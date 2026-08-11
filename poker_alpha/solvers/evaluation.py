@@ -28,6 +28,20 @@ from ..games.base import Game, State
 Strategy = Dict[str, Dict[str, float]]
 
 
+def _probs_at(game: Game, state: State, strategy: Strategy) -> Dict[str, float]:
+    """Action probabilities at a decision state, defaulting to uniform.
+
+    Sampling solvers (MCCFR) may not have visited every information set early
+    in training; an unvisited infoset plays regret matching's zero-regret
+    default, which is uniform, so evaluation treats it the same way.
+    """
+    probs = strategy.get(game.infoset_key(state))
+    if probs is None:
+        actions = game.legal_actions(state)
+        return {a: 1.0 / len(actions) for a in actions}
+    return probs
+
+
 def expected_value(game: Game, strategy: Strategy) -> float:
     """Player-0 game value when both players follow ``strategy``."""
 
@@ -36,7 +50,7 @@ def expected_value(game: Game, strategy: Strategy) -> float:
             return game.utility(state)
         if game.is_chance(state):
             return sum(p * walk(s) for p, s in game.chance_outcomes(state))
-        probs = strategy[game.infoset_key(state)]
+        probs = _probs_at(game, state, strategy)
         return sum(
             probs[a] * walk(game.next_state(state, a))
             for a in game.legal_actions(state)
@@ -62,7 +76,7 @@ def _subtree_value(game: Game, state: State, br_player: int,
         action = br_policy[key]
         return _subtree_value(game, game.next_state(state, action), br_player,
                               strategy, br_policy)
-    probs = strategy[key]
+    probs = _probs_at(game, state, strategy)
     return sum(
         probs[a] * _subtree_value(game, game.next_state(state, a), br_player,
                                   strategy, br_policy)
@@ -96,7 +110,7 @@ def best_response_value(game: Game, strategy: Strategy, br_player: int) -> float
                 # br_player's own reach is excluded from the counterfactual reach.
                 enumerate_states(game.next_state(state, a), reach, d + 1)
         else:
-            probs = strategy[key]
+            probs = _probs_at(game, state, strategy)
             for a in game.legal_actions(state):
                 enumerate_states(game.next_state(state, a), reach * probs[a], d + 1)
 

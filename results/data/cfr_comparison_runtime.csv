@@ -1,3 +1,4 @@
-solver,iterations,seconds,iters_per_sec
-CFR,100000,28.069,3562.6
-CFR+,100000,49.355,2026.1
+solver,iterations,seconds,iters_per_sec,infosets
+CFR,100000,27.876,3587.3,12
+CFR+,100000,53.633,1864.5,12
+MCCFR,100000,12.28,8143.3,12

@@ -21,9 +21,13 @@ next begins.
    updates, linear averaging; 5 tests; `experiments/cfr_comparison.py`
    (2.1e-6 vs 6.3e-4 exploitability at 100k, ~1.75× runtime cost).
 
+7. External-sampling MCCFR (`solvers/mccfr.py`) — chance/opponent sampling,
+   seeded determinism; 5 tests; three-way comparison experiment with both
+   per-iteration and per-second views.
+
 ## Current
 
-7. External-sampling MCCFR; three-way comparison (convergence, runtime, memory).
+8. Leduc Poker; convergence experiments; Kuhn-vs-Leduc scaling plots.
 
 ## Next
 

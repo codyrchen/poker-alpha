@@ -17,8 +17,11 @@ Phase 1 of the [development plan](TODO.md) is complete and verified:
 
 - **Kuhn Poker** implemented as an extensive-form game (states, chance nodes,
   information sets, utilities).
+- **Leduc Poker** — public card, two betting rounds with raises and a raise
+  cap, pot-based fold/showdown utilities; converges to the known game value.
 - **Vanilla CFR** with regret matching, cumulative/average strategies.
 - **CFR+** with regret clipping, alternating updates, and linear averaging.
+- **External-sampling MCCFR** with seeded, deterministic sampling.
 - **Exploitability evaluation** via a true imperfect-information best response.
 - **Convergence experiments** with reproducible results.
 
@@ -34,19 +37,28 @@ Current measured results (`python experiments/kuhn_convergence.py --iterations 1
 
 ![CFR convergence on Kuhn Poker](results/figures/kuhn_convergence.png)
 
-CFR vs CFR+ (`python experiments/cfr_comparison.py --iterations 100000 --seed 42`),
+Solver comparison on Kuhn
+(`python experiments/cfr_comparison.py --iterations 100000 --seed 42`),
 measured on the same machine, exploitability in chips:
 
-| algorithm | iterations | runtime | it/s | final exploitability |
-| --- | --- | --- | --- | --- |
-| CFR | 100k | 28.1 s | 3,563 | 6.3 × 10⁻⁴ |
-| CFR+ | 100k | 49.4 s | 2,026 | 2.1 × 10⁻⁶ |
+| algorithm | game | iterations | runtime | it/s | final exploitability |
+| --- | --- | --- | --- | --- | --- |
+| CFR | Kuhn | 100k | 27.9 s | 3,587 | 6.3 × 10⁻⁴ |
+| CFR+ | Kuhn | 100k | 53.6 s | 1,865 | 2.1 × 10⁻⁶ |
+| MCCFR (external sampling) | Kuhn | 100k | 12.3 s | 8,143 | 2.3 × 10⁻³ |
 
-CFR+ costs ~1.75× per iteration (an iteration is two alternating traversals,
-one per player) but converges near O(1/T) versus CFR's O(1/√T) — roughly 300×
-lower exploitability at this budget:
+Two readings worth internalizing:
 
-![CFR vs CFR+ convergence](results/figures/cfr_comparison.png)
+- **CFR+ converges near O(1/T)** versus CFR's O(1/√T) — ~300× lower
+  exploitability here — at ~1.9× cost per iteration (an iteration is two
+  alternating traversals, one per player).
+- **MCCFR iterations are 2.3× cheaper than CFR's even on Kuhn**, but its
+  sampled convergence is noisier, and on a ~50-node tree cheap iterations
+  can't win: CFR+ dominates per unit wall-clock. Sampling pays off as the game
+  grows — that scaling is what the Leduc experiment measures.
+
+![CFR vs CFR+ vs MCCFR convergence](results/figures/cfr_comparison.png)
+![CFR vs CFR+ vs MCCFR by wall-clock](results/figures/cfr_comparison_time.png)
 
 An implementation note worth knowing for interviews: CFR+'s regret clip must be
 applied to an information set's **total** regret per iteration, not per visited
