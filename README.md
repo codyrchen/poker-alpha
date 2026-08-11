@@ -60,6 +60,32 @@ Two readings worth internalizing:
 ![CFR vs CFR+ vs MCCFR convergence](results/figures/cfr_comparison.png)
 ![CFR vs CFR+ vs MCCFR by wall-clock](results/figures/cfr_comparison_time.png)
 
+### Scaling up: Leduc Poker
+
+Leduc (`python experiments/leduc_convergence.py --iterations 1000 --seed 42`)
+is ~75× larger than Kuhn by decision nodes (3,780 vs ~50; 288 rank-merged
+information sets). Measured results:
+
+| algorithm | game | iterations | runtime | it/s | final exploitability |
+| --- | --- | --- | --- | --- | --- |
+| CFR | Leduc | 1k | 50.7 s | 19.7 | 1.6 × 10⁻² |
+| CFR+ | Leduc | 1k | 92.2 s | 10.8 | 2.5 × 10⁻⁴ |
+| MCCFR | Leduc | 200k | 106.0 s | 1,886 | 2.9 × 10⁻² |
+
+- Full-traversal cost scaled with the tree: CFR went from 3,587 it/s on Kuhn
+  to 19.7 it/s on Leduc (~180× slower per iteration), while MCCFR's sampled
+  iterations only slowed ~4× (8,143 → 1,886 it/s). The *relative* cheapness of
+  sampling grew from 2.3× to ~96×.
+- CFR+ again dominates per iteration (~64× lower exploitability than CFR at
+  1k) and converges to the known game value (measured −0.0855 vs −0.0856).
+- **Honest negative result:** even at matched wall-clock, MCCFR still trails
+  exact CFR on Leduc (4.7 × 10⁻² vs 1.6 × 10⁻² at ~50 s) — sampling variance
+  dominates on a game that full traversal can still comfortably sweep. MCCFR's
+  real payoff is games where a full traversal is infeasible *per se* (the
+  abstracted Hold'em phase), not mid-sized games.
+
+![CFR vs CFR+ on Leduc](results/figures/leduc_convergence_exact.png)
+
 An implementation note worth knowing for interviews: CFR+'s regret clip must be
 applied to an information set's **total** regret per iteration, not per visited
 history. An information set spans several histories (in Kuhn, "hold the Jack"

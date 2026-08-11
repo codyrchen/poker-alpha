@@ -1,0 +1,3 @@
+solver,iterations,seconds,iters_per_sec,infosets
+CFR,1000,50.71,19.7,288
+CFR+,1000,92.218,10.8,288

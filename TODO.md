@@ -25,9 +25,16 @@ next begins.
    seeded determinism; 5 tests; three-way comparison experiment with both
    per-iteration and per-second views.
 
+8. Leduc Poker (`games/leduc.py`) — public card, 2 rounds, raise cap,
+   rank-merged infosets (288); 12 tests; converges to known value −0.0856.
+   `experiments/leduc_convergence.py` measured: CFR 19.7 it/s vs MCCFR
+   1,886 it/s (sampling advantage 2.3×→96× from Kuhn to Leduc); CFR+ 64×
+   lower exploitability at 1k iters; MCCFR still trails exact CFR at matched
+   wall-clock on a game this size (documented as an honest negative).
+
 ## Current
 
-8. Leduc Poker; convergence experiments; Kuhn-vs-Leduc scaling plots.
+9. Card engine (Card/Deck/Hand) + Hold'em hand evaluator + tests.
 
 ## Next
 
