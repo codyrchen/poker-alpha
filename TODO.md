@@ -49,9 +49,27 @@ next begins.
     single source of truth. 16 tests + 5,000-hand random-playout invariant
     check (chip conservation, stack caps, showdown equality).
 
+13. Opponent-modeling core (`opponent/`), built on Leduc where every claim is
+    exactly computable:
+    - `archetypes.py` — OpponentConfig multiplier tilts of the equilibrium
+      (balanced/nit/calling_station/maniac/bluff_heavy/passive).
+    - `bayesian_model.py` — Beta-Bernoulli posteriors with calibrated
+      uncertainty (mean/variance/credible intervals).
+    - `beliefs.py` — discrete Bayes over candidate types from *public*
+      actions, marginalizing hidden cards (showdowns reveal); posterior
+      mixture strategy; entropy-based confidence.
+    - `match.py` — seat-alternating match simulator with a hero-visible
+      information firewall.
+    - `exploit.py` — exact best response to the estimate, λ-blend with
+      confidence×deviation weighting, exploitability-budget guardrail via
+      bisection; `adaptive_strategy()`.
+    Measured: BR vs maniac +1.08 chips/hand (equilibrium: +0.002) at 2000×
+    the exploitability; guardrail holds blends within ε; maniac identified
+    96% by 50 hands. 24 tests (115 total).
+
 ## Current
 
-13. Equity-bucket card abstraction; document information loss.
+14. Equity-bucket card abstraction; document information loss.
 
 ## Future
 

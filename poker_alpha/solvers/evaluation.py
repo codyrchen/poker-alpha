@@ -84,11 +84,39 @@ def _subtree_value(game: Game, state: State, br_player: int,
     )
 
 
-def best_response_value(game: Game, strategy: Strategy, br_player: int) -> float:
-    """Value to ``br_player`` of best-responding to ``strategy`` (the opponent).
+def profile_value(game: Game, strategy0: Strategy, strategy1: Strategy) -> float:
+    """Exact player-0 value when player 0 plays ``strategy0`` and player 1
+    plays ``strategy1``.
 
-    Respects information sets: the returned value is the true (imperfect-
-    information) best-response value, so it is a valid input to exploitability.
+    This is the exact (full-tree, chance-averaged) expected value of an
+    asymmetric profile — the yardstick for "how much does agent A make against
+    opponent B" without Monte Carlo noise.
+    """
+
+    def walk(state: State) -> float:
+        if game.is_terminal(state):
+            return game.utility(state)
+        if game.is_chance(state):
+            return sum(p * walk(s) for p, s in game.chance_outcomes(state))
+        strat = strategy0 if game.current_player(state) == 0 else strategy1
+        probs = _probs_at(game, state, strat)
+        return sum(
+            probs[a] * walk(game.next_state(state, a))
+            for a in game.legal_actions(state)
+        )
+
+    return walk(game.root())
+
+
+def best_response(game: Game, strategy: Strategy,
+                  br_player: int) -> Tuple[float, Dict[str, str]]:
+    """Best response of ``br_player`` to an opponent playing ``strategy``.
+
+    Returns ``(value, policy)`` where ``policy`` maps each of the responder's
+    information-set keys to their chosen (pure) action. Respects information
+    sets: the value is the true imperfect-information best-response value, so
+    it is a valid input to exploitability — and the policy is what a maximally
+    exploitative agent would actually play.
     """
     # Group br_player's decision states by information set, recording the
     # counterfactual reach (opponent x chance) of each and its depth.
@@ -132,7 +160,14 @@ def best_response_value(game: Game, strategy: Strategy, br_player: int) -> float
                 best_value, best_action = value, action
         br_policy[key] = best_action
 
-    return _subtree_value(game, game.root(), br_player, strategy, br_policy)
+    value = _subtree_value(game, game.root(), br_player, strategy, br_policy)
+    return value, br_policy
+
+
+def best_response_value(game: Game, strategy: Strategy, br_player: int) -> float:
+    """Value to ``br_player`` of best-responding to ``strategy``."""
+    value, _ = best_response(game, strategy, br_player)
+    return value
 
 
 def exploitability(game: Game, strategy: Strategy) -> float:
