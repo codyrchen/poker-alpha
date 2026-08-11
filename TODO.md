@@ -16,14 +16,17 @@ next begins.
 5. Kuhn convergence experiment — `experiments/kuhn_convergence.py`
    (CSV + log-log figure; verified value −1/18, exploitability 6.3e-4 @ 100k).
 
+6. CFR+ (`solvers/cfr_plus.py`) — regret clipping (once per infoset per
+   iteration; per-visit clipping measurably degrades to O(1/√T)), alternating
+   updates, linear averaging; 5 tests; `experiments/cfr_comparison.py`
+   (2.1e-6 vs 6.3e-4 exploitability at 100k, ~1.75× runtime cost).
+
 ## Current
 
-6. CFR+ (`solvers/cfr_plus.py`): regret clipping at zero, linear/weighted
-   averaging; comparison experiment vs vanilla CFR on Kuhn.
+7. External-sampling MCCFR; three-way comparison (convergence, runtime, memory).
 
 ## Next
 
-7. External-sampling MCCFR; three-way comparison (convergence, runtime, memory).
 8. Leduc Poker; convergence experiments; Kuhn-vs-Leduc scaling plots.
 9. Card engine (Card/Deck/Hand) + Hold'em hand evaluator + tests.
 10. Monte Carlo equity engine with seeded reproducibility.

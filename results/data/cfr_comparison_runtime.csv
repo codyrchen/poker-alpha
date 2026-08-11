@@ -1,0 +1,3 @@
+solver,iterations,seconds,iters_per_sec
+CFR,100000,28.069,3562.6
+CFR+,100000,49.355,2026.1

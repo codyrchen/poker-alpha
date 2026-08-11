@@ -18,8 +18,9 @@ Phase 1 of the [development plan](TODO.md) is complete and verified:
 - **Kuhn Poker** implemented as an extensive-form game (states, chance nodes,
   information sets, utilities).
 - **Vanilla CFR** with regret matching, cumulative/average strategies.
+- **CFR+** with regret clipping, alternating updates, and linear averaging.
 - **Exploitability evaluation** via a true imperfect-information best response.
-- **Convergence experiment** with reproducible results.
+- **Convergence experiments** with reproducible results.
 
 Current measured results (`python experiments/kuhn_convergence.py --iterations 100000 --seed 42`):
 
@@ -32,6 +33,28 @@ Current measured results (`python experiments/kuhn_convergence.py --iterations 1
 | Queen facing bet: call | 0.336 | 1/3 |
 
 ![CFR convergence on Kuhn Poker](results/figures/kuhn_convergence.png)
+
+CFR vs CFR+ (`python experiments/cfr_comparison.py --iterations 100000 --seed 42`),
+measured on the same machine, exploitability in chips:
+
+| algorithm | iterations | runtime | it/s | final exploitability |
+| --- | --- | --- | --- | --- |
+| CFR | 100k | 28.1 s | 3,563 | 6.3 × 10⁻⁴ |
+| CFR+ | 100k | 49.4 s | 2,026 | 2.1 × 10⁻⁶ |
+
+CFR+ costs ~1.75× per iteration (an iteration is two alternating traversals,
+one per player) but converges near O(1/T) versus CFR's O(1/√T) — roughly 300×
+lower exploitability at this budget:
+
+![CFR vs CFR+ convergence](results/figures/cfr_comparison.png)
+
+An implementation note worth knowing for interviews: CFR+'s regret clip must be
+applied to an information set's **total** regret per iteration, not per visited
+history. An information set spans several histories (in Kuhn, "hold the Jack"
+spans two opponent cards), and clipping between visits biases the update — with
+that bug, CFR+ degraded to CFR's O(1/√T) rate; buffering the per-iteration
+deltas and clipping once restored O(1/T). The commit history preserves both
+measurements.
 
 Upcoming phases (see [TODO.md](TODO.md)): CFR+, MCCFR, Leduc poker, a hand
 evaluator and Monte Carlo equity engine, an abstracted heads-up Hold'em,
