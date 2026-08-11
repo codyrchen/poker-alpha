@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "poker-alpha"
+version = "0.1.0"
+description = "Game-theoretic poker solver and adaptive exploitation research engine"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "Cody Chen" }]
+dependencies = [
+    "numpy>=1.24",
+    "scipy>=1.10",
+    "pandas>=2.0",
+    "matplotlib>=3.6",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.0"]
+opt = ["numba>=0.58"]
+
+[tool.setuptools]
+packages = { find = { include = ["poker_alpha*"] } }
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
