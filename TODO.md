@@ -41,9 +41,17 @@ next begins.
     11 tests. Validated: AA 85.1% (known 85.2%), 72o 34.1% (known ~34.6%);
     ~7k sims/s (optimization target for the profiling phase).
 
+12. Abstracted heads-up NL Hold'em (`games/holdem.py`) — 100 BB stacks,
+    0.5/1 blinds, four streets, action set {f, c, b50, b100, b200, all-in},
+    3-raise cap, pot-relative sizing, all-in runouts, sampled chance
+    (`sample_chance`/`deal`; full chance enumeration intentionally
+    unsupported). Betting bookkeeping replayed from the blinds forward as the
+    single source of truth. 16 tests + 5,000-hand random-playout invariant
+    check (chip conservation, stack caps, showdown equality).
+
 ## Current
 
-12. Abstracted heads-up NL Hold'em state engine (restricted bet sizes).
+13. Equity-bucket card abstraction; document information loss.
 
 ## Future
 
