@@ -67,9 +67,17 @@ next begins.
     the exploitability; guardrail holds blends within ε; maniac identified
     96% by 50 hands. 24 tests (115 total).
 
+14. Risk analytics (`risk/`) — metrics.py (mean/variance/downside/Sharpe-like
+    with caveats, max drawdown, VaR/CVaR, win rate, bb/100, percentile
+    bootstrap CIs, RiskReport), kelly.py (f*, log-growth, fractional-Kelly
+    Monte Carlo showing over-betting lowers median wealth and deepens
+    drawdowns), bankroll.py (risk-of-ruin, percentiles, drawdown
+    distributions). 17 tests (132 total).
+
 ## Current
 
-14. Equity-bucket card abstraction; document information loss.
+15. Headline experiments (adaptation vs archetypes, opponent identification,
+    overfitting-vs-sample-size, regime change) + figures.
 
 ## Future
 
