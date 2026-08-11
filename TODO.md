@@ -32,34 +32,36 @@ next begins.
    lower exploitability at 1k iters; MCCFR still trails exact CFR at matched
    wall-clock on a game this size (documented as an honest negative).
 
+9. Card engine (`poker/cards.py`) — int-coded 52-card deck, Card/Deck/Hand,
+   seeded shuffling, dead-card exclusion; 8 tests.
+10. Hand evaluator (`poker/evaluator.py`) — all 9 categories as comparable
+    tuples, wheel/steel-wheel, kickers, ties, best-of-5/6/7; 17 tests.
+11. Monte Carlo equity engine (`poker/equity.py`) — uniform or weighted
+    opponent ranges with blocker handling, seeded, std-error reporting;
+    11 tests. Validated: AA 85.1% (known 85.2%), 72o 34.1% (known ~34.6%);
+    ~7k sims/s (optimization target for the profiling phase).
+
 ## Current
 
-9. Card engine (Card/Deck/Hand) + Hold'em hand evaluator + tests.
-
-## Next
-
-8. Leduc Poker; convergence experiments; Kuhn-vs-Leduc scaling plots.
-9. Card engine (Card/Deck/Hand) + Hold'em hand evaluator + tests.
-10. Monte Carlo equity engine with seeded reproducibility.
+12. Abstracted heads-up NL Hold'em state engine (restricted bet sizes).
 
 ## Future
 
-11. Abstracted heads-up NL Hold'em state engine (restricted bet sizes).
-12. Equity-bucket card abstraction; document information loss.
-13. Real-time subgame solving; compute-vs-quality experiment.
-14. Opponent archetypes (Balanced, Nit, Calling Station, Maniac, Bluff Heavy,
+13. Equity-bucket card abstraction; document information loss.
+14. Real-time subgame solving; compute-vs-quality experiment.
+15. Opponent archetypes (Balanced, Nit, Calling Station, Maniac, Bluff Heavy,
     Passive) via configurable behavior multipliers.
-15. Observable opponent statistics (VPIP, PFR, aggression, fold-to-bet, ...)
+16. Observable opponent statistics (VPIP, PFR, aggression, fold-to-bet, ...)
     with no hidden-information leakage.
-16. Bayesian opponent model (Beta-Bernoulli posteriors with explicit
+17. Bayesian opponent model (Beta-Bernoulli posteriors with explicit
     uncertainty); range estimation via Bayes rule over actions.
-17. EV-derived exploitative strategy.
-18. Risk-constrained adaptive strategy (confidence-weighted λ blend;
+18. EV-derived exploitative strategy.
+19. Risk-constrained adaptive strategy (confidence-weighted λ blend;
     exploitability guardrail).
-19. Experiments: adaptation vs archetypes, opponent identification,
+20. Experiments: adaptation vs archetypes, opponent identification,
     distribution shift, exploration-vs-exploitation, overfitting-vs-sample-size,
     rake sensitivity.
-20. Risk analytics: return metrics, Kelly, bankroll simulation, risk of ruin.
-21. Performance profiling + optimization benchmark.
-22. README finalization with benchmark tables from real runs.
-23. RESEARCH.md writeup.
+21. Risk analytics: return metrics, Kelly, bankroll simulation, risk of ruin.
+22. Performance profiling + optimization benchmark.
+23. README finalization with benchmark tables from real runs.
+24. RESEARCH.md writeup + final demo (`python -m poker_alpha.demo`).

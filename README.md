@@ -24,6 +24,12 @@ Phase 1 of the [development plan](TODO.md) is complete and verified:
 - **External-sampling MCCFR** with seeded, deterministic sampling.
 - **Exploitability evaluation** via a true imperfect-information best response.
 - **Convergence experiments** with reproducible results.
+- **Card engine + hand evaluator** — 52-card integer representation, all nine
+  hand categories as lexicographically comparable tuples (wheel included),
+  best-of-seven; 25 tests.
+- **Monte Carlo equity engine** — seeded showdown-equity estimation against
+  uniform or weighted opponent ranges with blocker handling. Validated against
+  known values: AA vs random 85.1% (reference 85.2%), 72o 34.1% (≈34.6%).
 
 Current measured results (`python experiments/kuhn_convergence.py --iterations 100000 --seed 42`):
 
