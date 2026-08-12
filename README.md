@@ -13,7 +13,8 @@ automate, or interact with any real poker platform.
 
 ## Status
 
-Phase 1 of the [development plan](TODO.md) is complete and verified:
+Phases 1–15 of the [development plan](TODO.md) are complete and verified
+(132 tests):
 
 - **Kuhn Poker** implemented as an extensive-form game (states, chance nodes,
   information sets, utilities).
@@ -30,6 +31,16 @@ Phase 1 of the [development plan](TODO.md) is complete and verified:
 - **Monte Carlo equity engine** — seeded showdown-equity estimation against
   uniform or weighted opponent ranges with blocker handling. Validated against
   known values: AA vs random 85.1% (reference 85.2%), 72o 34.1% (≈34.6%).
+- **Abstracted heads-up NL Hold'em** — 100 BB stacks, four streets, pot-relative
+  sizing, sampled chance, chip-conservation-checked random playouts.
+- **Opponent modeling** — six archetypes as multiplicative tilts of the
+  equilibrium; Bayesian identification from public actions only; a
+  risk-constrained adaptive strategy (confidence-weighted λ blend, exact
+  exploitability guardrail). See
+  [Opponent modeling: identification, adaptation, and its limits](#opponent-modeling-identification-adaptation-and-its-limits)
+  below for measured results, including an honest negative one.
+- **Risk analytics** — return metrics with bootstrap CIs, Kelly criterion,
+  bankroll / risk-of-ruin simulation.
 
 Current measured results (`python experiments/kuhn_convergence.py --iterations 100000 --seed 42`):
 
@@ -100,10 +111,85 @@ that bug, CFR+ degraded to CFR's O(1/√T) rate; buffering the per-iteration
 deltas and clipping once restored O(1/T). The commit history preserves both
 measurements.
 
-Upcoming phases (see [TODO.md](TODO.md)): CFR+, MCCFR, Leduc poker, a hand
-evaluator and Monte Carlo equity engine, an abstracted heads-up Hold'em,
-Bayesian opponent modeling, the equilibrium–exploitation tradeoff experiments,
-and risk analytics.
+### Opponent modeling: identification, adaptation, and its limits
+
+The core research question — how much equilibrium robustness to trade for
+opponent-specific exploitation — is tested directly on Leduc, where every
+strategy's exact EV and exploitability are computable, not just estimated.
+Four experiments (`experiments/adaptation_vs_archetypes.py`,
+`opponent_identification.py`, `overfitting_vs_sample_size.py`,
+`regime_change.py`; seed 42, 300-iteration CFR+ equilibrium):
+
+**How fast can the opponent be identified?** A Bayesian posterior over the six
+archetypes, updated hand-by-hand from public actions only (hero plays static
+equilibrium; 50 repeats/archetype):
+
+| archetype | correct by 5 hands | by 50 hands | by 100 hands |
+| --- | --- | --- | --- |
+| maniac | 78% | 96% | 100% |
+| calling_station | 40% | 92% | 94% |
+| bluff_heavy (subtlest tilt) | 18% | 72% | 84% |
+
+![Opponent identification accuracy](results/figures/opponent_identification_accuracy.png)
+
+**Does adaptation pay?** Three heroes, 3000-hand matches: static equilibrium,
+an oracle best response (knows the true opponent strategy, uncapped — an EV
+ceiling, not a realizable agent), and the online adaptive agent (posterior
+mixture, refreshed every 20 hands, capped to an exploitability budget ε=0.1):
+
+| opponent | equilibrium | oracle BR (exploitability) | adaptive (exploitability) |
+| --- | --- | --- | --- |
+| maniac | −9.0 | +77.8 (2.42) | +10.9 (≤0.10) |
+| calling_station | −10.1 | +38.2 (1.82) | +3.1 (≤0.10) |
+| bluff_heavy | −4.9 | +47.6 (2.60) | −1.7 (≤0.10) |
+
+(chips/100 hands; oracle exploitability in chips, ~1000× the equilibrium's
+own ~0.002.) The adaptive agent recovers a real slice of the oracle's edge at
+a small, bounded exploitability cost — but at 3000 hands the bootstrap CIs on
+these numbers are ~±17 chips/100, wide enough that most individual
+adaptive-vs-equilibrium deltas above are not significant on their own.
+
+![Adaptive vs equilibrium vs oracle](results/figures/adaptation_vs_archetypes.png)
+
+Sweeping the exploitability budget ε against the maniac confirms the
+*mechanism* works exactly as designed — mean applied λ rises monotonically
+with ε (0 → 0.013 → 0.032 → 0.059 → 0.16 → 0.31 as ε: 0 → 1.0, matching the
+uncapped ceiling computed directly from the posterior's deviation estimate) —
+but a single 2000-hand run's realized EV at each ε is dominated by Leduc's
+per-hand variance, not ε. Confirming the *EV* payoff of the tradeoff needs the
+repeats/bootstrap approach above, not a one-shot sweep.
+
+**Does the exploitability guardrail actually prevent overfitting to noise?**
+Freezing a strategy after only *n* hands of belief formation and scoring its
+*exact* EV (`profile_value`, no evaluation noise; 15 repeats/point) shows the
+posterior's own confidence gating already blocks most early overfitting — at
+5–20 hands, low confidence caps λ regardless of the guardrail, so guarded and
+unguarded strategies both stay near equilibrium. Once confidence saturates
+(60+ hands), the guardrail's effect is visible: against maniac at 1000 hands,
+guarded settles at 0.031 chips/hand vs unguarded's 0.184 (oracle 1.075) — most
+of the unguarded edge traded away for a much smaller exploitability
+footprint. In worst-case draws the guardrail bounds tail losses when it binds
+(calling_station @ 20 hands: guarded_min −0.020 vs unguarded_min −0.034) and
+is a no-op, not a floor, when it doesn't.
+
+**Honest negative result: regime change.** The opponent plays maniac for 2000
+hands, then switches to nit for 2000 more, with no signal to the hero. The
+posterior correctly locks onto maniac by ~180 hands — then, after the switch,
+confidence stays pegged at ~1.0 *on the now-wrong label*, and posterior mass
+on the true new archetype measures numerically ~0 for the entire remaining
+1980 post-switch hands, in all 3 repeats (reaching only ~1e-280 by hand
+3980). `ArchetypeBelief` accumulates log-likelihood over every hand it has
+ever seen with no decay: a sound assumption for a stationary opponent, and
+actively harmful for a non-stationary one — once confidence saturates, old
+evidence permanently outvotes new evidence. Documented as a limitation rather
+than patched speculatively; see [TODO.md](TODO.md) for the scoped fix
+(a recency-windowed or exponentially-discounted posterior).
+
+![Regime change: confidence stays high on the stale label](results/figures/regime_change_confidence.png)
+
+Upcoming (see [TODO.md](TODO.md)): a windowed/discounted belief for
+non-stationary opponents, exploration-vs-exploitation and rake-sensitivity
+experiments, performance profiling, and a final RESEARCH.md writeup.
 
 ## The math so far (no CFR background assumed)
 
@@ -142,13 +228,17 @@ deepest-first with counterfactual reach weights.
 
 ```bash
 pip install -e ".[dev]"     # or: pip install -r requirements.txt
-pytest                       # 17 tests
+pytest                       # 132 tests
 python experiments/kuhn_convergence.py --iterations 100000 --seed 42
+python experiments/adaptation_vs_archetypes.py --seed 42
+python experiments/opponent_identification.py --seed 42
+python experiments/overfitting_vs_sample_size.py --seed 42
+python experiments/regime_change.py --seed 42
 ```
 
-Experiments take command-line arguments (`--iterations`, `--seed`, `--outdir`)
-and write raw CSV data to `results/data/` and figures to `results/figures/`.
-All randomness is seeded for reproducibility.
+Experiments take command-line arguments (`--iterations`/`--hands`, `--seed`,
+`--outdir`) and write raw CSV data to `results/data/` and figures to
+`results/figures/`. All randomness is seeded for reproducibility.
 
 ## Repository structure
 
