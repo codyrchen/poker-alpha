@@ -86,22 +86,52 @@ def leduc_hand_likelihood(strategy: Strategy, obs: HandObservation) -> float:
 
 @dataclass
 class ArchetypeBelief:
-    """Discrete Bayesian posterior over named candidate opponent strategies."""
+    """Discrete Bayesian posterior over named candidate opponent strategies.
+
+    ``decay`` is a forgetting factor applied to the accumulated log-likelihood
+    before folding in each new hand's evidence. At the default ``decay=1.0``
+    nothing is discounted: this is the *stationary* baseline used throughout
+    the project so far, and it is exact Bayesian updating -- every hand ever
+    seen counts equally forever, which is correct only if the opponent's type
+    never changes.
+
+    ``decay<1.0`` gives a *recency-aware* posterior: expanding the recursion
+    ``LL_t = decay * LL_{t-1} + ll_t`` shows hand ``j``, observed ``t-j`` hands
+    ago, contributes with weight ``decay**(t-j)`` -- old evidence is
+    exponentially down-weighted, with an effective memory horizon of roughly
+    ``1 / (1 - decay)`` hands. This trades identification precision against a
+    stationary opponent (more noise in the posterior at any given hand count)
+    for the ability to notice and recover from a regime change (see
+    ``experiments/regime_change.py`` for the measured tradeoff, including its
+    cost: a smaller decay makes the posterior more prone to spurious
+    "false-switch" flips from ordinary sampling noise even when the opponent
+    never actually changes).
+
+    A rolling evidence window (keep the raw last ``W`` hands, recompute the
+    likelihood from scratch) was the other natural design; exponential
+    forgetting was chosen because it drops in as an O(1) per-hand update to
+    the existing scalar log-likelihood accumulator, with no history buffer.
+    """
 
     candidates: Dict[str, Strategy]
+    decay: float = 1.0
     log_likelihood: Dict[str, float] = field(default_factory=dict)
     hands_observed: int = 0
     _floor: float = 1e-12
 
     def __post_init__(self) -> None:
+        if not 0.0 < self.decay <= 1.0:
+            raise ValueError(f"decay must be in (0, 1], got {self.decay}")
         for name in self.candidates:
             self.log_likelihood.setdefault(name, 0.0)
 
     def update(self, obs: HandObservation) -> None:
-        """Fold one hand's evidence into the posterior."""
+        """Discount past evidence by ``decay``, then fold in this hand's."""
         for name, strategy in self.candidates.items():
             like = leduc_hand_likelihood(strategy, obs)
-            self.log_likelihood[name] += float(np.log(max(like, self._floor)))
+            self.log_likelihood[name] = (
+                self.decay * self.log_likelihood[name]
+                + float(np.log(max(like, self._floor))))
         self.hands_observed += 1
 
     def posterior(self) -> Dict[str, float]:

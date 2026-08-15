@@ -153,6 +153,57 @@ def test_mixture_strategy_is_normalized(archetype_strategies):
         assert sum(probs.values()) == pytest.approx(1.0)
 
 
+# -- decay (recency-aware belief) --------------------------------------------
+
+def test_decay_one_matches_baseline_exactly(archetype_strategies):
+    from poker_alpha.opponent import HandObservation
+
+    obs = HandObservation(hero_rank=1, public_rank=None,
+                          opp_decisions=(("?", "r", "r"), ("0", "r/r", "c")),
+                          revealed_opp_rank=None)
+    baseline = ArchetypeBelief(candidates=archetype_strategies)
+    explicit_one = ArchetypeBelief(candidates=archetype_strategies, decay=1.0)
+    for _ in range(5):
+        baseline.update(obs)
+        explicit_one.update(obs)
+    assert baseline.log_likelihood == pytest.approx(explicit_one.log_likelihood)
+
+
+def test_invalid_decay_rejected(archetype_strategies):
+    with pytest.raises(ValueError):
+        ArchetypeBelief(candidates=archetype_strategies, decay=0.0)
+    with pytest.raises(ValueError):
+        ArchetypeBelief(candidates=archetype_strategies, decay=1.1)
+
+
+def test_decay_discounts_old_evidence(leduc_game, leduc_equilibrium,
+                                      archetype_strategies):
+    """A decaying belief that first sees strong maniac evidence, then a long
+    run of nit evidence, moves on to favor nit much more than a decay=1.0
+    belief given the identical hands, which keeps weighing in the stale
+    maniac evidence forever."""
+    maniac_obs_rng = np.random.default_rng(1)
+    nit_obs_rng = np.random.default_rng(2)
+
+    baseline = ArchetypeBelief(candidates=archetype_strategies, decay=1.0)
+    recency = ArchetypeBelief(candidates=archetype_strategies, decay=0.98)
+
+    simulate_match(leduc_game, leduc_equilibrium, archetype_strategies["maniac"],
+                   hands=300, rng=maniac_obs_rng,
+                   on_hand=lambda r: (baseline.update(r.observation),
+                                      recency.update(r.observation)))
+    assert baseline.map_estimate() == "maniac"
+    assert recency.map_estimate() == "maniac"
+
+    simulate_match(leduc_game, leduc_equilibrium, archetype_strategies["nit"],
+                   hands=300, rng=nit_obs_rng,
+                   on_hand=lambda r: (baseline.update(r.observation),
+                                      recency.update(r.observation)))
+    assert recency.map_estimate() == "nit"
+    assert baseline.map_estimate() != "nit"
+    assert recency.posterior()["nit"] > baseline.posterior()["nit"]
+
+
 # -- exploitation ------------------------------------------------------------
 
 def test_blend_endpoints(leduc_equilibrium, archetype_strategies):

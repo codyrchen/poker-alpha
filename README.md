@@ -13,8 +13,8 @@ automate, or interact with any real poker platform.
 
 ## Status
 
-Phases 1–15 of the [development plan](TODO.md) are complete and verified
-(132 tests):
+Phases 1–16 of the [development plan](TODO.md) are complete and verified
+(135 tests):
 
 - **Kuhn Poker** implemented as an extensive-form game (states, chance nodes,
   information sets, utilities).
@@ -34,11 +34,13 @@ Phases 1–15 of the [development plan](TODO.md) are complete and verified
 - **Abstracted heads-up NL Hold'em** — 100 BB stacks, four streets, pot-relative
   sizing, sampled chance, chip-conservation-checked random playouts.
 - **Opponent modeling** — six archetypes as multiplicative tilts of the
-  equilibrium; Bayesian identification from public actions only; a
-  risk-constrained adaptive strategy (confidence-weighted λ blend, exact
-  exploitability guardrail). See
+  equilibrium; a stationary Bayesian belief identifying the opponent from
+  public actions only; a risk-constrained adaptive strategy
+  (confidence-weighted λ blend, exact exploitability guardrail); and a
+  recency-aware belief (exponential forgetting) for non-stationary opponents,
+  with the regime-change tradeoff it buys — and costs — measured directly. See
   [Opponent modeling: identification, adaptation, and its limits](#opponent-modeling-identification-adaptation-and-its-limits)
-  below for measured results, including an honest negative one.
+  below for the numbers, including an honest negative result and its fix.
 - **Risk analytics** — return metrics with bootstrap CIs, Kelly criterion,
   bankroll / risk-of-ruin simulation.
 
@@ -174,22 +176,60 @@ is a no-op, not a floor, when it doesn't.
 
 **Honest negative result: regime change.** The opponent plays maniac for 2000
 hands, then switches to nit for 2000 more, with no signal to the hero. The
-posterior correctly locks onto maniac by ~180 hands — then, after the switch,
-confidence stays pegged at ~1.0 *on the now-wrong label*, and posterior mass
-on the true new archetype measures numerically ~0 for the entire remaining
-1980 post-switch hands, in all 3 repeats (reaching only ~1e-280 by hand
-3980). `ArchetypeBelief` accumulates log-likelihood over every hand it has
+posterior locks onto maniac early in the first regime — then, after the
+switch, it stays *confidently wrong*: the MAP estimate is never correct at
+any post-switch checkpoint, and posterior mass on the true new archetype
+stays numerically ~0 (below 1e-319) across the entire remaining 2000 hands,
+in all 3 repeats. `ArchetypeBelief` accumulates log-likelihood over every hand it has
 ever seen with no decay: a sound assumption for a stationary opponent, and
 actively harmful for a non-stationary one — once confidence saturates, old
-evidence permanently outvotes new evidence. Documented as a limitation rather
-than patched speculatively; see [TODO.md](TODO.md) for the scoped fix
-(a recency-windowed or exponentially-discounted posterior).
+evidence permanently outvotes new evidence forever.
 
-![Regime change: confidence stays high on the stale label](results/figures/regime_change_confidence.png)
+### Fixing it: a recency-aware belief, and what it costs
 
-Upcoming (see [TODO.md](TODO.md)): a windowed/discounted belief for
-non-stationary opponents, exploration-vs-exploitation and rake-sensitivity
-experiments, performance profiling, and a final RESEARCH.md writeup.
+`ArchetypeBelief` now takes a `decay` parameter: exponential forgetting of the
+accumulated log-likelihood (`LL_t = decay·LL_{t-1} + ll_t`, effective memory
+horizon ≈ 1/(1−decay) hands). `decay=1.0` is the exact stationary baseline
+above — unchanged, still the default, every existing call site and test
+untouched. This is not a free upgrade: forgetting old evidence also means a
+decaying belief has less protection against noise, so it can *misidentify a
+stationary opponent* just from an unlucky run of hands. `regime_change.py`
+now measures both sides on the identical maniac→nit switch (baseline and
+`decay=0.995` fed the exact same paired hand sequence) and on a
+stationary-opponent control (no switch at all, 30 repeats, decay swept from
+1.0 to 0.98):
+
+| | baseline (decay=1.0) | recency (decay=0.995) |
+| --- | --- | --- |
+| detection delay (hands post-switch to a *sustained* correct MAP estimate) | never, in 3/3 repeats | 380–500, in 3/3 repeats |
+| confidence during recovery | >0.99 at 96% of post-switch checkpoints, never below 0.87 — *confidently* wrong | falls to 0.76, then re-saturates |
+| false-switch rate, stationary maniac (30 reps, post-warmup) | 0.02% | 0.0% |
+| false-switch rate, stationary bluff_heavy (30 reps, post-warmup) | 0.71% | 1.39% |
+
+![Posterior mass on the true archetype: baseline never recovers, recency does](results/figures/regime_change_posterior_true.png)
+![Confidence: baseline stays near 1.0 on the stale label through the switch, while recency dips visibly as it recovers](results/figures/regime_change_confidence.png)
+
+decay=0.995 is a good point on the curve, not a free lunch: sweeping decay
+down to 0.98 on the stationary control shows *why* it isn't pushed lower —
+false switches on bluff_heavy (the hardest archetype to read) jump to 10.8%
+of checkpoints (8.6 flip episodes per 3000-hand repeat), trading faster
+hypothetical recovery for materially worse stability against an opponent that
+never actually changed.
+
+![False-switch rate rises as decay drops](results/figures/regime_change_control_flip_rate.png)
+
+Under this experiment's ε=0.1 exploitability guardrail (from the adaptation
+experiment above), the exact EV (`profile_value`) of both baseline's and
+recency's frozen strategy tracks close to equilibrium — well short of the
+oracle ceiling either way — so the guardrail itself absorbs most of the
+downside of misidentification at this budget; a looser ε would make getting
+the identification right (or wrong) matter more.
+
+![EV lost after the switch, baseline vs recency, against the equilibrium and oracle bounds](results/figures/regime_change_ev.png)
+
+Upcoming (see [TODO.md](TODO.md)): exploration-vs-exploitation and
+rake-sensitivity experiments, performance profiling, and a final RESEARCH.md
+writeup.
 
 ## The math so far (no CFR background assumed)
 
@@ -228,7 +268,7 @@ deepest-first with counterfactual reach weights.
 
 ```bash
 pip install -e ".[dev]"     # or: pip install -r requirements.txt
-pytest                       # 132 tests
+pytest                       # 135 tests
 python experiments/kuhn_convergence.py --iterations 100000 --seed 42
 python experiments/adaptation_vs_archetypes.py --seed 42
 python experiments/opponent_identification.py --seed 42

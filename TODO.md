@@ -121,27 +121,68 @@ next begins.
       no-op, not a floor).
     - **Regime change, honest negative result**: opponent plays maniac for
       2000 hands then switches to nit for 2000 more, hero none the wiser.
-      `ArchetypeBelief`'s posterior correctly locks onto maniac by ~180
-      hands — then, post-switch, confidence stays pegged at ~1.0 (on the now
-      *wrong* label) and posterior mass on the true new archetype (nit)
-      measures numerically ~0 for the entire remaining 1980 post-switch
-      hands, in all 3 repeats, reaching only ~1e-280 by hand 3980. Because
-      the posterior accumulates log-likelihood over every hand ever observed
+      `ArchetypeBelief`'s posterior correctly locks onto maniac early in the
+      first regime — then, post-switch, it stays confidently wrong: the MAP
+      estimate is never correct at any post-switch checkpoint and posterior
+      mass on the true new archetype (nit) stays numerically ~0 (below
+      1e-319) for the entire remaining 2000 hands, in all 3 repeats. Because the
+      posterior accumulates log-likelihood over every hand ever observed
       with no decay, old evidence permanently outvotes new evidence once
       confidence has saturated — a sound design for a stationary opponent,
-      actively harmful for a non-stationary one. Left as a documented
-      limitation (see Future: recency-windowed or exponentially-discounted
-      belief) rather than patched speculatively.
+      actively harmful for a non-stationary one. Fixed in phase 16 below,
+      whose paired baseline-vs-recency run reproduces this baseline behavior
+      and supplies the numbers quoted here (the phase-15 run's own CSV was
+      superseded by it; see git history at `b61d2d9` for the original).
+
+16. Recency-aware `ArchetypeBelief` (`opponent/beliefs.py`): a `decay`
+    parameter (default 1.0, exactly the phase-15 stationary baseline —
+    backward compatible, no existing call site or test changed) applies
+    exponential forgetting to the accumulated log-likelihood before each
+    hand's update (`LL_t = decay * LL_{t-1} + ll_t`; effective memory
+    horizon ≈ 1/(1-decay) hands). A rolling evidence window was the other
+    natural design; exponential forgetting was chosen as an O(1) per-hand
+    update to the existing scalar accumulator, no history buffer needed.
+    3 new tests (135 total).
+
+    `experiments/regime_change.py` rewritten to compare baseline (decay=1.0)
+    against recency (decay=0.995, chosen from the control sweep below) on
+    the identical maniac→nit switch, paired on one hand sequence (hero fixed
+    at equilibrium) so both beliefs see exactly the same evidence. Measured
+    (seed 42, 3 repeats):
+    - **Detection delay**: baseline never recovers within the 2000 post-switch
+      hands (confirms phase 15). Recency recovers a *sustained* correct MAP
+      estimate 380–500 hands after the switch, in all 3 repeats.
+    - **Confidence**: baseline's confidence stays above 0.99 at 96% of
+      post-switch checkpoints (on the now-stale label), never dipping below
+      0.87 — it is not merely wrong, it is *confidently* wrong. Recency's
+      confidence falls to 0.76 during the ~500-hand recovery window before
+      re-saturating near 1.0: a visible "I'm confused" signal the baseline
+      never really produces. (Per-checkpoint means over 3 repeats, which is
+      what `regime_change_confidence.png` plots.)
+    - **EV lost**: with the ε=0.1 exploitability guardrail from phase 15
+      active, both baseline's and recency's exact EV (`profile_value`) track
+      close to equilibrium — well short of the oracle best response either
+      way. The guardrail itself bounds most of the downside of misidentifying
+      the opponent at this budget; a looser ε would make correct
+      identification matter more (see phase 15's ε-sweep finding).
+    - **False-switch / noise sensitivity** (stationary-opponent control, no
+      actual regime change, 30 repeats, decay ∈ {1.0, 0.999, 0.995, 0.99,
+      0.98} × {maniac, bluff_heavy}): flip rate rises monotonically as decay
+      drops. At decay=0.995 it stays close to the stationary baseline's own
+      rate (maniac 0% vs 0.02%; bluff_heavy 1.4% vs 0.7%) while still
+      recovering from a real switch in ~450 hands. At decay=0.98, false
+      switches on bluff_heavy jump to 10.8% of checkpoints (8.6 flip episodes
+      per 3000-hand repeat) — recovering faster from a real switch, but far
+      noisier against a stationary opponent. decay=0.995 is a good point on
+      that curve, not a free lunch: the tradeoff is real and measured, not
+      assumed.
 
 ## Future
 
-13. Equity-bucket card abstraction; document information loss.
-14. Real-time subgame solving; compute-vs-quality experiment.
-15. Recency-windowed or exponentially-discounted `ArchetypeBelief` variant to
-    handle non-stationary opponents (motivated by the regime-change negative
-    result above); re-run `regime_change.py` against it.
-16. Additional experiments: exploration-vs-exploitation, rake sensitivity.
-17. Performance profiling + optimization benchmark (equity engine currently
+17. Equity-bucket card abstraction; document information loss.
+18. Real-time subgame solving; compute-vs-quality experiment.
+19. Additional experiments: exploration-vs-exploitation, rake sensitivity.
+20. Performance profiling + optimization benchmark (equity engine currently
     ~7k sims/s — the flagged optimization target).
-18. README finalization with benchmark tables from real runs.
-19. RESEARCH.md writeup + final demo (`python -m poker_alpha.demo`).
+21. README finalization with benchmark tables from real runs.
+22. RESEARCH.md writeup + final demo (`python -m poker_alpha.demo`).
