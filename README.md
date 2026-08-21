@@ -11,9 +11,14 @@ research project studying the tradeoff between **equilibrium robustness** and
 This is an offline simulation and research project. It does not connect to,
 automate, or interact with any real poker platform.
 
+> **📄 [RESEARCH.md](RESEARCH.md)** — the full quantitative writeup: the whole
+> project organized around that question, with every measured result, the
+> negative results, and the limitations. Start there for the research
+> narrative; this README is the reference documentation.
+
 ## Status
 
-Phases 1–17 of the [development plan](TODO.md) are complete and verified
+Phases 1–18 of the [development plan](TODO.md) are complete and verified
 (144 tests):
 
 - **Kuhn Poker** implemented as an extensive-form game (states, chance nodes,

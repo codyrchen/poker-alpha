@@ -225,10 +225,36 @@ next begins.
       accuracy: at a fixed 10 ms budget the engine went from ~171 to ~1,354
       simulations, i.e. **≈2.8× tighter error bars for the same latency**.
 
+18. Quantitative research writeup (`RESEARCH.md`) — the whole project
+    reorganized around its central question ("how much equilibrium robustness
+    should an agent sacrifice to exploit statistically detected deviations,
+    under noise, non-stationarity, and a compute budget?") rather than as a
+    feature list. ~5.3k words of prose, 7 figures, 14 sections: game-theoretic
+    foundation, solver experiments, opponent modeling, adaptive exploitation,
+    estimation risk, the distribution-shift negative result and its fix,
+    performance engineering, the compute/quality tradeoff, risk, limitations,
+    findings, and reproducibility.
+
+    Documentation-only: no source change, test count unchanged at 144. Every
+    numerical claim was verified programmatically against the committed CSVs
+    before commit (solver tables, identification curves, adaptation and
+    ε-sweep, overfitting, regime change, control sweep, performance
+    comparison, equity accuracy, and the Kelly table recomputed from
+    `poker_alpha.risk`), and all equations were checked against the
+    implementations they describe. Two cross-cutting observations that only
+    became visible when the results were assembled in one place:
+    - **Detectability and exploitability are close to unrelated.** Across the
+      five non-balanced archetypes, identification accuracy at 50 hands
+      correlates with total-variation deviation at r = 0.88 but with
+      exploitability at only r = 0.28 (n = 5, indicative). `bluff_heavy` is
+      the hardest archetype to identify yet the second most exploitable.
+    - **The guardrail, not confidence, is what binds** in the headline
+      adaptation runs: at ε = 0.1 the applied λ averages 0.059 against a
+      confidence-implied ceiling of 0.313.
+
 ## Future
 
-18. Equity-bucket card abstraction; document information loss.
-19. Real-time subgame solving.
-20. Additional experiments: exploration-vs-exploitation, rake sensitivity.
-21. README finalization with benchmark tables from real runs.
-22. RESEARCH.md writeup + final demo (`python -m poker_alpha.demo`).
+19. Final demo (`python -m poker_alpha.demo`).
+20. Equity-bucket card abstraction; document information loss.
+21. Real-time subgame solving.
+22. Additional experiments: exploration-vs-exploitation, rake sensitivity.
