@@ -25,7 +25,7 @@ from typing import Iterable, List, Optional, Sequence, Tuple
 import numpy as np
 
 from .cards import NUM_CARDS, codes
-from .evaluator import evaluate_five, evaluate_best
+from .evaluator import evaluate_best_codes
 
 
 @dataclass(frozen=True)
@@ -125,8 +125,9 @@ def estimate_equity(
             runout = [int(pool[i]) for i in draw]
 
         full_board = board_known + runout
-        hv = evaluate_best(hero + full_board)
-        ov = evaluate_best(opp + full_board)
+        # Codes are already validated ints here, so use the fast path.
+        hv = evaluate_best_codes(hero + full_board)
+        ov = evaluate_best_codes(opp + full_board)
         if hv > ov:
             wins += 1
         elif hv == ov:

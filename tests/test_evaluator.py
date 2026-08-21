@@ -141,3 +141,44 @@ def test_evaluate_best_rejects_wrong_sizes():
         evaluate_best(["As", "Kd"])
     with pytest.raises(ValueError):
         evaluate_best(["As", "Kd", "9h", "5c", "2s", "3d", "4h", "6s"])
+
+
+# -- direct evaluator equivalence (phase 17 optimization) --------------------
+#
+# `evaluate_best` evaluates 5-7 cards directly from rank/suit histograms
+# instead of maxing over every 5-card subset. `evaluate_five` remains the
+# reference semantics, so these tests pin the two together. The full
+# exhaustive sweep (all 2,598,960 five-card hands, plus 360k random 6/7-card
+# hands) was run once at optimization time; this keeps a fast, deterministic
+# subset in CI.
+
+def _reference_best(cards):
+    """Original implementation: max over all five-card subsets."""
+    from itertools import combinations
+    cs = codes(cards)
+    if len(cs) == 5:
+        return evaluate_five(cs)
+    return max(evaluate_five(combo) for combo in combinations(cs, 5))
+
+
+def test_direct_matches_reference_on_random_hands():
+    import numpy as np
+    rng = np.random.default_rng(20250817)
+    for n in (5, 6, 7):
+        for _ in range(1500):
+            cs = [int(c) for c in rng.choice(52, size=n, replace=False)]
+            assert evaluate_best(cs) == _reference_best(cs), cs
+
+
+@pytest.mark.parametrize("cards", [
+    ["Ks", "Kh", "Kd", "Qs", "Qh", "Qd", "2c"],   # two trips -> best boat
+    ["As", "Ah", "Ks", "Kh", "Qs", "Qh", "2c"],   # three pairs -> 3rd is kicker
+    ["As", "Ah", "Ad", "Ac", "Ks", "Kh", "Kd"],   # quads + trips
+    ["As", "2s", "3s", "4s", "5s", "Ks", "9s"],   # steel wheel under a bigger flush
+    ["9s", "8s", "7s", "6s", "5s", "4s", "Kh"],   # six suited: highest straight flush
+    ["As", "Ks", "9s", "7s", "5s", "3s", "2s"],   # seven suited: top five ranks
+    ["9s", "9h", "9d", "Ks", "Kh", "2c", "2d"],   # trips + two pairs -> higher pair
+    ["Ah", "2d", "3c", "4s", "5h", "Kd", "Qc"],   # wheel, mixed suits
+])
+def test_direct_matches_reference_on_edge_cases(cards):
+    assert evaluate_best(cards) == _reference_best(cards)

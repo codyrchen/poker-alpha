@@ -52,12 +52,14 @@ def save_grouped_bar_chart(
     title: str,
     path: "str | Path",
     errors: Optional[Dict[str, Sequence[Tuple[float, float]]]] = None,
+    log_y: bool = False,
 ) -> Path:
     """Save a grouped bar chart: one bar per (category, series) pair.
 
     ``series`` maps a series label to one value per category. ``errors``, if
     given, maps the same labels to per-category ``(lo, hi)`` interval bounds
-    (absolute, not offsets) rendered as asymmetric error bars.
+    (absolute, not offsets) rendered as asymmetric error bars. ``log_y`` puts
+    the value axis on a log scale, for series spanning several decades.
     """
     path = Path(path)
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -67,7 +69,9 @@ def save_grouped_bar_chart(
     x = np.arange(n_cat)
     width = 0.8 / max(n_series, 1)
 
-    fig, ax = plt.subplots(figsize=(max(7, 1.2 * n_cat), 4.5))
+    # Widen with the category count, but cap it: past ~12 categories an
+    # ever-wider figure just squashes the bars into an unreadable strip.
+    fig, ax = plt.subplots(figsize=(min(max(7.0, 1.2 * n_cat), 12.0), 5.0))
     for i, label in enumerate(labels):
         values = np.asarray(series[label], dtype=float)
         offset = (i - (n_series - 1) / 2.0) * width
@@ -78,7 +82,10 @@ def save_grouped_bar_chart(
                                      np.asarray(hi) - values]))
         ax.bar(x + offset, values, width=width, label=label, yerr=yerr,
                capsize=3)
-    ax.axhline(0.0, color="black", linewidth=0.8)
+    if log_y:
+        ax.set_yscale("log")
+    else:
+        ax.axhline(0.0, color="black", linewidth=0.8)
     ax.set_xticks(x)
     ax.set_xticklabels(categories, rotation=20, ha="right")
     ax.set_ylabel(ylabel)

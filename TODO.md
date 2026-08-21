@@ -38,8 +38,9 @@ next begins.
     tuples, wheel/steel-wheel, kickers, ties, best-of-5/6/7; 17 tests.
 11. Monte Carlo equity engine (`poker/equity.py`) — uniform or weighted
     opponent ranges with blocker handling, seeded, std-error reporting;
-    11 tests. Validated: AA 85.1% (known 85.2%), 72o 34.1% (known ~34.6%);
-    ~7k sims/s (optimization target for the profiling phase).
+    11 tests. Validated: AA 85.1% (known 85.2%), 72o 34.1% (known ~34.6%).
+    (An earlier note here estimated ~7k sims/s; phase 17 measured the real
+    figure at 17.1k sims/s before optimization and 135k after.)
 
 12. Abstracted heads-up NL Hold'em (`games/holdem.py`) — 100 BB stacks,
     0.5/1 blinds, four streets, action set {f, c, b50, b100, b200, all-in},
@@ -177,12 +178,57 @@ next begins.
       that curve, not a free lunch: the tradeoff is real and measured, not
       assumed.
 
+17. Performance profiling and optimization (`experiments/performance_benchmark.py`,
+    `experiments/compute_quality_tradeoff.py`). Measure first, optimize only
+    what profiling justifies, prove results unchanged, re-measure.
+    - **Baseline + profiling.** 15 workloads benchmarked (7 timed reps after
+      warmup, mean/median/std/min/max + throughput). `cProfile` on 20k equity
+      simulations put **94.6% of runtime in `evaluate_best`**: evaluating 7
+      cards as `max` over all C(7,5)=21 subsets meant 42 `evaluate_five`
+      calls per simulated hand (840k calls for the workload). Sampling —
+      the part that looks expensive — was negligible. The old note claiming
+      ~7k sims/s was wrong; the real baseline was 17.1k.
+    - **Optimization 1: direct 7-card evaluation.** `evaluate_best` now works
+      from rank/suit histograms and a 13-bit rank mask (straights via
+      `m = r & r>>1 & r>>2 & r>>3 & r>>4`), testing categories in descending
+      order. 21 evaluations → 1.
+    - **Optimization 2: pre-validated fast path.** Re-profiling showed
+      `codes()` had risen to ~24% of equity runtime (560k `isinstance` calls
+      on values the sampler already emits as ints). `evaluate_best_codes`
+      skips normalization; `estimate_equity` calls it directly.
+    - **Measured** (back-to-back runs, same machine): hand_eval_7card
+      **11.0×** (37.7k → 415k evals/s), equity_flop **7.9×** (17.1k → 135k
+      sims/s), equity_preflop **7.1×**, equity_weighted_range **5.0×**.
+    - **Correctness preserved exactly.** All 2,598,960 five-card hands match
+      `evaluate_five` (category histogram reproduces textbook frequencies);
+      300k 7-card and 60k 6-card hands match the original subset-max
+      implementation; adversarial cases (two trips, three pairs, steel wheel
+      under a bigger flush, 6-/7-card flushes) committed as tests. SHA-256
+      digests of hand-value streams, exact `estimate_equity` floats for
+      identical seeds, and CFR/CFR+ strategy digests are **bit-identical**
+      before and after — the RNG stream was deliberately left untouched.
+      9 new tests (144 total).
+    - **Honest non-results.** Solver, exact-evaluation and opponent-modeling
+      workloads are unchanged (0.93×–1.07×) — none import the evaluator, so
+      they serve as a built-in control whose spread *is* this machine's noise
+      floor (nothing under ~1.1× is meaningful). `evaluate_five` was left
+      alone on purpose. Batching the equity RNG draws was rejected: it would
+      break per-seed reproducibility. A precomputed C(52,7) lookup table was
+      rejected on memory grounds. No dependency added; `numba` still unused.
+    - **Compute budget vs decision quality.** Solver quality per wall-clock
+      budget shows the best *algorithm* depends on the budget: plain CFR beats
+      CFR+ below ~0.5 s (3.6× better at 0.25 s, since CFR+ spends two
+      traversals per iteration and its averaging needs iterations to pay
+      off), they cross near 1 s, and CFR+ is 19× better by 20 s. MCCFR trails
+      at every budget on a game this small. On the equity side, measured RMS
+      error over 12 seeds tracks the 1/√n law; the speedup converts to
+      accuracy: at a fixed 10 ms budget the engine went from ~171 to ~1,354
+      simulations, i.e. **≈2.8× tighter error bars for the same latency**.
+
 ## Future
 
-17. Equity-bucket card abstraction; document information loss.
-18. Real-time subgame solving; compute-vs-quality experiment.
-19. Additional experiments: exploration-vs-exploitation, rake sensitivity.
-20. Performance profiling + optimization benchmark (equity engine currently
-    ~7k sims/s — the flagged optimization target).
+18. Equity-bucket card abstraction; document information loss.
+19. Real-time subgame solving.
+20. Additional experiments: exploration-vs-exploitation, rake sensitivity.
 21. README finalization with benchmark tables from real runs.
 22. RESEARCH.md writeup + final demo (`python -m poker_alpha.demo`).

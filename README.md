@@ -13,8 +13,8 @@ automate, or interact with any real poker platform.
 
 ## Status
 
-Phases 1–16 of the [development plan](TODO.md) are complete and verified
-(135 tests):
+Phases 1–17 of the [development plan](TODO.md) are complete and verified
+(144 tests):
 
 - **Kuhn Poker** implemented as an extensive-form game (states, chance nodes,
   information sets, utilities).
@@ -264,16 +264,178 @@ seats. Zero exactly at Nash. Our best response respects information sets (it
 does not peek at hidden cards), computed by resolving information sets
 deepest-first with counterfactual reach weights.
 
+## Performance engineering
+
+Profile first, optimize second, prove correctness unchanged, then re-measure.
+All numbers below come from `experiments/performance_benchmark.py` (7 timed
+repetitions after a warmup, `time.perf_counter`) and live in
+`results/data/performance_comparison.csv`.
+
+### What profiling identified
+
+`cProfile` on 20,000 preflop equity simulations put **94.6% of runtime inside
+`evaluate_best`**. The cause was algorithmic, not micro: evaluating seven
+cards by taking `max` over every five-card subset costs C(7,5) = 21
+`evaluate_five` calls, so one simulated hand (hero + villain) ran 42 of them —
+840,000 calls for the 20k-simulation workload. Monte Carlo sampling, the
+part that *looks* expensive, was negligible by comparison.
+
+### What was optimized
+
+1. **Direct 7-card evaluation.** `evaluate_best` now derives the hand
+   directly from rank/suit histograms and a 13-bit rank mask, testing
+   categories in descending order and returning on the first match. Straights
+   use the bit trick `m = r & r>>1 & r>>2 & r>>3 & r>>4`, whose highest set
+   bit is the straight's low card. This removes the 21× subset blowup
+   entirely: 21 evaluations → 1.
+2. **A pre-validated fast path.** With the evaluator fast, re-profiling
+   showed `codes()` — the mixed-type (`Card` / `int` / `"As"`) normalizer —
+   had risen to ~24% of equity runtime, doing 560k `isinstance` checks on
+   values the sampler already produced as integers. `evaluate_best_codes`
+   skips that normalization; `estimate_equity` calls it directly.
+
+### Measured before/after
+
+| workload | before | after | speedup |
+| --- | --- | --- | --- |
+| hand_eval_7card | 37,679 evals/s | 414,955 evals/s | **11.01×** |
+| equity_flop_uniform | 17,108 sims/s | 135,370 sims/s | **7.91×** |
+| equity_preflop_uniform | 17,874 sims/s | 126,444 sims/s | **7.07×** |
+| equity_weighted_range | 15,068 sims/s | 74,764 sims/s | **4.96×** |
+| hand_eval_5card | 831,594 evals/s | 810,468 evals/s | 0.97× |
+| cfr_leduc / cfr_plus_leduc / mccfr_leduc | — | — | 1.02× / 1.02× / 1.01× |
+| exploitability_leduc / profile_value_leduc | — | — | 0.96× / 0.95× |
+| belief_update / leduc_match_simulation | — | — | 0.96× / 0.93× |
+
+![Throughput before vs after](results/figures/performance_speedup.png)
+
+### What did *not* improve, and why
+
+The solver, exact-evaluation and opponent-modeling workloads are untouched:
+none of them import the hand evaluator (Leduc compares ranks directly), so
+they act as a **built-in control**. Their spread — 0.93× to 1.07× — is the
+honest noise floor of this machine, and it is the reason no speedup below
+roughly 1.1× anywhere in the table should be read as real. `hand_eval_5card`
+is deliberately flat: `evaluate_five` was left exactly as it was, since it is
+the reference semantics the fast path is verified against and it was never
+the bottleneck.
+
+`equity_weighted_range` gains least (4.96×) because a weighted range spends a
+second `rng.choice` per simulation to draw the villain combo; with evaluation
+no longer dominant, that NumPy call is a larger share of what remains. The
+next optimization there would be batching the RNG draws — deliberately *not*
+done, because it would change the per-seed random stream and therefore the
+reproducibility contract below.
+
+### Tradeoffs introduced
+
+* `evaluate_best_codes` trades a little safety for speed: it skips input
+  validation, so it is documented as a fast path for callers that already
+  hold validated integer codes. `evaluate_best` remains the safe public entry
+  point and is unchanged in behavior.
+* The direct evaluator is denser code than a 21-way `max`. It is paid for by
+  the equivalence tests, not by trust.
+* No new dependency was added. `numba` remains an optional extra and is still
+  unused; a ~11× algorithmic win made a JIT unnecessary.
+
+### Correctness: the optimization is provably behavior-preserving
+
+Speed gains do not count if results move. This one was pinned before and
+after:
+
+* **Exhaustive**: all **2,598,960** distinct five-card hands agree with
+  `evaluate_five` exactly, and the category histogram reproduces the textbook
+  frequencies (40 straight flushes, 624 quads, …, 1,302,540 high card).
+* **Random**: 300,000 seven-card and 60,000 six-card hands agree with the
+  original subset-max implementation — zero mismatches.
+* **Adversarial**: two trips, three pairs, quads-plus-trips, steel wheel
+  under a bigger flush, six- and seven-card flushes — the cases a direct
+  evaluator typically gets wrong. All committed as tests.
+* **End-to-end**: SHA-256 digests of hand-value streams, exact
+  `estimate_equity` floats for identical seeds, and CFR/CFR+ average-strategy
+  digests are **bit-identical** before and after. Because only the evaluation
+  path changed and the RNG draw sequence was left alone, every seeded result
+  in this repository still reproduces exactly.
+
+### Complexity, measured rather than asserted
+
+| component | cost | measured behavior |
+| --- | --- | --- |
+| Full-tree CFR / CFR+ iteration | O(\|tree\|) per traversal | Kuhn ~50 nodes → 8.4k it/s; Leduc 3,780 → 46 it/s, ~180× slower for a ~75× bigger tree |
+| MCCFR iteration | O(depth) per sampled path | barely grows with tree size: 22.2k it/s Kuhn → 5.1k it/s Leduc (~4×), which is why sampling wins as games grow |
+| Exact best response / exploitability | two full traversals + per-infoset argmax | 19 calls/s on Leduc — the reason the λ-guardrail bisection is the costliest part of the adaptive agent |
+| Hand evaluation (7 cards) | was O(C(7,5)) = 21 sub-evaluations; now O(1) histogram | 37.7k → 415k evals/s |
+| Monte Carlo equity | O(simulations) evaluations; error O(1/√n) | 17.1k → 135k sims/s, so a fixed latency now buys ~7× the samples and ~√7 ≈ 2.6× tighter error |
+
+The memory-vs-compute tradeoff was considered and **rejected**: a full
+precomputed 7-card lookup table would make evaluation a single array index,
+but C(52,7) = 133,784,560 entries is hundreds of MB and would need building
+or shipping. The histogram evaluator gets most of the win with zero
+preprocessing and no memory footprint — the right point on that curve for a
+research codebase.
+
+### Compute budget vs decision quality
+
+A decision system rarely runs to convergence — it gets a budget.
+`experiments/compute_quality_tradeoff.py` trains each solver in chunks until a
+wall-clock budget is spent (evaluation clock stopped, so measuring never eats
+the budget) and scores the result by exploitability. This is an
+imperfect-information-game analogue of a latency budget, not a production
+trading benchmark.
+
+The headline finding is that **the best algorithm depends on the budget**:
+
+| budget | CFR | CFR+ | MCCFR | best |
+| --- | --- | --- | --- | --- |
+| 0.05 s | 0.972 | 2.058 | 1.320 | CFR |
+| 0.25 s | 0.279 | 1.011 | 0.637 | CFR (3.6× better than CFR+) |
+| 0.5 s | 0.182 | 0.358 | 0.390 | CFR |
+| 1 s | 0.105 | 0.096 | 0.226 | CFR+ (crossover) |
+| 5 s | 0.034 | 0.0095 | 0.082 | CFR+ |
+| 20 s | 0.0176 | 0.00093 | 0.045 | CFR+ (19× better than CFR) |
+
+(exploitability in chips; lower is better)
+
+![Strategy quality per unit compute](results/figures/compute_quality_tradeoff.png)
+
+Below about half a second, plain CFR wins: CFR+ spends two alternating
+traversals per iteration, so it buys roughly half the iterations, and its
+regret clipping and linear averaging need enough iterations before their
+asymptotically better rate pays off. Past the ~1 s crossover the asymptotics
+take over and CFR+'s advantage compounds to 19× by 20 s. MCCFR trails at every
+budget on a game this small — the same honest negative already documented for
+Leduc: sampled iterations are only worth their variance when a full traversal
+is infeasible.
+
+The equity engine shows the other half of the tradeoff. Monte Carlo error
+falls as 1/√n, so accuracy is bought at quadratic cost — and measured RMS
+error over 12 seeds tracks that law closely:
+
+| latency | simulations | RMS error |
+| --- | --- | --- |
+| 7.9 ms | 1,000 | 1.62 × 10⁻² |
+| 78 ms | 10,000 | 3.39 × 10⁻³ |
+| 2.3 s | 300,000 | 7.9 × 10⁻⁴ |
+
+![Equity accuracy per millisecond](results/figures/compute_quality_equity.png)
+
+This is where the optimization cashes out in decision quality rather than
+vanity throughput: at a fixed 10 ms budget the old evaluator afforded ~171
+simulations, the new one ~1,354 — and since error scales as 1/√n, that is
+**≈2.8× tighter error bars for the same latency**.
+
 ## Running
 
 ```bash
 pip install -e ".[dev]"     # or: pip install -r requirements.txt
-pytest                       # 135 tests
+pytest                       # 144 tests
 python experiments/kuhn_convergence.py --iterations 100000 --seed 42
 python experiments/adaptation_vs_archetypes.py --seed 42
 python experiments/opponent_identification.py --seed 42
 python experiments/overfitting_vs_sample_size.py --seed 42
 python experiments/regime_change.py --seed 42
+python experiments/performance_benchmark.py --label baseline
+python experiments/compute_quality_tradeoff.py --seed 42
 ```
 
 Experiments take command-line arguments (`--iterations`/`--hands`, `--seed`,
