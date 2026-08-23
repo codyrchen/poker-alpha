@@ -1,8 +1,17 @@
 # PokerAlpha — Development Plan
 
-Working order follows the incremental plan in the project brief: each phase is
-implemented smallest-correct-first, tested, smoke-run, and committed before the
-next begins.
+> **Status: complete.** Phases 1–19 are done, tested, and committed. This file
+> is retained as development history — it records what was built in what order,
+> what each phase measured, and which assumptions the experiments falsified
+> along the way. The items under *Optional extensions* are ideas, not
+> outstanding work.
+>
+> Start at [README.md](README.md) for the overview, [RESEARCH.md](RESEARCH.md)
+> for the research narrative, or `python -m poker_alpha.demo` for a 12-second
+> tour.
+
+Working order followed an incremental plan: each phase was implemented
+smallest-correct-first, tested, smoke-run, and committed before the next began.
 
 ## Completed
 
@@ -252,9 +261,34 @@ next begins.
       adaptation runs: at ε = 0.1 the applied λ averages 0.059 against a
       confidence-implied ceiling of 0.313.
 
-## Future
+19. Final demo and repository polish. `poker_alpha/demo.py` — one
+    deterministic command (`python -m poker_alpha.demo`, ~12s) that walks the
+    whole research narrative: equilibrium baseline on Kuhn and Leduc solved
+    live; Bayesian identification of a hidden `maniac` from public actions
+    only, with the posterior printed at log-spaced checkpoints; the same
+    machinery against `bluff_heavy` to show that detectability and
+    exploitability are separate axes; the λ tradeoff curve (exact EV against
+    exploitability) with the guardrail's actual choice marked; and the
+    regime-change and performance results read from committed CSVs. Every
+    section is labelled *computed live* or *committed results*, and no value
+    is hard-coded — the CSV loaders and the sustained-recovery logic are
+    covered by 24 new tests (168 total).
 
-19. Final demo (`python -m poker_alpha.demo`).
-20. Equity-bucket card abstraction; document information loss.
-21. Real-time subgame solving.
-22. Additional experiments: exploration-vs-exploitation, rake sensitivity.
+    README rewritten for a first-screen read: what the project is, four
+    navigation links, five headline measurements, quick start, the research
+    question, key findings, four selected figures, and limitations up front —
+    with the detailed results kept below and RESEARCH.md as the narrative.
+    Repository-structure and design-principles sections de-staled (they still
+    described modules as "later phases"), and the experiment list split by
+    cost so nobody assumes the expensive runs are instant.
+
+## Optional extensions
+
+Ideas, not outstanding work — the project above is complete without them.
+
+- Equity-bucket card abstraction, documenting the information loss.
+- Real-time subgame solving.
+- Exploration-vs-exploitation and rake-sensitivity experiments.
+- Scaling the opponent-modeling results to the abstracted Hold'em engine,
+  where MCCFR's sampling advantage should finally dominate (the Leduc
+  measurements say it does not at that size).

@@ -878,7 +878,7 @@ hand-entered.
 
 ```bash
 pip install -e ".[dev]"
-pytest                        # 144 tests
+pytest                        # 168 tests
 ```
 
 **Foundational solver results** (§3)

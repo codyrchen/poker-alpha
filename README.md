@@ -1,55 +1,152 @@
 # PokerAlpha
 
-Game-theoretic poker solver and adaptive exploitation engine — a quantitative
-research project studying the tradeoff between **equilibrium robustness** and
-**opponent-specific exploitation** in imperfect-information games.
+**PokerAlpha is an imperfect-information game research platform studying when
+an equilibrium agent should sacrifice robustness to exploit statistically
+detected opponent behavior.**
 
-> **Core research question:** How much equilibrium robustness should a poker
-> agent sacrifice in order to exploit statistically detected weaknesses in an
-> opponent?
+A Nash equilibrium cannot be beaten in expectation — and against a flawed
+opponent, that guarantee is exactly what stops you from winning more. This
+project makes that tradeoff measurable: it solves poker games to equilibrium
+with CFR/CFR+/MCCFR, infers an opponent's tendencies from public actions
+alone, and then deviates from equilibrium by a controlled amount under an
+explicit *exploitability budget* — the quantified cost of being wrong.
 
-This is an offline simulation and research project. It does not connect to,
-automate, or interact with any real poker platform.
+The interesting part is what constrains that deviation. Finite samples make
+early reads unreliable, opponents change behavior mid-match, and both solving
+and estimating are bounded by compute. Each of those is measured here rather
+than assumed, including where the system **fails**.
 
-> **📄 [RESEARCH.md](RESEARCH.md)** — the full quantitative writeup: the whole
-> project organized around that question, with every measured result, the
-> negative results, and the limitations. Start there for the research
-> narrative; this README is the reference documentation.
+| | |
+| --- | --- |
+| 📄 **Research writeup** | **[RESEARCH.md](RESEARCH.md)** — the full quantitative paper |
+| ▶️ **Run the demo** | `python -m poker_alpha.demo` — the whole story in ~12s |
+| 🔬 **Reproduce results** | [Reproducing the experiments](#reproducing-the-experiments) |
+| 📊 **Raw data** | [`results/data/`](results/data) — every number is generated, none hand-entered |
 
-## Status
+## Selected measured results
 
-Phases 1–18 of the [development plan](TODO.md) are complete and verified
-(144 tests):
+| finding | measurement |
+| --- | --- |
+| A stationary Bayesian belief **fails permanently** under regime change; exponential forgetting repairs it | never recovers in 3/3 repeats vs **380–500 hands** at decay 0.995 — at the cost of 2× the false-switch rate |
+| Profile-driven optimization of the 7-card hand evaluator | **11.0×** (37.7k → 415k evals/s), bit-identical results |
+| Equity throughput, converting to precision under a fixed 10 ms budget | **7.9×** (17.1k → 135k sims/s) → ~171 → ~1,354 sims → **~2.8× tighter error bars** |
+| The better *algorithm* depends on the compute budget | CFR beats CFR+ below ~0.5 s; they cross near **1 s**; CFR+ is 19× better by 20 s |
+| Detectability and exploitability are nearly unrelated | deviation correlates with identification accuracy at r = 0.88, with exploitability at r = 0.28 (n = 5) |
 
-- **Kuhn Poker** implemented as an extensive-form game (states, chance nodes,
-  information sets, utilities).
-- **Leduc Poker** — public card, two betting rounds with raises and a raise
-  cap, pot-based fold/showdown utilities; converges to the known game value.
-- **Vanilla CFR** with regret matching, cumulative/average strategies.
-- **CFR+** with regret clipping, alternating updates, and linear averaging.
-- **External-sampling MCCFR** with seeded, deterministic sampling.
-- **Exploitability evaluation** via a true imperfect-information best response.
-- **Convergence experiments** with reproducible results.
-- **Card engine + hand evaluator** — 52-card integer representation, all nine
-  hand categories as lexicographically comparable tuples (wheel included),
-  best-of-seven; 25 tests.
-- **Monte Carlo equity engine** — seeded showdown-equity estimation against
-  uniform or weighted opponent ranges with blocker handling. Validated against
-  known values: AA vs random 85.1% (reference 85.2%), 72o 34.1% (≈34.6%).
-- **Abstracted heads-up NL Hold'em** — 100 BB stacks, four streets, pot-relative
-  sizing, sampled chance, chip-conservation-checked random playouts.
-- **Opponent modeling** — six archetypes as multiplicative tilts of the
-  equilibrium; a stationary Bayesian belief identifying the opponent from
-  public actions only; a risk-constrained adaptive strategy
-  (confidence-weighted λ blend, exact exploitability guardrail); and a
-  recency-aware belief (exponential forgetting) for non-stationary opponents,
-  with the regime-change tradeoff it buys — and costs — measured directly. See
-  [Opponent modeling: identification, adaptation, and its limits](#opponent-modeling-identification-adaptation-and-its-limits)
-  below for the numbers, including an honest negative result and its fix.
-- **Risk analytics** — return metrics with bootstrap CIs, Kelly criterion,
-  bankroll / risk-of-ruin simulation.
+## Quick start
 
-Current measured results (`python experiments/kuhn_convergence.py --iterations 100000 --seed 42`):
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -e ".[dev]"
+pytest                        # 168 tests, ~45s
+python -m poker_alpha.demo    # ~12s
+```
+
+The demo walks the full narrative in one deterministic run: equilibrium as a
+baseline, live Bayesian opponent identification, the exploitation/robustness
+tradeoff curve with the guardrail applied, the regime-change failure and its
+fix, and the performance work. Every figure it prints is either computed live
+or read from a committed CSV, and it says which.
+
+## The research question
+
+> **How much equilibrium robustness should an agent sacrifice to exploit
+> statistically detected opponent behavior, under estimation error,
+> distribution shift, and limited computation?**
+
+The mapping to quantitative decision-making is deliberate: equilibrium is a
+robust baseline, an opponent's behavioral deviation is exploitable structure,
+finite observations are estimation error, deviating is taking model risk, and
+exploitability is the quantified cost of being wrong. Poker is used because it
+supplies something most applied settings cannot — an **exactly computable**
+cost of being wrong. [RESEARCH.md §1](RESEARCH.md) states plainly where that
+analogy breaks down.
+
+*This is an offline research project. It does not connect to, automate, or
+interact with any real poker platform, and makes no claim about profitability
+in real-money poker or financial markets.*
+
+## Key findings
+
+1. **Equilibrium is robust but concedes structured EV.** Against a "maniac"
+   opponent, equilibrium earns −9.0 chips/100 while an oracle best response
+   earns +77.8 — at ~1,000× the exploitability. The opportunity is large and
+   so is the risk of chasing it.
+2. **The risk limit binds before statistical confidence does.** Under an
+   ε = 0.1 exploitability budget the applied blend weight λ averages 0.059
+   against a confidence-implied ceiling of 0.313.
+3. **Estimation risk is real.** With only 20 hands of evidence, the worst
+   draw against a calling station is −0.034 chips/hand unguarded and −0.020
+   guarded — both worse than simply playing equilibrium.
+4. **Stationary Bayesian inference fails outright under distribution shift.**
+   After an unannounced archetype switch the posterior stays >0.99 confident
+   at 96% of checkpoints while placing ~0 mass on the truth, and never
+   recovers. Exponential forgetting fixes it, at a measured cost in false
+   switches.
+5. **Compute budgets change the right answer.** Both which solver to use and
+   how precisely equity can be estimated are budget-dependent, and an 11×
+   engineering win buys only a √-discounted improvement in decision quality.
+
+Full derivations, tables, and caveats: **[RESEARCH.md](RESEARCH.md)**.
+
+## Selected figures
+
+| | |
+| --- | --- |
+| ![Adaptive vs equilibrium vs oracle](results/figures/adaptation_vs_archetypes.png) | ![Regime change posterior](results/figures/regime_change_posterior_true.png) |
+| **Adaptation vs archetypes.** The oracle best response (orange) is an upper bound, not a realizable agent; the guarded adaptive agent (green) captures a bounded share of it. Error bars are wide — see limitations. | **Regime change.** The stationary belief (blue) never recovers after the opponent switches at hand 2,000; the recency-aware belief (orange) does, in 380–500 hands. |
+| ![Compute-quality tradeoff](results/figures/compute_quality_tradeoff.png) | ![Performance speedup](results/figures/performance_speedup.png) |
+| **Compute vs quality.** The solver curves cross near 1 s: CFR+ is asymptotically better but buys half the iterations, so it loses under a tight budget. | **Performance.** Four evaluator-dependent workloads improved 5–11×; the untouched workloads (0.93–1.07×) are the control that establishes the noise floor. |
+
+## Limitations
+
+Stated up front, because they bound every number above:
+
+- **Opponent archetypes are synthetic** — multiplicative tilts of equilibrium,
+  not empirical player types. The identifier also assumes the true opponent is
+  well approximated by a mixture of its six known candidates.
+- **Leduc is far smaller than real no-limit Hold'em** (288 information sets vs
+  ~10¹⁶⁰ states). The Hold'em module here is an abstracted state engine, not a
+  solved game.
+- **Some realized-EV comparisons have wide confidence intervals** (~±17
+  chips/100 at 3,000 hands); the exact-EV experiments, not the match results,
+  are the load-bearing evidence.
+- **decay = 0.995 is environment-specific**, conditional on the switch
+  frequency and archetype set tested. No universal optimum is claimed.
+- **No rake or transaction friction** appears in the central experiments.
+- **This is not a real-money poker system or a trading strategy.**
+
+The full limitations section is [RESEARCH.md §12](RESEARCH.md).
+
+## What's implemented
+
+- **Games** — Kuhn and Leduc poker as extensive-form games with chance nodes
+  and information sets; an abstracted heads-up no-limit Hold'em state engine
+  (100 BB, four streets, pot-relative sizing, chip-conservation checked).
+- **Solvers** — vanilla CFR, CFR+ (regret clipping, alternating updates,
+  linear averaging), external-sampling MCCFR, and exact evaluation: expected
+  value, imperfect-information best response, exploitability.
+- **Card engine** — 52-card integer representation, a hand evaluator covering
+  all nine categories (verified against all 2,598,960 five-card hands), and a
+  seeded Monte Carlo equity engine with weighted ranges and blocker handling.
+- **Opponent modeling** — six archetypes, Beta-Bernoulli tendency posteriors,
+  discrete Bayesian type inference from public actions only, exploitative best
+  response, confidence-weighted λ blending, an exact exploitability guardrail,
+  and a recency-aware belief for non-stationary opponents.
+- **Risk** — return/downside metrics, max drawdown, VaR/CVaR, bootstrap
+  confidence intervals, Kelly sizing, and bankroll/risk-of-ruin simulation.
+
+## Detailed results
+
+Everything below is measured, with the generating command given. For the
+narrative version of these results — with the derivations, the statistical
+caveats, and the full limitations — read **[RESEARCH.md](RESEARCH.md)**
+instead; this section is the reference detail behind it.
+
+### Kuhn poker: verification against known theory
+
+`python experiments/kuhn_convergence.py --iterations 100000 --seed 42`
 
 | quantity | measured | theory |
 | --- | --- | --- |
@@ -232,11 +329,7 @@ the identification right (or wrong) matter more.
 
 ![EV lost after the switch, baseline vs recency, against the equilibrium and oracle bounds](results/figures/regime_change_ev.png)
 
-Upcoming (see [TODO.md](TODO.md)): exploration-vs-exploitation and
-rake-sensitivity experiments, performance profiling, and a final RESEARCH.md
-writeup.
-
-## The math so far (no CFR background assumed)
+## The math (no CFR background assumed)
 
 **Extensive-form games & information sets.** Poker is a sequential game where
 players cannot see each other's cards. All game states that look identical to
@@ -429,37 +522,72 @@ vanity throughput: at a fixed 10 ms budget the old evaluator afforded ~171
 simulations, the new one ~1,354 — and since error scales as 1/√n, that is
 **≈2.8× tighter error bars for the same latency**.
 
-## Running
+## Reproducing the experiments
+
+Every number in this README and in [RESEARCH.md](RESEARCH.md) comes from a
+committed CSV in `results/data/`, produced by a seeded script in
+`experiments/`. Nothing is hand-entered.
+
+**Fast** (seconds):
 
 ```bash
-pip install -e ".[dev]"     # or: pip install -r requirements.txt
-pytest                       # 144 tests
+python -m poker_alpha.demo                                  # ~12s
+pytest                                                      # 168 tests, ~45s
+```
+
+**Moderate** (under a minute each):
+
+```bash
+python experiments/opponent_identification.py --repeats 50 --seed 42
 python experiments/kuhn_convergence.py --iterations 100000 --seed 42
-python experiments/adaptation_vs_archetypes.py --seed 42
-python experiments/opponent_identification.py --seed 42
-python experiments/overfitting_vs_sample_size.py --seed 42
 python experiments/regime_change.py --seed 42
-python experiments/performance_benchmark.py --label baseline
+```
+
+**Expensive** (several minutes each — these do the heavy solving):
+
+```bash
+python experiments/cfr_comparison.py --iterations 100000 --seed 42
+python experiments/leduc_convergence.py --iterations 1000 --seed 42
+python experiments/adaptation_vs_archetypes.py --hands 3000 --seed 42
+python experiments/overfitting_vs_sample_size.py --repeats 15 --seed 42
 python experiments/compute_quality_tradeoff.py --seed 42
 ```
 
-Experiments take command-line arguments (`--iterations`/`--hands`, `--seed`,
-`--outdir`) and write raw CSV data to `results/data/` and figures to
-`results/figures/`. All randomness is seeded for reproducibility.
+**Benchmarks** — timing is machine-dependent, so the before/after arms must be
+run back-to-back on an idle machine (the untouched control workloads should
+land within ~±7%, otherwise the comparison is measuring noise):
+
+```bash
+python experiments/performance_benchmark.py --label baseline
+python experiments/performance_benchmark.py --label optimized
+python experiments/performance_benchmark.py --compare baseline optimized
+```
+
+All scripts accept `--seed` and `--outdir`, and most accept `--iterations` or
+`--hands`; they write raw CSVs to `results/data/` and figures to
+`results/figures/`.
 
 ## Repository structure
 
 ```
 poker_alpha/
-  games/      extensive-form game definitions (base interface, Kuhn; Leduc & Hold'em later)
-  solvers/    CFR (+ CFR+/MCCFR later) and strategy evaluation (EV, best response, exploitability)
-  poker/      card engine, hand evaluator, equity simulation (later phases)
-  opponent/   archetypes, statistics, Bayesian modeling, exploitation (later phases)
-  risk/       bankroll, Kelly, risk metrics (later phases)
-  utils/      seeding, plotting
-experiments/  runnable, parameterized experiments
-tests/        pytest suite
-results/      generated data and figures (never hand-entered)
+  games/        extensive-form games: Game interface, Kuhn, Leduc,
+                abstracted heads-up no-limit Hold'em
+  solvers/      CFR, CFR+, external-sampling MCCFR, and exact evaluation
+                (expected value, best response, exploitability)
+  poker/        52-card engine, hand evaluator, Monte Carlo equity
+  opponent/     archetypes, Beta-Bernoulli and discrete Bayesian models,
+                match simulation, risk-constrained adaptive exploitation
+  risk/         return/drawdown metrics, Kelly sizing, bankroll simulation
+  utils/        seeding, plotting, shared experiment harness
+  demo.py       the narrative demo (python -m poker_alpha.demo)
+experiments/      runnable, seeded, parameterized experiment scripts
+results/
+  data/           generated CSVs — the source of every number quoted
+  figures/        generated figures
+tests/            pytest suite (168 tests)
+RESEARCH.md       the full research writeup
+TODO.md           development history, phase by phase
 ```
 
 ## Design principles
@@ -468,10 +596,13 @@ results/      generated data and figures (never hand-entered)
   trains on every game in the project.
 - Math is kept visible: `regret_matching(regrets: np.ndarray)` is a function,
   not a framework.
-- All reported numbers come from actual runs; nothing in this README or the
-  research notes is hand-entered.
-- Results carry uncertainty wherever sampling is involved (later phases add
-  bootstrap confidence intervals for match results).
+- All reported numbers come from actual runs; nothing in this README or
+  RESEARCH.md is hand-entered.
+- Results carry uncertainty wherever sampling is involved — bootstrap
+  confidence intervals on match results, and exact computation preferred over
+  simulation wherever the game is small enough to allow it.
+- Negative results are reported, not buried. The regime-change failure and the
+  MCCFR non-result are both load-bearing parts of the writeup.
 
 ## License
 
