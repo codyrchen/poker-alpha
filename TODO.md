@@ -142,7 +142,7 @@ smallest-correct-first, tested, smoke-run, and committed before the next began.
       actively harmful for a non-stationary one. Fixed in phase 16 below,
       whose paired baseline-vs-recency run reproduces this baseline behavior
       and supplies the numbers quoted here (the phase-15 run's own CSV was
-      superseded by it; see git history at `b61d2d9` for the original).
+      superseded by it; see git history at `e97a0de` for the original).
 
 16. Recency-aware `ArchetypeBelief` (`opponent/beliefs.py`): a `decay`
     parameter (default 1.0, exactly the phase-15 stationary baseline —
