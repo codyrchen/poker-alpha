@@ -110,6 +110,18 @@ class HoldemGame(Game):
         self.bet_fractions = dict(bet_fractions or _BET_FRACTIONS)
         self.raise_cap = raise_cap
 
+    def signature(self) -> str:
+        """Versioned game signature covering every tree-shaping parameter."""
+        def num(x: float) -> str:
+            return format(float(x), ".12g")
+
+        # Bet order is part of the signature: it fixes legal-action order.
+        fracs = ",".join(f"{name}={num(frac)}"
+                         for name, frac in self.bet_fractions.items())
+        return (f"HoldemGame:v1:stack={num(self.starting_stack)}:"
+                f"blinds={num(SMALL_BLIND)}/{num(BIG_BLIND)}:"
+                f"bets={fracs}:raise_cap={int(self.raise_cap)}")
+
     # -- construction / chance ------------------------------------------
 
     def root(self) -> HoldemState:

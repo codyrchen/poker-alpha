@@ -34,6 +34,22 @@ class Game(ABC):
 
     num_players: int = 2
 
+    def signature(self) -> str:
+        """Deterministic, versioned identifier of this game's rules/config.
+
+        Stored in solver checkpoints so a checkpoint cannot be resumed against
+        a different game. Games with configuration must override this and
+        encode every parameter that changes the game tree.
+        """
+        return f"{type(self).__name__}:v1"
+
+    def encoder_signature(self) -> "str | None":
+        """Signature of the information-state encoder, if the game has one.
+
+        ``None`` means information-set keys are the game's built-in keys.
+        """
+        return None
+
     @abstractmethod
     def root(self) -> State:
         """Return the initial state (typically a chance node)."""
