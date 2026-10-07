@@ -1,6 +1,7 @@
 """Abstraction layer: information-state encoders, card and betting abstractions."""
 
 from .base import InformationStateEncoder, format_number
+from .betting import ActionAbstraction, BettingContext, ConcreteAction
 from .cards import (BoardTexture, HandFeatures, PREFLOP_CLASSES, board_texture,
                     canonicalize_suits, combos_for_class, hand_equity,
                     hand_features, preflop_class)
@@ -12,4 +13,5 @@ __all__ = [
     "BoardTexture", "HandFeatures", "PREFLOP_CLASSES", "board_texture",
     "canonicalize_suits", "combos_for_class", "hand_equity", "hand_features",
     "preflop_class",
+    "ActionAbstraction", "BettingContext", "ConcreteAction",
 ]
