@@ -1,0 +1,49 @@
+{
+ "format": "pokeralpha.hand/v1",
+ "hands": [
+  {"events": [
+   {"type": "HandStarted", "hand_id": "demo-1", "num_seats": 6, "dealer": 0,
+    "small_blind": 0.5, "big_blind": 1.0, "hero_seat": 0, "timestamp": 1700000000.0,
+    "seats": [{"seat": 0, "name": "hero", "stack": 100}, {"seat": 1, "name": "sb", "stack": 100},
+              {"seat": 2, "name": "bb", "stack": 100}, {"seat": 3, "name": "utg", "stack": 100},
+              {"seat": 4, "name": "hj", "stack": 100}, {"seat": 5, "name": "co", "stack": 100}]},
+   {"type": "BlindPosted", "seat": 1, "amount": 0.5, "blind": "sb"},
+   {"type": "BlindPosted", "seat": 2, "amount": 1.0, "blind": "bb"},
+   {"type": "CardDealt", "seat": 0, "cards": ["As", "Ks"]},
+   {"type": "PlayerFolded", "seat": 3},
+   {"type": "PlayerFolded", "seat": 4},
+   {"type": "PlayerFolded", "seat": 5},
+   {"type": "PlayerRaised", "seat": 0, "to": 2.5},
+   {"type": "PlayerFolded", "seat": 1},
+   {"type": "PlayerCalled", "seat": 2},
+   {"type": "FlopDealt", "cards": ["Qs", "Js", "4h"]},
+   {"type": "PlayerChecked", "seat": 2},
+   {"type": "PlayerBet", "seat": 0, "to": 3.5},
+   {"type": "PlayerCalled", "seat": 2},
+   {"type": "TurnDealt", "card": "2c"},
+   {"type": "PlayerChecked", "seat": 2},
+   {"type": "PlayerBet", "seat": 0, "to": 9},
+   {"type": "PlayerFolded", "seat": 2},
+   {"type": "PotAwarded", "seat": 0, "amount": 21.5}
+  ]},
+  {"events": [
+   {"type": "HandStarted", "hand_id": "demo-2", "num_seats": 2, "dealer": 0,
+    "small_blind": 0.5, "big_blind": 1.0, "hero_seat": 1,
+    "seats": [{"seat": 0, "name": "villain", "stack": 50}, {"seat": 1, "name": "hero", "stack": 80}]},
+   {"type": "BlindPosted", "seat": 0, "amount": 0.5, "blind": "sb"},
+   {"type": "BlindPosted", "seat": 1, "amount": 1.0, "blind": "bb"},
+   {"type": "CardDealt", "seat": 1, "cards": ["Qh", "Qd"]},
+   {"type": "CardDealt", "seat": 0, "cards": ["As", "Kc"]},
+   {"type": "PlayerRaised", "seat": 0, "to": 3},
+   {"type": "PlayerRaised", "seat": 1, "to": 10},
+   {"type": "PlayerAllIn", "seat": 0, "to": 50},
+   {"type": "PlayerCalled", "seat": 1},
+   {"type": "FlopDealt", "cards": ["Ah", "7c", "2d"]},
+   {"type": "TurnDealt", "card": "9s"},
+   {"type": "RiverDealt", "card": "Kd"},
+   {"type": "Showdown", "seat": 0, "cards": ["As", "Kc"]},
+   {"type": "Showdown", "seat": 1, "cards": ["Qh", "Qd"]},
+   {"type": "PotAwarded", "seat": 0, "amount": 100}
+  ]}
+ ]
+}

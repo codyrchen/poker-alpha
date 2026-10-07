@@ -134,28 +134,34 @@ class SimulationStateAdapter:
 
     @staticmethod
     def observe(state: HoldemTableState, hero_seat: int,
-                timestamp: Optional[float] = None) -> ObservedTableState:
+                timestamp: Optional[float] = None, chip_unit: float = 1.0,
+                names: Optional[Sequence[str]] = None,
+                source: str = "simulation") -> ObservedTableState:
+        """``chip_unit`` converts engine integer chips to display chips
+        (e.g. 0.01 when the engine counts cents)."""
+        u = float(chip_unit)
         seats = tuple(ObservedSeat(
-            seat=s.seat, occupied=True, stack=float(s.stack),
-            current_bet=float(s.committed_street),
-            committed_total=float(s.committed_total),
+            seat=s.seat, occupied=True, stack=s.stack * u,
+            name=names[s.seat] if names else "",
+            current_bet=s.committed_street * u,
+            committed_total=s.committed_total * u,
             folded=s.folded, all_in=s.all_in) for s in state.seats)
         # All-ins are reported as "all_in" with the resulting street total
         # (what a viewer sees); bets/raises as raise-to; calls as chips added.
         actions = tuple(ObservedAction(
             street=r.street, seat=r.seat,
             kind="all_in" if r.all_in else r.type.value,
-            amount=float(r.street_total if r.all_in
-                         or r.type.value in ("bet", "raise") else r.added))
+            amount=u * (r.street_total if r.all_in
+                        or r.type.value in ("bet", "raise") else r.added))
             for r in state.action_history)
         hero = state.seats[hero_seat].hole_cards
         street = state.street if state.street <= Street.SHOWDOWN else Street.SHOWDOWN
         return ObservedTableState(
             num_seats=state.num_seats, hero_seat=hero_seat,
             dealer=state.dealer, seats=seats, street=Street(street),
-            small_blind=float(state.small_blind),
-            big_blind=float(state.big_blind), ante=float(state.ante),
+            small_blind=state.small_blind * u,
+            big_blind=state.big_blind * u, ante=state.ante * u,
             hero_cards=tuple(hero) if hero else None, board=state.board,
-            pot_total=float(state.pot), actor=state.actor,
+            pot_total=state.pot * u, actor=state.actor,
             action_history=actions, hand_id=state.hand_id,
-            timestamp=timestamp, source="simulation")
+            timestamp=timestamp, source=source)
