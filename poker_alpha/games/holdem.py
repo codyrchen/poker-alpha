@@ -105,10 +105,20 @@ class HoldemGame(Game):
     def __init__(self,
                  starting_stack: float = STARTING_STACK,
                  bet_fractions: Optional[dict] = None,
-                 raise_cap: int = _RAISE_CAP_PER_STREET) -> None:
+                 raise_cap: int = _RAISE_CAP_PER_STREET,
+                 encoder=None) -> None:
+        # Imported lazily: the abstraction package imports game-side helpers.
+        from ..abstraction.holdem import RawHoldemEncoder
+
         self.starting_stack = float(starting_stack)
         self.bet_fractions = dict(bet_fractions or _BET_FRACTIONS)
         self.raise_cap = raise_cap
+        # Information-state encoder (see poker_alpha.abstraction.base). The
+        # default reproduces the historical raw key byte for byte.
+        self.encoder = encoder if encoder is not None else RawHoldemEncoder()
+
+    def encoder_signature(self) -> str:
+        return self.encoder.signature()
 
     def signature(self) -> str:
         """Versioned game signature covering every tree-shaping parameter."""
@@ -258,11 +268,7 @@ class HoldemGame(Game):
         return to_act
 
     def infoset_key(self, state: HoldemState) -> str:
-        player = self.current_player(state)
-        hole = ",".join(str(c) for c in sorted(state.holes[player]))
-        board = ",".join(str(c) for c in state.board)
-        history = "/".join(state.streets)
-        return f"{player}|{hole}|{board}|{history}"
+        return self.encoder.encode(self, state)
 
     def legal_actions(self, state: HoldemState) -> List[str]:
         street_paid, total, to_act, n_raises = self._replay(state)
