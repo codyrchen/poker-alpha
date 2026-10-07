@@ -23,6 +23,8 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from typing import Hashable, List, Tuple
 
+import numpy as np
+
 State = Hashable
 Action = str
 
@@ -42,7 +44,27 @@ class Game(ABC):
 
     @abstractmethod
     def chance_outcomes(self, state: State) -> List[Tuple[float, State]]:
-        """Return ``(probability, successor)`` pairs for a chance node."""
+        """Return ``(probability, successor)`` pairs for a chance node.
+
+        Games whose chance trees are too large to enumerate (Hold'em) may
+        raise :class:`NotImplementedError` here and override
+        :meth:`sample_chance` instead; exact full-tree algorithms (CFR, CFR+,
+        exact evaluation) then do not apply to them.
+        """
+
+    def sample_chance(self, state: State, rng: np.random.Generator) -> State:
+        """Sample one chance successor of ``state`` using ``rng``.
+
+        The default samples from :meth:`chance_outcomes` with exactly one
+        ``rng.choice(n, p=...)`` call, so sampling solvers consume the RNG
+        stream identically to the pre-existing enumerating implementation
+        (seeded Kuhn/Leduc MCCFR results are unchanged). Games that cannot
+        enumerate their chance outcomes override this.
+        """
+        outcomes = self.chance_outcomes(state)
+        probs = np.array([p for p, _ in outcomes])
+        idx = int(rng.choice(len(probs), p=probs / probs.sum()))
+        return outcomes[idx][1]
 
     @abstractmethod
     def is_terminal(self, state: State) -> bool:

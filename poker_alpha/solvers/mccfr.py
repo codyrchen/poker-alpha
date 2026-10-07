@@ -22,7 +22,8 @@ Update rules per traversal for player ``i``:
   ``s(a) += σ(a)`` here (each infoset is reached with probability proportional
   to the opponent's own reach, which makes this unweighted tally correct in
   expectation);
-* at chance nodes: sample one outcome by its probability.
+* at chance nodes: sample one outcome via :meth:`Game.sample_chance`
+  (enumeration-free, so it also works for Hold'em).
 
 Sampling makes results stochastic, so the solver takes an explicit seed.
 """
@@ -54,10 +55,10 @@ class MCCFRSolver(CFRSolver):
             u0 = game.utility(state)
             return u0 if update_player == 0 else -u0
         if game.is_chance(state):
-            outcomes = game.chance_outcomes(state)
-            probs = np.array([p for p, _ in outcomes])
-            idx = self._sample(probs / probs.sum())
-            return self._traverse(outcomes[idx][1], update_player)
+            # Delegated to the game so huge chance trees (Hold'em deals) can
+            # be sampled without being enumerated.
+            return self._traverse(game.sample_chance(state, self.rng),
+                                  update_player)
 
         player = game.current_player(state)
         key = game.infoset_key(state)
