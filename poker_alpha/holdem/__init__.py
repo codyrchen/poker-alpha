@@ -8,6 +8,10 @@ from .engine import (IllegalActionError, apply_action, cards_needed,
                      check_invariants, deal_board, deal_board_random,
                      known_cards, legal_actions, pots_of, settle, start_hand,
                      total_chips)
+from .adapters import (ManualStateAdapter, SimulationStateAdapter,
+                       observed_to_dict, parse_cards)
+from .observed import (ObservedAction, ObservedSeat, ObservedTableState,
+                       ValidationIssue, is_valid, validate)
 from .pots import Pot, award_pots, build_pots
 from .positions import blind_seats, clockwise_from, position_names
 from .state import (BOARD_SIZE, HoldemTableState, SeatState, Street,
@@ -20,5 +24,8 @@ __all__ = [
     "pots_of", "settle", "start_hand", "total_chips",
     "Pot", "award_pots", "build_pots",
     "blind_seats", "clockwise_from", "position_names",
+    "ManualStateAdapter", "SimulationStateAdapter", "observed_to_dict",
+    "parse_cards", "ObservedAction", "ObservedSeat", "ObservedTableState",
+    "ValidationIssue", "is_valid", "validate",
     "BOARD_SIZE", "HoldemTableState", "SeatState", "Street", "TableConfig",
 ]
