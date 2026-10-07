@@ -1,0 +1,33 @@
+{
+  "format": "pokeralpha.preflop_ranges/v1",
+  "description": "Illustrative heuristic preflop ranges for building range PRIORS. These are hand-written, typical-online-cash approximations, NOT solver output and NOT ground truth. Override by passing your own file to RangePriors.load().",
+  "position_aliases": {"UTG+1": "UTG", "UTG+2": "UTG", "LJ": "LJ", "MP": "LJ"},
+  "stack_buckets": [{"name": "short", "max_bb": 25.0}, {"name": "standard", "max_bb": null}],
+  "ranges": {
+    "standard": {
+      "open": {
+        "UTG": "77+,ATs+,KTs+,QTs+,JTs,T9s,98s,AJo+,KQo",
+        "LJ": "66+,A9s+,A5s,KTs+,QTs+,JTs,T9s,98s,AJo+,KQo",
+        "HJ": "55+,A8s+,A5s-A4s,K9s+,Q9s+,J9s+,T9s,98s,87s,ATo+,KJo+",
+        "CO": "22+,A2s+,K8s+,Q9s+,J9s+,T8s+,97s+,86s+,76s,65s,A9o+,KTo+,QTo+,JTo",
+        "BTN": "22+,A2s+,K4s+,Q6s+,J7s+,T7s+,96s+,85s+,75s+,64s+,54s,A2o+,K9o+,Q9o+,J9o+,T9o",
+        "SB": "22+,A2s+,K6s+,Q8s+,J8s+,T8s+,97s+,87s,76s,65s,A7o+,KTo+,QTo+,JTo"
+      },
+      "limp": {"default": "22-99,A2s-A9s,K2s-KJs,Q8s-QJs,J8s+,T8s+,97s+,86s+,75s+,64s+,54s,A2o-ATo,K9o-KJo,QTo+,JTo"},
+      "call_open": {
+        "default": "22-99,ATs-AJs,KTs+,QTs+,JTs,T9s,98s,87s,76s,AJo-AQo,KQo",
+        "BB": "22+,A2s+,K2s+,Q5s+,J7s+,T7s+,96s+,85s+,74s+,63s+,53s+,43s,A2o+,K8o+,Q9o+,J9o+,T8o+,98o"
+      },
+      "3bet": {"default": "TT+,AQs+,AKo,A5s:0.5,A4s:0.5,KQs:0.5"},
+      "call_3bet": {"default": "77-QQ,AJs-AQs,KQs,AQo:0.5,JTs:0.5"},
+      "4bet": {"default": "QQ+,AKs,AKo,A5s:0.3"},
+      "call_4bet": {"default": "QQ+,AKs,AKo:0.5"},
+      "unopened": {"default": "random"},
+      "check_option": {"default": "random"}
+    },
+    "short": {
+      "open": {"default": "22+,A2s+,K9s+,QTs+,JTs,A8o+,KJo+"},
+      "call_open": {"default": "22+,A7s+,KTs+,QJs,ATo+,KQo"}
+    }
+  }
+}

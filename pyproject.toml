@@ -24,6 +24,9 @@ opt = ["numba>=0.58"]
 [tool.setuptools]
 packages = { find = { include = ["poker_alpha*"] } }
 
+[tool.setuptools.package-data]
+poker_alpha = ["data/*.json"]
+
 [tool.pytest.ini_options]
 pythonpath = ["."]
 testpaths = ["tests"]

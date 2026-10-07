@@ -10,6 +10,9 @@ from .exploit import (
     deviation_magnitude,
     exploitative_strategy,
 )
+from .behavior import ARCHETYPE_MODELS, BehaviorModel, StrategyLikelihood
+from .ranges import (RangeBelief, RangePriors, classify_preflop_line,
+                     strength_vector, update_range_for_action)
 from .match import HandRecord, match_summary, play_hand, simulate_match
 
 __all__ = [
@@ -19,5 +22,8 @@ __all__ = [
     "exploitative_strategy", "blend", "confidence_lambda",
     "deviation_magnitude", "cap_lambda_by_exploitability",
     "adaptive_strategy", "AdaptiveDecision",
+    "BehaviorModel", "ARCHETYPE_MODELS", "StrategyLikelihood",
+    "RangeBelief", "RangePriors", "classify_preflop_line",
+    "strength_vector", "update_range_for_action",
     "play_hand", "simulate_match", "match_summary", "HandRecord",
 ]

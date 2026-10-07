@@ -1,5 +1,7 @@
 from .cards import Card, Deck, Hand, card_code, card_str, codes
 from .equity import EquityResult, estimate_equity
+from .ranges import (COMBOS, NUM_COMBOS, WeightedRange, combo_index,
+                     parse_range, strength_percentiles)
 from .evaluator import (
     CATEGORY_NAMES,
     compare_hands,
@@ -22,4 +24,6 @@ __all__ = [
     "CATEGORY_NAMES",
     "estimate_equity",
     "EquityResult",
+    "COMBOS", "NUM_COMBOS", "WeightedRange", "combo_index", "parse_range",
+    "strength_percentiles",
 ]
