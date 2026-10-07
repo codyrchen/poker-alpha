@@ -20,6 +20,9 @@ dependencies = [
 [project.optional-dependencies]
 dev = ["pytest>=7.0"]
 opt = ["numba>=0.58"]
+vision = ["pillow>=10.1", "mss>=9.0"]
+ocr = ["pytesseract>=0.3.10"]
+ui = ["streamlit>=1.30"]
 
 [tool.setuptools]
 packages = { find = { include = ["poker_alpha*"] } }
