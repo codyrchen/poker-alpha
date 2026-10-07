@@ -10,8 +10,17 @@ probabilities with smooth logistic thresholds:
 * facing a bet: ``P(raise)`` analogous with ``t_raise``; ``P(fold) =
   (1 - P(raise)) * σ((t_fold - s) / temp)``; ``P(call)`` takes the rest.
 
-Bigger bets shift thresholds up by ``size_sensitivity × (size − 0.5 pot)``
-(stronger hands bet bigger) — a modelling assumption, exposed as a parameter.
+Bet size enters through *pot odds*, which keeps the model bounded however
+large the wager: facing a bet of ``f`` × pot the caller needs equity
+``r(f) = f / (1 + 2f)`` (0.25 for half pot, -> 0.5 for huge overbets), and
+the fold threshold moves by ``pot_odds_sensitivity × (r(f) − 0.25)``, the
+raise (or, facing an all-in, call-off) threshold by
+``raise_sensitivity × (r(f) − 0.25)``, and raise-bluffs shrink to zero as
+``r`` approaches 0.5 — so nobody "calls off" a 100 BB shove with the top
+half of hands, but premium hands still continue. When
+betting, a bounded ``size_sensitivity × clip(f − 0.5, −0.5, 1.5)`` shift
+makes bigger bets come from a stronger range. Both are modelling assumptions
+exposed as parameters.
 
 Archetype parameters are illustrative defaults, not fitted to data. They are
 data, so users can supply their own.
@@ -41,21 +50,27 @@ class BehaviorModel:
     bluff_raise: float = 0.04
     temperature: float = 0.06
     size_sensitivity: float = 0.15
+    pot_odds_sensitivity: float = 2.0
+    raise_sensitivity: float = 0.4
 
     def probabilities(self, strength: np.ndarray, facing_bet: bool,
                       size_pot_fraction: float = 0.5) -> Dict[str, np.ndarray]:
         """Per-combo action probabilities. NaN strengths (blocked combos)
         produce NaN rows, which callers treat as impossible combos."""
         s = np.asarray(strength, dtype=np.float64)
-        shift = self.size_sensitivity * (size_pot_fraction - 0.5)
+        f = max(float(size_pot_fraction), 0.0)
         temp = self.temperature
         if not facing_bet:
+            shift = self.size_sensitivity * min(max(f - 0.5, -0.5), 1.5)
             bet = self.bluff_bet + (1 - self.bluff_bet) * _sigmoid(
                 (s - (self.t_bet + shift)) / temp)
             return {"bet": bet, "check": 1.0 - bet}
-        raise_ = self.bluff_raise + (1 - self.bluff_raise) * _sigmoid(
-            (s - self.t_raise) / temp)
-        fold = (1.0 - raise_) * _sigmoid(((self.t_fold + shift) - s) / temp)
+        d = f / (1.0 + 2.0 * f) - 0.25          # required equity - 0.25
+        t_fold = self.t_fold + self.pot_odds_sensitivity * d
+        t_raise = min(self.t_raise + self.raise_sensitivity * d, 0.995)
+        bluff = self.bluff_raise * max(0.0, 1.0 - 4.0 * d)
+        raise_ = bluff + (1 - bluff) * _sigmoid((s - t_raise) / temp)
+        fold = (1.0 - raise_) * _sigmoid((t_fold - s) / temp)
         return {"raise": raise_, "fold": fold, "call": 1.0 - raise_ - fold}
 
     def likelihood(self, action: str, strength: np.ndarray, facing_bet: bool,

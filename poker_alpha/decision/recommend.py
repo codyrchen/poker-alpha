@@ -270,6 +270,10 @@ def recommend_action(state: ObservedTableState,
         if len(ranges) > 1:
             warnings.append("multiway spot: EVs are approximate range-based "
                             "estimates, not an equilibrium")
+        if rec in ("all_in",) and (state.spr or 0) > 3:
+            warnings.append("all-in at high SPR: rollouts check down after one "
+                            "response, so later-street value of smaller bets "
+                            "is not credited; treat with caution")
     else:
         cands = _heuristic_candidates(menu, equity, state)
         method = "heuristic fallback"
