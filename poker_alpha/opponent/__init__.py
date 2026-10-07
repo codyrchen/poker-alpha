@@ -13,6 +13,8 @@ from .exploit import (
 from .behavior import ARCHETYPE_MODELS, BehaviorModel, StrategyLikelihood
 from .ranges import (RangeBelief, RangePriors, classify_preflop_line,
                      strength_vector, update_range_for_action)
+from .statistics import (STATS, HandSummary, PlayerStatistics,
+                         StatEstimate)
 from .match import HandRecord, match_summary, play_hand, simulate_match
 
 __all__ = [
@@ -25,5 +27,6 @@ __all__ = [
     "BehaviorModel", "ARCHETYPE_MODELS", "StrategyLikelihood",
     "RangeBelief", "RangePriors", "classify_preflop_line",
     "strength_vector", "update_range_for_action",
+    "STATS", "HandSummary", "PlayerStatistics", "StatEstimate",
     "play_hand", "simulate_match", "match_summary", "HandRecord",
 ]
