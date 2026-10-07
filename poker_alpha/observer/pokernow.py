@@ -31,7 +31,7 @@ from .calibration import TableCalibration, color_mask, locate_table
 from .cards import CardRecognizer, TemplateCardRecognizer
 from .regions import Region, crop
 from .text import (OCRBackend, TemplateOCR, fix_separators, foreground_mask,
-                   parse_amount)
+                   parse_amount, segment_glyphs)
 
 
 def default_layout(num_seats: int = 6, hero_seat: int = 0,
@@ -47,16 +47,20 @@ def default_layout(num_seats: int = 6, hero_seat: int = 0,
         k = (seat - hero_seat) % num_seats
         theta = math.pi / 2 + 2 * math.pi * k / num_seats
         sx, sy = cx + rx * math.cos(theta), cy + ry * math.sin(theta)
-        bx, by = sx + 0.26 * (cx - sx), sy + 0.26 * (cy - sy)
+        bx, by = sx + 0.36 * (cx - sx), sy + 0.30 * (cy - sy)
+        regions[f"seat{seat}_active"] = Region(sx - 0.07, sy - 0.058, 0.14, 0.012)
         regions[f"seat{seat}_name"] = Region(sx - 0.07, sy - 0.04, 0.14, 0.035)
         regions[f"seat{seat}_stack"] = Region(sx - 0.07, sy, 0.14, 0.045)
-        regions[f"seat{seat}_active"] = Region(sx - 0.07, sy + 0.05, 0.14, 0.012)
-        regions[f"seat{seat}_cards"] = Region(sx - 0.035, sy - 0.10, 0.07, 0.05)
-        regions[f"seat{seat}_bet"] = Region(bx - 0.05, by - 0.02, 0.10, 0.042)
-        regions[f"seat{seat}_dealer"] = Region(bx + 0.055, by - 0.02, 0.026, 0.042)
+        regions[f"seat{seat}_cards"] = Region(sx - 0.035, sy - 0.115, 0.07, 0.05)
         if seat == hero_seat:
-            regions["hero_card_0"] = Region(sx + 0.08, sy - 0.15, 0.055, 0.15)
-            regions["hero_card_1"] = Region(sx + 0.14, sy - 0.15, 0.055, 0.15)
+            # Hero: cards above the plate, bet to the left, button to the right.
+            regions["hero_card_0"] = Region(sx - 0.062, sy - 0.235, 0.058, 0.16)
+            regions["hero_card_1"] = Region(sx + 0.004, sy - 0.235, 0.058, 0.16)
+            regions[f"seat{seat}_bet"] = Region(sx - 0.20, sy - 0.02, 0.10, 0.042)
+        else:
+            regions[f"seat{seat}_bet"] = Region(bx - 0.05, by - 0.02, 0.10, 0.042)
+        # Button beside the seat plate, clear of every text region.
+        regions[f"seat{seat}_dealer"] = Region(sx + 0.075, sy - 0.035, 0.024, 0.038)
     return TableCalibration(name=name, num_seats=num_seats, hero_seat=hero_seat,
                             regions=regions)
 
@@ -115,7 +119,9 @@ class PokerNowStyleAdapter:
     # -- reading ---------------------------------------------------------------
 
     def _amount(self, img, name: str, ts, ocr) -> FieldReading:
-        if not foreground_mask(img).any():
+        from .text import segment_glyphs
+
+        if segment_glyphs(foreground_mask(img), drop_edge_blobs=True) is None:
             return FieldReading(0.0, 1.0, name, ts)  # clearly empty
         res = ocr.read_text(img)
         if res.text == "ALLIN":
@@ -148,7 +154,8 @@ class PokerNowStyleAdapter:
         for s in range(self.cal.num_seats):
             stack = self._amount(crops[f"seat{s}_stack"], f"seat{s}_stack",
                                  timestamp, self.stack_ocr)
-            occupied = foreground_mask(crops[f"seat{s}_stack"]).any()
+            occupied = segment_glyphs(foreground_mask(crops[f"seat{s}_stack"]),
+                                      drop_edge_blobs=True) is not None
             f[f"seat{s}.occupied"] = FieldReading(bool(occupied), stack.confidence
                                                   if occupied else 1.0,
                                                   f"seat{s}_stack", timestamp)

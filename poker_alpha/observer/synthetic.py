@@ -50,9 +50,14 @@ def _fmt(x: float) -> str:
 
 def _text_in(draw, box: Box, text: str, color, height_frac: float = 0.7):
     l, t, r, b = box
-    font = _font((b - t) * height_frac)
-    bb = draw.textbbox((0, 0), text, font=font)
-    w, h = bb[2] - bb[0], bb[3] - bb[1]
+    px = (b - t) * height_frac
+    while True:  # shrink to fit the box width, like a real UI would
+        font = _font(px)
+        bb = draw.textbbox((0, 0), text, font=font)
+        w, h = bb[2] - bb[0], bb[3] - bb[1]
+        if w <= (r - l) * 0.95 or px <= 8:
+            break
+        px *= 0.9
     draw.text((l + (r - l - w) / 2 - bb[0], t + (b - t - h) / 2 - bb[1]),
               text, fill=tuple(color), font=font)
 
@@ -129,3 +134,29 @@ def render_table(table: SyntheticTable, cal: TableCalibration,
         arr += np.random.default_rng(seed).normal(0, noise, arr.shape)
         img = Image.fromarray(np.clip(arr, 0, 255).astype(np.uint8))
     return img
+
+
+def random_table(rng: np.random.Generator, num_seats: int, hero_seat: int = 0,
+                 street_cards: Optional[int] = None) -> SyntheticTable:
+    """A random but internally consistent table for accuracy measurement."""
+    deck = [r + s for r in "23456789TJQKA" for s in "shdc"]
+    order = rng.permutation(len(deck))
+    cards = [deck[i] for i in order]
+    n_board = int(rng.choice([0, 3, 4, 5])) if street_cards is None else street_cards
+    seats = []
+    for i in range(num_seats):
+        if i != hero_seat and rng.random() < 0.15:
+            seats.append(SyntheticSeat(stack=None))
+            continue
+        stack = float(rng.choice([rng.integers(1, 300), rng.integers(1, 3000) / 2,
+                                  rng.integers(100, 2_000_000) / 4]))
+        bet = float(rng.choice([0, 0, rng.integers(1, 200) / 2]))
+        seats.append(SyntheticSeat(name=f"p{i}", stack=stack, bet=bet,
+                                   in_hand=bool(i == hero_seat or rng.random() < 0.6),
+                                   all_in=bool(rng.random() < 0.05)))
+    occupied = [i for i, s in enumerate(seats) if s.stack is not None]
+    return SyntheticTable(
+        seats=seats, dealer=int(rng.choice(occupied)),
+        hero_cards=tuple(cards[:2]), board=tuple(cards[2:2 + n_board]),
+        pot=float(rng.integers(3, 4000) / 2),
+        actor=int(rng.choice(occupied)) if rng.random() < 0.7 else None)

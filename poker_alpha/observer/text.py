@@ -54,13 +54,17 @@ def foreground_mask(image, contrast: float = 60.0) -> np.ndarray:
     return np.abs(g - bg) > contrast
 
 
-def segment_glyphs(mask: np.ndarray, min_pixels: int = 2):
+def segment_glyphs(mask: np.ndarray, min_pixels: int = 2,
+                   drop_edge_blobs: bool = False):
     """Split a single text line into glyph column spans.
 
     Glyphs are 8-connected components (so a comma tucked under a ``7`` is
     still its own glyph); components whose column ranges mostly overlap are
     merged. Returns ``(band_top, band_bottom, [(c0, c1), ...])`` sorted left
-    to right, or ``None`` if the region holds no text.
+    to right, or ``None`` if the region holds no text. With
+    ``drop_edge_blobs`` components touching the top or bottom edge are
+    discarded: text is centred in its region, so such blobs are intruders
+    (a neighbouring button, chip or card) rather than glyphs.
     """
     from scipy import ndimage
 
@@ -74,6 +78,10 @@ def segment_glyphs(mask: np.ndarray, min_pixels: int = 2):
         rs, cs = sl
         if mask[rs, cs].sum() < min_pixels:
             continue
+        if drop_edge_blobs and (rs.start == 0 or rs.stop == mask.shape[0]):
+            continue
+        if drop_edge_blobs and (cs.stop - cs.start) > 4 * (rs.stop - rs.start):
+            continue  # a bar/underline (e.g. an action highlight), not a glyph
         boxes.append([cs.start, cs.stop, rs.start, rs.stop])
     if not boxes:
         return None
@@ -244,7 +252,7 @@ class TemplateOCR:
 
     def read_text(self, image) -> OCRResult:
         mask = foreground_mask(image, self.contrast)
-        seg = segment_glyphs(mask)
+        seg = segment_glyphs(mask, drop_edge_blobs=True)
         if seg is None:
             return OCRResult("", 1.0)
         _, _, spans = seg
