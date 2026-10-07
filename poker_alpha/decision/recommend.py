@@ -25,7 +25,6 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from typing import Dict, List, Mapping, Optional, Sequence, Tuple
 
-import numpy as np
 
 from ..abstraction.betting import ActionAbstraction, BettingContext
 from ..holdem.observed import ObservedTableState, validate
@@ -235,7 +234,8 @@ def recommend_action(state: ObservedTableState,
                                  source=source)
                  for _, label, kind, to, p in lookup.actions]
         if cfg.rollout_simulations and ranges:
-            cands = _attach_rollout_evs(state, hero, ranges, models, cfg, cands)
+            cands, _ = _attach_rollout_evs(state, hero, ranges, models, cfg,
+                                           cands, source=source)
         mix = {c.label: c.probability for c in cands if c.probability}
         rec = max(cands, key=lambda c: c.probability or 0.0).label
         confidence = "medium" if lookup.exact else "low"
@@ -258,14 +258,15 @@ def recommend_action(state: ObservedTableState,
         cands = [CandidateAction(label=l, kind=a.kind, amount_to=a.raise_to,
                                  added=a.add, probability=None, ev_bb=None,
                                  ev_se_bb=None) for l, a in menu]
-        cands = _attach_rollout_evs(state, hero, ranges, models, cfg, cands)
+        cands, res = _attach_rollout_evs(state, hero, ranges, models, cfg, cands)
         method = "Monte Carlo rollout"
-        mix, rec = _best_probabilities(cands, cfg.seed)
+        mix = dict(res.best_probability)
+        rec = max(cands, key=lambda c: c.ev_bb).label
         cands = [_with_prob(c, mix.get(c.label, 0.0)) for c in cands]
-        mix_meaning = ("probability each action has the highest EV given "
-                       "the rollout estimates and their standard errors "
-                       "(uncertainty, not a mixed strategy)")
-        confidence = _confidence_from_evs(cands, summaries, cfg)
+        mix_meaning = ("paired-bootstrap probability that each action has "
+                       "the highest rollout EV (estimation uncertainty, not "
+                       "a mixed strategy)")
+        confidence = _confidence_from_evs(cands, summaries, res)
         if len(ranges) > 1:
             warnings.append("multiway spot: EVs are approximate range-based "
                             "estimates, not an equilibrium")
@@ -335,29 +336,15 @@ def _heuristic_choice(cands, equity, pot_odds) -> Optional[str]:
     return labels[0] if labels else None
 
 
-def _best_probabilities(cands: Sequence[CandidateAction], seed: int,
-                        draws: int = 4000) -> Tuple[Dict[str, float], str]:
-    """P(action is EV-best) under independent normal estimate errors."""
-    evaluated = [c for c in cands if c.ev_bb is not None]
-    if not evaluated:
-        return {}, cands[0].label if cands else None
-    rng = np.random.default_rng(seed + 7919)
-    means = np.array([c.ev_bb for c in evaluated])
-    ses = np.array([c.ev_se_bb or 0.0 for c in evaluated])
-    sims = means[None, :] + rng.standard_normal((draws, len(evaluated))) * ses[None, :]
-    best = np.bincount(sims.argmax(axis=1), minlength=len(evaluated)) / draws
-    mix = {c.label: float(p) for c, p in zip(evaluated, best) if p > 0}
-    rec = evaluated[int(np.argmax(means))].label
-    return mix, rec
-
-
-def _confidence_from_evs(cands, summaries, cfg) -> str:
-    evs = sorted(((c.ev_bb, c.ev_se_bb or 0.0) for c in cands
-                  if c.ev_bb is not None), reverse=True)
-    if len(evs) < 2:
+def _confidence_from_evs(cands, summaries, res) -> str:
+    """High only when the best action beats the runner-up by > 3 paired SEs
+    heads-up against a reasonably narrow range."""
+    ranked = sorted((c for c in cands if c.ev_bb is not None),
+                    key=lambda c: c.ev_bb, reverse=True)
+    if len(ranked) < 2:
         return "low"
-    (m1, s1), (m2, s2) = evs[0], evs[1]
-    gap = (m1 - m2) / max(np.hypot(s1, s2), 1e-9)
+    mean, se = res.paired_difference(ranked[0].label, ranked[1].label)
+    gap = mean / max(se, 1e-9)
     wide = any(r.effective_combos > 300 for r in summaries)
     if gap > 3 and not wide:
         return "high" if len(summaries) == 1 else "medium"
@@ -366,6 +353,30 @@ def _confidence_from_evs(cands, summaries, cfg) -> str:
     return "low"
 
 
-def _attach_rollout_evs(state, hero, ranges, models, cfg, cands):
-    """Placeholder until rollouts exist: EVs stay unknown."""
-    return list(cands)
+def _attach_rollout_evs(state, hero, ranges, models, cfg, cands,
+                        source: Optional[str] = None):
+    """Fill EV/SE/sample counts from common-random-number rollouts.
+
+    Returns ``(candidates, best_probability)``."""
+    from dataclasses import replace
+
+    from .rollout import RolloutCandidate, rollout_action_evs
+
+    rc = [RolloutCandidate(c.label, c.kind if c.label != "call" else "call",
+                           c.amount_to) for c in cands]
+    res = rollout_action_evs(
+        state, hero, ranges, models, rc,
+        simulations=cfg.rollout_simulations, seed=cfg.seed,
+        hero_model=ARCHETYPE_MODELS[cfg.hero_model],
+        opponent_bet_fraction=cfg.opponent_bet_fraction,
+        raise_multiplier=cfg.raise_multiplier)
+    out = []
+    for c in cands:
+        e = res.ev(c.label)
+        note = c.note
+        if source is not None:
+            note = (note + "; " if note else "") + "EV from Monte Carlo rollout"
+        out.append(replace(c, ev_bb=e.ev_bb, ev_se_bb=e.se_bb,
+                           samples=e.samples,
+                           source=source or "Monte Carlo rollout", note=note))
+    return out, res
