@@ -200,5 +200,220 @@
    ]
   }
  ],
- "note": "exact = closed form under the pinned response model; errors should shrink ~1/sqrt(n) and stay within ~3 SE"
+ "note": "exact = closed form under the pinned response model; errors should shrink ~1/sqrt(n) and stay within ~3 SE",
+ "vs_exact_river_equilibrium": {
+  "spots": 36,
+  "agreements": 20,
+  "note": "rollout recommendation (bet vs check) against the exact equilibrium's majority action for out-of-position hero hands at the root of six river subgames",
+  "disagreements": [
+   {
+    "hero": "6c5s",
+    "equilibrium_mix": {
+     "c": 0.9964108676065591,
+     "b50": 1.6376549281581486e-05,
+     "b100": 3.053053398584562e-05,
+     "a": 0.00354222531017354
+    },
+    "equilibrium_bet_freq": 0.0035891323934409414,
+    "rollout_recommendation": "all_in",
+    "rollout_method": "Monte Carlo rollout",
+    "agrees": false
+   },
+   {
+    "hero": "7dKh",
+    "equilibrium_mix": {
+     "c": 0.9999203884954811,
+     "b50": 3.0376445821590743e-05,
+     "b100": 3.9097957778363505e-05,
+     "a": 1.0137100919051176e-05
+    },
+    "equilibrium_bet_freq": 7.961150451885057e-05,
+    "rollout_recommendation": "all_in",
+    "rollout_method": "Monte Carlo rollout",
+    "agrees": false
+   },
+   {
+    "hero": "3hAh",
+    "equilibrium_mix": {
+     "c": 0.9999743135596745,
+     "b50": 1.90070501246602e-05,
+     "b100": 4.936027759610152e-06,
+     "a": 1.74336244120205e-06
+    },
+    "equilibrium_bet_freq": 2.568644032552303e-05,
+    "rollout_recommendation": "all_in",
+    "rollout_method": "Monte Carlo rollout",
+    "agrees": false
+   },
+   {
+    "hero": "9sAs",
+    "equilibrium_mix": {
+     "c": 0.9999687398484581,
+     "b50": 1.7975472382887696e-05,
+     "b100": 1.1177797854589467e-05,
+     "a": 2.106881304578295e-06
+    },
+    "equilibrium_bet_freq": 3.1260151541867565e-05,
+    "rollout_recommendation": "all_in",
+    "rollout_method": "Monte Carlo rollout",
+    "agrees": false
+   },
+   {
+    "hero": "5c2h",
+    "equilibrium_mix": {
+     "c": 0.9999633652264723,
+     "b50": 2.326973382136335e-05,
+     "b100": 1.114810871833826e-05,
+     "a": 2.216930987914546e-06
+    },
+    "equilibrium_bet_freq": 3.66347735276662e-05,
+    "rollout_recommendation": "all_in",
+    "rollout_method": "Monte Carlo rollout",
+    "agrees": false
+   },
+   {
+    "hero": "2cTh",
+    "equilibrium_mix": {
+     "c": 0.8596291388214717,
+     "b50": 0.00011626488421139209,
+     "b100": 4.90774509514163e-05,
+     "a": 0.14020551884336543
+    },
+    "equilibrium_bet_freq": 0.14037086117852826,
+    "rollout_recommendation": "all_in",
+    "rollout_method": "Monte Carlo rollout",
+    "agrees": false
+   },
+   {
+    "hero": "TdAd",
+    "equilibrium_mix": {
+     "c": 0.7773082492783535,
+     "b50": 0.00013085196816812897,
+     "b100": 4.8338647260474924e-05,
+     "a": 0.2225125601062179
+    },
+    "equilibrium_bet_freq": 0.2226917507216465,
+    "rollout_recommendation": "all_in",
+    "rollout_method": "Monte Carlo rollout",
+    "agrees": false
+   },
+   {
+    "hero": "Th5s",
+    "equilibrium_mix": {
+     "c": 0.8873415067967558,
+     "b50": 8.918616640379826e-05,
+     "b100": 3.278385264318399e-05,
+     "a": 0.11253652318419724
+    },
+    "equilibrium_bet_freq": 0.11265849320324417,
+    "rollout_recommendation": "all_in",
+    "rollout_method": "Monte Carlo rollout",
+    "agrees": false
+   },
+   {
+    "hero": "4c4h",
+    "equilibrium_mix": {
+     "c": 0.742416767192479,
+     "b50": 0.25753013593994345,
+     "b100": 4.843271767728971e-05,
+     "a": 4.664149900309028e-06
+    },
+    "equilibrium_bet_freq": 0.25758323280752105,
+    "rollout_recommendation": "bet_75",
+    "rollout_method": "Monte Carlo rollout",
+    "agrees": false
+   },
+   {
+    "hero": "2c4c",
+    "equilibrium_mix": {
+     "c": 0.9998445382552502,
+     "b50": 1.2377271281427022e-05,
+     "b100": 2.8118707118421526e-06,
+     "a": 0.00014027260275651716
+    },
+    "equilibrium_bet_freq": 0.00015546174474978525,
+    "rollout_recommendation": "all_in",
+    "rollout_method": "Monte Carlo rollout",
+    "agrees": false
+   },
+   {
+    "hero": "4d7d",
+    "equilibrium_mix": {
+     "c": 0.9999326340361331,
+     "b50": 1.2456755369566048e-05,
+     "b100": 3.213455026555779e-06,
+     "a": 5.169575347073394e-05
+    },
+    "equilibrium_bet_freq": 6.736596386691662e-05,
+    "rollout_recommendation": "all_in",
+    "rollout_method": "Monte Carlo rollout",
+    "agrees": false
+   },
+   {
+    "hero": "9c7d",
+    "equilibrium_mix": {
+     "c": 0.9998318461808103,
+     "b50": 1.2377253919192344e-05,
+     "b100": 2.6896346526484532e-06,
+     "a": 0.00015308693061782944
+    },
+    "equilibrium_bet_freq": 0.00016815381918966477,
+    "rollout_recommendation": "all_in",
+    "rollout_method": "Monte Carlo rollout",
+    "agrees": false
+   },
+   {
+    "hero": "7hTs",
+    "equilibrium_mix": {
+     "c": 0.99927115764294,
+     "b50": 1.2295971187619823e-05,
+     "b100": 1.7348749756036014e-05,
+     "a": 0.000699197636116222
+    },
+    "equilibrium_bet_freq": 0.0007288423570599445,
+    "rollout_recommendation": "all_in",
+    "rollout_method": "Monte Carlo rollout",
+    "agrees": false
+   },
+   {
+    "hero": "7dQh",
+    "equilibrium_mix": {
+     "c": 0.9989286606475365,
+     "b50": 1.2329837691112132e-05,
+     "b100": 2.5704722028340005e-06,
+     "a": 0.001056439042569529
+    },
+    "equilibrium_bet_freq": 0.0010713393524635073,
+    "rollout_recommendation": "all_in",
+    "rollout_method": "Monte Carlo rollout",
+    "agrees": false
+   },
+   {
+    "hero": "7hTs",
+    "equilibrium_mix": {
+     "c": 0.998683635068887,
+     "b50": 1.592279652379602e-05,
+     "b100": 1.57334454355125e-05,
+     "a": 0.001284708689153707
+    },
+    "equilibrium_bet_freq": 0.0013163649311129788,
+    "rollout_recommendation": "all_in",
+    "rollout_method": "Monte Carlo rollout",
+    "agrees": false
+   },
+   {
+    "hero": "AcQs",
+    "equilibrium_mix": {
+     "c": 0.9998856264686934,
+     "b50": 2.3599538603706193e-05,
+     "b100": 8.482861665910535e-06,
+     "a": 8.229113103701909e-05
+    },
+    "equilibrium_bet_freq": 0.00011437353130661077,
+    "rollout_recommendation": "all_in",
+    "rollout_method": "Monte Carlo rollout",
+    "agrees": false
+   }
+  ]
+ }
 }

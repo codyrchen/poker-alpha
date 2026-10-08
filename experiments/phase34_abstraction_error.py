@@ -202,7 +202,7 @@ def part_b(top_keys, hands, seed):
             lines["/".join(st.streets)] += 1
             a, b = sorted(hole)
             pre[COMBO_CLASS[COMBO_INDEX[(a, b)]]] += 1
-            eqs.append(hand_equity(hole, st.board, samples=200, seed=0) if st.board else None)
+            eqs.append(hand_equity(hole, st.board, samples=200) if st.board else None)
         eqs = [e for e in eqs if e is not None]
         n = sum(made.values())
         eq_range = (max(eqs) - min(eqs)) if eqs else 0.0
@@ -240,6 +240,19 @@ def suspicious_keys(n=20):
     return sorted(out, key=lambda x: -x[1])[:n]
 
 
+def part_a_from_log(path):
+    import ast
+    rows = {}
+    for line in Path(path).read_text().splitlines():
+        name, _, rest = line.partition(" ")
+        enc, _, dct = rest.partition(" ")
+        if name in {b[0] for b in BOARDS} and dct.startswith("{"):
+            row = rows.setdefault(name, {"name": name, "board": dict((b[0], b[1]) for b in BOARDS)[name],
+                                         "encoders": {}, "rebuilt_from_log": str(path)})
+            row["encoders"][enc] = ast.literal_eval(dct)
+    return list(rows.values())
+
+
 BOARDS = [
     ("dry_high", ["Ks", "7d", "2c", "Qh", "4s"], [(0.0, 0.12), (0.88, 1.0)], [(0.40, 0.85)]),
     ("four_flush", ["Qh", "9h", "5h", "2h", "Kc"], [(0.55, 0.9)], [(0.35, 0.8)]),
@@ -250,6 +263,8 @@ def main():
     p = argparse.ArgumentParser()
     p.add_argument("--iters", type=int, default=400)
     p.add_argument("--corpus-hands", type=int, default=30000)
+    p.add_argument("--part-a-from-log", type=Path, default=None,
+                   help="rebuild part A from the per-encoder lines of an earlier run's log")
     a = p.parse_args()
     t = time.time()
     doc = {"format": "pokeralpha.abstraction_error/v1",
@@ -257,7 +272,10 @@ def main():
                                     "bets 33/75/150% + all-in, raise cap 2",
                             "solver": f"CFR+ {a.iters} iterations per encoder",
                             "ranges": "14 combos per player from river-strength percentile bands"}}
-    doc["part_a"] = part_a(BOARDS, a.iters)
+    if a.part_a_from_log:
+        doc["part_a"] = part_a_from_log(a.part_a_from_log)
+    else:
+        doc["part_a"] = part_a(BOARDS, a.iters)
     keys = suspicious_keys()
     doc["part_b"] = {"selection": "canonical-matrix keys (postflop, >= 20 visits on all seeds) with the "
                                   "highest seed disagreement at 300k",

@@ -68,3 +68,184 @@ L1 0.13; facing a jam, L1 0.38); close decisions are not.
   of the BTN's own open).
 * Utility of all-in lines is exact (32B). Diagnosis: **pot-relative opening
   sizes + near-indifference noise + response collision; not a utility bug.**
+
+## Phase 33 — exact Hold'em-shaped games
+
+`poker_alpha/games/reduced_holdem.py`, `experiments/phase33_reduced_games.py`
+-> `results/validation/reduced_holdem_v1.json`. Exploitability is exact for
+the defined games (mean of both players' best-response gains, in BB / chips).
+
+**Reduced preflop game** (deck A K Q J T x 2 suits, 45 hands; 0.5 / 1
+blinds; 10 BB; fold / limp / raise to 2.5 / all-in; showdown by a seeded
+equity table; 360 infosets). Reference CFR+ 2,000 iterations:
+exploitability 3e-5, game value -0.0453 BB for the button.
+
+| iterations | CFR | CFR+ | MCCFR seed 0 / 1 / 2 | MCCFR weighted L1 to reference |
+| --- | --- | --- | --- | --- |
+| 100 | 0.0077 | 0.0035 | 0.579 / 0.559 / 0.597 | 1.14 |
+| 1,000 | 0.0017 | 0.0001 | 0.259 / 0.279 / 0.281 | 0.88 |
+| 10,000 | — | — | 0.066 / 0.063 / 0.064 | 0.57 |
+| 100,000 | — | — | 0.016 / 0.014 / 0.013 | 0.31 |
+| 300,000 | — | — | 0.0070 / 0.0071 / 0.0079 | 0.24 |
+
+MCCFR exploitability falls roughly as 1/sqrt(T) and the three seeds agree;
+EV error is below 0.002 BB from 10k iterations. The weighted L1 to the
+reference stays sizable (0.24 at 300k) because many actions are nearly
+indifferent: a strategy can be close to unexploitable while its
+frequencies differ from the reference's.
+
+**Six fixed-board 52-card river subgames** (pot 10, 20 behind, bets 50% /
+100% + all-in, cap 2; 24-combo ranges from strength-percentile bands; 336
+infosets each): CFR+ references at 1,500 iterations have exploitability
+<= 0.001. MCCFR at 10k / 30k / 100k iterations: 0.21-0.52 / 0.10-0.24 /
+0.044-0.12 (all boards, all seeds), weighted L1 0.18-0.40 at 100k.
+
+**Conclusion: external-sampling MCCFR as implemented converges to the exact
+solution on Hold'em-shaped games.** No solver bug.
+
+Rollout recommendation vs the exact equilibrium (OOP hero, six hands per
+board, opponent range = the subgame range, 1,000 rollouts): agrees with the
+equilibrium's majority action in **20 / 36** spots; all 16 disagreements are
+the rollout betting (15 all-in) where the equilibrium checks — the default
+behaviour model folds too much to large bets. Rollout EVs are correct for
+their model (below); the model is the weakness.
+
+Compact-strategy lookups are not compatible with these subgames (different
+pot / stack / menu); no lookup was attempted.
+
+## Phase 34 — abstraction error
+
+`experiments/phase34_abstraction_error.py` -> `results/validation/abstraction_error_v1.json`.
+Identical tree for every encoder: the river decision of the real
+`HoldemGame` (line b75c / cc / cc: pot 5 BB, 97.5 BB behind, 33 / 75 / 150% +
+all-in, cap 2), 14-combo ranges. Each encoder's abstract game is solved by
+CFR+ (400 iterations) and the strategy is evaluated in the raw game.
+
+| board | encoder | keys | exploitability in raw game (BB) | EV error | weighted L1 vs raw |
+| --- | --- | --- | --- | --- | --- |
+| dry K72Q4 | raw | 476 | 0.006 | — | — |
+| | bucket (perfect recall) | 476 | 0.006 | 0 | 0 |
+| | transition (perfect recall) | 476 | 0.006 | 0 | 0 |
+| | **compact (v1)** | **99** | **9.24** | 0.44 | 0.19 |
+| four-flush Q952K | raw | 476 | 0.019 | — | — |
+| | bucket / transition | 476 | 0.019 | 0 | 0 |
+| | **compact (v1)** | **63** | **2.24** | 0.32 | 0.51 |
+
+On these small ranges the perfect-recall encoders merge nothing; the
+compact encoder's river rung (0..7 made-hand ladder) merges hands that must
+play differently, and the merged strategy is exploitable by a large margin
+at all-in-heavy nodes even where average L1 is small.
+
+**Collision attribution** (34B): the canonical-matrix flop keys with the
+highest seed disagreement (L1 1.4-1.9) are mostly coherent: within-key
+equity ranges 0-0.25, one or two adjacent made-hand classes, severity
+0-0.32. Their instability is training noise, not card collisions; the
+measured large error is on the river.
+
+## Phase 35 — remediation
+
+Evidence-backed changes, both opt-in (v1 is untouched and bit-identical):
+
+1. **Legal NLHE sizing** (`enforce_min_raise`, preflop raise-to multiples
+   2 / 2.5 / 3.5x): v1 offers sizes below the NLHE minimum (81% of preflop
+   33% raises, ~30% of postflop 33% bets/raises) and the decision engine
+   could recommend them. Additionally, the solver lookup now drops any
+   sub-minimum size from every strategy (mass reported).
+2. **Exact river percentile buckets** in the compact encoder
+   (`river_percentile_buckets=20`): exploitability in the same exact river
+   subgames
+
+   | board | compact v1 | 10 buckets | **20 buckets** |
+   | --- | --- | --- | --- |
+   | dry K72Q4 | 9.24 | 8.02 | **0.57** |
+   | four-flush | 2.24 | 0.49 | **0.28** |
+
+   (`results/validation/abstraction_error_river_pct.json`). Cost: 4.4x
+   slower training (each new river board needs 1,081 hand evaluations).
+
+Rejected, with reasons: changing the averaging scheme (Phase 32 windows show
+recent and current strategies limp AA as much as the full average, and MCCFR
+already converges on the exact games); a separate preflop encoder (the
+preflop key is already the exact 169 class); extra betting-context detail
+for the facing-jam collision (it changes the required call equity by ~1
+percentage point); premium-hand de-abstraction (no preflop merge exists).
+
+`V2_CONFIG` = both changes; retraining is reported in Phase 36.
+
+## Phase 37 — solver confidence gate
+
+`poker_alpha/decision/solver_gate.py`. Signals per abstract key (from the
+confidence table built from the training runs): visits, movement between
+checkpoints, seed disagreement, collision dispersion, audit-flagged keys.
+Output `SOLVER_ACCEPT` / `SOLVER_LOW_CONFIDENCE` / `SOLVER_REJECT` with
+machine-readable reasons (`LOW_VISIT_COUNT`, `HIGH_SEED_DISAGREEMENT`,
+`UNSTABLE_ACROSS_CHECKPOINTS`, `HIGH_COLLISION_DISPERSION`,
+`CONFIG_MISMATCH`, `INCOMPATIBLE_CHECKPOINT`, `UNSEEN_STATE`,
+`OUTSIDE_ABSTRACTION`, `KNOWN_PATHOLOGICAL_BUCKET`, `NO_STABILITY_DATA`).
+Rejected lookups fall back to rollout, then heuristic.
+
+**Calibration (37A)** — `experiments/phase37_calibration.py` ->
+`results/validation/solver_gate_calibration.json`: 3 MCCFR seeds on the
+reduced preflop game and two river subgames (3k and 30k iterations), 1,888
+infosets with their true L1 error vs the exact solution. Spearman
+correlation with true error: seed disagreement **0.61**, movement 0.33,
+visits -0.06.
+
+| seed disagreement (L1) | < 0.05 | 0.1-0.2 | 0.2-0.3 | 0.3-0.5 | 0.5-0.8 | 0.8-1.2 |
+| --- | --- | --- | --- | --- | --- | --- |
+| median true error | 0.014 | 0.17 | 0.26 | 0.40 | 0.56 | 0.84 |
+
+Thresholds (lowest bin edge from which every bin's median true error
+exceeds 0.5 / 0.25): reject at seed disagreement >= 0.5 or movement >= 0.5;
+low confidence at >= 0.2 / >= 0.1. Visits did not predict error, so the
+20-visit rule is a documented sanity floor, not a calibrated threshold. The
+collision threshold (>= 3 ladder rungs mixed) is a heuristic.
+
+Applied to the v1 300k strategy: 72% of keys rejected; weighted by visits,
+37.7% of decisions rejected, 26.7% low confidence, 35.6% accepted. Reports
+carry `details["solver"]` (used, confidence, visits, seed disagreement,
+movement, collision, reasons) and the UI shows them.
+
+## Phase 39 — strategic references
+
+**Clairvoyant river toy game** (analytically solved; `experiments/phase39_reference_checks.py`
+-> `results/validation/strategy_reference_checks.json`): OOP holds the nuts
+or air (1 : 2), IP a bluff-catcher, one bet size s.
+
+| s (pot) | value bets (theory 1) | bluff share of bets (theory s/(1+2s)) | IP calls (theory 1/(1+s)) |
+| --- | --- | --- | --- |
+| 0.5 | 1.000 | 0.2502 (0.25) | 0.6668 (0.667) |
+| 1.0 | 1.000 | 0.3332 (0.333) | 0.5001 (0.5) |
+| 2.0 | 1.000 | 0.3996 (0.4) | 0.3341 (0.333) |
+
+Polarization grows with size as theory says. Broad principles on the
+trained strategy (premiums aggressive, trash folds, nuts never fold, pot
+odds, bigger bets get more folds) are the Phase 29 sanity checks (10 / 10
+on every seed). No proprietary solver output was used.
+
+## Rollout validation
+
+`experiments/rollout_validation.py` -> `results/validation/rollout_validation_v1.json`
+(5 seeds x {100, 400, 1,000, 5,000} rollouts, pinned response model):
+
+| case | exact EV | mean abs error at 100 / 400 / 1,000 / 5,000 |
+| --- | --- | --- |
+| call vs all-in (pot odds) | 0.0 | 1.70 / 0.78 / 0.34 / 0.20 (SE 2.44 -> 0.35) |
+| always-fold: bet wins the pot | 12.0 | 0 / 0 / 0 / 0 |
+| value bet vs always-call | 3.0 | 1.02 / 0.47 / 0.20 / 0.12 |
+| bluff, opponent folds 30% | -2.7 | 1.09 / 0.28 / 0.33 / 0.17 |
+| bluff, opponent folds 60% | 3.6 | 1.13 / 0.24 / 0.20 / 0.09 |
+
+Every run is within 3 SE of the closed form; error shrinks ~1/sqrt(n).
+The weakness is the response model, not the estimator (Phase 33 above).
+
+## Range / model sensitivity
+
+`experiments/range_sensitivity.py` -> `results/validation/range_sensitivity_v1.json`.
+Changing only the assumed opponent model changes the recommendation in two
+of three HU spots: top pair facing a flop bet -> raise (regular), call
+(nit), all-in (calling station, maniac); best-action EV 4.6-30.1 BB. River
+bluff-catcher facing a pot bet -> fold (regular, nit, station), call
+(maniac), raise (any two cards). A draw first to act is "all-in" under every
+model (the known check-down bias of rollouts at high SPR). Inferred ranges
+are model assumptions, and reports must be read that way.
