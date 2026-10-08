@@ -60,3 +60,14 @@ asserts conservation, no duplicate cards, a legal actor and award integrity.
 multiway all-ins, one stack covering everyone, multiple side pots, tied main
 and side pots, dead money, min-raise and reopening rules) and property tests
 over thousands of random 2–9 seat hands (`tests/test_validation.py`).
+
+## Relation to the solver game
+
+The solver's heads-up `HoldemGame` (`games/holdem.py`) is a separate,
+float-BB abstract game. Since Phase 28 it memoizes its betting replay, legal
+actions and the abstract betting context by action history (bounded
+tables), so its tree parameters (stack, bet menu, raise cap) must not be
+mutated after construction; build a new game (or a new
+`HoldemSolverConfig`) instead. Training output is bit-identical to the
+unmemoized code (`tests/test_performance_equivalence.py`). The rules engine
+in this document is not used for solving and was not changed.

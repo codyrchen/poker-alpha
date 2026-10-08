@@ -16,8 +16,53 @@ print(report.format())
 | C. multiway estimate | 3+ players in the hand | `Monte Carlo rollout` (with a multiway warning) |
 | fallback | rollouts disabled | `heuristic fallback` (pot odds, check-down EVs) |
 
-None of B, C or the fallback is labelled GTO. Even method A is an
-approximate equilibrium of an *abstracted heads-up* game; the report says so.
+None of B, C or the fallback is labelled GTO. Method A is not an
+equilibrium either: the locked solver config (`HoldemSolverConfig` v1,
+`docs/abstraction.md`) uses an **imperfect-recall** abstraction, so its
+average strategy is an abstract MCCFR strategy with no equilibrium
+guarantee, even of the abstract game. Reports say so in `mix_meaning`,
+`uncertainty["abstraction"]` and a warning.
+
+### Source priority and rejection reasons (Phase 31)
+
+Priority is solver -> Monte Carlo rollout -> heuristic. Every report carries
+`details["source_cascade"]`: one entry per source with its status (`used`,
+`rejected`, `not configured`, `not run`, `not needed`, `used for EVs only`)
+and, for a rejected solver, a code from `decision.strategy.REJECTION_CODES`:
+
+| code | meaning |
+| --- | --- |
+| `config_mismatch` | the strategy file was trained under a different solver config / encoder / game signature |
+| `incompatible_checkpoint` | file missing, unreadable or of an unsupported format |
+| `out_of_abstraction` | the spot cannot be mapped (not heads-up, other blinds or stack depth, untranslatable history) |
+| `unvisited` | the abstract information set was never visited in training |
+| `insufficient_visits` | visited fewer than `min_visits` times (default 20) |
+
+`pipeline.load_solver(path)` (artifact or checkpoint) returns either a
+`SolverStrategyProvider` or a coded `LookupMiss`, which `pipeline.analyze`
+reports in the cascade instead of failing.
+
+### Uncertainty by source
+
+`report.uncertainty` keeps five sources separate instead of blending them:
+`observation` (given state vs screen recognition and its confidence),
+`range_estimation` (effective combos and entropy of each opponent belief),
+`sampling` (equity SE, rollout EV SE), `abstraction` (solver infoset, visits,
+exact vs translated sizes, strategy description) and `response_model`
+(rollout behaviour models / check-down assumption / none).
+
+## One path for every input (`poker_alpha.pipeline`)
+
+```python
+from poker_alpha.pipeline import observe_manual, analyze, load_solver
+report = analyze(observe_manual(state_dict), solver=load_solver("results/strategy/holdem_v1_seed0.npz"))
+```
+
+`observe_manual`, `observe_simulation`, `observe_hand_history` and
+`observe_screenshot` all produce an `Observation` (an `ObservedTableState`
+plus its source and, for screenshots, the observer confidence); `analyze`
+is the single entry into `recommend_action`. Demo:
+`python -m poker_alpha.platform_demo`.
 
 ## `DecisionReport`
 

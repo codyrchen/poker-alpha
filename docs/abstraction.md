@@ -94,6 +94,18 @@ and the canonical-state suite. `tests/test_solver_config.py` fails if any
 key changes; changing the abstraction means a new config version and new
 fixtures, deliberately.
 
+## Trained strategy (Phase 29)
+
+Three seeds of the locked config were trained to 100k iterations (see
+[validation.md](validation.md#11-phase-29-training-the-locked-config)); the
+seed-0 average strategy is exported as `results/strategy/holdem_v1_seed0.npz`
+(`pokeralpha.strategy_artifact/v1`, loaded by
+`SolverStrategyProvider.from_artifact`, which rejects it with
+`config_mismatch` under any other config). It is an abstract strategy for
+heads-up 100 BB play with a 33/75/150% + all-in menu, trained on an
+imperfect-recall abstraction: not an equilibrium, not GTO, exploitability
+unknown.
+
 ## Card abstraction (`abstraction/cards.py`)
 
 * 169 preflop classes, exhaustively tested over all 1,326 combos (13 pairs ×

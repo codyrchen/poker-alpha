@@ -64,3 +64,13 @@ from blocker-adjusted ranges is biased; a test shows a case where it gives
 0.25 instead of the exact 1/3. Optional `contributions` make the share
 side-pot aware. Throughput on this machine after the Phase 22 optimization:
 see `results/data/holdem_benchmark_optimized.csv`.
+
+## How range uncertainty reaches a report
+
+Ranges are beliefs, never known hands. Every `DecisionReport` lists each
+opponent's range summary (line, live and effective combos, entropy, top
+classes, behaviour model) and repeats it under
+`report.uncertainty["range_estimation"]`, kept separate from sampling error
+(equity / rollout SE), observation uncertainty and abstraction uncertainty
+(see [decision_engine.md](decision_engine.md)). No ground-truth range
+accuracy has been measured.

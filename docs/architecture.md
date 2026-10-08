@@ -21,6 +21,9 @@ PokerAlpha has two layers that share code but not assumptions:
          UI / replay / session analysis                 (ui, replay, session)
 ```
 
+All four input sources go through `poker_alpha.pipeline` (`observe_*` ->
+`analyze`), the only entry into the decision engine.
+
 **Dependency rule.** Solver and poker logic never import the observer, the
 UI, or any site-specific code. The observer (`poker_alpha.observer`) depends
 on the core only through `ObservedTableState`; nothing depends on it.
@@ -33,7 +36,10 @@ Optional dependency groups keep it that way: `[vision]` (Pillow, mss),
 | --- | --- |
 | `games/` | two-player zero-sum extensive-form games for CFR: Kuhn, Leduc, abstracted HU Hold'em (`HoldemGame`, now with a pluggable information-state encoder) |
 | `solvers/` | CFR, CFR+, MCCFR (sampled chance), exact evaluation, canonical strategy digests, versioned `.npz` checkpoints, Hold'em run diagnostics |
-| `abstraction/` | information-state encoders (raw / toy / bucketed), 169 preflop classes, board and hand features, betting abstraction |
+| `abstraction/` | information-state encoders (raw / toy / bucketed / transition / compact), 169 preflop classes, board and hand features, cheap cached card features, betting-history abstraction |
+| `solver_config.py` | locked `HoldemSolverConfig` v1 (`PRIMARY_CONFIG`: compact encoder, imperfect recall) |
+| `pipeline.py` | one normalized path: manual / simulation / hand history / screenshot -> `DecisionReport` |
+| `validation/` | abstraction audits, canonical spots and the canonical matrix, duplicate cross-play |
 | `holdem/` | 2–9 seat no-limit rules engine (integer chips, side pots), positions, `ObservedTableState`, input adapters |
 | `poker/` | cards, evaluator, heads-up equity, combo-level `WeightedRange`, multiway equity |
 | `opponent/` | archetypes and Bayesian beliefs (research), behaviour models, range priors and updates, player statistics |
@@ -48,8 +54,10 @@ Optional dependency groups keep it that way: `[vision]` (Pillow, mss),
 | format | identifier |
 | --- | --- |
 | strategy digest | `PASD` v1 (binary, see `solvers/digest.py`) |
-| solver checkpoint | `.npz`, `format_version` 1, pickle-free |
-| encoder signatures | `RawHoldemEncoder:v1`, `ToyHoldemEncoder:v1`, `HoldemBucketEncoder:v1:equity=..` |
+| solver checkpoint | `.npz`, `format_version` 2 (adds `solver_config`; version 1 still readable), pickle-free |
+| solver config | `HoldemSolverConfig:v1:<hash>` |
+| strategy artifact | `pokeralpha.strategy_artifact/v1` (`.npz`, average strategy + visits) |
+| encoder signatures | `RawHoldemEncoder:v1`, `ToyHoldemEncoder:v1`, `HoldemBucketEncoder:v1:equity=..`, `TransitionHoldemEncoder:v1:..`, `CompactHoldemEncoder:v1:..:recall=imperfect` |
 | action abstraction | `ActionAbstraction:v1:bets=..:raises=..:allin=..` |
 | observed state | `pokeralpha.observed/v1` |
 | hand history | `pokeralpha.hand/v1` |
@@ -62,8 +70,9 @@ Optional dependency groups keep it that way: `[vision]` (Pillow, mss),
 | component | status |
 | --- | --- |
 | CFR/CFR+ on Kuhn/Leduc | converges to Nash in two-player zero-sum games; exploitability computed exactly |
-| MCCFR on abstracted HU Hold'em | converges (in expectation) to an equilibrium **of the abstract game**; exploitability in real Hold'em is unknown and not reported |
-| bucketed abstraction | perfect recall within the abstraction (bucket history + exact actions); lossy, not optimal |
+| MCCFR on abstracted HU Hold'em, perfect-recall encoders (raw, bucket, transition) | converges (in expectation) to an equilibrium **of the abstract game**; exploitability in real Hold'em is unknown and not reported |
+| MCCFR on the locked compact encoder (primary) | **imperfect recall: no standard CFR guarantee**; produces an abstract heuristic strategy whose quality is measured only by proxies (visits, seed agreement, sanity checks, cross-play) |
+| bucketed abstraction | perfect recall within the abstraction (bucket history + exact actions); lossy, not optimal; too fine to be revisited (Phase 25/26) |
 | toy encoder | imperfect recall; plumbing demo only |
 | multiplayer (3–9) | **no** equilibrium claim; CFR guarantees do not extend to multiplayer general-sum play |
 | range estimates | Bayesian *beliefs* under heuristic priors and behaviour models, not known hands |

@@ -4,10 +4,14 @@ Method hierarchy
 ----------------
 A. **Solver** — if a :class:`SolverStrategyProvider` is configured and the
    spot maps into its trained heads-up abstraction (with enough visits), the
-   recommended frequencies are the solver's average strategy. An abstract
-   heads-up strategy is an *approximate equilibrium of the abstract game*,
-   not of real Hold'em; it is labelled ``"solver"`` (exact mapping) or
-   ``"interpolated abstraction"`` (off-tree sizes translated).
+   recommended frequencies are the solver's average strategy. The locked
+   solver config uses an IMPERFECT-RECALL abstraction, so this is an
+   abstract MCCFR strategy with no equilibrium guarantee — of the abstract
+   game or of real Hold'em; it is labelled ``"solver"`` (exact mapping) or
+   ``"interpolated abstraction"`` (off-tree sizes translated). When it is
+   not used, the reason is recorded with a code from
+   :data:`~.strategy.REJECTION_CODES` (config mismatch, incompatible
+   checkpoint, out of abstraction, unvisited, insufficient visits).
 B/C. **Range-based estimation** — otherwise (heads-up outside the
    abstraction, or any multiway spot) candidate actions come from the
    :class:`ActionAbstraction` menu and are evaluated against the opponents'
@@ -15,6 +19,11 @@ B/C. **Range-based estimation** — otherwise (heads-up outside the
    (``"Monte Carlo rollout"``) or by closed-form pot-odds reasoning
    (``"heuristic fallback"``). Neither is game-theoretically optimal and
    neither is ever called GTO.
+
+Priority: solver -> Monte Carlo rollout -> heuristic. Every report carries
+``details["source_cascade"]`` (what was tried, used or rejected, and why)
+and ``uncertainty`` (observation, range estimation, sampling, abstraction
+and response-model uncertainty, kept separate).
 
 Opponent ranges are beliefs: data-driven preflop priors, card removal, and
 Bayesian updates for each observed postflop action, with entropy reported.
@@ -47,6 +56,9 @@ class DecisionConfig:
     seed: int = 0
     abstraction: ActionAbstraction = field(default_factory=ActionAbstraction)
     solver: Optional[SolverStrategyProvider] = None
+    # Set when a configured strategy could not be loaded (see
+    # SolverStrategyProvider.from_artifact); reported in the source cascade.
+    solver_unavailable: Optional[LookupMiss] = None
     priors: Optional[RangePriors] = None
     default_model: str = "regular"
     hero_model: str = "regular"           # hero's continuation policy in rollouts
@@ -182,7 +194,12 @@ def recommend_action(state: ObservedTableState,
                               recommended=None, recommended_mix={},
                               mix_meaning="no recommendation",
                               method="none", confidence="low",
-                              warnings=tuple(warnings), **base)
+                              warnings=tuple(warnings),
+                              details={"source_cascade": [
+                                  {"source": "none", "status": "no decision",
+                                   "reason": "invalid state, unknown hero cards or not hero's turn"}]},
+                              uncertainty=_uncertainty(cfg, state, [], None, None, None, None),
+                              **base)
 
     # Opponent ranges & models.
     priors = cfg.priors or RangePriors.load()
@@ -220,11 +237,21 @@ def recommend_action(state: ObservedTableState,
 
     # Method A: trained heads-up strategy.
     lookup = None
+    cascade: List[Dict[str, object]] = []
     if cfg.solver is not None:
         lookup = cfg.solver.lookup(state)
         if isinstance(lookup, LookupMiss):
             warnings.append(f"solver strategy not used: {lookup.reason}")
+            cascade.append({"source": "solver", "status": "rejected",
+                            "code": lookup.code, "reason": lookup.reason})
             lookup = None
+    elif cfg.solver_unavailable is not None:
+        miss = cfg.solver_unavailable
+        warnings.append(f"solver strategy not used: {miss.reason}")
+        cascade.append({"source": "solver", "status": "rejected", "code": miss.code,
+                        "reason": miss.reason})
+    else:
+        cascade.append({"source": "solver", "status": "not configured"})
 
     if lookup is not None:
         source = "solver" if lookup.exact else "interpolated abstraction"
@@ -233,23 +260,38 @@ def recommend_action(state: ObservedTableState,
                                  probability=p, ev_bb=None, ev_se_bb=None,
                                  source=source)
                  for _, label, kind, to, p in lookup.actions]
+        cascade.append({"source": source, "status": "used",
+                        "infoset": lookup.infoset_key, "visits": lookup.visits,
+                        "strategy": cfg.solver.description})
+        rres = None
         if cfg.rollout_simulations and ranges:
-            cands, _ = _attach_rollout_evs(state, hero, ranges, models, cfg,
-                                           cands, source=source)
+            cands, rres = _attach_rollout_evs(state, hero, ranges, models, cfg,
+                                              cands, source=source)
+            cascade.append({"source": "Monte Carlo rollout", "status": "used for EVs only"})
+        else:
+            cascade.append({"source": "Monte Carlo rollout", "status": "not run"})
+        cascade.append({"source": "heuristic fallback", "status": "not needed"})
         mix = {c.label: c.probability for c in cands if c.probability}
         rec = max(cands, key=lambda c: c.probability or 0.0).label
         confidence = "medium" if lookup.exact else "low"
         if not lookup.exact:
             warnings.append("off-tree bet sizes were translated onto the abstraction")
         warnings.append("solver frequencies are from an abstracted heads-up "
-                        "game; not an exact Hold'em equilibrium")
+                        "game (imperfect-recall abstraction): not a Hold'em "
+                        "equilibrium and not proven optimal")
+        if cfg.observer_confidence is not None and cfg.observer_confidence < 0.9:
+            warnings.append(f"observer confidence {cfg.observer_confidence:.0%}: "
+                            "verify the recognized state")
+            confidence = "low"
         return DecisionReport(
             hero_equity=equity, hero_equity_se=se,
             opponent_ranges=tuple(summaries), candidates=tuple(cands),
             recommended=rec, recommended_mix=mix,
-            mix_meaning="solver average-strategy frequencies",
+            mix_meaning=f"solver average-strategy frequencies ({cfg.solver.description})",
             method=source, confidence=confidence, warnings=tuple(warnings),
-            details={"infoset": lookup.infoset_key, "visits": lookup.visits},
+            details={"infoset": lookup.infoset_key, "visits": lookup.visits,
+                     "source_cascade": cascade},
+            uncertainty=_uncertainty(cfg, state, summaries, se, rres, lookup, source),
             **base)
 
     # Methods B/C: abstraction menu evaluated against ranges.
@@ -260,6 +302,9 @@ def recommend_action(state: ObservedTableState,
                                  ev_se_bb=None) for l, a in menu]
         cands, res = _attach_rollout_evs(state, hero, ranges, models, cfg, cands)
         method = "Monte Carlo rollout"
+        cascade.append({"source": method, "status": "used",
+                        "simulations": cfg.rollout_simulations})
+        cascade.append({"source": "heuristic fallback", "status": "not needed"})
         mix = dict(res.best_probability)
         rec = max(cands, key=lambda c: c.ev_bb).label
         cands = [_with_prob(c, mix.get(c.label, 0.0)) for c in cands]
@@ -275,8 +320,13 @@ def recommend_action(state: ObservedTableState,
                             "response, so later-street value of smaller bets "
                             "is not credited; treat with caution")
     else:
+        res = None
+        cascade.append({"source": "Monte Carlo rollout", "status": "not run",
+                        "reason": "rollouts disabled (rollout_simulations=0)"
+                        if not cfg.rollout_simulations else "no opponent ranges"})
         cands = _heuristic_candidates(menu, equity, state)
         method = "heuristic fallback"
+        cascade.append({"source": method, "status": "used"})
         rec = _heuristic_choice(cands, equity, pot_odds)
         mix = {rec: 1.0} if rec else {}
         cands = [_with_prob(c, mix.get(c.label, 0.0)) for c in cands]
@@ -291,7 +341,50 @@ def recommend_action(state: ObservedTableState,
         opponent_ranges=tuple(summaries), candidates=tuple(cands),
         recommended=rec, recommended_mix=mix, mix_meaning=mix_meaning,
         method=method, confidence=confidence, warnings=tuple(warnings),
+        details={"source_cascade": cascade},
+        uncertainty=_uncertainty(cfg, state, summaries, se, res, None, method),
         **base)
+
+
+def _uncertainty(cfg, state, summaries, equity_se, rollout_res, lookup, method):
+    """Separate the sources of uncertainty instead of one blended number."""
+    u: Dict[str, object] = {}
+    if cfg.observer_confidence is None:
+        u["observation"] = f"state given as input (source: {state.source or 'unknown'}); not recognized from pixels"
+    else:
+        u["observation"] = (f"screen recognition, critical-field confidence "
+                            f"{cfg.observer_confidence:.2f}; real PokerNow accuracy not validated")
+    if summaries:
+        u["range_estimation"] = "; ".join(
+            f"seat {r.seat} {r.position} [{r.line}]: ~{r.effective_combos:.0f} effective combos, "
+            f"entropy {r.entropy_bits:.1f} bits (belief, model {r.model})" for r in summaries)
+    else:
+        u["range_estimation"] = "no opponent ranges"
+    samp = []
+    if equity_se is not None:
+        samp.append(f"equity standard error {equity_se:.3f}")
+    if rollout_res is not None:
+        ses = [e.se_bb for e in rollout_res.evs]
+        if ses:
+            samp.append(f"rollout EV standard error up to {max(ses):.2f} BB "
+                        f"({rollout_res.simulations} simulations)")
+    u["sampling"] = "; ".join(samp) if samp else "none"
+    if lookup is not None:
+        u["abstraction"] = (f"solver infoset {lookup.infoset_key!r} with {lookup.visits:.0f} visits; "
+                            f"{'exact' if lookup.exact else 'off-tree sizes translated'}; "
+                            f"{cfg.solver.description}")
+    else:
+        u["abstraction"] = "solver not used; candidate sizes from the betting abstraction menu"
+    if method == "Monte Carlo rollout" or (lookup is not None and rollout_res is not None):
+        u["response_model"] = (f"opponent responses from behaviour model(s), hero continuation "
+                               f"'{cfg.hero_model}'; one response, then check-down")
+    elif method == "heuristic fallback":
+        u["response_model"] = "no response model: check/call EVs assume no further betting"
+    elif lookup is not None:
+        u["response_model"] = "none (solver frequencies; no EVs computed)"
+    else:
+        u["response_model"] = "n/a"
+    return u
 
 
 def _with_prob(c: CandidateAction, p: float) -> CandidateAction:

@@ -34,21 +34,84 @@ class SolverLookup:
     # (token, label, kind, raise_to_bb, probability)
 
 
+# Why a solver strategy was not used (``LookupMiss.code``).
+REJECTION_CODES = {
+    "config_mismatch": "strategy was trained under a different solver config / encoder / game",
+    "incompatible_checkpoint": "strategy file unreadable or of an unsupported format",
+    "out_of_abstraction": "observed spot cannot be mapped into the abstract game",
+    "unvisited": "abstract information set never visited in training",
+    "insufficient_visits": "abstract information set visited too rarely to trust",
+}
+
+
 @dataclass(frozen=True)
 class LookupMiss:
     reason: str
+    code: str = "out_of_abstraction"
 
 
 class SolverStrategyProvider:
     def __init__(self, game: HoldemGame, strategy: Strategy,
                  visits: Optional[Mapping[str, float]] = None,
                  min_visits: float = 20.0,
-                 stack_tolerance: float = 0.05) -> None:
+                 stack_tolerance: float = 0.05,
+                 description: str = "abstract heads-up strategy") -> None:
         self.game = game
         self.strategy = strategy
         self.visits = visits or {}
         self.min_visits = min_visits
         self.stack_tolerance = stack_tolerance
+        self.description = description
+
+    # -- loading ---------------------------------------------------------------
+
+    @classmethod
+    def from_artifact(cls, path, config=None, min_visits: float = 20.0):
+        """Provider from a strategy artifact (``solvers.strategy_artifact``)
+        trained under ``config`` (default: the locked ``PRIMARY_CONFIG``).
+
+        Returns a :class:`LookupMiss` (``config_mismatch`` or
+        ``incompatible_checkpoint``) instead of raising when it cannot be used.
+        """
+        from ..solver_config import PRIMARY_CONFIG
+        from ..solvers.strategy_artifact import StrategyArtifactError, load_artifact
+
+        config = config or PRIMARY_CONFIG
+        game = config.build_game()
+        try:
+            art = load_artifact(path, game)
+        except StrategyArtifactError as exc:
+            code = "config_mismatch" if "signature mismatch" in str(exc) else "incompatible_checkpoint"
+            return LookupMiss(f"strategy artifact rejected: {exc}", code)
+        recall = "perfect recall" if config.perfect_recall else \
+            "IMPERFECT-RECALL abstraction, no equilibrium guarantee"
+        desc = (f"MCCFR average strategy, {art.meta.get('iterations', '?')} iterations, "
+                f"seed {art.meta.get('seed', '?')}, {recall}")
+        return cls(game, art.strategy, art.visits, min_visits=min_visits, description=desc)
+
+    @classmethod
+    def from_checkpoint(cls, path, config=None, min_visits: float = 20.0):
+        """Provider from a full training checkpoint; same rejection rules."""
+        from ..solver_config import PRIMARY_CONFIG
+        from ..solvers.serialize import CheckpointError, load_checkpoint
+
+        config = config or PRIMARY_CONFIG
+        game = config.build_game()
+        try:
+            solver = load_checkpoint(path, game)
+        except CheckpointError as exc:
+            code = "config_mismatch" if "mismatch" in str(exc) else "incompatible_checkpoint"
+            return LookupMiss(f"checkpoint rejected: {exc}", code)
+        strategy, visits = {}, {}
+        for k, n in solver.infosets.items():
+            v = float(n.strategy_sum.sum())
+            if v > 0:
+                strategy[k] = dict(zip(n.actions, (float(x) for x in n.average_strategy())))
+                visits[k] = v
+        recall = "perfect recall" if config.perfect_recall else \
+            "IMPERFECT-RECALL abstraction, no equilibrium guarantee"
+        return cls(game, strategy, visits, min_visits=min_visits,
+                   description=f"MCCFR checkpoint, {solver.iterations} iterations, {recall}")
 
     # -- translation -----------------------------------------------------------
 
@@ -151,11 +214,11 @@ class SolverStrategyProvider:
         key = self.game.infoset_key(state)
         probs = self.strategy.get(key)
         if probs is None:
-            return LookupMiss("information set never visited in training")
+            return LookupMiss("information set never visited in training", "unvisited")
         visits = float(self.visits.get(key, 0.0))
         if self.visits and visits < self.min_visits:
             return LookupMiss(f"information set visited only {visits:g} times "
-                              f"(< {self.min_visits:g})")
+                              f"(< {self.min_visits:g})", "insufficient_visits")
         street_paid, total, me, _ = self.game._replay(state)
         owe = street_paid[1 - me] - street_paid[me]
         out = []

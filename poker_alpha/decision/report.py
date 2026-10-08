@@ -66,6 +66,9 @@ class DecisionReport:
     confidence: str               # low / medium / high
     warnings: Tuple[str, ...] = ()
     details: Dict[str, object] = field(default_factory=dict)
+    # Separate uncertainty sources: observation, range_estimation, sampling,
+    # abstraction, response_model (see recommend._uncertainty).
+    uncertainty: Dict[str, object] = field(default_factory=dict)
 
     def candidate(self, label: str) -> CandidateAction:
         for c in self.candidates:
@@ -99,6 +102,17 @@ class DecisionReport:
         lines.append(f"Recommendation: {self.recommended} "
                      f"(method: {self.method}; confidence: {self.confidence})")
         lines.append(f"Frequencies mean: {self.mix_meaning}")
+        cascade = self.details.get("source_cascade") or []
+        if cascade:
+            lines.append("Decision sources (priority solver -> rollout -> heuristic):")
+            for c in cascade:
+                extra = f" [{c['code']}]" if c.get("code") else ""
+                why = f": {c['reason']}" if c.get("reason") else ""
+                lines.append(f"  {c['source']}: {c['status']}{extra}{why}")
+        if self.uncertainty:
+            lines.append("Uncertainty by source:")
+            for k, v in self.uncertainty.items():
+                lines.append(f"  {k}: {v}")
         for w in self.warnings:
             lines.append(f"WARNING: {w}")
         return "\n".join(lines)
