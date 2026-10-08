@@ -69,6 +69,31 @@ history, not the card state, dominates the key space. The price is
 imperfect recall: 874 of 1,508 colliding compact keys merge states whose
 earlier observations differ.
 
+## Locked solver configuration (Phase 27, `poker_alpha/solver_config.py`)
+
+**PRIMARY_SOLVER_ENCODER = `CompactHoldemEncoder` (abstract betting
+context). IMPERFECT RECALL — NO STANDARD CFR EQUILIBRIUM GUARANTEE.**
+It was the only candidate to pass every selection criterion (revisitation,
+not-mostly-discovery, canonical coverage across seeds, no legal-action
+mixing, within-key equity coherence); the scorecard is
+`results/validation/solver_abstraction_selection.json`.
+
+`HoldemSolverConfig` (v1) pins: encoder `compact`; card buckets = the
+deterministic features of `abstraction/features.py` (a digest of the
+strength/draw tables is part of the signature); bet menu 33/75/150% pot +
+all-in; 100 BB stacks, 0.5/1 blinds; raise cap 3 per street; external-
+sampling MCCFR; reference range "uniform random hand", used only for offline
+quality metrics. `PRIMARY_CONFIG.signature()` (`HoldemSolverConfig:v1:<hash>`)
+is written into checkpoints (format 2, field `solver_config`) and checked on
+load: a checkpoint never loads into a game built from a different config or
+from no config. Format-1 checkpoints still load into config-less games.
+
+Regression fixtures under `tests/fixtures/solver_v1/`: a frozen corpus of
+seeded random-policy decision states with expected keys and legal actions,
+and the canonical-state suite. `tests/test_solver_config.py` fails if any
+key changes; changing the abstraction means a new config version and new
+fixtures, deliberately.
+
 ## Card abstraction (`abstraction/cards.py`)
 
 * 169 preflop classes, exhaustively tested over all 1,326 combos (13 pairs ×

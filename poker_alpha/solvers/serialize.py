@@ -10,6 +10,8 @@ A checkpoint is an uncompressed NumPy ``.npz`` archive written and read with
 ``solver_type``     unicode scalar: ``"CFR"``, ``"CFR+"`` or ``"MCCFR"``
 ``game_signature``  unicode scalar, from :meth:`Game.signature`
 ``encoder_sig``     unicode scalar, :meth:`Game.encoder_signature` or ``""``
+``solver_config``   unicode scalar, :meth:`Game.solver_config_signature`
+                    (``HoldemSolverConfig:v1:...`` or ``""``; format >= 2)
 ``iterations``      int64 scalar
 ``keys``            unicode array of infoset keys, sorted by UTF-8 bytes
 ``action_offsets``  int64 array (len = n_infosets + 1) into ``actions``
@@ -20,10 +22,11 @@ A checkpoint is an uncompressed NumPy ``.npz`` archive written and read with
                     (MCCFR only; ``""`` otherwise)
 ==================  ========================================================
 
-Loading verifies the format version, solver type, game signature and encoder
-signature and raises :class:`CheckpointError` on any mismatch, so a
+Loading verifies the format version, solver type, game signature, encoder
+signature and solver-config signature and raises :class:`CheckpointError` on any mismatch, so a
 checkpoint can never silently resume against a different game or
-abstraction. Resuming is exact: ``train(a) + save + load + train(b)`` is
+abstraction or locked solver config. Format 1 files (no config field) load
+only into games without a solver config. Resuming is exact: ``train(a) + save + load + train(b)`` is
 bit-identical to ``train(a + b)`` (including the MCCFR random stream).
 """
 
@@ -41,7 +44,8 @@ from .cfr import CFRSolver, InfoSet
 from .cfr_plus import CFRPlusSolver
 from .mccfr import MCCFRSolver
 
-CHECKPOINT_FORMAT_VERSION = 1
+CHECKPOINT_FORMAT_VERSION = 2
+_READABLE_VERSIONS = (1, 2)
 
 _SOLVER_TYPES: Dict[str, Type[CFRSolver]] = {
     "CFR": CFRSolver,
@@ -97,6 +101,7 @@ def save_checkpoint(solver: CFRSolver, path: PathLike) -> Path:
         "solver_type": _ustr(solver_type),
         "game_signature": _ustr(solver.game.signature()),
         "encoder_sig": _ustr(enc),
+        "solver_config": _ustr(solver.game.solver_config_signature()),
         "iterations": np.array(solver.iterations, dtype=np.int64),
         "keys": np.array(keys, dtype=np.str_) if keys
         else np.zeros(0, dtype="<U1"),
@@ -140,10 +145,12 @@ def load_checkpoint(path: PathLike, game: Game) -> CFRSolver:
     if missing:
         raise CheckpointError(f"checkpoint missing fields: {sorted(missing)}")
     version = int(data["format_version"])
-    if version != CHECKPOINT_FORMAT_VERSION:
+    if version not in _READABLE_VERSIONS:
         raise CheckpointError(
             f"unsupported checkpoint format version {version} "
-            f"(expected {CHECKPOINT_FORMAT_VERSION})")
+            f"(readable: {_READABLE_VERSIONS})")
+    if version >= 2 and "solver_config" not in data:
+        raise CheckpointError("checkpoint missing fields: ['solver_config']")
     solver_type = _scalar_str(data, "solver_type")
     if solver_type not in _SOLVER_TYPES:
         raise CheckpointError(f"unknown solver type {solver_type!r}")
@@ -158,6 +165,12 @@ def load_checkpoint(path: PathLike, game: Game) -> CFRSolver:
         raise CheckpointError(
             f"encoder signature mismatch: checkpoint {stored_enc!r} vs "
             f"game {game_enc!r}")
+    stored_cfg = _scalar_str(data, "solver_config") if version >= 2 else ""
+    game_cfg = game.solver_config_signature()
+    if stored_cfg != game_cfg:
+        raise CheckpointError(
+            f"solver config mismatch: checkpoint {stored_cfg or '(none)'!r} vs "
+            f"game {game_cfg or '(none)'!r}")
 
     keys = [str(k) for k in data["keys"]]
     offsets = data["action_offsets"]

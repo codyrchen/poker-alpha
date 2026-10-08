@@ -285,7 +285,7 @@ iterations (bucket rows reuse the Phase 25 runs).
 | turn | 0.073 | 0.42 | 32% |
 | river | 0.089 | 0.50 | 51% |
 
-Corpus-wide: 0 states in keys whose equity range exceeds 0.5, 4.7% in keys
+Corpus-wide: 0.04% of states in keys whose equity range exceeds 0.5, 4.7% in keys
 with range > 0.3, 0 keys mixing legal-action menus. Category mixing is mostly
 adjacent rungs of the same strength class by design (e.g. middle pair and
 weak top pair share rung 3); river mixing is highest because draws are gone.
@@ -318,6 +318,28 @@ equilibrium guarantee and its output must be described as an abstract
 strategy, not an equilibrium. The perfect-recall transition encoder fails
 because the exact betting history dominates the key space; abstracting the
 history is what makes revisitation possible, and that forfeits recall.
+
+## 9. Phase 27: abstraction selection
+
+`experiments/phase27_lock.py` scores every Phase-26 candidate against
+thresholds fixed in the script: >= 25% of infosets with >= 5 visits and
+>= 10x the bucket encoder; <= 50% of infosets newly discovered in the last
+training segment; >= 12 of 14 canonical spots visited by all three seeds;
+no legal-action mixing; <= 1% of states in keys with equity range > 0.5,
+<= 10% with range > 0.3, mean within-key equity std <= 0.05.
+
+| encoder | revisitation | not mostly discovery | canonical coverage | legal | coherence | selected |
+| --- | --- | --- | --- | --- | --- | --- |
+| bucket | fail | fail (59% new) | fail | pass | pass | |
+| transition | fail | fail (78%) | fail | pass | pass | |
+| transition_abstract | fail (6.5%) | fail (68%) | pass | pass | pass | |
+| compact_exact | fail (1.5%) | fail (75%) | pass | pass | pass | |
+| **compact** | **pass (50.8%)** | **pass (32%)** | **pass (12/14 all seeds, 14/14 seed 0)** | pass | pass (std 0.020, 4.7% > 0.3, 0.04% > 0.5) | **yes** |
+
+Gate 27 -> 28: primary selected; every canonical postflop spot has >= 5
+visits at 5,000 iterations (7-496); training is no longer mostly discovery;
+collision quality within the thresholds. The encoder is imperfect recall
+(874 / 1,508 colliding keys); this is stated wherever its output appears.
 
 ## Exploitability
 

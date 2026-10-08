@@ -43,6 +43,12 @@ class Game(ABC):
         """
         return f"{type(self).__name__}:v1"
 
+    def solver_config_signature(self) -> str:
+        """Signature of the locked solver configuration this game was built
+        from (``HoldemSolverConfig.build_game``), or ``""``."""
+        cfg = getattr(self, "solver_config", None)
+        return cfg.signature() if cfg is not None else ""
+
     def encoder_signature(self) -> "str | None":
         """Signature of the information-state encoder, if the game has one.
 

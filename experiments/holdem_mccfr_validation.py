@@ -48,16 +48,9 @@ BETS = {"b33": 0.33, "b75": 0.75, "b150": 1.5}
 
 
 def make_encoder(name: str = "bucket"):
-    from poker_alpha.abstraction.holdem_v2 import (CompactHoldemEncoder,
-                                                   TransitionHoldemEncoder)
+    from poker_alpha.solver_config import make_encoder as _make
 
-    return {
-        "bucket": lambda: HoldemBucketEncoder(),
-        "transition": lambda: TransitionHoldemEncoder("exact"),
-        "transition_abstract": lambda: TransitionHoldemEncoder("abstract"),
-        "compact": lambda: CompactHoldemEncoder("abstract"),
-        "compact_exact": lambda: CompactHoldemEncoder("exact"),
-    }[name]()
+    return _make(name)
 
 
 ENCODER_NAMES = ("bucket", "transition", "transition_abstract", "compact",
