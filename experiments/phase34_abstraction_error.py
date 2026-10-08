@@ -26,7 +26,6 @@ import argparse
 import json
 import sys
 import time
-import tracemalloc
 from collections import Counter, defaultdict
 from dataclasses import replace
 from pathlib import Path
@@ -141,13 +140,11 @@ def part_a(boards, iters):
         ref = None
         for enc in ("raw", "bucket", "transition", "compact"):
             g = raw if enc == "raw" else HoldemRiverSubgame(board, r0, r1, enc)
-            tracemalloc.start()
             t = time.time()
             s = CFRPlusSolver(g)
             s.train(iters)
             secs = time.time() - t
-            _, peak = tracemalloc.get_traced_memory()
-            tracemalloc.stop()
+            table_bytes = sum(sys.getsizeof(k) + 2 * n.regret_sum.nbytes + 300 for k, n in s.infosets.items())
             strat = lift(g, raw, s.average_strategy())
             if enc == "raw":
                 ref = strat
@@ -155,7 +152,7 @@ def part_a(boards, iters):
                 value = expected_value(raw, ref)
             res["encoders"][enc] = {
                 "abstract_infosets": len(s.infosets), "seconds": round(secs, 1),
-                "peak_memory_mb": round(peak / 1e6, 1),
+                "infoset_table_kb_estimate": round(table_bytes / 1e3, 1),
                 "exploitability_in_raw_game": exploitability(raw, strat),
                 "ev_p0": expected_value(raw, strat),
                 "ev_error_vs_raw": abs(expected_value(raw, strat) - value),

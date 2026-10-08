@@ -1,0 +1,204 @@
+{
+ "format": "pokeralpha.rollout_validation/v1",
+ "board": "2c 7d 9s Th 3h",
+ "seeds": [
+  0,
+  1,
+  2,
+  3,
+  4
+ ],
+ "cases": [
+  {
+   "case": "call vs all-in (pot odds)",
+   "exact_ev_bb": 0.0,
+   "by_sims": [
+    {
+     "simulations": 100,
+     "mean_abs_error": 1.7,
+     "max_abs_error": 3.5,
+     "mean_se": 2.4441636356004244,
+     "within_3se": 5,
+     "seeds": 5
+    },
+    {
+     "simulations": 400,
+     "mean_abs_error": 0.775,
+     "max_abs_error": 1.75,
+     "mean_se": 1.2172094847375223,
+     "within_3se": 5,
+     "seeds": 5
+    },
+    {
+     "simulations": 1000,
+     "mean_abs_error": 0.34,
+     "max_abs_error": 0.55,
+     "mean_se": 0.7742347673134704,
+     "within_3se": 5,
+     "seeds": 5
+    },
+    {
+     "simulations": 5000,
+     "mean_abs_error": 0.20400000000000001,
+     "max_abs_error": 0.29,
+     "mean_se": 0.34672993633169924,
+     "within_3se": 5,
+     "seeds": 5
+    }
+   ]
+  },
+  {
+   "case": "fold equity: always-fold",
+   "exact_ev_bb": 12.0,
+   "by_sims": [
+    {
+     "simulations": 100,
+     "mean_abs_error": 0.0,
+     "max_abs_error": 0.0,
+     "mean_se": 0.0,
+     "within_3se": 5,
+     "seeds": 5
+    },
+    {
+     "simulations": 400,
+     "mean_abs_error": 0.0,
+     "max_abs_error": 0.0,
+     "mean_se": 0.0,
+     "within_3se": 5,
+     "seeds": 5
+    },
+    {
+     "simulations": 1000,
+     "mean_abs_error": 0.0,
+     "max_abs_error": 0.0,
+     "mean_se": 0.0,
+     "within_3se": 5,
+     "seeds": 5
+    },
+    {
+     "simulations": 5000,
+     "mean_abs_error": 0.0,
+     "max_abs_error": 0.0,
+     "mean_se": 0.0,
+     "within_3se": 5,
+     "seeds": 5
+    }
+   ]
+  },
+  {
+   "case": "value bet vs always-call",
+   "exact_ev_bb": 3.0,
+   "by_sims": [
+    {
+     "simulations": 100,
+     "mean_abs_error": 1.02,
+     "max_abs_error": 2.1,
+     "mean_se": 1.4664981813602544,
+     "within_3se": 5,
+     "seeds": 5
+    },
+    {
+     "simulations": 400,
+     "mean_abs_error": 0.465,
+     "max_abs_error": 1.05,
+     "mean_se": 0.7303256908425135,
+     "within_3se": 5,
+     "seeds": 5
+    },
+    {
+     "simulations": 1000,
+     "mean_abs_error": 0.20400000000000001,
+     "max_abs_error": 0.33000000000000007,
+     "mean_se": 0.46454086038808234,
+     "within_3se": 5,
+     "seeds": 5
+    },
+    {
+     "simulations": 5000,
+     "mean_abs_error": 0.12240000000000002,
+     "max_abs_error": 0.17399999999999993,
+     "mean_se": 0.20803796179901957,
+     "within_3se": 5,
+     "seeds": 5
+    }
+   ]
+  },
+  {
+   "case": "bluff, opponent folds 30%",
+   "exact_ev_bb": -2.7,
+   "by_sims": [
+    {
+     "simulations": 100,
+     "mean_abs_error": 1.092,
+     "max_abs_error": 1.8899999999999997,
+     "mean_se": 0.9460386952634117,
+     "within_3se": 5,
+     "seeds": 5
+    },
+    {
+     "simulations": 400,
+     "mean_abs_error": 0.2835000000000001,
+     "max_abs_error": 0.5775000000000001,
+     "mean_se": 0.4862309122905673,
+     "within_3se": 5,
+     "seeds": 5
+    },
+    {
+     "simulations": 1000,
+     "mean_abs_error": 0.32760000000000006,
+     "max_abs_error": 0.4830000000000001,
+     "mean_se": 0.30677389788142617,
+     "within_3se": 5,
+     "seeds": 5
+    },
+    {
+     "simulations": 5000,
+     "mean_abs_error": 0.16715999999999998,
+     "max_abs_error": 0.28559999999999963,
+     "mean_se": 0.13609242985085773,
+     "within_3se": 5,
+     "seeds": 5
+    }
+   ]
+  },
+  {
+   "case": "bluff, opponent folds 60%",
+   "exact_ev_bb": 3.599999999999999,
+   "by_sims": [
+    {
+     "simulations": 100,
+     "mean_abs_error": 1.134,
+     "max_abs_error": 2.939999999999999,
+     "mean_se": 1.040974543128775,
+     "within_3se": 5,
+     "seeds": 5
+    },
+    {
+     "simulations": 400,
+     "mean_abs_error": 0.24149999999999983,
+     "max_abs_error": 0.577500000000001,
+     "mean_se": 0.5133894622719233,
+     "within_3se": 5,
+     "seeds": 5
+    },
+    {
+     "simulations": 1000,
+     "mean_abs_error": 0.20160000000000017,
+     "max_abs_error": 0.4829999999999992,
+     "mean_se": 0.3254987387937888,
+     "within_3se": 5,
+     "seeds": 5
+    },
+    {
+     "simulations": 5000,
+     "mean_abs_error": 0.0898799999999996,
+     "max_abs_error": 0.176400000000001,
+     "mean_se": 0.14555346757668924,
+     "within_3se": 5,
+     "seeds": 5
+    }
+   ]
+  }
+ ],
+ "note": "exact = closed form under the pinned response model; errors should shrink ~1/sqrt(n) and stay within ~3 SE"
+}

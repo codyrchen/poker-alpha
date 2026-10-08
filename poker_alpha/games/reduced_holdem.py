@@ -178,8 +178,11 @@ class RiverSubgame(Game):
 
     def __init__(self, board: Sequence[str], range0: Sequence[str], range1: Sequence[str],
                  pot: float = 10.0, stack: float = 20.0, bets: Sequence[float] = (0.75,),
-                 raise_cap: int = 2, name: str = "") -> None:
+                 raise_cap: int = 2, name: str = "", oop_only_bets: bool = False) -> None:
         self.name = name
+        # textbook toy-game mode: only player 0 may bet; player 1 can only
+        # check behind, call or fold (no bets or raises)
+        self.oop_only_bets = oop_only_bets
         self.board = tuple(codes(board))
         self.r0 = parse_range(range0, self.board)
         self.r1 = parse_range(range1, self.board)
@@ -200,7 +203,8 @@ class RiverSubgame(Game):
                     self._value[h] = evaluate_best_codes(list(h) + list(self.board))
 
     def signature(self):
-        return f"RiverSubgame:v1:{self.name}:pot={self.pot:g}:stack={self.stack:g}:bets={self.bets}:cap={self.raise_cap}"
+        return (f"RiverSubgame:v1:{self.name}:pot={self.pot:g}:stack={self.stack:g}:bets={self.bets}"
+                f":cap={self.raise_cap}" + (":oop_only" if self.oop_only_bets else ""))
 
     def _tok(self, i):
         return f"b{int(round(self.bets[i] * 100))}"
@@ -268,6 +272,8 @@ class RiverSubgame(Game):
         c, level, p, n = self._state(s.history)
         facing = level > c[p] + 1e-9
         acts = (["f"] if facing else []) + ["c"]
+        if self.oop_only_bets and p == 1:
+            return acts
         if n < self.raise_cap and level < self.stack - 1e-9:
             pot_now = self.pot + c[0] + c[1]
             owe = level - c[p]
