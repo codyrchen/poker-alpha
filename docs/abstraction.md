@@ -42,6 +42,33 @@ information state (0 invariant violations), the bucket encoder has perfect
 recall (0 violations in the collision audit), and its postflop compression
 is small because keys carry the full bucket history.
 
+## Phase 26 scalable encoders (`abstraction/holdem_v2.py`)
+
+Built on cheap, exact, cached card features (`abstraction/features.py`:
+made-hand class on a 0..7 strength ladder, draw class, current-nuts flag,
+nut-flush blockers, texture) and an abstract betting context
+(`abstraction/betting_history.py`: street, position, initiative, raise
+count, size class of the bet faced, own prior aggression, SPR bucket **and
+the legal-action code**, so one key never spans two action menus).
+
+| encoder | key | recall |
+| --- | --- | --- |
+| `TransitionHoldemEncoder("exact")` | preflop class / flop state / turn and river *transitions* / exact history | perfect (0 audit violations) |
+| `TransitionHoldemEncoder("abstract")` | same cards, abstract betting context | imperfect |
+| `CompactHoldemEncoder()` | street, position, current strength/draw/nut (+blocker on river), texture, betting context | **IMPERFECT RECALL — NO STANDARD CFR EQUILIBRIUM GUARANTEE** |
+| `CompactHoldemEncoder("exact")` | current card state, exact history | imperfect |
+
+Results (same frozen corpus, identical seeds/budgets, full numbers in
+[validation.md](validation.md#8-phase-26-scalable-abstractions) and
+`results/validation/abstraction_v2.json`): only the compact encoder
+materially improves revisitation — 60,747 infosets after 5,000 iterations
+vs 1.65M for the Phase-25 bucket encoder, 50.8% of infosets with >= 5 visits
+(bucket 0.31%), all 14 canonical spots visited. The perfect-recall
+transition encoder does **not** help (1.51M infosets): the exact betting
+history, not the card state, dominates the key space. The price is
+imperfect recall: 874 of 1,508 colliding compact keys merge states whose
+earlier observations differ.
+
 ## Card abstraction (`abstraction/cards.py`)
 
 * 169 preflop classes, exhaustively tested over all 1,326 combos (13 pairs ×

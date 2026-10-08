@@ -257,6 +257,68 @@ and `vision-ui` (observer, fixture validation, headless Streamlit). First run
 (commit 34a9299): vision-ui passed; core failed on the two Leduc pins above,
 which led to the migration in section 5. Status of later runs: see GitHub.
 
+## 8. Phase 26: scalable abstractions
+
+Script: `experiments/phase26_abstraction.py`; data:
+`results/validation/abstraction_v2.json`. Same frozen corpus as section 1
+(2,000 random-policy hands, 8,932 decision states, 33/75/150% menu, 100 BB)
+plus the fixed lines; training runs of `holdem_mccfr_validation.py
+--encoder X` with seeds 0/1/2 and checkpoints at 200/1,000/5,000
+iterations (bucket rows reuse the Phase 25 runs).
+
+### Corpus compression and recall
+
+| encoder | keys (raw 8,932 states) | flop line keys (raw 2,000) | turn | river | recall violations / colliding keys |
+| --- | --- | --- | --- | --- | --- |
+| raw | — | — | — | — | 0 / 870 |
+| bucket | 7,038 | 1,471 | 1,897 | 1,992 | 0 / 712 |
+| transition (exact) | 6,877 | | | | 0 / 825 |
+| transition_abstract | 6,630 | | | | 211 / 1,005 |
+| compact_exact | 5,864 | | | | 498 / 1,142 |
+| **compact** | **4,643** | **120** | **176** | **142** | **874 / 1,508** |
+
+### Within-key coherence of `compact` (equity vs a uniform random hand)
+
+| street | mean within-key equity std | p90 equity range | keys mixing hand categories |
+| --- | --- | --- | --- |
+| flop | 0.072 | 0.40 | 27% |
+| turn | 0.073 | 0.42 | 32% |
+| river | 0.089 | 0.50 | 51% |
+
+Corpus-wide: 0 states in keys whose equity range exceeds 0.5, 4.7% in keys
+with range > 0.3, 0 keys mixing legal-action menus. Category mixing is mostly
+adjacent rungs of the same strength class by design (e.g. middle pair and
+weak top pair share rung 3); river mixing is highest because draws are gone.
+
+### Training (seed 0, 5,000 iterations)
+
+| encoder | infosets | new / iter (last segment) | >= 5 visits | >= 20 visits | canonical visited | wall clock | checkpoint |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| bucket | 1,647,628 | 321.6 | 0.31% | 0.06% | 5 / 14 | 2,531 s | 621 MB |
+| transition | 1,514,490 | 293.7 | 0.44% | 0.07% | 8 / 14 | 333 s | 515 MB |
+| transition_abstract | 711,868 | 120.3 | 6.5% | 0.63% | 13 / 14 | 383 s | 235 MB |
+| compact_exact | 1,212,030 | 226.8 | 1.5% | 0.15% | 13 / 14 | 319 s | 374 MB |
+| **compact** | **60,747** | **4.9** | **50.8%** | **24.0%** | **14 / 14** | **438 s** | **19 MB** |
+
+Compact: median visits 5, mean 24, 96.9% of all visits land in infosets
+with >= 5 visits; 32% of infosets were first discovered in the last segment
+(bucket 59%, transition 78%). Infoset counts agree across seeds (59,825-61,023).
+(The bucket wall clock predates the Phase-26 feature caches and is not a
+like-for-like speed comparison.)
+
+Seed disagreement for compact (L1, max 2.0): canonical spots 0.82-1.01 at
+5,000; top-2,000 visited infosets overlap 81% and their common-key mean L1
+fell from ~0.64 at 1,000 to ~0.45-0.48 at 5,000. Perfect-recall candidates
+overlap only 38-51% and their common-key L1 rises with training (new rare
+keys enter the top set).
+
+**Conclusion.** Only `CompactHoldemEncoder` materially improves
+revisitation, and it is imperfect recall: MCCFR on it carries no standard
+equilibrium guarantee and its output must be described as an abstract
+strategy, not an equilibrium. The perfect-recall transition encoder fails
+because the exact betting history dominates the key space; abstracting the
+history is what makes revisitation possible, and that forfeits recall.
+
 ## Exploitability
 
 Not computed. Exact Hold'em exploitability is infeasible here, and no proxy
