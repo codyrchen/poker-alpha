@@ -1,11 +1,16 @@
-# Validation status (Phase 25)
+# Validation (Phases 25-31)
+
+**Current status of every component: [release_status.md](release_status.md)**
+(machine-readable: `results/validation/final_platform_validation.json`).
+Sections 1-7 and the summary table below are the Phase 25 record; sections
+8-12 cover Phases 26-29.
 
 Machine-readable results: [`results/validation/holdem_platform_validation.json`](../results/validation/holdem_platform_validation.json)
 (regenerate with `python experiments/phase25_validation.py --runs-dir RUNS`,
 where `RUNS` holds the output of `experiments/holdem_mccfr_validation.py`).
 Every number below is copied from that file.
 
-## Summary
+## Phase 25 summary
 
 | status | item |
 | --- | --- |
@@ -468,6 +473,41 @@ infosets play uniform (miss rate < 0.02% for 100k strategies).
 More training clearly produces a stronger abstract strategy (100k beats 10k
 by ~2.6 bb/hand); independently seeded 100k strategies are close to each
 other but not identical. None of this bounds exploitability.
+
+## 12. Phase 29 extension: 100k -> 300k
+
+Because 100k still beat 10k clearly, the same three runs were resumed from
+their 100k checkpoints (`--resume`) to 300k (about 8,400 s more per seed,
+~3.5 h in total per seed). Results:
+`results/validation/holdem_training_v1_300k.json`; the committed artifact
+`results/strategy/holdem_v1_seed0.npz` is now the seed-0 300k export
+(1.6 MB).
+
+| proxy (seed 0) | 100k | 300k |
+| --- | --- | --- |
+| infosets | 82,781 | 86,615 |
+| new infosets / iteration | 0.09 | 0.019 |
+| >= 5 / >= 20 visits | 79.2% / 62.5% | 86.1% / 73.4% |
+| matrix spots visited / >= 20 visits | 656 / 591 | 659 / 629 |
+| matrix L1 vs previous checkpoint | 0.50 | 0.44 |
+| seed disagreement, matrix both >= 20 (mean L1) | 0.84 | 0.79 |
+| seed disagreement, top-2000 overlap / common L1 | 88-89% / 0.25 | 90-92% / 0.20-0.21 |
+| sanity checks passed (each seed) | 10 / 10 | 10 / 10 |
+
+Cross-play at 300k (200,000 duplicate deals, bb/100, 95% CI): seeds vs
+seeds +0.6 (-6.9..+8.1), +1.2 (-6.3..+8.7), +5.0 (-2.5..+12.5) — no
+significant differences; **300k vs 100k same seed +84.0 (+75.5..+92.5)**,
+vs 100k other seed +85.5; vs 10k +291; vs 1k +419; vs uniform random +442;
+vs calling station +374; uniform control +1.3 (-12.5..+15.2).
+
+Reading: training is still improving inside the abstract game (300k beats
+100k), seeds now agree in head-to-head strength, and canonical-spot
+policies are still moving (L1 0.44 per checkpoint). The 300k strategy wins
+*less* than 100k against uniform-random and calling-station opponents —
+it is not tuned to exploit those, and those numbers are not a quality
+ranking. Stopping point: 1M iterations would take about 8 more hours per
+seed on this machine, which was not judged practical; the strategy is
+therefore not converged by any proxy. No exploitability is computed.
 
 ## Exploitability
 

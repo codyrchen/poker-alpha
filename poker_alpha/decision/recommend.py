@@ -276,6 +276,22 @@ def recommend_action(state: ObservedTableState,
         confidence = "medium" if lookup.exact else "low"
         if not lookup.exact:
             warnings.append("off-tree bet sizes were translated onto the abstraction")
+        if rres is not None:
+            best = max((c for c in cands if c.ev_bb is not None), key=lambda c: c.ev_bb,
+                       default=None)
+            if best is not None and best.label != rec:
+                try:
+                    mean, se_d = rres.paired_difference(best.label, rec)
+                except KeyError:
+                    mean, se_d = 0.0, 0.0
+                if mean > 2 * max(se_d, 1e-9):
+                    warnings.append(
+                        f"solver and rollouts disagree: solver prefers {rec}, rollout EV "
+                        f"favours {best.label} by {mean:.2f} BB (±{se_d:.2f}); both are "
+                        "approximations — treat this spot as uncertain")
+                    confidence = "low"
+                    cascade.append({"source": "consistency check", "status": "conflict",
+                                    "reason": f"rollout best {best.label}, solver {rec}"})
         warnings.append("solver frequencies are from an abstracted heads-up "
                         "game (imperfect-recall abstraction): not a Hold'em "
                         "equilibrium and not proven optimal")

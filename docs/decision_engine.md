@@ -38,6 +38,14 @@ and, for a rejected solver, a code from `decision.strategy.REJECTION_CODES`:
 | `unvisited` | the abstract information set was never visited in training |
 | `insufficient_visits` | visited fewer than `min_visits` times (default 20) |
 
+When the solver is used and rollouts are enabled, a consistency check
+compares the solver's most frequent action with the highest rollout EV; if
+rollouts favour another action by more than two paired standard errors, the
+report warns ("solver and rollouts disagree"), drops confidence to low and
+adds a `consistency check: conflict` cascade entry. With the 300k strategy
+this fires, for example, on BTN AQo at 100 BB (solver limps, rollouts prefer
+a raise) — such spots should be treated as uncertain.
+
 `pipeline.load_solver(path)` (artifact or checkpoint) returns either a
 `SolverStrategyProvider` or a coded `LookupMiss`, which `pipeline.analyze`
 reports in the cascade instead of failing.

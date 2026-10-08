@@ -140,3 +140,18 @@ def test_observation_does_not_mutate_input():
     observe_manual(d)
     assert repr(d) == before
     assert np.isfinite(analyze(observe_manual(d), FAST).pot_bb)
+
+
+def test_solver_rollout_conflict_is_flagged():
+    from poker_alpha.decision import SolverStrategyProvider
+    from poker_alpha.games import HoldemGame
+
+    # A deliberately bad "strategy": fold AKs preflop when folding is legal.
+    game = HoldemGame()
+    prov = SolverStrategyProvider(game, {"0|50,51||": {"f": 1.0}}, {"0|50,51||": 500})
+    rep = analyze(observe_manual(hu()), dataclasses.replace(FAST, rollout_simulations=200),
+                  solver=prov)
+    assert rep.method == "solver" and rep.recommended == "fold"
+    assert rep.confidence == "low"
+    assert any("solver and rollouts disagree" in w for w in rep.warnings)
+    assert _cascade(rep)["consistency check"]["status"] == "conflict"

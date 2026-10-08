@@ -87,7 +87,8 @@ def main() -> None:
         f = ROOT / "results" / "validation" / name
         return json.loads(f.read_text()) if f.exists() else None
 
-    bench, train = read("backend_benchmark.json"), read("holdem_training_v1.json")
+    bench = read("backend_benchmark.json")
+    train = read("holdem_training_v1_300k.json") or read("holdem_training_v1.json")
     offline = {}
     if bench:
         offline["mccfr_iterations_per_second_single_core"] = bench["optimized"]["iterations_per_second"]

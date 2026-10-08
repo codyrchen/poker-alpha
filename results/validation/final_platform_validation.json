@@ -1,0 +1,355 @@
+{
+ "format": "pokeralpha.final_platform_validation/v1",
+ "statuses": [
+  "VALIDATED",
+  "PARTIALLY VALIDATED",
+  "EXPERIMENTAL",
+  "BLOCKED"
+ ],
+ "components": [
+  {
+   "component": "Kuhn / Leduc CFR research core",
+   "status": "VALIDATED",
+   "evidence": "exact exploitability; canonical strategy digests pinned and unchanged through Phases 26-31"
+  },
+  {
+   "component": "Hold'em rules engine (2-9 seats, side pots)",
+   "status": "VALIDATED",
+   "evidence": "rules invariants, chip conservation, side/split pots under test; no invariant failure"
+  },
+  {
+   "component": "Hand evaluator / equity",
+   "status": "VALIDATED",
+   "evidence": "evaluator checked against all 2,598,960 five-card hands; seeded equity with SE"
+  },
+  {
+   "component": "Scalable abstraction (compact encoder)",
+   "status": "PARTIALLY VALIDATED",
+   "evidence": "only candidate passing all selection criteria; >=5-visit share 50.8% vs bucket 0.31% at 5k; IMPERFECT RECALL (874 of 1508 colliding keys violate recall)"
+  },
+  {
+   "component": "Locked solver config + config-bound checkpoints/artifacts",
+   "status": "VALIDATED",
+   "evidence": "signature covers encoder, feature tables, bets, stack, raise cap, sampling, reference range; mismatches rejected in tests; frozen regression corpus and canonical suite"
+  },
+  {
+   "component": "Optimized MCCFR backend",
+   "status": "VALIDATED",
+   "evidence": "1.99x it/s, bit-identical exact digests; no compiled backend built"
+  },
+  {
+   "component": "Trained abstract HU strategy",
+   "status": "EXPERIMENTAL",
+   "evidence": "3 seeds; sanity checks {0: 10, 1: 10, 2: 10} of 10; seeds close in cross-play; more training beats less; no exploitability, imperfect recall, policies not settled"
+  },
+  {
+   "component": "Decision engine (rollout / heuristic)",
+   "status": "PARTIALLY VALIDATED",
+   "evidence": "closed-form decision invariants pass; EVs depend on heuristic response models and a check-down assumption"
+  },
+  {
+   "component": "Range / opponent modelling",
+   "status": "EXPERIMENTAL",
+   "evidence": "Bayesian beliefs under heuristic priors and models; no ground-truth range accuracy"
+  },
+  {
+   "component": "Unified pipeline + source priority + uncertainty breakdown",
+   "status": "VALIDATED",
+   "evidence": "all four input sources reach DecisionReport through one path in tests; rejection codes for config mismatch, incompatible file, out of abstraction, unvisited, insufficient visits"
+  },
+  {
+   "component": "Screen observer on synthetic images",
+   "status": "PARTIALLY VALIDATED",
+   "evidence": "synthetic fixtures only; read-only"
+  },
+  {
+   "component": "Screen observer on real PokerNow",
+   "status": "BLOCKED",
+   "evidence": "BLOCKED ON REAL FIXTURES: 0 annotated screenshots; nothing measured, nothing fabricated"
+  }
+ ],
+ "solver": {
+  "primary_encoder": "compact",
+  "recall": "IMPERFECT RECALL \u2014 NO STANDARD CFR EQUILIBRIUM GUARANTEE",
+  "config_signature": "HoldemSolverConfig:v1:2e23c098860f7894c871",
+  "trained_iterations": 100000,
+  "extended_iterations": 300000,
+  "artifact": {
+   "path": "results/strategy/holdem_v1_seed0.npz",
+   "bytes": 1613612,
+   "seed": 0,
+   "iterations": 300000
+  },
+  "sanity_checks_passed": {
+   "0": 10,
+   "1": 10,
+   "2": 10
+  },
+  "crossplay_bb_per_100": {
+   "seed0@100000 vs seed1@100000": {
+    "bb_per_100": 5.4,
+    "ci95": [
+     -4.2,
+     15.1
+    ]
+   },
+   "seed1@100000 vs seed2@100000": {
+    "bb_per_100": -1.2,
+    "ci95": [
+     -10.9,
+     8.5
+    ]
+   },
+   "seed0@100000 vs seed2@100000": {
+    "bb_per_100": 13.3,
+    "ci95": [
+     3.6,
+     23.0
+    ]
+   },
+   "seed0@100000 vs seed1@1000": {
+    "bb_per_100": 439.9,
+    "ci95": [
+     427.1,
+     452.7
+    ]
+   },
+   "seed0@100000 vs seed1@10000": {
+    "bb_per_100": 264.0,
+    "ci95": [
+     252.2,
+     275.8
+    ]
+   },
+   "seed0@100000 vs uniform": {
+    "bb_per_100": 498.0,
+    "ci95": [
+     485.6,
+     510.4
+    ]
+   },
+   "seed0@100000 vs calling_station": {
+    "bb_per_100": 472.1,
+    "ci95": [
+     461.1,
+     483.0
+    ]
+   },
+   "uniform vs uniform": {
+    "bb_per_100": 3.9,
+    "ci95": [
+     -10.0,
+     17.7
+    ]
+   }
+  },
+  "extension_crossplay_bb_per_100": {
+   "seed0@300000 vs seed1@300000": {
+    "bb_per_100": 0.6,
+    "ci95": [
+     -6.9,
+     8.1
+    ]
+   },
+   "seed1@300000 vs seed2@300000": {
+    "bb_per_100": 1.2,
+    "ci95": [
+     -6.3,
+     8.7
+    ]
+   },
+   "seed0@300000 vs seed2@300000": {
+    "bb_per_100": 5.0,
+    "ci95": [
+     -2.5,
+     12.5
+    ]
+   },
+   "seed0@300000 vs seed1@1000": {
+    "bb_per_100": 419.2,
+    "ci95": [
+     407.5,
+     431.0
+    ]
+   },
+   "seed0@300000 vs seed1@10000": {
+    "bb_per_100": 291.1,
+    "ci95": [
+     280.2,
+     302.0
+    ]
+   },
+   "seed0@300000 vs seed1@100000": {
+    "bb_per_100": 85.5,
+    "ci95": [
+     76.9,
+     94.2
+    ]
+   },
+   "seed0@300000 vs seed0@100000": {
+    "bb_per_100": 84.0,
+    "ci95": [
+     75.5,
+     92.5
+    ]
+   },
+   "seed0@300000 vs uniform": {
+    "bb_per_100": 441.9,
+    "ci95": [
+     430.7,
+     453.2
+    ]
+   },
+   "seed0@300000 vs calling_station": {
+    "bb_per_100": 373.8,
+    "ci95": [
+     364.4,
+     383.1
+    ]
+   },
+   "uniform vs uniform": {
+    "bb_per_100": 1.3,
+    "ci95": [
+     -12.5,
+     15.2
+    ]
+   }
+  },
+  "exploitability": "not computed"
+ },
+ "performance": {
+  "mccfr_iterations_per_second": 30.102163910192406,
+  "baseline_iterations_per_second": 15.15165375203309,
+  "online": {
+   "strategy_artifact_load": {
+    "median_ms": 297.426411001652,
+    "p95_ms": 332.49899499787716,
+    "reps": 3
+   },
+   "sources": {
+    "manual (HU 100BB)": {
+     "observe": {
+      "median_ms": 0.01741200321703218,
+      "p95_ms": 0.04159099989919923,
+      "reps": 15
+     },
+     "analyze": {
+      "solver if eligible, else heuristic (equity 1500 sims)": {
+       "median_ms": 73.17795999915688,
+       "p95_ms": 79.74873900093371,
+       "reps": 15,
+       "method_used": "solver"
+      },
+      "heuristic (equity 1500 sims, no solver)": {
+       "median_ms": 74.96535599784693,
+       "p95_ms": 88.86387600068701,
+       "reps": 15,
+       "method_used": "heuristic fallback"
+      },
+      "rollout 400 sims (no solver)": {
+       "median_ms": 154.65504400344798,
+       "p95_ms": 160.82427999936044,
+       "reps": 5,
+       "method_used": "Monte Carlo rollout"
+      }
+     }
+    },
+    "simulation (6-max)": {
+     "observe": {
+      "median_ms": 0.03013400055351667,
+      "p95_ms": 0.05934799992246553,
+      "reps": 15
+     },
+     "analyze": {
+      "solver if eligible, else heuristic (equity 1500 sims)": {
+       "median_ms": 100.77877200092189,
+       "p95_ms": 109.36965200016857,
+       "reps": 15,
+       "method_used": "heuristic fallback"
+      },
+      "heuristic (equity 1500 sims, no solver)": {
+       "median_ms": 94.90933200140717,
+       "p95_ms": 107.22252999767079,
+       "reps": 15,
+       "method_used": "heuristic fallback"
+      },
+      "rollout 400 sims (no solver)": {
+       "median_ms": 232.71007999937865,
+       "p95_ms": 244.46498399993288,
+       "reps": 5,
+       "method_used": "Monte Carlo rollout"
+      }
+     }
+    },
+    "hand_history": {
+     "observe": {
+      "median_ms": 0.9247210000467021,
+      "p95_ms": 1.2784330028807744,
+      "reps": 15
+     },
+     "analyze": {
+      "solver if eligible, else heuristic (equity 1500 sims)": {
+       "median_ms": 87.64951000193832,
+       "p95_ms": 89.62627200162387,
+       "reps": 15,
+       "method_used": "heuristic fallback"
+      },
+      "heuristic (equity 1500 sims, no solver)": {
+       "median_ms": 87.85464500033413,
+       "p95_ms": 93.7479739986884,
+       "reps": 15,
+       "method_used": "heuristic fallback"
+      },
+      "rollout 400 sims (no solver)": {
+       "median_ms": 191.31124100022134,
+       "p95_ms": 224.00612700221245,
+       "reps": 5,
+       "method_used": "Monte Carlo rollout"
+      }
+     }
+    },
+    "screenshot (synthetic, 3 frames)": {
+     "observe": {
+      "median_ms": 247.91452199860942,
+      "p95_ms": 288.06503400119254,
+      "reps": 5
+     },
+     "analyze": {
+      "solver if eligible, else heuristic (equity 1500 sims)": {
+       "median_ms": 78.37100899996585,
+       "p95_ms": 80.76804899974377,
+       "reps": 15,
+       "method_used": "heuristic fallback"
+      },
+      "heuristic (equity 1500 sims, no solver)": {
+       "median_ms": 77.80965200072387,
+       "p95_ms": 88.55066700198222,
+       "reps": 15,
+       "method_used": "heuristic fallback"
+      },
+      "rollout 400 sims (no solver)": {
+       "median_ms": 186.7569449968869,
+       "p95_ms": 217.7890170023602,
+       "reps": 5,
+       "method_used": "Monte Carlo rollout"
+      }
+     }
+    }
+   }
+  }
+ },
+ "observer_real_pokernow": "BLOCKED ON REAL FIXTURES",
+ "tests": {
+  "passed": 532,
+  "skipped": 0,
+  "slow_included": true
+ },
+ "ci": "green on 2080178 (Phase 31 part 1); the final commit's run is checked after push",
+ "not_claimed": [
+  "solved NLHE",
+  "GTO / Nash equilibrium of Hold'em",
+  "profitable bot",
+  "real PokerNow recognition accuracy",
+  "exploitability of the trained strategy"
+ ]
+}

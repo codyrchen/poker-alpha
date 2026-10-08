@@ -96,9 +96,10 @@ fixtures, deliberately.
 
 ## Trained strategy (Phase 29)
 
-Three seeds of the locked config were trained to 100k iterations (see
-[validation.md](validation.md#11-phase-29-training-the-locked-config)); the
-seed-0 average strategy is exported as `results/strategy/holdem_v1_seed0.npz`
+Three seeds of the locked config were trained to 100k and then 300k
+iterations (see [validation.md](validation.md#11-phase-29-training-the-locked-config)
+and section 12); the seed-0 300k average strategy is exported as
+`results/strategy/holdem_v1_seed0.npz`
 (`pokeralpha.strategy_artifact/v1`, loaded by
 `SolverStrategyProvider.from_artifact`, which rejects it with
 `config_mismatch` under any other config). It is an abstract strategy for

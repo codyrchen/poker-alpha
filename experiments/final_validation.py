@@ -92,7 +92,7 @@ def main() -> None:
             "config_signature": sel["selected"]["config_signature"],
             "trained_iterations": train["final_iterations"],
             "extended_iterations": ext["final_iterations"] if ext else None,
-            "artifact": train["artifact"],
+            "artifact": (ext or train)["artifact"],
             "sanity_checks_passed": sanity,
             "crossplay_bb_per_100": cross,
             "extension_crossplay_bb_per_100": (

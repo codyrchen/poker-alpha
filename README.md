@@ -40,7 +40,7 @@ than assumed, including where the system **fails**.
 python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install -e ".[dev]"
-pytest                        # 449 tests, ~2.5 min (POKERALPHA_SKIP_SLOW=1 skips 5 slow ones)
+pytest                        # 532 tests, ~3.5 min (POKERALPHA_SKIP_SLOW=1 skips 5 slow ones)
 python -m poker_alpha.demo    # ~12s
 python -m poker_alpha.holdem_demo   # 6-max Hold'em decision report, ~2s
 ```
@@ -164,7 +164,7 @@ UI / replay / session analysis
 | --- | --- | --- |
 | Research | Kuhn, Leduc, CFR/CFR+/MCCFR, exploitability, opponent-identification experiments — unchanged | [RESEARCH.md](RESEARCH.md) |
 | Hold'em engine | 2–9 seats, integer chips, antes, heads-up blind rules, min-raise and short-all-in reopening, side and split pots | [docs/holdem_engine.md](docs/holdem_engine.md) |
-| Solver | sampled-chance external-sampling MCCFR on HU Hold'em; locked `HoldemSolverConfig` v1 with the compact encoder (**imperfect recall, no equilibrium guarantee**), chosen because it is the only measured abstraction that gets states revisited; config-bound checkpoints and a committed strategy artifact (3 seeds trained, see [validation](docs/validation.md)); 2x faster pure-Python backend, bit-identical | [docs/abstraction.md](docs/abstraction.md) |
+| Solver | sampled-chance external-sampling MCCFR on HU Hold'em; locked `HoldemSolverConfig` v1 with the compact encoder (**imperfect recall, no equilibrium guarantee**), chosen because it is the only measured abstraction that gets states revisited; config-bound checkpoints and a committed strategy artifact (3 seeds trained to 300k iterations, 10/10 sanity checks, see [validation](docs/validation.md)); 2x faster pure-Python backend, bit-identical | [docs/abstraction.md](docs/abstraction.md) |
 | Opponent / range modelling | 1,326-combo weighted ranges, versioned priors, Bayesian updates, Hold'em statistics with credible intervals and recency decay, exact joint multiway equity | [docs/ranges.md](docs/ranges.md) |
 | Observer | optional, read-only screenshot reader: calibration, template OCR, card recognition, smoothing, fusion rules, pause/correct/resume. Validated on synthetic images only — **real PokerNow accuracy: blocked on real fixtures, not measured** | [docs/observer.md](docs/observer.md) |
 | Decision analysis | one path for every input (`poker_alpha.pipeline`: manual / simulation / hand history / screenshot → `DecisionReport`); priority solver → rollout → heuristic with coded solver rejection reasons; uncertainty reported per source (observation, ranges, sampling, abstraction, response model) | [docs/decision_engine.md](docs/decision_engine.md) |
@@ -605,7 +605,7 @@ committed CSV in `results/data/`, produced by a seeded script in
 
 ```bash
 python -m poker_alpha.demo                                  # ~12s
-pytest                                                      # 449 tests, ~2.5 min
+pytest                                                      # 532 tests, ~3.5 min
 ```
 
 **Moderate** (under a minute each):
@@ -688,7 +688,7 @@ results/
   validation/     Hold'em validation results (JSON), incl. final_platform_validation.json
   strategy/       exported abstract HU strategy artifact (npz, ~1.5 MB)
   figures/        generated figures
-tests/            pytest suite (449 tests; fixtures/ holds synthetic screenshots and hand histories)
+tests/            pytest suite (532 tests; fixtures/ holds synthetic screenshots and hand histories)
 RESEARCH.md       the full research writeup
 TODO.md           development history, phase by phase
 ```
