@@ -37,10 +37,23 @@ from .features import CARD_FEATURES_VERSION, TRANSITION_VERSION, card_features, 
 _BOARD_AT = (0, 3, 4, 5)
 
 
+_MEMO_LIMIT = 1 << 18
+
+
 def _history(game: Any, state: Any, mode: str) -> str:
     if mode == "exact":
         return "/".join(state.streets)
-    return betting_context(game, state).key()
+    # The betting context is a function of the action history and the game's
+    # (immutable) tree parameters only, so memoize it per game by ``streets``.
+    memo = game.__dict__.get("_betting_key_memo")
+    if memo is None:
+        memo = game.__dict__["_betting_key_memo"] = {}
+    key = memo.get(state.streets)
+    if key is None:
+        if len(memo) >= _MEMO_LIMIT:
+            memo.clear()
+        key = memo[state.streets] = betting_context(game, state).key()
+    return key
 
 
 class TransitionHoldemEncoder:

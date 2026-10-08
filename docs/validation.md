@@ -341,6 +341,46 @@ visits at 5,000 iterations (7-496); training is no longer mostly discovery;
 collision quality within the thresholds. The encoder is imperfect recall
 (874 / 1,508 colliding keys); this is stated wherever its output appears.
 
+## 10. Phase 28: backend performance
+
+Profile first (`cProfile`, locked config, 200 iterations after warm-up):
+30.0 s, of which action-history replay (`_tokens`, `_replay`,
+`betting_context`) was about 60% and card-feature cache misses about 25%.
+
+Changes (all pure Python, bit-for-bit equivalent): cached action-string
+tokenizer; `_replay`, `legal_actions` and the abstract betting-context key
+memoized per game by action history (bounded tables); a flush-only blocker
+helper instead of a full blocker scan whose straight part was discarded; an
+inverse-CDF sampler equal to `Generator.choice(p=...)`. After: 13.3 s.
+
+`experiments/phase28_benchmark.py`, baseline commit 5a42e03 vs optimized,
+same machine, seed 0, 300 warm-up + 600 timed iterations
+(`results/validation/backend_benchmark.json`):
+
+| metric | baseline | optimized |
+| --- | --- | --- |
+| iterations / s | 15.2 | **30.1** (1.99x) |
+| iteration latency median / p95 | 59.7 / 140.6 ms | 28.5 / 74.7 ms |
+| infoset touches / s | 5,944 | 11,810 |
+| infosets after 1,000 iterations | 41,066 | 41,066 |
+| table estimate | 22.1 MB (538 B / infoset) | 21.6 MB |
+| max RSS | 118 MB | 194 MB (memo tables) |
+| checkpoint (13.0 MB) save median / p95 | 0.095 / 0.147 s | 0.100 / 0.152 s |
+| checkpoint load median / p95 | 0.166 / 0.217 s | 0.157 / 0.265 s |
+| exact SHA-256 of trained tables | b81170d8... | b81170d8... (identical) |
+
+Equivalence: `tests/test_performance_equivalence.py` pins the
+pre-optimization exact digests for the compact, bucket, transition and raw
+encoders and checks the sampler against `Generator.choice`; Kuhn and Leduc
+pins in `tests/test_reproducibility.py` are unchanged.
+
+Not done, deliberately: integer infoset IDs / compact arrays (the locked
+config's table is tens of MB and not a bottleneck) and a compiled backend
+(remaining time is spread across the evaluator, feature misses and the
+traversal; the Phase-29 budget fits in about an hour per seed; a port of
+rules + features + encoder would add semantic-equivalence risk for no
+required gain).
+
 ## Exploitability
 
 Not computed. Exact Hold'em exploitability is infeasible here, and no proxy

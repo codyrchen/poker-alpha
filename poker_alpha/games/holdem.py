@@ -34,6 +34,7 @@ to avoid.
 from __future__ import annotations
 
 from dataclasses import dataclass, replace
+from functools import lru_cache
 from typing import List, Optional, Tuple
 
 import numpy as np
@@ -50,6 +51,7 @@ BIG_BLIND = 1.0
 STARTING_STACK = 100.0
 
 _BET_FRACTIONS = {"b50": 0.5, "b100": 1.0, "b200": 2.0}
+_MEMO_LIMIT = 1 << 18  # entries per memo table before it is cleared
 _RAISE_CAP_PER_STREET = 3  # bets/raises per street, keeps the tree bounded
 
 
@@ -79,8 +81,10 @@ class HoldemState:
         return self.contrib[0] + self.contrib[1]
 
 
-def _tokens(street_actions: str) -> List[str]:
-    """Split a street's action string into action tokens."""
+@lru_cache(maxsize=1 << 16)
+def _tokens(street_actions: str) -> Tuple[str, ...]:
+    """Split a street's action string into action tokens (cached; the
+    result is an immutable tuple)."""
     out: List[str] = []
     i = 0
     while i < len(street_actions):
@@ -96,7 +100,7 @@ def _tokens(street_actions: str) -> List[str]:
             i = j
         else:
             raise ValueError(f"bad action char {ch!r} in {street_actions!r}")
-    return out
+    return tuple(out)
 
 
 class HoldemGame(Game):
@@ -116,6 +120,12 @@ class HoldemGame(Game):
         # Information-state encoder (see poker_alpha.abstraction.base). The
         # default reproduces the historical raw key byte for byte.
         self.encoder = encoder if encoder is not None else RawHoldemEncoder()
+        # Phase 28 memo tables keyed by the action history (``streets``),
+        # which together with the tree parameters above fully determines the
+        # betting replay and the legal actions. Tree parameters must not be
+        # mutated after construction. Bounded: cleared when full.
+        self._replay_memo: dict = {}
+        self._legal_memo: dict = {}
 
     def encoder_signature(self) -> str:
         return self.encoder.signature()
@@ -178,7 +188,17 @@ class HoldemGame(Game):
 
     # -- betting mechanics ----------------------------------------------
 
-    def _replay(self, state: HoldemState) -> Tuple[List[float], List[float], int, int]:
+    def _replay(self, state: HoldemState):
+        """Memoized :meth:`_replay_uncached` (results are immutable tuples)."""
+        memo = self._replay_memo
+        hit = memo.get(state.streets)
+        if hit is None:
+            if len(memo) >= _MEMO_LIMIT:
+                memo.clear()
+            hit = memo[state.streets] = self._replay_uncached(state.streets)
+        return hit
+
+    def _replay_uncached(self, streets: Tuple[str, ...]):
         """Replay the whole betting history from the blinds forward.
 
         Returns ``(street_paid, total, to_act, n_raises)`` where ``total`` is
@@ -194,7 +214,7 @@ class HoldemGame(Game):
         street_paid = [SMALL_BLIND, BIG_BLIND]
         to_act = 0
         n_raises = 0
-        for street_idx, street_actions in enumerate(state.streets):
+        for street_idx, street_actions in enumerate(streets):
             if street_idx > 0:
                 street_paid = [0.0, 0.0]
                 to_act = 1  # big blind first postflop
@@ -220,7 +240,7 @@ class HoldemGame(Game):
                 street_paid[me] += add
                 total[me] += add
                 to_act = 1 - to_act
-        return street_paid, total, to_act, n_raises
+        return tuple(street_paid), tuple(total), to_act, n_raises
 
     def _betting_closed(self, state: HoldemState) -> bool:
         """Has the current street's betting concluded (no fold)?"""
@@ -271,6 +291,15 @@ class HoldemGame(Game):
         return self.encoder.encode(self, state)
 
     def legal_actions(self, state: HoldemState) -> List[str]:
+        memo = self._legal_memo
+        hit = memo.get(state.streets)
+        if hit is None:
+            if len(memo) >= _MEMO_LIMIT:
+                memo.clear()
+            hit = memo[state.streets] = tuple(self._legal_uncached(state))
+        return list(hit)
+
+    def _legal_uncached(self, state: HoldemState) -> List[str]:
         street_paid, total, to_act, n_raises = self._replay(state)
         me, opp = to_act, 1 - to_act
         owe = street_paid[opp] - street_paid[me]

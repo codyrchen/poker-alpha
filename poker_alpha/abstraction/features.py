@@ -52,8 +52,7 @@ from functools import lru_cache
 from typing import Sequence, Tuple
 
 from ..poker.evaluator import evaluate_best_codes
-from .cards import (_blockers, board_texture, draw_type, preflop_class,
-                    texture_code)
+from .cards import board_texture, draw_type, preflop_class, texture_code
 
 CARD_FEATURES_VERSION = 1
 
@@ -179,6 +178,28 @@ def _is_current_nuts(hole: Sequence[int], board: Sequence[int]) -> bool:
     return True
 
 
+def _flush_blockers(hole: Sequence[int], board: Sequence[int]) -> Tuple[bool, bool]:
+    """``(holds a card of the board's most frequent suit, holds the highest
+    missing card of it)`` for boards with 2+ cards of one suit — the flush
+    part of :func:`.cards._blockers`, without its straight-blocker scan."""
+    suit_counts = [0] * 4
+    for c in board:
+        suit_counts[c // 13] += 1
+    fb = nfb = False
+    ms = max(suit_counts)
+    if ms >= 2 and len(board) >= 3:
+        for s in range(4):
+            if suit_counts[s] != ms:
+                continue
+            mine = {c % 13 for c in hole if c // 13 == s}
+            if mine:
+                fb = True
+                on_board = {c % 13 for c in board if c // 13 == s}
+                if max(r for r in range(13) if r not in on_board) in mine:
+                    nfb = True
+    return fb, nfb
+
+
 @lru_cache(maxsize=1_000_000)
 def _features(hole: Tuple[int, int], board: Tuple[int, ...]) -> CardFeatures:
     if not board:
@@ -192,7 +213,7 @@ def _features(hole: Tuple[int, int], board: Tuple[int, ...]) -> CardFeatures:
         nut = 2 if _is_current_nuts(hole, board) else 1
     else:
         nut = 0
-    fb, nfb, _ = _blockers(hole, board)
+    fb, nfb = _flush_blockers(hole, board)
     blocker = 2 if nfb else (1 if fb else 0)
     potential = 0 if street == 3 else (0 if draw == 0 else (1 if draw == 1 else 2))
     tex = texture_code(board_texture(board), 1)

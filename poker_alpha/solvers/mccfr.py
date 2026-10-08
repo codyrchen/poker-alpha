@@ -46,7 +46,13 @@ class MCCFRSolver(CFRSolver):
         self.rng = np.random.default_rng(seed)
 
     def _sample(self, probs: np.ndarray) -> int:
-        return int(self.rng.choice(len(probs), p=probs))
+        # Same draw as ``self.rng.choice(len(probs), p=probs)`` (one uniform
+        # double, inverse CDF with side="right"), without choice()'s argument
+        # validation overhead; tests/test_performance_equivalence.py checks it
+        # against Generator.choice.
+        cdf = np.cumsum(probs)
+        cdf /= cdf[-1]
+        return int(np.searchsorted(cdf, self.rng.random(), side="right"))
 
     def _traverse(self, state: State, update_player: int) -> float:
         """Sampled counterfactual value of ``state`` for ``update_player``."""

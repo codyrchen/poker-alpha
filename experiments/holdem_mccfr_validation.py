@@ -84,16 +84,34 @@ def main() -> None:
     p.add_argument("--ckpt-dir", type=Path, required=True)
     p.add_argument("--out", type=Path, required=True)
     p.add_argument("--encoder", choices=ENCODER_NAMES, default="bucket")
+    p.add_argument("--locked-config", action="store_true",
+                   help="train the locked HoldemSolverConfig (PRIMARY_CONFIG); "
+                        "checkpoints carry its signature; overrides --encoder")
+    p.add_argument("--resume", type=Path, default=None,
+                   help="continue from this checkpoint (same game/config)")
     p.add_argument("--max-seconds", type=float, default=float("inf"),
                    help="stop at the first milestone reached after this budget")
     args = p.parse_args()
     milestones = [int(x) for x in args.milestones.split(",")]
     args.ckpt_dir.mkdir(parents=True, exist_ok=True)
-    solver = MCCFRSolver(make_game(args.encoder), seed=args.seed)
+    if args.locked_config:
+        from poker_alpha.solver_config import PRIMARY_CONFIG
+
+        game, tag = PRIMARY_CONFIG.build_game(), "locked"
+    else:
+        game, tag = make_game(args.encoder), args.encoder
+    if args.resume is not None:
+        from poker_alpha.solvers.serialize import load_checkpoint
+
+        solver = load_checkpoint(args.resume, game)
+        milestones = [m for m in milestones if m > solver.iterations]
+    else:
+        solver = MCCFRSolver(game, seed=args.seed)
+    start_it = solver.iterations
     prev_keys = 0
     prev_top = {}
     t_start = time.perf_counter()
-    with open(args.out, "w") as fh:
+    with open(args.out, "a" if args.resume else "w") as fh:
         for m in milestones:
             seg = time.perf_counter()
             solver.train(m - solver.iterations)
@@ -107,13 +125,14 @@ def main() -> None:
                     moves.append(float(np.abs(node.average_strategy() - old).sum()))
             top = sorted(visits, key=lambda k: (-visits[k], k))[:args.top_n]
             path = save_checkpoint(
-                solver, args.ckpt_dir / f"{args.encoder}_seed{args.seed}_it{m}.npz")
+                solver, args.ckpt_dir / f"{tag}_seed{args.seed}_it{m}.npz")
             row = {
-                "seed": args.seed, "encoder": args.encoder, "iterations": m,
+                "seed": args.seed, "encoder": tag, "iterations": m,
+                "config_signature": game.solver_config_signature(),
                 "segment_seconds": seg,
                 "total_seconds": time.perf_counter() - t_start,
                 "iters_per_sec_segment": (m - (milestones[milestones.index(m) - 1]
-                                               if milestones.index(m) else 0)) / seg,
+                                               if milestones.index(m) else start_it)) / seg,
                 "infosets": met.infosets,
                 "new_infosets": met.infosets - prev_keys,
                 "visit_fraction": visit_histogram(visits),
