@@ -226,6 +226,27 @@ def card_features(hole: Sequence[int], board: Sequence[int] = ()) -> CardFeature
     return _features(tuple(sorted(hole)), tuple(sorted(board)))
 
 
+@lru_cache(maxsize=4096)
+def _river_values(board: Tuple[int, ...]):
+    import bisect  # noqa: F401  (used by river_percentile)
+    from itertools import combinations
+    b = list(board)
+    live = [c for c in range(52) if c not in board]
+    return tuple(sorted(evaluate_best_codes([x, y] + b) for x, y in combinations(live, 2)))
+
+
+def river_percentile(hole: Sequence[int], board: Sequence[int]) -> float:
+    """Exact share of all two-card holdings (from the cards not on the board;
+    hero's own cards are not removed) that hero beats on a complete board,
+    ties counting half. Cached per board (one 1,081-hand evaluation)."""
+    import bisect
+    vals = _river_values(tuple(sorted(board)))
+    hv = evaluate_best_codes(list(hole) + list(board))
+    lo = bisect.bisect_left(vals, hv)
+    hi = bisect.bisect_right(vals, hv)
+    return (lo + 0.5 * (hi - lo)) / len(vals)
+
+
 TRANSITION_VERSION = 1
 
 

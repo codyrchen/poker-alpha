@@ -103,25 +103,36 @@ class CompactHoldemEncoder:
     perfect_recall_by_design = False
 
     def __init__(self, history: str = "abstract", texture: bool = True,
-                 river_blockers: bool = True) -> None:
+                 river_blockers: bool = True, river_percentile_buckets: int = 0) -> None:
         if history not in ("exact", "abstract"):
             raise ValueError("history must be 'exact' or 'abstract'")
         self.history = history
         self.texture = texture
         self.river_blockers = river_blockers
+        # 0 = v1 behaviour. N > 0: on the river the 0..7 strength rung is
+        # replaced by an exact strength percentile vs all holdings, in N
+        # equal buckets (Phase 35 candidate fix for river collisions).
+        self.river_percentile_buckets = int(river_percentile_buckets)
 
     def signature(self) -> str:
         return (f"CompactHoldemEncoder:v{self.VERSION}:cards=v{CARD_FEATURES_VERSION}"
                 f":history={self.history}:texture={int(self.texture)}"
                 f":river_blockers={int(self.river_blockers)}"
                 + (f":betting=v{BETTING_HISTORY_VERSION}" if self.history == "abstract" else "")
+                + (f":river_pct={self.river_percentile_buckets}" if self.river_percentile_buckets else "")
                 + ":recall=imperfect")
 
     def card_part(self, hole, board) -> str:
         f = card_features(hole, board)
         if not board:
             return f.made
-        s = f"{f.strength}{f.draw}{f.nut}"
+        if self.river_percentile_buckets and len(board) == 5:
+            from .features import river_percentile
+            n = self.river_percentile_buckets
+            pct = river_percentile(hole, board)
+            s = f"p{min(int(pct * n), n - 1)}{f.draw}{f.nut}"
+        else:
+            s = f"{f.strength}{f.draw}{f.nut}"
         if self.river_blockers and len(board) == 5:
             s += f"b{f.blocker}"
         if self.texture:

@@ -130,7 +130,7 @@ def distance(ref, strat, weights):
                for k, w in weights.items() if k in ref and k in strat) / tot
 
 
-def part_a(boards, iters):
+def part_a(boards, iters, encoders=("raw", "bucket", "transition", "compact")):
     rows = []
     for name, board, b0, b1 in boards:
         r0 = [tuple(sorted(codes([h[:2], h[2:]]))) for h in percentile_range(board, b0, 14)]
@@ -138,7 +138,7 @@ def part_a(boards, iters):
         raw = HoldemRiverSubgame(board, r0, r1, "raw")
         res = {"name": name, "board": board, "range_sizes": [len(r0), len(r1)], "encoders": {}}
         ref = None
-        for enc in ("raw", "bucket", "transition", "compact"):
+        for enc in encoders:
             g = raw if enc == "raw" else HoldemRiverSubgame(board, r0, r1, enc)
             t = time.time()
             s = CFRPlusSolver(g)

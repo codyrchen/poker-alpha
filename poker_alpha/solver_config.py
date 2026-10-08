@@ -29,7 +29,8 @@ PRIMARY_SOLVER_ENCODER_RECALL = "IMPERFECT RECALL — NO STANDARD CFR EQUILIBRIU
 
 SAMPLING_VARIANTS = ("external-sampling-mccfr",)
 
-_ENCODERS = ("bucket", "transition", "transition_abstract", "compact", "compact_exact")
+_ENCODERS = ("bucket", "transition", "transition_abstract", "compact", "compact_exact",
+             "compact_river_pct10", "compact_river_pct20")
 
 
 def make_encoder(name: str):
@@ -43,6 +44,8 @@ def make_encoder(name: str):
         "transition_abstract": lambda: TransitionHoldemEncoder("abstract"),
         "compact": lambda: CompactHoldemEncoder("abstract"),
         "compact_exact": lambda: CompactHoldemEncoder("exact"),
+        "compact_river_pct10": lambda: CompactHoldemEncoder("abstract", river_percentile_buckets=10),
+        "compact_river_pct20": lambda: CompactHoldemEncoder("abstract", river_percentile_buckets=20),
     }
     if name not in factories:
         raise ValueError(f"unknown encoder {name!r}; known: {sorted(factories)}")
