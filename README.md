@@ -22,6 +22,7 @@ than assumed, including where the system **fails**.
 | ▶️ **Run the demo** | `python -m poker_alpha.demo` — the whole story in ~12s |
 | 🔬 **Reproduce results** | [Reproducing the experiments](#reproducing-the-experiments) |
 | 📊 **Raw data** | [`results/data/`](results/data) — every number is generated, none hand-entered |
+| 🃏 **Hold'em platform** | [Hold'em decision-support platform](#holdem-decision-support-platform) · [docs/architecture.md](docs/architecture.md) |
 
 ## Selected measured results
 
@@ -39,9 +40,13 @@ than assumed, including where the system **fails**.
 python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install -e ".[dev]"
-pytest                        # 168 tests, ~45s
+pytest                        # 444 tests, ~2.5 min (POKERALPHA_SKIP_SLOW=1 skips 5 slow ones)
 python -m poker_alpha.demo    # ~12s
+python -m poker_alpha.holdem_demo   # 6-max Hold'em decision report, ~2s
 ```
+
+Optional extras: `.[vision]` (screen observer: Pillow, mss), `.[ocr]`
+(Tesseract backend), `.[ui]` (Streamlit app).
 
 The demo walks the full narrative in one deterministic run: equilibrium as a
 baseline, live Bayesian opponent identification, the exploitation/robustness
@@ -63,9 +68,12 @@ supplies something most applied settings cannot — an **exactly computable**
 cost of being wrong. [RESEARCH.md §1](RESEARCH.md) states plainly where that
 analogy breaks down.
 
-*This is an offline research project. It does not connect to, automate, or
-interact with any real poker platform, and makes no claim about profitability
-in real-money poker or financial markets.*
+*The research core is offline. The Hold'em platform adds an optional screen
+observer that **reads** screenshots; nothing in PokerAlpha clicks, types,
+controls a browser or submits actions. Real-time assistance is only for
+private, play-money or test games where it is permitted — elsewhere use the
+same pipeline for post-hand and post-session analysis. No claim is made about
+profitability in real-money poker or financial markets.*
 
 ## Key findings
 
@@ -107,8 +115,15 @@ Stated up front, because they bound every number above:
   not empirical player types. The identifier also assumes the true opponent is
   well approximated by a mixture of its six known candidates.
 - **Leduc is far smaller than real no-limit Hold'em** (288 information sets vs
-  ~10¹⁶⁰ states). The Hold'em module here is an abstracted state engine, not a
-  solved game.
+  ~10¹⁶⁰ states). Heads-up Hold'em MCCFR runs here (with checkpoints and a
+  bucketed abstraction) but only smoke-scale training has been done: it is
+  not a solved game, and its exploitability is unknown.
+- **Multiplayer recommendations are approximate.** CFR's two-player
+  zero-sum guarantees do not extend to 3–9 players; multiway advice is
+  range-based EV estimation under heuristic opponent models.
+- **The screen observer is validated on synthetic frames only.** Exact
+  PokerNow visual accuracy is not validated without representative
+  screenshots.
 - **Some realized-EV comparisons have wide confidence intervals** (~±17
   chips/100 at 3,000 hands); the exact-EV experiments, not the match results,
   are the load-bearing evidence.
@@ -118,6 +133,52 @@ Stated up front, because they bound every number above:
 - **This is not a real-money poker system or a trading strategy.**
 
 The full limitations section is [RESEARCH.md §12](RESEARCH.md).
+
+## Hold'em decision-support platform
+
+Built on top of the research core, without changing its results (Kuhn/Leduc
+outputs are pinned by canonical strategy digests in
+`tests/test_reproducibility.py`).
+
+```
+Screen / hand history / simulator / manual entry
+        ↓
+ObservedTableState  ──  validate()
+        ↓
+Range + opponent model        (priors, blockers, Bayesian action updates, statistics)
+        ↓
+Solver lookup / equity / EV   (abstract HU strategy · multiway equity · CRN rollouts)
+        ↓
+DecisionReport                (frequencies, EV ± SE, provenance, confidence, warnings)
+        ↓
+UI / replay / session analysis
+```
+
+| area | what exists | docs |
+| --- | --- | --- |
+| Research | Kuhn, Leduc, CFR/CFR+/MCCFR, exploitability, opponent-identification experiments — unchanged | [RESEARCH.md](RESEARCH.md) |
+| Hold'em engine | 2–9 seats, integer chips, antes, heads-up blind rules, min-raise and short-all-in reopening, side and split pots | [docs/holdem_engine.md](docs/holdem_engine.md) |
+| Solver | sampled-chance MCCFR on HU Hold'em, exact checkpoint/resume, information-state encoders (raw / toy / bucketed with perfect recall), betting abstraction, convergence proxies | [docs/abstraction.md](docs/abstraction.md) |
+| Opponent / range modelling | 1,326-combo weighted ranges, versioned priors, Bayesian updates, Hold'em statistics with credible intervals and recency decay, exact joint multiway equity | [docs/ranges.md](docs/ranges.md) |
+| Observer | optional screenshot reader: calibration, template OCR, card recognition, smoothing, fusion rules, pause/correct/resume | [docs/observer.md](docs/observer.md) |
+| Decision analysis | `recommend_action` → `DecisionReport` with method hierarchy (solver → rollout → heuristic) and provenance | [docs/decision_engine.md](docs/decision_engine.md) |
+| UI | `streamlit run poker_alpha/ui/app.py` — display only | [docs/architecture.md](docs/architecture.md) |
+
+What the platform does **not** claim: GTO play, Nash convergence for 3+
+players, ground-truth opponent ranges, noise-free Monte Carlo EVs or
+OCR-free state. Abstraction approximates; ranges are beliefs; EVs carry
+sampling error (always shown); OCR adds state uncertainty (field
+confidences and validation warnings are always shown).
+
+```bash
+python -m poker_alpha.holdem_demo                            # 6-max end-to-end report
+python -m poker_alpha.observer.demo tests/fixtures/table.png # screenshot -> state -> report
+python -m poker_alpha.replay tests/fixtures/hands/sample.json --recommend --rollouts 1000
+python -m poker_alpha.session import tests/fixtures/hands/sample.json --db session.sqlite
+python experiments/holdem_mccfr.py --iterations 2000 --encoder bucket \
+    --checkpoint results/checkpoints/hu.npz --checkpoint-every 500
+streamlit run poker_alpha/ui/app.py
+```
 
 ## What's implemented
 
@@ -136,6 +197,11 @@ The full limitations section is [RESEARCH.md §12](RESEARCH.md).
   and a recency-aware belief for non-stationary opponents.
 - **Risk** — return/downside metrics, max drawdown, VaR/CVaR, bootstrap
   confidence intervals, Kelly sizing, and bankroll/risk-of-ruin simulation.
+- **Hold'em platform** — multiplayer rules engine, observed-state model and
+  adapters, abstraction layer, checkpointed HU MCCFR, ranges and statistics,
+  multiway equity, decision engine with rollouts, hand-history replay,
+  SQLite session analysis, optional screen observer and Streamlit UI (see
+  [the section above](#holdem-decision-support-platform)).
 
 ## Detailed results
 
@@ -532,7 +598,7 @@ committed CSV in `results/data/`, produced by a seeded script in
 
 ```bash
 python -m poker_alpha.demo                                  # ~12s
-pytest                                                      # 168 tests, ~45s
+pytest                                                      # 444 tests, ~2.5 min
 ```
 
 **Moderate** (under a minute each):
@@ -551,6 +617,14 @@ python experiments/leduc_convergence.py --iterations 1000 --seed 42
 python experiments/adaptation_vs_archetypes.py --hands 3000 --seed 42
 python experiments/overfitting_vs_sample_size.py --repeats 15 --seed 42
 python experiments/compute_quality_tradeoff.py --seed 42
+```
+
+**Hold'em platform** (seconds to minutes):
+
+```bash
+python experiments/holdem_mccfr.py --iterations 200 --checkpoint-every 50 --encoder bucket
+python experiments/observer_validation.py --frames 30      # synthetic frames only
+python experiments/holdem_benchmark.py --label baseline    # then --label optimized --compare ...
 ```
 
 **Benchmarks** — timing is machine-dependent, so the before/after arms must be
@@ -572,20 +646,31 @@ All scripts accept `--seed` and `--outdir`, and most accept `--iterations` or
 ```
 poker_alpha/
   games/        extensive-form games: Game interface, Kuhn, Leduc,
-                abstracted heads-up no-limit Hold'em
-  solvers/      CFR, CFR+, external-sampling MCCFR, and exact evaluation
-                (expected value, best response, exploitability)
-  poker/        52-card engine, hand evaluator, Monte Carlo equity
-  opponent/     archetypes, Beta-Bernoulli and discrete Bayesian models,
-                match simulation, risk-constrained adaptive exploitation
+                abstracted heads-up no-limit Hold'em (pluggable encoder)
+  solvers/      CFR, CFR+, external-sampling MCCFR, exact evaluation,
+                strategy digests, checkpoints, Hold'em run diagnostics
+  abstraction/  information-state encoders, card and betting abstraction
+  holdem/       2-9 seat rules engine, ObservedTableState, input adapters
+  poker/        52-card engine, hand evaluator, equity, ranges, multiway equity
+  opponent/     archetypes, Bayesian models, match simulation, adaptive
+                exploitation, behaviour models, range priors, statistics
+  decision/     recommend_action, DecisionReport, solver lookup, rollouts
+  history/      canonical hand-history events, JSON format, replay
+  observer/     optional screen observer (calibration, OCR, cards, fusion)
+  session/      SQLite session store and post-session analysis
+  ui/           optional Streamlit decision-support app
+  data/         versioned range-prior table
   risk/         return/drawdown metrics, Kelly sizing, bankroll simulation
   utils/        seeding, plotting, shared experiment harness
   demo.py       the narrative demo (python -m poker_alpha.demo)
+  holdem_demo.py  6-max end-to-end decision demo
+  replay.py     python -m poker_alpha.replay
+docs/             architecture and component documentation
 experiments/      runnable, seeded, parameterized experiment scripts
 results/
   data/           generated CSVs — the source of every number quoted
   figures/        generated figures
-tests/            pytest suite (168 tests)
+tests/            pytest suite (444 tests; fixtures/ holds synthetic screenshots and hand histories)
 RESEARCH.md       the full research writeup
 TODO.md           development history, phase by phase
 ```
