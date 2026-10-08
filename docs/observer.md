@@ -76,6 +76,23 @@ heavy noise produced one confident misread and false events. Wrong
 readings usually carry much lower confidence than right ones, which is what
 the tracker relies on — usually, not always.
 
+## Real PokerNow validation status
+
+**Not validated.** No real screenshots have been collected, so no real
+accuracy exists. `tests/fixtures/pokernow/` holds the structure (`raw/`,
+`annotations/`, optional `calibration.json`) and the annotation format
+(`pokeralpha.screenshot_annotation/v1`, see its README). Once screenshots and
+annotations are added:
+
+```bash
+python experiments/observer_validation.py --fixture-dir tests/fixtures/pokernow
+```
+
+reports hero-card, board-card, stack (exact + MAE), bet (exact + MAE), pot
+(exact + MAE), dealer, seat-occupancy and full-state accuracy and writes
+`results/validation/observer_fixture_validation.json`. With an empty
+directory it reports that nothing was measured.
+
 ## Adding real fixtures
 
 1. Save screenshots of the real client (four-colour deck on) under

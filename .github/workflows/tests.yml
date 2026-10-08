@@ -1,0 +1,52 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  core:
+    name: core (Python ${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12"]
+    env:
+      POKERALPHA_SKIP_SLOW: "1"
+      MPLBACKEND: Agg
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: pip
+      - name: Install
+        run: python -m pip install -e ".[dev]"
+      - name: Non-slow test suite
+        run: pytest -q
+
+  vision-ui:
+    name: vision + UI extras
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      MPLBACKEND: Agg
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install with optional extras (no Tesseract, no display needed)
+        run: python -m pip install -e ".[dev,vision,ui]"
+      - name: Observer, fixture-validation and headless Streamlit tests
+        run: >
+          pytest -q -m vision
+          tests/test_observer_core.py tests/test_observer_pokernow.py
+          tests/test_observer_fusion.py tests/test_observer_fixture_validation.py
+          && pytest -q tests/test_ui.py

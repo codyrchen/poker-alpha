@@ -44,6 +44,13 @@ from .ranges import (CARD_MASK, COMBOS, NUM_COMBOS, WeightedRange,
                      blocked_mask, combo_cdf, draw_combo)
 
 
+# Pot units are scaled by 2520 = lcm(1..9) so a pot split between any number
+# of tied winners (at most 9) divides exactly: equity analysis must not
+# inherit the odd-chip rule, which would bias split-pot shares (a 2-way tie
+# in a 3-unit pot would otherwise be scored 2/3 vs 1/3).
+SPLIT_SCALE = 2520
+
+
 class SamplingError(RuntimeError):
     """Joint opponent hands could not be sampled (ranges incompatible)."""
 
@@ -113,7 +120,8 @@ def multiway_equity(hero: Sequence, board: Sequence = (),
     known = set(h + b)
     need = 5 - len(b)
     players = n_opp + 1
-    contrib = list(contributions) if contributions is not None else [1] * players
+    contrib = [SPLIT_SCALE * int(c) for c in
+               (contributions if contributions is not None else [1] * players)]
     total = float(sum(contrib))
     seat_order = list(range(players))
 
@@ -202,7 +210,8 @@ def exact_equity_enumeration(hero: Sequence, board: Sequence,
     if len(b) != 5:
         raise ValueError("exact enumeration requires a complete board")
     n = len(opponent_ranges)
-    contrib = list(contributions) if contributions is not None else [1] * (n + 1)
+    contrib = [SPLIT_SCALE * int(c) for c in
+               (contributions if contributions is not None else [1] * (n + 1))]
     total = float(sum(contrib))
     dead = blocked_mask(h + b)
     lists = []

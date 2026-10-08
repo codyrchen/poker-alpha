@@ -118,6 +118,11 @@ Stated up front, because they bound every number above:
   ~10¹⁶⁰ states). Heads-up Hold'em MCCFR runs here (with checkpoints and a
   bucketed abstraction) but only smoke-scale training has been done: it is
   not a solved game, and its exploitability is unknown.
+- **Phase 25 validation** ([docs/validation.md](docs/validation.md)): the
+  bucketed abstraction has perfect recall but compresses little postflop,
+  and controlled MCCFR runs (3 seeds to 1,000 iterations) are dominated by
+  discovering new information sets — canonical policies are not yet learned
+  and differ across seeds. Treat solver output as untrained.
 - **Multiplayer recommendations are approximate.** CFR's two-player
   zero-sum guarantees do not extend to 3–9 players; multiway advice is
   range-based EV estimation under heuristic opponent models.

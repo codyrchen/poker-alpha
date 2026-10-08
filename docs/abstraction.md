@@ -32,8 +32,15 @@ had (e.g. the toy encoder drops the preflop class once the flop is dealt)
 yields an imperfect-recall abstraction: CFR may still run, but its output is
 not an equilibrium of anything and must not be presented as one.
 
-Measured infoset growth under identical seeded MCCFR (seed 123, 200
-iterations): raw 49,050 vs toy 23,940.
+**Measurement correction (Phase 25).** Earlier docs compared infoset counts
+from *separate* MCCFR runs (raw 49,050, toy 23,940, bucket 77,872). Those
+runs sampled different trajectories and the bucket run even used a
+different bet menu (33/75/150% vs 50/100/200%), so they did **not** measure
+compression. The encoder-independent measurement on one frozen corpus is in
+[validation.md](validation.md): every encoder is a function of the raw
+information state (0 invariant violations), the bucket encoder has perfect
+recall (0 violations in the collision audit), and its postflop compression
+is small because keys carry the full bucket history.
 
 ## Card abstraction (`abstraction/cards.py`)
 
@@ -51,6 +58,18 @@ iterations): raw 49,050 vs toy 23,940.
 
 Uniform equity buckets are a simple, inspectable first choice — not
 potential-aware, not distribution-aware, not optimal.
+
+**Cost of perfect recall.** Carrying the 169-class preflop label and every
+earlier street bucket in each key multiplies the key space street by street:
+on a fixed action line the current flop bucket label alone takes ~69
+values, but the full flop key (×169 preflop classes) left 1,471 of 2,000
+sampled flop states distinct; turn 1,897/2,000; river 1,992/2,000. In
+practice the abstraction is barely coarser than raw postflop, which is why
+MCCFR training is dominated by state-space discovery (see
+[validation.md](validation.md)). Coarser perfect-recall designs, or an
+explicitly *imperfect-recall* postflop abstraction (standard in large
+solvers, but without equilibrium guarantees), are the options; neither is
+implemented yet.
 
 ## Betting abstraction (`abstraction/betting.py`)
 

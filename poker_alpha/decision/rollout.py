@@ -235,7 +235,9 @@ def _settle(hv, ov, in_hand: Dict[str, bool], add: Dict[str, float],
         return pot0 + total_add
     if "hero" not in live:
         return 0.0
-    scale = 1000  # integer milli-chips so the shared pot code applies exactly
+    # Integer units for the shared pot code: 1/100 chip, times 2520 = lcm(1..9)
+    # so ties among any number of winners split exactly (no odd-chip bias).
+    scale = 100 * 2520
     contrib = [int(round((street_bet[p] + add[p]) * scale)) for p in players]
     folded = [not in_hand[p] for p in players]
     dead = pot0 - sum(street_bet.values())

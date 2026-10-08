@@ -12,6 +12,11 @@ accuracy is not validated without representative screenshots.
 Usage
 -----
     python experiments/observer_validation.py --frames 30 --seed 0
+    python experiments/observer_validation.py --fixture-dir tests/fixtures/pokernow
+
+With ``--fixture-dir`` it instead scores annotated screenshots (see
+``tests/fixtures/pokernow/README.md``) field by field and writes
+``results/validation/observer_fixture_validation.json``.
 
 Outputs (under --outdir, default ./results):
     data/observer_synthetic_validation.csv
@@ -64,13 +69,67 @@ def false_events(adapter, cal, table, frames: int, noise: float, size, seed: int
             yield len(events)
 
 
+def fixture_mode(fixture_dir: Path, out_path: Path) -> dict:
+    import json
+
+    from PIL import Image
+
+    from poker_alpha.observer.annotations import load_fixture_dir, score
+    from poker_alpha.observer.calibration import TableCalibration
+
+    anns = load_fixture_dir(fixture_dir)
+    cal_file = fixture_dir / "calibration.json"
+    cal_fixed = TableCalibration.load(cal_file) if cal_file.exists() else None
+    frames, missing = [], []
+    for a in anns:
+        if not a.image.exists():
+            missing.append(str(a.image))
+            continue
+        cal = cal_fixed or default_layout(a.num_seats, a.hero_seat)
+        if cal.num_seats != a.num_seats:
+            raise SystemExit(f"{a.name}: calibration has {cal.num_seats} seats, "
+                             f"annotation {a.num_seats}")
+        obs = PokerNowStyleAdapter(cal).read_frame(Image.open(a.image).convert("RGB"))
+        frames.append((obs, a))
+    result = {"fixture_dir": str(fixture_dir),
+              "calibration": str(cal_file) if cal_fixed else "default_layout (not PokerNow-derived)",
+              "annotations": len(anns), "missing_images": missing,
+              "metrics": score(frames)}
+    if not frames:
+        result["note"] = ("no annotated screenshots found: nothing was measured; "
+                          "real PokerNow accuracy remains unvalidated")
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    out_path.write_text(json.dumps(result, indent=1))
+    m = result["metrics"]
+    print(f"annotated screenshots scored: {m['screenshots']} (of {len(anns)} annotations)")
+    if missing:
+        print(f"missing images: {missing}")
+    for k in ("hero_cards", "board_cards", "stack", "bet", "pot", "dealer",
+              "seat_occupancy", "full_state"):
+        v = m[k]
+        acc = "n/a" if v["accuracy"] is None else f"{v['accuracy']:.3f}"
+        mae = "" if v.get("mae") is None else f"  MAE {v['mae']:.3f}"
+        unr = "" if not v.get("unreadable") else f"  unreadable {v['unreadable']}"
+        print(f"  {k:<15} {acc:>6}  ({v['correct']}/{v['total']}){mae}{unr}")
+    if not frames:
+        print(result["note"])
+    print(f"wrote {out_path}")
+    return result
+
+
 def main() -> None:
     p = argparse.ArgumentParser(description=__doc__,
                                 formatter_class=argparse.RawDescriptionHelpFormatter)
     p.add_argument("--frames", type=int, default=30)
     p.add_argument("--seed", type=int, default=0)
     p.add_argument("--outdir", type=Path, default=Path("results"))
+    p.add_argument("--fixture-dir", type=Path, default=None)
+    p.add_argument("--out", type=Path,
+                   default=Path("results/validation/observer_fixture_validation.json"))
     args = p.parse_args()
+    if args.fixture_dir is not None:
+        fixture_mode(args.fixture_dir, args.out)
+        return
     rows = []
     for n, size, noise in CONFIGS:
         rng = np.random.default_rng(args.seed + n)
