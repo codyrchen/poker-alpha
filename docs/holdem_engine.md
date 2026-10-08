@@ -71,3 +71,11 @@ mutated after construction; build a new game (or a new
 `HoldemSolverConfig`) instead. Training output is bit-identical to the
 unmemoized code (`tests/test_performance_equivalence.py`). The rules engine
 in this document is not used for solving and was not changed.
+
+Since Phase 35 the solver game also has two opt-in options used by
+`HoldemSolverConfig` v2: `preflop_raise_multiples` (preflop raises become
+"raise to m x current bet" tokens `x200`/`x250`/`x350`) and
+`enforce_min_raise` (no bet below 1 BB, no raise increment below the last
+full increment on the street; blinds count as a 1 BB bet). Both default
+off, so v1 checkpoints and pinned digests are unchanged
+(`tests/test_legal_sizing.py`).

@@ -30,6 +30,17 @@ on the core only through `ObservedTableState`; nothing depends on it.
 Optional dependency groups keep it that way: `[vision]` (Pillow, mss),
 `[ocr]` (pytesseract), `[ui]` (Streamlit).
 
+## Layers and what each one claims
+
+| layer | what it is | claim |
+| --- | --- | --- |
+| Research core | Kuhn / Leduc CFR, CFR+, MCCFR, exact exploitability, adaptive opponent research | equilibria of those small games, measured exactly |
+| Hold'em engine | 2-9 player rules and simulation (`holdem/`) | correct rules, chip conservation, side pots (tested) |
+| HU solver | approximate abstract MCCFR on heads-up 100 BB (`games/holdem.py`, `solver_config.py`) | abstract strategy only; imperfect recall; exploitability of the full abstraction unknown; gated before use |
+| Multiway | range/EV approximation (equity, rollouts) | no Nash solving for 3+ players |
+| Observer | read-only visual state extraction (`observer/`) | synthetic-fixture validated; real client BLOCKED on fixtures |
+| Decision engine | solver -> rollout -> heuristic cascade with uncertainty (`decision/`, `pipeline.py`) | every number carries source and uncertainty |
+
 ## Packages
 
 | package | role |
@@ -39,6 +50,8 @@ Optional dependency groups keep it that way: `[vision]` (Pillow, mss),
 | `abstraction/` | information-state encoders (raw / toy / bucketed / transition / compact), 169 preflop classes, board and hand features, cheap cached card features, betting-history abstraction |
 | `solver_config.py` | locked `HoldemSolverConfig` v1 (`PRIMARY_CONFIG`: compact encoder, imperfect recall) |
 | `pipeline.py` | one normalized path: manual / simulation / hand history / screenshot -> `DecisionReport` |
+| `decision/solver_gate.py` | solver-confidence gate (accept / low confidence / reject with reasons) |
+| `games/reduced_holdem.py` | exact Hold'em-shaped validation games (reduced preflop, fixed-board river) |
 | `validation/` | abstraction audits, canonical spots and the canonical matrix, duplicate cross-play |
 | `holdem/` | 2–9 seat no-limit rules engine (integer chips, side pots), positions, `ObservedTableState`, input adapters |
 | `poker/` | cards, evaluator, heads-up equity, combo-level `WeightedRange`, multiway equity |

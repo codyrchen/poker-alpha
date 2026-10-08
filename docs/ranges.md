@@ -74,3 +74,9 @@ classes, behaviour model) and repeats it under
 (equity / rollout SE), observation uncertainty and abstraction uncertainty
 (see [decision_engine.md](decision_engine.md)). No ground-truth range
 accuracy has been measured.
+
+Sensitivity (`results/validation/range_sensitivity_v1.json`): changing only
+the assumed opponent model (regular / nit / calling station / maniac / any
+two cards) changes the recommendation in 2 of 3 measured heads-up spots
+(e.g. top pair facing a flop bet: raise, call or all-in; best-action EV
+4.6-30.1 BB). Ranges are assumptions; read EVs as conditional on them.

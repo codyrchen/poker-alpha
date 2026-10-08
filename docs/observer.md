@@ -98,6 +98,19 @@ reports hero-card, board-card, stack (exact + MAE), bet (exact + MAE), pot
 `results/validation/observer_fixture_validation.json`. With an empty
 directory it reports that nothing was measured.
 
+## Annotation validation and metrics (Phase 38)
+
+`observer.annotations.validate_annotation` rejects inconsistent ground
+truth before it is used (card syntax, duplicate cards, board length vs
+`street`, seat ranges, hero seat occupied, non-negative stacks/bets/pot,
+`all_in` with a non-zero stack). Annotations may carry `street`, per-seat
+`all_in` and `name`. Scoring reports hero-card and board-card accuracy per
+card and as exact pair/board, street, stacks / bets / pot (exact + MAE),
+dealer, seat occupancy, full state, and accuracy by reported confidence
+(calibration). A harness self-test runs it end to end on the synthetic image
+(`tests/test_annotation_validation.py`) — that proves the plumbing, not real
+accuracy. **Real screen validation: BLOCKED** (0 real fixtures, Phase 38).
+
 ## Adding real fixtures (unblocks Phase 30)
 
 1. Capture screenshots of the real client only where you are allowed to

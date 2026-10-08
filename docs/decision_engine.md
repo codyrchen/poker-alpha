@@ -50,6 +50,32 @@ a raise) — such spots should be treated as uncertain.
 `SolverStrategyProvider` or a coded `LookupMiss`, which `pipeline.analyze`
 reports in the cascade instead of failing.
 
+### Solver-confidence gate (Phase 37)
+
+A solver key that exists is not trusted by default. `decision/solver_gate.py`
+reads the strategy's confidence table (per key: visits, movement between
+checkpoints, seed disagreement, collision dispersion, audit flags) and
+returns `SOLVER_ACCEPT`, `SOLVER_LOW_CONFIDENCE` (used, confidence low,
+warning) or `SOLVER_REJECT` (fall back to rollout, then heuristic). Reasons
+are machine-readable: `LOW_VISIT_COUNT`, `HIGH_SEED_DISAGREEMENT`,
+`UNSTABLE_ACROSS_CHECKPOINTS`, `HIGH_COLLISION_DISPERSION`,
+`CONFIG_MISMATCH`, `INCOMPATIBLE_CHECKPOINT`, `UNSEEN_STATE`,
+`OUTSIDE_ABSTRACTION`, `KNOWN_PATHOLOGICAL_BUCKET`, `NO_STABILITY_DATA`.
+Thresholds are calibrated against true strategy error in exact games
+(`docs/solver_validation.md`, Phase 37). Every report has
+`details["solver"]` = {used, confidence, reasons, visits, seed_disagreement,
+movement, collision}; the UI prints "Solver strategy not used: <reasons> ·
+fallback: <method>" when it is rejected.
+
+The lookup also never returns a bet or raise below the NLHE minimum (the v1
+abstraction contains such sizes); their probability mass is removed,
+renormalized and reported as `illegal_size_mass_removed`.
+
+Known weakness found by exact games: the default opponent behaviour model
+folds too much to large bets, so rollouts recommend river overbets where
+the exact equilibrium checks (16 of 36 spots); rollout EVs themselves match
+closed forms (`results/validation/rollout_validation_v1.json`).
+
 ### Uncertainty by source
 
 `report.uncertainty` keeps five sources separate instead of blending them:
