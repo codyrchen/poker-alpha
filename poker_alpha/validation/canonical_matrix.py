@@ -110,12 +110,40 @@ class MatrixSpot:
     preflop_line: str = ""
 
 
-def canonical_matrix() -> List[MatrixSpot]:
+# v1 preflop tokens -> v2 (legal-sizing) preflop tokens with the same role
+# (small / medium / large open or raise).
+V2_PREFLOP = {"b33": "x200", "b75": "x250", "b150": "x350"}
+
+
+def _translate(streets: Tuple[str, ...], game) -> Tuple[str, ...]:
+    if game is None or not getattr(game, "preflop_raise_multiples", None):
+        return streets
+    pre = streets[0]
+    for old, new in sorted(V2_PREFLOP.items(), key=lambda kv: -len(kv[0])):
+        pre = pre.replace(old, new)
+    return (pre,) + tuple(streets[1:])
+
+
+def _legal_line(game, streets) -> bool:
+    """Every action of ``streets`` legal in ``game`` (board-independent)."""
+    from ..games.holdem import HoldemState, _tokens
+    for si in range(len(streets)):
+        for j in range(len(_tokens(streets[si]))):
+            pre = streets[:si] + ("".join(_tokens(streets[si])[:j]),)
+            st = HoldemState(holes=((0, 1), (2, 3)), board=(), streets=pre, contrib=(0.0, 0.0))
+            if _tokens(streets[si])[j] not in game.legal_actions(st):
+                return False
+    return True
+
+
+def canonical_matrix(game=None) -> List[MatrixSpot]:
+    """The canonical spots; with ``game`` given, preflop tokens are mapped to
+    the game's sizing (v2) and lines illegal in the game are skipped."""
     spots: List[MatrixSpot] = []
     for sit, (pos, streets) in PREFLOP_SITUATIONS.items():
         for hand, hole in PREFLOP_HANDS.items():
             spots.append(MatrixSpot(f"pre|{sit}|{hand}", "preflop", sit, pos, hole, (),
-                                    streets, hand))
+                                    _translate(streets, game), hand))
     for bt, flop in FLOPS.items():
         boards = {"flop": flop, "turn": flop + (TURN_CARD[bt],),
                   "river": flop + (TURN_CARD[bt], RIVER_CARD[bt])}
@@ -129,9 +157,12 @@ def canonical_matrix() -> List[MatrixSpot]:
                     for cat in CATEGORIES:
                         if cat not in reps:
                             continue
+                        line = _translate(prior + (cur,), game)
+                        if game is not None and not _legal_line(game, line):
+                            continue
                         spots.append(MatrixSpot(
                             f"{street}|{bt}|{lname}|{node}|{cat}", street, node, pos,
-                            reps[cat], board, prior + (cur,), cat, bt, lname))
+                            reps[cat], board, line, cat, bt, lname))
     return spots
 
 

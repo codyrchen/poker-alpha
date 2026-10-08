@@ -32,7 +32,8 @@ ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
 from poker_alpha.poker.ranges import CLASS_MEMBERS, COMBOS  # noqa: E402
-from poker_alpha.solver_config import PRIMARY_CONFIG  # noqa: E402
+from poker_alpha.solver_config import PRIMARY_CONFIG, V2_CONFIG  # noqa: E402
+from poker_alpha.validation.canonical_matrix import _translate  # noqa: E402
 from poker_alpha.solvers.holdem_analysis import action_label, spot_state  # noqa: E402
 from poker_alpha.solvers.serialize import load_checkpoint  # noqa: E402
 
@@ -50,7 +51,8 @@ SITUATIONS = {                   # name -> (position, streets)
     "BTN_open75_vs_3bet75": ("BTN", ("b75b75",)),
 }
 ACTION_CLASSES = {"f": "fold", "c": "call_or_limp", "b33": "small_raise",
-                  "b75": "medium_raise", "b150": "large_raise", "a": "all_in"}
+                  "b75": "medium_raise", "b150": "large_raise", "a": "all_in",
+                  "x200": "small_raise", "x250": "medium_raise", "x350": "large_raise"}
 
 
 def classes_grid():
@@ -100,8 +102,13 @@ def main() -> None:
     p.add_argument("--iterations", default="10000,100000,300000")
     p.add_argument("--out", type=Path, default=ROOT / "results" / "validation" / "preflop_audit_v1.json")
     p.add_argument("--fig-dir", type=Path, default=ROOT / "results" / "figures" / "phase32")
+    p.add_argument("--config", choices=("v1", "v2"), default="v1")
+    p.add_argument("--prefix", default=None)
     a = p.parse_args()
-    game = PRIMARY_CONFIG.build_game()
+    cfg = PRIMARY_CONFIG if a.config == "v1" else V2_CONFIG
+    prefix = a.prefix or ("locked" if a.config == "v1" else "v2")
+    game = cfg.build_game()
+    sits = {k: (pos, _translate(st, game)) for k, (pos, st) in SITUATIONS.items()}
     seeds = [int(x) for x in a.seeds.split(",")]
     its = [int(x) for x in a.iterations.split(",")]
     grid = classes_grid()
@@ -109,7 +116,7 @@ def main() -> None:
 
     # Static part: keys, legal actions, concrete geometry.
     states, geometry = {}, {}
-    for sit, (pos, streets) in SITUATIONS.items():
+    for sit, (pos, streets) in sits.items():
         for cls in classes:
             hole = hole_of(cls)
             s = spot_state(game, pos, hole, (), streets, villain_hole=villain_for(hole))
@@ -130,7 +137,7 @@ def main() -> None:
                for (sit, cls) in states}
     for seed in seeds:
         for it in its:
-            path = a.ckpt_dir / f"locked_seed{seed}_it{it}.npz"
+            path = a.ckpt_dir / f"{prefix}_seed{seed}_it{it}.npz"
             if not path.exists():
                 print("missing", path)
                 continue
@@ -195,7 +202,7 @@ def main() -> None:
                         "top": sorted(rows, key=lambda x: -x[1])[:12]}
 
     _heatmaps(records, grid, a.fig_dir, final)
-    doc = {"format": "pokeralpha.preflop_audit/v1", "config_signature": PRIMARY_CONFIG.signature(),
+    doc = {"format": "pokeralpha.preflop_audit/v1", "config_signature": cfg.signature(),
            "seeds": seeds, "iterations": its, "action_geometry": geometry,
            "action_classes": ACTION_CLASSES, "surprises": surprises, "jam_distribution": jam,
            "records": records}

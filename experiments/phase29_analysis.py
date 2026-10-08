@@ -39,7 +39,10 @@ sys.path.insert(0, str(ROOT / "experiments"))
 
 from phase25_validation import top_visited, visit_counts, visit_stats  # noqa: E402
 
-from poker_alpha.solver_config import PRIMARY_CONFIG  # noqa: E402
+from poker_alpha.solver_config import PRIMARY_CONFIG, V2_CONFIG  # noqa: E402
+
+CONFIGS = {"v1": (PRIMARY_CONFIG, "locked"), "v2": (V2_CONFIG, "v2")}
+CFG, PREFIX = CONFIGS["v1"]
 from poker_alpha.solvers.serialize import load_checkpoint  # noqa: E402
 from poker_alpha.solvers.strategy_artifact import export_solver  # noqa: E402
 from poker_alpha.validation.canonical_matrix import (PREMIUM, TRASH,  # noqa: E402
@@ -55,7 +58,7 @@ MIN_VISITS_SANITY = 5
 
 def load_runs(runs_dir: Path):
     runs = {}
-    for f in sorted(runs_dir.glob("locked_seed*.jsonl")):
+    for f in sorted(runs_dir.glob(f"{PREFIX}_seed*.jsonl")):
         rows = [json.loads(x) for x in f.read_text().splitlines() if x.strip()]
         if rows:
             runs[rows[0]["seed"]] = rows
@@ -171,7 +174,7 @@ def _strategy_table(solver):
 
 def _match(job):
     name, a, b, deals, seed = job
-    game = PRIMARY_CONFIG.build_game()
+    game = CFG.build_game()
     pa, pb = _POLICIES[a](), _POLICIES[b]()
     t = time.perf_counter()
     r = duplicate_match(game, pa, pb, deals, seed).to_dict()
@@ -193,10 +196,13 @@ def main() -> None:
     p.add_argument("--workers", type=int, default=4)
     p.add_argument("--out", type=Path,
                    default=ROOT / "results" / "validation" / "holdem_training_v1.json")
+    p.add_argument("--config", choices=sorted(CONFIGS), default="v1")
     args = p.parse_args()
+    global CFG, PREFIX
+    CFG, PREFIX = CONFIGS[args.config]
     runs = load_runs(args.runs_dir)
-    game = PRIMARY_CONFIG.build_game()
-    spots = canonical_matrix()
+    game = CFG.build_game()
+    spots = canonical_matrix(game if CFG is not PRIMARY_CONFIG else None)
     seeds = sorted(runs)
     per_seed, mats, tops, tables = {}, {}, {}, {}
     for seed in seeds:
@@ -288,8 +294,8 @@ def main() -> None:
 
     doc = {
         "format": "pokeralpha.holdem_training/v1",
-        "config": PRIMARY_CONFIG.to_dict(),
-        "config_signature": PRIMARY_CONFIG.signature(),
+        "config": CFG.to_dict(),
+        "config_signature": CFG.signature(),
         "recall": "IMPERFECT RECALL - no standard CFR equilibrium guarantee",
         "seeds": seeds, "final_iterations": final_it,
         "convergence_proxies": per_seed,
