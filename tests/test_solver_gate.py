@@ -97,3 +97,27 @@ def test_calibrated_thresholds_load():
     th = GateThresholds.calibrated()
     assert th.reject_visits_below <= th.low_visits_below
     assert th.low_seed_disagreement <= th.reject_seed_disagreement
+
+
+def test_illegal_abstract_sizes_never_recommended(provider):
+    """v1 offers a 1.66 BB open ('raise33'); the lookup drops it."""
+    rep = analyze(observe_manual(_hu("7c 2h")), DecisionConfig(equity_simulations=200), solver=provider)
+    labels = [c.label for c in rep.candidates]
+    if rep.details["solver"]["used"]:
+        assert "raise_33" not in labels
+        assert sum(c.probability for c in rep.candidates) == pytest.approx(1.0)
+
+
+def test_illegal_size_mass_is_removed_deterministically():
+    from poker_alpha.decision import SolverStrategyProvider
+
+    game = PRIMARY_CONFIG.build_game()
+    key = game.infoset_key(spot_state(game, "BTN", ("Ah", "Qd"), (), ("",), villain_hole=("2c", "3d")))
+    prov = SolverStrategyProvider(game, {key: {"f": 0.0, "c": 0.2, "b33": 0.5, "b75": 0.3, "b150": 0.0,
+                                              "a": 0.0}}, {key: 1000.0})
+    rep = analyze(observe_manual(_hu("Ah Qd")), DecisionConfig(equity_simulations=200), solver=prov)
+    assert rep.method == "solver"
+    mix = {c.label: c.probability for c in rep.candidates}
+    assert "raise_33" not in mix
+    assert mix["raise_75"] == pytest.approx(0.6) and mix["call"] == pytest.approx(0.4)
+    assert rep.details["solver"]["illegal_size_mass_removed"] == pytest.approx(0.5)

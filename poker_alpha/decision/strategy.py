@@ -276,4 +276,24 @@ class SolverStrategyProvider:
                 else:
                     pct = int(round(self.game.bet_fractions[tok] * 100))
                     out.append((tok, f"{verb}_{pct}", verb, to, p))
-        return SolverLookup(key, visits, exact, tuple(out), decision.to_dict())
+        # Never recommend an abstract size that is illegal in real NLHE (the
+        # v1 abstraction offers bets/raises below the minimum): drop them,
+        # renormalize, and report the removed mass.
+        level = street_paid[1 - me]
+        min_inc = self.game._min_increment(state.streets)
+        legal_out, removed = [], 0.0
+        for row in out:
+            tok, to, p = row[0], row[3], row[4]
+            if tok not in ("f", "c", "a") and to - level < min_inc - 1e-9:
+                removed += p
+                continue
+            legal_out.append(row)
+        gate_d = decision.to_dict()
+        if removed > 0 or len(legal_out) < len(out):
+            rest = sum(r[4] for r in legal_out)
+            if rest <= 0:
+                return LookupMiss("all solver mass is on sizes below the NLHE minimum",
+                                  "OUTSIDE_ABSTRACTION", ("OUTSIDE_ABSTRACTION",), gate_d)
+            legal_out = [r[:4] + (r[4] / rest,) for r in legal_out]
+            gate_d["signals"]["illegal_size_mass_removed"] = round(removed, 4)
+        return SolverLookup(key, visits, exact, tuple(legal_out), gate_d)

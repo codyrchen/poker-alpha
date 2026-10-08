@@ -71,8 +71,13 @@ class GateThresholds:
         def pick(key, default):
             v = t.get(key)
             return float(v) if v is not None else default
-        return cls(reject_visits_below=pick("reject_visits_below", d.reject_visits_below),
-                   low_visits_below=pick("low_conf_visits_below", d.low_visits_below),
+        # Visits did not predict true error in the exact games (calibration
+        # file), so the visit rule is a documented sanity floor, not a
+        # calibrated threshold: reject below 20 visits, low-confidence below
+        # max(calibrated, 20).
+        rv = pick("reject_visits_below", 20.0)
+        lv = max(pick("low_conf_visits_below", rv), rv)
+        return cls(reject_visits_below=rv, low_visits_below=lv,
                    reject_seed_disagreement=pick("reject_seed_disagreement_at_or_above",
                                                  d.reject_seed_disagreement),
                    low_seed_disagreement=pick("low_conf_seed_disagreement_at_or_above",

@@ -84,17 +84,21 @@ def binned(x, err, edges):
     return out
 
 
-def threshold(x, err, candidates, level, direction):
-    """Smallest (direction='above') / largest ('below') cut such that states
-    beyond it have median true error > level."""
-    best = None
-    for c in candidates:
-        m = x >= c if direction == "above" else x < c
-        if m.sum() >= 10 and np.median(err[m]) > level:
-            if direction == "above":
-                return c
-            best = c
-    return best
+def bin_threshold(bins, level, direction):
+    """Lowest bin edge from which every higher bin's median true error exceeds
+    ``level`` ('above'), or highest edge below which every bin does ('below')."""
+    if direction == "above":
+        for i in range(len(bins)):
+            if all(b["median_true_error"] > level for b in bins[i:]):
+                return bins[i]["bin"][0]
+        return None
+    edge = None
+    for b in bins:
+        if b["median_true_error"] > level:
+            edge = b["bin"][1]
+        else:
+            break
+    return edge
 
 
 def main():
@@ -120,21 +124,24 @@ def main():
     corr = {"spearman_visits_vs_error": float(_spearman(vis, err)),
             "spearman_movement_vs_error": float(_spearman(mv, err)),
             "spearman_seed_disagreement_vs_error": float(_spearman(dis, err))}
+    by_vis = binned(vis, err, [0, 5, 10, 20, 50, 100, 300, 1000, 1e9])
+    by_mv = binned(mv, err, [0, 0.05, 0.1, 0.2, 0.3, 0.5, 0.8, 2.01])
+    by_dis = binned(dis, err, [0, 0.05, 0.1, 0.2, 0.3, 0.5, 0.8, 1.2, 2.01])
     doc = {
         "format": "pokeralpha.solver_gate_calibration/v1",
         "games": per_game, "pooled_infosets": int(len(err)),
         "correlations": corr,
-        "by_visits": binned(vis, err, [0, 5, 10, 20, 50, 100, 300, 1000, 1e9]),
-        "by_movement": binned(mv, err, [0, 0.05, 0.1, 0.2, 0.3, 0.5, 0.8, 2.01]),
-        "by_seed_disagreement": binned(dis, err, [0, 0.05, 0.1, 0.2, 0.3, 0.5, 0.8, 1.2, 2.01]),
+        "by_visits": by_vis, "by_movement": by_mv, "by_seed_disagreement": by_dis,
         "thresholds": {
-            "reject_seed_disagreement_at_or_above": threshold(dis, err, [0.2, 0.3, 0.4, 0.5, 0.6, 0.8, 1.0], 0.5, "above"),
-            "low_conf_seed_disagreement_at_or_above": threshold(dis, err, [0.1, 0.15, 0.2, 0.3, 0.4, 0.5], 0.25, "above"),
-            "reject_movement_at_or_above": threshold(mv, err, [0.1, 0.2, 0.3, 0.4, 0.5, 0.8], 0.5, "above"),
-            "low_conf_movement_at_or_above": threshold(mv, err, [0.05, 0.1, 0.15, 0.2, 0.3], 0.25, "above"),
-            "reject_visits_below": threshold(vis, err, [5, 10, 20, 50, 100], 0.5, "below"),
-            "low_conf_visits_below": threshold(vis, err, [10, 20, 50, 100, 300], 0.25, "below"),
+            "reject_seed_disagreement_at_or_above": bin_threshold(by_dis, 0.5, "above"),
+            "low_conf_seed_disagreement_at_or_above": bin_threshold(by_dis, 0.25, "above"),
+            "reject_movement_at_or_above": bin_threshold(by_mv, 0.5, "above"),
+            "low_conf_movement_at_or_above": bin_threshold(by_mv, 0.25, "above"),
+            "reject_visits_below": bin_threshold(by_vis, 0.5, "below"),
+            "low_conf_visits_below": bin_threshold(by_vis, 0.25, "below"),
         },
+        "threshold_rule": "lowest bin edge from which every bin's median true error exceeds 0.5 (reject) "
+                          "or 0.25 (low confidence); visits: highest edge below which every bin does",
         "true_error": "L1 (0..2) between seed-0 MCCFR average strategy and the CFR+ solution",
         "seconds": round(time.time() - t)}
     OUT.write_text(json.dumps(doc, indent=1))
