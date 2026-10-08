@@ -29,7 +29,7 @@ from pathlib import Path
 from typing import List, Optional
 
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_STRATEGY = ROOT / "results" / "strategy" / "holdem_v1_seed0.npz"
+DEFAULT_STRATEGY = ROOT / "results" / "strategy" / "holdem_v2_seed0.npz"
 
 
 def manual_hu_spot():

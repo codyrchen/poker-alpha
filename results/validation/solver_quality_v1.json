@@ -2758,5 +2758,629 @@
     }
    }
   }
+ },
+ "v1_vs_v2": {
+  "iterations": 100000,
+  "note": "v1 = HoldemSolverConfig:v1 (pot-fraction sizes, 0..7 river rung); v2 = legal sizing + 20 exact river percentile buckets",
+  "v1": {
+   "config_signature": "HoldemSolverConfig:v1:2e23c098860f7894c871",
+   "infosets_seed0": 82781,
+   "new_infosets_per_iteration": 0.08844285714285714,
+   "fraction_trained_ge5": 0.7924161341370605,
+   "fraction_trained_ge20": 0.6248776893248451,
+   "seed_disagreement": {
+    "seed 0 vs seed 1": {
+     "matrix_both_ge20_mean_l1": 0.8459545794392523,
+     "top2000_overlap": 0.893,
+     "top2000_common_mean_l1": 0.2519966466983711
+    },
+    "seed 0 vs seed 2": {
+     "matrix_both_ge20_mean_l1": 0.8352226785714285,
+     "top2000_overlap": 0.879,
+     "top2000_common_mean_l1": 0.25465054234542606
+    },
+    "seed 1 vs seed 2": {
+     "matrix_both_ge20_mean_l1": 0.8347475563909774,
+     "top2000_overlap": 0.8915,
+     "top2000_common_mean_l1": 0.2543270724656847
+    }
+   },
+   "sanity_checks_passed": {
+    "0": 10,
+    "1": 10,
+    "2": 10
+   },
+   "crossplay": [
+    {
+     "match": "seed vs seed (final)",
+     "a": "seed0@100000",
+     "b": "seed1@100000",
+     "bb_per_100": 5.443955193270839,
+     "ci95_bb_per_100": [
+      -4.212914170658081,
+      15.10082455719976
+     ]
+    },
+    {
+     "match": "seed vs seed (final)",
+     "a": "seed1@100000",
+     "b": "seed2@100000",
+     "bb_per_100": -1.175216700815776,
+     "ci95_bb_per_100": [
+      -10.868881460684875,
+      8.518448059053323
+     ]
+    },
+    {
+     "match": "seed vs seed (final)",
+     "a": "seed0@100000",
+     "b": "seed2@100000",
+     "bb_per_100": 13.32998421486023,
+     "ci95_bb_per_100": [
+      3.611810459929955,
+      23.048157969790505
+     ]
+    },
+    {
+     "match": "final vs 1k (other seed)",
+     "a": "seed0@100000",
+     "b": "seed1@1000",
+     "bb_per_100": 439.90262768804945,
+     "ci95_bb_per_100": [
+      427.10854046542227,
+      452.6967149106767
+     ]
+    },
+    {
+     "match": "final vs 10k (other seed)",
+     "a": "seed0@100000",
+     "b": "seed1@10000",
+     "bb_per_100": 264.0116241049287,
+     "ci95_bb_per_100": [
+      252.18671687050258,
+      275.8365313393549
+     ]
+    },
+    {
+     "match": "final vs uniform random",
+     "a": "seed0@100000",
+     "b": "uniform",
+     "bb_per_100": 498.00824686495105,
+     "ci95_bb_per_100": [
+      485.62765465613165,
+      510.3888390737705
+     ]
+    },
+    {
+     "match": "final vs calling station",
+     "a": "seed0@100000",
+     "b": "calling_station",
+     "bb_per_100": 472.06098353000004,
+     "ci95_bb_per_100": [
+      461.10518308141735,
+      483.0167839785827
+     ]
+    },
+    {
+     "match": "control: uniform vs uniform",
+     "a": "uniform",
+     "b": "uniform",
+     "bb_per_100": 3.878119879060139,
+     "ci95_bb_per_100": [
+      -9.959329842830806,
+      17.715569600951085
+     ]
+    }
+   ],
+   "preflop": {
+    "BB_vs_allin": {
+     "mean_seed_disagreement": 0.491,
+     "mean_jam_freq": 0.0,
+     "median_visits": 451.7
+    },
+    "BB_vs_limp": {
+     "mean_seed_disagreement": 0.9369,
+     "mean_jam_freq": 0.1525,
+     "median_visits": 451.7
+    },
+    "BB_vs_open150": {
+     "mean_seed_disagreement": 0.9521,
+     "mean_jam_freq": 0.1695,
+     "median_visits": 451.7
+    },
+    "BB_vs_open33": {
+     "mean_seed_disagreement": 1.0044,
+     "mean_jam_freq": 0.2012,
+     "median_visits": 451.7
+    },
+    "BB_vs_open75": {
+     "mean_seed_disagreement": 1.0007,
+     "mean_jam_freq": 0.1669,
+     "median_visits": 451.7
+    },
+    "BTN_first": {
+     "mean_seed_disagreement": 0.9382,
+     "mean_jam_freq": 0.0843,
+     "median_visits": 457.3
+    },
+    "BTN_limp_vs_raise150": {
+     "mean_seed_disagreement": 1.1305,
+     "mean_jam_freq": 0.2285,
+     "median_visits": 46.7
+    },
+    "BTN_limp_vs_raise33": {
+     "mean_seed_disagreement": 1.1061,
+     "mean_jam_freq": 0.2421,
+     "median_visits": 46.7
+    },
+    "BTN_limp_vs_raise75": {
+     "mean_seed_disagreement": 1.1421,
+     "mean_jam_freq": 0.2244,
+     "median_visits": 46.7
+    },
+    "BTN_open75_vs_3bet75": {
+     "mean_seed_disagreement": 1.0732,
+     "mean_jam_freq": 0.155,
+     "median_visits": 235.7
+    }
+   },
+   "BTN_first_AA": {
+    "legal": [
+     "f",
+     "c",
+     "b33",
+     "b75",
+     "b150",
+     "a"
+    ],
+    "mean_avg": [
+     0.0,
+     0.6867,
+     0.1363,
+     0.0204,
+     0.1182,
+     0.0384
+    ],
+    "per_seed": [
+     [
+      0.0,
+      0.88614,
+      0.00074,
+      0.00112,
+      0.1022,
+      0.00982
+     ],
+     [
+      0.0,
+      0.56636,
+      0.40659,
+      0.02036,
+      0.00248,
+      0.00421
+     ],
+     [
+      0.0,
+      0.60749,
+      0.00159,
+      0.03972,
+      0.24999,
+      0.10121
+     ]
+    ]
+   },
+   "BTN_first_72o": {
+    "legal": [
+     "f",
+     "c",
+     "b33",
+     "b75",
+     "b150",
+     "a"
+    ],
+    "mean_avg": [
+     0.8047,
+     0.0036,
+     0.0385,
+     0.0042,
+     0.1403,
+     0.0086
+    ],
+    "per_seed": [
+     [
+      0.68238,
+      0.00742,
+      0.02905,
+      0.00319,
+      0.25494,
+      0.02303
+     ],
+     [
+      0.79906,
+      0.00311,
+      0.03769,
+      0.00828,
+      0.15187,
+      0.0
+     ],
+     [
+      0.93268,
+      0.00037,
+      0.04867,
+      0.00127,
+      0.01417,
+      0.00285
+     ]
+    ]
+   },
+   "BTN_first_KK": {
+    "legal": [
+     "f",
+     "c",
+     "b33",
+     "b75",
+     "b150",
+     "a"
+    ],
+    "mean_avg": [
+     0.0004,
+     0.4904,
+     0.1436,
+     0.1109,
+     0.2345,
+     0.0204
+    ],
+    "per_seed": [
+     [
+      0.0007,
+      0.50783,
+      0.04002,
+      0.0137,
+      0.43354,
+      0.00421
+     ],
+     [
+      0.00037,
+      0.80122,
+      0.05072,
+      0.02603,
+      0.08373,
+      0.03793
+     ],
+     [
+      0.0,
+      0.16201,
+      0.34003,
+      0.29292,
+      0.18609,
+      0.01894
+     ]
+    ]
+   },
+   "gate_at_100k": {
+    "keys": 78200,
+    "share_keys": {
+     "SOLVER_REJECT": 0.8399,
+     "SOLVER_LOW_CONFIDENCE": 0.0869,
+     "SOLVER_ACCEPT": 0.0732
+    },
+    "share_visit_weighted": {
+     "SOLVER_REJECT": 0.5859,
+     "SOLVER_LOW_CONFIDENCE": 0.1963,
+     "SOLVER_ACCEPT": 0.2178
+    },
+    "median_seed_disagreement": 0.6667,
+    "median_movement": 0.5294
+   }
+  },
+  "v2": {
+   "config_signature": "HoldemSolverConfig:v2:733e52f1d1014e2e7973",
+   "infosets_seed0": 133044,
+   "new_infosets_per_iteration": 0.18977142857142856,
+   "fraction_trained_ge5": 0.7616878626619765,
+   "fraction_trained_ge20": 0.5771173446378641,
+   "seed_disagreement": {
+    "seed 0 vs seed 1": {
+     "matrix_both_ge20_mean_l1": 0.8453285451197055,
+     "top2000_overlap": 0.8395,
+     "top2000_common_mean_l1": 0.29987576571046887
+    },
+    "seed 0 vs seed 2": {
+     "matrix_both_ge20_mean_l1": 0.8532869090909091,
+     "top2000_overlap": 0.846,
+     "top2000_common_mean_l1": 0.30005595606825547
+    },
+    "seed 1 vs seed 2": {
+     "matrix_both_ge20_mean_l1": 0.8427320224719101,
+     "top2000_overlap": 0.862,
+     "top2000_common_mean_l1": 0.2977763098913201
+    }
+   },
+   "sanity_checks_passed": {
+    "0": 10,
+    "1": 10,
+    "2": 10
+   },
+   "crossplay": [
+    {
+     "match": "seed vs seed (final)",
+     "a": "seed0@100000",
+     "b": "seed1@100000",
+     "bb_per_100": 14.673573778869972,
+     "ci95_bb_per_100": [
+      4.870303164699733,
+      24.476844393040214
+     ]
+    },
+    {
+     "match": "seed vs seed (final)",
+     "a": "seed1@100000",
+     "b": "seed2@100000",
+     "bb_per_100": 1.8618521505062064,
+     "ci95_bb_per_100": [
+      -8.060901999685315,
+      11.784606300697726
+     ]
+    },
+    {
+     "match": "seed vs seed (final)",
+     "a": "seed0@100000",
+     "b": "seed2@100000",
+     "bb_per_100": 1.1013929685652453,
+     "ci95_bb_per_100": [
+      -8.739816511823236,
+      10.942602448953727
+     ]
+    },
+    {
+     "match": "final vs 1k (other seed)",
+     "a": "seed0@100000",
+     "b": "seed1@1000",
+     "bb_per_100": 453.8124849880898,
+     "ci95_bb_per_100": [
+      440.8212693550745,
+      466.8037006211051
+     ]
+    },
+    {
+     "match": "final vs 10k (other seed)",
+     "a": "seed0@100000",
+     "b": "seed1@10000",
+     "bb_per_100": 270.0298206361452,
+     "ci95_bb_per_100": [
+      258.07390830028544,
+      281.985732972005
+     ]
+    },
+    {
+     "match": "final vs uniform random",
+     "a": "seed0@100000",
+     "b": "uniform",
+     "bb_per_100": 512.5935035532924,
+     "ci95_bb_per_100": [
+      500.06128866952224,
+      525.1257184370626
+     ]
+    },
+    {
+     "match": "final vs calling station",
+     "a": "seed0@100000",
+     "b": "calling_station",
+     "bb_per_100": 515.408098128,
+     "ci95_bb_per_100": [
+      503.9479375912057,
+      526.8682586647943
+     ]
+    },
+    {
+     "match": "control: uniform vs uniform",
+     "a": "uniform",
+     "b": "uniform",
+     "bb_per_100": -9.953711820315336,
+     "ci95_bb_per_100": [
+      -23.86274934515172,
+      3.9553257045210484
+     ]
+    }
+   ],
+   "preflop": {
+    "BB_vs_allin": {
+     "mean_seed_disagreement": 0.5308,
+     "mean_jam_freq": 0.0,
+     "median_visits": 457.0
+    },
+    "BB_vs_limp": {
+     "mean_seed_disagreement": 0.9994,
+     "mean_jam_freq": 0.168,
+     "median_visits": 457.0
+    },
+    "BB_vs_open150": {
+     "mean_seed_disagreement": 0.9435,
+     "mean_jam_freq": 0.1773,
+     "median_visits": 457.0
+    },
+    "BB_vs_open33": {
+     "mean_seed_disagreement": 1.0285,
+     "mean_jam_freq": 0.1787,
+     "median_visits": 457.0
+    },
+    "BB_vs_open75": {
+     "mean_seed_disagreement": 0.965,
+     "mean_jam_freq": 0.1761,
+     "median_visits": 457.0
+    },
+    "BTN_first": {
+     "mean_seed_disagreement": 0.9644,
+     "mean_jam_freq": 0.0995,
+     "median_visits": 453.7
+    },
+    "BTN_limp_vs_raise150": {
+     "mean_seed_disagreement": 1.1341,
+     "mean_jam_freq": 0.2013,
+     "median_visits": 55.3
+    },
+    "BTN_limp_vs_raise33": {
+     "mean_seed_disagreement": 1.0864,
+     "mean_jam_freq": 0.2017,
+     "median_visits": 55.3
+    },
+    "BTN_limp_vs_raise75": {
+     "mean_seed_disagreement": 1.0918,
+     "mean_jam_freq": 0.2098,
+     "median_visits": 55.3
+    },
+    "BTN_open75_vs_3bet75": {
+     "mean_seed_disagreement": 1.0539,
+     "mean_jam_freq": 0.168,
+     "median_visits": 207.0
+    }
+   },
+   "BTN_first_AA": {
+    "legal": [
+     "f",
+     "c",
+     "x200",
+     "x250",
+     "x350",
+     "a"
+    ],
+    "mean_avg": [
+     0.0,
+     0.4844,
+     0.0373,
+     0.0976,
+     0.3784,
+     0.0023
+    ],
+    "per_seed": [
+     [
+      0.0,
+      0.74531,
+      0.0163,
+      0.09527,
+      0.14313,
+      0.0
+     ],
+     [
+      0.0,
+      0.40278,
+      0.00591,
+      0.11682,
+      0.47449,
+      0.0
+     ],
+     [
+      0.0,
+      0.30516,
+      0.08972,
+      0.08064,
+      0.51765,
+      0.00683
+     ]
+    ]
+   },
+   "BTN_first_72o": {
+    "legal": [
+     "f",
+     "c",
+     "x200",
+     "x250",
+     "x350",
+     "a"
+    ],
+    "mean_avg": [
+     0.8755,
+     0.0398,
+     0.0686,
+     0.0018,
+     0.0079,
+     0.0064
+    ],
+    "per_seed": [
+     [
+      0.79926,
+      0.01125,
+      0.17385,
+      0.00018,
+      0.01326,
+      0.0022
+     ],
+     [
+      0.93437,
+      0.04419,
+      0.001,
+      0.00303,
+      0.0005,
+      0.0169
+     ],
+     [
+      0.8929,
+      0.06409,
+      0.03101,
+      0.00206,
+      0.00993,
+      0.0
+     ]
+    ]
+   },
+   "BTN_first_KK": {
+    "legal": [
+     "f",
+     "c",
+     "x200",
+     "x250",
+     "x350",
+     "a"
+    ],
+    "mean_avg": [
+     0.0002,
+     0.2553,
+     0.0183,
+     0.3254,
+     0.3189,
+     0.082
+    ],
+    "per_seed": [
+     [
+      0.0,
+      0.16527,
+      0.00992,
+      0.33558,
+      0.24502,
+      0.2442
+     ],
+     [
+      0.00048,
+      0.12258,
+      0.01069,
+      0.45925,
+      0.40519,
+      0.00181
+     ],
+     [
+      0.0,
+      0.47797,
+      0.03421,
+      0.18128,
+      0.30654,
+      0.0
+     ]
+    ]
+   },
+   "gate_at_100k": {
+    "keys": 124381,
+    "share_keys": {
+     "SOLVER_REJECT": 0.8575,
+     "SOLVER_LOW_CONFIDENCE": 0.0802,
+     "SOLVER_ACCEPT": 0.0623
+    },
+    "share_visit_weighted": {
+     "SOLVER_REJECT": 0.6474,
+     "SOLVER_LOW_CONFIDENCE": 0.1578,
+     "SOLVER_ACCEPT": 0.1948
+    },
+    "median_seed_disagreement": 0.6436,
+    "median_movement": 0.5677
+   }
+  }
  }
 }

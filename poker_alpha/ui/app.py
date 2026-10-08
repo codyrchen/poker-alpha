@@ -23,7 +23,7 @@ from poker_alpha.ui.view import (candidate_rows, headline, range_rows,
 
 ROOT = Path(__file__).resolve().parents[2]
 FIXTURES = ROOT / "tests" / "fixtures"
-STRATEGY = ROOT / "results" / "strategy" / "holdem_v1_seed0.npz"
+STRATEGY = ROOT / "results" / "strategy" / "holdem_v2_seed0.npz"
 
 EXAMPLE_STATE = {
     "format": "pokeralpha.observed/v1", "num_seats": 6, "hero_seat": 0,

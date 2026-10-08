@@ -171,6 +171,12 @@ V2_CONFIG = HoldemSolverConfig(
     enforce_min_raise=True)
 
 
+# Release choice (Phase 36/40): v2 — legal NLHE sizing and measured lower
+# river abstraction error; v1 remains the locked reference for reproducing
+# Phases 26-31 (its tests, fixtures and artifact are unchanged).
+RELEASE_CONFIG = V2_CONFIG
+RELEASE_STRATEGY = "results/strategy/holdem_v2_seed0.npz"
+
 KNOWN_CONFIGS = {"v1": PRIMARY_CONFIG, "v2-sizing-only": LEGAL_SIZING_CONFIG, "v2": V2_CONFIG}
 
 

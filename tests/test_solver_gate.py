@@ -134,3 +134,23 @@ def test_config_inferred_from_artifact_signature(tmp_path):
     assert not hasattr(prov, "code") and prov.game.signature() == V2_CONFIG.build_game().signature()
     miss = load_solver(path, config=PRIMARY_CONFIG)
     assert miss.code == "CONFIG_MISMATCH"
+
+
+def test_release_strategy_is_v2_gated_and_legal():
+    from poker_alpha.solver_config import RELEASE_CONFIG, RELEASE_STRATEGY
+    from poker_alpha.solvers.strategy_artifact import load_artifact
+
+    path = ROOT / RELEASE_STRATEGY
+    art = load_artifact(path, RELEASE_CONFIG.build_game())
+    assert art.config_signature == RELEASE_CONFIG.signature() and art.meta["iterations"] >= 100000
+    prov = load_solver(path)
+    assert prov.confidence is not None and prov.confidence.config_signature == RELEASE_CONFIG.signature()
+    for cards in ("Ah Qd", "As Ah", "7c 2h", "Kd Kh"):
+        rep = analyze(observe_manual(_hu(cards)), DecisionConfig(equity_simulations=200), solver=prov)
+        info = rep.details["solver"]
+        assert info["confidence"] in ("SOLVER_ACCEPT", "SOLVER_LOW_CONFIDENCE", "rejected")
+        if info["used"]:
+            for c in rep.candidates:
+                if c.kind in ("raise", "bet"):
+                    assert c.amount_to >= 2.0 - 1e-9      # legal NLHE open: at least a min-raise
+            assert "illegal_size_mass_removed" not in info

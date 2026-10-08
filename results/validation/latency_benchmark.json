@@ -9,73 +9,73 @@
  },
  "online_inference": {
   "hand_evaluation (7 cards, x2000)": {
-   "median_ms": 7.8884,
-   "p95_ms": 11.9604,
+   "median_ms": 8.089,
+   "p95_ms": 8.5917,
    "reps": 20
   },
   "HU equity vs random (2,000 sims)": {
-   "median_ms": 35.2504,
-   "p95_ms": 36.0309,
+   "median_ms": 37.1453,
+   "p95_ms": 38.4384,
    "reps": 20
   },
   "multiway equity, 2 opponents (2,000 sims)": {
-   "median_ms": 115.1419,
-   "p95_ms": 132.481,
+   "median_ms": 114.6166,
+   "p95_ms": 118.4816,
    "reps": 20
   },
   "range update (Bayes, 1,326 combos)": {
-   "median_ms": 4.5173,
-   "p95_ms": 7.2599,
+   "median_ms": 4.3762,
+   "p95_ms": 4.4816,
    "reps": 30
   },
   "solver lookup incl. gate": {
-   "median_ms": 0.0154,
-   "p95_ms": 0.0312,
+   "median_ms": 0.016,
+   "p95_ms": 0.0246,
    "reps": 200
   },
   "rollout 100 (3 candidates)": {
-   "median_ms": 33.1002,
-   "p95_ms": 34.2961,
+   "median_ms": 34.4573,
+   "p95_ms": 35.0519,
    "reps": 10
   },
   "rollout 400 (3 candidates)": {
-   "median_ms": 82.9711,
-   "p95_ms": 84.6784,
+   "median_ms": 85.8535,
+   "p95_ms": 87.8204,
    "reps": 10
   },
   "rollout 1000 (3 candidates)": {
-   "median_ms": 182.2884,
-   "p95_ms": 183.1338,
+   "median_ms": 192.1462,
+   "p95_ms": 192.697,
    "reps": 5
   },
   "observer frame (synthetic fixture)": {
-   "median_ms": 67.9558,
-   "p95_ms": 69.2774,
+   "median_ms": 73.7011,
+   "p95_ms": 74.3474,
    "reps": 10
   },
   "state fusion (one update + observed state)": {
-   "median_ms": 0.0855,
-   "p95_ms": 0.1216,
+   "median_ms": 0.081,
+   "p95_ms": 0.127,
    "reps": 30
   },
   "full DecisionReport, solver path (1,500 equity sims)": {
-   "median_ms": 71.5696,
-   "p95_ms": 72.5486,
+   "median_ms": 77.3984,
+   "p95_ms": 78.1944,
    "reps": 8
   },
   "full DecisionReport, heuristic (1,500 equity sims)": {
-   "median_ms": 72.0287,
-   "p95_ms": 72.4952,
+   "median_ms": 76.698,
+   "p95_ms": 78.53,
    "reps": 8
   },
   "full DecisionReport, rollout 400": {
-   "median_ms": 148.6653,
-   "p95_ms": 149.2702,
+   "median_ms": 163.2651,
+   "p95_ms": 164.6123,
    "reps": 8
   },
   "hand-history replay + DecisionReport (heuristic)": {
-   "median_ms": 90.5214,
-   "p95_ms": 95.3412,
+   "median_ms": 92.912,
+   "p95_ms": 98.3348,
    "reps": 8
   }
  },
@@ -93,6 +93,20 @@
    "2": {
     "iterations": 300000,
     "infosets": 86375
+   }
+  },
+  "holdem_training_v2.json": {
+   "0": {
+    "iterations": 100000,
+    "infosets": 133044
+   },
+   "1": {
+    "iterations": 100000,
+    "infosets": 132887
+   },
+   "2": {
+    "iterations": 100000,
+    "infosets": 132953
    }
   }
  }

@@ -33,7 +33,7 @@ sys.path.insert(0, str(ROOT))
 
 from poker_alpha.abstraction.features import card_features  # noqa: E402
 from poker_alpha.decision.solver_gate import ConfidenceTable, KeyStats  # noqa: E402
-from poker_alpha.solver_config import LEGAL_SIZING_CONFIG, PRIMARY_CONFIG  # noqa: E402
+from poker_alpha.solver_config import PRIMARY_CONFIG, V2_CONFIG  # noqa: E402
 from poker_alpha.solvers.serialize import load_checkpoint  # noqa: E402
 from poker_alpha.validation.abstraction_audit import generate_corpus  # noqa: E402
 
@@ -57,7 +57,7 @@ def main():
     p.add_argument("--audit", type=Path, default=ROOT / "results" / "validation" / "preflop_audit_v1.json")
     p.add_argument("--out", type=Path, required=True)
     a = p.parse_args()
-    cfg = PRIMARY_CONFIG if a.config == "v1" else LEGAL_SIZING_CONFIG
+    cfg = PRIMARY_CONFIG if a.config == "v1" else V2_CONFIG
     game = cfg.build_game()
     seeds = [int(x) for x in a.seeds.split(",")]
     ck = lambda s, it: a.ckpt_dir / f"{a.prefix}_seed{s}_it{it}.npz"  # noqa: E731

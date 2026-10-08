@@ -8,7 +8,7 @@ p95 over repeated runs, plus strategy-artifact load time.
 
 Usage::
 
-    python experiments/final_benchmark.py --strategy results/strategy/holdem_v1_seed0.npz
+    python experiments/final_benchmark.py --strategy results/strategy/holdem_v2_seed0.npz
 """
 
 from __future__ import annotations

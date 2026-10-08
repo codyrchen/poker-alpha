@@ -64,7 +64,7 @@ def main():
     out["range update (Bayes, 1,326 combos)"] = bench(
         lambda: update_range_for_action(unif, "raise", facing_bet=True, board=board, dead=hero,
                                         model=ARCHETYPE_MODELS["regular"]), 30)
-    solver = load_solver(ROOT / "results" / "strategy" / "holdem_v1_seed0.npz")
+    solver = load_solver(ROOT / "results" / "strategy" / "holdem_v2_seed0.npz")
     obs = observe_manual(manual_hu_spot())
     out["solver lookup incl. gate"] = bench(lambda: solver.lookup(obs.state), 200)
     from poker_alpha.holdem.adapters import ManualStateAdapter
