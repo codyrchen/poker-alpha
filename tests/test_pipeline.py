@@ -95,25 +95,26 @@ def test_rejection_reasons_are_coded(artifact, tmp_path):
     other = dataclasses.replace(PRIMARY_CONFIG, raise_cap=2)
     for path in (art, ckpt):
         miss = load_solver(path, config=other)
-        assert isinstance(miss, LookupMiss) and miss.code == "config_mismatch"
+        assert isinstance(miss, LookupMiss) and miss.code == "CONFIG_MISMATCH"
         rep = analyze(observe_manual(hu()), FAST, solver=miss)
-        assert _cascade(rep)["solver"]["code"] == "config_mismatch"
+        assert _cascade(rep)["solver"]["code"] == "CONFIG_MISMATCH"
         assert rep.method == "heuristic fallback"
     (tmp_path / "junk.npz").write_bytes(b"junk")
-    assert load_solver(tmp_path / "junk.npz").code == "incompatible_checkpoint"
-    assert load_solver(tmp_path / "missing.npz").code == "incompatible_checkpoint"
+    assert load_solver(tmp_path / "junk.npz").code == "INCOMPATIBLE_CHECKPOINT"
+    assert load_solver(tmp_path / "missing.npz").code == "INCOMPATIBLE_CHECKPOINT"
 
     prov = load_solver(art, min_visits=1e9)
     rep = analyze(observe_manual(hu(visited_hand(solver))), FAST, solver=prov)
-    assert _cascade(rep)["solver"]["code"] == "insufficient_visits"
+    assert _cascade(rep)["solver"]["code"] == "LOW_VISIT_COUNT"
     rep = analyze(observe_manual(hu(stack=40)), FAST, solver=prov)
-    assert _cascade(rep)["solver"]["code"] == "out_of_abstraction"
+    assert _cascade(rep)["solver"]["code"] == "OUTSIDE_ABSTRACTION"
     empty = load_solver(art, min_visits=0.0)
     empty.strategy = {}
     rep = analyze(observe_manual(hu()), FAST, solver=empty)
-    assert _cascade(rep)["solver"]["code"] == "unvisited"
-    assert set(REJECTION_CODES) == {"config_mismatch", "incompatible_checkpoint",
-                                    "out_of_abstraction", "unvisited", "insufficient_visits"}
+    assert _cascade(rep)["solver"]["code"] == "UNSEEN_STATE"
+    assert {"CONFIG_MISMATCH", "INCOMPATIBLE_CHECKPOINT", "OUTSIDE_ABSTRACTION", "UNSEEN_STATE",
+            "LOW_VISIT_COUNT", "HIGH_SEED_DISAGREEMENT", "UNSTABLE_ACROSS_CHECKPOINTS",
+            "HIGH_COLLISION_DISPERSION", "KNOWN_PATHOLOGICAL_BUCKET"} <= set(REJECTION_CODES)
 
 
 def test_priority_rollout_before_heuristic():

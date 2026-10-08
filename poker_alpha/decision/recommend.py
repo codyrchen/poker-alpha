@@ -238,18 +238,25 @@ def recommend_action(state: ObservedTableState,
     # Method A: trained heads-up strategy.
     lookup = None
     cascade: List[Dict[str, object]] = []
+    solver_info: Dict[str, object] = {"used": False, "confidence": "not configured", "reasons": []}
     if cfg.solver is not None:
         lookup = cfg.solver.lookup(state)
         if isinstance(lookup, LookupMiss):
             warnings.append(f"solver strategy not used: {lookup.reason}")
             cascade.append({"source": "solver", "status": "rejected",
-                            "code": lookup.code, "reason": lookup.reason})
+                            "code": lookup.code, "reason": lookup.reason,
+                            "reasons": list(lookup.reasons or (lookup.code,)),
+                            "gate": lookup.gate})
+            solver_info = {"used": False, "confidence": "rejected",
+                           "reasons": list(lookup.reasons or (lookup.code,)),
+                           **((lookup.gate or {}).get("signals") or {})}
             lookup = None
     elif cfg.solver_unavailable is not None:
         miss = cfg.solver_unavailable
         warnings.append(f"solver strategy not used: {miss.reason}")
         cascade.append({"source": "solver", "status": "rejected", "code": miss.code,
-                        "reason": miss.reason})
+                        "reason": miss.reason, "reasons": [miss.code]})
+        solver_info = {"used": False, "confidence": "rejected", "reasons": [miss.code]}
     else:
         cascade.append({"source": "solver", "status": "not configured"})
 
@@ -260,9 +267,12 @@ def recommend_action(state: ObservedTableState,
                                  probability=p, ev_bb=None, ev_se_bb=None,
                                  source=source)
                  for _, label, kind, to, p in lookup.actions]
+        gate_d = lookup.gate or {"status": "SOLVER_ACCEPT", "reasons": [], "signals": {}}
         cascade.append({"source": source, "status": "used",
                         "infoset": lookup.infoset_key, "visits": lookup.visits,
-                        "strategy": cfg.solver.description})
+                        "strategy": cfg.solver.description, "gate": gate_d})
+        solver_info = {"used": True, "confidence": gate_d["status"], "reasons": gate_d["reasons"],
+                       **gate_d.get("signals", {})}
         rres = None
         if cfg.rollout_simulations and ranges:
             cands, rres = _attach_rollout_evs(state, hero, ranges, models, cfg,
@@ -274,6 +284,9 @@ def recommend_action(state: ObservedTableState,
         mix = {c.label: c.probability for c in cands if c.probability}
         rec = max(cands, key=lambda c: c.probability or 0.0).label
         confidence = "medium" if lookup.exact else "low"
+        if gate_d["status"] != "SOLVER_ACCEPT":
+            confidence = "low"
+            warnings.append("solver confidence low: " + ", ".join(gate_d["reasons"]))
         if not lookup.exact:
             warnings.append("off-tree bet sizes were translated onto the abstraction")
         if rres is not None:
@@ -306,7 +319,7 @@ def recommend_action(state: ObservedTableState,
             mix_meaning=f"solver average-strategy frequencies ({cfg.solver.description})",
             method=source, confidence=confidence, warnings=tuple(warnings),
             details={"infoset": lookup.infoset_key, "visits": lookup.visits,
-                     "source_cascade": cascade},
+                     "source_cascade": cascade, "solver": solver_info},
             uncertainty=_uncertainty(cfg, state, summaries, se, rres, lookup, source),
             **base)
 
@@ -357,7 +370,7 @@ def recommend_action(state: ObservedTableState,
         opponent_ranges=tuple(summaries), candidates=tuple(cands),
         recommended=rec, recommended_mix=mix, mix_meaning=mix_meaning,
         method=method, confidence=confidence, warnings=tuple(warnings),
-        details={"source_cascade": cascade},
+        details={"source_cascade": cascade, "solver": solver_info},
         uncertainty=_uncertainty(cfg, state, summaries, se, res, None, method),
         **base)
 
@@ -386,9 +399,15 @@ def _uncertainty(cfg, state, summaries, equity_se, rollout_res, lookup, method):
                         f"({rollout_res.simulations} simulations)")
     u["sampling"] = "; ".join(samp) if samp else "none"
     if lookup is not None:
+        g = lookup.gate or {}
+        sig = g.get("signals", {})
+        extra = "; ".join(f"{k} {v}" for k, v in sig.items() if v is not None and k != "visits")
         u["abstraction"] = (f"solver infoset {lookup.infoset_key!r} with {lookup.visits:.0f} visits; "
                             f"{'exact' if lookup.exact else 'off-tree sizes translated'}; "
-                            f"{cfg.solver.description}")
+                            f"gate {g.get('status', 'n/a')}"
+                            + (f" ({', '.join(g.get('reasons', []))})" if g.get("reasons") else "")
+                            + (f"; {extra}" if extra else "")
+                            + f"; {cfg.solver.description}")
     else:
         u["abstraction"] = "solver not used; candidate sizes from the betting abstraction menu"
     if method == "Monte Carlo rollout" or (lookup is not None and rollout_res is not None):

@@ -92,7 +92,7 @@ def _tokens(street_actions: str) -> Tuple[str, ...]:
         if ch in ("f", "c", "a"):
             out.append(ch)
             i += 1
-        elif ch == "b":
+        elif ch in ("b", "x"):
             j = i + 1
             while j < len(street_actions) and street_actions[j].isdigit():
                 j += 1
@@ -110,13 +110,26 @@ class HoldemGame(Game):
                  starting_stack: float = STARTING_STACK,
                  bet_fractions: Optional[dict] = None,
                  raise_cap: int = _RAISE_CAP_PER_STREET,
-                 encoder=None) -> None:
+                 encoder=None,
+                 preflop_raise_multiples: Optional[dict] = None,
+                 enforce_min_raise: bool = False) -> None:
         # Imported lazily: the abstraction package imports game-side helpers.
         from ..abstraction.holdem import RawHoldemEncoder
 
         self.starting_stack = float(starting_stack)
         self.bet_fractions = dict(bet_fractions or _BET_FRACTIONS)
         self.raise_cap = raise_cap
+        # Optional legal-NLHE sizing (HoldemSolverConfig v2). Preflop raises
+        # become "raise to multiple x current bet" tokens ``x<100*m>``;
+        # with ``enforce_min_raise`` any bet/raise below the NLHE minimum
+        # (1 BB bet, raise increment >= the last full increment on the
+        # street, blinds counting as a 1 BB bet) is not offered. Both default
+        # off, which keeps the v1 game (and its checkpoints) unchanged.
+        self.preflop_raise_multiples = dict(preflop_raise_multiples or {})
+        for tok in self.preflop_raise_multiples:
+            if not (tok.startswith("x") and tok[1:].isdigit()):
+                raise ValueError(f"preflop token {tok!r} must be 'x' + digits")
+        self.enforce_min_raise = bool(enforce_min_raise)
         # Information-state encoder (see poker_alpha.abstraction.base). The
         # default reproduces the historical raw key byte for byte.
         self.encoder = encoder if encoder is not None else RawHoldemEncoder()
@@ -138,9 +151,69 @@ class HoldemGame(Game):
         # Bet order is part of the signature: it fixes legal-action order.
         fracs = ",".join(f"{name}={num(frac)}"
                          for name, frac in self.bet_fractions.items())
-        return (f"HoldemGame:v1:stack={num(self.starting_stack)}:"
-                f"blinds={num(SMALL_BLIND)}/{num(BIG_BLIND)}:"
-                f"bets={fracs}:raise_cap={int(self.raise_cap)}")
+        sig = (f"HoldemGame:v1:stack={num(self.starting_stack)}:"
+               f"blinds={num(SMALL_BLIND)}/{num(BIG_BLIND)}:"
+               f"bets={fracs}:raise_cap={int(self.raise_cap)}")
+        if self.preflop_raise_multiples:
+            sig += ":preflop=" + ",".join(f"{t}={num(m)}" for t, m in self.preflop_raise_multiples.items())
+        if self.enforce_min_raise:
+            sig += ":min_raise=nlhe"
+        return sig
+
+    # -- sizing ------------------------------------------------------------
+
+    def raise_add(self, tok: str, street: int, owe: float, pot_now: float,
+                  my_street_paid: float) -> float:
+        """Chips added by bet/raise token ``tok`` (not 'a'/'c'/'f')."""
+        if tok[0] == "x":
+            level = my_street_paid + owe
+            return self.preflop_raise_multiples[tok] * level - my_street_paid
+        return owe + self.bet_fractions[tok] * (pot_now + owe)
+
+    def raise_tokens(self, street: int):
+        if street == 0 and self.preflop_raise_multiples:
+            return self.preflop_raise_multiples
+        return self.bet_fractions
+
+    def size_label(self, tok: str, facing: bool, street: int) -> str:
+        if tok[0] == "x":
+            return f"raise_to_{self.preflop_raise_multiples[tok]:g}x"
+        pct = int(round(self.bet_fractions[tok] * 100))
+        return f"{'raise' if facing else 'bet'}{pct}"
+
+    def _min_increment(self, streets: Tuple[str, ...]) -> float:
+        """Minimum legal raise increment on the current street (NLHE)."""
+        memo = self.__dict__.setdefault("_inc_memo", {})
+        hit = memo.get(streets)
+        if hit is not None:
+            return hit
+        total = [SMALL_BLIND, BIG_BLIND]
+        inc = BIG_BLIND
+        for si, sa in enumerate(streets):
+            paid = [SMALL_BLIND, BIG_BLIND] if si == 0 else [0.0, 0.0]
+            to_act = 0 if si == 0 else 1
+            inc = BIG_BLIND
+            for tok in _tokens(sa):
+                me, opp = to_act, 1 - to_act
+                owe = paid[opp] - paid[me]
+                stack = self.starting_stack - total[me]
+                if tok == "c":
+                    add = min(owe, stack)
+                elif tok == "f":
+                    add = 0.0
+                elif tok == "a":
+                    add = stack
+                else:
+                    add = self.raise_add(tok, si, owe, total[0] + total[1], paid[me])
+                if tok not in ("c", "f") and add - owe >= inc - 1e-9:
+                    inc = add - owe            # full raise sets the new increment
+                paid[me] += add
+                total[me] += add
+                to_act = opp
+        if len(memo) >= _MEMO_LIMIT:
+            memo.clear()
+        memo[streets] = inc
+        return inc
 
     # -- construction / chance ------------------------------------------
 
@@ -235,7 +308,7 @@ class HoldemGame(Game):
                     add = 0.0
                 else:
                     pot_now = total[0] + total[1]
-                    add = owe + self.bet_fractions[tok] * (pot_now + owe)
+                    add = self.raise_add(tok, street_idx, owe, pot_now, street_paid[me])
                     n_raises += 1
                 street_paid[me] += add
                 total[me] += add
@@ -315,8 +388,12 @@ class HoldemGame(Game):
         if n_raises < self.raise_cap and my_stack > owe + 1e-9 \
                 and opp_stack > 1e-9:
             pot_now = total[0] + total[1]
-            for name, frac in self.bet_fractions.items():
-                add = owe + frac * (pot_now + owe)
+            street = len(state.streets) - 1
+            min_inc = self._min_increment(state.streets) if self.enforce_min_raise else 0.0
+            for name in self.raise_tokens(street):
+                add = self.raise_add(name, street, owe, pot_now, street_paid[me])
+                if add - owe < min_inc - 1e-9:
+                    continue               # below the NLHE minimum bet / raise
                 if add < my_stack - 1e-9:  # strictly less: 'a' covers the top
                     legal.append(name)
             legal.append("a")
@@ -339,7 +416,7 @@ class HoldemGame(Game):
             all_in = True
         else:
             pot_now = total[0] + total[1]
-            delta = owe + self.bet_fractions[action] * (pot_now + owe)
+            delta = self.raise_add(action, len(state.streets) - 1, owe, pot_now, street_paid[me])
 
         contrib = list(state.contrib)
         contrib[me] += delta

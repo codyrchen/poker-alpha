@@ -102,7 +102,7 @@ and section 12); the seed-0 300k average strategy is exported as
 `results/strategy/holdem_v1_seed0.npz`
 (`pokeralpha.strategy_artifact/v1`, loaded by
 `SolverStrategyProvider.from_artifact`, which rejects it with
-`config_mismatch` under any other config). It is an abstract strategy for
+`CONFIG_MISMATCH` under any other config). It is an abstract strategy for
 heads-up 100 BB play with a 33/75/150% + all-in menu, trained on an
 imperfect-recall abstraction: not an equilibrium, not GTO, exploitability
 unknown.

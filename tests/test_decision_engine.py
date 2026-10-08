@@ -126,7 +126,7 @@ def test_solver_refuses_outside_abstraction():
     assert "heads-up" in provider.lookup(six_max_flop()).reason
     low = SolverStrategyProvider(game, {"0|50,51||": {"c": 1.0}},
                                  {"0|50,51||": 3}, min_visits=20)
-    assert "visited only" in low.lookup(hu_state()).reason
+    assert low.lookup(hu_state()).code == "LOW_VISIT_COUNT"
     rep = recommend_action(hu_state(stack=40), config=DecisionConfig(
         equity_simulations=200, solver=provider))
     assert rep.method == "heuristic fallback"

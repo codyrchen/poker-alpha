@@ -4,8 +4,20 @@
  "checkpoints": "/home/user/pa_ckpt",
  "config_signature": "HoldemSolverConfig:v1:2e23c098860f7894c871",
  "current_phase": 33,
- "experiments_running": [],
- "head": "8335ea2",
+ "experiments_running": [
+  {
+   "cmd": "python experiments/phase33_reduced_games.py",
+   "log": "/home/user/pa_ckpt/phase33.log",
+   "output": "results/validation/reduced_holdem_v1.json"
+  },
+  {
+   "cmd": "python experiments/phase34_abstraction_error.py",
+   "expected_minutes": 35,
+   "log": "/home/user/pa_ckpt/phase34.log",
+   "output": "results/validation/abstraction_error_v1.json"
+  }
+ ],
+ "head": "76bcf14",
  "last_completed_phase": 32,
  "next_action": "Phase 33: exact reduced Hold-em games",
  "open_bugs": [
@@ -16,5 +28,5 @@
   "phase32": "no rule/utility/MCCFR/averaging bug; preflop noise dominant (seed L1 ~0.9 at 1360 visits); b33 preflop sizes below NLHE min; BTN facing-jam key ignores open size"
  },
  "start_commit": "8335ea2",
- "updated": "2026-10-08T17:22:38Z"
+ "updated": "2026-10-08T17:34:07Z"
 }

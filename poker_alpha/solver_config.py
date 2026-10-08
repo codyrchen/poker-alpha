@@ -77,6 +77,12 @@ class HoldemSolverConfig:
     # (no equity range is used to bucket). The reference range below is used
     # only offline, for abstraction-quality metrics.
     reference_range: str = "uniform-random-hand (offline quality metrics only)"
+    # v2 options (default off = v1 semantics and v1 signature, unchanged):
+    # preflop raises as "raise to multiple x current bet" and NLHE minimum
+    # bet / raise enforcement (see HoldemGame).
+    preflop_raise_multiples: Tuple[Tuple[str, float], ...] = ()
+    enforce_min_raise: bool = False
+    averaging: str = "uniform"
     notes: Dict[str, str] = field(default_factory=dict, compare=False, hash=False)
 
     def __post_init__(self) -> None:
@@ -86,6 +92,12 @@ class HoldemSolverConfig:
             raise ValueError(f"unsupported sampling variant {self.sampling!r}")
         if self.raise_cap < 1 or self.starting_stack <= 0 or not self.bet_fractions:
             raise ValueError("invalid tree parameters")
+        if self.averaging != "uniform":
+            raise ValueError("only uniform (simple external-sampling) averaging is implemented")
+
+    @property
+    def version(self) -> int:
+        return 2 if (self.preflop_raise_multiples or self.enforce_min_raise) else CONFIG_VERSION
 
     # -- derived ----------------------------------------------------------
 
@@ -95,7 +107,9 @@ class HoldemSolverConfig:
         game = HoldemGame(starting_stack=self.starting_stack,
                           bet_fractions=dict(self.bet_fractions),
                           raise_cap=self.raise_cap,
-                          encoder=make_encoder(self.encoder))
+                          encoder=make_encoder(self.encoder),
+                          preflop_raise_multiples=dict(self.preflop_raise_multiples),
+                          enforce_min_raise=self.enforce_min_raise)
         game.solver_config = self
         return game
 
@@ -113,8 +127,17 @@ class HoldemSolverConfig:
         d = asdict(self)
         d.pop("notes")
         d["bet_fractions"] = [list(x) for x in self.bet_fractions]
+        if self.version == 1:
+            # v1 dict layout kept byte-identical so v1 signatures never change
+            for k in ("preflop_raise_multiples", "enforce_min_raise", "averaging"):
+                d.pop(k)
+        else:
+            d["preflop_raise_multiples"] = [list(x) for x in self.preflop_raise_multiples]
+            d["action_abstraction"] = ("postflop pot fractions; preflop raise-to multiples of the "
+                                       "current bet; NLHE minimum bet/raise enforced"
+                                       if self.enforce_min_raise else "see fields")
         game = self.build_game()
-        d["config_version"] = CONFIG_VERSION
+        d["config_version"] = self.version
         d["game_signature"] = game.signature()
         d["encoder_signature"] = game.encoder_signature()
         d["card_feature_tables"] = card_feature_tables_digest()
@@ -122,9 +145,16 @@ class HoldemSolverConfig:
         return d
 
     def signature(self) -> str:
-        """``HoldemSolverConfig:v1:<sha256 prefix>`` over :meth:`to_dict`."""
+        """``HoldemSolverConfig:v<1|2>:<sha256 prefix>`` over :meth:`to_dict`."""
         blob = json.dumps(self.to_dict(), sort_keys=True)
-        return f"HoldemSolverConfig:v{CONFIG_VERSION}:{hashlib.sha256(blob.encode()).hexdigest()[:20]}"
+        return f"HoldemSolverConfig:v{self.version}:{hashlib.sha256(blob.encode()).hexdigest()[:20]}"
 
 
 PRIMARY_CONFIG = HoldemSolverConfig()
+
+# Candidate v2 (Phase 35): legal NLHE sizing. Preflop opens / raises to
+# 2x, 2.5x or 3.5x the current bet; postflop pot fractions unchanged; bets
+# and raises below the NLHE minimum are not offered.
+LEGAL_SIZING_CONFIG = HoldemSolverConfig(
+    preflop_raise_multiples=(("x200", 2.0), ("x250", 2.5), ("x350", 3.5)),
+    enforce_min_raise=True)

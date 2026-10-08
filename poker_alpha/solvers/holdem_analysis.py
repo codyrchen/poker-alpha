@@ -183,8 +183,7 @@ def action_label(game: HoldemGame, state: HoldemState, action: str) -> str:
     owe = street_paid[1 - to_act] - street_paid[to_act]
     if action == "c":
         return "call" if owe > 1e-9 else "check"
-    pct = int(round(game.bet_fractions[action] * 100))
-    return f"{'raise' if owe > 1e-9 else 'bet'}{pct}"
+    return game.size_label(action, owe > 1e-9, state.street)
 
 
 @dataclass(frozen=True)

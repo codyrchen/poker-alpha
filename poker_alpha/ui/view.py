@@ -77,3 +77,34 @@ def headline(report: DecisionReport) -> str:
         return "No recommendation (see warnings)"
     return (f"Suggested: {report.recommended}  ·  method: {report.method}  ·  "
             f"confidence: {report.confidence}")
+
+
+def solver_status(report: DecisionReport) -> str:
+    """One line on whether the solver strategy was used and why (not)."""
+    info = report.details.get("solver") or {}
+    if not info or info.get("confidence") == "not configured":
+        return "Solver strategy: not loaded"
+    reasons = ", ".join(info.get("reasons") or [])
+    if info.get("used"):
+        return f"Solver strategy used · gate {info.get('confidence')}" + (f" ({reasons})" if reasons else "")
+    fallback = report.method
+    return f"Solver strategy not used: {reasons or 'unknown reason'} · fallback: {fallback}"
+
+
+def source_rows(report: DecisionReport) -> List[Dict[str, object]]:
+    rows = []
+    for c in report.details.get("source_cascade") or []:
+        rows.append({"source": c.get("source"), "status": c.get("status"),
+                     "reasons": ", ".join(c.get("reasons") or ([c["code"]] if c.get("code") else [])),
+                     "detail": c.get("reason", "")})
+    return rows
+
+
+def solver_signal_rows(report: DecisionReport) -> List[Dict[str, object]]:
+    info = report.details.get("solver") or {}
+    return [{"signal": k, "value": info.get(k)} for k in
+            ("confidence", "visits", "seed_disagreement", "movement", "collision") if k in info]
+
+
+def uncertainty_rows(report: DecisionReport) -> List[Dict[str, object]]:
+    return [{"source of uncertainty": k, "detail": str(v)} for k, v in report.uncertainty.items()]

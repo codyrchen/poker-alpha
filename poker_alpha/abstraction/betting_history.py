@@ -98,8 +98,8 @@ def betting_context(game: Any, state: Any, spr_edges=(1.0, 3.0, 8.0)) -> Betting
                 add = mystack
             else:
                 pot_now = total[0] + total[1]
-                add = owe + game.bet_fractions[tok] * (pot_now + owe)
-            if tok in ("a",) or tok.startswith("b"):
+                add = game.raise_add(tok, si, owe, pot_now, paid[me])
+            if tok == "a" or tok[0] in ("b", "x"):
                 pot_after_call = total[0] + total[1] + owe
                 frac = (add - owe) / pot_after_call if pot_after_call > 0 else 0.0
                 cls = size_class(frac, tok == "a")

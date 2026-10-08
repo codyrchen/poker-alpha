@@ -32,11 +32,11 @@ and, for a rejected solver, a code from `decision.strategy.REJECTION_CODES`:
 
 | code | meaning |
 | --- | --- |
-| `config_mismatch` | the strategy file was trained under a different solver config / encoder / game signature |
-| `incompatible_checkpoint` | file missing, unreadable or of an unsupported format |
-| `out_of_abstraction` | the spot cannot be mapped (not heads-up, other blinds or stack depth, untranslatable history) |
-| `unvisited` | the abstract information set was never visited in training |
-| `insufficient_visits` | visited fewer than `min_visits` times (default 20) |
+| `CONFIG_MISMATCH` | the strategy file was trained under a different solver config / encoder / game signature |
+| `INCOMPATIBLE_CHECKPOINT` | file missing, unreadable or of an unsupported format |
+| `OUTSIDE_ABSTRACTION` | the spot cannot be mapped (not heads-up, other blinds or stack depth, untranslatable history) |
+| `UNSEEN_STATE` | the abstract information set was never visited in training |
+| `LOW_VISIT_COUNT` | visited fewer than `min_visits` times (default 20) |
 
 When the solver is used and rollouts are enabled, a consistency check
 compares the solver's most frequent action with the highest rollout EV; if

@@ -89,24 +89,24 @@ def observe_screenshot(image: Any, calibration=None, small_blind: float = 0.5,
 
 
 def load_solver(path: Optional[Union[str, Path]], config=None,
-                min_visits: float = 20.0):
-    """Provider or :class:`LookupMiss` (``config_mismatch`` /
-    ``incompatible_checkpoint``) for a strategy artifact or checkpoint."""
+                min_visits: Optional[float] = None):
+    """Provider or :class:`LookupMiss` (``CONFIG_MISMATCH`` /
+    ``INCOMPATIBLE_CHECKPOINT``) for a strategy artifact or checkpoint."""
     if path is None:
         return None
     path = Path(path)
     if not path.exists():
-        return LookupMiss(f"strategy file {path} not found", "incompatible_checkpoint")
+        return LookupMiss(f"strategy file {path} not found", "INCOMPATIBLE_CHECKPOINT")
     try:
         import numpy as np
 
         with np.load(path, allow_pickle=False) as z:
             is_artifact = "format" in z.files
     except (OSError, ValueError) as exc:
-        return LookupMiss(f"cannot read {path}: {exc}", "incompatible_checkpoint")
+        return LookupMiss(f"cannot read {path}: {exc}", "INCOMPATIBLE_CHECKPOINT")
     if is_artifact:
         return SolverStrategyProvider.from_artifact(path, config, min_visits)
-    return SolverStrategyProvider.from_checkpoint(path, config, min_visits)
+    return SolverStrategyProvider.from_checkpoint(path, config, 20.0 if min_visits is None else min_visits)
 
 
 def analyze(obs: Observation, config: Optional[DecisionConfig] = None,

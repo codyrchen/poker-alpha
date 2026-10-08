@@ -18,7 +18,7 @@ Everything later phases need from them is extracted into committed JSON
 (see below) so they are not irreplaceable.
 
 ## Experiments running
-none
+- Phase 33 full run: `python experiments/phase33_reduced_games.py` -> `results/validation/reduced_holdem_v1.json`, log `/home/user/pa_ckpt/phase33.log` (~80 min; done when the log prints `wrote ...reduced_holdem_v1.json`). Deterministic: rerun from scratch if lost.
 
 ## Results so far
 - Phase 32: see docs/solver_validation.md. No rule/utility/MCCFR/averaging bug; preflop strategy noise-dominated; sub-minimum b33 sizes; facing-jam key collision.

@@ -18,10 +18,12 @@ import streamlit as st
 from poker_alpha.decision import DecisionConfig, recommend_action
 from poker_alpha.holdem import ManualStateAdapter, validate
 from poker_alpha.ui.view import (candidate_rows, headline, range_rows,
-                                 seat_rows, state_rows)
+                                 seat_rows, solver_signal_rows, solver_status,
+                                 source_rows, state_rows, uncertainty_rows)
 
 ROOT = Path(__file__).resolve().parents[2]
 FIXTURES = ROOT / "tests" / "fixtures"
+STRATEGY = ROOT / "results" / "strategy" / "holdem_v1_seed0.npz"
 
 EXAMPLE_STATE = {
     "format": "pokeralpha.observed/v1", "num_seats": 6, "hero_seat": 0,
@@ -47,8 +49,22 @@ def sidebar_config() -> DecisionConfig:
     ro = st.sidebar.slider("Rollout simulations (0 = heuristic only)", 0, 5000,
                            1000, step=100)
     seed = st.sidebar.number_input("Seed", value=0, step=1)
+    use_solver = st.sidebar.checkbox("Use HU solver strategy (gated)", value=True)
+    solver, unavailable = None, None
+    if use_solver:
+        prov = _load_solver(str(STRATEGY))
+        if hasattr(prov, "code"):
+            unavailable = prov
+        else:
+            solver = prov
     return DecisionConfig(equity_simulations=eq, rollout_simulations=ro,
-                          seed=int(seed))
+                          seed=int(seed), solver=solver, solver_unavailable=unavailable)
+
+
+@st.cache_resource
+def _load_solver(path: str):
+    from poker_alpha.pipeline import load_solver
+    return load_solver(path)
 
 
 def manual_state():
@@ -174,6 +190,13 @@ def main() -> None:
         m3.metric("SPR", "-" if report.spr is None else f"{report.spr:.2f}")
         st.dataframe(candidate_rows(report), hide_index=True)
         st.caption(f"Frequencies: {report.mix_meaning}")
+        st.markdown(f"**{solver_status(report)}**")
+        if solver_signal_rows(report):
+            st.dataframe(solver_signal_rows(report), hide_index=True)
+        st.markdown("**Decision sources (solver -> rollout -> heuristic)**")
+        st.dataframe(source_rows(report), hide_index=True)
+        st.markdown("**Uncertainty by source**")
+        st.dataframe(uncertainty_rows(report), hide_index=True)
         st.markdown("**Opponent ranges (beliefs, not known hands)**")
         st.dataframe(range_rows(report), hide_index=True)
         for w in report.warnings:

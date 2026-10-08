@@ -21,6 +21,7 @@ from typing import Dict, List, Mapping, Optional, Tuple
 from ..games.holdem import HoldemGame, HoldemState
 from ..holdem.observed import ObservedTableState
 from ..holdem.state import Street
+from .solver_gate import REASONS, REJECT, GateThresholds, KeyStats, gate
 
 Strategy = Mapping[str, Mapping[str, float]]
 
@@ -32,22 +33,20 @@ class SolverLookup:
     exact: bool
     actions: Tuple[Tuple[str, str, str, float, float], ...]
     # (token, label, kind, raise_to_bb, probability)
+    gate: Optional[dict] = None       # solver_gate.GateDecision.to_dict()
 
 
-# Why a solver strategy was not used (``LookupMiss.code``).
-REJECTION_CODES = {
-    "config_mismatch": "strategy was trained under a different solver config / encoder / game",
-    "incompatible_checkpoint": "strategy file unreadable or of an unsupported format",
-    "out_of_abstraction": "observed spot cannot be mapped into the abstract game",
-    "unvisited": "abstract information set never visited in training",
-    "insufficient_visits": "abstract information set visited too rarely to trust",
-}
+# Why a solver strategy was not used (``LookupMiss.code``): the reason codes
+# of the solver-use gate (decision/solver_gate.py).
+REJECTION_CODES = REASONS
 
 
 @dataclass(frozen=True)
 class LookupMiss:
     reason: str
-    code: str = "out_of_abstraction"
+    code: str = "OUTSIDE_ABSTRACTION"
+    reasons: Tuple[str, ...] = ()
+    gate: Optional[dict] = None
 
 
 class SolverStrategyProvider:
@@ -55,23 +54,31 @@ class SolverStrategyProvider:
                  visits: Optional[Mapping[str, float]] = None,
                  min_visits: float = 20.0,
                  stack_tolerance: float = 0.05,
-                 description: str = "abstract heads-up strategy") -> None:
+                 description: str = "abstract heads-up strategy",
+                 confidence=None, thresholds=None) -> None:
         self.game = game
         self.strategy = strategy
         self.visits = visits or {}
         self.min_visits = min_visits
         self.stack_tolerance = stack_tolerance
         self.description = description
+        # Solver-use gate: a ConfidenceTable (per-key visits / movement /
+        # seed disagreement / collision) and thresholds. Without a table the
+        # gate still applies the visit threshold and reports NO_STABILITY_DATA.
+        self.confidence = confidence
+        self.thresholds = thresholds or GateThresholds(
+            reject_visits_below=min_visits, low_visits_below=min_visits)
 
     # -- loading ---------------------------------------------------------------
 
     @classmethod
-    def from_artifact(cls, path, config=None, min_visits: float = 20.0):
+    def from_artifact(cls, path, config=None, min_visits: Optional[float] = None,
+                      confidence_path=None, use_gate: bool = True):
         """Provider from a strategy artifact (``solvers.strategy_artifact``)
         trained under ``config`` (default: the locked ``PRIMARY_CONFIG``).
 
-        Returns a :class:`LookupMiss` (``config_mismatch`` or
-        ``incompatible_checkpoint``) instead of raising when it cannot be used.
+        Returns a :class:`LookupMiss` (``CONFIG_MISMATCH`` or
+        ``INCOMPATIBLE_CHECKPOINT``) instead of raising when it cannot be used.
         """
         from ..solver_config import PRIMARY_CONFIG
         from ..solvers.strategy_artifact import StrategyArtifactError, load_artifact
@@ -81,13 +88,32 @@ class SolverStrategyProvider:
         try:
             art = load_artifact(path, game)
         except StrategyArtifactError as exc:
-            code = "config_mismatch" if "signature mismatch" in str(exc) else "incompatible_checkpoint"
+            code = "CONFIG_MISMATCH" if "signature mismatch" in str(exc) else "INCOMPATIBLE_CHECKPOINT"
             return LookupMiss(f"strategy artifact rejected: {exc}", code)
         recall = "perfect recall" if config.perfect_recall else \
             "IMPERFECT-RECALL abstraction, no equilibrium guarantee"
         desc = (f"MCCFR average strategy, {art.meta.get('iterations', '?')} iterations, "
                 f"seed {art.meta.get('seed', '?')}, {recall}")
-        return cls(game, art.strategy, art.visits, min_visits=min_visits, description=desc)
+        table, thresholds = None, None
+        if use_gate:
+            from pathlib import Path
+
+            from .solver_gate import ConfidenceTable, GateThresholds
+            cpath = Path(confidence_path) if confidence_path else \
+                Path(path).with_name(Path(path).stem + "_confidence.npz")
+            if cpath.exists():
+                try:
+                    table = ConfidenceTable.load(cpath, config.signature())
+                except ValueError as exc:
+                    return LookupMiss(f"confidence table rejected: {exc}", "CONFIG_MISMATCH")
+            thresholds = GateThresholds.calibrated()
+            if min_visits is not None:
+                from dataclasses import replace as _r
+                thresholds = _r(thresholds, reject_visits_below=min_visits,
+                                low_visits_below=max(min_visits, thresholds.low_visits_below))
+        mv = 20.0 if min_visits is None else min_visits
+        return cls(game, art.strategy, art.visits, min_visits=mv, description=desc,
+                   confidence=table, thresholds=thresholds)
 
     @classmethod
     def from_checkpoint(cls, path, config=None, min_visits: float = 20.0):
@@ -100,7 +126,7 @@ class SolverStrategyProvider:
         try:
             solver = load_checkpoint(path, game)
         except CheckpointError as exc:
-            code = "config_mismatch" if "mismatch" in str(exc) else "incompatible_checkpoint"
+            code = "CONFIG_MISMATCH" if "mismatch" in str(exc) else "INCOMPATIBLE_CHECKPOINT"
             return LookupMiss(f"checkpoint rejected: {exc}", code)
         strategy, visits = {}, {}
         for k, n in solver.infosets.items():
@@ -214,11 +240,19 @@ class SolverStrategyProvider:
         key = self.game.infoset_key(state)
         probs = self.strategy.get(key)
         if probs is None:
-            return LookupMiss("information set never visited in training", "unvisited")
-        visits = float(self.visits.get(key, 0.0))
-        if self.visits and visits < self.min_visits:
-            return LookupMiss(f"information set visited only {visits:g} times "
-                              f"(< {self.min_visits:g})", "insufficient_visits")
+            return LookupMiss("information set never visited in training", "UNSEEN_STATE",
+                              ("UNSEEN_STATE",))
+        visits = float(self.visits.get(key, 0.0)) if self.visits else float("inf")
+        stats = self.confidence.get(key) if self.confidence is not None else None
+        if stats is None:
+            stats = KeyStats(visits)
+        decision = gate(stats, self.thresholds,
+                        pathological=bool(self.confidence and key in self.confidence.pathological))
+        if decision.status == REJECT:
+            first = decision.reasons[0]
+            detail = ", ".join(f"{k}={v}" for k, v in decision.signals.items() if v is not None)
+            return LookupMiss(f"solver gate rejected {first} ({detail})", first, decision.reasons,
+                              decision.to_dict())
         street_paid, total, me, _ = self.game._replay(state)
         owe = street_paid[1 - me] - street_paid[me]
         out = []
@@ -236,6 +270,10 @@ class SolverStrategyProvider:
                 out.append((tok, "all_in", "all_in", to, p))
             else:
                 verb = "raise" if owe > 1e-9 or state.street == 0 else "bet"
-                pct = int(round(self.game.bet_fractions[tok] * 100))
-                out.append((tok, f"{verb}_{pct}", verb, to, p))
-        return SolverLookup(key, visits, exact, tuple(out))
+                if tok[0] == "x":
+                    m = self.game.preflop_raise_multiples[tok]
+                    out.append((tok, f"raise_to_{m:g}x", "raise", to, p))
+                else:
+                    pct = int(round(self.game.bet_fractions[tok] * 100))
+                    out.append((tok, f"{verb}_{pct}", verb, to, p))
+        return SolverLookup(key, visits, exact, tuple(out), decision.to_dict())
