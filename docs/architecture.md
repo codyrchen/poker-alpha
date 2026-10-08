@@ -68,7 +68,9 @@ Optional dependency groups keep it that way: `[vision]` (Pillow, mss),
 | --- | --- |
 | strategy digest | `PASD` v1 (binary, see `solvers/digest.py`) |
 | solver checkpoint | `.npz`, `format_version` 2 (adds `solver_config`; version 1 still readable), pickle-free |
-| solver config | `HoldemSolverConfig:v1:<hash>` |
+| solver config | `HoldemSolverConfig:v1:<hash>` (locked reference), `HoldemSolverConfig:v2:<hash>` (release: legal sizing, river percentiles, averaging recorded) |
+| solver confidence table | `pokeralpha.solver_confidence/v1` (`.npz`, per-key visits / movement / seed disagreement / collision) |
+| screenshot annotation | `pokeralpha.screenshot_annotation/v1` (validated by `validate_annotation`) |
 | strategy artifact | `pokeralpha.strategy_artifact/v1` (`.npz`, average strategy + visits) |
 | encoder signatures | `RawHoldemEncoder:v1`, `ToyHoldemEncoder:v1`, `HoldemBucketEncoder:v1:equity=..`, `TransitionHoldemEncoder:v1:..`, `CompactHoldemEncoder:v1:..:recall=imperfect` |
 | action abstraction | `ActionAbstraction:v1:bets=..:raises=..:allin=..` |

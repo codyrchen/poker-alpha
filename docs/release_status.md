@@ -1,62 +1,72 @@
-# Release status (end of Phase 31)
+# Release status (release candidate, Phase 40)
 
-Machine-readable: [`results/validation/final_platform_validation.json`](../results/validation/final_platform_validation.json)
-(regenerate with `python experiments/final_validation.py ...`). Evidence for
-each line is in [validation.md](validation.md) and the result files it
-cites.
+Machine-readable: [`results/validation/release_candidate.json`](../results/validation/release_candidate.json).
+Evidence: [solver_validation.md](solver_validation.md) (Phases 32-40) and
+[validation.md](validation.md) (Phases 25-29). Every number traces to a
+committed file in `results/validation/`.
 
 **What PokerAlpha is not:** a solver for no-limit Hold'em, a GTO or Nash
-strategy for real Hold'em, a profitable bot, or a validated PokerNow
-reader. The trained strategy comes from an **imperfect-recall** abstraction
-and has **no equilibrium guarantee**; its exploitability is unknown.
+strategy for real Hold'em, a profitable bot, or a validated PokerNow reader.
+The heads-up strategy is an abstract MCCFR strategy on an **imperfect-recall**
+abstraction with **no equilibrium guarantee**; exploitability of the full
+abstraction is not computed. The observer is read-only and never acts.
 
 ## Component status
 
 | status | component | evidence |
 | --- | --- | --- |
-| VALIDATED | Kuhn / Leduc CFR research core | exact exploitability; canonical digests pinned and unchanged through Phases 26-31 |
-| VALIDATED | Hold'em rules engine (2-9 seats) | chip conservation, side / split pots, reopening rules under property tests |
-| VALIDATED | hand evaluator and equity | evaluator checked on all 2,598,960 five-card hands; seeded equity with SE |
-| VALIDATED | locked solver config, config-bound checkpoints and artifacts | signature over encoder, feature tables, bets, stack, raise cap, sampling, reference range; mismatches rejected; frozen regression corpus and canonical suite |
-| VALIDATED | optimized MCCFR backend | 1.99x iterations/s (15.2 -> 30.1), bit-identical exact digests; no compiled backend |
-| VALIDATED | unified pipeline, source priority, coded rejections, uncertainty breakdown | all four input sources reach `DecisionReport` through `pipeline.analyze` in tests |
-| PARTIALLY VALIDATED | compact abstraction (primary) | only candidate passing all Phase-27 criteria (>= 5 visits: 50.8% vs 0.31% for bucket at 5k); imperfect recall (874 / 1,508 colliding keys) |
-| PARTIALLY VALIDATED | decision engine, rollout and heuristic methods | closed-form invariants pass; EVs rest on heuristic response models and a check-down assumption |
-| PARTIALLY VALIDATED | screen observer on synthetic images | synthetic fixtures only; read-only |
-| EXPERIMENTAL | trained abstract HU strategy (`results/strategy/holdem_v1_seed0.npz`) | 3 seeds x 300k iterations; 10 / 10 sanity checks per seed; seeds even in cross-play; 300k beats 100k by ~84 bb/100 in the abstract game; canonical-spot policies still moving; exploitability not computed |
-| EXPERIMENTAL | range and opponent modelling | Bayesian beliefs under heuristic priors; no ground-truth accuracy |
-| BLOCKED | real PokerNow recognition accuracy | **BLOCKED ON REAL FIXTURES**: 0 annotated screenshots; nothing measured, nothing fabricated; see [observer.md](observer.md) |
+| VALIDATED | Kuhn / Leduc research core | exact exploitability; pinned digests unchanged |
+| VALIDATED | Hold'em rules engine (2-9 seats, side pots, all-in) | property tests; solver-game rules and terminal utilities checked (Phase 32) |
+| VALIDATED | external-sampling MCCFR implementation | converges to exact solutions on a reduced preflop game (exploitability 0.007 BB at 300k, 3 seeds) and six 52-card river subgames; update identities traced in Hold'em |
+| VALIDATED | solver tooling: config-bound checkpoints / artifacts, config inference, resume | signature tests; bit-identical resume and optimizations |
+| VALIDATED | rollout estimator | converges to closed forms within 3 SE (100-5,000 samples) |
+| VALIDATED | pipeline: solver -> rollout -> heuristic with a confidence gate and legal-size filter | tests over all four input sources; rejection reasons machine-readable |
+| PARTIALLY VALIDATED | compact abstraction (v2) | river error measured on exact subgames and cut 4-16x; flop/turn error not measured exactly |
+| PARTIALLY VALIDATED | gate thresholds | calibrated on exact games (seed disagreement vs true error, Spearman 0.61), applied to the full abstraction by extrapolation |
+| PARTIALLY VALIDATED | decision response models | rollouts disagree with exact river equilibria in 16 / 36 spots (they overbet); recommendations change with the assumed opponent model |
+| PARTIALLY VALIDATED | screen observer on synthetic images | synthetic fixtures; annotation validation and metrics harness ready |
+| EXPERIMENTAL | trained HU strategy (v2, 3 seeds x 100k) | 10 / 10 sanity checks per seed; not converged; preflop noise-dominated (all 169 BTN first-action keys gated out) |
+| EXPERIMENTAL | range and opponent modelling | beliefs under heuristic priors; no ground-truth accuracy |
+| BLOCKED | real PokerNow recognition | **BLOCKED ON REAL FIXTURES** (0 annotated screenshots) |
 
-## Performance (4-vCPU container)
+## Release solver
 
-| | value |
+| | |
 | --- | --- |
-| offline: MCCFR training, locked config | ~23-30 it/s per process; 300k iterations ~3.5 h per seed; checkpoint ~28 MB |
-| online: strategy artifact load | ~300 ms once |
-| online: observe (manual / simulation / hand history) | < 1 ms |
-| online: observe (synthetic screenshot, 3 frames) | ~240 ms median |
-| online: analyze, solver or heuristic (1,500 equity sims) | ~70-100 ms median |
-| online: analyze, 400 rollouts | ~150-230 ms median |
+| config | `HoldemSolverConfig:v2:733e52f1d1014e2e7973` (compact encoder + 20 river percentile buckets, legal NLHE sizing, 100 BB, raise cap 3, external-sampling MCCFR, uniform averaging) |
+| artifact | `results/strategy/holdem_v2_seed0.npz` (seed 0, 100,000 iterations; checksum in `release_candidate.json`) |
+| confidence table | `results/strategy/holdem_v2_seed0_confidence.npz` |
+| use at decision time | gate: 19% of visit-weighted decisions accepted, 16% low confidence, 65% rejected -> rollout / heuristic |
 
-Online numbers are in `results/validation/final_benchmark.json`; solver
-lookups are dictionary reads, and equity and rollout sampling dominate
-online time.
+## Performance (4-vCPU container, CPython 3.13, pure Python + NumPy)
+
+Offline: v2 training ~9 it/s per process (~3 h per seed to 100k); v1 ~30
+it/s. Online (median, `results/validation/latency_benchmark.json`):
+
+| step | median | p95 |
+| --- | --- | --- |
+| solver lookup incl. gate | 0.016 ms | 0.025 ms |
+| hand evaluation x2000 | 8.1 ms | 8.6 ms |
+| HU equity, 2,000 sims | 37 ms | 38 ms |
+| multiway equity (2 opp.), 2,000 sims | 115 ms | 118 ms |
+| range update (1,326 combos) | 4.4 ms | 4.5 ms |
+| rollout 100 / 400 / 1,000 | 34 / 86 / 192 ms | 35 / 88 / 193 ms |
+| observer frame (synthetic) / fusion | 74 ms / 0.08 ms | 74 ms / 0.13 ms |
+| full DecisionReport: solver path / heuristic / rollout 400 | 77 / 77 / 163 ms | 78 / 79 / 165 ms |
 
 ## Readiness
 
-| use | recommendation |
+| area | rating |
 | --- | --- |
-| research on abstraction, MCCFR behaviour and opponent modelling | **ready**: measured, reproducible, documented limits |
-| post-hand analysis (hand histories, manual spots) | **ready with caveats**: every report shows its source, rejections and uncertainty; rollout EVs are model-dependent |
-| live assistance in private / play-money / test games where permitted | **usable with caution**: read-only; screen recognition is unvalidated on the real client, so verify the recognized state; never in games that forbid assistance |
-| trusted solver-quality recommendations | **not ready**: abstract imperfect-recall strategy, not converged, exploitability unknown |
+| Research | **READY WITH CAVEATS** — measured, reproducible, limits documented |
+| Hand analysis | **READY WITH MODEL CAVEATS** — EVs are conditional on assumed ranges / response models |
+| Private / play-money / test decision support | **READY WITH MANUAL STATE VERIFICATION** — read-only; verify recognized state; only where permitted |
+| Real screen observation | **BLOCKED ON REAL FIXTURES** |
+| Trusted solver recommendations | **EXPERIMENTAL** — gated, abstract, not converged |
 
-## Unblocking next steps
+## Next steps that would change a rating
 
-1. Real PokerNow fixtures: annotated screenshots in `tests/fixtures/pokernow/`
-   (steps in [observer.md](observer.md)); then run `experiments/observer_validation.py`.
-2. An exploitability estimate inside the abstract game (e.g. local best
-   response over the compact abstraction) before calling any strategy strong.
-3. A perfect-recall abstraction coarse enough to be revisited (the
-   transition encoder failed only because the exact betting history
-   dominates), or more compute, if equilibrium guarantees matter.
+1. Real annotated PokerNow screenshots -> run `experiments/observer_validation.py --fixture-dir tests/fixtures/pokernow`.
+2. Longer v2 training (3 seeds to 300k, ~6.5 h) and a local best-response / exploitability estimate inside the abstraction.
+3. Exact abstraction-error measurement on flop and turn subgames.
+4. A better-calibrated rollout response model (the default model overfolds to large bets).

@@ -249,3 +249,76 @@ bluff-catcher facing a pot bet -> fold (regular, nit, station), call
 (maniac), raise (any two cards). A draw first to act is "all-in" under every
 model (the known check-down bias of rollouts at high SPR). Inferred ranges
 are model assumptions, and reports must be read that way.
+
+## Phase 36 — training with the remediated config
+
+`V2_CONFIG` (`HoldemSolverConfig:v2:733e52f1d1014e2e7973`), seeds 0 / 1 / 2,
+checkpoints 1k / 5k / 10k / 30k / 100k
+(`results/validation/holdem_training_v2.json`, `preflop_audit_v2.json`).
+Runs were restarted at 5k with an exact, 3x faster river ranking (resume is
+bit-exact); ~9 iterations/s per process, ~3 h per seed to 100k.
+
+| iterations (seed 0) | infosets | new / iter | >= 5 visits | >= 20 visits | top-2000 movement | matrix movement | seeds: top-2000 overlap / common L1 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| 1k | 53,395 | 53.4 | 22% | 3.5% | — | — | 70% / 0.65 |
+| 10k | 101,875 | 2.7 | 53% | 27% | — | 0.35 | 80% / 0.45 |
+| 30k | 119,760 | 0.89 | 66% | 43% | 0.28 | 0.48 | 82% / 0.36 |
+| 100k | 133,044 | 0.19 | 76% | 58% | 0.25 | 0.50 | 85% / 0.30 |
+
+**v1 vs v2 at matched 100k** (`solver_quality_v1.json` -> `v1_vs_v2`):
+
+| | v1 | v2 |
+| --- | --- | --- |
+| infosets | 82,781 | 133,044 |
+| >= 5 / >= 20 visits | 79% / 62% | 76% / 58% |
+| seeds: matrix L1 (both >= 20 visits) | 0.84 | 0.85 |
+| seeds: top-2000 common L1 | 0.25 | 0.30 |
+| sanity checks (each seed) | 10 / 10 | 10 / 10 |
+| preflop seed disagreement (BTN first) | 0.94 | 0.96 |
+| BTN AA: limp / raise / jam | 69% / 27% / 4% | 48% / 51% / 0.2% |
+| BTN KK: limp | 49% | 26% |
+| BTN 72o: fold | 80% | 88% |
+| preflop jam frequency (BB vs medium open) | 16.7% | 17.6% |
+| gate at 100k, visit-weighted accept / low / reject | 22% / 20% / 59% | 19% / 16% / 65% |
+| sizes below the NLHE minimum | yes (filtered at lookup) | none by construction |
+| exact river abstraction error (Phase 34/35 boards) | 9.24 / 2.24 BB | 0.57 / 0.28 BB |
+
+Cross-play inside v2 (200,000 duplicate deals): seeds +14.7 (+4.9..+24.5),
++1.9 (-8.1..+11.8), +1.1 (-8.7..+10.9) bb/100; 100k vs 10k +270
+(+258..+282); vs 1k +454; vs uniform +513; vs calling station +515;
+uniform control -10.0 (-23.9..+4.0). Not significantly different is not
+identical, and none of this is exploitability.
+
+**Conclusions.** v2 fixes what was measurably wrong (illegal sizes, river
+collisions) and makes premium preflop play more aggressive, but it does not
+fix the dominant preflop problem: noise at ~450 visits per preflop key
+(seed L1 ~0.95 at 100k in both configs). **Release config: v2**; v1 remains
+the locked, reproducible reference.
+
+**Stop criterion (36B/36C).** Training still improves (100k beats 10k by
+~270 bb/100; v1 300k beat 100k by ~84), and policies still move (L1 ~0.25
+top-2000, ~0.5 matrix). A 1M-iteration run was **not** started: v2 costs
+~3 h per 100k iterations per seed even after the speedup (~30 h per seed to
+1M), and its main beneficiary would be the noise-dominated preflop, which
+the gate already rejects (all 169 BTN first-action keys) and routes to
+rollouts. Extending three seeds to 300k (~6.5 h) is the recommended next
+step.
+
+## Phase 37 applied to the release strategy
+
+`results/strategy/holdem_v2_seed0_confidence.npz` (124,381 visited keys;
+seeds 0-2 at 100k, movement vs 10k). With the calibrated thresholds: 86% of
+keys rejected, 8% low confidence, 6% accepted; weighted by visits 65% / 16%
+/ 19%. All 169 BTN first-action preflop keys are rejected
+(`HIGH_SEED_DISAGREEMENT`, `UNSTABLE_ACROSS_CHECKPOINTS`), so preflop advice
+comes from rollouts; the solver contributes mainly in stable postflop
+spots.
+
+## Phase 38 — real screen fixtures
+
+`tests/fixtures/pokernow/raw/` and `annotations/` are empty: **REAL SCREEN
+VALIDATION: BLOCKED.** No screenshots were fabricated or scraped. The
+tooling is ready (annotation validation, per-field metrics, confidence
+calibration, harness self-test on the synthetic image); temporal (multi-frame)
+metrics remain the synthetic Phase 25 ones. `observer_real_v1.json` is not
+produced because no real fixtures exist.

@@ -3,7 +3,9 @@
 **Current status of every component: [release_status.md](release_status.md)**
 (machine-readable: `results/validation/final_platform_validation.json`).
 Sections 1-7 and the summary table below are the Phase 25 record; sections
-8-12 cover Phases 26-29.
+8-12 cover Phases 26-29. **Phases 32-40 (solver trustworthiness, exact
+reduced games, abstraction error, remediation, v2 training, confidence
+gate, release candidate) are in [solver_validation.md](solver_validation.md).**
 
 Machine-readable results: [`results/validation/holdem_platform_validation.json`](../results/validation/holdem_platform_validation.json)
 (regenerate with `python experiments/phase25_validation.py --runs-dir RUNS`,

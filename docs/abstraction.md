@@ -107,6 +107,28 @@ heads-up 100 BB play with a 33/75/150% + all-in menu, trained on an
 imperfect-recall abstraction: not an equilibrium, not GTO, exploitability
 unknown.
 
+## Release configuration v2 (Phases 35-36)
+
+**RELEASE_CONFIG = `V2_CONFIG` (`HoldemSolverConfig:v2:733e52f1d1014e2e7973`).**
+Still the compact encoder and still **IMPERFECT RECALL — no standard CFR
+equilibrium guarantee**, with two evidence-backed changes
+([solver_validation.md](solver_validation.md)):
+
+* legal NLHE sizing — preflop raises to 2 / 2.5 / 3.5x the current bet
+  (tokens `x200` / `x250` / `x350`), postflop 33 / 75 / 150% pot, and no
+  bet or raise below the NLHE minimum (v1 offered a 1.66 BB "open");
+* river cards bucketed by exact strength percentile against all holdings
+  (20 buckets) instead of the 0..7 made-hand rung — exact river-subgame
+  exploitability of the compact strategy 9.24 -> 0.57 BB and 2.24 -> 0.28 BB.
+
+The v2 signature also records `averaging=uniform` (simple external-sampling
+averaging) and the action-abstraction description. Release artifact:
+`results/strategy/holdem_v2_seed0.npz` (seed 0, 100k iterations, 2.2 MB)
+plus `holdem_v2_seed0_confidence.npz` for the solver-use gate. v1
+(`PRIMARY_CONFIG`, artifact `holdem_v1_seed0.npz`, 300k) stays the locked
+reference; strategy files load under whichever known config their
+signature names (`solver_config.config_for_signature`).
+
 ## Card abstraction (`abstraction/cards.py`)
 
 * 169 preflop classes, exhaustively tested over all 1,326 combos (13 pairs ×

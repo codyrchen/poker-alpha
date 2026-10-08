@@ -40,7 +40,7 @@ than assumed, including where the system **fails**.
 python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install -e ".[dev]"
-pytest                        # 532 tests, ~3.5 min (POKERALPHA_SKIP_SLOW=1 skips 5 slow ones)
+pytest                        # 571 tests, ~4 min (POKERALPHA_SKIP_SLOW=1 skips 5 slow ones)
 python -m poker_alpha.demo    # ~12s
 python -m poker_alpha.holdem_demo   # 6-max Hold'em decision report, ~2s
 ```
@@ -155,6 +155,8 @@ Range + opponent model        (priors, blockers, Bayesian action updates, statis
         ↓
 Solver lookup / equity / EV   (abstract HU strategy · multiway equity · CRN rollouts)
         ↓
+Solver-confidence gate        (accept / low confidence / reject -> rollout -> heuristic)
+        ↓
 DecisionReport                (frequencies, EV ± SE, provenance, confidence, warnings)
         ↓
 UI / replay / session analysis
@@ -164,7 +166,7 @@ UI / replay / session analysis
 | --- | --- | --- |
 | Research | Kuhn, Leduc, CFR/CFR+/MCCFR, exploitability, opponent-identification experiments — unchanged | [RESEARCH.md](RESEARCH.md) |
 | Hold'em engine | 2–9 seats, integer chips, antes, heads-up blind rules, min-raise and short-all-in reopening, side and split pots | [docs/holdem_engine.md](docs/holdem_engine.md) |
-| Solver | sampled-chance external-sampling MCCFR on HU Hold'em; locked `HoldemSolverConfig` v1 with the compact encoder (**imperfect recall, no equilibrium guarantee**), chosen because it is the only measured abstraction that gets states revisited; config-bound checkpoints and a committed strategy artifact (3 seeds trained to 300k iterations, 10/10 sanity checks, see [validation](docs/validation.md)); 2x faster pure-Python backend, bit-identical | [docs/abstraction.md](docs/abstraction.md) |
+| Solver | external-sampling MCCFR on HU Hold'em, **validated against exact solutions of reduced Hold'em games**; release config `HoldemSolverConfig` v2: compact encoder (**imperfect recall, no equilibrium guarantee**) with exact river-strength buckets and legal NLHE sizing; 3 seeds x 100k iterations; every lookup passes a **solver-confidence gate** calibrated on exact games (preflop keys are currently all rejected as too noisy) | [docs/abstraction.md](docs/abstraction.md) |
 | Opponent / range modelling | 1,326-combo weighted ranges, versioned priors, Bayesian updates, Hold'em statistics with credible intervals and recency decay, exact joint multiway equity | [docs/ranges.md](docs/ranges.md) |
 | Observer | optional, read-only screenshot reader: calibration, template OCR, card recognition, smoothing, fusion rules, pause/correct/resume. Validated on synthetic images only — **real PokerNow accuracy: blocked on real fixtures, not measured** | [docs/observer.md](docs/observer.md) |
 | Decision analysis | one path for every input (`poker_alpha.pipeline`: manual / simulation / hand history / screenshot → `DecisionReport`); priority solver → rollout → heuristic with coded solver rejection reasons; uncertainty reported per source (observation, ranges, sampling, abstraction, response model) | [docs/decision_engine.md](docs/decision_engine.md) |
@@ -186,6 +188,23 @@ python experiments/holdem_mccfr.py --iterations 2000 --encoder bucket \
     --checkpoint results/checkpoints/hu.npz --checkpoint-every 500
 streamlit run poker_alpha/ui/app.py
 ```
+
+### Solver quality and release candidate (Phases 32-40)
+
+| question | answer (evidence in [docs/solver_validation.md](docs/solver_validation.md)) |
+| --- | --- |
+| Is MCCFR implemented correctly? | Yes: it converges to the exact solutions of a reduced preflop game (exploitability 0.58 -> 0.007 BB, 3 seeds) and six 52-card river subgames; rules, utilities and update signs traced in the real game |
+| Why did the button limp AA? | Not a bug: sampling noise at ~450-1,400 visits per preflop key (raise beats limp by ~1 BB under the profile, inside the noise), plus pot-relative sizes below the legal minimum and imperfect recall downstream |
+| How big is the abstraction error? | Measured on exact river subgames: the v1 compact strategy is exploitable by 9.24 / 2.24 BB; exact river-percentile buckets (v2) cut it to 0.57 / 0.28 BB |
+| When is the solver used? | Only when its seed disagreement / stability passes thresholds calibrated against true error in exact games; ~19% of visit-weighted decisions, otherwise rollouts |
+| Are rollouts right? | The estimator matches closed forms within 3 SE; the default response model overfolds to large bets (rollouts overbet in 16 / 36 exact river spots) |
+| Real PokerNow accuracy? | **BLOCKED**: no real annotated screenshots exist |
+
+Readiness ([release status](docs/release_status.md)): research — ready with
+caveats; hand analysis — ready with model caveats; private / play-money /
+test decision support — ready with manual state verification; real screen
+observation — blocked on real fixtures; trusted solver recommendations —
+experimental.
 
 ## What's implemented
 
@@ -605,7 +624,7 @@ committed CSV in `results/data/`, produced by a seeded script in
 
 ```bash
 python -m poker_alpha.demo                                  # ~12s
-pytest                                                      # 532 tests, ~3.5 min
+pytest                                                      # 571 tests, ~4 min
 ```
 
 **Moderate** (under a minute each):
@@ -634,7 +653,21 @@ python experiments/holdem_mccfr_validation.py --locked-config --seed 0 \
     --milestones 1000,10000,100000 --ckpt-dir /tmp/ck --out /tmp/run0.jsonl   # ~70 min to 100k
 python experiments/phase29_analysis.py --runs-dir /tmp --artifact /tmp/strategy.npz
 python experiments/phase28_benchmark.py --root . --out /tmp/bench.json
-python experiments/final_benchmark.py --strategy results/strategy/holdem_v1_seed0.npz
+python experiments/final_benchmark.py --strategy results/strategy/holdem_v2_seed0.npz
+```
+
+**Solver quality (Phases 32-40)** — see [docs/solver_validation.md](docs/solver_validation.md):
+
+```bash
+python experiments/phase33_reduced_games.py        # exact reduced games, ~85 min
+python experiments/phase34_abstraction_error.py    # encoders on identical exact subgames
+python experiments/phase35_river_buckets.py        # river percentile buckets
+python experiments/phase37_calibration.py          # gate thresholds vs true error
+python experiments/phase39_reference_checks.py     # clairvoyant toy game vs theory
+python experiments/rollout_validation.py           # rollouts vs closed forms
+python experiments/holdem_mccfr_validation.py --v2-config --seed 0 \
+    --milestones 1000,5000,10000,30000,100000 --ckpt-dir DIR --out DIR/v2_seed0.jsonl   # ~3 h
+python experiments/latency_benchmark.py            # online latency, idle machine
 python experiments/observer_validation.py --frames 30      # synthetic frames only
 python experiments/holdem_benchmark.py --label baseline    # then --label optimized --compare ...
 ```
@@ -688,7 +721,7 @@ results/
   validation/     Hold'em validation results (JSON), incl. final_platform_validation.json
   strategy/       exported abstract HU strategy artifact (npz, ~1.5 MB)
   figures/        generated figures
-tests/            pytest suite (532 tests; fixtures/ holds synthetic screenshots and hand histories)
+tests/            pytest suite (571 tests; fixtures/ holds synthetic screenshots and hand histories)
 RESEARCH.md       the full research writeup
 TODO.md           development history, phase by phase
 ```

@@ -933,6 +933,33 @@ within ~±7% before any speedup is believed.
 | §7–§8 | `regime_change_switching.csv`, `regime_change_switching_ev.csv`, `regime_change_control_summary.csv` |
 | §9 | `performance_baseline.csv`, `performance_optimized.csv`, `performance_comparison.csv` |
 
+## Addendum: validating the heads-up Hold'em solver (Phases 32-40)
+
+The research question above was studied on Kuhn and Leduc, where
+exploitability is exact. The Hold'em extension asked a narrower question:
+does the same MCCFR machinery behave correctly on Hold'em-shaped games, and
+how much of the trained Hold'em strategy can be trusted? Findings, each
+traceable to `results/validation/` and summarised in
+[docs/solver_validation.md](docs/solver_validation.md):
+
+* External-sampling MCCFR converges to exact CFR+ solutions of a reduced
+  preflop game and six 52-card river subgames (exploitability falling
+  roughly as 1/sqrt(T); independent seeds agree).
+* Suspicious preflop outputs of the full abstract strategy (AA limps,
+  frequent jams) are not implementation bugs: the dominant cause is
+  sampling noise at a few hundred to ~1,400 visits per preflop key, with
+  contributions from illegal pot-relative sizes and imperfect recall.
+* The imperfect-recall compact abstraction carries large, measurable error
+  on the river (exploitable by up to 9 BB in an exact subgame); exact
+  river-strength buckets reduce it 4-16x.
+* On exact games, seed disagreement predicts true strategy error well
+  (Spearman 0.61) while visit count does not; the platform therefore gates
+  solver output on seed disagreement and checkpoint stability, and falls
+  back to rollouts otherwise.
+
+None of this computes the exploitability of the full abstraction, and the
+trained strategy remains an experimental abstract strategy.
+
 ---
 
 *PokerAlpha is an offline simulation and research project. It does not connect
