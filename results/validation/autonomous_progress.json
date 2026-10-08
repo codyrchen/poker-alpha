@@ -3,7 +3,7 @@
  "branch": "claude/solver-quality-and-release",
  "checkpoints": "/home/user/pa_ckpt",
  "config_signature": "HoldemSolverConfig:v1:2e23c098860f7894c871",
- "current_phase": 33,
+ "current_phase": "35 (v2 retraining) with 33/34/37A runs",
  "experiments_running": [
   {
    "cmd": "python experiments/phase33_reduced_games.py",
@@ -12,12 +12,29 @@
   },
   {
    "cmd": "python experiments/phase34_abstraction_error.py",
-   "expected_minutes": 35,
    "log": "/home/user/pa_ckpt/phase34.log",
    "output": "results/validation/abstraction_error_v1.json"
+  },
+  {
+   "cmd": "python experiments/phase37_calibration.py",
+   "log": "/home/user/pa_ckpt/phase37cal.log",
+   "output": "results/validation/solver_gate_calibration.json"
+  },
+  {
+   "cmd": "python experiments/holdem_mccfr_validation.py --legal-sizing-config --seed S --milestones 1000,5000,10000,30000,100000 --ckpt-dir /home/user/pa_ckpt/v2 --out /home/user/pa_ckpt/v2/legal_seedS.jsonl",
+   "config_signature": "HoldemSolverConfig:v2:1eca9c95607b7a7fb008",
+   "done_when": "jsonl has iterations 100000 for all seeds",
+   "expected_checkpoints": "legal_seedS_it{1000,5000,10000,30000,100000}.npz",
+   "expected_minutes": 100,
+   "resume": "--resume legal_seedS_it<last>.npz --milestones <remaining>",
+   "seeds": [
+    0,
+    1,
+    2
+   ]
   }
  ],
- "head": "76bcf14",
+ "head": "be6cc0c",
  "last_completed_phase": 32,
  "next_action": "Phase 33: exact reduced Hold-em games",
  "open_bugs": [
@@ -28,5 +45,5 @@
   "phase32": "no rule/utility/MCCFR/averaging bug; preflop noise dominant (seed L1 ~0.9 at 1360 visits); b33 preflop sizes below NLHE min; BTN facing-jam key ignores open size"
  },
  "start_commit": "8335ea2",
- "updated": "2026-10-08T17:34:07Z"
+ "updated": "2026-10-08T17:52:01Z"
 }

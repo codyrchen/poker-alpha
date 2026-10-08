@@ -5,7 +5,7 @@ Recovery file for a fresh session. Machine-readable twin:
 
 - branch: `claude/solver-quality-and-release` (from `8335ea2`)
 - baseline: `POKERALPHA_SKIP_SLOW=1 pytest` = 527 passed, 5 skipped, 196 s (2026-10-08)
-- current phase: 33 (exact reduced games)
+- current phase: 35 (v2 legal-sizing retraining; 33/34/37A runs in flight)
 - last completed phase: 32
 
 ## Persistent inputs
@@ -18,7 +18,13 @@ Everything later phases need from them is extracted into committed JSON
 (see below) so they are not irreplaceable.
 
 ## Experiments running
-- Phase 33 full run: `python experiments/phase33_reduced_games.py` -> `results/validation/reduced_holdem_v1.json`, log `/home/user/pa_ckpt/phase33.log` (~80 min; done when the log prints `wrote ...reduced_holdem_v1.json`). Deterministic: rerun from scratch if lost.
+- Phase 33: `python experiments/phase33_reduced_games.py` -> results/validation/reduced_holdem_v1.json (log /home/user/pa_ckpt/phase33.log). Deterministic; rerun if lost.
+- Phase 34: `python experiments/phase34_abstraction_error.py` -> results/validation/abstraction_error_v1.json (log phase34.log).
+- Phase 37A: `python experiments/phase37_calibration.py` -> results/validation/solver_gate_calibration.json (log phase37cal.log).
+- Phase 35 v2 retraining (HoldemSolverConfig:v2:1eca9c95607b7a7fb008, legal sizing), seeds 0/1/2:
+  `python experiments/holdem_mccfr_validation.py --legal-sizing-config --seed S --milestones 1000,5000,10000,30000,100000 --ckpt-dir /home/user/pa_ckpt/v2 --out /home/user/pa_ckpt/v2/legal_seedS.jsonl`
+  checkpoints `/home/user/pa_ckpt/v2/legal_seedS_it{1000,5000,10000,30000,100000}.npz`; complete when each jsonl has an `"iterations": 100000` row.
+  Resume a killed seed with `--resume /home/user/pa_ckpt/v2/legal_seedS_it<last>.npz --milestones <remaining>`.
 
 ## Results so far
 - Phase 32: see docs/solver_validation.md. No rule/utility/MCCFR/averaging bug; preflop strategy noise-dominated; sub-minimum b33 sizes; facing-jam key collision.

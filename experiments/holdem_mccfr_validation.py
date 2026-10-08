@@ -87,6 +87,9 @@ def main() -> None:
     p.add_argument("--locked-config", action="store_true",
                    help="train the locked HoldemSolverConfig (PRIMARY_CONFIG); "
                         "checkpoints carry its signature; overrides --encoder")
+    p.add_argument("--legal-sizing-config", action="store_true",
+                   help="train LEGAL_SIZING_CONFIG (HoldemSolverConfig v2: preflop raise-to "
+                        "multiples, NLHE minimum bets/raises); checkpoints prefixed 'legal'")
     p.add_argument("--resume", type=Path, default=None,
                    help="continue from this checkpoint (same game/config)")
     p.add_argument("--max-seconds", type=float, default=float("inf"),
@@ -94,7 +97,11 @@ def main() -> None:
     args = p.parse_args()
     milestones = [int(x) for x in args.milestones.split(",")]
     args.ckpt_dir.mkdir(parents=True, exist_ok=True)
-    if args.locked_config:
+    if args.legal_sizing_config:
+        from poker_alpha.solver_config import LEGAL_SIZING_CONFIG
+
+        game, tag = LEGAL_SIZING_CONFIG.build_game(), "legal"
+    elif args.locked_config:
         from poker_alpha.solver_config import PRIMARY_CONFIG
 
         game, tag = PRIMARY_CONFIG.build_game(), "locked"
