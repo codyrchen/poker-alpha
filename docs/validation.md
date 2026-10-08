@@ -381,6 +381,94 @@ traversal; the Phase-29 budget fits in about an hour per seed; a port of
 rules + features + encoder would add semantic-equivalence risk for no
 required gain).
 
+## 11. Phase 29: training the locked config
+
+Runs: `holdem_mccfr_validation.py --locked-config`, seeds 0/1/2, checkpoints
+at 1k / 3k / 10k / 30k / 100k (log-spaced), ~23-27 it/s per process, about
+70 minutes per seed to 100k. Analysis: `experiments/phase29_analysis.py`
+-> `results/validation/holdem_training_v1.json`. Checkpoints (~25 MB each)
+stay outside the repository; the exported strategy artifact
+`results/strategy/holdem_v1_seed0.npz` (1.4 MB, seed 0, 100k iterations,
+every visited infoset) is committed. **The abstraction is imperfect recall:
+everything below is a proxy, not a convergence or exploitability result.**
+
+### Convergence proxies (seed 0; seeds 1 and 2 within +/- 0.01 on every rate)
+
+| iterations | infosets | new / iter | newly discovered | >= 5 visits | >= 20 visits | top-2000 movement (L1 vs prev.) | matrix spots visited / >= 20 | visit-weighted entropy |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1k | 41,066 | 41.1 | 100% | 28.4% | 6.4% | — | 464 / 51 | 1.07 bits |
+| 3k | 54,652 | 6.8 | 25% | 43.9% | 17.3% | 0.36 | 544 / 167 | 0.94 |
+| 10k | 67,705 | 1.9 | 19% | 59.5% | 34.2% | 0.36 | 592 / 400 | 0.81 |
+| 30k | 76,590 | 0.44 | 12% | 70.4% | 49.1% | 0.28 | 633 / 503 | 0.72 |
+| 100k | 82,781 | 0.09 | 7.5% | 79.2% | 62.5% | 0.24 | 656 / 591 | 0.65 |
+
+Discovery has nearly stopped (0.09 new infosets per iteration). The policies
+of the most visited infosets still move between checkpoints (mean L1 0.24),
+and the canonical-matrix spots move about 0.5 L1 per checkpoint without a
+clear downward trend, so the strategy is **not settled** at 100k.
+
+### Seed disagreement (L1, max 2.0)
+
+| iterations | top-2000 overlap | top-2000 common-key mean L1 | matrix spots visited by both: mean L1 | both >= 20 visits: mean L1 |
+| --- | --- | --- | --- | --- |
+| 1k | 75% | 0.64 | 0.73 (n ~ 375) | 0.91 (n ~ 34) |
+| 10k | 84% | 0.39 | 0.93 | 0.92 |
+| 100k | 88-89% | 0.25 | 0.87-0.89 (n ~ 640) | 0.84 (n ~ 540) |
+
+The heavily visited core agrees more and more across seeds; specific
+canonical spots still differ a lot between seeds (mean L1 ~0.85), so any
+single spot's frequencies should be read as rough tendencies, not as stable
+numbers.
+
+### Canonical matrix
+
+666 spots (`validation/canonical_matrix.py`): 16 preflop hands x 6
+situations (BTN unopened; BB vs limp, 33/75/150% raise, all-in) and, for
+five flop textures (dry high, wet connected, paired, monotone, low
+connected), hand categories (monster, top pair+, medium, weak made, draw,
+air) x preflop lines (limped, 75% and 150% raise: different SPRs) x nodes
+(BB first, BTN after check, BB facing 33/75/150%) on the flop, plus turn
+and river lines. At 100k, 656 / 639 / 653 spots are visited (seeds 0/1/2);
+the 10 unvisited seed-0 spots (mostly monsters facing bets in limped pots)
+are reported as `UNVISITED`. Illustrative seed-0 policies: BTN 72o folds
+68%; BB vs a 75% open folds 72o 62% and 3-bets/jams AA 99.6%; facing a 75%
+c-bet on K72 rainbow, air folds 93% and medium pairs call 66%; on 986
+two-tone after a check the BTN bets top pair+ 99.9% and checks draws 92%.
+Visible oddities, reported as they are: AA limps on the BTN 89% of the
+time, and preflop all-ins are frequent — consistent with an abstract game
+with a three-size menu and imperfect recall, not with real-game theory.
+
+### Strategic sanity checks (`>= 5` visits per spot used)
+
+All 10 pass on all three seeds: AA never folds preflop (max fold 0.4-2%);
+BTN folds 72o more than AA; BTN raises premiums more than trash; BB folds
+trash more than premiums vs raises and vs all-ins; facing flop bets air
+folds more than top pair+ (69-76% vs 2-4%); monsters fold <= 2%; air and
+weak made hands fold more to 150% than to 33% bets; first to act, value
+hands bet more than weak made hands; river monsters facing a bet fold
+<= 0.4%. These are coarse plausibility checks, not optimality tests.
+
+### Duplicate cross-play with seat swap (200,000 deals per match)
+
+Each deal is played twice with the cards fixed and seats swapped; result
+for A in bb/100 hands (95% CI). Inside the abstract game only; unvisited
+infosets play uniform (miss rate < 0.02% for 100k strategies).
+
+| A | B | bb/100 | 95% CI |
+| --- | --- | --- | --- |
+| seed 0 @100k | seed 1 @100k | +5.4 | -4.2 .. +15.1 |
+| seed 1 @100k | seed 2 @100k | -1.2 | -10.9 .. +8.5 |
+| seed 0 @100k | seed 2 @100k | +13.3 | +3.6 .. +23.0 |
+| seed 0 @100k | seed 1 @10k | +264.0 | +252.2 .. +275.8 |
+| seed 0 @100k | seed 1 @1k | +439.9 | +427.1 .. +452.7 |
+| seed 0 @100k | uniform random | +498.0 | +485.6 .. +510.4 |
+| seed 0 @100k | calling station | +472.1 | +461.1 .. +483.0 |
+| uniform (control) | uniform | +3.9 | -10.0 .. +17.7 |
+
+More training clearly produces a stronger abstract strategy (100k beats 10k
+by ~2.6 bb/hand); independently seeded 100k strategies are close to each
+other but not identical. None of this bounds exploitability.
+
 ## Exploitability
 
 Not computed. Exact Hold'em exploitability is infeasible here, and no proxy
