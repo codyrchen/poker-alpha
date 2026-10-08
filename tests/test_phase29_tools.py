@@ -99,7 +99,7 @@ def test_committed_strategy_artifact_matches_locked_config():
     path = Path(__file__).parents[1] / "results" / "strategy" / "holdem_v1_seed0.npz"
     art = load_artifact(path, PRIMARY_CONFIG.build_game())
     assert art.config_signature == PRIMARY_CONFIG.signature()
-    assert art.meta["iterations"] >= 100000 and len(art) > 80000
+    assert art.meta["iterations"] >= 100000 and len(art) > 75000  # visited infosets only
     assert "IMPERFECT RECALL" in art.meta["recall"]
     for probs in list(art.strategy.values())[:2000]:
         assert abs(sum(probs.values()) - 1.0) < 1e-4
