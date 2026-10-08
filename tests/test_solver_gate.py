@@ -121,3 +121,16 @@ def test_illegal_size_mass_is_removed_deterministically():
     assert "raise_33" not in mix
     assert mix["raise_75"] == pytest.approx(0.6) and mix["call"] == pytest.approx(0.4)
     assert rep.details["solver"]["illegal_size_mass_removed"] == pytest.approx(0.5)
+
+
+def test_config_inferred_from_artifact_signature(tmp_path):
+    from poker_alpha.solver_config import V2_CONFIG
+    from poker_alpha.solvers.strategy_artifact import export_solver
+
+    s = V2_CONFIG.build_solver(seed=1)
+    s.train(5)
+    path = export_solver(s, tmp_path / "v2.npz", meta={"seed": 1})
+    prov = load_solver(path)
+    assert not hasattr(prov, "code") and prov.game.signature() == V2_CONFIG.build_game().signature()
+    miss = load_solver(path, config=PRIMARY_CONFIG)
+    assert miss.code == "CONFIG_MISMATCH"

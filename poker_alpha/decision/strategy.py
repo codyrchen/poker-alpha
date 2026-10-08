@@ -75,15 +75,25 @@ class SolverStrategyProvider:
     def from_artifact(cls, path, config=None, min_visits: Optional[float] = None,
                       confidence_path=None, use_gate: bool = True):
         """Provider from a strategy artifact (``solvers.strategy_artifact``)
-        trained under ``config`` (default: the locked ``PRIMARY_CONFIG``).
+        trained under ``config`` (default: inferred from the artifact's signature).
 
         Returns a :class:`LookupMiss` (``CONFIG_MISMATCH`` or
         ``INCOMPATIBLE_CHECKPOINT``) instead of raising when it cannot be used.
         """
-        from ..solver_config import PRIMARY_CONFIG
         from ..solvers.strategy_artifact import StrategyArtifactError, load_artifact
 
-        config = config or PRIMARY_CONFIG
+        if config is None:
+            # Infer the config from the artifact's own signature (known
+            # configs only); unknown signatures are rejected as mismatches.
+            from ..solver_config import config_for_signature
+            try:
+                peek = load_artifact(path)
+            except StrategyArtifactError as exc:
+                return LookupMiss(f"strategy artifact rejected: {exc}", "INCOMPATIBLE_CHECKPOINT")
+            config = config_for_signature(peek.config_signature)
+            if config is None:
+                return LookupMiss(f"strategy artifact trained under unknown config "
+                                  f"{peek.config_signature!r}", "CONFIG_MISMATCH")
         game = config.build_game()
         try:
             art = load_artifact(path, game)
@@ -121,7 +131,16 @@ class SolverStrategyProvider:
         from ..solver_config import PRIMARY_CONFIG
         from ..solvers.serialize import CheckpointError, load_checkpoint
 
-        config = config or PRIMARY_CONFIG
+        if config is None:
+            import numpy as np
+
+            from ..solver_config import config_for_signature
+            try:
+                with np.load(path, allow_pickle=False) as z:
+                    sig = str(z["solver_config"][()]) if "solver_config" in z.files else ""
+            except (OSError, ValueError) as exc:
+                return LookupMiss(f"checkpoint rejected: {exc}", "INCOMPATIBLE_CHECKPOINT")
+            config = config_for_signature(sig) or PRIMARY_CONFIG
         game = config.build_game()
         try:
             solver = load_checkpoint(path, game)

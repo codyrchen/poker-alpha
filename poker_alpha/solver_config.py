@@ -169,3 +169,14 @@ V2_CONFIG = HoldemSolverConfig(
     encoder="compact_river_pct20",
     preflop_raise_multiples=(("x200", 2.0), ("x250", 2.5), ("x350", 3.5)),
     enforce_min_raise=True)
+
+
+KNOWN_CONFIGS = {"v1": PRIMARY_CONFIG, "v2-sizing-only": LEGAL_SIZING_CONFIG, "v2": V2_CONFIG}
+
+
+def config_for_signature(signature: str):
+    """The known config with this signature, or ``None``."""
+    for cfg in KNOWN_CONFIGS.values():
+        if cfg.signature() == signature:
+            return cfg
+    return None
