@@ -81,3 +81,21 @@ def test_v2_trains_and_keys_carry_legal_menu():
     assert any("x250" in k for k in s.infosets)
     # no preflop key offers the postflop pot-fraction tokens
     assert not any(k.startswith("0|") and ".b33" in k for k in s.infosets)
+
+
+def test_v2_config_combines_sizing_and_river_percentiles():
+    from poker_alpha.abstraction.features import river_percentile
+    from poker_alpha.poker.cards import codes
+    from poker_alpha.solver_config import V2_CONFIG
+
+    sig = V2_CONFIG.to_dict()
+    assert V2_CONFIG.signature().startswith("HoldemSolverConfig:v2:")
+    assert "river_pct=20" in sig["encoder_signature"] and "min_raise=nlhe" in sig["game_signature"]
+    board = codes(["Ks", "7d", "2c", "Qh", "4s"])
+    assert river_percentile(codes(["7c", "7h"]), board) > river_percentile(codes(["Ah", "Kd"]), board) \
+        > river_percentile(codes(["3c", "5h"]), board)
+    g = V2_CONFIG.build_game()
+    s = spot_state(g, "BB", ("7c", "7h"), ("Ks", "7d", "2c", "Qh", "4s"), ("x250c", "cc", "cc", ""),
+                   villain_hole=("9c", "9d"))
+    key = g.infoset_key(s)
+    assert key.split("|")[2].startswith("p19"), key       # a set is in the top 5% bucket

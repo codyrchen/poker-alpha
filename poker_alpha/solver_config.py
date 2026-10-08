@@ -161,3 +161,11 @@ PRIMARY_CONFIG = HoldemSolverConfig()
 LEGAL_SIZING_CONFIG = HoldemSolverConfig(
     preflop_raise_multiples=(("x200", 2.0), ("x250", 2.5), ("x350", 3.5)),
     enforce_min_raise=True)
+
+# v2 candidate (Phase 35): legal sizing + exact river-strength percentile
+# buckets (20) in the compact encoder, which cut the measured river
+# abstraction error by an order of magnitude on exact subgames.
+V2_CONFIG = HoldemSolverConfig(
+    encoder="compact_river_pct20",
+    preflop_raise_multiples=(("x200", 2.0), ("x250", 2.5), ("x350", 3.5)),
+    enforce_min_raise=True)

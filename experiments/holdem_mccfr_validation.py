@@ -90,6 +90,9 @@ def main() -> None:
     p.add_argument("--legal-sizing-config", action="store_true",
                    help="train LEGAL_SIZING_CONFIG (HoldemSolverConfig v2: preflop raise-to "
                         "multiples, NLHE minimum bets/raises); checkpoints prefixed 'legal'")
+    p.add_argument("--v2-config", action="store_true",
+                   help="train V2_CONFIG (legal sizing + compact encoder with 20 exact river "
+                        "percentile buckets); checkpoints prefixed 'v2'")
     p.add_argument("--resume", type=Path, default=None,
                    help="continue from this checkpoint (same game/config)")
     p.add_argument("--max-seconds", type=float, default=float("inf"),
@@ -97,7 +100,11 @@ def main() -> None:
     args = p.parse_args()
     milestones = [int(x) for x in args.milestones.split(",")]
     args.ckpt_dir.mkdir(parents=True, exist_ok=True)
-    if args.legal_sizing_config:
+    if args.v2_config:
+        from poker_alpha.solver_config import V2_CONFIG
+
+        game, tag = V2_CONFIG.build_game(), "v2"
+    elif args.legal_sizing_config:
         from poker_alpha.solver_config import LEGAL_SIZING_CONFIG
 
         game, tag = LEGAL_SIZING_CONFIG.build_game(), "legal"

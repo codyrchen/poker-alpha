@@ -3,38 +3,33 @@
  "branch": "claude/solver-quality-and-release",
  "checkpoints": "/home/user/pa_ckpt",
  "config_signature": "HoldemSolverConfig:v1:2e23c098860f7894c871",
- "current_phase": "35 (v2 retraining) with 33/34/37A runs",
+ "current_phase": "35/36 v2 retraining",
  "experiments_running": [
   {
-   "cmd": "python experiments/phase33_reduced_games.py",
-   "log": "/home/user/pa_ckpt/phase33.log",
-   "output": "results/validation/reduced_holdem_v1.json"
-  },
-  {
-   "cmd": "python experiments/phase34_abstraction_error.py",
-   "log": "/home/user/pa_ckpt/phase34.log",
-   "output": "results/validation/abstraction_error_v1.json"
-  },
-  {
-   "cmd": "python experiments/phase37_calibration.py",
-   "log": "/home/user/pa_ckpt/phase37cal.log",
-   "output": "results/validation/solver_gate_calibration.json"
-  },
-  {
-   "cmd": "python experiments/holdem_mccfr_validation.py --legal-sizing-config --seed S --milestones 1000,5000,10000,30000,100000 --ckpt-dir /home/user/pa_ckpt/v2 --out /home/user/pa_ckpt/v2/legal_seedS.jsonl",
-   "config_signature": "HoldemSolverConfig:v2:1eca9c95607b7a7fb008",
-   "done_when": "jsonl has iterations 100000 for all seeds",
-   "expected_checkpoints": "legal_seedS_it{1000,5000,10000,30000,100000}.npz",
-   "expected_minutes": 100,
-   "resume": "--resume legal_seedS_it<last>.npz --milestones <remaining>",
+   "cmd": "python experiments/holdem_mccfr_validation.py --v2-config --seed S --milestones 1000,5000,10000,30000,100000 --ckpt-dir /home/user/pa_ckpt/v2b --out /home/user/pa_ckpt/v2b/v2_seedS.jsonl",
+   "done_when": "iterations 100000 row in each jsonl",
+   "expected_hours": 4,
+   "name": "v2 training",
    "seeds": [
     0,
     1,
     2
    ]
+  },
+  {
+   "log": "/home/user/pa_ckpt/phase33.log",
+   "name": "phase33"
+  },
+  {
+   "log": "/home/user/pa_ckpt/phase34.log",
+   "name": "phase34"
+  },
+  {
+   "log": "/home/user/pa_ckpt/phase35rp.log",
+   "name": "phase35 river pct"
   }
  ],
- "head": "be6cc0c",
+ "head": "f9868c2",
  "last_completed_phase": 32,
  "next_action": "Phase 33: exact reduced Hold-em games",
  "open_bugs": [
@@ -45,5 +40,6 @@
   "phase32": "no rule/utility/MCCFR/averaging bug; preflop noise dominant (seed L1 ~0.9 at 1360 visits); b33 preflop sizes below NLHE min; BTN facing-jam key ignores open size"
  },
  "start_commit": "8335ea2",
- "updated": "2026-10-08T17:52:01Z"
+ "updated": "2026-10-08T19:01:53Z",
+ "v2_config": "HoldemSolverConfig:v2:733e52f1d1014e2e7973"
 }
