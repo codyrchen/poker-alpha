@@ -106,18 +106,64 @@ def _load(path: Path):
     return load_checkpoint(path, make_game())
 
 
-def visit_hist(solver) -> dict:
-    v = np.rint(np.array([n.strategy_sum.sum() for n in solver.infosets.values()]))
-    return {"0": float(np.mean(v == 0)), "1": float(np.mean(v == 1)),
-            "2-5": float(np.mean((v >= 2) & (v <= 5))),
-            "6-20": float(np.mean((v >= 6) & (v <= 20))), ">20": float(np.mean(v > 20)),
-            "max": float(v.max())}
+VISIT_TOL = 1e-6
+
+
+def visit_counts(solver) -> np.ndarray:
+    """Exact integer visit counts per infoset.
+
+    External-sampling MCCFR adds the current strategy (a probability vector)
+    to ``strategy_sum`` once per visit by the non-updating player, so
+    ``strategy_sum.sum()`` equals the visit count up to floating-point
+    summation error (e.g. 0.9999999999999999). Earlier histograms compared
+    ``v == 1`` on these floats and silently dropped such infosets from every
+    bucket, which is why their percentages summed to ~93%. Here each total is
+    checked to lie within ``VISIT_TOL`` of an integer before rounding; a
+    violation would indicate a real bug and raises.
+    """
+    raw = np.array([n.strategy_sum.sum() for n in solver.infosets.values()],
+                   dtype=np.float64)
+    rounded = np.rint(raw)
+    bad = np.abs(raw - rounded) > VISIT_TOL * np.maximum(1.0, rounded)
+    if bad.any():
+        raise ValueError(f"{int(bad.sum())} visit totals are not near-integers")
+    return rounded.astype(np.int64)
+
+
+def visit_stats(v: np.ndarray, prev_infosets: int) -> dict:
+    n = len(v)
+    cats = {"0": v == 0, "1": v == 1, "2-5": (v >= 2) & (v <= 5),
+            "6-20": (v >= 6) & (v <= 20), ">20": v > 20}
+    counts = {k: int(m.sum()) for k, m in cats.items()}
+    assert sum(counts.values()) == n
+    return {
+        "infosets": n,
+        "counts": counts,
+        "percent": {k: 100.0 * c / n for k, c in counts.items()},
+        "max": int(v.max()), "median": float(np.median(v)), "mean": float(v.mean()),
+        "max_visit_non_integer_totals": 0,
+        # discovery vs learning (see docs/validation.md for definitions)
+        "fraction_newly_discovered": (n - prev_infosets) / n,
+        "fraction_revisited_ge2": float(np.mean(v >= 2)),
+        "fraction_trained_ge5": float(np.mean(v >= 5)),
+        "fraction_trained_ge10": float(np.mean(v >= 10)),
+        "fraction_trained_ge20": float(np.mean(v >= 20)),
+        "visit_share_in_infosets_ge5": float(v[v >= 5].sum() / max(v.sum(), 1)),
+    }
 
 
 def top_visited(solver, n: int):
     items = sorted(((float(node.strategy_sum.sum()), k) for k, node in solver.infosets.items()),
                    key=lambda x: (-x[0], x[1]))[:n]
     return {k: (v, solver.infosets[k].average_strategy().copy()) for v, k in items}
+
+
+def policy_record(p) -> dict:
+    if not p.visited:
+        return {"key": p.key, "visits": 0, "status": "UNVISITED", "policy": None}
+    return {"key": p.key, "visits": int(round(p.visits)), "status": "visited",
+            "policy": dict(zip(p.actions, [round(x, 4) for x in p.probs])),
+            "l1_from_uniform": round(p.l1_from_uniform, 4)}
 
 
 def part_c(runs_dir: Path, top_n: int = 2000) -> dict:
@@ -127,60 +173,88 @@ def part_c(runs_dir: Path, top_n: int = 2000) -> dict:
     for f in sorted(runs_dir.glob("run_seed*.jsonl")):
         rows = [json.loads(l) for l in f.read_text().splitlines() if l.strip()]
         runs[rows[0]["seed"]] = rows
-    result = {"runs": {}, "canonical": {}, "seed_disagreement": {}}
-    tops = {}
+    result = {"definitions": {
+        "visit": "one arrival at the infoset as the non-updating player in external-sampling "
+                 "MCCFR (each adds one probability vector to strategy_sum); infosets reached "
+                 "only as the updating player have 0 visits",
+        "newly_discovered": "infoset absent at the previous checkpoint",
+        "revisited": "visit count >= 2",
+        "meaningfully_trained": "reported at three fixed thresholds: >= 5, >= 10, >= 20 visits; "
+                                "none is privileged",
+        "l1": "sum of absolute probability differences; maximum possible 2.0"},
+        "runs": {}, "seed_disagreement": {}}
+    at_1000 = {}
     for seed, rows in sorted(runs.items()):
-        per = []
-        prev_spot = None
+        per, prev_n, prev_pols = [], 0, None
         for r in rows:
             solver = _load(Path(r["checkpoint"]))
+            v = visit_counts(solver)
             pols = spot_policies(game, solver.infosets, spots)
-            hist = visit_hist(solver)
             top = top_visited(solver, top_n)
-            far = np.mean([np.abs(p - 1.0 / len(p)).sum() > 0.5 for _, p in top.values()])
-            row = {k: r[k] for k in ("iterations", "segment_seconds", "total_seconds",
-                                     "iters_per_sec_segment", "infosets", "new_infosets",
-                                     "top_n_prev_mean_l1", "top_n_prev_median_l1",
-                                     "entropy_bits_visit_weighted", "checkpoint_mb",
-                                     "memory_mb_estimate", "max_rss_mb")}
-            row["visit_fraction"] = hist
-            row["new_infoset_share"] = r["new_infosets"] / r["infosets"]
-            row[f"top{top_n}_min_visits"] = min(v for v, _ in top.values())
-            row[f"top{top_n}_share_far_from_uniform(L1>0.5)"] = float(far)
-            row["canonical"] = {p.spot: {"visits": p.visits, "key": p.key,
-                                         "policy": dict(zip(p.actions, [round(x, 4) for x in p.probs])),
-                                         "l1_from_uniform": round(p.l1_from_uniform, 4),
-                                         "l1_vs_previous_checkpoint":
-                                             None if prev_spot is None else l1(prev_spot[i], p)}
-                                for i, p in enumerate(pols)}
-            prev_spot = pols
+            row = {
+                "iterations": r["iterations"],
+                "wall_clock_seconds_cumulative": r["total_seconds"],
+                "segment_seconds": r["segment_seconds"],
+                "iterations_per_second_segment": r["iters_per_sec_segment"],
+                "new_infosets_since_previous": r["infosets"] - prev_n,
+                "checkpoint_bytes": Path(r["checkpoint"]).stat().st_size,
+                "infoset_memory_estimate_bytes": int(r["memory_mb_estimate"] * 1e6),
+                "max_rss_mb": r["max_rss_mb"],
+                "entropy_bits_visit_weighted": r["entropy_bits_visit_weighted"],
+                "visits": visit_stats(v, prev_n),
+                f"top{top_n}_most_visited_min_visits": int(round(min(x for x, _ in top.values()))),
+                f"top{top_n}_share_far_from_uniform_l1_gt_0.5": float(np.mean(
+                    [np.abs(p - 1.0 / len(p)).sum() > 0.5 for _, p in top.values()])),
+                "canonical": {},
+            }
+            assert row["visits"]["infosets"] == r["infosets"]
+            for i, p in enumerate(pols):
+                rec = policy_record(p)
+                if prev_pols is not None and p.visited and prev_pols[i].visited:
+                    rec["l1_vs_previous_checkpoint"] = round(l1(prev_pols[i], p), 4)
+                row["canonical"][p.spot] = rec
             per.append(row)
             if r["iterations"] == 1000:
-                tops[seed] = (top, pols)
-            print(f"[C] seed {seed} it {r['iterations']}: infosets {r['infosets']} "
-                  f"visits {hist}", flush=True)
+                at_1000[seed] = (top, pols)
+            prev_n, prev_pols = r["infosets"], pols
+            print(f"[C] seed {seed} it {r['iterations']}: {row['visits']['counts']}", flush=True)
             del solver
         result["runs"][str(seed)] = per
-    if len(tops) >= 2:
-        pair = {}
-        spot_l1 = {sp.name: [] for sp in spots}
-        overlap, top_l1 = [], []
-        for a, b in itertools.combinations(sorted(tops), 2):
-            (ta, pa), (tb, pb) = tops[a], tops[b]
-            common = set(ta) & set(tb)
-            overlap.append(len(common) / top_n)
-            top_l1.extend(float(np.abs(ta[k][1] - tb[k][1]).sum()) for k in common)
-            for x, y in zip(pa, pb):
-                if x.visited and y.visited:
-                    spot_l1[x.spot].append(l1(x, y))
-        pair["iterations"] = 1000
-        pair["seeds"] = sorted(tops)
-        pair[f"top{top_n}_key_overlap_mean"] = float(np.mean(overlap))
-        pair[f"top{top_n}_common_policy_l1_mean"] = float(np.mean(top_l1)) if top_l1 else None
-        pair[f"top{top_n}_common_policy_l1_median"] = float(np.median(top_l1)) if top_l1 else None
-        pair["canonical_spot_l1_mean_where_visited_in_both"] = {
-            k: (float(np.mean(v)) if v else None) for k, v in spot_l1.items()}
-        result["seed_disagreement"] = pair
+    if len(at_1000) >= 2:
+        seeds = sorted(at_1000)
+        spot_rows = {}
+        for i, sp in enumerate(spots):
+            visited = [s for s in seeds if at_1000[s][1][i].visited]
+            entry = {"visited_by": visited,
+                     "category": ("all" if len(visited) == len(seeds) else
+                                  "none" if not visited else "some"),
+                     "pairwise_l1": {}}
+            for a, b in itertools.combinations(seeds, 2):
+                pa, pb = at_1000[a][1][i], at_1000[b][1][i]
+                entry["pairwise_l1"][f"{a}v{b}"] = (round(l1(pa, pb), 4)
+                                                    if pa.visited and pb.visited else None)
+            spot_rows[sp.name] = entry
+        pairs = {}
+        for a, b in itertools.combinations(seeds, 2):
+            ta, tb = at_1000[a][0], at_1000[b][0]
+            common = sorted(set(ta) & set(tb))
+            d = [float(np.abs(ta[k][1] - tb[k][1]).sum()) for k in common]
+            spot_d = [e["pairwise_l1"][f"{a}v{b}"] for e in spot_rows.values()
+                      if e["pairwise_l1"][f"{a}v{b}"] is not None]
+            pairs[f"seed {a} vs seed {b}"] = {
+                "canonical_spots_visited_by_both": len(spot_d),
+                "canonical_mean_l1": float(np.mean(spot_d)) if spot_d else None,
+                f"top{top_n}_overlap_fraction": len(common) / top_n,
+                f"top{top_n}_common_mean_l1": float(np.mean(d)) if d else None,
+                f"top{top_n}_common_median_l1": float(np.median(d)) if d else None,
+            }
+        result["seed_disagreement"] = {
+            "iterations": 1000, "seeds": seeds, "max_possible_l1": 2.0,
+            "note": "unvisited (uniform-fallback) infosets are excluded from every L1 average",
+            "canonical_spots": spot_rows,
+            "spot_counts": {c: sum(1 for e in spot_rows.values() if e["category"] == c)
+                            for c in ("all", "some", "none")},
+            "pairs": pairs}
     return result
 
 

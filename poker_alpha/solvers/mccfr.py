@@ -35,7 +35,7 @@ from typing import Dict, List
 import numpy as np
 
 from ..games.base import Game, State
-from .cfr import CFRSolver
+from .cfr import CFRSolver, strategy_dot
 
 
 class MCCFRSolver(CFRSolver):
@@ -78,7 +78,7 @@ class MCCFRSolver(CFRSolver):
         for i, action in enumerate(actions):
             child_values[i] = self._traverse(game.next_state(state, action),
                                              update_player)
-        node_value = float(strategy @ child_values)
+        node_value = strategy_dot(strategy, child_values)
         node.regret_sum += child_values - node_value
         return node_value
 

@@ -200,3 +200,47 @@ def test_10_side_pot_eligibility_in_rollouts():
     models = {0: FixedResponse(fold=0.0), 2: FixedResponse(fold=0.0)}
     res = evs(obs, "Kc Kd", ranges, models, [("bet", "bet", 50.0)])
     assert res.ev("bet").ev_bb == pytest.approx(80.0 - 50.0)
+
+
+# -- split-pot regression (bug found in Phase 25) ---------------------------------
+
+def test_split_pot_three_way_two_way_tie_is_exactly_half():
+    """3-way pot, hero ties with seat 0, seat 2 loses: each tied player owns
+    exactly 1/2, not the 2/3 vs 1/3 the integer odd-chip rule used to give."""
+    board = [C(x) for x in BOARD.split()]
+    hero = [C("Kc"), C("Kd")]
+    tie, loser = combo("Kh", "Ks"), combo("4c", "4d")
+    exact = exact_equity_enumeration(hero, board, [tie, loser])
+    assert exact == 0.5
+    for method in ("rejection", "importance"):
+        eq = multiway_equity(hero, board, [tie, loser], simulations=50, seed=0,
+                             method=method)
+        assert eq.expected_share == 0.5
+        assert eq.opponent_shares == (0.5, 0.0)
+    # Unequal contributions: seat 0 contributed less (all-in) — tie still
+    # splits each pot layer exactly among its eligible winners.
+    eq = multiway_equity(hero, board, [tie, loser], simulations=20, seed=0,
+                         contributions=[3, 1, 3])
+    # main layer 3x1: hero 1.5, seat0 1.5; side layer 2x2 = 4 -> hero (seat 2 loses)
+    assert eq.expected_share == pytest.approx((1.5 + 4) / 7)
+    assert eq.opponent_shares[0] == pytest.approx(1.5 / 7)
+
+
+def test_rules_engine_keeps_real_odd_chip_rule():
+    """The analysis fix must not leak into the rules engine: a real 3-chip
+    pot split two ways still pays 2 and 1, odd chip to the first winner
+    clockwise from the button."""
+    from poker_alpha.holdem import (Action, TableConfig, apply_action,
+                                    cards_needed, deal_board, settle, start_hand)
+    holes = [(C("Kc"), C("Kd")), (C("Kh"), C("Ks")), (C("4c"), C("4d"))]
+    s = start_hand([50, 50, 50], dealer=0, config=TableConfig(1, 1), hole_cards=holes)
+    s = apply_action(s, Action.call())     # button calls 1
+    s = apply_action(s, Action.check())    # SB (posted 1) checks
+    s = apply_action(s, Action.check())    # BB checks
+    for street in (BOARD.split()[:3], BOARD.split()[3:4], BOARD.split()[4:]):
+        assert cards_needed(s) == len(street)
+        s = deal_board(s, [C(x) for x in street])
+        while s.actor is not None:
+            s = apply_action(s, Action.check())
+    s = settle(s)
+    assert dict(s.awards) == {1: 2, 0: 1}   # seat 1 is first clockwise of button 0

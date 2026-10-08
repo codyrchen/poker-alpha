@@ -8,6 +8,19 @@ a change is *deliberate*, update the pins in the same commit and document why.
 
 Pins were recorded at the baseline commit 433c52f (before the Hold'em
 platform work) and must stay valid unless a migration is documented.
+
+MIGRATION (Phase 25): the original pins were only reproducible on CPUs where
+OpenBLAS selects the same ``ddot`` kernel as the recording machine. GitHub
+Actions runners (OpenBLAS Haswell/Zen kernels) produced different Leduc
+digests — and, because one ULP flipped a sampling decision, a different
+seeded Leduc MCCFR trajectory (game value -0.1148 instead of -0.0759).
+Solvers now compute strategy-weighted values with an exactly rounded,
+platform-independent sum (``solvers.cfr.strategy_dot``). The four Kuhn pins
+were unchanged by the migration; the three Leduc pins below were re-recorded
+and verified identical under the OpenBLAS SkylakeX, Haswell and Prescott
+kernels and with NumPy's AVX2/AVX-512 paths disabled. Previous Leduc
+digests: leduc_cfr_20 5390b065..., leduc_cfr_plus_50 48bb5b20...,
+leduc_mccfr_seed11_2000 08122b00....
 """
 
 import pytest
@@ -34,12 +47,12 @@ PINS = {
         -0.0555943747546295, 0.00574898365888217),
     "leduc_cfr_20": (
         lambda: CFRSolver(LeducPoker()), LeducPoker, 20,
-        "5390b065effe5e163d66d0d8989c0b3f065e8f7f58efe6b067a541c2b0692ee9",
-        -0.11574584187151803, 0.19314248478612356),
+        "af63936dd575123bec4522725575ca5cb396176941f41700252db93636663be6",
+        -0.11574584187152509, 0.19314248478612467),
     "leduc_mccfr_seed11_2000": (
         lambda: MCCFRSolver(LeducPoker(), seed=11), LeducPoker, 2000,
-        "08122b00815cada2eb8a7ea7f1031cded104106140d19277cd54d17b8c1a0664",
-        -0.0759033916243191, 0.5105884722922842),
+        "ddb1f2560a2a53539a4b735c249626b80db099c9696fcfe8406cd8328d948769",
+        -0.11483613315775798, 0.49581637915174925),
 }
 
 SLOW_PINS = {
@@ -49,8 +62,8 @@ SLOW_PINS = {
         -0.055555107992281305, 0.0016078547525372779),
     "leduc_cfr_plus_50": (
         lambda: CFRPlusSolver(LeducPoker()), LeducPoker, 50,
-        "48bb5b20a90e4a7afae7db0207d9908a5237d3a05aa8d4ee32247d7c9d157ae7",
-        -0.08623878844551512, 0.03412145649454884),
+        "cf14c9d2acd9307e0d995239d65ed7977b933c7fa695e5e3fa6add8176cb2e02",
+        -0.08623878844551527, 0.034121456494549535),
 }
 
 TOL = 1e-12
@@ -79,6 +92,22 @@ def test_pinned_solver_outputs_slow(name):
 
 
 # -- digest properties -------------------------------------------------------
+
+def test_strategy_dot_is_exactly_rounded_and_platform_independent():
+    """Guards the migration: strategy-weighted values must not depend on the
+    BLAS kernel or the reduction order."""
+    import math
+
+    import numpy as np
+
+    from poker_alpha.solvers.cfr import strategy_dot
+
+    s = np.array([0.1, 0.2, 0.7])
+    v = np.array([1e16, 1.0, -1e16])
+    exact = math.fsum([0.1 * 1e16, 0.2 * 1.0, 0.7 * -1e16])
+    assert strategy_dot(s, v) == exact
+    assert strategy_dot(s[::-1].copy(), v[::-1].copy()) == exact   # order-free
+
 
 def test_digest_independent_of_dict_order():
     a = {"x": {"p": 0.25, "b": 0.75}, "y": {"c": 1.0}}

@@ -1,0 +1,2492 @@
+{
+ "format": "pokeralpha.validation/v1",
+ "commit_base": "34a9299",
+ "environment": {
+  "python": "3.13.16",
+  "machine": "x86_64",
+  "numpy": "2.5.3"
+ },
+ "abstraction": {
+  "training_menu_33_75_150": {
+   "states": 10250,
+   "raw_keys": 8932,
+   "keys": {
+    "toy": 2927,
+    "bucket": 7038
+   },
+   "ratios": {
+    "toy": 3.0515886573283226,
+    "bucket": 1.2691105427678318
+   },
+   "by_street": {
+    "flop": {
+     "states": 2775,
+     "raw": 2775,
+     "toy": 678,
+     "bucket": 2691
+    },
+    "preflop": {
+     "states": 4614,
+     "raw": 3296,
+     "toy": 232,
+     "bucket": 1487
+    },
+    "river": {
+     "states": 1077,
+     "raw": 1077,
+     "toy": 937,
+     "bucket": 1077
+    },
+    "turn": {
+     "states": 1784,
+     "raw": 1784,
+     "toy": 1080,
+     "bucket": 1783
+    }
+   },
+   "by_position": {
+    "BB": {
+     "states": 5045,
+     "raw": 4726,
+     "toy": 1528,
+     "bucket": 3864
+    },
+    "BTN/SB": {
+     "states": 5205,
+     "raw": 4206,
+     "toy": 1399,
+     "bucket": 3174
+    }
+   },
+   "by_spr_bucket": {
+    "spr0": {
+     "states": 269,
+     "raw": 269,
+     "toy": 262,
+     "bucket": 269
+    },
+    "spr1": {
+     "states": 565,
+     "raw": 565,
+     "toy": 521,
+     "bucket": 565
+    },
+    "spr2": {
+     "states": 822,
+     "raw": 822,
+     "toy": 682,
+     "bucket": 822
+    },
+    "spr3": {
+     "states": 8594,
+     "raw": 7276,
+     "toy": 1462,
+     "bucket": 5382
+    }
+   },
+   "by_depth": {
+    "depth0": {
+     "states": 2000,
+     "raw": 1027,
+     "toy": 6,
+     "bucket": 169
+    },
+    "depth1": {
+     "states": 1683,
+     "raw": 1365,
+     "toy": 30,
+     "bucket": 568
+    },
+    "depth2": {
+     "states": 1442,
+     "raw": 1416,
+     "toy": 95,
+     "bucket": 1208
+    },
+    "depth3": {
+     "states": 1193,
+     "raw": 1192,
+     "toy": 188,
+     "bucket": 1165
+    },
+    "depth4": {
+     "states": 1004,
+     "raw": 1004,
+     "toy": 306,
+     "bucket": 1000
+    },
+    "depth5": {
+     "states": 848,
+     "raw": 848,
+     "toy": 467,
+     "bucket": 848
+    },
+    "depth6": {
+     "states": 716,
+     "raw": 716,
+     "toy": 547,
+     "bucket": 716
+    },
+    "depth7": {
+     "states": 584,
+     "raw": 584,
+     "toy": 516,
+     "bucket": 584
+    },
+    "depth8+": {
+     "states": 780,
+     "raw": 780,
+     "toy": 772,
+     "bucket": 780
+    }
+   },
+   "invariant_violations": {
+    "toy": 0,
+    "bucket": 0
+   },
+   "history_lower_bound": 2158,
+   "history_lower_bound_by_street": {
+    "preflop": 86,
+    "flop": 444,
+    "turn": 820,
+    "river": 808
+   },
+   "corpus": {
+    "hands": 2000,
+    "seed": 0,
+    "policy": "random legal: fold 0.15 / check-call 0.5 / bets share the rest",
+    "bet_menu": "HoldemGame:v1:stack=100:blinds=0.5/1:bets=b33=0.33,b75=0.75,b150=1.5:raise_cap=3"
+   },
+   "perfect_recall_audit": {
+    "raw": {
+     "encoder": "raw",
+     "abstract_keys": 8932,
+     "colliding_keys": 870,
+     "colliding_states": 2188,
+     "violations": 0,
+     "violation_kinds": {
+      "own_actions": 0,
+      "public_history": 0,
+      "earlier_abstraction": 0,
+      "legal_actions": 0
+     },
+     "perfect_recall": true,
+     "examples": [
+      {
+       "key": "0|14,26||",
+       "members": 3,
+       "own_actions_consistent": true,
+       "public_history_consistent": true,
+       "earlier_abstraction_consistent": true,
+       "legal_actions_consistent": true,
+       "raw_board_identical": true,
+       "raw_hole_identical": true
+      },
+      {
+       "key": "0|22,51||",
+       "members": 5,
+       "own_actions_consistent": true,
+       "public_history_consistent": true,
+       "earlier_abstraction_consistent": true,
+       "legal_actions_consistent": true,
+       "raw_board_identical": true,
+       "raw_hole_identical": true
+      },
+      {
+       "key": "0|29,34||",
+       "members": 2,
+       "own_actions_consistent": true,
+       "public_history_consistent": true,
+       "earlier_abstraction_consistent": true,
+       "legal_actions_consistent": true,
+       "raw_board_identical": true,
+       "raw_hole_identical": true
+      },
+      {
+       "key": "0|20,40||",
+       "members": 3,
+       "own_actions_consistent": true,
+       "public_history_consistent": true,
+       "earlier_abstraction_consistent": true,
+       "legal_actions_consistent": true,
+       "raw_board_identical": true,
+       "raw_hole_identical": true
+      },
+      {
+       "key": "0|29,33||",
+       "members": 4,
+       "own_actions_consistent": true,
+       "public_history_consistent": true,
+       "earlier_abstraction_consistent": true,
+       "legal_actions_consistent": true,
+       "raw_board_identical": true,
+       "raw_hole_identical": true
+      }
+     ]
+    },
+    "toy": {
+     "encoder": "toy",
+     "abstract_keys": 2927,
+     "colliding_keys": 692,
+     "colliding_states": 8015,
+     "violations": 483,
+     "violation_kinds": {
+      "own_actions": 0,
+      "public_history": 0,
+      "earlier_abstraction": 483,
+      "legal_actions": 0
+     },
+     "perfect_recall": false,
+     "examples": [
+      {
+       "key": "1|0|3|b33c/",
+       "members": 30,
+       "own_actions_consistent": true,
+       "public_history_consistent": true,
+       "earlier_abstraction_consistent": false,
+       "legal_actions_consistent": true,
+       "raw_board_identical": false,
+       "raw_hole_identical": false
+      },
+      {
+       "key": "0|1|3|b33c/c",
+       "members": 15,
+       "own_actions_consistent": true,
+       "public_history_consistent": true,
+       "earlier_abstraction_consistent": false,
+       "legal_actions_consistent": true,
+       "raw_board_identical": false,
+       "raw_hole_identical": false
+      },
+      {
+       "key": "1|0|4|b33c/cc/",
+       "members": 4,
+       "own_actions_consistent": true,
+       "public_history_consistent": true,
+       "earlier_abstraction_consistent": false,
+       "legal_actions_consistent": true,
+       "raw_board_identical": false,
+       "raw_hole_identical": false
+      },
+      {
+       "key": "0|1|4|b33c/cc/c",
+       "members": 7,
+       "own_actions_consistent": true,
+       "public_history_consistent": true,
+       "earlier_abstraction_consistent": false,
+       "legal_actions_consistent": true,
+       "raw_board_identical": false,
+       "raw_hole_identical": false
+      },
+      {
+       "key": "1|1|3|b33c/",
+       "members": 40,
+       "own_actions_consistent": true,
+       "public_history_consistent": true,
+       "earlier_abstraction_consistent": false,
+       "legal_actions_consistent": true,
+       "raw_board_identical": false,
+       "raw_hole_identical": false
+      }
+     ]
+    },
+    "bucket": {
+     "encoder": "bucket",
+     "abstract_keys": 7038,
+     "colliding_keys": 712,
+     "colliding_states": 3924,
+     "violations": 0,
+     "violation_kinds": {
+      "own_actions": 0,
+      "public_history": 0,
+      "earlier_abstraction": 0,
+      "legal_actions": 0
+     },
+     "perfect_recall": true,
+     "examples": [
+      {
+       "key": "0|32o|",
+       "members": 20,
+       "own_actions_consistent": true,
+       "public_history_consistent": true,
+       "earlier_abstraction_consistent": true,
+       "legal_actions_consistent": true,
+       "raw_board_identical": true,
+       "raw_hole_identical": false
+      },
+      {
+       "key": "0|22|",
+       "members": 9,
+       "own_actions_consistent": true,
+       "public_history_consistent": true,
+       "earlier_abstraction_consistent": true,
+       "legal_actions_consistent": true,
+       "raw_board_identical": true,
+       "raw_hole_identical": false
+      },
+      {
+       "key": "1|T3o|b33",
+       "members": 2,
+       "own_actions_consistent": true,
+       "public_history_consistent": true,
+       "earlier_abstraction_consistent": true,
+       "legal_actions_consistent": true,
+       "raw_board_identical": true,
+       "raw_hole_identical": false
+      },
+      {
+       "key": "0|AJo|",
+       "members": 23,
+       "own_actions_consistent": true,
+       "public_history_consistent": true,
+       "earlier_abstraction_consistent": true,
+       "legal_actions_consistent": true,
+       "raw_board_identical": true,
+       "raw_hole_identical": false
+      },
+      {
+       "key": "0|T5s|",
+       "members": 10,
+       "own_actions_consistent": true,
+       "public_history_consistent": true,
+       "earlier_abstraction_consistent": true,
+       "legal_actions_consistent": true,
+       "raw_board_identical": true,
+       "raw_hole_identical": false
+      }
+     ]
+    }
+   },
+   "fixed_line_corpora": {
+    "preflop BTN unopened": {
+     "line": "",
+     "states": 2000,
+     "raw_keys": 1038,
+     "keys": {
+      "toy": 6,
+      "bucket": 169
+     },
+     "ratios": {
+      "toy": 173.0,
+      "bucket": 6.1420118343195265
+     },
+     "invariant_violations": {
+      "toy": 0,
+      "bucket": 0
+     },
+     "bucket_recall_violations": 0,
+     "distinct_current_street_bucket_labels": 169
+    },
+    "flop BB first after BTN raise/call": {
+     "line": "b75c/",
+     "states": 2000,
+     "raw_keys": 2000,
+     "keys": {
+      "toy": 8,
+      "bucket": 1471
+     },
+     "ratios": {
+      "toy": 250.0,
+      "bucket": 1.3596193065941535
+     },
+     "invariant_violations": {
+      "toy": 0,
+      "bucket": 0
+     },
+     "bucket_recall_violations": 0,
+     "distinct_current_street_bucket_labels": 69
+    },
+    "turn BB first after flop check-check": {
+     "line": "b75c/cc/",
+     "states": 2000,
+     "raw_keys": 2000,
+     "keys": {
+      "toy": 7,
+      "bucket": 1897
+     },
+     "ratios": {
+      "toy": 285.7142857142857,
+      "bucket": 1.0542962572482868
+     },
+     "invariant_violations": {
+      "toy": 0,
+      "bucket": 0
+     },
+     "bucket_recall_violations": 0,
+     "distinct_current_street_bucket_labels": 112
+    },
+    "river BB first after check-check twice": {
+     "line": "b75c/cc/cc/",
+     "states": 2000,
+     "raw_keys": 2000,
+     "keys": {
+      "toy": 9,
+      "bucket": 1992
+     },
+     "ratios": {
+      "toy": 222.22222222222223,
+      "bucket": 1.0040160642570282
+     },
+     "invariant_violations": {
+      "toy": 0,
+      "bucket": 0
+     },
+     "bucket_recall_violations": 0,
+     "distinct_current_street_bucket_labels": 80
+    },
+    "flop BB facing c-bet": {
+     "line": "b75c/cb75",
+     "states": 2000,
+     "raw_keys": 2000,
+     "keys": {
+      "toy": 8,
+      "bucket": 1471
+     },
+     "ratios": {
+      "toy": 250.0,
+      "bucket": 1.3596193065941535
+     },
+     "invariant_violations": {
+      "toy": 0,
+      "bucket": 0
+     },
+     "bucket_recall_violations": 0,
+     "distinct_current_street_bucket_labels": 69
+    }
+   },
+   "seconds": 61.95964380800001
+  },
+  "default_menu_50_100_200": {
+   "states": 10114,
+   "raw_keys": 8792,
+   "keys": {
+    "toy": 2756,
+    "bucket": 6896
+   },
+   "ratios": {
+    "toy": 3.1901306240928884,
+    "bucket": 1.2749419953596288
+   },
+   "by_street": {
+    "flop": {
+     "states": 2769,
+     "raw": 2769,
+     "toy": 659,
+     "bucket": 2689
+    },
+    "preflop": {
+     "states": 4616,
+     "raw": 3294,
+     "toy": 223,
+     "bucket": 1479
+    },
+    "river": {
+     "states": 1000,
+     "raw": 1000,
+     "toy": 866,
+     "bucket": 1000
+    },
+    "turn": {
+     "states": 1729,
+     "raw": 1729,
+     "toy": 1008,
+     "bucket": 1728
+    }
+   },
+   "by_position": {
+    "BB": {
+     "states": 4968,
+     "raw": 4631,
+     "toy": 1430,
+     "bucket": 3783
+    },
+    "BTN/SB": {
+     "states": 5146,
+     "raw": 4161,
+     "toy": 1326,
+     "bucket": 3113
+    }
+   },
+   "by_spr_bucket": {
+    "spr0": {
+     "states": 379,
+     "raw": 379,
+     "toy": 367,
+     "bucket": 379
+    },
+    "spr1": {
+     "states": 680,
+     "raw": 680,
+     "toy": 570,
+     "bucket": 680
+    },
+    "spr2": {
+     "states": 741,
+     "raw": 741,
+     "toy": 581,
+     "bucket": 741
+    },
+    "spr3": {
+     "states": 8314,
+     "raw": 6992,
+     "toy": 1238,
+     "bucket": 5096
+    }
+   },
+   "by_depth": {
+    "depth0": {
+     "states": 2000,
+     "raw": 1041,
+     "toy": 6,
+     "bucket": 169
+    },
+    "depth1": {
+     "states": 1695,
+     "raw": 1359,
+     "toy": 30,
+     "bucket": 570
+    },
+    "depth2": {
+     "states": 1441,
+     "raw": 1415,
+     "toy": 97,
+     "bucket": 1211
+    },
+    "depth3": {
+     "states": 1193,
+     "raw": 1192,
+     "toy": 180,
+     "bucket": 1162
+    },
+    "depth4": {
+     "states": 998,
+     "raw": 998,
+     "toy": 306,
+     "bucket": 997
+    },
+    "depth5": {
+     "states": 849,
+     "raw": 849,
+     "toy": 457,
+     "bucket": 849
+    },
+    "depth6": {
+     "states": 697,
+     "raw": 697,
+     "toy": 518,
+     "bucket": 697
+    },
+    "depth7": {
+     "states": 562,
+     "raw": 562,
+     "toy": 494,
+     "bucket": 562
+    },
+    "depth8+": {
+     "states": 679,
+     "raw": 679,
+     "toy": 668,
+     "bucket": 679
+    }
+   },
+   "invariant_violations": {
+    "toy": 0,
+    "bucket": 0
+   },
+   "history_lower_bound": 2008,
+   "history_lower_bound_by_street": {
+    "preflop": 81,
+    "flop": 433,
+    "turn": 754,
+    "river": 740
+   },
+   "corpus": {
+    "hands": 2000,
+    "seed": 0,
+    "policy": "random legal: fold 0.15 / check-call 0.5 / bets share the rest",
+    "bet_menu": "HoldemGame:v1:stack=100:blinds=0.5/1:bets=b50=0.5,b100=1,b200=2:raise_cap=3"
+   },
+   "perfect_recall_audit": {
+    "raw": {
+     "encoder": "raw",
+     "abstract_keys": 8792,
+     "colliding_keys": 887,
+     "colliding_states": 2209,
+     "violations": 0,
+     "violation_kinds": {
+      "own_actions": 0,
+      "public_history": 0,
+      "earlier_abstraction": 0,
+      "legal_actions": 0
+     },
+     "perfect_recall": true,
+     "examples": [
+      {
+       "key": "0|14,26||",
+       "members": 3,
+       "own_actions_consistent": true,
+       "public_history_consistent": true,
+       "earlier_abstraction_consistent": true,
+       "legal_actions_consistent": true,
+       "raw_board_identical": true,
+       "raw_hole_identical": true
+      },
+      {
+       "key": "0|22,51||",
+       "members": 3,
+       "own_actions_consistent": true,
+       "public_history_consistent": true,
+       "earlier_abstraction_consistent": true,
+       "legal_actions_consistent": true,
+       "raw_board_identical": true,
+       "raw_hole_identical": true
+      },
+      {
+       "key": "0|29,34||",
+       "members": 2,
+       "own_actions_consistent": true,
+       "public_history_consistent": true,
+       "earlier_abstraction_consistent": true,
+       "legal_actions_consistent": true,
+       "raw_board_identical": true,
+       "raw_hole_identical": true
+      },
+      {
+       "key": "0|20,40||",
+       "members": 3,
+       "own_actions_consistent": true,
+       "public_history_consistent": true,
+       "earlier_abstraction_consistent": true,
+       "legal_actions_consistent": true,
+       "raw_board_identical": true,
+       "raw_hole_identical": true
+      },
+      {
+       "key": "0|29,33||",
+       "members": 3,
+       "own_actions_consistent": true,
+       "public_history_consistent": true,
+       "earlier_abstraction_consistent": true,
+       "legal_actions_consistent": true,
+       "raw_board_identical": true,
+       "raw_hole_identical": true
+      }
+     ]
+    },
+    "toy": {
+     "encoder": "toy",
+     "abstract_keys": 2756,
+     "colliding_keys": 695,
+     "colliding_states": 8053,
+     "violations": 470,
+     "violation_kinds": {
+      "own_actions": 0,
+      "public_history": 0,
+      "earlier_abstraction": 470,
+      "legal_actions": 0
+     },
+     "perfect_recall": false,
+     "examples": [
+      {
+       "key": "1|0|3|b50c/",
+       "members": 36,
+       "own_actions_consistent": true,
+       "public_history_consistent": true,
+       "earlier_abstraction_consistent": false,
+       "legal_actions_consistent": true,
+       "raw_board_identical": false,
+       "raw_hole_identical": false
+      },
+      {
+       "key": "0|1|3|b50c/c",
+       "members": 13,
+       "own_actions_consistent": true,
+       "public_history_consistent": true,
+       "earlier_abstraction_consistent": false,
+       "legal_actions_consistent": true,
+       "raw_board_identical": false,
+       "raw_hole_identical": false
+      },
+      {
+       "key": "1|0|4|b50c/cc/",
+       "members": 4,
+       "own_actions_consistent": true,
+       "public_history_consistent": true,
+       "earlier_abstraction_consistent": false,
+       "legal_actions_consistent": true,
+       "raw_board_identical": false,
+       "raw_hole_identical": false
+      },
+      {
+       "key": "0|1|4|b50c/cc/c",
+       "members": 6,
+       "own_actions_consistent": true,
+       "public_history_consistent": true,
+       "earlier_abstraction_consistent": false,
+       "legal_actions_consistent": true,
+       "raw_board_identical": false,
+       "raw_hole_identical": false
+      },
+      {
+       "key": "1|1|3|b50c/",
+       "members": 40,
+       "own_actions_consistent": true,
+       "public_history_consistent": true,
+       "earlier_abstraction_consistent": false,
+       "legal_actions_consistent": true,
+       "raw_board_identical": false,
+       "raw_hole_identical": false
+      }
+     ]
+    },
+    "bucket": {
+     "encoder": "bucket",
+     "abstract_keys": 6896,
+     "colliding_keys": 720,
+     "colliding_states": 3938,
+     "violations": 0,
+     "violation_kinds": {
+      "own_actions": 0,
+      "public_history": 0,
+      "earlier_abstraction": 0,
+      "legal_actions": 0
+     },
+     "perfect_recall": true,
+     "examples": [
+      {
+       "key": "0|32o|",
+       "members": 20,
+       "own_actions_consistent": true,
+       "public_history_consistent": true,
+       "earlier_abstraction_consistent": true,
+       "legal_actions_consistent": true,
+       "raw_board_identical": true,
+       "raw_hole_identical": false
+      },
+      {
+       "key": "0|22|",
+       "members": 6,
+       "own_actions_consistent": true,
+       "public_history_consistent": true,
+       "earlier_abstraction_consistent": true,
+       "legal_actions_consistent": true,
+       "raw_board_identical": true,
+       "raw_hole_identical": false
+      },
+      {
+       "key": "0|AJo|",
+       "members": 21,
+       "own_actions_consistent": true,
+       "public_history_consistent": true,
+       "earlier_abstraction_consistent": true,
+       "legal_actions_consistent": true,
+       "raw_board_identical": true,
+       "raw_hole_identical": false
+      },
+      {
+       "key": "0|T5s|",
+       "members": 6,
+       "own_actions_consistent": true,
+       "public_history_consistent": true,
+       "earlier_abstraction_consistent": true,
+       "legal_actions_consistent": true,
+       "raw_board_identical": true,
+       "raw_hole_identical": false
+      },
+      {
+       "key": "1|62o|c",
+       "members": 10,
+       "own_actions_consistent": true,
+       "public_history_consistent": true,
+       "earlier_abstraction_consistent": true,
+       "legal_actions_consistent": true,
+       "raw_board_identical": true,
+       "raw_hole_identical": false
+      }
+     ]
+    }
+   },
+   "seconds": 5.821863733999976
+  }
+ },
+ "mccfr": {
+  "definitions": {
+   "visit": "one arrival at the infoset as the non-updating player in external-sampling MCCFR (each adds one probability vector to strategy_sum); infosets reached only as the updating player have 0 visits",
+   "newly_discovered": "infoset absent at the previous checkpoint",
+   "revisited": "visit count >= 2",
+   "meaningfully_trained": "reported at three fixed thresholds: >= 5, >= 10, >= 20 visits; none is privileged",
+   "l1": "sum of absolute probability differences; maximum possible 2.0"
+  },
+  "runs": {
+   "0": [
+    {
+     "iterations": 200,
+     "wall_clock_seconds_cumulative": 111.539210592,
+     "segment_seconds": 110.60585288899999,
+     "iterations_per_second_segment": 1.8082225739058557,
+     "new_infosets_since_previous": 77872,
+     "checkpoint_bytes": 29107062,
+     "infoset_memory_estimate_bytes": 34472401,
+     "max_rss_mb": 155.84375,
+     "entropy_bits_visit_weighted": 1.5570864586477984,
+     "visits": {
+      "infosets": 77872,
+      "counts": {
+       "0": 26483,
+       "1": 50788,
+       "2-5": 590,
+       "6-20": 11,
+       ">20": 0
+      },
+      "percent": {
+       "0": 34.008372714197655,
+       "1": 65.21984795561947,
+       "2-5": 0.757653585370865,
+       "6-20": 0.014125744811999179,
+       ">20": 0.0
+      },
+      "max": 7,
+      "median": 1.0,
+      "mean": 0.6717433737415246,
+      "max_visit_non_integer_totals": 0,
+      "fraction_newly_discovered": 1.0,
+      "fraction_revisited_ge2": 0.007717793301828642,
+      "fraction_trained_ge5": 0.000243990137661804,
+      "fraction_trained_ge10": 0.0,
+      "fraction_trained_ge20": 0.0,
+      "visit_share_in_infosets_ge5": 0.00212196520741732
+     },
+     "top2000_most_visited_min_visits": 1,
+     "top2000_share_far_from_uniform_l1_gt_0.5": 0.0495,
+     "canonical": {
+      "BTN open AA": {
+       "key": "0|AA|",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BTN open AKs": {
+       "key": "0|AKs|",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BTN open AKo": {
+       "key": "0|AKo|",
+       "visits": 3,
+       "status": "visited",
+       "policy": {
+        "fold": 0.1667,
+        "call": 0.1667,
+        "raise33": 0.1667,
+        "raise75": 0.1667,
+        "raise150": 0.1667,
+        "all-in": 0.1667
+       },
+       "l1_from_uniform": 0.0
+      },
+      "BTN open 72o": {
+       "key": "0|72o|",
+       "visits": 1,
+       "status": "visited",
+       "policy": {
+        "fold": 0.3516,
+        "call": 0.085,
+        "raise33": 0.0,
+        "raise75": 0.1751,
+        "raise150": 0.3883,
+        "all-in": 0.0
+       },
+       "l1_from_uniform": 0.8299
+      },
+      "BB flop first top pair": {
+       "key": "1|QJo/e8utds3|b75c/",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BB flop first nut flush draw": {
+       "key": "1|A5s/e7utds3|b75c/",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BB flop first air": {
+       "key": "1|98o/e3utds3|b75c/",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BTN flop after check top pair": {
+       "key": "0|QJo/e8utds3|b75c/c",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BTN flop after check nut flush draw": {
+       "key": "0|A5s/e7utds3|b75c/c",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BTN flop after check air": {
+       "key": "0|98o/e3utds3|b75c/c",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BB facing c-bet strong made (set)": {
+       "key": "1|77/e9utds3|b75c/cb75",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BB facing c-bet medium (middle pair)": {
+       "key": "1|76o/e6utds3|b75c/cb75",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BB facing c-bet draw (nut flush draw)": {
+       "key": "1|A5s/e7utds3|b75c/cb75",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BB facing c-bet air": {
+       "key": "1|98o/e3utds3|b75c/cb75",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      }
+     }
+    },
+    {
+     "iterations": 1000,
+     "wall_clock_seconds_cumulative": 527.9421313180001,
+     "segment_seconds": 412.14536175800004,
+     "iterations_per_second_segment": 1.941062727450363,
+     "new_infosets_since_previous": 277424,
+     "checkpoint_bytes": 132669014,
+     "infoset_memory_estimate_bytes": 157403998,
+     "max_rss_mb": 532.20703125,
+     "entropy_bits_visit_weighted": 1.5535307923113093,
+     "visits": {
+      "infosets": 355296,
+      "counts": {
+       "0": 121190,
+       "1": 229876,
+       "2-5": 3614,
+       "6-20": 616,
+       ">20": 0
+      },
+      "percent": {
+       "0": 34.10958749887418,
+       "1": 64.6998558948032,
+       "2-5": 1.017180041430244,
+       "6-20": 0.17337656489237144,
+       ">20": 0.0
+      },
+      "max": 16,
+      "median": 1.0,
+      "mean": 0.6893998243717914,
+      "max_visit_non_integer_totals": 0,
+      "fraction_newly_discovered": 0.7808250022516438,
+      "fraction_revisited_ge2": 0.011905566063226155,
+      "fraction_trained_ge5": 0.0024261460866432496,
+      "fraction_trained_ge10": 0.0007008241015941637,
+      "fraction_trained_ge20": 0.0,
+      "visit_share_in_infosets_ge5": 0.027671969984608538
+     },
+     "top2000_most_visited_min_visits": 2,
+     "top2000_share_far_from_uniform_l1_gt_0.5": 0.291,
+     "canonical": {
+      "BTN open AA": {
+       "key": "0|AA|",
+       "visits": 3,
+       "status": "visited",
+       "policy": {
+        "fold": 0.0,
+        "call": 0.2612,
+        "raise33": 0.0284,
+        "raise75": 0.4693,
+        "raise150": 0.2412,
+        "all-in": 0.0
+       },
+       "l1_from_uniform": 0.9433
+      },
+      "BTN open AKs": {
+       "key": "0|AKs|",
+       "visits": 1,
+       "status": "visited",
+       "policy": {
+        "fold": 0.1667,
+        "call": 0.1667,
+        "raise33": 0.1667,
+        "raise75": 0.1667,
+        "raise150": 0.1667,
+        "all-in": 0.1667
+       },
+       "l1_from_uniform": 0.0
+      },
+      "BTN open AKo": {
+       "key": "0|AKo|",
+       "visits": 10,
+       "status": "visited",
+       "policy": {
+        "fold": 0.1298,
+        "call": 0.2619,
+        "raise33": 0.2041,
+        "raise75": 0.1837,
+        "raise150": 0.079,
+        "all-in": 0.1416
+       },
+       "l1_from_uniform": 0.2993,
+       "l1_vs_previous_checkpoint": 0.2993
+      },
+      "BTN open 72o": {
+       "key": "0|72o|",
+       "visits": 7,
+       "status": "visited",
+       "policy": {
+        "fold": 0.2922,
+        "call": 0.154,
+        "raise33": 0.0362,
+        "raise75": 0.025,
+        "raise150": 0.4926,
+        "all-in": 0.0
+       },
+       "l1_from_uniform": 0.903,
+       "l1_vs_previous_checkpoint": 0.4189
+      },
+      "BB flop first top pair": {
+       "key": "1|QJo/e8utds3|b75c/",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BB flop first nut flush draw": {
+       "key": "1|A5s/e7utds3|b75c/",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BB flop first air": {
+       "key": "1|98o/e3utds3|b75c/",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BTN flop after check top pair": {
+       "key": "0|QJo/e8utds3|b75c/c",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BTN flop after check nut flush draw": {
+       "key": "0|A5s/e7utds3|b75c/c",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BTN flop after check air": {
+       "key": "0|98o/e3utds3|b75c/c",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BB facing c-bet strong made (set)": {
+       "key": "1|77/e9utds3|b75c/cb75",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BB facing c-bet medium (middle pair)": {
+       "key": "1|76o/e6utds3|b75c/cb75",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BB facing c-bet draw (nut flush draw)": {
+       "key": "1|A5s/e7utds3|b75c/cb75",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BB facing c-bet air": {
+       "key": "1|98o/e3utds3|b75c/cb75",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      }
+     }
+    },
+    {
+     "iterations": 2000,
+     "wall_clock_seconds_cumulative": 1031.713057875,
+     "segment_seconds": 495.0770477069999,
+     "iterations_per_second_segment": 2.0198876207887286,
+     "new_infosets_since_previous": 327454,
+     "checkpoint_bytes": 257542194,
+     "infoset_memory_estimate_bytes": 302563585,
+     "max_rss_mb": 941.83203125,
+     "entropy_bits_visit_weighted": 1.5491521683378158,
+     "visits": {
+      "infosets": 682750,
+      "counts": {
+       "0": 234041,
+       "1": 440326,
+       "2-5": 6703,
+       "6-20": 1528,
+       ">20": 152
+      },
+      "percent": {
+       "0": 34.279165140974,
+       "1": 64.49300622482608,
+       "2-5": 0.9817649212742585,
+       "6-20": 0.22380080556572685,
+       ">20": 0.022262907359941412
+      },
+      "max": 28,
+      "median": 1.0,
+      "mean": 0.698000732332479,
+      "max_visit_non_integer_totals": 0,
+      "fraction_newly_discovered": 0.479610399121201,
+      "fraction_revisited_ge2": 0.012278286341999267,
+      "fraction_trained_ge5": 0.003201757597949469,
+      "fraction_trained_ge10": 0.0010750640790919076,
+      "fraction_trained_ge20": 0.0002943976565360674,
+      "visit_share_in_infosets_ge5": 0.04464915225784791
+     },
+     "top2000_most_visited_min_visits": 5,
+     "top2000_share_far_from_uniform_l1_gt_0.5": 0.439,
+     "canonical": {
+      "BTN open AA": {
+       "key": "0|AA|",
+       "visits": 6,
+       "status": "visited",
+       "policy": {
+        "fold": 0.0,
+        "call": 0.4249,
+        "raise33": 0.0142,
+        "raise75": 0.2701,
+        "raise150": 0.2908,
+        "all-in": 0.0
+       },
+       "l1_from_uniform": 0.9716,
+       "l1_vs_previous_checkpoint": 0.4268
+      },
+      "BTN open AKs": {
+       "key": "0|AKs|",
+       "visits": 4,
+       "status": "visited",
+       "policy": {
+        "fold": 0.0881,
+        "call": 0.0417,
+        "raise33": 0.2312,
+        "raise75": 0.325,
+        "raise150": 0.2162,
+        "all-in": 0.0979
+       },
+       "l1_from_uniform": 0.5447,
+       "l1_vs_previous_checkpoint": 0.5447
+      },
+      "BTN open AKo": {
+       "key": "0|AKo|",
+       "visits": 19,
+       "status": "visited",
+       "policy": {
+        "fold": 0.0985,
+        "call": 0.3131,
+        "raise33": 0.1793,
+        "raise75": 0.1982,
+        "raise150": 0.1045,
+        "all-in": 0.1064
+       },
+       "l1_from_uniform": 0.3812,
+       "l1_vs_previous_checkpoint": 0.1827
+      },
+      "BTN open 72o": {
+       "key": "0|72o|",
+       "visits": 14,
+       "status": "visited",
+       "policy": {
+        "fold": 0.3969,
+        "call": 0.077,
+        "raise33": 0.0239,
+        "raise75": 0.0214,
+        "raise150": 0.4808,
+        "all-in": 0.0
+       },
+       "l1_from_uniform": 1.0888,
+       "l1_vs_previous_checkpoint": 0.2094
+      },
+      "BB flop first top pair": {
+       "key": "1|QJo/e8utds3|b75c/",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BB flop first nut flush draw": {
+       "key": "1|A5s/e7utds3|b75c/",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BB flop first air": {
+       "key": "1|98o/e3utds3|b75c/",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BTN flop after check top pair": {
+       "key": "0|QJo/e8utds3|b75c/c",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BTN flop after check nut flush draw": {
+       "key": "0|A5s/e7utds3|b75c/c",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BTN flop after check air": {
+       "key": "0|98o/e3utds3|b75c/c",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BB facing c-bet strong made (set)": {
+       "key": "1|77/e9utds3|b75c/cb75",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BB facing c-bet medium (middle pair)": {
+       "key": "1|76o/e6utds3|b75c/cb75",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BB facing c-bet draw (nut flush draw)": {
+       "key": "1|A5s/e7utds3|b75c/cb75",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BB facing c-bet air": {
+       "key": "1|98o/e3utds3|b75c/cb75",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      }
+     }
+    },
+    {
+     "iterations": 5000,
+     "wall_clock_seconds_cumulative": 2531.393196687,
+     "segment_seconds": 1476.9166970099998,
+     "iterations_per_second_segment": 2.0312587744951793,
+     "new_infosets_since_previous": 964878,
+     "checkpoint_bytes": 621028330,
+     "infoset_memory_estimate_bytes": 730500994,
+     "max_rss_mb": 2126.55078125,
+     "entropy_bits_visit_weighted": 1.5396868252209361,
+     "visits": {
+      "infosets": 1647628,
+      "counts": {
+       "0": 566954,
+       "1": 1058420,
+       "2-5": 18024,
+       "6-20": 3317,
+       ">20": 913
+      },
+      "percent": {
+       "0": 34.41031592082679,
+       "1": 64.23901511749011,
+       "2-5": 1.0939362526007084,
+       "6-20": 0.2013197153726448,
+       ">20": 0.05541299370974516
+      },
+      "max": 64,
+      "median": 1.0,
+      "mean": 0.7103599841711843,
+      "max_visit_non_integer_totals": 0,
+      "fraction_newly_discovered": 0.5856164134137075,
+      "fraction_revisited_ge2": 0.013506689616830984,
+      "fraction_trained_ge5": 0.0030735093115679024,
+      "fraction_trained_ge10": 0.0015161189297584164,
+      "fraction_trained_ge20": 0.00059904298785891,
+      "visit_share_in_infosets_ge5": 0.0613563292831822
+     },
+     "top2000_most_visited_min_visits": 12,
+     "top2000_share_far_from_uniform_l1_gt_0.5": 0.606,
+     "canonical": {
+      "BTN open AA": {
+       "key": "0|AA|",
+       "visits": 22,
+       "status": "visited",
+       "policy": {
+        "fold": 0.0,
+        "call": 0.7073,
+        "raise33": 0.0039,
+        "raise75": 0.2095,
+        "raise150": 0.0794,
+        "all-in": 0.0
+       },
+       "l1_from_uniform": 1.1669,
+       "l1_vs_previous_checkpoint": 0.5647
+      },
+      "BTN open AKs": {
+       "key": "0|AKs|",
+       "visits": 13,
+       "status": "visited",
+       "policy": {
+        "fold": 0.0507,
+        "call": 0.2188,
+        "raise33": 0.3237,
+        "raise75": 0.1824,
+        "raise150": 0.1719,
+        "all-in": 0.0525
+       },
+       "l1_from_uniform": 0.4602,
+       "l1_vs_previous_checkpoint": 0.5393
+      },
+      "BTN open AKo": {
+       "key": "0|AKo|",
+       "visits": 42,
+       "status": "visited",
+       "policy": {
+        "fold": 0.0614,
+        "call": 0.2219,
+        "raise33": 0.1822,
+        "raise75": 0.1748,
+        "raise150": 0.233,
+        "all-in": 0.1266
+       },
+       "l1_from_uniform": 0.2906,
+       "l1_vs_previous_checkpoint": 0.3033
+      },
+      "BTN open 72o": {
+       "key": "0|72o|",
+       "visits": 42,
+       "status": "visited",
+       "policy": {
+        "fold": 0.6209,
+        "call": 0.0257,
+        "raise33": 0.0222,
+        "raise75": 0.046,
+        "raise150": 0.2852,
+        "all-in": 0.0
+       },
+       "l1_from_uniform": 1.1455,
+       "l1_vs_previous_checkpoint": 0.4972
+      },
+      "BB flop first top pair": {
+       "key": "1|QJo/e8utds3|b75c/",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BB flop first nut flush draw": {
+       "key": "1|A5s/e7utds3|b75c/",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BB flop first air": {
+       "key": "1|98o/e3utds3|b75c/",
+       "visits": 2,
+       "status": "visited",
+       "policy": {
+        "check": 0.2,
+        "bet33": 0.2,
+        "bet75": 0.2,
+        "bet150": 0.2,
+        "all-in": 0.2
+       },
+       "l1_from_uniform": 0.0
+      },
+      "BTN flop after check top pair": {
+       "key": "0|QJo/e8utds3|b75c/c",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BTN flop after check nut flush draw": {
+       "key": "0|A5s/e7utds3|b75c/c",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BTN flop after check air": {
+       "key": "0|98o/e3utds3|b75c/c",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BB facing c-bet strong made (set)": {
+       "key": "1|77/e9utds3|b75c/cb75",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BB facing c-bet medium (middle pair)": {
+       "key": "1|76o/e6utds3|b75c/cb75",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BB facing c-bet draw (nut flush draw)": {
+       "key": "1|A5s/e7utds3|b75c/cb75",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BB facing c-bet air": {
+       "key": "1|98o/e3utds3|b75c/cb75",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      }
+     }
+    }
+   ],
+   "1": [
+    {
+     "iterations": 200,
+     "wall_clock_seconds_cumulative": 102.44668336299999,
+     "segment_seconds": 101.497226401,
+     "iterations_per_second_segment": 1.9704971957542032,
+     "new_infosets_since_previous": 69995,
+     "checkpoint_bytes": 25924770,
+     "infoset_memory_estimate_bytes": 30982109,
+     "max_rss_mb": 144.14453125,
+     "entropy_bits_visit_weighted": 1.5678401090920349,
+     "visits": {
+      "infosets": 69995,
+      "counts": {
+       "0": 23729,
+       "1": 45662,
+       "2-5": 598,
+       "6-20": 6,
+       ">20": 0
+      },
+      "percent": {
+       "0": 33.90099292806629,
+       "1": 65.23608829202085,
+       "2-5": 0.8543467390527895,
+       "6-20": 0.008572040860061433,
+       ">20": 0.0
+      },
+      "max": 8,
+      "median": 1.0,
+      "mean": 0.6743053075219658,
+      "max_visit_non_integer_totals": 0,
+      "fraction_newly_discovered": 1.0,
+      "fraction_revisited_ge2": 0.00862918779912851,
+      "fraction_trained_ge5": 0.0004714622473033788,
+      "fraction_trained_ge10": 0.0,
+      "fraction_trained_ge20": 0.0,
+      "visit_share_in_infosets_ge5": 0.0038349082588245266
+     },
+     "top2000_most_visited_min_visits": 1,
+     "top2000_share_far_from_uniform_l1_gt_0.5": 0.038,
+     "canonical": {
+      "BTN open AA": {
+       "key": "0|AA|",
+       "visits": 1,
+       "status": "visited",
+       "policy": {
+        "fold": 0.0,
+        "call": 0.1731,
+        "raise33": 0.2856,
+        "raise75": 0.1433,
+        "raise150": 0.398,
+        "all-in": 0.0
+       },
+       "l1_from_uniform": 0.7134
+      },
+      "BTN open AKs": {
+       "key": "0|AKs|",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BTN open AKo": {
+       "key": "0|AKo|",
+       "visits": 1,
+       "status": "visited",
+       "policy": {
+        "fold": 0.1667,
+        "call": 0.1667,
+        "raise33": 0.1667,
+        "raise75": 0.1667,
+        "raise150": 0.1667,
+        "all-in": 0.1667
+       },
+       "l1_from_uniform": 0.0
+      },
+      "BTN open 72o": {
+       "key": "0|72o|",
+       "visits": 2,
+       "status": "visited",
+       "policy": {
+        "fold": 0.1706,
+        "call": 0.0,
+        "raise33": 0.1488,
+        "raise75": 0.0,
+        "raise150": 0.0,
+        "all-in": 0.6806
+       },
+       "l1_from_uniform": 1.0357
+      },
+      "BB flop first top pair": {
+       "key": "1|QJo/e8utds3|b75c/",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BB flop first nut flush draw": {
+       "key": "1|A5s/e7utds3|b75c/",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BB flop first air": {
+       "key": "1|98o/e3utds3|b75c/",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BTN flop after check top pair": {
+       "key": "0|QJo/e8utds3|b75c/c",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BTN flop after check nut flush draw": {
+       "key": "0|A5s/e7utds3|b75c/c",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BTN flop after check air": {
+       "key": "0|98o/e3utds3|b75c/c",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BB facing c-bet strong made (set)": {
+       "key": "1|77/e9utds3|b75c/cb75",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BB facing c-bet medium (middle pair)": {
+       "key": "1|76o/e6utds3|b75c/cb75",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BB facing c-bet draw (nut flush draw)": {
+       "key": "1|A5s/e7utds3|b75c/cb75",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BB facing c-bet air": {
+       "key": "1|98o/e3utds3|b75c/cb75",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      }
+     }
+    },
+    {
+     "iterations": 1000,
+     "wall_clock_seconds_cumulative": 501.788400919,
+     "segment_seconds": 395.73333918599997,
+     "iterations_per_second_segment": 2.0215633124203096,
+     "new_infosets_since_previous": 262116,
+     "checkpoint_bytes": 124085966,
+     "infoset_memory_estimate_bytes": 147087838,
+     "max_rss_mb": 486.609375,
+     "entropy_bits_visit_weighted": 1.5589623526969685,
+     "visits": {
+      "infosets": 332111,
+      "counts": {
+       "0": 113151,
+       "1": 214882,
+       "2-5": 3432,
+       "6-20": 646,
+       ">20": 0
+      },
+      "percent": {
+       "0": 34.070235553775696,
+       "1": 64.70186172695274,
+       "2-5": 1.033389439073081,
+       "6-20": 0.19451328019848785,
+       ">20": 0.0
+      },
+      "max": 18,
+      "median": 1.0,
+      "mean": 0.6912176952886234,
+      "max_visit_non_integer_totals": 0,
+      "fraction_newly_discovered": 0.7892421509675982,
+      "fraction_revisited_ge2": 0.012279027192715689,
+      "fraction_trained_ge5": 0.002634661302998094,
+      "fraction_trained_ge10": 0.0006262966297412612,
+      "fraction_trained_ge20": 0.0,
+      "visit_share_in_infosets_ge5": 0.02960868788687974
+     },
+     "top2000_most_visited_min_visits": 2,
+     "top2000_share_far_from_uniform_l1_gt_0.5": 0.2835,
+     "canonical": {
+      "BTN open AA": {
+       "key": "0|AA|",
+       "visits": 6,
+       "status": "visited",
+       "policy": {
+        "fold": 0.0,
+        "call": 0.1674,
+        "raise33": 0.0952,
+        "raise75": 0.1552,
+        "raise150": 0.2316,
+        "all-in": 0.3507
+       },
+       "l1_from_uniform": 0.4993,
+       "l1_vs_previous_checkpoint": 0.7252
+      },
+      "BTN open AKs": {
+       "key": "0|AKs|",
+       "visits": 1,
+       "status": "visited",
+       "policy": {
+        "fold": 0.0,
+        "call": 0.0,
+        "raise33": 0.0,
+        "raise75": 0.0,
+        "raise150": 1.0,
+        "all-in": 0.0
+       },
+       "l1_from_uniform": 1.6667
+      },
+      "BTN open AKo": {
+       "key": "0|AKo|",
+       "visits": 6,
+       "status": "visited",
+       "policy": {
+        "fold": 0.0278,
+        "call": 0.2358,
+        "raise33": 0.0278,
+        "raise75": 0.0681,
+        "raise150": 0.0278,
+        "all-in": 0.6128
+       },
+       "l1_from_uniform": 1.0304,
+       "l1_vs_previous_checkpoint": 1.0304
+      },
+      "BTN open 72o": {
+       "key": "0|72o|",
+       "visits": 9,
+       "status": "visited",
+       "policy": {
+        "fold": 0.0964,
+        "call": 0.0572,
+        "raise33": 0.0361,
+        "raise75": 0.0094,
+        "raise150": 0.032,
+        "all-in": 0.7689
+       },
+       "l1_from_uniform": 1.2044,
+       "l1_vs_previous_checkpoint": 0.374
+      },
+      "BB flop first top pair": {
+       "key": "1|QJo/e8utds3|b75c/",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BB flop first nut flush draw": {
+       "key": "1|A5s/e7utds3|b75c/",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BB flop first air": {
+       "key": "1|98o/e3utds3|b75c/",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BTN flop after check top pair": {
+       "key": "0|QJo/e8utds3|b75c/c",
+       "visits": 1,
+       "status": "visited",
+       "policy": {
+        "check": 0.2,
+        "bet33": 0.2,
+        "bet75": 0.2,
+        "bet150": 0.2,
+        "all-in": 0.2
+       },
+       "l1_from_uniform": 0.0
+      },
+      "BTN flop after check nut flush draw": {
+       "key": "0|A5s/e7utds3|b75c/c",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BTN flop after check air": {
+       "key": "0|98o/e3utds3|b75c/c",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BB facing c-bet strong made (set)": {
+       "key": "1|77/e9utds3|b75c/cb75",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BB facing c-bet medium (middle pair)": {
+       "key": "1|76o/e6utds3|b75c/cb75",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BB facing c-bet draw (nut flush draw)": {
+       "key": "1|A5s/e7utds3|b75c/cb75",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BB facing c-bet air": {
+       "key": "1|98o/e3utds3|b75c/cb75",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      }
+     }
+    }
+   ],
+   "2": [
+    {
+     "iterations": 200,
+     "wall_clock_seconds_cumulative": 110.42774556100001,
+     "segment_seconds": 109.56540548599999,
+     "iterations_per_second_segment": 1.825393691675385,
+     "new_infosets_since_previous": 76532,
+     "checkpoint_bytes": 28962798,
+     "infoset_memory_estimate_bytes": 33891276,
+     "max_rss_mb": 153.4609375,
+     "entropy_bits_visit_weighted": 1.5678969267767089,
+     "visits": {
+      "infosets": 76532,
+      "counts": {
+       "0": 25881,
+       "1": 50034,
+       "2-5": 615,
+       "6-20": 2,
+       ">20": 0
+      },
+      "percent": {
+       "0": 33.81722678095437,
+       "1": 65.37657450478231,
+       "2-5": 0.8035854283175665,
+       "6-20": 0.0026132859457481837,
+       ">20": 0.0
+      },
+      "max": 6,
+      "median": 1.0,
+      "mean": 0.6731040610463597,
+      "max_visit_non_integer_totals": 0,
+      "fraction_newly_discovered": 1.0,
+      "fraction_revisited_ge2": 0.008061987142633146,
+      "fraction_trained_ge5": 9.146500810118644e-05,
+      "fraction_trained_ge10": 0.0,
+      "fraction_trained_ge20": 0.0,
+      "visit_share_in_infosets_ge5": 0.0007182513491478045
+     },
+     "top2000_most_visited_min_visits": 1,
+     "top2000_share_far_from_uniform_l1_gt_0.5": 0.0435,
+     "canonical": {
+      "BTN open AA": {
+       "key": "0|AA|",
+       "visits": 2,
+       "status": "visited",
+       "policy": {
+        "fold": 0.1667,
+        "call": 0.1667,
+        "raise33": 0.1667,
+        "raise75": 0.1667,
+        "raise150": 0.1667,
+        "all-in": 0.1667
+       },
+       "l1_from_uniform": 0.0
+      },
+      "BTN open AKs": {
+       "key": "0|AKs|",
+       "visits": 1,
+       "status": "visited",
+       "policy": {
+        "fold": 0.1667,
+        "call": 0.1667,
+        "raise33": 0.1667,
+        "raise75": 0.1667,
+        "raise150": 0.1667,
+        "all-in": 0.1667
+       },
+       "l1_from_uniform": 0.0
+      },
+      "BTN open AKo": {
+       "key": "0|AKo|",
+       "visits": 3,
+       "status": "visited",
+       "policy": {
+        "fold": 0.1441,
+        "call": 0.1059,
+        "raise33": 0.23,
+        "raise75": 0.2983,
+        "raise150": 0.0556,
+        "all-in": 0.1661
+       },
+       "l1_from_uniform": 0.39
+      },
+      "BTN open 72o": {
+       "key": "0|72o|",
+       "visits": 1,
+       "status": "visited",
+       "policy": {
+        "fold": 0.1667,
+        "call": 0.1667,
+        "raise33": 0.1667,
+        "raise75": 0.1667,
+        "raise150": 0.1667,
+        "all-in": 0.1667
+       },
+       "l1_from_uniform": 0.0
+      },
+      "BB flop first top pair": {
+       "key": "1|QJo/e8utds3|b75c/",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BB flop first nut flush draw": {
+       "key": "1|A5s/e7utds3|b75c/",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BB flop first air": {
+       "key": "1|98o/e3utds3|b75c/",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BTN flop after check top pair": {
+       "key": "0|QJo/e8utds3|b75c/c",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BTN flop after check nut flush draw": {
+       "key": "0|A5s/e7utds3|b75c/c",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BTN flop after check air": {
+       "key": "0|98o/e3utds3|b75c/c",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BB facing c-bet strong made (set)": {
+       "key": "1|77/e9utds3|b75c/cb75",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BB facing c-bet medium (middle pair)": {
+       "key": "1|76o/e6utds3|b75c/cb75",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BB facing c-bet draw (nut flush draw)": {
+       "key": "1|A5s/e7utds3|b75c/cb75",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BB facing c-bet air": {
+       "key": "1|98o/e3utds3|b75c/cb75",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      }
+     }
+    },
+    {
+     "iterations": 1000,
+     "wall_clock_seconds_cumulative": 500.530785366,
+     "segment_seconds": 385.859635742,
+     "iterations_per_second_segment": 2.073292788092791,
+     "new_infosets_since_previous": 255951,
+     "checkpoint_bytes": 125578778,
+     "infoset_memory_estimate_bytes": 147290084,
+     "max_rss_mb": 490.5234375,
+     "entropy_bits_visit_weighted": 1.559615959863522,
+     "visits": {
+      "infosets": 332483,
+      "counts": {
+       "0": 113442,
+       "1": 214844,
+       "2-5": 3582,
+       "6-20": 615,
+       ">20": 0
+      },
+      "percent": {
+       "0": 34.119639199598176,
+       "1": 64.61804062162577,
+       "2-5": 1.0773483155529757,
+       "6-20": 0.1849718632230821,
+       ">20": 0.0
+      },
+      "max": 19,
+      "median": 1.0,
+      "mean": 0.6910037505676982,
+      "max_visit_non_integer_totals": 0,
+      "fraction_newly_discovered": 0.7698168026635949,
+      "fraction_revisited_ge2": 0.012623201787760578,
+      "fraction_trained_ge5": 0.002556521686823086,
+      "fraction_trained_ge10": 0.000646649603137604,
+      "fraction_trained_ge20": 0.0,
+      "visit_share_in_infosets_ge5": 0.02880559920260112
+     },
+     "top2000_most_visited_min_visits": 3,
+     "top2000_share_far_from_uniform_l1_gt_0.5": 0.2805,
+     "canonical": {
+      "BTN open AA": {
+       "key": "0|AA|",
+       "visits": 6,
+       "status": "visited",
+       "policy": {
+        "fold": 0.1389,
+        "call": 0.1993,
+        "raise33": 0.1389,
+        "raise75": 0.2452,
+        "raise150": 0.1389,
+        "all-in": 0.1389
+       },
+       "l1_from_uniform": 0.2222,
+       "l1_vs_previous_checkpoint": 0.2222
+      },
+      "BTN open AKs": {
+       "key": "0|AKs|",
+       "visits": 6,
+       "status": "visited",
+       "policy": {
+        "fold": 0.1319,
+        "call": 0.257,
+        "raise33": 0.1111,
+        "raise75": 0.1356,
+        "raise150": 0.2532,
+        "all-in": 0.1111
+       },
+       "l1_from_uniform": 0.3538,
+       "l1_vs_previous_checkpoint": 0.3538
+      },
+      "BTN open AKo": {
+       "key": "0|AKo|",
+       "visits": 6,
+       "status": "visited",
+       "policy": {
+        "fold": 0.1139,
+        "call": 0.0738,
+        "raise33": 0.3344,
+        "raise75": 0.2098,
+        "raise150": 0.0278,
+        "all-in": 0.2404
+       },
+       "l1_from_uniform": 0.5692,
+       "l1_vs_previous_checkpoint": 0.3573
+      },
+      "BTN open 72o": {
+       "key": "0|72o|",
+       "visits": 4,
+       "status": "visited",
+       "policy": {
+        "fold": 0.1857,
+        "call": 0.1557,
+        "raise33": 0.198,
+        "raise75": 0.1362,
+        "raise150": 0.1995,
+        "all-in": 0.125
+       },
+       "l1_from_uniform": 0.1663,
+       "l1_vs_previous_checkpoint": 0.1663
+      },
+      "BB flop first top pair": {
+       "key": "1|QJo/e8utds3|b75c/",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BB flop first nut flush draw": {
+       "key": "1|A5s/e7utds3|b75c/",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BB flop first air": {
+       "key": "1|98o/e3utds3|b75c/",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BTN flop after check top pair": {
+       "key": "0|QJo/e8utds3|b75c/c",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BTN flop after check nut flush draw": {
+       "key": "0|A5s/e7utds3|b75c/c",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BTN flop after check air": {
+       "key": "0|98o/e3utds3|b75c/c",
+       "visits": 1,
+       "status": "visited",
+       "policy": {
+        "check": 0.2,
+        "bet33": 0.2,
+        "bet75": 0.2,
+        "bet150": 0.2,
+        "all-in": 0.2
+       },
+       "l1_from_uniform": 0.0
+      },
+      "BB facing c-bet strong made (set)": {
+       "key": "1|77/e9utds3|b75c/cb75",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BB facing c-bet medium (middle pair)": {
+       "key": "1|76o/e6utds3|b75c/cb75",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BB facing c-bet draw (nut flush draw)": {
+       "key": "1|A5s/e7utds3|b75c/cb75",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      },
+      "BB facing c-bet air": {
+       "key": "1|98o/e3utds3|b75c/cb75",
+       "visits": 0,
+       "status": "UNVISITED",
+       "policy": null
+      }
+     }
+    }
+   ]
+  },
+  "seed_disagreement": {
+   "iterations": 1000,
+   "seeds": [
+    0,
+    1,
+    2
+   ],
+   "max_possible_l1": 2.0,
+   "note": "unvisited (uniform-fallback) infosets are excluded from every L1 average",
+   "canonical_spots": {
+    "BTN open AA": {
+     "visited_by": [
+      0,
+      1,
+      2
+     ],
+     "category": "all",
+     "pairwise_l1": {
+      "0v1": 0.8351,
+      "0v2": 0.7766,
+      "1v2": 0.609
+     }
+    },
+    "BTN open AKs": {
+     "visited_by": [
+      0,
+      1,
+      2
+     ],
+     "category": "all",
+     "pairwise_l1": {
+      "0v1": 1.6667,
+      "0v2": 0.3538,
+      "1v2": 1.4935
+     }
+    },
+    "BTN open AKo": {
+     "visited_by": [
+      0,
+      1,
+      2
+     ],
+     "category": "all",
+     "pairwise_l1": {
+      "0v1": 0.9423,
+      "0v2": 0.5104,
+      "1v2": 1.0689
+     }
+    },
+    "BTN open 72o": {
+     "visited_by": [
+      0,
+      1,
+      2
+     ],
+     "category": "all",
+     "pairwise_l1": {
+      "0v1": 1.5378,
+      "0v2": 0.7993,
+      "1v2": 1.2878
+     }
+    },
+    "BB flop first top pair": {
+     "visited_by": [],
+     "category": "none",
+     "pairwise_l1": {
+      "0v1": null,
+      "0v2": null,
+      "1v2": null
+     }
+    },
+    "BB flop first nut flush draw": {
+     "visited_by": [],
+     "category": "none",
+     "pairwise_l1": {
+      "0v1": null,
+      "0v2": null,
+      "1v2": null
+     }
+    },
+    "BB flop first air": {
+     "visited_by": [],
+     "category": "none",
+     "pairwise_l1": {
+      "0v1": null,
+      "0v2": null,
+      "1v2": null
+     }
+    },
+    "BTN flop after check top pair": {
+     "visited_by": [
+      1
+     ],
+     "category": "some",
+     "pairwise_l1": {
+      "0v1": null,
+      "0v2": null,
+      "1v2": null
+     }
+    },
+    "BTN flop after check nut flush draw": {
+     "visited_by": [],
+     "category": "none",
+     "pairwise_l1": {
+      "0v1": null,
+      "0v2": null,
+      "1v2": null
+     }
+    },
+    "BTN flop after check air": {
+     "visited_by": [
+      2
+     ],
+     "category": "some",
+     "pairwise_l1": {
+      "0v1": null,
+      "0v2": null,
+      "1v2": null
+     }
+    },
+    "BB facing c-bet strong made (set)": {
+     "visited_by": [],
+     "category": "none",
+     "pairwise_l1": {
+      "0v1": null,
+      "0v2": null,
+      "1v2": null
+     }
+    },
+    "BB facing c-bet medium (middle pair)": {
+     "visited_by": [],
+     "category": "none",
+     "pairwise_l1": {
+      "0v1": null,
+      "0v2": null,
+      "1v2": null
+     }
+    },
+    "BB facing c-bet draw (nut flush draw)": {
+     "visited_by": [],
+     "category": "none",
+     "pairwise_l1": {
+      "0v1": null,
+      "0v2": null,
+      "1v2": null
+     }
+    },
+    "BB facing c-bet air": {
+     "visited_by": [],
+     "category": "none",
+     "pairwise_l1": {
+      "0v1": null,
+      "0v2": null,
+      "1v2": null
+     }
+    }
+   },
+   "spot_counts": {
+    "all": 4,
+    "some": 2,
+    "none": 8
+   },
+   "pairs": {
+    "seed 0 vs seed 1": {
+     "canonical_spots_visited_by_both": 4,
+     "canonical_mean_l1": 1.245475,
+     "top2000_overlap_fraction": 0.4385,
+     "top2000_common_mean_l1": 0.6183065218646419,
+     "top2000_common_median_l1": 0.5560882586318965
+    },
+    "seed 0 vs seed 2": {
+     "canonical_spots_visited_by_both": 4,
+     "canonical_mean_l1": 0.6100249999999999,
+     "top2000_overlap_fraction": 0.436,
+     "top2000_common_mean_l1": 0.6239691873896589,
+     "top2000_common_median_l1": 0.5863516030146259
+    },
+    "seed 1 vs seed 2": {
+     "canonical_spots_visited_by_both": 4,
+     "canonical_mean_l1": 1.1148,
+     "top2000_overlap_fraction": 0.45,
+     "top2000_common_mean_l1": 0.597235269917735,
+     "top2000_common_median_l1": 0.5645251038517809
+    }
+   }
+  }
+ },
+ "decision_invariants": {
+  "command": "pytest -q -p no:cacheprovider tests/test_decision_invariants.py --junitxml=/home/user/poker-alpha/results/validation/_invariants_junit.xml",
+  "returncode": 0,
+  "summary": "13 passed in 2.31s",
+  "cases": [
+   {
+    "test": "test_1_nuts_never_folds",
+    "status": "passed"
+   },
+   {
+    "test": "test_2_zero_equity_call_costs_exactly_the_call",
+    "status": "passed"
+   },
+   {
+    "test": "test_3_4_pot_odds_threshold_under_fixed_showdown[100.0-110.0-fold]",
+    "status": "passed"
+   },
+   {
+    "test": "test_3_4_pot_odds_threshold_under_fixed_showdown[20.0-120.0-call]",
+    "status": "passed"
+   },
+   {
+    "test": "test_5_always_fold_bet_wins_exactly_the_pot",
+    "status": "passed"
+   },
+   {
+    "test": "test_6_always_call_bet_matches_showdown_geometry[Kc Kd-villain0-True]",
+    "status": "passed"
+   },
+   {
+    "test": "test_6_always_call_bet_matches_showdown_geometry[Kc Kd-villain1-False]",
+    "status": "passed"
+   },
+   {
+    "test": "test_7_bigger_bets_not_better_when_math_says_worse",
+    "status": "passed"
+   },
+   {
+    "test": "test_8_no_double_counting_of_pot_shares",
+    "status": "passed"
+   },
+   {
+    "test": "test_9_folded_players_cannot_win",
+    "status": "passed"
+   },
+   {
+    "test": "test_10_side_pot_eligibility_in_rollouts",
+    "status": "passed"
+   },
+   {
+    "test": "test_split_pot_three_way_two_way_tie_is_exactly_half",
+    "status": "passed"
+   },
+   {
+    "test": "test_rules_engine_keeps_real_odd_chip_rule",
+    "status": "passed"
+   }
+  ]
+ },
+ "observer": {
+  "synthetic": [
+   {
+    "seats": "2",
+    "width": "1280",
+    "height": "800",
+    "noise_std": "0.0",
+    "frames": "30",
+    "card_accuracy": "1.0",
+    "numeric_accuracy": "1.0",
+    "discrete_accuracy": "1.0",
+    "state_accuracy": "1.0",
+    "fused_state_accuracy_3frames": "1.0",
+    "mean_conf_correct": "0.8167309485798018",
+    "mean_conf_wrong": "",
+    "false_events_per_frame": "0.0",
+    "seconds_per_frame_incl_render": "0.07299072316664024"
+   },
+   {
+    "seats": "3",
+    "width": "1280",
+    "height": "800",
+    "noise_std": "0.0",
+    "frames": "30",
+    "card_accuracy": "1.0",
+    "numeric_accuracy": "1.0",
+    "discrete_accuracy": "1.0",
+    "state_accuracy": "1.0",
+    "fused_state_accuracy_3frames": "0.9",
+    "mean_conf_correct": "0.8098166699317141",
+    "mean_conf_wrong": "",
+    "false_events_per_frame": "0.0",
+    "seconds_per_frame_incl_render": "0.08239343970002058"
+   },
+   {
+    "seats": "6",
+    "width": "1280",
+    "height": "800",
+    "noise_std": "0.0",
+    "frames": "30",
+    "card_accuracy": "1.0",
+    "numeric_accuracy": "1.0",
+    "discrete_accuracy": "1.0",
+    "state_accuracy": "1.0",
+    "fused_state_accuracy_3frames": "0.7",
+    "mean_conf_correct": "0.7952588044690226",
+    "mean_conf_wrong": "",
+    "false_events_per_frame": "0.0",
+    "seconds_per_frame_incl_render": "0.08804683570000028"
+   },
+   {
+    "seats": "6",
+    "width": "1280",
+    "height": "800",
+    "noise_std": "8.0",
+    "frames": "30",
+    "card_accuracy": "1.0",
+    "numeric_accuracy": "0.9736842105263158",
+    "discrete_accuracy": "1.0",
+    "state_accuracy": "0.7333333333333333",
+    "fused_state_accuracy_3frames": "0.7",
+    "mean_conf_correct": "0.7963060122905614",
+    "mean_conf_wrong": "0.647943270516566",
+    "false_events_per_frame": "0.1111111111111111",
+    "seconds_per_frame_incl_render": "0.14516340726668203"
+   },
+   {
+    "seats": "6",
+    "width": "1920",
+    "height": "1200",
+    "noise_std": "0.0",
+    "frames": "30",
+    "card_accuracy": "1.0",
+    "numeric_accuracy": "1.0",
+    "discrete_accuracy": "1.0",
+    "state_accuracy": "1.0",
+    "fused_state_accuracy_3frames": "1.0",
+    "mean_conf_correct": "0.8037480260930324",
+    "mean_conf_wrong": "",
+    "false_events_per_frame": "0.0",
+    "seconds_per_frame_incl_render": "0.16283847603332713"
+   },
+   {
+    "seats": "9",
+    "width": "1280",
+    "height": "800",
+    "noise_std": "0.0",
+    "frames": "30",
+    "card_accuracy": "1.0",
+    "numeric_accuracy": "0.984251968503937",
+    "discrete_accuracy": "1.0",
+    "state_accuracy": "0.7333333333333333",
+    "fused_state_accuracy_3frames": "0.8",
+    "mean_conf_correct": "0.7874300546970779",
+    "mean_conf_wrong": "0.0",
+    "false_events_per_frame": "0.0",
+    "seconds_per_frame_incl_render": "0.10124191726666444"
+   },
+   {
+    "seats": "9",
+    "width": "1600",
+    "height": "1000",
+    "noise_std": "4.0",
+    "frames": "30",
+    "card_accuracy": "1.0",
+    "numeric_accuracy": "0.984251968503937",
+    "discrete_accuracy": "1.0",
+    "state_accuracy": "0.7333333333333333",
+    "fused_state_accuracy_3frames": "0.9",
+    "mean_conf_correct": "0.7968995783186502",
+    "mean_conf_wrong": "0.003834476893413883",
+    "false_events_per_frame": "0.0",
+    "seconds_per_frame_incl_render": "0.24224478233333382"
+   },
+   {
+    "seats": "9",
+    "width": "960",
+    "height": "600",
+    "noise_std": "0.0",
+    "frames": "30",
+    "card_accuracy": "1.0",
+    "numeric_accuracy": "0.9153543307086615",
+    "discrete_accuracy": "1.0",
+    "state_accuracy": "0.23333333333333334",
+    "fused_state_accuracy_3frames": "0.0",
+    "mean_conf_correct": "0.7123889261236811",
+    "mean_conf_wrong": "0.07569905265703221",
+    "false_events_per_frame": "0.0",
+    "seconds_per_frame_incl_render": "0.07860753420000037"
+   }
+  ],
+  "synthetic_note": "rendered by poker_alpha.observer.synthetic; says nothing about real clients",
+  "real_pokernow": {
+   "screenshots": 0,
+   "annotations": 0,
+   "accuracy": null,
+   "status": "not validated: no real screenshots collected"
+  }
+ },
+ "exploitability": "not computed: exact Hold'em exploitability is infeasible here and no proxy is reported as exploitability"
+}

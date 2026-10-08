@@ -101,7 +101,10 @@ def fixture_mode(fixture_dir: Path, out_path: Path) -> dict:
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(result, indent=1))
     m = result["metrics"]
-    print(f"annotated screenshots scored: {m['screenshots']} (of {len(anns)} annotations)")
+    print(f"{m['screenshots']} real fixtures found (annotated screenshots scored, "
+          f"of {len(anns)} annotations)")
+    if not frames:
+        print("real PokerNow accuracy: NOT MEASURED")
     if missing:
         print(f"missing images: {missing}")
     for k in ("hero_cards", "board_cards", "stack", "bet", "pot", "dealer",

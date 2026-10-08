@@ -120,9 +120,10 @@ Stated up front, because they bound every number above:
   not a solved game, and its exploitability is unknown.
 - **Phase 25 validation** ([docs/validation.md](docs/validation.md)): the
   bucketed abstraction has perfect recall but compresses little postflop,
-  and controlled MCCFR runs (3 seeds to 1,000 iterations) are dominated by
-  discovering new information sets — canonical policies are not yet learned
-  and differ across seeds. Treat solver output as untrained.
+  and a 5,000-iteration MCCFR run (plus 3 seeds to 1,000) is still dominated
+  by discovering new information sets (58.6% new since iteration 2,000;
+  median visits 1) — postflop canonical spots are unvisited and preflop
+  policies differ across seeds. Treat solver output as untrained.
 - **Multiplayer recommendations are approximate.** CFR's two-player
   zero-sum guarantees do not extend to 3–9 players; multiway advice is
   range-based EV estimation under heuristic opponent models.

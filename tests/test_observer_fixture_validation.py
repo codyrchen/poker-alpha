@@ -31,7 +31,8 @@ def test_real_fixture_dir_is_empty_and_reports_nothing_measured(tmp_path):
     raw = list((ROOT / "tests/fixtures/pokernow/raw").glob("*.png"))
     assert raw == [], "real fixture dir must not contain invented screenshots"
     out = run(ROOT / "tests/fixtures/pokernow", tmp_path / "r.json")
-    assert "annotated screenshots scored: 0" in out
+    assert "0 real fixtures found" in out
+    assert "real PokerNow accuracy: NOT MEASURED" in out
     res = json.loads((tmp_path / "r.json").read_text())
     assert res["metrics"]["screenshots"] == 0 and "unvalidated" in res["note"]
 
