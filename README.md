@@ -40,7 +40,7 @@ than assumed, including where the system **fails**.
 python3 -m venv .venv
 source .venv/bin/activate
 python -m pip install -e ".[dev]"
-pytest                        # 444 tests, ~2.5 min (POKERALPHA_SKIP_SLOW=1 skips 5 slow ones)
+pytest                        # 446 tests, ~2.5 min (POKERALPHA_SKIP_SLOW=1 skips 5 slow ones)
 python -m poker_alpha.demo    # ~12s
 python -m poker_alpha.holdem_demo   # 6-max Hold'em decision report, ~2s
 ```
@@ -598,7 +598,7 @@ committed CSV in `results/data/`, produced by a seeded script in
 
 ```bash
 python -m poker_alpha.demo                                  # ~12s
-pytest                                                      # 444 tests, ~2.5 min
+pytest                                                      # 446 tests, ~2.5 min
 ```
 
 **Moderate** (under a minute each):
@@ -670,7 +670,7 @@ experiments/      runnable, seeded, parameterized experiment scripts
 results/
   data/           generated CSVs — the source of every number quoted
   figures/        generated figures
-tests/            pytest suite (444 tests; fixtures/ holds synthetic screenshots and hand histories)
+tests/            pytest suite (446 tests; fixtures/ holds synthetic screenshots and hand histories)
 RESEARCH.md       the full research writeup
 TODO.md           development history, phase by phase
 ```

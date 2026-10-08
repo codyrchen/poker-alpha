@@ -213,7 +213,10 @@ class StateTracker:
         self.fields["actor"].update(fr.get("actor", FieldReading(None, 0.0, "actor")))
 
         snap = self.snapshot()
-        if self._prev is not None:
+        # Only diff against an *established* baseline: the jump from "nothing
+        # confirmed yet" to the first stable frame is not a sequence of actions.
+        if self._prev is not None and self._prev.pot is not None \
+                and self._prev.hero_cards[0] is not None:
             new = infer_events(self._prev, snap)
             for e in new:
                 if e.kind == "new_hand":
@@ -287,6 +290,25 @@ class StateTracker:
         street = {0: Street.PREFLOP, 3: Street.FLOP, 4: Street.TURN,
                   5: Street.RIVER}.get(len(snap.board), Street.PREFLOP)
         dealer = snap.dealer if snap.dealer is not None else self.cal.hero_seat
+        # Bets visible on the table are facts even when the frames that showed
+        # them being made were missed (e.g. a single screenshot). Add them as
+        # actions in ascending size order (the true order is unknown); blinds
+        # (preflop bets up to the big blind) are posts, not actions.
+        actions = list(self.actions)
+        cur = {0: 0, 3: 1, 4: 2, 5: 3}.get(len(snap.board), 0)
+        recorded = {a.seat for a in actions if a.street == cur}
+        visible = sorted((snap.bets[s], s) for s in range(self.cal.num_seats)
+                         if snap.occupied[s] and snap.bets[s] > 0
+                         and s not in recorded and s != self.cal.hero_seat
+                         and not (cur == 0 and snap.bets[s] <= self.bb))
+        level = self.bb if cur == 0 else 0.0
+        for amount, seat in visible:
+            if amount > level + 1e-9:
+                kind = "raise" if (cur == 0 or level > 0) else "bet"
+                level = amount
+            else:
+                kind = "call"
+            actions.append(ObservedAction(cur, seat, kind, amount))
         return ObservedTableState(
             num_seats=self.cal.num_seats, hero_seat=self.cal.hero_seat,
             dealer=dealer, seats=tuple(seats), street=street,
@@ -294,6 +316,6 @@ class StateTracker:
             hero_cards=hero if len(hero) == 2 else None,
             board=tuple(card_code(c) for c in snap.board),
             pot_total=snap.pot, actor=snap.actor,
-            action_history=tuple(self.actions),
+            action_history=tuple(actions),
             hand_id=f"observed-{self.hand_number}",
             timestamp=snap.timestamp, source="screen observer")
