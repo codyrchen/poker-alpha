@@ -26,6 +26,10 @@ from .errors import OCRUnavailable, require_pil
 
 TEMPLATE_H = 24
 TEMPLATE_W = 16
+# Templates are rendered at full contrast (0 -> 255); threshold them at the
+# same *relative* level the default contrast rule applies to typical light-on-
+# felt UI text (~35% of the text/background difference).
+TEMPLATE_THRESHOLD = 90.0
 
 
 @dataclass(frozen=True)
@@ -170,10 +174,11 @@ class TemplateOCR:
         require_pil()
         self.charset = charset
         self.contrast = contrast
-        self.templates = templates or self._render_templates(charset, font_factory)
+        self.templates = templates or self._render_templates(charset, font_factory,
+                                                             contrast)
 
     @staticmethod
-    def _render_templates(charset: str, font_factory=None):
+    def _render_templates(charset: str, font_factory=None, contrast: float = 60.0):
         from PIL import Image, ImageDraw, ImageFont
 
         font = (font_factory or (lambda s: ImageFont.load_default(size=s)))(48)
@@ -184,7 +189,9 @@ class TemplateOCR:
             text = f"8{ch}8"
             img = Image.new("L", (240, 100), 0)
             ImageDraw.Draw(img).text((10, 10), text, fill=255, font=font)
-            mask = np.asarray(img) > 128
+            # Binarize exactly like input text (same contrast rule), so
+            # anti-aliased fringes, and hence small-glyph geometry, match.
+            mask = np.asarray(img, dtype=np.float64) > TEMPLATE_THRESHOLD
             _, _, spans = segment_glyphs(mask)
             if len(spans) != 3:
                 raise RuntimeError(f"could not isolate template glyph {ch!r}")

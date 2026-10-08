@@ -146,7 +146,6 @@ class StateTracker:
             self.fields["dealer"].update(d)
 
         # Board: no disappearing/changed cards, fill in order.
-        n_board = sum(1 for i in range(5) if self._stable(f"board_{i}") is not None)
         for i in range(5):
             name = f"board_{i}"
             reading = fr.get(name)
@@ -164,7 +163,11 @@ class StateTracker:
                     self.flags.append(f"rejected {name} change {stable}->{reading.value}")
                 continue
             if stable is None and reading.value is not None:
-                if i not in (0, 1, 2) and n_board < i:
+                earlier_missing = any(
+                    self._stable(f"board_{j}") is None
+                    and (f"board_{j}" not in fr or fr[f"board_{j}"].value is None)
+                    for j in range(i))
+                if i >= 3 and earlier_missing:
                     self.flags.append(f"rejected {name} before earlier board cards")
                     continue
                 self.fields[name].update(reading)
