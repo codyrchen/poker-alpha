@@ -40,7 +40,8 @@ import numpy as np
 from ..holdem.pots import award_pots, build_pots
 from .cards import NUM_CARDS, codes
 from .evaluator import evaluate_best_codes
-from .ranges import CARD_MASK, COMBOS, NUM_COMBOS, WeightedRange, blocked_mask
+from .ranges import (CARD_MASK, COMBOS, NUM_COMBOS, WeightedRange,
+                     blocked_mask, combo_cdf, draw_combo)
 
 
 class SamplingError(RuntimeError):
@@ -108,6 +109,7 @@ def multiway_equity(hero: Sequence, board: Sequence = (),
     dead = blocked_mask(h + b)
     weights = [_range_probs(r, dead) for r in opponent_ranges]
     probs = [w / w.sum() for w in weights]
+    cdfs = [combo_cdf(p) for p in probs]
     known = set(h + b)
     need = 5 - len(b)
     players = n_opp + 1
@@ -129,7 +131,7 @@ def multiway_equity(hero: Sequence, board: Sequence = (),
                 f"incompatible" + ("; try method='importance'"
                                    if method == "rejection" else ""))
         if method == "rejection":
-            idx = [int(rng.choice(NUM_COMBOS, p=p)) for p in probs]
+            idx = [draw_combo(rng, c) for c in cdfs]
             cards = [c for i in idx for c in COMBOS[i]]
             if len(set(cards)) != len(cards):
                 continue

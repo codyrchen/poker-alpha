@@ -91,3 +91,19 @@ def test_input_validation():
         multiway_equity(C("As", "Ks"), (), [None] * 9)
     with pytest.raises(ValueError):
         multiway_equity(C("As", "Ks"), (), [None], contributions=[1])
+
+
+def test_fast_combo_draw_is_bit_identical_to_numpy_choice():
+    """Phase 22 optimization must not change seeded results."""
+    import numpy as np
+
+    from poker_alpha.poker.ranges import NUM_COMBOS, combo_cdf, draw_combo
+
+    w = np.random.default_rng(0).random(NUM_COMBOS)
+    w[::3] = 0.0
+    p = w / w.sum()
+    cdf = combo_cdf(p)
+    a, b = np.random.default_rng(9), np.random.default_rng(9)
+    for _ in range(5000):
+        assert draw_combo(a, cdf) == int(b.choice(NUM_COMBOS, p=p))
+    assert a.random() == b.random()   # streams stay aligned

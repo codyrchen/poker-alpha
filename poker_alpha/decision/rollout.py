@@ -49,7 +49,8 @@ from ..opponent.behavior import ARCHETYPE_MODELS, BehaviorModel
 from ..opponent.ranges import strength_vector
 from ..poker.cards import codes
 from ..poker.evaluator import evaluate_best_codes
-from ..poker.ranges import COMBO_INDEX, COMBOS, NUM_COMBOS, WeightedRange
+from ..poker.ranges import (COMBO_INDEX, COMBOS, NUM_COMBOS, WeightedRange,
+                            combo_cdf, draw_combo)
 
 
 class RolloutError(RuntimeError):
@@ -145,7 +146,7 @@ def rollout_action_evs(obs: ObservedTableState, hero: Sequence,
             w[(COMBOS[:, 0] == c) | (COMBOS[:, 1] == c)] = 0.0
         if w.sum() <= 0:
             raise RolloutError(f"seat {s} range is empty")
-        probs.append(w / w.sum())
+        probs.append(combo_cdf(w / w.sum()))
     sv = strength_vector(board) if board else strength_vector(())
     hero_strength = float(sv[COMBO_INDEX[tuple(sorted(hero_c))]])
     need = 5 - len(board)
@@ -160,7 +161,7 @@ def rollout_action_evs(obs: ObservedTableState, hero: Sequence,
         attempts += 1
         if attempts > max_attempts:
             raise RolloutError("could not sample collision-free opponent hands")
-        idx = [int(rng.choice(NUM_COMBOS, p=p)) for p in probs]
+        idx = [draw_combo(rng, c) for c in probs]
         cards = [int(c) for i in idx for c in COMBOS[i]]
         if len(set(cards)) != len(cards):
             continue
