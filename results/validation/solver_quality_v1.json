@@ -1,0 +1,2762 @@
+{
+ "format": "pokeralpha.solver_quality/v1",
+ "config_signature": "HoldemSolverConfig:v1:2e23c098860f7894c871",
+ "rules": {
+  "btn_acts_first_preflop": true,
+  "blinds_sb_bb": true,
+  "bb_acts_after_limp": true,
+  "street_closes_after_limp_check": true,
+  "bb_acts_first_postflop": true,
+  "pot_after_limp_check_bb": 2.0,
+  "pot_ok": true,
+  "btn_allin_total": 100.0,
+  "allin_ok": true,
+  "call_allin_total": 100.0,
+  "call_allin_ok": true,
+  "runout_after_allin_call_is_chance": true,
+  "effective_stack_after_3bet": 93.75,
+  "all_pass": true
+ },
+ "geometry": {
+  "pre_raise:b33": {
+   "offered": 3110,
+   "below_nlhe_minimum": 2519,
+   "share_below": 0.81,
+   "examples": [
+    {
+     "streets": [
+      ""
+     ],
+     "increment_bb": 0.66,
+     "min_increment_bb": 1.0
+    },
+    {
+     "streets": [
+      ""
+     ],
+     "increment_bb": 0.66,
+     "min_increment_bb": 1.0
+    },
+    {
+     "streets": [
+      ""
+     ],
+     "increment_bb": 0.66,
+     "min_increment_bb": 1.0
+    }
+   ]
+  },
+  "pre_raise:b75": {
+   "offered": 3110,
+   "below_nlhe_minimum": 0,
+   "share_below": 0.0,
+   "examples": []
+  },
+  "pre_raise:b150": {
+   "offered": 3110,
+   "below_nlhe_minimum": 0,
+   "share_below": 0.0,
+   "examples": []
+  },
+  "post_bet:b33": {
+   "offered": 2511,
+   "below_nlhe_minimum": 728,
+   "share_below": 0.2899,
+   "examples": [
+    {
+     "streets": [
+      "cc",
+      ""
+     ],
+     "increment_bb": 0.66,
+     "min_increment_bb": 1.0
+    },
+    {
+     "streets": [
+      "cc",
+      "c"
+     ],
+     "increment_bb": 0.66,
+     "min_increment_bb": 1.0
+    },
+    {
+     "streets": [
+      "cc",
+      ""
+     ],
+     "increment_bb": 0.66,
+     "min_increment_bb": 1.0
+    }
+   ]
+  },
+  "post_bet:b75": {
+   "offered": 2471,
+   "below_nlhe_minimum": 0,
+   "share_below": 0.0,
+   "examples": []
+  },
+  "post_bet:b150": {
+   "offered": 2401,
+   "below_nlhe_minimum": 0,
+   "share_below": 0.0,
+   "examples": []
+  },
+  "post_raise:b33": {
+   "offered": 1060,
+   "below_nlhe_minimum": 318,
+   "share_below": 0.3,
+   "examples": [
+    {
+     "streets": [
+      "cc",
+      "cb75c",
+      "cc",
+      "b150"
+     ],
+     "increment_bb": 6.6,
+     "min_increment_bb": 7.5
+    },
+    {
+     "streets": [
+      "cc",
+      "b150"
+     ],
+     "increment_bb": 2.64,
+     "min_increment_bb": 3.0
+    },
+    {
+     "streets": [
+      "b150c",
+      "b150"
+     ],
+     "increment_bb": 10.56,
+     "min_increment_bb": 12.0
+    }
+   ]
+  },
+  "post_raise:b75": {
+   "offered": 998,
+   "below_nlhe_minimum": 0,
+   "share_below": 0.0,
+   "examples": []
+  },
+  "post_raise:b150": {
+   "offered": 891,
+   "below_nlhe_minimum": 0,
+   "share_below": 0.0,
+   "examples": []
+  }
+ },
+ "utility": {
+  "sb_folds": {
+   "u0": -0.5,
+   "expected": -0.5,
+   "ok": true
+  },
+  "bb_folds_to_open": {
+   "u0": 1.0,
+   "expected": 1.0,
+   "ok": true
+  },
+  "raise_call_checkdown_AA_wins": {
+   "u0": 2.5,
+   "expected": 2.5,
+   "ok": true
+  },
+  "allin_call_AA_wins": {
+   "u0": 100.0,
+   "expected": 100.0,
+   "ok": true
+  },
+  "allin_call_72_loses": {
+   "u0": -100.0,
+   "expected": -100.0,
+   "ok": true
+  },
+  "allin_split": {
+   "u0": 0.0,
+   "expected": 0.0,
+   "ok": true
+  },
+  "all_pass": true
+ },
+ "mccfr_trace": {
+  "key": "0|0|AA|inr0fnoneans3|f.c.b33.b75.b150.a",
+  "log": [
+   {
+    "iteration": 0,
+    "player": 0,
+    "villain": "63o",
+    "strategy": [
+     0.1667,
+     0.1667,
+     0.1667,
+     0.1667,
+     0.1667,
+     0.1667
+    ],
+    "child_values": [
+     -0.5,
+     49.5,
+     27.1739,
+     3.0309,
+     6.0049,
+     100.0
+    ],
+    "node_value": 30.8683,
+    "node_value_check": 30.8683,
+    "regret_delta": [
+     -31.3683,
+     18.6317,
+     -3.6944,
+     -27.8373,
+     -24.8634,
+     69.1317
+    ],
+    "strategy_sum_delta": [
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "iteration": 1,
+    "player": 0,
+    "villain": "T3o",
+    "strategy": [
+     0.0,
+     0.2123,
+     0.0,
+     0.0,
+     0.0,
+     0.7877
+    ],
+    "child_values": [
+     -0.5,
+     43.6342,
+     49.17,
+     34.0558,
+     34.3493,
+     1.0
+    ],
+    "node_value": 10.051,
+    "node_value_check": 10.051,
+    "regret_delta": [
+     -10.551,
+     33.5832,
+     39.119,
+     24.0048,
+     24.2983,
+     -9.051
+    ],
+    "strategy_sum_delta": [
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "iteration": 2,
+    "player": 0,
+    "villain": "K9s",
+    "strategy": [
+     0.0,
+     0.3535,
+     0.2398,
+     0.0,
+     0.0,
+     0.4067
+    ],
+    "child_values": [
+     -0.5,
+     -50.5,
+     9.0451,
+     95.8877,
+     25.6405,
+     1.0
+    ],
+    "node_value": -15.2745,
+    "node_value_check": -15.2745,
+    "regret_delta": [
+     14.7745,
+     -35.2255,
+     24.3196,
+     111.1622,
+     40.915,
+     16.2745
+    ],
+    "strategy_sum_delta": [
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "iteration": 3,
+    "player": 0,
+    "villain": "T3s",
+    "strategy": [
+     0.0,
+     0.0565,
+     0.1986,
+     0.3569,
+     0.1342,
+     0.2539
+    ],
+    "child_values": [
+     -0.5,
+     24.4126,
+     2.7556,
+     48.75,
+     100.0,
+     1.0
+    ],
+    "node_value": 32.9923,
+    "node_value_check": 32.9923,
+    "regret_delta": [
+     -33.4923,
+     -8.5798,
+     -30.2367,
+     15.7577,
+     67.0077,
+     -31.9923
+    ],
+    "strategy_sum_delta": [
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "iteration": 4,
+    "player": 0,
+    "villain": "93o",
+    "strategy": [
+     0.0,
+     0.0269,
+     0.0944,
+     0.3936,
+     0.3433,
+     0.1419
+    ],
+    "child_values": [
+     -0.5,
+     21.997,
+     2.7556,
+     1.0,
+     22.2165,
+     100.0
+    ],
+    "node_value": 23.0579,
+    "node_value_check": 23.0579,
+    "regret_delta": [
+     -23.5579,
+     -1.0609,
+     -20.3023,
+     -22.0579,
+     -0.8414,
+     76.9421
+    ],
+    "strategy_sum_delta": [
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   },
+   {
+    "iteration": 5,
+    "player": 0,
+    "villain": "KQo",
+    "strategy": [
+     0.0,
+     0.0213,
+     0.0267,
+     0.2925,
+     0.3084,
+     0.3512
+    ],
+    "child_values": [
+     -0.5,
+     36.2744,
+     9.757,
+     1.0,
+     1.0,
+     100.0
+    ],
+    "node_value": 36.7524,
+    "node_value_check": 36.7524,
+    "regret_delta": [
+     -37.2524,
+     -0.4779,
+     -26.9953,
+     -35.7524,
+     -35.7524,
+     63.2476
+    ],
+    "strategy_sum_delta": [
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0,
+     0.0
+    ]
+   }
+  ],
+  "checks": {
+   "node_value_equals_strategy_dot_children": true,
+   "regret_delta_sums_to_zero_under_strategy": true,
+   "strategy_sum_unchanged_on_traverser_visit": true,
+   "fold_child_value_is_minus_small_blind": true
+  },
+  "all_pass": true
+ },
+ "averaging": {
+  "BTN_first|AA": {
+   "legal": [
+    "f",
+    "c",
+    "b33",
+    "b75",
+    "b150",
+    "a"
+   ],
+   "per_seed": {
+    "0": {
+     "full_average_300k": [
+      0.0,
+      0.62317,
+      0.10236,
+      0.00037,
+      0.27084,
+      0.00326
+     ],
+     "window_100k_300k": [
+      0.0,
+      0.4924,
+      0.1529,
+      0.0,
+      0.3547,
+      0.0
+     ],
+     "window_10k_100k": [
+      0.0,
+      0.9037,
+      0.0,
+      0.0,
+      0.0963,
+      0.0
+     ],
+     "current_300k": [
+      0.0,
+      0.54507,
+      0.01454,
+      0.0,
+      0.44039,
+      0.0
+     ],
+     "visits_by_window": [
+      39.0,
+      418,
+      919
+     ]
+    },
+    "1": {
+     "full_average_300k": [
+      0.0,
+      0.73795,
+      0.15536,
+      0.07555,
+      0.02982,
+      0.00132
+     ],
+     "window_100k_300k": [
+      0.0,
+      0.8165,
+      0.0403,
+      0.1008,
+      0.0423,
+      0.0
+     ],
+     "window_10k_100k": [
+      0.0,
+      0.5456,
+      0.4544,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "current_300k": [
+      0.0,
+      0.6886,
+      0.0,
+      0.13749,
+      0.17391,
+      0.0
+     ],
+     "visits_by_window": [
+      51.0,
+      368,
+      915
+     ]
+    },
+    "2": {
+     "full_average_300k": [
+      0.0,
+      0.45934,
+      0.00056,
+      0.01189,
+      0.49791,
+      0.0303
+     ],
+     "window_100k_300k": [
+      0.0,
+      0.396,
+      0.0001,
+      0.0,
+      0.6039,
+      0.0
+     ],
+     "window_10k_100k": [
+      0.0,
+      0.6482,
+      0.0006,
+      0.0257,
+      0.2819,
+      0.0436
+     ],
+     "current_300k": [
+      0.0,
+      0.44729,
+      0.0,
+      0.0,
+      0.55271,
+      0.0
+     ],
+     "visits_by_window": [
+      46.0,
+      360,
+      950
+     ]
+    }
+   }
+  },
+  "BTN_first|KK": {
+   "legal": [
+    "f",
+    "c",
+    "b33",
+    "b75",
+    "b150",
+    "a"
+   ],
+   "per_seed": {
+    "0": {
+     "full_average_300k": [
+      0.00024,
+      0.7019,
+      0.0139,
+      0.09297,
+      0.18952,
+      0.00146
+     ],
+     "window_100k_300k": [
+      0.0,
+      0.8052,
+      0.0,
+      0.1352,
+      0.0596,
+      0.0
+     ],
+     "window_10k_100k": [
+      0.0,
+      0.5136,
+      0.0041,
+      0.011,
+      0.4701,
+      0.0012
+     ],
+     "current_300k": [
+      0.0,
+      0.4754,
+      0.0,
+      0.41149,
+      0.11311,
+      0.0
+     ],
+     "visits_by_window": [
+      49.0,
+      426,
+      892
+     ]
+    },
+    "1": {
+     "full_average_300k": [
+      0.00012,
+      0.5828,
+      0.08029,
+      0.14491,
+      0.1794,
+      0.01248
+     ],
+     "window_100k_300k": [
+      0.0,
+      0.4757,
+      0.0948,
+      0.2032,
+      0.2263,
+      0.0
+     ],
+     "window_10k_100k": [
+      0.0,
+      0.8661,
+      0.0338,
+      0.0,
+      0.081,
+      0.019
+     ],
+     "current_300k": [
+      0.0,
+      0.0,
+      0.0,
+      0.59191,
+      0.40809,
+      0.0
+     ],
+     "visits_by_window": [
+      38.0,
+      410,
+      914
+     ]
+    },
+    "2": {
+     "full_average_300k": [
+      0.0,
+      0.06663,
+      0.13128,
+      0.36456,
+      0.43089,
+      0.00665
+     ],
+     "window_100k_300k": [
+      0.0,
+      0.0151,
+      0.0184,
+      0.4033,
+      0.5632,
+      0.0
+     ],
+     "window_10k_100k": [
+      0.0,
+      0.1827,
+      0.3156,
+      0.2749,
+      0.2071,
+      0.0196
+     ],
+     "current_300k": [
+      0.0,
+      0.20127,
+      0.0,
+      0.25671,
+      0.54202,
+      0.0
+     ],
+     "visits_by_window": [
+      54.0,
+      418,
+      873
+     ]
+    }
+   }
+  },
+  "BTN_first|72o": {
+   "legal": [
+    "f",
+    "c",
+    "b33",
+    "b75",
+    "b150",
+    "a"
+   ],
+   "per_seed": {
+    "0": {
+     "full_average_300k": [
+      0.88999,
+      0.00257,
+      0.01007,
+      0.0011,
+      0.0883,
+      0.00797
+     ],
+     "window_100k_300k": [
+      0.9999,
+      0.0,
+      0.0,
+      0.0,
+      0.0001,
+      0.0
+     ],
+     "window_10k_100k": [
+      0.7216,
+      0.0,
+      0.0196,
+      0.0,
+      0.2587,
+      0.0
+     ],
+     "current_300k": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "visits_by_window": [
+      106.0,
+      876,
+      1855
+     ]
+    },
+    "1": {
+     "full_average_300k": [
+      0.93143,
+      0.00101,
+      0.01555,
+      0.00269,
+      0.04932,
+      0.0
+     ],
+     "window_100k_300k": [
+      0.9951,
+      0.0,
+      0.0049,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "window_10k_100k": [
+      0.8511,
+      0.0,
+      0.0376,
+      0.0,
+      0.1113,
+      0.0
+     ],
+     "current_300k": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "visits_by_window": [
+      87.0,
+      811,
+      1867
+     ]
+    },
+    "2": {
+     "full_average_300k": [
+      0.97738,
+      0.00012,
+      0.01635,
+      0.00043,
+      0.00476,
+      0.00096
+     ],
+     "window_100k_300k": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "window_10k_100k": [
+      0.9979,
+      0.0,
+      0.0007,
+      0.0,
+      0.0015,
+      0.0
+     ],
+     "current_300k": [
+      1.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+     ],
+     "visits_by_window": [
+      101.0,
+      811,
+      1802
+     ]
+    }
+   }
+  },
+  "BB_vs_limp|AA": {
+   "legal": [
+    "c",
+    "b33",
+    "b75",
+    "b150",
+    "a"
+   ],
+   "per_seed": {
+    "0": {
+     "full_average_300k": [
+      0.00272,
+      0.06371,
+      0.54028,
+      0.00206,
+      0.39123
+     ],
+     "window_100k_300k": [
+      0.0,
+      0.0252,
+      0.6437,
+      0.0,
+      0.3311
+     ],
+     "window_10k_100k": [
+      0.0016,
+      0.1624,
+      0.3524,
+      0.0,
+      0.4836
+     ],
+     "current_300k": [
+      0.0,
+      0.0,
+      1.0,
+      0.0,
+      0.0
+     ],
+     "visits_by_window": [
+      46.0,
+      413,
+      989
+     ]
+    },
+    "1": {
+     "full_average_300k": [
+      0.00271,
+      0.0929,
+      0.08352,
+      0.65553,
+      0.16534
+     ],
+     "window_100k_300k": [
+      0.0,
+      0.1121,
+      0.0403,
+      0.6256,
+      0.222
+     ],
+     "window_10k_100k": [
+      0.0,
+      0.0521,
+      0.1708,
+      0.7086,
+      0.0685
+     ],
+     "current_300k": [
+      0.0,
+      0.14773,
+      0.21,
+      0.64228,
+      0.0
+     ],
+     "visits_by_window": [
+      61.0,
+      455,
+      888
+     ]
+    },
+    "2": {
+     "full_average_300k": [
+      0.00062,
+      0.41626,
+      0.21369,
+      0.26884,
+      0.10059
+     ],
+     "window_100k_300k": [
+      0.0,
+      0.3962,
+      0.3172,
+      0.2866,
+      0.0
+     ],
+     "window_10k_100k": [
+      0.0,
+      0.5189,
+      0.0007,
+      0.2637,
+      0.2167
+     ],
+     "current_300k": [
+      0.0,
+      0.09131,
+      0.37487,
+      0.53382,
+      0.0
+     ],
+     "visits_by_window": [
+      56.0,
+      397,
+      917
+     ]
+    }
+   }
+  },
+  "BB_vs_open75|AKo": {
+   "legal": [
+    "f",
+    "c",
+    "b33",
+    "b75",
+    "b150",
+    "a"
+   ],
+   "per_seed": {
+    "0": {
+     "full_average_300k": [
+      0.0003,
+      0.00037,
+      0.27778,
+      0.02773,
+      0.07799,
+      0.61583
+     ],
+     "window_100k_300k": [
+      0.0,
+      0.0,
+      0.3624,
+      0.0,
+      0.0,
+      0.6376
+     ],
+     "window_10k_100k": [
+      0.0,
+      0.0,
+      0.1088,
+      0.0039,
+      0.2388,
+      0.6485
+     ],
+     "current_300k": [
+      0.0,
+      0.0,
+      0.62728,
+      0.0,
+      0.0,
+      0.37272
+     ],
+     "visits_by_window": [
+      109.0,
+      788,
+      1857
+     ]
+    },
+    "1": {
+     "full_average_300k": [
+      0.00234,
+      0.01986,
+      0.00623,
+      0.12862,
+      0.04595,
+      0.797
+     ],
+     "window_100k_300k": [
+      0.0,
+      0.0,
+      0.0,
+      0.1215,
+      0.0,
+      0.8785
+     ],
+     "window_10k_100k": [
+      0.0,
+      0.0278,
+      0.0178,
+      0.128,
+      0.1405,
+      0.6859
+     ],
+     "current_300k": [
+      0.0,
+      0.0,
+      0.0,
+      0.16015,
+      0.0,
+      0.83985
+     ],
+     "visits_by_window": [
+      88.0,
+      870,
+      1796
+     ]
+    },
+    "2": {
+     "full_average_300k": [
+      0.00022,
+      0.00872,
+      0.26905,
+      0.28811,
+      0.12853,
+      0.30538
+     ],
+     "window_100k_300k": [
+      0.0,
+      0.0,
+      0.249,
+      0.2658,
+      0.1316,
+      0.3536
+     ],
+     "window_10k_100k": [
+      0.0,
+      0.0053,
+      0.321,
+      0.3268,
+      0.1305,
+      0.2164
+     ],
+     "current_300k": [
+      0.0,
+      0.0,
+      0.37622,
+      0.29859,
+      0.08937,
+      0.23582
+     ],
+     "visits_by_window": [
+      74.0,
+      801,
+      1760
+     ]
+    }
+   }
+  },
+  "BB_vs_open33|99": {
+   "legal": [
+    "f",
+    "c",
+    "b33",
+    "b75",
+    "b150",
+    "a"
+   ],
+   "per_seed": {
+    "0": {
+     "full_average_300k": [
+      0.00108,
+      0.00266,
+      0.02609,
+      0.30446,
+      0.00057,
+      0.66513
+     ],
+     "window_100k_300k": [
+      0.0,
+      0.0,
+      0.0,
+      0.3987,
+      0.0,
+      0.6013
+     ],
+     "window_10k_100k": [
+      0.0,
+      0.0007,
+      0.0321,
+      0.0815,
+      0.0007,
+      0.8851
+     ],
+     "current_300k": [
+      0.0,
+      0.0,
+      0.0,
+      0.51893,
+      0.0,
+      0.48107
+     ],
+     "visits_by_window": [
+      53.0,
+      385,
+      892
+     ]
+    },
+    "1": {
+     "full_average_300k": [
+      0.00165,
+      0.00379,
+      0.02879,
+      0.01817,
+      0.20685,
+      0.74075
+     ],
+     "window_100k_300k": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.1175,
+      0.8825
+     ],
+     "window_10k_100k": [
+      0.0003,
+      0.0019,
+      0.0903,
+      0.0299,
+      0.4184,
+      0.4593
+     ],
+     "current_300k": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "visits_by_window": [
+      50.0,
+      402,
+      849
+     ]
+    },
+    "2": {
+     "full_average_300k": [
+      0.00049,
+      0.00318,
+      0.00068,
+      0.00739,
+      0.10954,
+      0.87871
+     ],
+     "window_100k_300k": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "window_10k_100k": [
+      0.0,
+      0.0,
+      0.0007,
+      0.0232,
+      0.3038,
+      0.6724
+     ],
+     "current_300k": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      1.0
+     ],
+     "visits_by_window": [
+      36.0,
+      408,
+      927
+     ]
+    }
+   }
+  }
+ },
+ "jams": {
+  "BTN_first": {
+   "mean_jam_freq": 0.0511,
+   "classes_jam_gt_50pct": 0,
+   "classes_jam_gt_20pct": 9,
+   "top5": [
+    [
+     "AKs",
+     0.4227,
+     [
+      917.0,
+      900.0,
+      883.0
+     ],
+     0.9616
+    ],
+    [
+     "44",
+     0.3825,
+     [
+      1360.0,
+      1352.0,
+      1354.0
+     ],
+     1.2187
+    ],
+    [
+     "A2s",
+     0.2785,
+     [
+      878.0,
+      939.0,
+      899.0
+     ],
+     1.5223
+    ],
+    [
+     "A6s",
+     0.2747,
+     [
+      932.0,
+      897.0,
+      898.0
+     ],
+     1.1474
+    ],
+    [
+     "A4o",
+     0.2732,
+     [
+      2693.0,
+      2734.0,
+      2738.0
+     ],
+     1.1376
+    ]
+   ]
+  },
+  "BB_vs_limp": {
+   "mean_jam_freq": 0.0985,
+   "classes_jam_gt_50pct": 4,
+   "classes_jam_gt_20pct": 27,
+   "top5": [
+    [
+     "A9s",
+     0.5878,
+     [
+      927.0,
+      854.0,
+      867.0
+     ],
+     1.2019
+    ],
+    [
+     "88",
+     0.5661,
+     [
+      1367.0,
+      1349.0,
+      1437.0
+     ],
+     1.0223
+    ],
+    [
+     "ATs",
+     0.5213,
+     [
+      907.0,
+      886.0,
+      948.0
+     ],
+     1.2266
+    ],
+    [
+     "AQo",
+     0.5093,
+     [
+      2708.0,
+      2732.0,
+      2763.0
+     ],
+     1.2872
+    ],
+    [
+     "A7s",
+     0.459,
+     [
+      923.0,
+      898.0,
+      936.0
+     ],
+     1.344
+    ]
+   ]
+  },
+  "BB_vs_open33": {
+   "mean_jam_freq": 0.1682,
+   "classes_jam_gt_50pct": 14,
+   "classes_jam_gt_20pct": 53,
+   "top5": [
+    [
+     "A5o",
+     0.7689,
+     [
+      2724.0,
+      2728.0,
+      2730.0
+     ],
+     0.8132
+    ],
+    [
+     "99",
+     0.7615,
+     [
+      1330.0,
+      1301.0,
+      1371.0
+     ],
+     0.4982
+    ],
+    [
+     "A2s",
+     0.7327,
+     [
+      939.0,
+      924.0,
+      912.0
+     ],
+     0.5565
+    ],
+    [
+     "ATo",
+     0.6322,
+     [
+      2798.0,
+      2762.0,
+      2716.0
+     ],
+     1.1641
+    ],
+    [
+     "55",
+     0.6113,
+     [
+      1327.0,
+      1365.0,
+      1374.0
+     ],
+     1.0875
+    ]
+   ]
+  },
+  "BB_vs_open75": {
+   "mean_jam_freq": 0.133,
+   "classes_jam_gt_50pct": 10,
+   "classes_jam_gt_20pct": 43,
+   "top5": [
+    [
+     "AJo",
+     0.7222,
+     [
+      2666.0,
+      2649.0,
+      2758.0
+     ],
+     0.5316
+    ],
+    [
+     "A3o",
+     0.7197,
+     [
+      2795.0,
+      2595.0,
+      2779.0
+     ],
+     0.7729
+    ],
+    [
+     "33",
+     0.5759,
+     [
+      1349.0,
+      1413.0,
+      1378.0
+     ],
+     0.8526
+    ],
+    [
+     "AKo",
+     0.5727,
+     [
+      2754.0,
+      2754.0,
+      2635.0
+     ],
+     0.7518
+    ],
+    [
+     "55",
+     0.5658,
+     [
+      1327.0,
+      1365.0,
+      1374.0
+     ],
+     1.1668
+    ]
+   ]
+  },
+  "BB_vs_open150": {
+   "mean_jam_freq": 0.1315,
+   "classes_jam_gt_50pct": 4,
+   "classes_jam_gt_20pct": 43,
+   "top5": [
+    [
+     "AKo",
+     0.7393,
+     [
+      2754.0,
+      2754.0,
+      2635.0
+     ],
+     0.9802
+    ],
+    [
+     "66",
+     0.5739,
+     [
+      1363.0,
+      1355.0,
+      1415.0
+     ],
+     0.9203
+    ],
+    [
+     "55",
+     0.5536,
+     [
+      1327.0,
+      1365.0,
+      1374.0
+     ],
+     1.3429
+    ],
+    [
+     "A7s",
+     0.5297,
+     [
+      923.0,
+      898.0,
+      936.0
+     ],
+     0.9004
+    ],
+    [
+     "AJo",
+     0.4782,
+     [
+      2666.0,
+      2649.0,
+      2758.0
+     ],
+     1.188
+    ]
+   ]
+  },
+  "BB_vs_allin": {
+   "mean_jam_freq": 0.0,
+   "classes_jam_gt_50pct": 0,
+   "classes_jam_gt_20pct": 0,
+   "top5": [
+    [
+     "AA",
+     0.0,
+     [
+      1448.0,
+      1404.0,
+      1370.0
+     ],
+     0.0086
+    ],
+    [
+     "AKs",
+     0.0,
+     [
+      897.0,
+      940.0,
+      821.0
+     ],
+     0.0191
+    ],
+    [
+     "AQs",
+     0.0,
+     [
+      856.0,
+      941.0,
+      899.0
+     ],
+     0.0551
+    ],
+    [
+     "AJs",
+     0.0,
+     [
+      939.0,
+      900.0,
+      878.0
+     ],
+     0.0678
+    ],
+    [
+     "ATs",
+     0.0,
+     [
+      907.0,
+      886.0,
+      948.0
+     ],
+     0.9536
+    ]
+   ]
+  },
+  "BTN_limp_vs_raise33": {
+   "mean_jam_freq": 0.2023,
+   "classes_jam_gt_50pct": 10,
+   "classes_jam_gt_20pct": 73,
+   "top5": [
+    [
+     "A7o",
+     0.7406,
+     [
+      1085.0,
+      2652.0,
+      1177.0
+     ],
+     0.6288
+    ],
+    [
+     "92s",
+     0.656,
+     [
+      5.0,
+      17.0,
+      7.0
+     ],
+     0.976
+    ],
+    [
+     "K6s",
+     0.6316,
+     [
+      150.0,
+      373.0,
+      277.0
+     ],
+     0.9261
+    ],
+    [
+     "Q9s",
+     0.6008,
+     [
+      74.0,
+      63.0,
+      122.0
+     ],
+     1.2741
+    ],
+    [
+     "32s",
+     0.5531,
+     [
+      3.0,
+      22.0,
+      11.0
+     ],
+     0.8879
+    ]
+   ]
+  },
+  "BTN_limp_vs_raise75": {
+   "mean_jam_freq": 0.1848,
+   "classes_jam_gt_50pct": 4,
+   "classes_jam_gt_20pct": 70,
+   "top5": [
+    [
+     "AJo",
+     0.7346,
+     [
+      1171.0,
+      134.0,
+      366.0
+     ],
+     0.6632
+    ],
+    [
+     "63s",
+     0.628,
+     [
+      15.0,
+      1.0,
+      13.0
+     ],
+     0.8323
+    ],
+    [
+     "A4o",
+     0.5528,
+     [
+      1775.0,
+      0.0,
+      1420.0
+     ],
+     1.1567
+    ],
+    [
+     "AQo",
+     0.5475,
+     [
+      2660.0,
+      819.0,
+      534.0
+     ],
+     1.1713
+    ],
+    [
+     "Q5o",
+     0.4967,
+     [
+      4.0,
+      0.0,
+      6.0
+     ],
+     1.072
+    ]
+   ]
+  },
+  "BTN_limp_vs_raise150": {
+   "mean_jam_freq": 0.1805,
+   "classes_jam_gt_50pct": 6,
+   "classes_jam_gt_20pct": 64,
+   "top5": [
+    [
+     "Q2s",
+     0.6041,
+     [
+      11.0,
+      302.0,
+      17.0
+     ],
+     0.9071
+    ],
+    [
+     "32s",
+     0.6023,
+     [
+      3.0,
+      22.0,
+      11.0
+     ],
+     1.2746
+    ],
+    [
+     "ATs",
+     0.5895,
+     [
+      128.0,
+      158.0,
+      388.0
+     ],
+     0.9675
+    ],
+    [
+     "A3o",
+     0.5656,
+     [
+      775.0,
+      1356.0,
+      72.0
+     ],
+     1.1299
+    ],
+    [
+     "42s",
+     0.5375,
+     [
+      52.0,
+      3.0,
+      7.0
+     ],
+     1.2795
+    ]
+   ]
+  },
+  "BTN_open75_vs_3bet75": {
+   "mean_jam_freq": 0.11,
+   "classes_jam_gt_50pct": 6,
+   "classes_jam_gt_20pct": 35,
+   "top5": [
+    [
+     "77",
+     0.5824,
+     [
+      1216.0,
+      1141.0,
+      1062.0
+     ],
+     1.033
+    ],
+    [
+     "A2s",
+     0.567,
+     [
+      295.0,
+      160.0,
+      754.0
+     ],
+     1.093
+    ],
+    [
+     "88",
+     0.5431,
+     [
+      535.0,
+      1299.0,
+      911.0
+     ],
+     1.0789
+    ],
+    [
+     "AKo",
+     0.532,
+     [
+      1570.0,
+      1868.0,
+      1996.0
+     ],
+     1.0516
+    ],
+    [
+     "44",
+     0.5149,
+     [
+      1251.0,
+      720.0,
+      250.0
+     ],
+     1.2891
+    ]
+   ]
+  }
+ },
+ "action_ev": {
+  "deals": 10000,
+  "note": "EV for BTN (bb) of each forced first action, both players then follow the seed's 300k average strategy; paired differences vs limp",
+  "results": {
+   "seed0@300k|BTN_first|AA": {
+    "c": {
+     "ev_bb": 22.5968,
+     "se_bb": 0.5351,
+     "minus_c_bb": 0.0,
+     "paired_se_bb": 0.0
+    },
+    "b33": {
+     "ev_bb": 23.2182,
+     "se_bb": 0.5171,
+     "minus_c_bb": 0.6215,
+     "paired_se_bb": 0.4553
+    },
+    "b75": {
+     "ev_bb": 23.7189,
+     "se_bb": 0.5137,
+     "minus_c_bb": 1.1221,
+     "paired_se_bb": 0.4587
+    },
+    "b150": {
+     "ev_bb": 23.2832,
+     "se_bb": 0.5093,
+     "minus_c_bb": 0.6864,
+     "paired_se_bb": 0.4541
+    },
+    "a": {
+     "ev_bb": 18.6969,
+     "se_bb": 0.4652,
+     "minus_c_bb": -3.8999,
+     "paired_se_bb": 0.4974
+    },
+    "f": {
+     "ev_bb": -0.5,
+     "se_bb": 0.0,
+     "minus_c_bb": -23.0968,
+     "paired_se_bb": 0.5351
+    }
+   },
+   "seed0@300k|BTN_first|KK": {
+    "c": {
+     "ev_bb": 18.3052,
+     "se_bb": 0.5433,
+     "minus_c_bb": 0.0,
+     "paired_se_bb": 0.0
+    },
+    "b33": {
+     "ev_bb": 17.6674,
+     "se_bb": 0.5265,
+     "minus_c_bb": -0.6378,
+     "paired_se_bb": 0.4588
+    },
+    "b75": {
+     "ev_bb": 17.7277,
+     "se_bb": 0.5251,
+     "minus_c_bb": -0.5775,
+     "paired_se_bb": 0.4497
+    },
+    "b150": {
+     "ev_bb": 17.6053,
+     "se_bb": 0.5182,
+     "minus_c_bb": -0.6999,
+     "paired_se_bb": 0.439
+    },
+    "a": {
+     "ev_bb": 15.0357,
+     "se_bb": 0.4896,
+     "minus_c_bb": -3.2695,
+     "paired_se_bb": 0.4922
+    },
+    "f": {
+     "ev_bb": -0.5,
+     "se_bb": 0.0,
+     "minus_c_bb": -18.8052,
+     "paired_se_bb": 0.5433
+    }
+   },
+   "seed0@300k|BTN_first|72o": {
+    "c": {
+     "ev_bb": -5.5411,
+     "se_bb": 0.3701,
+     "minus_c_bb": 0.0,
+     "paired_se_bb": 0.0
+    },
+    "b33": {
+     "ev_bb": -1.1356,
+     "se_bb": 0.1918,
+     "minus_c_bb": 4.4056,
+     "paired_se_bb": 0.3723
+    },
+    "b75": {
+     "ev_bb": -1.2454,
+     "se_bb": 0.2156,
+     "minus_c_bb": 4.2957,
+     "paired_se_bb": 0.3748
+    },
+    "b150": {
+     "ev_bb": -1.921,
+     "se_bb": 0.2392,
+     "minus_c_bb": 3.6201,
+     "paired_se_bb": 0.3824
+    },
+    "a": {
+     "ev_bb": -11.3732,
+     "se_bb": 0.5255,
+     "minus_c_bb": -5.8321,
+     "paired_se_bb": 0.4748
+    },
+    "f": {
+     "ev_bb": -0.5,
+     "se_bb": 0.0,
+     "minus_c_bb": 5.0411,
+     "paired_se_bb": 0.3701
+    }
+   },
+   "seed1@300k|BTN_first|AA": {
+    "c": {
+     "ev_bb": 20.7484,
+     "se_bb": 0.5443,
+     "minus_c_bb": 0.0,
+     "paired_se_bb": 0.0
+    },
+    "b33": {
+     "ev_bb": 20.3759,
+     "se_bb": 0.515,
+     "minus_c_bb": -0.3725,
+     "paired_se_bb": 0.4555
+    },
+    "b75": {
+     "ev_bb": 21.7043,
+     "se_bb": 0.5212,
+     "minus_c_bb": 0.9559,
+     "paired_se_bb": 0.4637
+    },
+    "b150": {
+     "ev_bb": 21.5741,
+     "se_bb": 0.5088,
+     "minus_c_bb": 0.8257,
+     "paired_se_bb": 0.4608
+    },
+    "a": {
+     "ev_bb": 17.9474,
+     "se_bb": 0.4571,
+     "minus_c_bb": -2.801,
+     "paired_se_bb": 0.4959
+    },
+    "f": {
+     "ev_bb": -0.5,
+     "se_bb": 0.0,
+     "minus_c_bb": -21.2484,
+     "paired_se_bb": 0.5443
+    }
+   },
+   "seed1@300k|BTN_first|KK": {
+    "c": {
+     "ev_bb": 16.7343,
+     "se_bb": 0.5543,
+     "minus_c_bb": 0.0,
+     "paired_se_bb": 0.0
+    },
+    "b33": {
+     "ev_bb": 16.2093,
+     "se_bb": 0.5371,
+     "minus_c_bb": -0.525,
+     "paired_se_bb": 0.4416
+    },
+    "b75": {
+     "ev_bb": 17.2609,
+     "se_bb": 0.5479,
+     "minus_c_bb": 0.5266,
+     "paired_se_bb": 0.4595
+    },
+    "b150": {
+     "ev_bb": 17.4641,
+     "se_bb": 0.5383,
+     "minus_c_bb": 0.7298,
+     "paired_se_bb": 0.4502
+    },
+    "a": {
+     "ev_bb": 14.584,
+     "se_bb": 0.5024,
+     "minus_c_bb": -2.1503,
+     "paired_se_bb": 0.4717
+    },
+    "f": {
+     "ev_bb": -0.5,
+     "se_bb": 0.0,
+     "minus_c_bb": -17.2343,
+     "paired_se_bb": 0.5543
+    }
+   },
+   "seed1@300k|BTN_first|72o": {
+    "c": {
+     "ev_bb": -6.0849,
+     "se_bb": 0.3817,
+     "minus_c_bb": 0.0,
+     "paired_se_bb": 0.0
+    },
+    "b33": {
+     "ev_bb": -1.6678,
+     "se_bb": 0.2134,
+     "minus_c_bb": 4.4171,
+     "paired_se_bb": 0.3873
+    },
+    "b75": {
+     "ev_bb": -2.3218,
+     "se_bb": 0.2398,
+     "minus_c_bb": 3.7631,
+     "paired_se_bb": 0.3868
+    },
+    "b150": {
+     "ev_bb": -2.9947,
+     "se_bb": 0.2643,
+     "minus_c_bb": 3.0902,
+     "paired_se_bb": 0.3911
+    },
+    "a": {
+     "ev_bb": -10.9443,
+     "se_bb": 0.5184,
+     "minus_c_bb": -4.8594,
+     "paired_se_bb": 0.48
+    },
+    "f": {
+     "ev_bb": -0.5,
+     "se_bb": 0.0,
+     "minus_c_bb": 5.5849,
+     "paired_se_bb": 0.3817
+    }
+   }
+  }
+ },
+ "recall": {
+  "flop_keys_with_AA": 22,
+  "examples": [
+   {
+    "key": "1|1|400|urd|inr0fnoneans3|c.b33.b75.b150.a",
+    "states": 20,
+    "distinct_preflop_classes": 16,
+    "distinct_preflop_lines": 1,
+    "AA_share": 0.05,
+    "top_classes": [
+     [
+      "AKo",
+      3
+     ],
+     [
+      "KJo",
+      2
+     ],
+     [
+      "KK",
+      2
+     ],
+     [
+      "AA",
+      1
+     ],
+     [
+      "82o",
+      1
+     ],
+     [
+      "JTo",
+      1
+     ]
+    ],
+    "lines": [
+     [
+      "cc",
+      20
+     ]
+    ]
+   },
+   {
+    "key": "1|1|410|utc|ior0fnoneans3|c.b33.b75.b150.a",
+    "states": 7,
+    "distinct_preflop_classes": 6,
+    "distinct_preflop_lines": 4,
+    "AA_share": 0.2857,
+    "top_classes": [
+     [
+      "AA",
+      2
+     ],
+     [
+      "AKo",
+      1
+     ],
+     [
+      "KTo",
+      1
+     ],
+     [
+      "ATo",
+      1
+     ],
+     [
+      "KK",
+      1
+     ],
+     [
+      "53o",
+      1
+     ]
+    ],
+    "lines": [
+     [
+      "b75c",
+      2
+     ],
+     [
+      "b150c",
+      2
+     ],
+     [
+      "cb33c",
+      2
+     ],
+     [
+      "cb75c",
+      1
+     ]
+    ]
+   },
+   {
+    "key": "1|0|400|utd|inr0fnoneans3|c.b33.b75.b150.a",
+    "states": 5,
+    "distinct_preflop_classes": 4,
+    "distinct_preflop_lines": 1,
+    "AA_share": 0.2,
+    "top_classes": [
+     [
+      "KK",
+      2
+     ],
+     [
+      "JJ",
+      1
+     ],
+     [
+      "AA",
+      1
+     ],
+     [
+      "QJo",
+      1
+     ]
+    ],
+    "lines": [
+     [
+      "cc",
+      5
+     ]
+    ]
+   },
+   {
+    "key": "1|1|400|utd|ior0fnoneans2|c.b33.b75.b150.a",
+    "states": 4,
+    "distinct_preflop_classes": 3,
+    "distinct_preflop_lines": 3,
+    "AA_share": 0.25,
+    "top_classes": [
+     [
+      "KK",
+      2
+     ],
+     [
+      "AA",
+      1
+     ],
+     [
+      "T3s",
+      1
+     ]
+    ],
+    "lines": [
+     [
+      "cb75b75c",
+      2
+     ],
+     [
+      "b33b75b75c",
+      1
+     ],
+     [
+      "b150b33c",
+      1
+     ]
+    ]
+   },
+   {
+    "key": "1|0|410|utd|inr1fsmallans3|f.c.b33.b75.b150.a",
+    "states": 4,
+    "distinct_preflop_classes": 4,
+    "distinct_preflop_lines": 1,
+    "AA_share": 0.25,
+    "top_classes": [
+     [
+      "KQo",
+      1
+     ],
+     [
+      "KQs",
+      1
+     ],
+     [
+      "32o",
+      1
+     ],
+     [
+      "AA",
+      1
+     ]
+    ],
+    "lines": [
+     [
+      "cc",
+      4
+     ]
+    ]
+   },
+   {
+    "key": "1|0|400|urc|inr0fnoneans3|c.b33.b75.b150.a",
+    "states": 4,
+    "distinct_preflop_classes": 4,
+    "distinct_preflop_lines": 1,
+    "AA_share": 0.25,
+    "top_classes": [
+     [
+      "AQo",
+      1
+     ],
+     [
+      "AA",
+      1
+     ],
+     [
+      "KTo",
+      1
+     ],
+     [
+      "T7o",
+      1
+     ]
+    ],
+    "lines": [
+     [
+      "cc",
+      4
+     ]
+    ]
+   },
+   {
+    "key": "1|0|400|urd|ior1foverans3|f.c.b33.b75.b150.a",
+    "states": 3,
+    "distinct_preflop_classes": 3,
+    "distinct_preflop_lines": 3,
+    "AA_share": 0.3333,
+    "top_classes": [
+     [
+      "AKs",
+      1
+     ],
+     [
+      "AA",
+      1
+     ],
+     [
+      "Q9o",
+      1
+     ]
+    ],
+    "lines": [
+     [
+      "cb75c",
+      1
+     ],
+     [
+      "cb33c",
+      1
+     ],
+     [
+      "b150c",
+      1
+     ]
+    ]
+   },
+   {
+    "key": "1|1|400|ptd|ior0fnoneans3|c.b33.b75.b150.a",
+    "states": 2,
+    "distinct_preflop_classes": 2,
+    "distinct_preflop_lines": 2,
+    "AA_share": 0.5,
+    "top_classes": [
+     [
+      "AKs",
+      1
+     ],
+     [
+      "AA",
+      1
+     ]
+    ],
+    "lines": [
+     [
+      "cb150c",
+      1
+     ],
+     [
+      "b75c",
+      1
+     ]
+    ]
+   },
+   {
+    "key": "1|0|502|utd|ior0fnoneans3|c.b33.b75.b150.a",
+    "states": 2,
+    "distinct_preflop_classes": 1,
+    "distinct_preflop_lines": 2,
+    "AA_share": 1.0,
+    "top_classes": [
+     [
+      "AA",
+      2
+     ]
+    ],
+    "lines": [
+     [
+      "cb33c",
+      1
+     ],
+     [
+      "b33c",
+      1
+     ]
+    ]
+   },
+   {
+    "key": "1|1|400|prd|inr0fnoneans3|c.b33.b75.b150.a",
+    "states": 2,
+    "distinct_preflop_classes": 2,
+    "distinct_preflop_lines": 1,
+    "AA_share": 0.5,
+    "top_classes": [
+     [
+      "AA",
+      1
+     ],
+     [
+      "QQ",
+      1
+     ]
+    ],
+    "lines": [
+     [
+      "cc",
+      2
+     ]
+    ]
+   },
+   {
+    "key": "1|0|400|utd|inr1fallinans3|f.c",
+    "states": 2,
+    "distinct_preflop_classes": 2,
+    "distinct_preflop_lines": 1,
+    "AA_share": 0.5,
+    "top_classes": [
+     [
+      "A9o",
+      1
+     ],
+     [
+      "AA",
+      1
+     ]
+    ],
+    "lines": [
+     [
+      "cc",
+      2
+     ]
+    ]
+   },
+   {
+    "key": "1|1|502|utd|inr0fnoneans3|c.b33.b75.b150.a",
+    "states": 2,
+    "distinct_preflop_classes": 2,
+    "distinct_preflop_lines": 1,
+    "AA_share": 0.5,
+    "top_classes": [
+     [
+      "99",
+      1
+     ],
+     [
+      "AA",
+      1
+     ]
+    ],
+    "lines": [
+     [
+      "cc",
+      2
+     ]
+    ]
+   },
+   {
+    "key": "1|1|601|prd|ior0fnoneans3|c.b33.b75.b150.a",
+    "states": 1,
+    "distinct_preflop_classes": 1,
+    "distinct_preflop_lines": 1,
+    "AA_share": 1.0,
+    "top_classes": [
+     [
+      "AA",
+      1
+     ]
+    ],
+    "lines": [
+     [
+      "b75c",
+      1
+     ]
+    ]
+   },
+   {
+    "key": "1|1|601|prd|ior1fallinacs3|f.c",
+    "states": 1,
+    "distinct_preflop_classes": 1,
+    "distinct_preflop_lines": 1,
+    "AA_share": 1.0,
+    "top_classes": [
+     [
+      "AA",
+      1
+     ]
+    ],
+    "lines": [
+     [
+      "b75c",
+      1
+     ]
+    ]
+   },
+   {
+    "key": "1|1|400|utd|ior1foveracs2|f.c.b33.b75.a",
+    "states": 1,
+    "distinct_preflop_classes": 1,
+    "distinct_preflop_lines": 1,
+    "AA_share": 1.0,
+    "top_classes": [
+     [
+      "AA",
+      1
+     ]
+    ],
+    "lines": [
+     [
+      "cb75b75c",
+      1
+     ]
+    ]
+   }
+  ],
+  "note": "the preflop key of a first action is the exact 169 class (no collision); from the flop on the compact key forgets the preflop class and line"
+ },
+ "seconds": 54,
+ "jam_ev": {
+  "btn_response_to_bb_jam": {
+   "b33": {
+    "classes_visited": 169,
+    "mean_fold_to_jam_over_classes": 0.6629,
+    "combo_weighted_note": "class-average, not combo-weighted",
+    "classes_calling_majority": [
+     "AA",
+     "AKs",
+     "AQs",
+     "AJs",
+     "ATs",
+     "A9s",
+     "A8s",
+     "A7s",
+     "A6s",
+     "A5s",
+     "A4s",
+     "A3s",
+     "A2s",
+     "AKo",
+     "KK",
+     "KQs",
+     "KJs",
+     "K9s",
+     "K7s",
+     "K6s",
+     "KQo",
+     "QQ",
+     "QJs",
+     "QTs",
+     "AJo",
+     "KJo",
+     "QJo",
+     "JJ",
+     "JTs",
+     "ATo",
+     "KTo",
+     "QTo",
+     "TT",
+     "T9s",
+     "A9o",
+     "K9o",
+     "99",
+     "A8o",
+     "88",
+     "A7o",
+     "77",
+     "66",
+     "A5o",
+     "55",
+     "A4o",
+     "44",
+     "A3o"
+    ]
+   },
+   "b75": {
+    "classes_visited": 169,
+    "mean_fold_to_jam_over_classes": 0.6629,
+    "combo_weighted_note": "class-average, not combo-weighted",
+    "classes_calling_majority": [
+     "AA",
+     "AKs",
+     "AQs",
+     "AJs",
+     "ATs",
+     "A9s",
+     "A8s",
+     "A7s",
+     "A6s",
+     "A5s",
+     "A4s",
+     "A3s",
+     "A2s",
+     "AKo",
+     "KK",
+     "KQs",
+     "KJs",
+     "K9s",
+     "K7s",
+     "K6s",
+     "KQo",
+     "QQ",
+     "QJs",
+     "QTs",
+     "AJo",
+     "KJo",
+     "QJo",
+     "JJ",
+     "JTs",
+     "ATo",
+     "KTo",
+     "QTo",
+     "TT",
+     "T9s",
+     "A9o",
+     "K9o",
+     "99",
+     "A8o",
+     "88",
+     "A7o",
+     "77",
+     "66",
+     "A5o",
+     "55",
+     "A4o",
+     "44",
+     "A3o"
+    ]
+   },
+   "b150": {
+    "classes_visited": 169,
+    "mean_fold_to_jam_over_classes": 0.6629,
+    "combo_weighted_note": "class-average, not combo-weighted",
+    "classes_calling_majority": [
+     "AA",
+     "AKs",
+     "AQs",
+     "AJs",
+     "ATs",
+     "A9s",
+     "A8s",
+     "A7s",
+     "A6s",
+     "A5s",
+     "A4s",
+     "A3s",
+     "A2s",
+     "AKo",
+     "KK",
+     "KQs",
+     "KJs",
+     "K9s",
+     "K7s",
+     "K6s",
+     "KQo",
+     "QQ",
+     "QJs",
+     "QTs",
+     "AJo",
+     "KJo",
+     "QJo",
+     "JJ",
+     "JTs",
+     "ATo",
+     "KTo",
+     "QTo",
+     "TT",
+     "T9s",
+     "A9o",
+     "K9o",
+     "99",
+     "A8o",
+     "88",
+     "A7o",
+     "77",
+     "66",
+     "A5o",
+     "55",
+     "A4o",
+     "44",
+     "A3o"
+    ]
+   }
+  },
+  "bb_action_ev": {
+   "BB 99 vs open33": {
+    "c": {
+     "ev_bb": 2.085,
+     "minus_c": 0.0,
+     "paired_se": 0.0
+    },
+    "b33": {
+     "ev_bb": 7.672,
+     "minus_c": 5.587,
+     "paired_se": 0.509
+    },
+    "b75": {
+     "ev_bb": 6.391,
+     "minus_c": 4.306,
+     "paired_se": 0.508
+    },
+    "b150": {
+     "ev_bb": 8.369,
+     "minus_c": 6.284,
+     "paired_se": 0.563
+    },
+    "a": {
+     "ev_bb": 7.694,
+     "minus_c": 5.608,
+     "paired_se": 0.623
+    },
+    "f": {
+     "ev_bb": -1.0,
+     "minus_c": -3.085,
+     "paired_se": 0.355
+    }
+   },
+   "BB A5o vs open33": {
+    "c": {
+     "ev_bb": -0.107,
+     "minus_c": 0.0,
+     "paired_se": 0.0
+    },
+    "b33": {
+     "ev_bb": -0.559,
+     "minus_c": -0.452,
+     "paired_se": 0.348
+    },
+    "b75": {
+     "ev_bb": -0.197,
+     "minus_c": -0.09,
+     "paired_se": 0.366
+    },
+    "b150": {
+     "ev_bb": -0.933,
+     "minus_c": -0.826,
+     "paired_se": 0.416
+    },
+    "a": {
+     "ev_bb": -0.144,
+     "minus_c": -0.037,
+     "paired_se": 0.575
+    },
+    "f": {
+     "ev_bb": -1.0,
+     "minus_c": -0.893,
+     "paired_se": 0.252
+    }
+   },
+   "BB AJo vs open75": {
+    "c": {
+     "ev_bb": 1.631,
+     "minus_c": 0.0,
+     "paired_se": 0.0
+    },
+    "b33": {
+     "ev_bb": 4.073,
+     "minus_c": 2.442,
+     "paired_se": 0.487
+    },
+    "b75": {
+     "ev_bb": 4.283,
+     "minus_c": 2.652,
+     "paired_se": 0.495
+    },
+    "b150": {
+     "ev_bb": 5.013,
+     "minus_c": 3.382,
+     "paired_se": 0.56
+    },
+    "a": {
+     "ev_bb": 6.973,
+     "minus_c": 5.341,
+     "paired_se": 0.581
+    },
+    "f": {
+     "ev_bb": -1.0,
+     "minus_c": -2.631,
+     "paired_se": 0.326
+    }
+   },
+   "BB 72o vs open33": {
+    "c": {
+     "ev_bb": -1.743,
+     "minus_c": 0.0,
+     "paired_se": 0.0
+    },
+    "b33": {
+     "ev_bb": -2.692,
+     "minus_c": -0.949,
+     "paired_se": 0.213
+    },
+    "b75": {
+     "ev_bb": -3.425,
+     "minus_c": -1.682,
+     "paired_se": 0.21
+    },
+    "b150": {
+     "ev_bb": -4.52,
+     "minus_c": -2.778,
+     "paired_se": 0.241
+    },
+    "a": {
+     "ev_bb": -12.809,
+     "minus_c": -11.067,
+     "paired_se": 0.61
+    },
+    "f": {
+     "ev_bb": -1.0,
+     "minus_c": 0.743,
+     "paired_se": 0.198
+    }
+   },
+   "BB AKo vs open150": {
+    "c": {
+     "ev_bb": 3.116,
+     "minus_c": 0.0,
+     "paired_se": 0.0
+    },
+    "b33": {
+     "ev_bb": 7.354,
+     "minus_c": 4.238,
+     "paired_se": 0.539
+    },
+    "b75": {
+     "ev_bb": 9.125,
+     "minus_c": 6.009,
+     "paired_se": 0.575
+    },
+    "b150": {
+     "ev_bb": 10.535,
+     "minus_c": 7.419,
+     "paired_se": 0.637
+    },
+    "a": {
+     "ev_bb": 10.518,
+     "minus_c": 7.401,
+     "paired_se": 0.582
+    },
+    "f": {
+     "ev_bb": -1.0,
+     "minus_c": -4.116,
+     "paired_se": 0.361
+    }
+   }
+  }
+ }
+}
