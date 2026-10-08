@@ -1,0 +1,155 @@
+{
+ "format": "pokeralpha.release_candidate/v1",
+ "solver": {
+  "config_signature": "HoldemSolverConfig:v2:733e52f1d1014e2e7973",
+  "config": {
+   "encoder": "compact_river_pct20",
+   "bet_fractions": [
+    [
+     "b33",
+     0.33
+    ],
+    [
+     "b75",
+     0.75
+    ],
+    [
+     "b150",
+     1.5
+    ]
+   ],
+   "starting_stack": 100.0,
+   "raise_cap": 3,
+   "sampling": "external-sampling-mccfr",
+   "reference_range": "uniform-random-hand (offline quality metrics only)",
+   "preflop_raise_multiples": [
+    [
+     "x200",
+     2.0
+    ],
+    [
+     "x250",
+     2.5
+    ],
+    [
+     "x350",
+     3.5
+    ]
+   ],
+   "enforce_min_raise": true,
+   "averaging": "uniform",
+   "action_abstraction": "postflop pot fractions; preflop raise-to multiples of the current bet; NLHE minimum bet/raise enforced",
+   "config_version": 2,
+   "game_signature": "HoldemGame:v1:stack=100:blinds=0.5/1:bets=b33=0.33,b75=0.75,b150=1.5:raise_cap=3:preflop=x200=2,x250=2.5,x350=3.5:min_raise=nlhe",
+   "encoder_signature": "CompactHoldemEncoder:v1:cards=v1:history=abstract:texture=1:river_blockers=1:betting=v1:river_pct=20:recall=imperfect",
+   "card_feature_tables": "ffa793631f72354c",
+   "perfect_recall": false
+  },
+  "recall": "IMPERFECT RECALL - no standard CFR equilibrium guarantee",
+  "averaging": "uniform",
+  "sampling": "external-sampling-mccfr",
+  "artifact": {
+   "path": "results/strategy/holdem_v2_seed0.npz",
+   "sha256": "34b3f52f7d27884e82bd95c15afc7b61a4e4e5993213545e9dea8c3d77f6a727",
+   "bytes": 2230038,
+   "iterations": 100000,
+   "seed": 0,
+   "infosets": 124381,
+   "generation_command": "python experiments/holdem_mccfr_validation.py --v2-config --seed 0 --milestones 1000,5000,10000,30000,100000 --ckpt-dir DIR --out DIR/v2_seed0.jsonl; then python experiments/phase29_analysis.py --config v2 --runs-dir DIR --artifact OUT.npz",
+   "validation_status": "EXPERIMENTAL (abstract strategy; exploitability of the full abstraction not computed; gated at lookup time)"
+  },
+  "confidence_table": {
+   "path": "results/strategy/holdem_v2_seed0_confidence.npz",
+   "sha256": "7aae4492115a2581414a60c8163df22fa4c69eedd56de8964aa51a5532ba2479"
+  },
+  "gate_thresholds": {
+   "reject_seed_disagreement_at_or_above": 0.5,
+   "low_conf_seed_disagreement_at_or_above": 0.2,
+   "reject_movement_at_or_above": 0.5,
+   "low_conf_movement_at_or_above": 0.1,
+   "reject_visits_below": null,
+   "low_conf_visits_below": 5
+  },
+  "training_summary": {
+   "0": {
+    "iterations": 100000,
+    "infosets": 133044
+   },
+   "1": {
+    "iterations": 100000,
+    "infosets": 132887
+   },
+   "2": {
+    "iterations": 100000,
+    "infosets": 132953
+   }
+  }
+ },
+ "results_files": [
+  "abstraction_error_river_pct.json",
+  "abstraction_error_v1.json",
+  "abstraction_v2.json",
+  "autonomous_progress.json",
+  "backend_benchmark.json",
+  "final_benchmark.json",
+  "final_platform_validation.json",
+  "holdem_platform_validation.json",
+  "holdem_training_v1.json",
+  "holdem_training_v1_300k.json",
+  "holdem_training_v2.json",
+  "latency_benchmark.json",
+  "observer_fixture_validation.json",
+  "preflop_audit_v1.json",
+  "preflop_audit_v2.json",
+  "range_sensitivity_v1.json",
+  "reduced_holdem_v1.json",
+  "rollout_validation_v1.json",
+  "solver_abstraction_selection.json",
+  "solver_gate_calibration.json",
+  "solver_quality_v1.json",
+  "strategy_reference_checks.json"
+ ],
+ "tests": {
+  "non_slow": "566 passed, 5 skipped (224 s)",
+  "slow": "5 passed (20 s)"
+ },
+ "ci": "green on 48b64d6 (last code change) and every earlier push of claude/solver-quality-and-release; final commit verified after push",
+ "statuses": {
+  "VALIDATED": [
+   "Kuhn/Leduc research core (exact exploitability, pinned digests)",
+   "Hold'em rules engine (2-9 seats, side pots, all-in) and solver-game rules/utility checks",
+   "external-sampling MCCFR correctness on exact reduced Hold'em games (preflop + 6 river subgames)",
+   "config-bound checkpoints and strategy artifacts (signature checks, config inference)",
+   "rollout estimator vs closed forms (within 3 SE, error ~1/sqrt(n))",
+   "unified pipeline, solver -> rollout -> heuristic cascade, solver-confidence gate",
+   "legal-size filter: no recommendation below the NLHE minimum bet/raise"
+  ],
+  "PARTIALLY VALIDATED": [
+   "compact abstraction: river error measured and reduced (v2), flop/turn error not measured exactly",
+   "solver-confidence thresholds (calibrated on exact games, applied to the full abstraction)",
+   "decision engine response models (rollouts disagree with exact river equilibria in 16/36 spots)",
+   "screen observer on synthetic images"
+  ],
+  "EXPERIMENTAL": [
+   "trained abstract HU strategy (imperfect recall, not converged, full exploitability unknown)",
+   "range / opponent modelling (recommendations change with the assumed model)"
+  ],
+  "BLOCKED": [
+   "real PokerNow screen recognition (0 real annotated fixtures)"
+  ]
+ },
+ "readiness": {
+  "research": "READY WITH CAVEATS",
+  "hand_analysis": "READY WITH MODEL CAVEATS",
+  "private_play_money_test_decision_support": "READY WITH MANUAL STATE VERIFICATION",
+  "real_screen_observation": "BLOCKED ON REAL FIXTURES",
+  "trusted_solver_recommendations": "EXPERIMENTAL"
+ },
+ "not_claimed": [
+  "solved NLHE",
+  "GTO / Nash equilibrium of Hold'em",
+  "profitable bot",
+  "real PokerNow accuracy",
+  "exploitability of the full trained abstraction"
+ ]
+}
