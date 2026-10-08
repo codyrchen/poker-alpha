@@ -47,9 +47,26 @@ from poker_alpha.solvers.serialize import save_checkpoint  # noqa: E402
 BETS = {"b33": 0.33, "b75": 0.75, "b150": 1.5}
 
 
-def make_game() -> HoldemGame:
+def make_encoder(name: str = "bucket"):
+    from poker_alpha.abstraction.holdem_v2 import (CompactHoldemEncoder,
+                                                   TransitionHoldemEncoder)
+
+    return {
+        "bucket": lambda: HoldemBucketEncoder(),
+        "transition": lambda: TransitionHoldemEncoder("exact"),
+        "transition_abstract": lambda: TransitionHoldemEncoder("abstract"),
+        "compact": lambda: CompactHoldemEncoder("abstract"),
+        "compact_exact": lambda: CompactHoldemEncoder("exact"),
+    }[name]()
+
+
+ENCODER_NAMES = ("bucket", "transition", "transition_abstract", "compact",
+                 "compact_exact")
+
+
+def make_game(encoder: str = "bucket") -> HoldemGame:
     return HoldemGame(starting_stack=100.0, bet_fractions=dict(BETS),
-                      encoder=HoldemBucketEncoder())
+                      encoder=make_encoder(encoder))
 
 
 def visit_histogram(visits) -> dict:
@@ -73,12 +90,13 @@ def main() -> None:
     p.add_argument("--top-n", type=int, default=2000)
     p.add_argument("--ckpt-dir", type=Path, required=True)
     p.add_argument("--out", type=Path, required=True)
+    p.add_argument("--encoder", choices=ENCODER_NAMES, default="bucket")
     p.add_argument("--max-seconds", type=float, default=float("inf"),
                    help="stop at the first milestone reached after this budget")
     args = p.parse_args()
     milestones = [int(x) for x in args.milestones.split(",")]
     args.ckpt_dir.mkdir(parents=True, exist_ok=True)
-    solver = MCCFRSolver(make_game(), seed=args.seed)
+    solver = MCCFRSolver(make_game(args.encoder), seed=args.seed)
     prev_keys = 0
     prev_top = {}
     t_start = time.perf_counter()
@@ -95,9 +113,10 @@ def main() -> None:
                 if node is not None:
                     moves.append(float(np.abs(node.average_strategy() - old).sum()))
             top = sorted(visits, key=lambda k: (-visits[k], k))[:args.top_n]
-            path = save_checkpoint(solver, args.ckpt_dir / f"seed{args.seed}_it{m}.npz")
+            path = save_checkpoint(
+                solver, args.ckpt_dir / f"{args.encoder}_seed{args.seed}_it{m}.npz")
             row = {
-                "seed": args.seed, "iterations": m,
+                "seed": args.seed, "encoder": args.encoder, "iterations": m,
                 "segment_seconds": seg,
                 "total_seconds": time.perf_counter() - t_start,
                 "iters_per_sec_segment": (m - (milestones[milestones.index(m) - 1]

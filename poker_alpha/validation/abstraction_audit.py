@@ -322,3 +322,91 @@ def generate_line_corpus(game: HoldemGame, streets: Tuple[str, ...], deals: int,
             seen.add(raw)
             out.append(s)
     return out
+
+
+# -- within-key quality (Phase 26E) ---------------------------------------------
+
+@dataclass
+class StateFacts:
+    equity: float          # vs a uniformly random hand (offline reference)
+    category: int          # evaluator category (-1 preflop)
+    draw: str
+    spr: int
+    legal: Tuple[str, ...]
+    street: int
+
+
+def state_facts(game: HoldemGame, corpus: Sequence[HoldemState],
+                equity_samples: int = 100) -> List[StateFacts]:
+    """Encoder-independent facts per state, computed once per corpus."""
+    from ..abstraction.cards import draw_type, hand_equity
+    from ..poker.evaluator import evaluate_best_codes
+
+    out = []
+    for s in corpus:
+        p = game.current_player(s)
+        hole = s.holes[p]
+        cat = evaluate_best_codes(list(hole) + list(s.board))[0] if s.board else -1
+        out.append(StateFacts(
+            equity=hand_equity(hole, s.board, equity_samples),
+            category=cat,
+            draw=draw_type(hole, s.board) if s.board else "none",
+            spr=spr_bucket(game, s),
+            legal=tuple(game.legal_actions(s)),
+            street=len(s.streets) - 1))
+    return out
+
+
+def measure_quality(game: HoldemGame, corpus: Sequence[HoldemState],
+                    facts: Sequence[StateFacts], encoder) -> dict:
+    """How strategically coherent each abstract key's members are.
+
+    All shares are fractions of *states* (not keys). "Mixed" means the key's
+    members disagree on that fact. Singleton keys are trivially coherent and
+    are counted in the denominators, so the numbers describe the whole corpus.
+    """
+    groups: Dict[str, List[int]] = defaultdict(list)
+    for i, s in enumerate(corpus):
+        groups[encoder.encode(game, s)].append(i)
+    n = len(corpus)
+    w_std = 0.0
+    ranges = []
+    mixed = {"category": 0, "draw": 0, "spr": 0, "legal": 0, "equity_range_gt_0.3": 0,
+             "equity_range_gt_0.5": 0}
+    by_street = defaultdict(lambda: {"states": 0, "keys": set(), "w_std": 0.0})
+    for key, idx in groups.items():
+        eq = np.array([facts[i].equity for i in idx])
+        std = float(eq.std())
+        rng = float(eq.max() - eq.min())
+        w_std += std * len(idx)
+        ranges.extend([rng] * len(idx))
+        if len({facts[i].category for i in idx}) > 1:
+            mixed["category"] += len(idx)
+        if len({facts[i].draw for i in idx}) > 1:
+            mixed["draw"] += len(idx)
+        if len({facts[i].spr for i in idx}) > 1:
+            mixed["spr"] += len(idx)
+        if len({facts[i].legal for i in idx}) > 1:
+            mixed["legal"] += len(idx)
+        if rng > 0.3:
+            mixed["equity_range_gt_0.3"] += len(idx)
+        if rng > 0.5:
+            mixed["equity_range_gt_0.5"] += len(idx)
+        for i in idx:
+            st = STREET_NAMES[facts[i].street]
+            by_street[st]["states"] += 1
+            by_street[st]["keys"].add(key)
+            by_street[st]["w_std"] += std
+    ranges = np.array(ranges)
+    return {
+        "keys": len(groups),
+        "mean_within_key_equity_std": w_std / n,
+        "within_key_equity_range_mean": float(ranges.mean()),
+        "within_key_equity_range_p90": float(np.quantile(ranges, 0.9)),
+        "within_key_equity_range_max": float(ranges.max()),
+        "share_of_states_in_keys_mixing": {k: v / n for k, v in mixed.items()},
+        "by_street": {st: {"states": d["states"], "keys": len(d["keys"]),
+                           "compression": d["states"] / len(d["keys"]),
+                           "mean_within_key_equity_std": d["w_std"] / d["states"]}
+                      for st, d in sorted(by_street.items())},
+    }
