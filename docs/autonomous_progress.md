@@ -24,6 +24,7 @@ Everything later phases need from them is extracted into committed JSON
 - Phase 35 v2 retraining (V2_CONFIG = HoldemSolverConfig:v2:733e52f1d1014e2e7973: legal sizing + compact
   encoder with 20 exact river-percentile buckets), seeds 0/1/2, started 2026-10-08 ~19:00 UTC, ~4 h:
   `python experiments/holdem_mccfr_validation.py --v2-config --seed S --milestones 1000,5000,10000,30000,100000 --ckpt-dir /home/user/pa_ckpt/v2b --out /home/user/pa_ckpt/v2b/v2_seedS.jsonl`
+  (restarted at 5k with the exact 3x faster river ranking, 19:25 UTC)
   complete when each jsonl has an `"iterations": 100000` row; resume with
   `--resume /home/user/pa_ckpt/v2b/v2_seedS_it<last>.npz --milestones <remaining>`.
 - Ablation (stopped at 30k on purpose): sizing-only v2 (LEGAL_SIZING_CONFIG) checkpoints in /home/user/pa_ckpt/v2/legal_seedS_it{1000,5000,10000,30000}.npz.

@@ -29,9 +29,9 @@
    "name": "phase35 river pct"
   }
  ],
- "head": "f9868c2",
- "last_completed_phase": 32,
- "next_action": "Phase 33: exact reduced Hold-em games",
+ "head": "5db626a",
+ "last_completed_phase": "32-35 analysis, 37 gate, 39 refs; 36 v2 training in flight",
+ "next_action": "when v2 100k done: phase29_analysis --config v2; phase32 audit --config v2; phase37_build_confidence v2; phase36_compare; choose release config; docs; release_candidate",
  "open_bugs": [
   "abstract b33 sizes below NLHE minimum (81% preflop, ~30% postflop)",
   "betting-context collision: facing jam after any open size"
@@ -40,6 +40,6 @@
   "phase32": "no rule/utility/MCCFR/averaging bug; preflop noise dominant (seed L1 ~0.9 at 1360 visits); b33 preflop sizes below NLHE min; BTN facing-jam key ignores open size"
  },
  "start_commit": "8335ea2",
- "updated": "2026-10-08T19:01:53Z",
+ "updated": "2026-10-08T19:29:49Z",
  "v2_config": "HoldemSolverConfig:v2:733e52f1d1014e2e7973"
 }
