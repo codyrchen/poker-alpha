@@ -228,7 +228,34 @@ def card_features(hole: Sequence[int], board: Sequence[int] = ()) -> CardFeature
 
 @lru_cache(maxsize=4096)
 def _river_values(board: Tuple[int, ...]):
-    import bisect  # noqa: F401  (used by river_percentile)
+    """Sorted hand values of every two-card holding on ``board``.
+
+    Exact and identical to evaluating all 1,081 holdings: a holding with no
+    card of a suit that has >= 3 cards on the board cannot make a flush, so
+    its value depends only on its two ranks and is shared by every such
+    holding with those ranks (one evaluation per rank pair)."""
+    from itertools import combinations
+    b = list(board)
+    suit_n = [0, 0, 0, 0]
+    for c in board:
+        suit_n[c // 13] += 1
+    live = [c for c in range(52) if c not in board]
+    by_ranks = {}
+    vals = []
+    for x, y in combinations(live, 2):
+        if suit_n[x // 13] >= 3 or suit_n[y // 13] >= 3:
+            vals.append(evaluate_best_codes([x, y] + b))
+            continue
+        k = (x % 13, y % 13) if x % 13 <= y % 13 else (y % 13, x % 13)
+        v = by_ranks.get(k)
+        if v is None:
+            v = by_ranks[k] = evaluate_best_codes([x, y] + b)
+        vals.append(v)
+    return tuple(sorted(vals))
+
+
+def _river_values_reference(board: Tuple[int, ...]):
+    """Unoptimized definition (all 1,081 evaluations), kept for tests."""
     from itertools import combinations
     b = list(board)
     live = [c for c in range(52) if c not in board]

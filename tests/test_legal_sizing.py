@@ -99,3 +99,13 @@ def test_v2_config_combines_sizing_and_river_percentiles():
                    villain_hole=("9c", "9d"))
     key = g.infoset_key(s)
     assert key.split("|")[2].startswith("p19"), key       # a set is in the top 5% bucket
+
+
+def test_fast_river_ranking_is_exact():
+    from poker_alpha.abstraction.features import _river_values, _river_values_reference
+
+    rng = np.random.default_rng(3)
+    boards = [tuple(sorted(int(c) for c in rng.choice(52, 5, replace=False))) for _ in range(60)]
+    boards += [(0, 1, 2, 3, 20), (0, 2, 4, 30, 40), (13, 14, 15, 16, 17)]
+    for b in boards:
+        assert _river_values(b) == _river_values_reference(b)
