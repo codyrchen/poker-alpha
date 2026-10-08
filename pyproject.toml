@@ -22,7 +22,7 @@ dev = ["pytest>=7.0"]
 opt = ["numba>=0.58"]
 vision = ["pillow>=10.1", "mss>=9.0"]
 ocr = ["pytesseract>=0.3.10"]
-ui = ["streamlit>=1.30"]
+ui = ["streamlit>=1.37"]  # st.fragment(run_every=...) drives the live observer
 
 [tool.setuptools]
 packages = { find = { include = ["poker_alpha*"] } }

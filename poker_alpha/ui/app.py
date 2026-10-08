@@ -155,22 +155,11 @@ def observer_state():
     return tracker.to_observed_state(), tracker.critical_confidence()
 
 
-def main() -> None:
-    st.set_page_config(page_title="PokerAlpha", layout="wide")
-    st.title("PokerAlpha decision support")
-    st.caption("Analysis only — PokerAlpha never clicks, bets or acts for you.")
-    cfg = sidebar_config()
-    mode = st.sidebar.radio("Input", ["Manual entry", "Hand-history replay",
-                                      "Screen observer"])
-    if mode == "Manual entry":
-        obs, conf = manual_state()
-    elif mode == "Hand-history replay":
-        obs, conf = replay_state()
-    else:
-        obs, conf = observer_state()
-    if obs is None:
-        return
-    cfg.observer_confidence = conf
+def render_report(obs, cfg, conf, report=None, store=None) -> None:
+    """Spot, validation and DecisionReport for an observed state."""
+    from dataclasses import replace
+
+    cfg = replace(cfg, observer_confidence=conf)
     left, right = st.columns([1, 2])
     with left:
         st.subheader("Spot")
@@ -179,8 +168,11 @@ def main() -> None:
         for issue in validate(obs):
             (st.error if issue.severity == "error" else st.warning)(issue.message)
     with right:
-        with st.spinner("Analysing..."):
-            report = recommend_action(obs, config=cfg)
+        if report is None:
+            with st.spinner("Analysing..."):
+                report = recommend_action(obs, config=cfg)
+            if store is not None:
+                store(report)
         st.subheader(headline(report))
         m1, m2, m3 = st.columns(3)
         m1.metric("Hero equity", "?" if report.hero_equity is None else
@@ -201,6 +193,28 @@ def main() -> None:
         st.dataframe(range_rows(report), hide_index=True)
         for w in report.warnings:
             st.warning(w)
+
+
+def main() -> None:
+    st.set_page_config(page_title="PokerAlpha", layout="wide")
+    st.title("PokerAlpha decision support")
+    st.caption("Analysis only — PokerAlpha never clicks, bets or acts for you.")
+    cfg = sidebar_config()
+    mode = st.sidebar.radio("Input", ["Manual entry", "Hand-history replay",
+                                      "Screen observer", "Live screen"])
+    if mode == "Live screen":
+        from poker_alpha.ui.live_panel import live_screen_mode
+        live_screen_mode(cfg, render_report)
+        return
+    if mode == "Manual entry":
+        obs, conf = manual_state()
+    elif mode == "Hand-history replay":
+        obs, conf = replay_state()
+    else:
+        obs, conf = observer_state()
+    if obs is None:
+        return
+    render_report(obs, cfg, conf)
 
 
 main()

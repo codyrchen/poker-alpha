@@ -182,6 +182,7 @@ confidences and validation warnings are always shown).
 python -m poker_alpha.platform_demo                          # all four input sources, one path, solver artifact
 python -m poker_alpha.holdem_demo                            # 6-max end-to-end report
 python -m poker_alpha.observer.demo tests/fixtures/table.png # screenshot -> state -> report
+streamlit run poker_alpha/ui/app.py                         # Input -> Live screen: read-only live observer (docs/observer.md)
 python -m poker_alpha.replay tests/fixtures/hands/sample.json --recommend --rollouts 1000
 python -m poker_alpha.session import tests/fixtures/hands/sample.json --db session.sqlite
 python experiments/holdem_mccfr.py --iterations 2000 --encoder bucket \

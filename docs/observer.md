@@ -98,6 +98,71 @@ reports hero-card, board-card, stack (exact + MAE), bet (exact + MAE), pot
 `results/validation/observer_fixture_validation.json`. With an empty
 directory it reports that nothing was measured.
 
+## Live screen mode (Streamlit)
+
+`MSSScreenSource -> PokerNowStyleAdapter -> StateTracker -> ObservedTableState
+-> DecisionReport`, implemented in `poker_alpha/observer/live.py` (no
+Streamlit dependency, unit-tested with a mocked screen) and
+`poker_alpha/ui/live_panel.py`.
+
+Read-only: frames are captured and analysed on this machine, never
+uploaded, and written to disk only when **Save current frame** is pressed
+(default folder `~/pokeralpha_captures`, PNG plus a small JSON sidecar).
+Nothing clicks, types, controls a browser or submits actions. Use live
+mode only in private, play-money or test games where real-time assistance
+is permitted; otherwise save frames / screenshots and analyse after the
+session.
+
+```bash
+pip install -e ".[vision,ui]"
+streamlit run poker_alpha/ui/app.py
+```
+
+Sidebar -> Input -> **Live screen**.
+
+**1. Capture.** Pick the monitor (mss index; 1 = main display). Set the
+capture rectangle `left / top / width / height` relative to that monitor in
+screen points (macOS screenshot coordinates: press Cmd+Shift+4 and read the
+numbers next to the crosshair at the table's top-left and bottom-right
+corners). Width or height 0 captures the whole monitor. On Retina displays
+the captured frame is 2x the point size; the raw-frame caption shows the
+pixel size.
+
+**2. Calibrate** (open "Calibration / debug workflow"; untick *Compute
+decisions* while doing this):
+1. Press **Capture one frame**. The left image is the raw frame, the right
+   one the overlay: yellow = table bounds, magenta = hero cards, cyan =
+   board, orange = pot, green = stacks, red = bets, white = dealer-button
+   spots, blue = seat name / card-back / highlight boxes; labels show the
+   last raw reading.
+2. Set seats and hero seat, then **Use default layout**.
+3. Table bounds: either *Fixed box* (x0, y0, x1, y1 in pixels of the
+   captured frame — the most reliable) or *Detect felt colour* (pick the
+   felt colour or "Sample felt colour at table centre", adjust tolerance).
+4. Coarse alignment: change dx / dy / scale x / scale y and press **Apply**
+   until the boxes sit on the table elements.
+5. Fine-tune single regions (x, y, w, h in table-normalized units) and press
+   **Update**. Compare each box with the *Raw recognition* table.
+6. **Save calibration** to a JSON path; **Load calibration** restores it.
+   Changing the calibration resets the tracker.
+
+**3. Run.** Set the blinds and frames per second (0.5-3, default 1), tick
+*Compute decisions*, press **Start Live Observer** (Stop to end). The same
+`StateTracker` persists across frames in `st.session_state`; the loop is a
+Streamlit fragment rerun on a timer (`run_every`), never a blocking loop.
+The page shows the raw per-field readings and confidences of the last frame
+separately from the fused tracker state (hero cards, board, pot, dealer,
+actor, per-seat occupied / folded / all-in, stacks, bets, confidences) and
+the critical confidence. A decision is computed only when the critical
+check passes: hero cards confirmed, pot and hero stack read, dealer found,
+critical confidence >= the threshold (default 0.5) and no rules-level
+validation error. Otherwise the reasons are shown and no decision is made.
+The report is recomputed only when the observed state changes.
+
+Capture failures (missing permission, display changes, mss missing) are
+shown in the page and the observer keeps running; an all-uniform frame
+triggers a Screen Recording permission hint.
+
 ## Annotation validation and metrics (Phase 38)
 
 `observer.annotations.validate_annotation` rejects inconsistent ground

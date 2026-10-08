@@ -49,4 +49,4 @@ jobs:
           pytest -q -m vision
           tests/test_observer_core.py tests/test_observer_pokernow.py
           tests/test_observer_fusion.py tests/test_observer_fixture_validation.py
-          && pytest -q tests/test_ui.py
+          && pytest -q tests/test_ui.py tests/test_live_observer.py
