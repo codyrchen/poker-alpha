@@ -1,0 +1,52 @@
+{
+ "fixture_dir": "tests/fixtures/pokernow",
+ "calibration": "default_layout (not PokerNow-derived)",
+ "annotations": 0,
+ "missing_images": [],
+ "metrics": {
+  "hero_cards": {
+   "correct": 0,
+   "total": 0,
+   "accuracy": null
+  },
+  "board_cards": {
+   "correct": 0,
+   "total": 0,
+   "accuracy": null
+  },
+  "stack": {
+   "correct": 0,
+   "total": 0,
+   "accuracy": null
+  },
+  "bet": {
+   "correct": 0,
+   "total": 0,
+   "accuracy": null
+  },
+  "pot": {
+   "correct": 0,
+   "total": 0,
+   "accuracy": null
+  },
+  "dealer": {
+   "correct": 0,
+   "total": 0,
+   "accuracy": null
+  },
+  "seat_occupancy": {
+   "correct": 0,
+   "total": 0,
+   "accuracy": null
+  },
+  "full_state": {
+   "correct": 0,
+   "total": 0,
+   "accuracy": null
+  },
+  "screenshots": 0
+ },
+ "note": "no annotated screenshots found: nothing was measured; real PokerNow accuracy remains unvalidated",
+ "phase_30_status": "BLOCKED ON REAL FIXTURES",
+ "phase_30_policy": "no screenshots fabricated, nothing scraped, no interaction with PokerNow, no accuracy claimed"
+}

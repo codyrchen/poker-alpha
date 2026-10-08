@@ -78,8 +78,13 @@ the tracker relies on — usually, not always.
 
 ## Real PokerNow validation status
 
-**Not validated.** No real screenshots have been collected, so no real
-accuracy exists. `tests/fixtures/pokernow/` holds the structure (`raw/`,
+**BLOCKED ON REAL FIXTURES (Phase 30).** `tests/fixtures/pokernow/raw/` and
+`annotations/` contain no screenshots: none have been collected, so no real
+accuracy exists and none is claimed. Nothing was fabricated, nothing was
+scraped and nothing interacted with PokerNow. The harness ran on the empty
+directory and reported "0 annotated screenshots, nothing measured"
+(`results/validation/observer_fixture_validation.json`). All observer
+numbers in this document come from synthetic images. `tests/fixtures/pokernow/` holds the structure (`raw/`,
 `annotations/`, optional `calibration.json`) and the annotation format
 (`pokeralpha.screenshot_annotation/v1`, see its README). Once screenshots and
 annotations are added:
@@ -93,14 +98,21 @@ reports hero-card, board-card, stack (exact + MAE), bet (exact + MAE), pot
 `results/validation/observer_fixture_validation.json`. With an empty
 directory it reports that nothing was measured.
 
-## Adding real fixtures
+## Adding real fixtures (unblocks Phase 30)
 
-1. Save screenshots of the real client (four-colour deck on) under
-   `tests/fixtures/observer/` with a JSON ground truth per image (same layout
-   as `tests/fixtures/table.json`).
-2. Adjust a copy of `tests/fixtures/table_calibration.json` until
+1. Capture screenshots of the real client only where you are allowed to
+   (your own private or play-money games; four-colour deck on) into
+   `tests/fixtures/pokernow/raw/`, and write one
+   `pokeralpha.screenshot_annotation/v1` JSON per image into
+   `tests/fixtures/pokernow/annotations/` (format in that directory's
+   README).
+2. Tune a copy of `tests/fixtures/table_calibration.json` as
+   `tests/fixtures/pokernow/calibration.json` until
    `PokerNowStyleAdapter.extract_regions` crops the right areas.
 3. Build `TemplateOCR.from_samples` from cropped glyphs, or install
    Tesseract.
-4. Run `observer.evaluation.evaluate` on the fixtures and record the result
-   — only those numbers say anything about the real client.
+4. Run `python experiments/observer_validation.py --fixture-dir
+   tests/fixtures/pokernow` and record the result — only those numbers say
+   anything about the real client. A few dozen screenshots across seat
+   counts, streets, all-in and folded states are the minimum for a
+   meaningful per-field accuracy.
