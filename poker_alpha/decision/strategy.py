@@ -21,7 +21,8 @@ from typing import Dict, List, Mapping, Optional, Tuple
 from ..games.holdem import HoldemGame, HoldemState
 from ..holdem.observed import ObservedTableState
 from ..holdem.state import Street
-from .solver_gate import REASONS, REJECT, GateThresholds, KeyStats, gate
+from .solver_gate import (ILLEGAL_MASS_LOW, REASONS, REJECT, GateThresholds, KeyStats, downgrade,
+                          gate)
 
 Strategy = Mapping[str, Mapping[str, float]]
 
@@ -316,4 +317,8 @@ class SolverStrategyProvider:
                                   "OUTSIDE_ABSTRACTION", ("OUTSIDE_ABSTRACTION",), gate_d)
             legal_out = [r[:4] + (r[4] / rest,) for r in legal_out]
             gate_d["signals"]["illegal_size_mass_removed"] = round(removed, 4)
+            if removed >= ILLEGAL_MASS_LOW:
+                gate_d = downgrade(gate_d, "ILLEGAL_SIZE_MASS")
+        if not exact:
+            gate_d = downgrade(gate_d, "OFF_TREE_TRANSLATION")
         return SolverLookup(key, visits, exact, tuple(legal_out), gate_d)

@@ -154,3 +154,34 @@ def test_release_strategy_is_v2_gated_and_legal():
                 if c.kind in ("raise", "bet"):
                     assert c.amount_to >= 2.0 - 1e-9      # legal NLHE open: at least a min-raise
             assert "illegal_size_mass_removed" not in info
+
+
+def test_gate_v2_downgrade_only_lowers():
+    from poker_alpha.decision.solver_gate import REASONS, downgrade
+
+    assert {"OFF_TREE_TRANSLATION", "ILLEGAL_SIZE_MASS"} <= set(REASONS)
+    acc = {"status": ACCEPT, "reasons": [], "signals": {}}
+    d = downgrade(acc, "OFF_TREE_TRANSLATION")
+    assert d["status"] == LOW and d["reasons"] == ["OFF_TREE_TRANSLATION"]
+    assert acc["status"] == ACCEPT and acc["reasons"] == []          # input untouched
+    rej = {"status": REJECT, "reasons": ["HIGH_SEED_DISAGREEMENT"], "signals": {}}
+    assert downgrade(rej, "OFF_TREE_TRANSLATION")["status"] == REJECT
+    low = downgrade(downgrade(acc, "ILLEGAL_SIZE_MASS"), "ILLEGAL_SIZE_MASS")
+    assert low["reasons"] == ["ILLEGAL_SIZE_MASS"]
+
+
+def test_large_illegal_size_mass_lowers_confidence():
+    from poker_alpha.decision import SolverStrategyProvider
+
+    game = PRIMARY_CONFIG.build_game()
+    key = game.infoset_key(spot_state(game, "BTN", ("Ah", "Qd"), (), ("",), villain_hole=("2c", "3d")))
+    prov = SolverStrategyProvider(game, {key: {"f": 0.0, "c": 0.2, "b33": 0.5, "b75": 0.3, "b150": 0.0,
+                                              "a": 0.0}}, {key: 1000.0})
+    rep = analyze(observe_manual(_hu("Ah Qd")), DecisionConfig(equity_simulations=200), solver=prov)
+    assert rep.method == "solver" and rep.confidence == "low"
+    assert rep.details["solver"]["confidence"] == LOW
+    assert "ILLEGAL_SIZE_MASS" in rep.details["solver"]["reasons"]
+    small = SolverStrategyProvider(game, {key: {"f": 0.0, "c": 0.5, "b33": 0.1, "b75": 0.4,
+                                                "b150": 0.0, "a": 0.0}}, {key: 1000.0})
+    rep = analyze(observe_manual(_hu("Ah Qd")), DecisionConfig(equity_simulations=200), solver=small)
+    assert "ILLEGAL_SIZE_MASS" not in rep.details["solver"]["reasons"]

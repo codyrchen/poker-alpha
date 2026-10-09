@@ -42,7 +42,25 @@ REASONS = {
     "OUTSIDE_ABSTRACTION": "spot cannot be mapped into the abstract game",
     "KNOWN_PATHOLOGICAL_BUCKET": "key flagged by the strategy audit",
     "NO_STABILITY_DATA": "no checkpoint / seed stability data for this key",
+    # gate v2 (Phase 64): spot-level reasons added at lookup time; they can
+    # only lower the status (ACCEPT -> LOW), never raise it.
+    "OFF_TREE_TRANSLATION": "observed bet sizes were translated onto the abstract tree",
+    "ILLEGAL_SIZE_MASS": "a large share of the solver's mass was on sizes below the "
+                         "NLHE minimum and was removed",
 }
+
+#: removed illegal-size mass at or above this lowers the status (heuristic).
+ILLEGAL_MASS_LOW = 0.2
+
+
+def downgrade(decision: dict, reason: str) -> dict:
+    """Add a LOW reason to a gate decision dict; ACCEPT becomes LOW, REJECT stays."""
+    d = dict(decision, reasons=list(decision.get("reasons", [])))
+    if reason not in d["reasons"]:
+        d["reasons"].append(reason)
+    if d.get("status") == ACCEPT:
+        d["status"] = LOW
+    return d
 
 CALIBRATION = Path(__file__).resolve().parents[2] / "results" / "validation" / "solver_gate_calibration.json"
 

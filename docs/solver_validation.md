@@ -341,3 +341,34 @@ produced because no real fixtures exist.
   sampled *lower* bound on real-game exploitability. Estimated 1-5 s per hand
   in this code base, so 10,000 hands ≈ 3-14 CPU-hours per strategy
   (SE ≈ 0.1 BB/hand).
+
+## Confidence gate v2 (Phase 64)
+
+Thresholds are **unchanged** (no new exact-game evidence to move them;
+weakening the gate was out of scope). Changes:
+
+* Two spot-level coded reasons, applied at lookup time, that can only lower
+  the status (ACCEPT -> LOW, REJECT stays REJECT):
+  `OFF_TREE_TRANSLATION` (observed sizes were mapped onto the abstract tree;
+  previously only a free-text warning) and `ILLEGAL_SIZE_MASS` (>= 20% of the
+  solver's mass was on sizes below the NLHE minimum and was removed —
+  heuristic threshold).
+* Acceptance by street: `python experiments/gate_acceptance.py
+  results/strategy/holdem_v2_seed0_confidence.npz --out
+  results/validation/gate_acceptance_v2_100k.json`.
+
+Release strategy (v2, 100k iterations, 3 seeds), visit-weighted share of
+self-play decisions:
+
+| street | keys | accept | low | reject |
+| --- | --- | --- | --- | --- |
+| preflop | 4,250 | 8.7% | 12.8% | 78.4% |
+| flop | 17,932 | 17.9% | 15.2% | 66.9% |
+| turn | 29,932 | 20.0% | 15.8% | 64.1% |
+| river | 72,267 | 21.0% | 16.3% | 62.8% |
+| all | 124,381 | 19.5% | 15.8% | 64.7% |
+
+All 338 preflop first-action keys are rejected (seed disagreement /
+movement): in practice the solver is not used for the first preflop
+decision, and recommendations there come from rollouts. Phase 65 checks
+whether longer training changes this.
