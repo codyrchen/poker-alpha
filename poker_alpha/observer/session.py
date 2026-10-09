@@ -97,8 +97,8 @@ class RetentionPolicy:
 
 
 def calibration_checksum(calibration) -> str:
-    blob = json.dumps(calibration.to_dict(), sort_keys=True).encode()
-    return hashlib.sha256(blob).hexdigest()
+    """Geometry checksum (provenance such as save timestamps excluded)."""
+    return calibration.geometry_checksum()
 
 
 def _jsonable(v):

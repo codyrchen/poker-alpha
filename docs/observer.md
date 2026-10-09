@@ -252,3 +252,22 @@ change recognition or tracking. **Export current debug report** writes
 `<save folder>/debug/debug-<time>-f<frame>.json` and a self-contained
 `.html` with the crops embedded (local, never overwritten, folder carries a
 `*` .gitignore). Code: `poker_alpha/observer/debug.py`.
+
+## Calibration files (format v2, Phase 53)
+
+`TableCalibration.save` writes `pokeralpha.calibration/v2`: schema version,
+name, seats, hero seat, table detector + settings (felt colour /
+tolerance / fixed box), recognizer client, pot convention, all colours,
+the normalized regions, a `region_semantics` note, provenance (`source`,
+`created`, `updated`, `migrated_from`) and `checksum` = SHA-256 of the
+geometry payload (everything that changes what the observer reads;
+provenance and timestamps excluded, so re-saving does not change it).
+
+Loading: v2 is verified against its checksum (a hand-edited or damaged
+geometry is refused: re-save from the UI or `load(path, verify=False)`
+deliberately); unknown fields and newer formats are refused; v1 files are
+migrated with the documented v1 defaults (felt-colour detector, generic
+client, pot including bets — exactly what v1 meant) and marked
+`migrated_from: v1`. Geometry is never silently reinterpreted. Sessions
+identify calibrations by the geometry checksum. Tests:
+`tests/test_calibration_versioning.py`.

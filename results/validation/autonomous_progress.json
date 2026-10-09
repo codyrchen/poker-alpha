@@ -2,8 +2,8 @@
  "run": "pre-real-test (Phases 41-80)",
  "branch": "claude/live-observer",
  "start_commit": "8a35231674b97982015454c2c649695713b43697",
- "head": "6f11bc8",
- "current_phase": 53,
+ "head": "e7a9f61",
+ "current_phase": 54,
  "completed_phases": [
   {
    "phase": 41,
@@ -48,17 +48,24 @@
   {
    "phase": 52,
    "summary": "capture geometry poker_alpha/observer/geometry.py (CaptureGeometry points<->pixels, Retina, fractional, negative monitor offsets, suggested crop), recorder diagnostics + live caption; docs/capture_geometry.md; tests/test_capture_geometry.py"
+  },
+  {
+   "phase": 53,
+   "summary": "calibration format v2 (schema_version, provenance, geometry checksum), v1 migration, refusal of tampered/unknown/newer files; sessions use geometry checksum; tests/test_calibration_versioning.py"
   }
  ],
- "tests": "707 passed, 5 skipped (non-slow)",
+ "tests": "713 passed, 5 skipped (non-slow)",
  "ci": "run 30 green at 8a35231",
  "long_running": [
   {
    "phase": 65,
-   "what": "v2 seed0 100k->300k, seeds1-2 100k->200k",
+   "what": "v2 seed0 ->300k (at 150k), seed1 ->200k (at 150k), seed2 ->200k (from 100k); restarted 09:26 after a worker restart killed them",
    "ckpt_dir": "/home/user/pa_ckpt/v2c",
-   "logs": "/home/user/pa_ckpt/v2c/seed{0,1,2}.log",
-   "resume": "latest /home/user/pa_ckpt/v2c/v2_seedS_itN.npz"
+   "resume": "latest v2_seedS_itN.npz in v2c (seed2 from v2b it100000 if none)"
+  },
+  {
+   "phase": 50,
+   "what": "30-min soak, results/validation/live_observer_soak.json, restarted 09:27"
   }
  ],
  "config_signatures": {
@@ -83,7 +90,9 @@
   "session_docs": "docs/observer_sessions.md",
   "robustness": "results/validation/observer_robustness_v1.json"
  },
- "unresolved": [],
- "next_step": "Phase 50 soak result (running, ends ~07:00, results/validation/live_observer_soak.json); then Phase 53 calibration versioning",
- "updated": "2026-10-09T06:37:51Z"
+ "unresolved": [
+  "worker restarts kill background processes: long runs must be resumed from checkpoints (see long_running)"
+ ],
+ "next_step": "Phase 54: calibration wizard UX (undo, reset region/all, save as, duplicate, pixel coords, visibility toggles)",
+ "updated": "2026-10-09T09:30:11Z"
 }

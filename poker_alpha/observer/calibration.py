@@ -25,6 +25,7 @@ Region names (``i`` = seat index):
 
 from __future__ import annotations
 
+import hashlib
 import json
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -35,7 +36,18 @@ import numpy as np
 from .errors import CalibrationError
 from .regions import Box, Region
 
-CALIBRATION_FORMAT = "pokeralpha.calibration/v1"
+CALIBRATION_FORMAT = "pokeralpha.calibration/v2"
+CALIBRATION_V1 = "pokeralpha.calibration/v1"
+SCHEMA_VERSION = 2
+# Keys a v2 file may contain; anything else was written by an unknown
+# (newer) version and is refused rather than silently ignored.
+V2_KEYS = {"format", "schema_version", "name", "num_seats", "hero_seat", "table_bbox",
+           "table_detector", "client", "pot_includes_bets", "felt_color", "felt_tolerance",
+           "text_color", "highlight_color", "button_color", "card_back_color", "suit_colors",
+           "regions", "region_semantics", "source", "created", "updated", "migrated_from",
+           "checksum"}
+REGION_SEMANTICS = ("x, y, w, h as fractions of the table box (located table in "
+                    "captured-image pixels; see observer/geometry.py)")
 RGB = Tuple[int, int, int]
 TABLE_DETECTORS = ("felt_color", "green_oval")
 CLIENTS = ("generic", "pokernow")
@@ -60,6 +72,11 @@ class TableCalibration:
     suit_colors: Dict[str, RGB] = field(default_factory=lambda: {
         "s": (20, 20, 20), "h": (200, 30, 40), "d": (30, 90, 210),
         "c": (30, 150, 60)})
+    # provenance (not part of the geometry checksum)
+    source: str = ""
+    created: Optional[str] = None
+    updated: Optional[str] = None
+    migrated_from: Optional[str] = None
 
     def __post_init__(self) -> None:
         if not 2 <= self.num_seats <= 9:
@@ -80,9 +97,9 @@ class TableCalibration:
 
     # -- serialization ---------------------------------------------------------
 
-    def to_dict(self) -> dict:
+    def geometry_payload(self) -> dict:
+        """Everything that changes what the observer reads (no provenance)."""
         return {
-            "format": CALIBRATION_FORMAT, "name": self.name,
             "num_seats": self.num_seats, "hero_seat": self.hero_seat,
             "table_bbox": list(self.table_bbox) if self.table_bbox else None,
             "table_detector": self.table_detector,
@@ -94,36 +111,82 @@ class TableCalibration:
             "highlight_color": list(self.highlight_color),
             "button_color": list(self.button_color),
             "card_back_color": list(self.card_back_color),
-            "suit_colors": {k: list(v) for k, v in self.suit_colors.items()},
+            "suit_colors": {k: list(v) for k, v in sorted(self.suit_colors.items())},
             "regions": {k: r.to_list() for k, r in sorted(self.regions.items())},
         }
 
+    def geometry_checksum(self) -> str:
+        blob = json.dumps(self.geometry_payload(), sort_keys=True).encode()
+        return hashlib.sha256(blob).hexdigest()
+
+    def to_dict(self) -> dict:
+        return {"format": CALIBRATION_FORMAT, "schema_version": SCHEMA_VERSION,
+                "name": self.name, **self.geometry_payload(),
+                "region_semantics": REGION_SEMANTICS, "source": self.source,
+                "created": self.created, "updated": self.updated,
+                "migrated_from": self.migrated_from,
+                "checksum": self.geometry_checksum()}
+
     @classmethod
-    def from_dict(cls, d: dict) -> "TableCalibration":
-        if d.get("format") != CALIBRATION_FORMAT:
-            raise CalibrationError(f"unsupported calibration format {d.get('format')!r}")
-        return cls(
-            name=d["name"], num_seats=int(d["num_seats"]),
-            hero_seat=int(d["hero_seat"]),
-            regions={k: Region(*v) for k, v in d["regions"].items()},
-            table_bbox=tuple(d["table_bbox"]) if d.get("table_bbox") else None,
-            table_detector=d.get("table_detector", "felt_color"),
-            client=d.get("client", "generic"),
-            pot_includes_bets=bool(d.get("pot_includes_bets", True)),
-            felt_color=tuple(d["felt_color"]),
-            felt_tolerance=int(d["felt_tolerance"]),
-            text_color=tuple(d["text_color"]),
-            highlight_color=tuple(d["highlight_color"]),
-            button_color=tuple(d["button_color"]),
-            card_back_color=tuple(d["card_back_color"]),
-            suit_colors={k: tuple(v) for k, v in d["suit_colors"].items()})
+    def from_dict(cls, d: dict, verify: bool = True) -> "TableCalibration":
+        """Load v2, or migrate v1 (same geometry semantics; documented v1
+        defaults for keys v1 files may lack). Anything else is refused."""
+        fmt = d.get("format")
+        if fmt == CALIBRATION_V1:
+            migrated = "v1"
+        elif fmt == CALIBRATION_FORMAT:
+            migrated = d.get("migrated_from")
+            unknown = set(d) - V2_KEYS
+            if unknown:
+                raise CalibrationError(f"calibration has unknown fields {sorted(unknown)} "
+                                       "(written by a newer PokerAlpha?)")
+        elif isinstance(fmt, str) and fmt.startswith("pokeralpha.calibration/"):
+            raise CalibrationError(f"calibration format {fmt!r} is newer than this "
+                                   f"PokerAlpha understands ({CALIBRATION_FORMAT}); upgrade")
+        else:
+            raise CalibrationError(f"unsupported calibration format {fmt!r}")
+        try:
+            cal = cls(
+                name=d["name"], num_seats=int(d["num_seats"]),
+                hero_seat=int(d["hero_seat"]),
+                regions={k: Region(*v) for k, v in d["regions"].items()},
+                table_bbox=tuple(d["table_bbox"]) if d.get("table_bbox") else None,
+                table_detector=d.get("table_detector", "felt_color"),
+                client=d.get("client", "generic"),
+                pot_includes_bets=bool(d.get("pot_includes_bets", True)),
+                felt_color=tuple(d["felt_color"]),
+                felt_tolerance=int(d["felt_tolerance"]),
+                text_color=tuple(d["text_color"]),
+                highlight_color=tuple(d["highlight_color"]),
+                button_color=tuple(d["button_color"]),
+                card_back_color=tuple(d["card_back_color"]),
+                suit_colors={k: tuple(v) for k, v in d["suit_colors"].items()},
+                source=str(d.get("source", "")), created=d.get("created"),
+                updated=d.get("updated"), migrated_from=migrated)
+        except KeyError as exc:
+            raise CalibrationError(f"calibration is missing field {exc}") from exc
+        if fmt == CALIBRATION_FORMAT and verify:
+            want = d.get("checksum")
+            if want is None:
+                raise CalibrationError("v2 calibration without checksum")
+            if want != cal.geometry_checksum():
+                raise CalibrationError(
+                    "calibration checksum mismatch: the geometry was changed outside "
+                    "PokerAlpha or the file is damaged; re-save it from the UI, or load with "
+                    "verify=False if the edit was intentional")
+        return cal
 
     def save(self, path: Union[str, Path]) -> None:
+        from datetime import datetime, timezone
+
+        now = datetime.now(timezone.utc).isoformat(timespec="seconds")
+        self.created = self.created or now
+        self.updated = now
         Path(path).write_text(json.dumps(self.to_dict(), indent=1))
 
     @classmethod
-    def load(cls, path: Union[str, Path]) -> "TableCalibration":
-        return cls.from_dict(json.loads(Path(path).read_text()))
+    def load(cls, path: Union[str, Path], verify: bool = True) -> "TableCalibration":
+        return cls.from_dict(json.loads(Path(path).read_text()), verify=verify)
 
 
 def color_mask(image, color: RGB, tolerance: int) -> np.ndarray:

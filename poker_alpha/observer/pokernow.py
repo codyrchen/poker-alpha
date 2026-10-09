@@ -67,7 +67,9 @@ def default_layout(num_seats: int = 6, hero_seat: int = 0,
         # Button beside the seat plate, clear of every text region.
         regions[f"seat{seat}_dealer"] = Region(sx + 0.075, sy - 0.035, 0.024, 0.038)
     return TableCalibration(name=name, num_seats=num_seats, hero_seat=hero_seat,
-                            regions=regions)
+                            regions=regions,
+                            source=f"default_layout({num_seats}, {hero_seat}): generic oval, "
+                                   "not measured from a real client")
 
 
 # -- real PokerNow heads-up layout --------------------------------------------
@@ -131,6 +133,8 @@ def pokernow_hu_layout(hero_side: str = "right",
             regions["hero_card_1"] = _hu_region(*_HU_SEAT["card_1"], dx=dx)
     return TableCalibration(
         name=name, num_seats=2, hero_seat=0, regions=regions,
+        source=f"pokernow_hu_layout(hero_side={hero_side!r}): measured on the real PokerNow "
+               "tuning frame tests/fixtures/pokernow/raw/hu_preflop_0001.png",
         table_detector="green_oval", client="pokernow", pot_includes_bets=False,
         felt_color=(40, 130, 78),
         text_color=(250, 250, 250), highlight_color=(248, 252, 215),

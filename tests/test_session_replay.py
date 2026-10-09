@@ -27,7 +27,7 @@ def _reset(s, rec):
 
 
 def _recal(s, rec):
-    c = replace(CAL, name="shifted")
+    c = replace(CAL, name="retuned", felt_tolerance=CAL.felt_tolerance + 1)   # new geometry
     s.configure(s.capture, c, 0.5, 1.0)
 
 

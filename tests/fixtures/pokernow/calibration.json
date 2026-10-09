@@ -1,5 +1,6 @@
 {
- "format": "pokeralpha.calibration/v1",
+ "format": "pokeralpha.calibration/v2",
+ "schema_version": 2,
  "name": "pokernow-heads-up",
  "num_seats": 2,
  "hero_seat": 0,
@@ -34,22 +35,22 @@
   125
  ],
  "suit_colors": {
-  "s": [
+  "c": [
    25,
    25,
    25
-  ],
-  "h": [
-   200,
-   30,
-   40
   ],
   "d": [
    200,
    30,
    40
   ],
-  "c": [
+  "h": [
+   200,
+   30,
+   40
+  ],
+  "s": [
    25,
    25,
    25
@@ -176,5 +177,11 @@
    0.08293460925039872,
    0.056105610561056105
   ]
- }
+ },
+ "region_semantics": "x, y, w, h as fractions of the table box (located table in captured-image pixels; see observer/geometry.py)",
+ "source": "pokernow_hu_layout(hero_side='right'): measured on the real PokerNow tuning frame tests/fixtures/pokernow/raw/hu_preflop_0001.png",
+ "created": "2026-10-09T06:38:46+00:00",
+ "updated": "2026-10-09T06:38:46+00:00",
+ "migrated_from": null,
+ "checksum": "6e18a556c1e15dc1eb051d6f261090d5a1438f67ef0acd5c4317ee4cada7f689"
 }
