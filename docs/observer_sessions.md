@@ -118,3 +118,77 @@ still replays from the streamed `manifest.jsonl`.
 
 Code: `poker_alpha/observer/session_replay.py`; tests:
 `tests/test_session_replay.py`.
+
+## 3. Annotation
+
+Streamlit -> Input -> **Annotate session**. Pick the session; step through
+its saved frames with **◀ Previous / Next ▶ / Next unreviewed** or the frame
+list. The header shows **annotated / total** and the count per status.
+
+Every field is optional; blank = unknown and is never scored:
+
+| field | input |
+| --- | --- |
+| hero cards | `Js` `7h` (`10s` and `T♠` also work) — both or neither |
+| board | `Qs Jh 4c`, `-` for no board |
+| street, dealer, actor | select (`unknown`, `none`, seat number) |
+| pot (as displayed), total pot | numbers |
+| each seat | status (unknown / empty / in hand / folded / all-in / sitting out), stack, bet |
+| notes | free text |
+
+Status: `unreviewed` (default, never scored), `partial`, `complete`,
+`skip` (never scored). Dataset role: `tuning`, `validation`, `held_out`
+or `unassigned` (see §5). **Prefill from observer readings** copies the
+observer's fused state into the form as a typing aid; it is flagged and must
+be checked field by field. Inside the form, Enter submits (Save).
+
+Annotations are written to `<session>/annotations/<frame>.json` in the
+`pokeralpha.screenshot_annotation/v1` schema. Partial annotations list the
+groups that carry ground truth in `annotated`; legacy complete annotations
+(no `annotated`) keep their old meaning. Logic:
+`poker_alpha/observer/annotation_tool.py`; page:
+`poker_alpha/ui/annotate_panel.py`.
+
+## 5. Dataset roles (no accuracy claims from tuning data)
+
+Every annotation has a role (`role` key, or `splits.json` mapping
+`{"<frame>": "<role>"}` in the fixture directory, which wins):
+
+| role | meaning | counts as real accuracy? |
+| --- | --- | --- |
+| `tuning` | used to build / tune layouts, OCR or card recognition | **no** — reported as "TUNING-FIT ONLY" |
+| `validation` | never used for fitting; used to choose between versions | yes |
+| `held_out` | never looked at during development | yes |
+| `unassigned` | no role given | **no** — excluded from claims |
+
+`experiments/observer_validation.py --fixture-dir DIR` reports metrics per
+role and a separate `real_validation` block computed **only** from
+validation + held-out frames. With none it reports `REAL VALIDATION:
+BLOCKED` — never 0% or 100%. The top-level `metrics` block (all scored
+frames, tuning included) is labelled as not a real accuracy claim.
+
+Current real data: `tests/fixtures/pokernow/hu_preflop_0001` = **tuning**.
+Real validation: **BLOCKED** (0 validation, 0 held-out frames).
+
+## 6. Metrics
+
+Frame metrics (`poker_alpha/observer/annotations.py`, only fields the
+annotation knows):
+
+| group | metrics |
+| --- | --- |
+| cards | hero card, hero exact pair, board card (5 slots, empty must read empty), board exact, rank accuracy, suit accuracy, frames with duplicate read cards |
+| numeric | stack / bet / pot: exact, MAE, mean relative error, unreadable count |
+| state | occupied, in hand, folded, all-in, dealer, actor, street, full state |
+| confidence | per 0.1 match-score bucket (cards, amounts, all): count, accuracy, error rate — **match scores, not probabilities** |
+
+Sequence metrics for a recorded session (`sequence_metrics.py`, needs ≥ 2
+annotated frames of the role group):
+
+| metric | definition |
+| --- | --- |
+| new-hand / street / bet / fold precision & recall | true events = net change between consecutive annotated frames; observed = tracker events replayed for every frame in that interval; matched as (kind, seat) sets; an interval with a true new hand scores new-hand detection only |
+| false events | unmatched observed events, per streamed frame and per minute |
+| state flicker | fused state reverts to the previous value within 3 frames |
+| card persistence violations | hero cards change, or earlier board cards change, within one tracked hand |
+| stack persistence violations | a stack grows within one tracked hand while the pot did not drop |

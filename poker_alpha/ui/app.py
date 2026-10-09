@@ -201,7 +201,11 @@ def main() -> None:
     st.caption("Analysis only — PokerAlpha never clicks, bets or acts for you.")
     cfg = sidebar_config()
     mode = st.sidebar.radio("Input", ["Manual entry", "Hand-history replay",
-                                      "Screen observer", "Live screen"])
+                                      "Screen observer", "Live screen", "Annotate session"])
+    if mode == "Annotate session":
+        from poker_alpha.ui.annotate_panel import annotate_mode
+        annotate_mode()
+        return
     if mode == "Live screen":
         from poker_alpha.ui.live_panel import live_screen_mode
         live_screen_mode(cfg, render_report)

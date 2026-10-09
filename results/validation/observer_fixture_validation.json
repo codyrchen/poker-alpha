@@ -2,8 +2,905 @@
  "fixture_dir": "tests/fixtures/pokernow",
  "calibration": "tests/fixtures/pokernow/calibration.json",
  "annotations": 1,
+ "scored_annotations": 1,
+ "unscored": {
+  "unreviewed": 0,
+  "skip": 0
+ },
  "missing_images": [],
+ "real_validation_status": "REAL VALIDATION: BLOCKED",
+ "real_validation": {
+  "status": "REAL VALIDATION: BLOCKED",
+  "frames": 0,
+  "reason": "no annotated validation or held-out frames"
+ },
+ "by_role": {
+  "tuning": {
+   "frames": 1,
+   "metrics": {
+    "hero_card": {
+     "correct": 2,
+     "total": 2,
+     "accuracy": 1.0
+    },
+    "hero_exact_pair": {
+     "correct": 1,
+     "total": 1,
+     "accuracy": 1.0
+    },
+    "board_card": {
+     "correct": 5,
+     "total": 5,
+     "accuracy": 1.0
+    },
+    "board_exact": {
+     "correct": 1,
+     "total": 1,
+     "accuracy": 1.0
+    },
+    "card_rank": {
+     "correct": 2,
+     "total": 2,
+     "accuracy": 1.0
+    },
+    "card_suit": {
+     "correct": 2,
+     "total": 2,
+     "accuracy": 1.0
+    },
+    "stack": {
+     "correct": 2,
+     "total": 2,
+     "accuracy": 1.0,
+     "mae": 0.0,
+     "unreadable": 0,
+     "mean_relative_error": 0.0
+    },
+    "bet": {
+     "correct": 2,
+     "total": 2,
+     "accuracy": 1.0,
+     "mae": 0.0,
+     "unreadable": 0,
+     "mean_relative_error": 0.0
+    },
+    "pot": {
+     "correct": 1,
+     "total": 1,
+     "accuracy": 1.0,
+     "mae": 0.0,
+     "unreadable": 0
+    },
+    "occupied": {
+     "correct": 2,
+     "total": 2,
+     "accuracy": 1.0
+    },
+    "in_hand": {
+     "correct": 2,
+     "total": 2,
+     "accuracy": 1.0
+    },
+    "folded": {
+     "correct": 2,
+     "total": 2,
+     "accuracy": 1.0
+    },
+    "all_in": {
+     "correct": 2,
+     "total": 2,
+     "accuracy": 1.0
+    },
+    "dealer": {
+     "correct": 1,
+     "total": 1,
+     "accuracy": 1.0
+    },
+    "actor": {
+     "correct": 0,
+     "total": 0,
+     "accuracy": null
+    },
+    "street": {
+     "correct": 1,
+     "total": 1,
+     "accuracy": 1.0
+    },
+    "full_state": {
+     "correct": 1,
+     "total": 1,
+     "accuracy": 1.0
+    },
+    "duplicate_card_frames": {
+     "frames": 0,
+     "total": 1
+    },
+    "confidence_buckets": {
+     "cards": [
+      {
+       "bucket": [
+        0.0,
+        0.1
+       ],
+       "count": 0,
+       "accuracy": null,
+       "error_rate": null
+      },
+      {
+       "bucket": [
+        0.1,
+        0.2
+       ],
+       "count": 0,
+       "accuracy": null,
+       "error_rate": null
+      },
+      {
+       "bucket": [
+        0.2,
+        0.3
+       ],
+       "count": 0,
+       "accuracy": null,
+       "error_rate": null
+      },
+      {
+       "bucket": [
+        0.3,
+        0.4
+       ],
+       "count": 0,
+       "accuracy": null,
+       "error_rate": null
+      },
+      {
+       "bucket": [
+        0.4,
+        0.5
+       ],
+       "count": 2,
+       "accuracy": 1.0,
+       "error_rate": 0.0
+      },
+      {
+       "bucket": [
+        0.5,
+        0.6
+       ],
+       "count": 0,
+       "accuracy": null,
+       "error_rate": null
+      },
+      {
+       "bucket": [
+        0.6,
+        0.7
+       ],
+       "count": 0,
+       "accuracy": null,
+       "error_rate": null
+      },
+      {
+       "bucket": [
+        0.7,
+        0.8
+       ],
+       "count": 0,
+       "accuracy": null,
+       "error_rate": null
+      },
+      {
+       "bucket": [
+        0.8,
+        0.9
+       ],
+       "count": 0,
+       "accuracy": null,
+       "error_rate": null
+      },
+      {
+       "bucket": [
+        0.9,
+        1.0
+       ],
+       "count": 5,
+       "accuracy": 1.0,
+       "error_rate": 0.0
+      }
+     ],
+     "amounts": [
+      {
+       "bucket": [
+        0.0,
+        0.1
+       ],
+       "count": 0,
+       "accuracy": null,
+       "error_rate": null
+      },
+      {
+       "bucket": [
+        0.1,
+        0.2
+       ],
+       "count": 0,
+       "accuracy": null,
+       "error_rate": null
+      },
+      {
+       "bucket": [
+        0.2,
+        0.3
+       ],
+       "count": 0,
+       "accuracy": null,
+       "error_rate": null
+      },
+      {
+       "bucket": [
+        0.3,
+        0.4
+       ],
+       "count": 1,
+       "accuracy": 1.0,
+       "error_rate": 0.0
+      },
+      {
+       "bucket": [
+        0.4,
+        0.5
+       ],
+       "count": 1,
+       "accuracy": 1.0,
+       "error_rate": 0.0
+      },
+      {
+       "bucket": [
+        0.5,
+        0.6
+       ],
+       "count": 1,
+       "accuracy": 1.0,
+       "error_rate": 0.0
+      },
+      {
+       "bucket": [
+        0.6,
+        0.7
+       ],
+       "count": 0,
+       "accuracy": null,
+       "error_rate": null
+      },
+      {
+       "bucket": [
+        0.7,
+        0.8
+       ],
+       "count": 1,
+       "accuracy": 1.0,
+       "error_rate": 0.0
+      },
+      {
+       "bucket": [
+        0.8,
+        0.9
+       ],
+       "count": 0,
+       "accuracy": null,
+       "error_rate": null
+      },
+      {
+       "bucket": [
+        0.9,
+        1.0
+       ],
+       "count": 1,
+       "accuracy": 1.0,
+       "error_rate": 0.0
+      }
+     ],
+     "all": [
+      {
+       "bucket": [
+        0.0,
+        0.1
+       ],
+       "count": 0,
+       "accuracy": null,
+       "error_rate": null
+      },
+      {
+       "bucket": [
+        0.1,
+        0.2
+       ],
+       "count": 0,
+       "accuracy": null,
+       "error_rate": null
+      },
+      {
+       "bucket": [
+        0.2,
+        0.3
+       ],
+       "count": 0,
+       "accuracy": null,
+       "error_rate": null
+      },
+      {
+       "bucket": [
+        0.3,
+        0.4
+       ],
+       "count": 1,
+       "accuracy": 1.0,
+       "error_rate": 0.0
+      },
+      {
+       "bucket": [
+        0.4,
+        0.5
+       ],
+       "count": 3,
+       "accuracy": 1.0,
+       "error_rate": 0.0
+      },
+      {
+       "bucket": [
+        0.5,
+        0.6
+       ],
+       "count": 1,
+       "accuracy": 1.0,
+       "error_rate": 0.0
+      },
+      {
+       "bucket": [
+        0.6,
+        0.7
+       ],
+       "count": 0,
+       "accuracy": null,
+       "error_rate": null
+      },
+      {
+       "bucket": [
+        0.7,
+        0.8
+       ],
+       "count": 1,
+       "accuracy": 1.0,
+       "error_rate": 0.0
+      },
+      {
+       "bucket": [
+        0.8,
+        0.9
+       ],
+       "count": 0,
+       "accuracy": null,
+       "error_rate": null
+      },
+      {
+       "bucket": [
+        0.9,
+        1.0
+       ],
+       "count": 6,
+       "accuracy": 1.0,
+       "error_rate": 0.0
+      }
+     ],
+     "meaning": "recognizer match scores, NOT probabilities"
+    },
+    "screenshots": 1,
+    "hero_cards": {
+     "correct": 2,
+     "total": 2,
+     "accuracy": 1.0
+    },
+    "board_cards": {
+     "correct": 5,
+     "total": 5,
+     "accuracy": 1.0
+    },
+    "seat_occupancy": {
+     "correct": 2,
+     "total": 2,
+     "accuracy": 1.0
+    },
+    "hero_cards_exact_pair": {
+     "correct": 1,
+     "total": 1,
+     "accuracy": 1.0
+    },
+    "confidence_calibration": [
+     {
+      "bucket": [
+       0.0,
+       0.1
+      ],
+      "count": 0,
+      "accuracy": null,
+      "error_rate": null
+     },
+     {
+      "bucket": [
+       0.1,
+       0.2
+      ],
+      "count": 0,
+      "accuracy": null,
+      "error_rate": null
+     },
+     {
+      "bucket": [
+       0.2,
+       0.3
+      ],
+      "count": 0,
+      "accuracy": null,
+      "error_rate": null
+     },
+     {
+      "bucket": [
+       0.3,
+       0.4
+      ],
+      "count": 1,
+      "accuracy": 1.0,
+      "error_rate": 0.0
+     },
+     {
+      "bucket": [
+       0.4,
+       0.5
+      ],
+      "count": 3,
+      "accuracy": 1.0,
+      "error_rate": 0.0
+     },
+     {
+      "bucket": [
+       0.5,
+       0.6
+      ],
+      "count": 1,
+      "accuracy": 1.0,
+      "error_rate": 0.0
+     },
+     {
+      "bucket": [
+       0.6,
+       0.7
+      ],
+      "count": 0,
+      "accuracy": null,
+      "error_rate": null
+     },
+     {
+      "bucket": [
+       0.7,
+       0.8
+      ],
+      "count": 1,
+      "accuracy": 1.0,
+      "error_rate": 0.0
+     },
+     {
+      "bucket": [
+       0.8,
+       0.9
+      ],
+      "count": 0,
+      "accuracy": null,
+      "error_rate": null
+     },
+     {
+      "bucket": [
+       0.9,
+       1.0
+      ],
+      "count": 6,
+      "accuracy": 1.0,
+      "error_rate": 0.0
+     }
+    ]
+   }
+  },
+  "validation": {
+   "frames": 0,
+   "metrics": null
+  },
+  "held_out": {
+   "frames": 0,
+   "metrics": null
+  },
+  "unassigned": {
+   "frames": 0,
+   "metrics": null
+  }
+ },
+ "metrics_label": "ALL scored frames INCLUDING tuning frames: not a real accuracy claim (see real_validation)",
  "metrics": {
+  "hero_card": {
+   "correct": 2,
+   "total": 2,
+   "accuracy": 1.0
+  },
+  "hero_exact_pair": {
+   "correct": 1,
+   "total": 1,
+   "accuracy": 1.0
+  },
+  "board_card": {
+   "correct": 5,
+   "total": 5,
+   "accuracy": 1.0
+  },
+  "board_exact": {
+   "correct": 1,
+   "total": 1,
+   "accuracy": 1.0
+  },
+  "card_rank": {
+   "correct": 2,
+   "total": 2,
+   "accuracy": 1.0
+  },
+  "card_suit": {
+   "correct": 2,
+   "total": 2,
+   "accuracy": 1.0
+  },
+  "stack": {
+   "correct": 2,
+   "total": 2,
+   "accuracy": 1.0,
+   "mae": 0.0,
+   "unreadable": 0,
+   "mean_relative_error": 0.0
+  },
+  "bet": {
+   "correct": 2,
+   "total": 2,
+   "accuracy": 1.0,
+   "mae": 0.0,
+   "unreadable": 0,
+   "mean_relative_error": 0.0
+  },
+  "pot": {
+   "correct": 1,
+   "total": 1,
+   "accuracy": 1.0,
+   "mae": 0.0,
+   "unreadable": 0
+  },
+  "occupied": {
+   "correct": 2,
+   "total": 2,
+   "accuracy": 1.0
+  },
+  "in_hand": {
+   "correct": 2,
+   "total": 2,
+   "accuracy": 1.0
+  },
+  "folded": {
+   "correct": 2,
+   "total": 2,
+   "accuracy": 1.0
+  },
+  "all_in": {
+   "correct": 2,
+   "total": 2,
+   "accuracy": 1.0
+  },
+  "dealer": {
+   "correct": 1,
+   "total": 1,
+   "accuracy": 1.0
+  },
+  "actor": {
+   "correct": 0,
+   "total": 0,
+   "accuracy": null
+  },
+  "street": {
+   "correct": 1,
+   "total": 1,
+   "accuracy": 1.0
+  },
+  "full_state": {
+   "correct": 1,
+   "total": 1,
+   "accuracy": 1.0
+  },
+  "duplicate_card_frames": {
+   "frames": 0,
+   "total": 1
+  },
+  "confidence_buckets": {
+   "cards": [
+    {
+     "bucket": [
+      0.0,
+      0.1
+     ],
+     "count": 0,
+     "accuracy": null,
+     "error_rate": null
+    },
+    {
+     "bucket": [
+      0.1,
+      0.2
+     ],
+     "count": 0,
+     "accuracy": null,
+     "error_rate": null
+    },
+    {
+     "bucket": [
+      0.2,
+      0.3
+     ],
+     "count": 0,
+     "accuracy": null,
+     "error_rate": null
+    },
+    {
+     "bucket": [
+      0.3,
+      0.4
+     ],
+     "count": 0,
+     "accuracy": null,
+     "error_rate": null
+    },
+    {
+     "bucket": [
+      0.4,
+      0.5
+     ],
+     "count": 2,
+     "accuracy": 1.0,
+     "error_rate": 0.0
+    },
+    {
+     "bucket": [
+      0.5,
+      0.6
+     ],
+     "count": 0,
+     "accuracy": null,
+     "error_rate": null
+    },
+    {
+     "bucket": [
+      0.6,
+      0.7
+     ],
+     "count": 0,
+     "accuracy": null,
+     "error_rate": null
+    },
+    {
+     "bucket": [
+      0.7,
+      0.8
+     ],
+     "count": 0,
+     "accuracy": null,
+     "error_rate": null
+    },
+    {
+     "bucket": [
+      0.8,
+      0.9
+     ],
+     "count": 0,
+     "accuracy": null,
+     "error_rate": null
+    },
+    {
+     "bucket": [
+      0.9,
+      1.0
+     ],
+     "count": 5,
+     "accuracy": 1.0,
+     "error_rate": 0.0
+    }
+   ],
+   "amounts": [
+    {
+     "bucket": [
+      0.0,
+      0.1
+     ],
+     "count": 0,
+     "accuracy": null,
+     "error_rate": null
+    },
+    {
+     "bucket": [
+      0.1,
+      0.2
+     ],
+     "count": 0,
+     "accuracy": null,
+     "error_rate": null
+    },
+    {
+     "bucket": [
+      0.2,
+      0.3
+     ],
+     "count": 0,
+     "accuracy": null,
+     "error_rate": null
+    },
+    {
+     "bucket": [
+      0.3,
+      0.4
+     ],
+     "count": 1,
+     "accuracy": 1.0,
+     "error_rate": 0.0
+    },
+    {
+     "bucket": [
+      0.4,
+      0.5
+     ],
+     "count": 1,
+     "accuracy": 1.0,
+     "error_rate": 0.0
+    },
+    {
+     "bucket": [
+      0.5,
+      0.6
+     ],
+     "count": 1,
+     "accuracy": 1.0,
+     "error_rate": 0.0
+    },
+    {
+     "bucket": [
+      0.6,
+      0.7
+     ],
+     "count": 0,
+     "accuracy": null,
+     "error_rate": null
+    },
+    {
+     "bucket": [
+      0.7,
+      0.8
+     ],
+     "count": 1,
+     "accuracy": 1.0,
+     "error_rate": 0.0
+    },
+    {
+     "bucket": [
+      0.8,
+      0.9
+     ],
+     "count": 0,
+     "accuracy": null,
+     "error_rate": null
+    },
+    {
+     "bucket": [
+      0.9,
+      1.0
+     ],
+     "count": 1,
+     "accuracy": 1.0,
+     "error_rate": 0.0
+    }
+   ],
+   "all": [
+    {
+     "bucket": [
+      0.0,
+      0.1
+     ],
+     "count": 0,
+     "accuracy": null,
+     "error_rate": null
+    },
+    {
+     "bucket": [
+      0.1,
+      0.2
+     ],
+     "count": 0,
+     "accuracy": null,
+     "error_rate": null
+    },
+    {
+     "bucket": [
+      0.2,
+      0.3
+     ],
+     "count": 0,
+     "accuracy": null,
+     "error_rate": null
+    },
+    {
+     "bucket": [
+      0.3,
+      0.4
+     ],
+     "count": 1,
+     "accuracy": 1.0,
+     "error_rate": 0.0
+    },
+    {
+     "bucket": [
+      0.4,
+      0.5
+     ],
+     "count": 3,
+     "accuracy": 1.0,
+     "error_rate": 0.0
+    },
+    {
+     "bucket": [
+      0.5,
+      0.6
+     ],
+     "count": 1,
+     "accuracy": 1.0,
+     "error_rate": 0.0
+    },
+    {
+     "bucket": [
+      0.6,
+      0.7
+     ],
+     "count": 0,
+     "accuracy": null,
+     "error_rate": null
+    },
+    {
+     "bucket": [
+      0.7,
+      0.8
+     ],
+     "count": 1,
+     "accuracy": 1.0,
+     "error_rate": 0.0
+    },
+    {
+     "bucket": [
+      0.8,
+      0.9
+     ],
+     "count": 0,
+     "accuracy": null,
+     "error_rate": null
+    },
+    {
+     "bucket": [
+      0.9,
+      1.0
+     ],
+     "count": 6,
+     "accuracy": 1.0,
+     "error_rate": 0.0
+    }
+   ],
+   "meaning": "recognizer match scores, NOT probabilities"
+  },
+  "screenshots": 1,
   "hero_cards": {
    "correct": 2,
    "total": 2,
@@ -14,40 +911,9 @@
    "total": 5,
    "accuracy": 1.0
   },
-  "stack": {
-   "correct": 2,
-   "total": 2,
-   "accuracy": 1.0,
-   "mae": 0.0,
-   "unreadable": 0
-  },
-  "bet": {
-   "correct": 2,
-   "total": 2,
-   "accuracy": 1.0,
-   "mae": 0.0,
-   "unreadable": 0
-  },
-  "pot": {
-   "correct": 1,
-   "total": 1,
-   "accuracy": 1.0,
-   "mae": 0.0,
-   "unreadable": 0
-  },
-  "dealer": {
-   "correct": 1,
-   "total": 1,
-   "accuracy": 1.0
-  },
   "seat_occupancy": {
    "correct": 2,
    "total": 2,
-   "accuracy": 1.0
-  },
-  "street": {
-   "correct": 1,
-   "total": 1,
    "accuracy": 1.0
   },
   "hero_cards_exact_pair": {
@@ -55,35 +921,102 @@
    "total": 1,
    "accuracy": 1.0
   },
-  "board_exact": {
-   "correct": 1,
-   "total": 1,
-   "accuracy": 1.0
-  },
   "confidence_calibration": [
    {
-    "confidence": [
+    "bucket": [
      0.0,
-     0.5
+     0.1
     ],
-    "n": 2,
-    "accuracy": 1.0
+    "count": 0,
+    "accuracy": null,
+    "error_rate": null
    },
    {
-    "confidence": [
-     0.95,
+    "bucket": [
+     0.1,
+     0.2
+    ],
+    "count": 0,
+    "accuracy": null,
+    "error_rate": null
+   },
+   {
+    "bucket": [
+     0.2,
+     0.3
+    ],
+    "count": 0,
+    "accuracy": null,
+    "error_rate": null
+   },
+   {
+    "bucket": [
+     0.3,
+     0.4
+    ],
+    "count": 1,
+    "accuracy": 1.0,
+    "error_rate": 0.0
+   },
+   {
+    "bucket": [
+     0.4,
+     0.5
+    ],
+    "count": 3,
+    "accuracy": 1.0,
+    "error_rate": 0.0
+   },
+   {
+    "bucket": [
+     0.5,
+     0.6
+    ],
+    "count": 1,
+    "accuracy": 1.0,
+    "error_rate": 0.0
+   },
+   {
+    "bucket": [
+     0.6,
+     0.7
+    ],
+    "count": 0,
+    "accuracy": null,
+    "error_rate": null
+   },
+   {
+    "bucket": [
+     0.7,
+     0.8
+    ],
+    "count": 1,
+    "accuracy": 1.0,
+    "error_rate": 0.0
+   },
+   {
+    "bucket": [
+     0.8,
+     0.9
+    ],
+    "count": 0,
+    "accuracy": null,
+    "error_rate": null
+   },
+   {
+    "bucket": [
+     0.9,
      1.0
     ],
-    "n": 5,
-    "accuracy": 1.0
+    "count": 6,
+    "accuracy": 1.0,
+    "error_rate": 0.0
    }
-  ],
-  "full_state": {
-   "correct": 1,
-   "total": 1,
-   "accuracy": 1.0
-  },
-  "screenshots": 1
+  ]
+ },
+ "tuning_fit": {
+  "frames": 1,
+  "label": "TUNING-FIT ONLY: these frames were used to build / tune the recognizers; not evidence of real accuracy"
  },
  "note": "only 1 annotated screenshot(s): a smoke test, not a statistically meaningful accuracy estimate | hu_preflop_0001 is also the frame the PokerNow heads-up layout was aligned on and the PokerNow OCR / card recognizer settings were chosen on, so its score is a regression check, not independent validation."
 }

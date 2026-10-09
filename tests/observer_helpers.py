@@ -38,9 +38,11 @@ def frames_of(*tables, repeat=3, cal=CAL):
     return out
 
 
-def record(root, frames, policy=None, limits=None, cal=CAL, actions=None, blinds=(0.5, 1.0)):
+def record(root, frames, policy=None, limits=None, cal=CAL, actions=None, blinds=(0.5, 1.0),
+           after=None):
     """Run a recorder over ``frames``; ``actions[i]`` = callable(session, recorder)
-    executed before step i (e.g. reset, recalibrate)."""
+    executed before step i (e.g. reset, recalibrate); ``after(i, session,
+    recorder)`` runs after each step."""
     scr = Screen(frames)
     s = LiveObserverSession(source_factory=lambda m, r: scr)
     s.configure(CaptureSettings(MON, None), cal, *blinds)
@@ -50,4 +52,6 @@ def record(root, frames, policy=None, limits=None, cal=CAL, actions=None, blinds
         if actions and i in actions:
             actions[i](s, rec)
         rec.on_step(s, s.step(now=float(i)))
+        if after is not None:
+            after(i, s, rec)
     return rec, s

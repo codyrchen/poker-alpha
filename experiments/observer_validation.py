@@ -70,14 +70,21 @@ def false_events(adapter, cal, table, frames: int, noise: float, size, seed: int
 
 
 def fixture_mode(fixture_dir: Path, out_path: Path) -> dict:
+    """Score annotated real screenshots, separately per dataset role.
+
+    Only validation / held-out frames may support a real-accuracy claim; with
+    none, the report says REAL VALIDATION: BLOCKED (not 0%, not 100%).
+    """
     import json
 
     from PIL import Image
 
-    from poker_alpha.observer.annotations import load_fixture_dir, score
+    from poker_alpha.observer.annotations import (load_fixture_dir, score,
+                                                  score_by_role)
     from poker_alpha.observer.calibration import TableCalibration
 
     anns = load_fixture_dir(fixture_dir)
+    all_anns = load_fixture_dir(fixture_dir, include_unscored=True)
     cal_file = fixture_dir / "calibration.json"
     cal_fixed = TableCalibration.load(cal_file) if cal_file.exists() else None
     frames, missing = [], []
@@ -91,10 +98,32 @@ def fixture_mode(fixture_dir: Path, out_path: Path) -> dict:
                              f"annotation {a.num_seats}")
         obs = PokerNowStyleAdapter(cal).read_frame(Image.open(a.image).convert("RGB"))
         frames.append((obs, a))
+    splits = score_by_role(frames)
     result = {"fixture_dir": str(fixture_dir),
               "calibration": str(cal_file) if cal_fixed else "default_layout (not PokerNow-derived)",
-              "annotations": len(anns), "missing_images": missing,
+              "annotations": len(all_anns), "scored_annotations": len(anns),
+              "unscored": {s: sum(a.status == s for a in all_anns)
+                           for s in ("unreviewed", "skip")},
+              "missing_images": missing,
+              "real_validation_status": splits["real_validation"]["status"],
+              "real_validation": splits["real_validation"],
+              "by_role": splits["by_role"],
+              "metrics_label": "ALL scored frames INCLUDING tuning frames: not a real "
+                               "accuracy claim (see real_validation)",
               "metrics": score(frames)}
+    for k in ("tuning_fit", "unassigned"):
+        if k in splits:
+            result[k] = splits[k]
+    if (fixture_dir / "observations" / "stream.jsonl").exists():
+        # a recorded session: event / stability metrics, split like the frames
+        from poker_alpha.observer.annotations import REAL_VALIDATION_ROLES
+        from poker_alpha.observer.sequence_metrics import sequence_metrics
+
+        seq = {"real_validation": sequence_metrics(fixture_dir, anns, REAL_VALIDATION_ROLES),
+               "tuning": sequence_metrics(fixture_dir, anns, ("tuning",))}
+        if seq["real_validation"]["annotated_frames"] < 2:
+            seq["real_validation"]["status"] = "REAL VALIDATION: BLOCKED (sequence)"
+        result["sequence"] = seq
     notes = []
     if not frames:
         notes.append("no annotated screenshots found: nothing was measured; "
@@ -110,20 +139,45 @@ def fixture_mode(fixture_dir: Path, out_path: Path) -> dict:
     out_path.write_text(json.dumps(result, indent=1))
     m = result["metrics"]
     print(f"{m['screenshots']} real fixtures found (annotated screenshots scored, "
-          f"of {len(anns)} annotations)")
+          f"of {len(all_anns)} annotations)")
+    roles = ", ".join(f"{r} {v['frames']}" for r, v in splits["by_role"].items() if v["frames"])
+    print(f"by role: {roles or 'none'}")
+    rv = splits["real_validation"]
+    print(rv["status"] if rv["status"] != "MEASURED"
+          else f"REAL VALIDATION: measured on {rv['frames']} validation/held-out frames")
     if not frames:
         print("real PokerNow accuracy: NOT MEASURED")
     elif "note" in result:
         print("NOTE:", result["note"])
     if missing:
         print(f"missing images: {missing}")
-    for k in ("hero_cards", "board_cards", "stack", "bet", "pot", "dealer",
-              "seat_occupancy", "full_state"):
-        v = m[k]
-        acc = "n/a" if v["accuracy"] is None else f"{v['accuracy']:.3f}"
-        mae = "" if v.get("mae") is None else f"  MAE {v['mae']:.3f}"
-        unr = "" if not v.get("unreadable") else f"  unreadable {v['unreadable']}"
-        print(f"  {k:<15} {acc:>6}  ({v['correct']}/{v['total']}){mae}{unr}")
+
+    def table(m, title):
+        print(title)
+        for k in ("hero_card", "hero_exact_pair", "board_card", "card_rank", "card_suit",
+                  "stack", "bet", "pot", "occupied", "in_hand", "folded", "all_in",
+                  "dealer", "actor", "street", "full_state"):
+            v = m[k]
+            if not v["total"]:
+                continue
+            acc = f"{v['accuracy']:.3f}"
+            mae = "" if v.get("mae") is None else f"  MAE {v['mae']:.3f}"
+            unr = "" if not v.get("unreadable") else f"  unreadable {v['unreadable']}"
+            print(f"  {k:<16} {acc:>6}  ({v['correct']}/{v['total']}){mae}{unr}")
+    for r, v in splits["by_role"].items():
+        if v["frames"]:
+            label = " (TUNING-FIT ONLY, not real accuracy)" if r == "tuning" else (
+                " (no role: excluded from accuracy claims)" if r == "unassigned" else "")
+            table(v["metrics"], f"[{r}] {v['frames']} frame(s){label}")
+    if "sequence" in result:
+        sq = result["sequence"]["real_validation"]
+        print(f"sequence (validation/held-out): {sq.get('status', 'measured')} · "
+              f"{sq['intervals']} intervals · flicker {sq['state_flicker']} · "
+              f"card violations {sq['card_persistence_violations']} · stack violations "
+              f"{sq['stack_persistence_violations']}")
+        for k, v in sq["events"].items():
+            if v["true_positive"] + v["false_positive"] + v["false_negative"]:
+                print(f"  {k:<9} precision {v['precision']}  recall {v['recall']}")
     if not frames:
         print(result["note"])
     print(f"wrote {out_path}")
