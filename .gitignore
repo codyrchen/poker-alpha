@@ -18,3 +18,7 @@ pokeralpha_fixture_export*/
 cpp/build/
 cmake-build*/
 *.so.dSYM/
+
+# Native training outputs: logs are committed, checkpoints are not
+results/native_training/**/*.npz
+results/native_training/**/seed*/
