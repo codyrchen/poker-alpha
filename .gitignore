@@ -13,3 +13,8 @@ pokeralpha_captures/
 pokeralpha_sessions/
 pokeralpha_fixture_export*/
 *.pokeralpha_session/
+
+# Native extension build trees
+cpp/build/
+cmake-build*/
+*.so.dSYM/
