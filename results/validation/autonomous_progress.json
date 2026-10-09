@@ -2,12 +2,16 @@
  "run": "pre-real-test (Phases 41-80)",
  "branch": "claude/live-observer",
  "start_commit": "8a35231674b97982015454c2c649695713b43697",
- "head": "8a35231",
- "current_phase": 42,
+ "head": "01f0d7b",
+ "current_phase": 43,
  "completed_phases": [
   {
    "phase": 41,
    "summary": "observer test-session recorder: poker_alpha/observer/session.py + Live screen 'Observer Test Session' mode; policies manual/interval/state/warning/low-conf/new-hand/street/hybrid; limits 4h/2000 frames/2GB; self-ignoring session dirs; tests/test_observer_session.py (13)"
+  },
+  {
+   "phase": 42,
+   "summary": "session replay: poker_alpha/observer/session_replay.py (stored = exact tracker reproduction from per-frame stream incl. resets; recompute = re-recognize kept frames; --compare-calibration; --write-report/--compare-report for cross-commit diffs); tests/test_session_replay.py (8)"
   }
  ],
  "tests": "608 passed, 5 skipped (non-slow)",
@@ -43,6 +47,6 @@
   "session_docs": "docs/observer_sessions.md"
  },
  "unresolved": [],
- "next_step": "Phase 42: session replay (poker_alpha/observer/session_replay.py)",
- "updated": "2026-10-09T05:30:06Z"
+ "next_step": "Phase 43: annotation workflow (Streamlit section over session frames)",
+ "updated": "2026-10-09T05:33:33Z"
 }

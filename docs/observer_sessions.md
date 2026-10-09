@@ -68,6 +68,8 @@ few KB of JSON.
   frames/<frame>.png
   observations/<frame>.json    raw readings + confidences per field, table bbox,
                                recognizer provenance (classes and parameters)
+  observations/stream.jsonl    compact raw readings of EVERY processed frame (no
+                               image, ~2-5 KB each) + tracker reset rows: replay input
   tracked_states/<frame>.json  fused snapshot, field confidences, hand number,
                                critical confidence, validation issues, tracker warnings
   diagnostics/<frame>.json     reasons, monitor, capture rect, captured size,
@@ -87,3 +89,32 @@ repository `.gitignore`.
 Code: `poker_alpha/observer/session.py` (`TestSessionRecorder`, no
 Streamlit dependency), UI in `poker_alpha/ui/live_panel.py`, tests in
 `tests/test_observer_session.py` (synthetic frames, fake screen).
+
+## 2. Replay
+
+```bash
+python -m poker_alpha.observer.session_replay ~/pokeralpha_sessions/<id>            # stored
+python -m poker_alpha.observer.session_replay <session> --mode recompute --write-report a.json
+python -m poker_alpha.observer.session_replay <session> --compare-calibration new_cal.json
+python -m poker_alpha.observer.session_replay <session> --mode recompute --compare-report a.json
+```
+
+| mode | input | answers |
+| --- | --- | --- |
+| `stored` (default) | `observations/stream.jsonl`: raw readings of **every** processed frame, plus a reset row whenever the tracker was rebuilt (start, Reset tracker, recalibration, blinds change) | Does the current tracker reproduce exactly what the live session concluded? Compares the fused state, hand number and critical confidence at every kept sample and the full event list. `reproduced: True` = deterministic and unchanged. |
+| `recompute` | kept frame images | Does current recognition read the same values? Field-by-field value changes and confidence deltas vs the stored readings, then tracker-state, event and decision differences over the kept frames. |
+| `--compare-calibration FILE` | kept frame images | Same, with a recompute under the session calibration as the baseline and FILE as the candidate. |
+| `--compare-report OLD.json` | a report written earlier (e.g. by another commit) | Per-sample state / decision / confidence differences between the two code versions — no Git checkout juggling. |
+
+`--no-decisions` skips decision computation (by default replay computes a
+quick decision — 400 equity samples, no rollouts, no solver — for samples
+whose critical check passes, to report decision-source changes).
+`--blinds SB BB` overrides the blinds recorded in the stream.
+
+Recompute mode only has images for kept frames, so its tracker states
+describe that subsequence; both sides of a comparison replay the same
+subsequence. A crashed session (no `manifest.json`, truncated last line)
+still replays from the streamed `manifest.jsonl`.
+
+Code: `poker_alpha/observer/session_replay.py`; tests:
+`tests/test_session_replay.py`.

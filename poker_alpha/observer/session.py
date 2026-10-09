@@ -14,6 +14,7 @@ Layout of one session (``~/pokeralpha_sessions/<YYYYmmdd_HHMMSS>/``)::
     manifest.json         retained samples (also streamed to manifest.jsonl)
     frames/<id>.png       retained frames (PNG, lossless)
     observations/<id>.json  raw per-field readings + confidences + provenance
+    observations/stream.jsonl  raw readings of every processed frame (no images)
     tracked_states/<id>.json  fused tracker state, critical confidence, validation
     diagnostics/<id>.json     timings, FPS, warnings, retention reasons
     events/events.jsonl   tracker events + session events (marks, notes, errors)
@@ -239,6 +240,7 @@ class TestSessionRecorder:
         self._last_interval = None
         self._frame_times: List[float] = []
         self._pending_mark: Optional[str] = None
+        self._tracker_ref = None
 
     # -- lifecycle ----------------------------------------------------------------
 
@@ -332,8 +334,18 @@ class TestSessionRecorder:
     # -- per-frame ------------------------------------------------------------------
 
     def on_step(self, session, result) -> Optional[Sample]:
-        """Call after each observer step; returns the sample if one was kept."""
+        """Call after each observer step; returns the sample if one was kept.
+
+        Steps taken while paused / stopped (e.g. "Capture one frame") are not
+        retained but still streamed, so a replay sees every tracker update."""
+        if not self.active:
+            return None
+        if session.tracker is not self._tracker_ref:
+            self._tracker_ref = session.tracker
+            self._stream_reset(session)
         if not self.recording:
+            if session.last_frame is not None:
+                self._stream(session, result)
             return None
         now = self._rel()
         if now > self.limits.max_duration_s:
@@ -353,6 +365,7 @@ class TestSessionRecorder:
         for e in session.last_events:
             self._event(e.kind, seat=e.seat, amount=e.amount, detail=e.detail,
                         frame_number=session.frames)
+        self._stream(session, result)
         reasons = self._reasons(session, result, now)
         if not reasons:
             return None
@@ -496,6 +509,37 @@ class TestSessionRecorder:
             self._write_manifest()
             self._write_session()
         return sample
+
+    def _stream(self, session, result) -> None:
+        """Raw readings of *every* processed frame (no image): lets a replay
+        rebuild the exact tracker sequence, not just the kept samples."""
+        obs = session.last_observation
+        if not result.ok or obs is None or obs.timestamp != session.last_time:
+            row = {"n": session.frames, "ok": False, "error": result.error}
+        else:
+            row = {"n": session.frames, "ok": True, "t": obs.timestamp,
+                   "bbox": list(obs.table_bbox),
+                   "f": {k: [f.value, f.confidence, f.region]
+                         for k, f in sorted(obs.fields.items())}}
+        data = (json.dumps(_jsonable(row), separators=(",", ":")) + "\n").encode()
+        with open(self.path / "observations" / "stream.jsonl", "ab") as fh:
+            fh.write(data)
+        self.bytes_written += len(data)
+
+    def _stream_reset(self, session) -> None:
+        """A new tracker (start, reset, recalibration, blinds change)."""
+        tr = session.tracker
+        row = {"n": session.frames, "reset": True,
+               "sb": tr.sb if tr is not None else None,
+               "bb": tr.bb if tr is not None else None,
+               "calibration": (calibration_checksum(session.calibration)
+                               if session.calibration is not None else None)}
+        data = (json.dumps(_jsonable(row), separators=(",", ":")) + "\n").encode()
+        with open(self.path / "observations" / "stream.jsonl", "ab") as fh:
+            fh.write(data)
+        self.bytes_written += len(data)
+        if session.calibration is not None:
+            self.calibration_changed(session.calibration)
 
     def _limit(self, reason: str) -> None:
         self.status = "stopped"

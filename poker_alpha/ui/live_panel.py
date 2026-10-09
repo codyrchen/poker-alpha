@@ -409,7 +409,10 @@ def live_screen_mode(cfg, render_report) -> None:
         session.stop()
         st.rerun()
     if b[2].button("Capture one frame"):
-        session.step()
+        result = session.step()
+        rec = _recorder()
+        if rec is not None and rec.active:
+            rec.on_step(session, result)
     if b[3].button("Reset tracker"):
         session.reset_tracker()
         st.session_state.pop("live_report", None)
