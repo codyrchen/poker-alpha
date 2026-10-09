@@ -360,6 +360,27 @@ PYBIND11_MODULE(poker_alpha_native, m) {
     m.def("debug_preflop_class",
           [](int a, int b) { return preflop_class_name(preflop_class_id(a, b)); });
 
+    m.def("debug_deal_counts",
+          [](const NativeConfig& cfg, int hands, uint64_t seed) {
+              // Statistical sanity of production-RNG dealing (Phase 9):
+              // counts of every card over `hands` root deals, per seat slot.
+              HoldemGame game(cfg);
+              RandomSource rnd(seed);
+              py::array_t<int64_t> counts({4, NUM_CARDS});
+              auto c = counts.mutable_unchecked<2>();
+              for (py::ssize_t i = 0; i < 4; ++i)
+                  for (py::ssize_t j = 0; j < NUM_CARDS; ++j) c(i, j) = 0;
+              for (int h = 0; h < hands; ++h) {
+                  HoldemState s = game.sample_chance(game.root(), rnd);
+                  c(0, s.holes[0][0]) += 1;
+                  c(1, s.holes[0][1]) += 1;
+                  c(2, s.holes[1][0]) += 1;
+                  c(3, s.holes[1][1]) += 1;
+              }
+              return counts;
+          },
+          py::arg("config"), py::arg("hands"), py::arg("seed"));
+
     m.def("debug_fsum", [](const std::vector<double>& xs) {
         if (xs.size() > 8) throw std::invalid_argument("max 8 terms");
         return fsum<8>(xs.data(), xs.size());
