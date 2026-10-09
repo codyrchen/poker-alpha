@@ -1,0 +1,135 @@
+{
+ "format": "pokeralpha.flop_abstraction/v1",
+ "method": "Method (same as the river study, Phase 34A, extended to earlier streets): a subgame of the real ``HoldemGame`` rules starts at the flop (or turn) with a fixed preflop (and flop) line and hole cards dealt from explicit finite ranges. To stay exactly solvable in pure Python the remaining board cards come from a FIXED SAMPLE of turn / river cards (uniform over the sample minus dead cards) and the bet menu is reduced (one bet size + all-in, raise cap 1). Raw and abstract keys play IDENTICAL trees, so the comparison is exact for this game; it measures how each encoder's flop / turn / river keys merge strategically different situations, not the full 52-card error.",
+ "settings": {
+  "iters": 300,
+  "range_combos": 6,
+  "turn_sample": 4,
+  "river_sample": 3,
+  "bets": {
+   "b75": 0.75
+  },
+  "raise_cap": 1,
+  "stack_bb": 100,
+  "line": [
+   "b75c"
+  ],
+  "seed": 0
+ },
+ "encoders": {
+  "raw": "perfect information sets (reference)",
+  "bucket": "perfect-recall card buckets (v1 'bucket' encoder)",
+  "compact": "compact imperfect-recall encoder (v1 release)",
+  "compact_river_pct20": "compact + 20 river percentile buckets (release v2)"
+ },
+ "rows": [
+  {
+   "name": "A72 rainbow",
+   "board": [
+    "As",
+    "7d",
+    "2c"
+   ],
+   "line": [
+    "b75c"
+   ],
+   "turn_sample": [
+    "3d",
+    "2h",
+    "4s",
+    "7h"
+   ],
+   "river_sample": [
+    "Ad",
+    "Qd",
+    "Ah"
+   ],
+   "range_sizes": [
+    6,
+    6
+   ],
+   "ranges": [
+    [
+     "3c4c",
+     "3s6s",
+     "4s8s",
+     "Ac5h",
+     "AdJh",
+     "AdAh"
+    ],
+    [
+     "4dQd",
+     "3cKd",
+     "KdTh",
+     "2h9h",
+     "7c5s",
+     "TdTh"
+    ]
+   ],
+   "pot_bb": 5.0,
+   "encoders": {
+    "raw": {
+     "abstract_infosets": 3744,
+     "seconds": 284.7,
+     "exploitability_in_raw_game_bb": 0.023038054990569545,
+     "ev_p0_bb": 2.505144312781786,
+     "ev_error_vs_raw_bb": 0.0,
+     "weighted_l1_vs_raw": 0.0,
+     "collisions": {
+      "abstract_keys_reached": 3744,
+      "merged_keys": 0,
+      "reach_weighted_severity": 3.856096341770382e-17,
+      "max_severity": 1.3877787807814457e-16,
+      "reach_share_severity_gt_0_5": 0.0
+     }
+    },
+    "bucket": {
+     "abstract_infosets": 2331,
+     "seconds": 298.1,
+     "exploitability_in_raw_game_bb": 0.7332398428751549,
+     "ev_p0_bb": 2.5066729373930183,
+     "ev_error_vs_raw_bb": 0.0015286246112324875,
+     "weighted_l1_vs_raw": 0.05445195740640174,
+     "collisions": {
+      "abstract_keys_reached": 2331,
+      "merged_keys": 981,
+      "reach_weighted_severity": 0.016890513211473394,
+      "max_severity": 0.9045410313066278,
+      "reach_share_severity_gt_0_5": 0.008304150348468405
+     }
+    },
+    "compact": {
+     "abstract_infosets": 609,
+     "seconds": 285.9,
+     "exploitability_in_raw_game_bb": 3.5212876632621324,
+     "ev_p0_bb": 2.509120386932184,
+     "ev_error_vs_raw_bb": 0.0039760741503980235,
+     "weighted_l1_vs_raw": 0.12122869958022489,
+     "collisions": {
+      "abstract_keys_reached": 609,
+      "merged_keys": 504,
+      "reach_weighted_severity": 0.06643383373226107,
+      "max_severity": 0.9783867834421849,
+      "reach_share_severity_gt_0_5": 0.013135019826078889
+     }
+    },
+    "compact_river_pct20": {
+     "abstract_infosets": 789,
+     "seconds": 284.5,
+     "exploitability_in_raw_game_bb": 5.078974426367251,
+     "ev_p0_bb": 2.5097661569491128,
+     "ev_error_vs_raw_bb": 0.004621844167326916,
+     "weighted_l1_vs_raw": 0.11946187921819586,
+     "collisions": {
+      "abstract_keys_reached": 789,
+      "merged_keys": 618,
+      "reach_weighted_severity": 0.06636517989799133,
+      "max_severity": 0.9783867834421849,
+      "reach_share_severity_gt_0_5": 0.013176162506417025
+     }
+    }
+   }
+  }
+ ],
+ "seconds": 1163.7
+}
