@@ -36,3 +36,20 @@ heuristics with that reason visible — never from the mismatched strategy.
 Blinds are fixed at 0.5 / 1 BB in the abstract game (amounts are in big
 blinds), so a different small-blind ratio or an ante is refused per
 decision ("blind structure differs from the abstraction").
+
+## Determinism and resume audit (Phase 70)
+
+What is checked, and where:
+
+| property | test |
+| --- | --- |
+| CFR / CFR+ / MCCFR resume bit-identical (Kuhn, Leduc, default Hold'em), RNG state restored (negative control: resetting the RNG changes the result) | `tests/test_checkpoint.py` |
+| MCCFR resume bit-identical under the **release v2 config** | `tests/test_determinism_audit.py` |
+| MCCFR digest, a full decision report and an observer state are identical under different `PYTHONHASHSEED` values (no dependence on set/dict iteration order) | `tests/test_determinism_audit.py` |
+| decision reports (recommendation, EVs to 4 dp) stable across runs | `tests/test_golden_e2e.py` |
+| observer session replay reproduces the recorded tracker sequence | `tests/test_session_replay.py` |
+| experiment CLI checkpoints and resumes | `tests/test_holdem_experiment.py` |
+
+Training runs in `experiments/holdem_mccfr_validation.py` checkpoint at
+milestones; a resumed run continues the same RNG stream, so an interrupted
+run that is resumed gives the same strategy as an uninterrupted one.
