@@ -107,10 +107,19 @@ def check_tesseract() -> Check:
 def check_monitors(monitor: int, capture: bool) -> List[Check]:
     try:
         from .observer.live import is_blank, list_monitors
-        mons = list_monitors()
-    except Exception as exc:  # noqa: BLE001
+    except ImportError as exc:
         return [Check("monitors", "FAIL", f"{type(exc).__name__}: {exc}",
                       "install the vision extra: pip install -e '.[vision]'")]
+    try:
+        mons = list_monitors()
+    except ImportError as exc:
+        return [Check("monitors", "FAIL", f"{type(exc).__name__}: {exc}",
+                      "install the vision extra: pip install -e '.[vision]'")]
+    except Exception as exc:  # noqa: BLE001 - no display / no permission
+        return [Check("monitors", "FAIL", f"{type(exc).__name__}: {exc}",
+                      "no screen is reachable: run PokerAlpha on the computer that shows "
+                      "the table (not over SSH / in a container); on macOS grant Screen "
+                      "Recording to the terminal app")]
     desc = ", ".join(f"#{m['index']} {m['width']}x{m['height']}@({m['left']},{m['top']})"
                      for m in mons)
     out = [Check("monitors", "OK" if len(mons) > 1 else "WARN", desc or "none",

@@ -85,3 +85,15 @@ def test_launcher_stops_on_fail_and_dry_run(monkeypatch, capsys):
 def test_shell_launcher_checks_python():
     r = subprocess.run(["bash", "-n", str(ROOT / "scripts" / "run_live_observer.sh")])
     assert r.returncode == 0
+
+
+def test_doctor_no_display_hint_is_not_an_install_hint(monkeypatch):
+    pytest.importorskip("PIL")
+    import poker_alpha.observer.live as L
+
+    def no_display():
+        raise RuntimeError("Cannot connect to display")
+    monkeypatch.setattr(L, "list_monitors", no_display)
+    c = {c.name: c for c in doctor.check_monitors(1, capture=False)}["monitors"]
+    assert c.status == "FAIL"
+    assert "no screen is reachable" in c.hint and "pip install" not in c.hint

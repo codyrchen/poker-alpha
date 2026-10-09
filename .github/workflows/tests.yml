@@ -44,16 +44,7 @@ jobs:
           cache: pip
       - name: Install with optional extras (no Tesseract, no display needed)
         run: python -m pip install -e ".[dev,vision,ui]"
-      - name: Observer, fixture-validation and headless Streamlit tests
-        run: >
-          pytest -q -m vision
-          tests/test_observer_core.py tests/test_observer_pokernow.py
-          tests/test_observer_fusion.py tests/test_observer_fixture_validation.py
-          tests/test_pokernow_real.py tests/test_observer_session.py
-          tests/test_session_replay.py tests/test_annotation_tool.py
-          tests/test_fixture_export.py tests/test_observer_debug.py
-          tests/test_observer_failures.py tests/test_observer_robustness.py
-          tests/test_observer_state_machine.py tests/test_capture_geometry.py
-          tests/test_calibration_versioning.py tests/test_privacy.py
-          tests/test_doctor_launcher.py
-          && pytest -q tests/test_ui.py tests/test_live_observer.py
+      - name: Full non-slow suite with the optional extras (observer, Streamlit AppTest)
+        env:
+          POKERALPHA_SKIP_SLOW: "1"
+        run: pytest -q -rs
