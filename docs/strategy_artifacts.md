@@ -53,3 +53,26 @@ What is checked, and where:
 Training runs in `experiments/holdem_mccfr_validation.py` checkpoint at
 milestones; a resumed run continues the same RNG stream, so an interrupted
 run that is resumed gives the same strategy as an uninterrupted one.
+
+## Size and loading (Phase 67)
+
+Release artifact `holdem_v2_seed0.npz`: 124,381 infosets, 451,148 actions;
+2.2 MB on disk (`savez_compressed`; 34.6 MB uncompressed). Alternatives
+measured: storing keys/actions as bytes instead of unicode would save only
+13% on disk (1.9 MB) and needs a new format version, so the format is
+unchanged (v1/v2 files stay byte-identical).
+
+Loading the release solver (`pipeline.load_solver`: artifact + checksums +
+confidence table), 4-vCPU container:
+
+| | before | after |
+| --- | --- | --- |
+| time | 2.28 s | 0.66 s |
+| peak RSS (process) | 375 MB | 236 MB |
+
+Changes: the config signature is read from the archive header instead of
+parsing the whole artifact a second time (`read_config_signature`), and the
+per-infoset parse uses `ndarray.tolist()` instead of per-element `str()` /
+`float()`. The loaded strategy and visit dicts are identical (checked
+against the previous loader for the v1 and v2 artifacts; the content SHA-256
+is still verified on every load).

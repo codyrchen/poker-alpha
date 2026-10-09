@@ -178,8 +178,8 @@ class ConfidenceTable:
             sig = str(z["config_sig"][()])
             if config_signature is not None and sig != config_signature:
                 raise ValueError(f"confidence table for {sig}, strategy is {config_signature}")
-            keys = [str(k) for k in z["keys"]]
-            arr = z["stats"].astype(float)
-            stats = {k: KeyStats(*arr[i]) for i, k in enumerate(keys)}
+            keys = z["keys"].tolist()
+            rows = z["stats"].astype(float).tolist()
+            stats = {k: KeyStats(*r) for k, r in zip(keys, rows)}
             return cls(sig, stats, tuple(str(k) for k in z["pathological"]),
                        json.loads(str(z["meta"][()])))

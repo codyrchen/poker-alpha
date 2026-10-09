@@ -80,20 +80,21 @@ class SolverStrategyProvider:
         Returns a :class:`LookupMiss` (``CONFIG_MISMATCH`` or
         ``INCOMPATIBLE_CHECKPOINT``) instead of raising when it cannot be used.
         """
-        from ..solvers.strategy_artifact import StrategyArtifactError, load_artifact
+        from ..solvers.strategy_artifact import (StrategyArtifactError, load_artifact,
+                                                 read_config_signature)
 
         if config is None:
             # Infer the config from the artifact's own signature (known
             # configs only); unknown signatures are rejected as mismatches.
             from ..solver_config import config_for_signature
             try:
-                peek = load_artifact(path)
+                sig = read_config_signature(path)
             except StrategyArtifactError as exc:
                 return LookupMiss(f"strategy artifact rejected: {exc}", "INCOMPATIBLE_CHECKPOINT")
-            config = config_for_signature(peek.config_signature)
+            config = config_for_signature(sig)
             if config is None:
                 return LookupMiss(f"strategy artifact trained under unknown config "
-                                  f"{peek.config_signature!r}", "CONFIG_MISMATCH")
+                                  f"{sig!r}", "CONFIG_MISMATCH")
         game = config.build_game()
         try:
             art = load_artifact(path, game)

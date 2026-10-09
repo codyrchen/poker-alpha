@@ -144,6 +144,20 @@ def export_solver(solver, path: PathLike, meta: Optional[dict] = None,
     return path
 
 
+def read_config_signature(path: PathLike) -> str:
+    """The artifact's solver-config signature, reading only that entry
+    (cheap: no strategy parsing, no checksum verification)."""
+    try:
+        with np.load(Path(path), allow_pickle=False) as z:
+            if "config_sig" not in z.files:
+                raise StrategyArtifactError("not a pokeralpha strategy artifact (v1 / v2)")
+            return str(z["config_sig"][()])
+    except StrategyArtifactError:
+        raise
+    except Exception as exc:  # noqa: BLE001 - corrupt / truncated / not a zip
+        raise StrategyArtifactError(f"cannot read {path}: {type(exc).__name__}: {exc}") from exc
+
+
 def load_artifact(path: PathLike, game=None) -> StrategyArtifact:
     """Read an artifact; if ``game`` is given, require matching signatures."""
     manifest = None
@@ -181,9 +195,9 @@ def load_artifact(path: PathLike, game=None) -> StrategyArtifact:
             if mine != theirs:
                 raise StrategyArtifactError(
                     f"{what} signature mismatch: artifact {mine!r} vs game {theirs!r}")
-    keys = [str(k) for k in d["keys"]]
+    keys = d["keys"].tolist()
     off = d["action_offsets"]
-    acts = [str(a) for a in d["actions"]]
+    acts = d["actions"].tolist()
     probs, visits = d["probs"], d["visits"]
     if len(off) != len(keys) + 1 or int(off[-1]) != len(acts) or len(probs) != len(acts) \
             or len(visits) != len(keys):
@@ -205,10 +219,9 @@ def load_artifact(path: PathLike, game=None) -> StrategyArtifact:
         commit = str(d["commit"][()]) or None
     elif manifest is not None:
         config, commit = manifest.get("config"), manifest.get("generation_commit")
-    strategy, vis = {}, {}
-    for i, k in enumerate(keys):
-        lo, hi = int(off[i]), int(off[i + 1])
-        strategy[k] = {a: float(p) for a, p in zip(acts[lo:hi], probs[lo:hi])}
-        vis[k] = float(visits[i])
+    offl, pl = off.tolist(), probs.tolist()
+    strategy = {k: dict(zip(acts[offl[i]:offl[i + 1]], pl[offl[i]:offl[i + 1]]))
+                for i, k in enumerate(keys)}
+    vis = dict(zip(keys, visits.tolist()))
     return StrategyArtifact(art_cfg, art_game, art_enc, json.loads(str(d["meta"][()])),
                             strategy, vis, fmt, config, commit, content, manifest)
