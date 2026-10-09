@@ -2,8 +2,8 @@
  "run": "pre-real-test (Phases 41-80)",
  "branch": "claude/live-observer",
  "start_commit": "8a35231674b97982015454c2c649695713b43697",
- "head": "61e227f",
- "current_phase": 56,
+ "head": "4e54c4d",
+ "current_phase": 65,
  "completed_phases": [
   {
    "phase": 41,
@@ -66,8 +66,16 @@
    "summary": "strategy artifact v2 (config_json, commit, content_sha256; verified), v1 still loadable, sidecar manifests for committed artifacts (no rewrite), rejection tests incl corrupt/truncated/tampered/wrong config/encoder/abstraction/stack/blinds; docs/strategy_artifacts.md"
   },
   {
+   "phase": 56,
+   "summary": "flop abstraction: v2 2.2-5.1 BB exploitable, EV err small"
+  },
+  {
    "phase": 57,
    "summary": "turn abstraction: compact/v2 1.4-9.6 BB exploitable on small exact subgames"
+  },
+  {
+   "phase": 58,
+   "summary": "remediation: flop/turn gate cap; no v2 mutation; v3 deferred"
   },
   {
    "phase": 59,
@@ -203,6 +211,6 @@
   "Phase 59/60 run started ~10:35: question = which rollout response model matches exact river equilibria on HELD-OUT games (agreement, EV regret); command = python experiments/rollout_response.py --iters 600 --sims 600 --range 10 --models behavior,mdf_range,mdf_calibrated; expected 20-40 min; stop = completion; log /home/user/pa_ckpt/rollout_response.log; adopt non-default only if held-out agreement AND regret improve",
   "Phase 56 flop run RESTARTED ~10:27 with infoset-key cache (bucket encoder was 7.4 s/iter, now ~1 s): python experiments/flop_turn_abstraction.py flop --iters 300 --range 6 --turns 4 --rivers 3 -> results/validation/flop_abstraction_v1.json; expected ~2.5-3.5 h under contention; log /home/user/pa_ckpt/flop_abstraction.log; then turn: python experiments/flop_turn_abstraction.py turn --iters 300 --range 6 --rivers 3"
  ],
- "next_step": "flop/turn abstraction results; soak 1h; Phase 65 analysis when 200k ckpts exist",
- "updated": "2026-10-09T11:01:39Z"
+ "next_step": "Phase 65 analysis once seed0 300k exists (~13:40); confidence table 200k building",
+ "updated": "2026-10-09T13:03:26Z"
 }
