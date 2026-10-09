@@ -322,3 +322,22 @@ tooling is ready (annotation validation, per-field metrics, confidence
 calibration, harness self-test on the synthetic image); temporal (multi-frame)
 metrics remain the synthetic Phase 25 ones. `observer_real_v1.json` is not
 produced because no real fixtures exist.
+
+## Best response feasibility (Phase 66)
+
+`results/validation/best_response_feasibility.json`.
+
+* The v2 betting tree has **191,100 decision nodes per deal** (preflop 106,
+  flop 3,438, turn 31,006, river 156,550) and 313,314 terminals.
+* **Exact best response in real Hold'em: infeasible here.** Even with suit
+  isomorphism the public tree has ~6.5e11 river nodes, each carrying
+  1,326-hand range vectors (>= 1e15 operations).
+* **"Abstract" best response: not meaningful.** v2 is an imperfect-recall
+  abstraction; a best response inside it is not a well-defined game value
+  (and NP-hard in general), so no number is reported.
+* **What exists:** exact exploitability on fixed-runout flop/turn subgames
+  (Phases 56-57) and 52-card river subgames (Phase 34).
+* **Feasible next step (not implemented): local best response (LBR)**, a
+  sampled *lower* bound on real-game exploitability. Estimated 1-5 s per hand
+  in this code base, so 10,000 hands ≈ 3-14 CPU-hours per strategy
+  (SE ≈ 0.1 BB/hand).
