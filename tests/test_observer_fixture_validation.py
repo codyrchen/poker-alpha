@@ -1,7 +1,8 @@
 """Phase 25: the annotated-screenshot validation command works end to end.
 
 The images used here are SYNTHETIC stand-ins written to a temp dir purely to
-exercise the command; tests/fixtures/pokernow itself holds no images.
+exercise the command. tests/fixtures/pokernow holds the real (cropped)
+PokerNow frames; see its README.
 """
 
 import json
@@ -27,10 +28,26 @@ def run(fixture_dir, out):
                           capture_output=True, text=True, check=True, cwd=ROOT).stdout
 
 
-def test_real_fixture_dir_is_empty_and_reports_nothing_measured(tmp_path):
-    raw = list((ROOT / "tests/fixtures/pokernow/raw").glob("*.png"))
-    assert raw == [], "real fixture dir must not contain invented screenshots"
-    out = run(ROOT / "tests/fixtures/pokernow", tmp_path / "r.json")
+def test_real_fixture_dir_holds_only_annotated_real_frames(tmp_path):
+    """tests/fixtures/pokernow holds real PokerNow frames only (cropped to the
+    table), each with a human annotation; the command scores them and says
+    that so few frames — also used for tuning — are not validation."""
+    fdir = ROOT / "tests/fixtures/pokernow"
+    raw = sorted(p.stem for p in (fdir / "raw").glob("*.png"))
+    anns = sorted(p.stem for p in (fdir / "annotations").glob("*.json"))
+    assert raw == anns == ["hu_preflop_0001"]
+    out = run(fdir, tmp_path / "r.json")
+    assert "1 real fixtures found" in out
+    res = json.loads((tmp_path / "r.json").read_text())
+    assert res["metrics"]["screenshots"] == 1
+    assert "not a statistically meaningful" in res["note"]
+    assert "not independent validation" in res["note"]
+
+
+def test_empty_fixture_dir_reports_nothing_measured(tmp_path):
+    (tmp_path / "raw").mkdir()
+    (tmp_path / "annotations").mkdir()
+    out = run(tmp_path, tmp_path / "r.json")
     assert "0 real fixtures found" in out
     assert "real PokerNow accuracy: NOT MEASURED" in out
     res = json.loads((tmp_path / "r.json").read_text())

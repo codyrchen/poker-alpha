@@ -278,3 +278,23 @@ def test_streamlit_calibration_editor(tmp_path):
     assert TableCalibration.load(out).regions["pot"].w == pytest.approx(0.2)
     _button(at, "Load calibration").click().run()
     assert not at.exception, at.exception
+
+
+def test_streamlit_pokernow_heads_up_preset():
+    at, _ = _app()
+    at.checkbox(key="live_compute").set_value(False).run()
+    at.radio(key="live_preset").set_value("PokerNow Heads-Up").run()
+    assert not at.exception, at.exception
+    _button(at, "Use PokerNow Heads-Up layout").click().run()
+    assert not at.exception, at.exception
+    cal = at.session_state["live_cal"]
+    assert (cal.client, cal.num_seats, cal.table_detector) == ("pokernow", 2, "green_oval")
+    assert at.radio(key="live_bbox_mode").value == "PokerNow felt (hue)"
+    at.radio(key="live_hu_side").set_value("left").run()
+    _button(at, "Use PokerNow Heads-Up layout").click().run()
+    left = at.session_state["live_cal"]
+    assert left.regions["seat0_stack"].x < left.regions["seat1_stack"].x
+    at.radio(key="live_preset").set_value("Generic layout").run()
+    _button(at, "Use default layout").click().run()
+    assert at.session_state["live_cal"].client == "generic"
+    assert not at.exception, at.exception

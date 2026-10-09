@@ -27,7 +27,7 @@ from ..observer.live import (CaptureSettings, LiveObserverSession, critical_chec
                              draw_overlay, fused_rows, list_monitors, mss_source_factory,
                              raw_rows, save_frame, seat_state_rows, transform_regions,
                              with_region)
-from ..observer.pokernow import default_layout
+from ..observer.pokernow import LAYOUT_PRESETS, default_layout, pokernow_hu_layout
 from ..observer.regions import Region
 
 DEFAULT_SAVE_DIR = "~/pokeralpha_captures"
@@ -57,7 +57,8 @@ def _set_cal(cal: TableCalibration) -> None:
     """Replace the calibration and drop editor widgets that hold old values."""
     st.session_state.live_cal = cal
     for k in list(st.session_state.keys()):
-        if str(k).startswith(("live_r", "live_dx", "live_dy", "live_sx", "live_sy", "live_bx", "live_by")) \
+        if str(k).startswith(("live_r", "live_dx", "live_dy", "live_sx", "live_sy", "live_bx", "live_by",
+                                "live_bbox_mode", "live_felt")) \
                 and k != "live_report":
             del st.session_state[k]
 
@@ -103,13 +104,28 @@ def _calibration_editor(session: LiveObserverSession):
             "3. Shift / scale all regions until the coloured boxes sit on the table.\n"
             "4. Fine-tune single regions, check the raw readings, save the JSON.\n"
             "Disable decisions while calibrating.")
-        c1, c2, c3 = st.columns(3)
-        seats = c1.number_input("Seats", 2, 9, cal.num_seats, key="live_seats")
-        hero = c2.number_input("Hero seat", 0, int(seats) - 1, min(cal.hero_seat, int(seats) - 1),
-                               key="live_hero")
-        if c3.button("Use default layout"):
-            _set_cal(default_layout(int(seats), int(hero)))
-            st.rerun()
+        preset = st.radio("Layout", LAYOUT_PRESETS, horizontal=True, key="live_preset",
+                          index=1 if cal.client == "pokernow" else 0)
+        if preset == "PokerNow Heads-Up":
+            st.caption("Measured on a real PokerNow heads-up table: both players along the "
+                       "bottom edge, seat 0 = hero, seat 1 = opponent. Table bounds = the green "
+                       "felt, found every frame. Board slots are not yet verified on a real board.")
+            c1, c2 = st.columns(2)
+            side = c1.radio("Hero plate on screen", ["right", "left"], horizontal=True,
+                            key="live_hu_side")
+            if c2.button("Use PokerNow Heads-Up layout"):
+                _set_cal(pokernow_hu_layout(side))
+                st.rerun()
+        else:
+            c1, c2, c3 = st.columns(3)
+            seats = c1.number_input("Seats", 2, 9, cal.num_seats, key="live_seats")
+            hero = c2.number_input("Hero seat", 0, int(seats) - 1,
+                                   min(cal.hero_seat, int(seats) - 1), key="live_hero")
+            if c3.button("Use default layout"):
+                _set_cal(default_layout(int(seats), int(hero)))
+                st.rerun()
+        st.caption(f"Active calibration: **{cal.name}** ({cal.num_seats} seats, hero seat "
+                   f"{cal.hero_seat}, recognizers: {cal.client})")
         path = st.text_input("Calibration JSON path", "pokernow_calibration.json", key="live_cal_path")
         b1, b2 = st.columns(2)
         if b1.button("Load calibration"):
@@ -126,9 +142,15 @@ def _calibration_editor(session: LiveObserverSession):
                 st.error(f"Cannot save: {exc}")
 
         st.markdown("**Table bounds** (pixels of the captured frame)")
-        mode = st.radio("Bounds", ["Detect felt colour", "Fixed box"],
-                        index=0 if cal.table_bbox is None else 1, horizontal=True, key="live_bbox_mode")
-        if mode == "Fixed box":
+        modes = ["Detect felt colour", "PokerNow felt (hue)", "Fixed box"]
+        cur_mode = 2 if cal.table_bbox is not None else (1 if cal.table_detector == "green_oval" else 0)
+        mode = st.radio("Bounds", modes, index=cur_mode, horizontal=True, key="live_bbox_mode")
+        if mode == "PokerNow felt (hue)":
+            cal.table_bbox = None
+            cal.table_detector = "green_oval"
+            st.caption("Ellipse fitted to the largest felt-hue blob: follows window size and "
+                       "browser zoom; ignores the felt's shading, logo and pot pill.")
+        elif mode == "Fixed box":
             cur = cal.table_bbox or session.table_bbox() or (0, 0, 800, 500)
             c = st.columns(4)
             l_ = c[0].number_input("x0", 0, 20000, int(cur[0]), key="live_bx0")
@@ -139,6 +161,7 @@ def _calibration_editor(session: LiveObserverSession):
                 cal.table_bbox = (int(l_), int(t_), int(r_), int(b_))
         else:
             cal.table_bbox = None
+            cal.table_detector = "felt_color"
             hexcol = "#%02x%02x%02x" % tuple(cal.felt_color)
             col = st.color_picker("Felt colour", hexcol, key="live_felt")
             cal.felt_color = tuple(int(col[i:i + 2], 16) for i in (1, 3, 5))

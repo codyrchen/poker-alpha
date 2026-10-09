@@ -1,0 +1,1 @@
+hu_preflop_0001 is also the frame the PokerNow heads-up layout was aligned on and the PokerNow OCR / card recognizer settings were chosen on, so its score is a regression check, not independent validation.

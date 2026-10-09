@@ -48,14 +48,23 @@ def _gray(image) -> np.ndarray:
     return np.asarray(image.convert("L"), dtype=np.float64)
 
 
-def foreground_mask(image, contrast: float = 60.0) -> np.ndarray:
-    """Pixels that differ strongly from the region's border (background)."""
+def _background(g: np.ndarray, mode: str = "border") -> float:
+    if mode == "mode":        # the region's most common grey level
+        hist, edges = np.histogram(g, bins=32, range=(0, 256))
+        k = int(np.argmax(hist))
+        return float(np.median(g[(g >= edges[k]) & (g <= edges[k + 1])]))
+    return float(np.median(np.concatenate([g[0], g[-1], g[:, 0], g[:, -1]])))
+
+
+def foreground_mask(image, contrast: float = 60.0, background: str = "border") -> np.ndarray:
+    """Pixels that differ strongly from the background: the median of the
+    region's border (default) or, with ``background="mode"``, the region's
+    most common grey level (robust when the region's edge clips a
+    neighbouring element, e.g. a bet pill inside a player plate)."""
     g = _gray(image)
     if g.size == 0:
         return np.zeros((0, 0), dtype=bool)
-    border = np.concatenate([g[0], g[-1], g[:, 0], g[:, -1]])
-    bg = float(np.median(border))
-    return np.abs(g - bg) > contrast
+    return np.abs(g - _background(g, background)) > contrast
 
 
 def segment_glyphs(mask: np.ndarray, min_pixels: int = 2,
@@ -68,7 +77,8 @@ def segment_glyphs(mask: np.ndarray, min_pixels: int = 2,
     to right, or ``None`` if the region holds no text. With
     ``drop_edge_blobs`` components touching the top or bottom edge are
     discarded: text is centred in its region, so such blobs are intruders
-    (a neighbouring button, chip or card) rather than glyphs.
+    (a neighbouring button, chip or card) rather than glyphs; so are blobs
+    lying entirely above or below the tallest glyph.
     """
     from scipy import ndimage
 
@@ -89,6 +99,11 @@ def segment_glyphs(mask: np.ndarray, min_pixels: int = 2,
         boxes.append([cs.start, cs.stop, rs.start, rs.stop])
     if not boxes:
         return None
+    if drop_edge_blobs:
+        # One text line: blobs entirely above or below the tallest glyph are
+        # fragments of neighbouring UI (a pill or plate edge), not text.
+        tall = max(boxes, key=lambda b: b[3] - b[2])
+        boxes = [b for b in boxes if b[2] < tall[3] and b[3] > tall[2]]
     boxes.sort()
     merged = [boxes[0]]
     for c0, c1, r0, r1 in boxes[1:]:
@@ -170,10 +185,21 @@ class TemplateOCR:
     def __init__(self, charset: str = "0123456789.,",
                  templates: Optional[Dict[str, "GlyphFeatures"]] = None,
                  font_factory: Optional[Callable[[int], object]] = None,
-                 contrast: float = 60.0) -> None:
+                 contrast: float = 60.0,
+                 relative_contrast: Optional[float] = None,
+                 confidence_ignores: str = "",
+                 background: str = "border") -> None:
         require_pil()
         self.charset = charset
         self.contrast = contrast
+        # If set, a pixel is text when it differs from the background by more
+        # than this fraction of the region's strongest difference (and at
+        # least ``contrast``): keeps small, bold, anti-aliased glyphs apart.
+        self.relative_contrast = relative_contrast
+        # Glyphs whose identity the caller resolves otherwise (separators by
+        # number grammar, a leading sign) do not cap the confidence.
+        self.confidence_ignores = confidence_ignores
+        self.background = background
         self.templates = templates or self._render_templates(charset, font_factory,
                                                              contrast)
 
@@ -257,12 +283,24 @@ class TemplateOCR:
         return (self._split(mask, (c0, cut), cap_h, depth + 1)
                 + self._split(mask, (cut, c1), cap_h, depth + 1))
 
+    def _contrast(self, image) -> float:
+        if self.relative_contrast is None:
+            return self.contrast
+        g = _gray(image)
+        if g.size == 0:
+            return self.contrast
+        peak = float(np.abs(g - _background(g, self.background)).max())
+        return max(self.contrast, self.relative_contrast * peak)
+
     def read_text(self, image) -> OCRResult:
-        mask = foreground_mask(image, self.contrast)
+        mask = foreground_mask(image, self._contrast(image), self.background)
         seg = segment_glyphs(mask, drop_edge_blobs=True)
         if seg is None:
             return OCRResult("", 1.0)
-        _, _, spans = seg
+        top, bottom, spans = seg
+        # Keep only the text line: blobs dropped by the segmentation (a name's
+        # descender above, a pill or chip edge below) must not stretch glyphs.
+        mask = mask[top:bottom]
         cap_top, cap_h = _cap_band(mask, spans)
         pieces = [p for sp in spans for p in self._split(mask, sp, cap_h)]
         chars, scores = [], []
@@ -272,8 +310,38 @@ class TemplateOCR:
             ch, sc = self.classify(glyph_features(mask[:, c0:c1], cap_top, cap_h))
             chars.append(ch)
             scores.append(sc)
-        return OCRResult("".join(chars), min(scores) if scores else 0.0,
+        counted = [sc for ch, sc in zip(chars, scores) if ch not in self.confidence_ignores]
+        counted = counted or scores
+        return OCRResult("".join(chars), min(counted) if counted else 0.0,
                          tuple(scores))
+
+
+def dejavu_font(name: str = "DejaVuSans-Bold.ttf") -> Callable[[int], object]:
+    """Font factory for a DejaVu face bundled with matplotlib (a core
+    dependency), so these templates need no system fonts."""
+    import os
+
+    import matplotlib
+    from PIL import ImageFont
+
+    path = os.path.join(os.path.dirname(matplotlib.__file__), "mpl-data", "fonts",
+                        "ttf", name)
+    return lambda size: ImageFont.truetype(path, size)
+
+
+def pokernow_ocr(charset: str = "0123456789.,+") -> TemplateOCR:
+    """Template OCR for PokerNow amounts (pot, stacks, bet pills).
+
+    DejaVu Sans Bold is close to PokerNow's bold sans digits; the relative
+    threshold keeps adjacent bold digits apart at small sizes. Separators
+    (resolved by :func:`fix_separators`) and the bet pill's leading "+" do
+    not cap the confidence. Chosen on one real heads-up frame
+    (tests/fixtures/pokernow): a tuned setting, not an independently
+    validated one.
+    """
+    return TemplateOCR(charset, font_factory=dejavu_font("DejaVuSans-Bold.ttf"),
+                       relative_contrast=0.5, confidence_ignores=".,+",
+                       background="mode")
 
 
 class TesseractOCR:

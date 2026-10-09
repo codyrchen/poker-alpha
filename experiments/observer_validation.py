@@ -95,9 +95,17 @@ def fixture_mode(fixture_dir: Path, out_path: Path) -> dict:
               "calibration": str(cal_file) if cal_fixed else "default_layout (not PokerNow-derived)",
               "annotations": len(anns), "missing_images": missing,
               "metrics": score(frames)}
+    notes = []
     if not frames:
-        result["note"] = ("no annotated screenshots found: nothing was measured; "
-                          "real PokerNow accuracy remains unvalidated")
+        notes.append("no annotated screenshots found: nothing was measured; "
+                     "real PokerNow accuracy remains unvalidated")
+    elif len(frames) < 10:
+        notes.append(f"only {len(frames)} annotated screenshot(s): a smoke test, "
+                     "not a statistically meaningful accuracy estimate")
+    if (fixture_dir / "NOTE.txt").exists():
+        notes.append((fixture_dir / "NOTE.txt").read_text().strip())
+    if notes:
+        result["note"] = " | ".join(notes)
     out_path.parent.mkdir(parents=True, exist_ok=True)
     out_path.write_text(json.dumps(result, indent=1))
     m = result["metrics"]
@@ -105,6 +113,8 @@ def fixture_mode(fixture_dir: Path, out_path: Path) -> dict:
           f"of {len(anns)} annotations)")
     if not frames:
         print("real PokerNow accuracy: NOT MEASURED")
+    elif "note" in result:
+        print("NOTE:", result["note"])
     if missing:
         print(f"missing images: {missing}")
     for k in ("hero_cards", "board_cards", "stack", "bet", "pot", "dealer",

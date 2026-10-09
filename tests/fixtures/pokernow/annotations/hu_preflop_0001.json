@@ -1,0 +1,15 @@
+{
+  "format": "pokeralpha.screenshot_annotation/v1",
+  "image": "raw/hu_preflop_0001.png",
+  "num_seats": 2,
+  "hero_seat": 0,
+  "dealer_seat": 1,
+  "hero_cards": ["Js", "7h"],
+  "board": [],
+  "pot": 0.0,
+  "street": "preflop",
+  "seats": [
+    {"seat": 0, "stack": 49.25, "bet": 0.0, "active": true},
+    {"seat": 1, "stack": 49.75, "bet": 1.0, "active": true}
+  ]
+}

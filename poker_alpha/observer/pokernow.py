@@ -9,6 +9,11 @@ count; it is **not** measured from real PokerNow screenshots.
     Exact PokerNow visual accuracy is not validated without representative
     screenshots.
 
+:func:`pokernow_hu_layout` is different: real PokerNow heads-up geometry,
+aligned on one real annotated frame (``tests/fixtures/pokernow``), with
+PokerNow-specific recognizers (``client="pokernow"``). One frame, also used
+for tuning, is a regression check, not a validation.
+
 To support a real client: take screenshots, adjust the region boxes (all
 table-normalized, so resolution-independent) in a saved
 :class:`~poker_alpha.observer.calibration.TableCalibration`, learn glyph
@@ -28,10 +33,10 @@ from typing import Dict, Optional, Tuple
 import numpy as np
 
 from .calibration import TableCalibration, color_mask, locate_table
-from .cards import CardRecognizer, TemplateCardRecognizer
+from .cards import CardRecognizer, PokerNowCardRecognizer, TemplateCardRecognizer
 from .regions import Region, crop
 from .text import (OCRBackend, TemplateOCR, fix_separators, foreground_mask,
-                   parse_amount, segment_glyphs)
+                   parse_amount, pokernow_ocr, segment_glyphs)
 
 
 def default_layout(num_seats: int = 6, hero_seat: int = 0,
@@ -63,6 +68,78 @@ def default_layout(num_seats: int = 6, hero_seat: int = 0,
         regions[f"seat{seat}_dealer"] = Region(sx + 0.075, sy - 0.035, 0.024, 0.038)
     return TableCalibration(name=name, num_seats=num_seats, hero_seat=hero_seat,
                             regions=regions)
+
+
+# -- real PokerNow heads-up layout --------------------------------------------
+#
+# Measured on a real PokerNow heads-up frame (tests/fixtures/pokernow/raw/
+# hu_preflop_0001.png). Coordinates below are pixels of that frame; the table
+# box there (ellipse fitted to the green felt, ``table_detector="green_oval"``)
+# is ``_HU_REF_TABLE``. Regions are stored relative to the table box, so any
+# capture size / browser zoom works.
+#
+# In PokerNow heads-up both players sit along the bottom edge, below the felt.
+# Each player "container" is the same: the hole cards on the left, the name /
+# stack plate to their right, the street bet as a pill under the stack inside
+# the plate, the dealer button above the card / plate junction. The plate
+# turns pale yellow for the player to act.
+_HU_REF_TABLE = (4, 9, 631, 312)
+_HU_CONTAINER_X = {"left": 94.0, "right": 331.0}
+_HU_SEAT = {                       # (x0, y0, x1, y1), x relative to the container
+    "card_0": (3, 320, 46, 380),   # left (rear) hole card face
+    "card_1": (49, 319, 97, 379),  # right (front) hole card face
+    "cards": (13, 321, 88, 376),   # where an opponent's card backs show
+    "name": (104, 335, 151, 349),
+    "stack": (104, 348, 156, 365),
+    "bet": (104, 362, 156, 379),   # the "+1.00" pill, with a small margin
+    "dealer": (82, 281, 108, 302),
+    "active": (153, 333, 177, 360),  # plate background right of the text
+}
+_HU_POT = (262, 51, 367, 78)
+# The reference frame is preflop: the board slots below are placed in the
+# felt centre at hole-card size but NOT yet verified against a real board.
+_HU_BOARD = [(189 + 52 * i, 101, 235 + 52 * i, 166) for i in range(5)]
+
+
+def _hu_region(x0: float, y0: float, x1: float, y1: float, dx: float = 0.0) -> Region:
+    l, t, r, b = _HU_REF_TABLE
+    w, h = r - l, b - t
+    return Region((x0 + dx - l) / w, (y0 - t) / h, (x1 - x0) / w, (y1 - y0) / h)
+
+
+def pokernow_hu_layout(hero_side: str = "right",
+                       name: str = "pokernow-heads-up") -> TableCalibration:
+    """Real PokerNow heads-up geometry: seat 0 = hero, seat 1 = opponent.
+
+    ``hero_side`` is where the hero's plate is on screen ("right" = hero
+    bottom-right, opponent bottom-left). The table bounds are the green felt,
+    found each frame by hue (``table_detector="green_oval"``), so the layout
+    follows browser zoom and window size.
+    """
+    if hero_side not in _HU_CONTAINER_X:
+        raise ValueError("hero_side must be 'left' or 'right'")
+    opp_side = "left" if hero_side == "right" else "right"
+    regions: Dict[str, Region] = {"pot": _hu_region(*_HU_POT)}
+    for i, box in enumerate(_HU_BOARD):
+        regions[f"board_{i}"] = _hu_region(*box)
+    for seat, side in ((0, hero_side), (1, opp_side)):
+        dx = _HU_CONTAINER_X[side]
+        for k in ("cards", "name", "stack", "bet", "dealer", "active"):
+            regions[f"seat{seat}_{k}"] = _hu_region(*_HU_SEAT[k], dx=dx)
+        if seat == 0:
+            regions["hero_card_0"] = _hu_region(*_HU_SEAT["card_0"], dx=dx)
+            regions["hero_card_1"] = _hu_region(*_HU_SEAT["card_1"], dx=dx)
+    return TableCalibration(
+        name=name, num_seats=2, hero_seat=0, regions=regions,
+        table_detector="green_oval", client="pokernow", pot_includes_bets=False,
+        felt_color=(40, 130, 78),
+        text_color=(250, 250, 250), highlight_color=(248, 252, 215),
+        button_color=(226, 234, 250), card_back_color=(215, 125, 125),
+        suit_colors={"s": (25, 25, 25), "h": (200, 30, 40),
+                     "d": (200, 30, 40), "c": (25, 25, 25)})
+
+
+LAYOUT_PRESETS = ("Generic layout", "PokerNow Heads-Up")
 
 
 @dataclass(frozen=True)
@@ -101,10 +178,16 @@ class PokerNowStyleAdapter:
                  card_recognizer: Optional[CardRecognizer] = None,
                  color_tolerance: int = 40) -> None:
         self.cal = calibration
-        self.amount_ocr = amount_ocr or TemplateOCR("0123456789.,")
-        self.stack_ocr = stack_ocr or TemplateOCR("0123456789.,ALIN")
-        self.cards = card_recognizer or TemplateCardRecognizer(
-            calibration.suit_colors)
+        if calibration.client == "pokernow":
+            # Real-PokerNow recognizers (see pokernow_ocr / PokerNowCardRecognizer).
+            self.amount_ocr = amount_ocr or pokernow_ocr()
+            self.stack_ocr = stack_ocr or pokernow_ocr("0123456789.,+ALIN")
+            self.cards = card_recognizer or PokerNowCardRecognizer()
+        else:
+            self.amount_ocr = amount_ocr or TemplateOCR("0123456789.,")
+            self.stack_ocr = stack_ocr or TemplateOCR("0123456789.,ALIN")
+            self.cards = card_recognizer or TemplateCardRecognizer(
+                calibration.suit_colors)
         self.tol = color_tolerance
 
     # -- TableLayoutAdapter interface -----------------------------------------
@@ -121,15 +204,19 @@ class PokerNowStyleAdapter:
     def _amount(self, img, name: str, ts, ocr) -> FieldReading:
         from .text import segment_glyphs
 
-        if segment_glyphs(foreground_mask(img), drop_edge_blobs=True) is None:
+        bg = getattr(ocr, "background", "border")
+        if segment_glyphs(foreground_mask(img, background=bg), drop_edge_blobs=True) is None:
             return FieldReading(0.0, 1.0, name, ts)  # clearly empty
         res = ocr.read_text(img)
-        if res.text == "ALLIN":
-            return FieldReading("ALLIN", res.confidence, name, ts)
-        value = parse_amount(fix_separators(res.text))
+        text, conf = res.text, res.confidence
+        if text.startswith("+"):
+            text = text[1:]      # PokerNow bet pills read "+1.00"
+        if text == "ALLIN":
+            return FieldReading("ALLIN", conf, name, ts)
+        value = parse_amount(fix_separators(text))
         if value is None:
             return FieldReading(None, 0.0, name, ts)
-        return FieldReading(value, res.confidence, name, ts)
+        return FieldReading(value, conf, name, ts)
 
     def _color_share(self, img, color) -> float:
         if img.size[0] == 0 or img.size[1] == 0:
@@ -154,7 +241,8 @@ class PokerNowStyleAdapter:
         for s in range(self.cal.num_seats):
             stack = self._amount(crops[f"seat{s}_stack"], f"seat{s}_stack",
                                  timestamp, self.stack_ocr)
-            occupied = segment_glyphs(foreground_mask(crops[f"seat{s}_stack"]),
+            occupied = segment_glyphs(foreground_mask(crops[f"seat{s}_stack"], background=getattr(
+                self.stack_ocr, "background", "border")),
                                       drop_edge_blobs=True) is not None
             f[f"seat{s}.occupied"] = FieldReading(bool(occupied), stack.confidence
                                                   if occupied else 1.0,

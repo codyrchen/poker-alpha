@@ -3,7 +3,10 @@
 A calibration is versioned JSON (``pokeralpha.calibration/v1``) so a user can
 calibrate once per layout (theme, seat count) and reuse it at any window size:
 regions are relative to the table bounding box, which is either fixed in
-pixels or detected each frame from the felt colour.
+pixels or detected each frame (``table_detector``): ``"felt_color"`` takes the
+extent of pixels near ``felt_color``; ``"green_oval"`` takes the largest
+connected blob with the felt's *hue* (robust to the shading gradient, logo
+watermark and pot pill on PokerNow's felt).
 
 Region names (``i`` = seat index):
 
@@ -34,6 +37,8 @@ from .regions import Box, Region
 
 CALIBRATION_FORMAT = "pokeralpha.calibration/v1"
 RGB = Tuple[int, int, int]
+TABLE_DETECTORS = ("felt_color", "green_oval")
+CLIENTS = ("generic", "pokernow")
 
 
 @dataclass
@@ -43,6 +48,9 @@ class TableCalibration:
     hero_seat: int
     regions: Dict[str, Region]
     table_bbox: Optional[Box] = None          # None => detect felt each frame
+    table_detector: str = "felt_color"        # or "green_oval" (see module doc)
+    client: str = "generic"                   # "pokernow": real-PokerNow recognizers
+    pot_includes_bets: bool = True            # PokerNow's pot excludes street bets
     felt_color: RGB = (31, 94, 61)
     felt_tolerance: int = 40
     text_color: RGB = (240, 240, 240)
@@ -56,6 +64,10 @@ class TableCalibration:
     def __post_init__(self) -> None:
         if not 2 <= self.num_seats <= 9:
             raise CalibrationError("2-9 seats")
+        if self.table_detector not in TABLE_DETECTORS:
+            raise CalibrationError(f"table_detector must be one of {TABLE_DETECTORS}")
+        if self.client not in CLIENTS:
+            raise CalibrationError(f"client must be one of {CLIENTS}")
         if not 0 <= self.hero_seat < self.num_seats:
             raise CalibrationError("hero seat out of range")
         required = {"pot"} | {f"board_{i}" for i in range(5)} | \
@@ -73,6 +85,9 @@ class TableCalibration:
             "format": CALIBRATION_FORMAT, "name": self.name,
             "num_seats": self.num_seats, "hero_seat": self.hero_seat,
             "table_bbox": list(self.table_bbox) if self.table_bbox else None,
+            "table_detector": self.table_detector,
+            "client": self.client,
+            "pot_includes_bets": self.pot_includes_bets,
             "felt_color": list(self.felt_color),
             "felt_tolerance": self.felt_tolerance,
             "text_color": list(self.text_color),
@@ -92,6 +107,9 @@ class TableCalibration:
             hero_seat=int(d["hero_seat"]),
             regions={k: Region(*v) for k, v in d["regions"].items()},
             table_bbox=tuple(d["table_bbox"]) if d.get("table_bbox") else None,
+            table_detector=d.get("table_detector", "felt_color"),
+            client=d.get("client", "generic"),
+            pot_includes_bets=bool(d.get("pot_includes_bets", True)),
             felt_color=tuple(d["felt_color"]),
             felt_tolerance=int(d["felt_tolerance"]),
             text_color=tuple(d["text_color"]),
@@ -123,6 +141,8 @@ def locate_table(image, calibration: TableCalibration,
     """
     if calibration.table_bbox is not None:
         return tuple(int(v) for v in calibration.table_bbox)
+    if calibration.table_detector == "green_oval":
+        return locate_hue_blob(image, calibration.felt_color)
     mask = color_mask(image, calibration.felt_color, calibration.felt_tolerance)
     if mask.mean() < min_fraction:
         raise CalibrationError("table felt not found; recalibrate felt_color "
@@ -130,3 +150,54 @@ def locate_table(image, calibration: TableCalibration,
     rows = np.flatnonzero(mask.mean(axis=1) > 0.05)
     cols = np.flatnonzero(mask.mean(axis=0) > 0.05)
     return (int(cols[0]), int(rows[0]), int(cols[-1]) + 1, int(rows[-1]) + 1)
+
+
+def _hsv(arr: np.ndarray):
+    mx, mn = arr.max(axis=-1), arr.min(axis=-1)
+    sat = np.where(mx > 0, (mx - mn) / np.maximum(mx, 1e-9), 0.0)
+    r, g, b = arr[..., 0], arr[..., 1], arr[..., 2]
+    d = np.maximum(mx - mn, 1e-9)
+    hue = np.where(mx == r, ((g - b) / d) % 6,
+                   np.where(mx == g, (b - r) / d + 2, (r - g) / d + 4)) * 60.0
+    return hue, sat, mx / 255.0
+
+
+def locate_hue_blob(image, felt_color: RGB, hue_tol: float = 25.0,
+                    min_sat: float = 0.35, min_val: float = 0.2,
+                    min_fraction: float = 0.03) -> Box:
+    """Bounding box of the ellipse fitted to the largest blob with the felt's hue.
+
+    Unlike :func:`locate_table` with a colour tolerance, this ignores
+    brightness changes across the felt (PokerNow's radial shading, the
+    watermark logo, the pot pill) and stray matching pixels elsewhere on
+    screen (buttons, badges), which are separate, smaller blobs.
+    """
+    from scipy import ndimage
+
+    rgb = np.asarray(image.convert("RGB"))
+    if rgb.size == 0:
+        raise CalibrationError("empty frame")
+    # The felt is large: find it on a subsampled frame (~640 px on the long
+    # side), then scale the fitted ellipse back (error ~ the step, 1-3 px).
+    step = max(1, int(round(max(rgb.shape[:2]) / 640)))
+    arr = rgb[::step, ::step].astype(np.float64)
+    hue, sat, val = _hsv(arr)
+    ref_hue, _, _ = _hsv(np.array([[felt_color]], dtype=np.float64))
+    dh = np.abs((hue - float(ref_hue[0, 0]) + 180.0) % 360.0 - 180.0)
+    mask = (dh <= hue_tol) & (sat >= min_sat) & (val >= min_val)
+    if mask.mean() < min_fraction:
+        raise CalibrationError("table felt not found (no large blob with the felt hue); "
+                               "check felt_color or set table_bbox")
+    labels, n = ndimage.label(mask)
+    sizes = ndimage.sum(mask, labels, range(1, n + 1))
+    k = int(np.argmax(sizes)) + 1
+    if sizes[k - 1] < min_fraction * mask.size:
+        raise CalibrationError("table felt not found (felt-hue blob too small)")
+    ys, xs = np.nonzero(labels == k)
+    # Ellipse fitted by moments (a filled ellipse has semi-axis = 2 sigma):
+    # unlike the blob's raw extent it barely moves when a badge, chip or the
+    # dealer button touches the felt edge and joins the blob.
+    cx, cy = (xs.mean() + 0.5) * step, (ys.mean() + 0.5) * step
+    ax, ay = 2.0 * xs.std() * step, 2.0 * ys.std() * step
+    return (int(round(cx - ax)), int(round(cy - ay)),
+            int(round(cx + ax)), int(round(cy + ay)))

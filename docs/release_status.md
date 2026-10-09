@@ -27,7 +27,7 @@ abstraction is not computed. The observer is read-only and never acts.
 | PARTIALLY VALIDATED | screen observer on synthetic images | synthetic fixtures; annotation validation and metrics harness ready |
 | EXPERIMENTAL | trained HU strategy (v2, 3 seeds x 100k) | 10 / 10 sanity checks per seed; not converged; preflop noise-dominated (all 169 BTN first-action keys gated out) |
 | EXPERIMENTAL | range and opponent modelling | beliefs under heuristic priors; no ground-truth accuracy |
-| BLOCKED | real PokerNow recognition | **BLOCKED ON REAL FIXTURES** (0 annotated screenshots) |
+| EXPERIMENTAL | real PokerNow recognition | heads-up preset aligned on 1 real annotated frame; all fields correct on it at 0.8x-3x, but the same frame was used for tuning, so accuracy is **not measured** (post-RC, `docs/observer.md`) |
 
 ## Release solver
 
@@ -61,12 +61,12 @@ it/s. Online (median, `results/validation/latency_benchmark.json`):
 | Research | **READY WITH CAVEATS** — measured, reproducible, limits documented |
 | Hand analysis | **READY WITH MODEL CAVEATS** — EVs are conditional on assumed ranges / response models |
 | Private / play-money / test decision support | **READY WITH MANUAL STATE VERIFICATION** — read-only; verify recognized state; only where permitted |
-| Real screen observation | **BLOCKED ON REAL FIXTURES** |
+| Real screen observation | **EXPERIMENTAL** — PokerNow heads-up only, 1 real frame (also the tuning frame); verify every reading |
 | Trusted solver recommendations | **EXPERIMENTAL** — gated, abstract, not converged |
 
 ## Next steps that would change a rating
 
-1. Real annotated PokerNow screenshots -> run `experiments/observer_validation.py --fixture-dir tests/fixtures/pokernow`.
+1. More real annotated PokerNow screenshots (not used for tuning; boards, other ranks / suits, all-in) -> run `experiments/observer_validation.py --fixture-dir tests/fixtures/pokernow`.
 2. Longer v2 training (3 seeds to 300k, ~6.5 h) and a local best-response / exploitability estimate inside the abstraction.
 3. Exact abstraction-error measurement on flop and turn subgames.
 4. A better-calibrated rollout response model (the default model overfolds to large bets).

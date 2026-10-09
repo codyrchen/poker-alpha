@@ -78,16 +78,18 @@ the tracker relies on — usually, not always.
 
 ## Real PokerNow validation status
 
-**BLOCKED ON REAL FIXTURES (Phase 30).** `tests/fixtures/pokernow/raw/` and
-`annotations/` contain no screenshots: none have been collected, so no real
-accuracy exists and none is claimed. Nothing was fabricated, nothing was
-scraped and nothing interacted with PokerNow. The harness ran on the empty
-directory and reported "0 annotated screenshots, nothing measured"
-(`results/validation/observer_fixture_validation.json`). All observer
-numbers in this document come from synthetic images. `tests/fixtures/pokernow/` holds the structure (`raw/`,
-`annotations/`, optional `calibration.json`) and the annotation format
-(`pokeralpha.screenshot_annotation/v1`, see its README). Once screenshots and
-annotations are added:
+**One real heads-up frame, used for alignment and tuning; not validated.**
+`tests/fixtures/pokernow/raw/hu_preflop_0001.png` is a real PokerNow
+heads-up table (preflop, blinds 0.25 / 0.50), cropped to the table, with the
+chat preview and both player names painted over; its ground truth is in
+`annotations/hu_preflop_0001.json` and the layout in `calibration.json`.
+The harness scores it fully correct (`results/validation/
+observer_fixture_validation.json`), but the same frame was used to place
+the regions and to choose the PokerNow OCR / card-recognizer settings, so
+this is a regression check, **not** an accuracy measurement. The note in the
+JSON says so. Real accuracy needs more annotated frames, especially ones
+not used for tuning (flop / turn / river boards, other ranks and suits,
+all-in, folded, larger stacks).
 
 ```bash
 python experiments/observer_validation.py --fixture-dir tests/fixtures/pokernow
@@ -97,6 +99,39 @@ reports hero-card, board-card, stack (exact + MAE), bet (exact + MAE), pot
 (exact + MAE), dealer, seat-occupancy and full-state accuracy and writes
 `results/validation/observer_fixture_validation.json`. With an empty
 directory it reports that nothing was measured.
+
+## PokerNow heads-up preset
+
+`pokernow_hu_layout(hero_side="right")` (UI: *Layout -> PokerNow
+Heads-Up*) replaces the generic oval for real PokerNow heads-up tables.
+The generic `default_layout(2, 0)` puts seat 1 at the top of the oval; in
+PokerNow heads-up **both players sit along the bottom edge**, so the generic
+layout reads both seats as empty and misses the hero cards, stacks and
+dealer button.
+
+| | |
+| --- | --- |
+| seats | seat 0 = hero (bottom-right by default), seat 1 = opponent (bottom-left); `hero_side="left"` mirrors |
+| per player | hole cards (hero faces / opponent backs) on the left of the name + stack plate, the street bet as a "+1.00" pill under the stack, dealer button above the card / plate junction, the plate turns pale yellow for the player to act |
+| table bounds | `table_detector="green_oval"`: ellipse fitted (by moments) to the largest felt-hue blob, on a frame subsampled to ~640 px. It follows window size and browser zoom and ignores the felt's shading, the logo watermark, the pot pill and badges touching the felt edge |
+| pot | PokerNow's centre number leaves out bets still in front of players (`pot_includes_bets=False`); the tracker adds visible bets to get the total pot the state model expects |
+| board | 5 slots in the felt centre, **not yet verified** (the reference frame is preflop) |
+| recognizers | `client="pokernow"`: amounts via `pokernow_ocr()` (DejaVu Sans Bold templates, 0.5 relative threshold, histogram-mode background so bet pills inside plates work, separators / "+" not capping confidence); cards via `PokerNowCardRecognizer` |
+
+`PokerNowCardRecognizer` handles PokerNow's two-colour deck and dimmed
+cards: the card face is found relative to its own brightness (the hero's
+cards in the reference frame are dimmed to grey ~100), rank = upper-left ink
+matched against DejaVu Serif Bold glyphs rotated +-12 degrees (hole cards
+are fanned), suit = red / black by colour, then spade vs club or heart vs
+diamond by shape. Only J of spades and 7 of hearts have been seen on a real
+frame; the other 11 ranks and 2 suits are untested on real PokerNow images.
+
+On the reference frame all fields match the ground truth at 0.8x-3x scale
+and on the uncropped desktop screenshot, at 45-270 ms per frame. Confidence
+values are match scores: hero cards ~0.4-0.55, amounts ~0.4-0.6, so the
+fused critical confidence is ~0.40 and the live mode's default threshold of
+0.5 blocks decisions on this frame. Lowering the threshold is a judgement
+call: it accepts match scores that are not calibrated probabilities.
 
 ## Live screen mode (Streamlit)
 
@@ -135,10 +170,13 @@ decisions* while doing this):
    board, orange = pot, green = stacks, red = bets, white = dealer-button
    spots, blue = seat name / card-back / highlight boxes; labels show the
    last raw reading.
-2. Set seats and hero seat, then **Use default layout**.
-3. Table bounds: either *Fixed box* (x0, y0, x1, y1 in pixels of the
-   captured frame — the most reliable) or *Detect felt colour* (pick the
-   felt colour or "Sample felt colour at table centre", adjust tolerance).
+2. Pick the layout: **PokerNow Heads-Up** (choose which side the hero's
+   plate is on, then **Use PokerNow Heads-Up layout**) or **Generic
+   layout** (seats, hero seat, **Use default layout**).
+3. Table bounds: *PokerNow felt (hue)* (set by the PokerNow preset; follows
+   the felt automatically), *Fixed box* (x0, y0, x1, y1 in pixels of the
+   captured frame) or *Detect felt colour* (pick the felt colour or "Sample
+   felt colour at table centre", adjust tolerance).
 4. Coarse alignment: change dx / dy / scale x / scale y and press **Apply**
    until the boxes sit on the table elements.
 5. Fine-tune single regions (x, y, w, h in table-normalized units) and press

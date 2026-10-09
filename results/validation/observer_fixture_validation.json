@@ -1,52 +1,89 @@
 {
  "fixture_dir": "tests/fixtures/pokernow",
- "calibration": "default_layout (not PokerNow-derived)",
- "annotations": 0,
+ "calibration": "tests/fixtures/pokernow/calibration.json",
+ "annotations": 1,
  "missing_images": [],
  "metrics": {
   "hero_cards": {
-   "correct": 0,
-   "total": 0,
-   "accuracy": null
+   "correct": 2,
+   "total": 2,
+   "accuracy": 1.0
   },
   "board_cards": {
-   "correct": 0,
-   "total": 0,
-   "accuracy": null
+   "correct": 5,
+   "total": 5,
+   "accuracy": 1.0
   },
   "stack": {
-   "correct": 0,
-   "total": 0,
-   "accuracy": null
+   "correct": 2,
+   "total": 2,
+   "accuracy": 1.0,
+   "mae": 0.0,
+   "unreadable": 0
   },
   "bet": {
-   "correct": 0,
-   "total": 0,
-   "accuracy": null
+   "correct": 2,
+   "total": 2,
+   "accuracy": 1.0,
+   "mae": 0.0,
+   "unreadable": 0
   },
   "pot": {
-   "correct": 0,
-   "total": 0,
-   "accuracy": null
+   "correct": 1,
+   "total": 1,
+   "accuracy": 1.0,
+   "mae": 0.0,
+   "unreadable": 0
   },
   "dealer": {
-   "correct": 0,
-   "total": 0,
-   "accuracy": null
+   "correct": 1,
+   "total": 1,
+   "accuracy": 1.0
   },
   "seat_occupancy": {
-   "correct": 0,
-   "total": 0,
-   "accuracy": null
+   "correct": 2,
+   "total": 2,
+   "accuracy": 1.0
   },
+  "street": {
+   "correct": 1,
+   "total": 1,
+   "accuracy": 1.0
+  },
+  "hero_cards_exact_pair": {
+   "correct": 1,
+   "total": 1,
+   "accuracy": 1.0
+  },
+  "board_exact": {
+   "correct": 1,
+   "total": 1,
+   "accuracy": 1.0
+  },
+  "confidence_calibration": [
+   {
+    "confidence": [
+     0.0,
+     0.5
+    ],
+    "n": 2,
+    "accuracy": 1.0
+   },
+   {
+    "confidence": [
+     0.95,
+     1.0
+    ],
+    "n": 5,
+    "accuracy": 1.0
+   }
+  ],
   "full_state": {
-   "correct": 0,
-   "total": 0,
-   "accuracy": null
+   "correct": 1,
+   "total": 1,
+   "accuracy": 1.0
   },
-  "screenshots": 0
+  "screenshots": 1
  },
- "note": "no annotated screenshots found: nothing was measured; real PokerNow accuracy remains unvalidated",
- "phase_30_status": "BLOCKED ON REAL FIXTURES",
- "phase_30_policy": "no screenshots fabricated, nothing scraped, no interaction with PokerNow, no accuracy claimed"
+ "note": "only 1 annotated screenshot(s): a smoke test, not a statistically meaningful accuracy estimate | hu_preflop_0001 is also the frame the PokerNow heads-up layout was aligned on and the PokerNow OCR / card recognizer settings were chosen on, so its score is a regression check, not independent validation."
 }

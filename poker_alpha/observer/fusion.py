@@ -275,6 +275,14 @@ class StateTracker:
             vals.append(1.0 if f.pinned else (f.stable_confidence if f.has_value else 0.0))
         return min(vals) if vals else 0.0
 
+    def _pot_total(self, snap) -> Optional[float]:
+        """All chips in the middle. Clients whose pot display leaves out the
+        bets still in front of the players (PokerNow) get those added."""
+        if snap.pot is None or self.cal.pot_includes_bets:
+            return snap.pot
+        return snap.pot + sum(b for s, b in enumerate(snap.bets)
+                              if snap.occupied[s] and b)
+
     def to_observed_state(self) -> ObservedTableState:
         snap = self.snapshot()
         seats = []
@@ -315,7 +323,7 @@ class StateTracker:
             small_blind=self.sb, big_blind=self.bb,
             hero_cards=hero if len(hero) == 2 else None,
             board=tuple(card_code(c) for c in snap.board),
-            pot_total=snap.pot, actor=snap.actor,
+            pot_total=self._pot_total(snap), actor=snap.actor,
             action_history=tuple(actions),
             hand_id=f"observed-{self.hand_number}",
             timestamp=snap.timestamp, source="screen observer")
