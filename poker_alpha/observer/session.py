@@ -28,7 +28,6 @@ duration / frame / disk limits.
 
 from __future__ import annotations
 
-import hashlib
 import json
 import os
 import platform
@@ -145,23 +144,9 @@ def recognizer_provenance(adapter) -> Dict[str, object]:
 
 
 def git_commit(repo: Optional[Path] = None) -> Optional[str]:
-    """Commit of the PokerAlpha checkout, read from .git (no subprocess)."""
-    root = repo or Path(__file__).resolve().parents[2]
-    head = root / ".git" / "HEAD"
-    try:
-        ref = head.read_text().strip()
-        if ref.startswith("ref: "):
-            p = root / ".git" / ref[5:]
-            if p.exists():
-                return p.read_text().strip()
-            packed = root / ".git" / "packed-refs"
-            for line in packed.read_text().splitlines():
-                if line.endswith(ref[5:]):
-                    return line.split()[0]
-            return None
-        return ref
-    except OSError:
-        return None
+    from ..utils.provenance import git_commit as _gc
+
+    return _gc(repo)
 
 
 def state_key(snapshot, hand_number: int) -> tuple:

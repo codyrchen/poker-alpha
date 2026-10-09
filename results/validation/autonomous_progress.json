@@ -2,8 +2,8 @@
  "run": "pre-real-test (Phases 41-80)",
  "branch": "claude/live-observer",
  "start_commit": "8a35231674b97982015454c2c649695713b43697",
- "head": "89bb838",
- "current_phase": 55,
+ "head": "536d101",
+ "current_phase": 56,
  "completed_phases": [
   {
    "phase": 41,
@@ -56,9 +56,13 @@
   {
    "phase": 54,
    "summary": "calibration editor: undo history (30), reset region / all to base layout, duplicate, save-as with overwrite guard, pixel box of selected region + highlight, overlay category visibility; helpers in live.py; region selection survives edits (bug fix); click-to-place not added (no stable Streamlit input)"
+  },
+  {
+   "phase": 55,
+   "summary": "strategy artifact v2 (config_json, commit, content_sha256; verified), v1 still loadable, sidecar manifests for committed artifacts (no rewrite), rejection tests incl corrupt/truncated/tampered/wrong config/encoder/abstraction/stack/blinds; docs/strategy_artifacts.md"
   }
  ],
- "tests": "713 passed, 5 skipped (non-slow)",
+ "tests": "726 passed, 5 skipped (non-slow)",
  "ci": "run 30 green at 8a35231",
  "long_running": [
   {
@@ -97,6 +101,6 @@
  "unresolved": [
   "worker restarts kill background processes: long runs must be resumed from checkpoints (see long_running)"
  ],
- "next_step": "Phase 55: strategy artifact config/metadata audit",
- "updated": "2026-10-09T09:32:21Z"
+ "next_step": "Phase 56: exact flop abstraction error (fixed-flop subgames)",
+ "updated": "2026-10-09T09:39:43Z"
 }
