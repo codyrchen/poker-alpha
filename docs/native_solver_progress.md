@@ -1,45 +1,38 @@
 # Native solver project — progress / recovery record
 
-Autonomous recovery file. If context is lost, recover from: git history,
-this file, results/benchmarks/native_solver_progress.json, committed
-benchmark outputs, checkpoint manifests. Do not ask the user.
+Autonomous recovery file. If context is lost: recover from git history,
+this file, results/benchmarks/*, results/validation/native_*.json. Do not
+ask the user.
 
-## Current state
+## State (updated after 3-seed 300k training)
 
-- branch: claude/live-observer
-- starting HEAD: b398c4e (after fast-forward from d43ae59; local was 43 behind, 0 ahead)
-- phase: 1 (baseline profile running), 0 complete (audit written)
-- active experiment: Python baseline profile, 50k iterations, release config, seed 0
-  (experiments/profile_mccfr_baseline.py) — running in background
-- machine: Apple M3 Pro, 12 cores, 18 GB, macOS 25.5.0 (arm64), Apple clang 21,
-  Python 3.12.6 (.venv), numpy 2.5.2 (venv) / 2.4.1 (system). No cmake binary
-  (will be a pip build dependency).
-- test baseline: POKERALPHA_SKIP_SLOW=1 pytest -q -> 783 passed, 6 skipped (green)
+- branch claude/live-observer; starting HEAD b398c4e; pushed through fbfc119+
+- Phases 0-55 complete: build (cpp/, pip install ./cpp), parity (evaluator
+  exhaustive, 20k+ state corpus, bitwise 1000-iteration tape parity),
+  checkpoints (exact resume, corruption rejection), artifact export,
+  doctor, CI (Linux+macOS native jobs GREEN), clean-install test, ASan/UBSan
+  self-test clean, --backend in holdem_mccfr_validation.py, multiseed runner.
+- Python baseline: 21 it/s warm (results/benchmarks/mccfr_python_baseline.json)
+- Native: ~770-800 it/s warm single process; 3 parallel seeds ~765 each.
+- TRAINING DONE: 3 fresh native seeds (Plan B; no resumable Python
+  checkpoints exist) 0->300k, 6.6 min total.
+  Checkpoints: results/native_training/seed{0,1,2}/v2_native_seed{s}_it{m}.npz
+  (gitignored); logs: results/native_training/v2_native_seed{s}.jsonl.
+  140k infosets/seed; top-2000 L1 (250k->300k) ~0.045.
+- Full fast suite: 811 passed, 12 skipped. CI green.
 
-## Key verified facts
+## In flight
 
-- Release: V2_CONFIG (HoldemSolverConfig:v2:733e52f1d1014e2e7973),
-  strategy holdem_v2_seed0_200k.npz + confidence (seeds 0-2 @200k).
-- Candidates: seed0 {100k,200k,300k} artifacts; seed1,2 {200k}. 300k has NO
-  confidence table. NO resumable checkpoints exist anywhere in the checkout
-  (manifest lists 44 by SHA only, "container only"). => Phase 19/59: Python->
-  native import is moot; fresh native training (Plan B) is the route.
-- Python cold throughput ~26 it/s at iterations 0-200 on this machine
-  (historical container: ~9 it/s); warm numbers in
-  results/benchmarks/mccfr_python_baseline.json when the run finishes.
-- ~327 decision nodes / iteration; max 6 actions per node.
+- experiments/benchmark_native_solver.py (3 trials) -> results/benchmarks/native_mccfr_v1.json
+- next: experiments/native_300k_study.py (artifacts, confidence table w/
+  earlier=10k, gate acceptance, canonical preflop, crossplay vs release)
 
-## Plan (decided)
+## Next actions (in order)
 
-- cpp/ tree with pybind11 + scikit-build-core + CMake as a separate
-  native component; poker_alpha/native/ Python wrapper; see
-  docs/native_solver_design.md and docs/native_solver_architecture_audit.md.
-- Packed uint64 infoset key rendering byte-identical canonical strings.
-- Random-tape parity harness on both backends; xoshiro256** production RNG.
-- Native checkpoint .npz written Python-side from arrays; artifact export
-  reuses strategy_artifact.export_solver via shim.
-
-## Exact next action
-
-Wait for baseline profile to finish; write docs/native_solver_baseline.md;
-commit Phase 0-1; then scaffold cpp/ build (Phase 3).
+1. finish benchmark -> docs/native_solver_benchmark.md, commit
+2. run native_300k_study.py -> results/validation/native_training_300k.json
+3. 1M go/no-go per Phase 65 (cost ~25 min for 3 seeds in parallel; decide
+   on movement/disagreement trends from the study)
+4. if GO: resume seeds to 1M (milestones 400k,500k,750k,1M), rerun study at 1M
+5. release-candidate decision (Phase 100-102; promotion only if all gates met)
+6. README/native docs finalization, full+slow suites, final report

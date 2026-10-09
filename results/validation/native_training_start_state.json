@@ -1,0 +1,26 @@
+{
+ "format": "pokeralpha.native_training_start_state/v1",
+ "recorded": "2026-10-09",
+ "release": {
+  "strategy": "results/strategy/holdem_v2_seed0_200k.npz",
+  "confidence": "results/strategy/holdem_v2_seed0_200k_confidence.npz",
+  "iterations": 200000,
+  "config": "HoldemSolverConfig:v2:733e52f1d1014e2e7973"
+ },
+ "prior_candidates": {
+  "100k_seed0": {"artifact": true, "confidence": true, "resumable_checkpoint": false},
+  "200k_seed0": {"artifact": true, "confidence": true, "resumable_checkpoint": false},
+  "300k_seed0": {"artifact": true, "confidence": false, "resumable_checkpoint": false},
+  "200k_seed1": {"artifact": true, "confidence": false, "resumable_checkpoint": false},
+  "200k_seed2": {"artifact": true, "confidence": false, "resumable_checkpoint": false},
+  "100k_seed1": {"artifact": false, "confidence": false, "resumable_checkpoint": false},
+  "100k_seed2": {"artifact": false, "confidence": false, "resumable_checkpoint": false},
+  "300k_seed1": {"artifact": false, "confidence": false, "resumable_checkpoint": false},
+  "300k_seed2": {"artifact": false, "confidence": false, "resumable_checkpoint": false}
+ },
+ "note": "All 44 historical resumable MCCFR checkpoints exist only as SHA-256 entries in results/strategy/candidates/v2_extension/MANIFEST.json ('container only'); none are on disk. Python->native state import is therefore impossible for the existing lineage, and PLAN B (fresh native seeds 0,1,2 from 0 to 300k under the release config) was chosen. Native seeds use xoshiro256** streams: they are new independent seeds, not continuations.",
+ "plan": "B",
+ "training_command": "python experiments/train_native_multiseed.py --seeds 0,1,2 --milestones 10000,50000,100000,150000,200000,250000,300000 --out-dir results/native_training --jobs 3",
+ "expected_duration": "~10-25 minutes total (measured ~860 it/s per seed with 3 parallel workers)",
+ "stop_criterion": "all seeds reach 300k; milestones logged to JSONL; checkpoints kept locally (gitignored)"
+}

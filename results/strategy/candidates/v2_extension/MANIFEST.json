@@ -69,7 +69,6 @@
    "regenerate": "python -c \"from poker_alpha.solver_config import V2_CONFIG as C; from poker_alpha.solvers.serialize import load_checkpoint; from poker_alpha.solvers.strategy_artifact import export_solver; export_solver(load_checkpoint('<ckpt>', C.build_game()), '<out>.npz', meta={...})\""
   }
  ],
- "release_strategy_unchanged": "results/strategy/holdem_v2_seed0.npz (100k) is still RELEASE_STRATEGY",
  "checkpoints_not_committed": [
   {
    "file": "locked_seed0_it10000.npz",
@@ -731,5 +730,6 @@
    "generation_commit_note": "generation commit not recorded; resumed 2026-10-09 from v2b 100k on branch claude/live-observer (after 8a35231); solver/encoder code unchanged on this branch",
    "location": "/home/user/pa_ckpt/v2c/v2_seed2_it200000.npz (container only, NOT in Git: too large)"
   }
- ]
+ ],
+ "release_strategy": "results/strategy/holdem_v2_seed0_200k.npz is RELEASE_STRATEGY (promoted after Phase 65; previous 100k release kept as results/strategy/holdem_v2_seed0.npz)"
 }

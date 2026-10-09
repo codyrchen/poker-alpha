@@ -119,6 +119,18 @@ Strategy artifacts exported by the native solver use the standard
 (`backend=native`, backend schema/version, RNG) and load everywhere the
 Python-trained ones do.
 
+## Third-party code (license audit, Phase 93)
+
+| component | origin | license |
+|---|---|---|
+| pybind11 | build dependency (header-only) | BSD-3-Clause |
+| scikit-build-core, CMake, Ninja | build-time only, nothing shipped | Apache-2.0 / BSD |
+| xoshiro256** + splitmix64 | algorithms by Blackman & Vigna, reimplemented in `cpp/src/rng.hpp` | public domain (CC0 reference) |
+| exact summation | Shewchuk's expansion algorithm (as in CPython's `math.fsum`), reimplemented in `cpp/src/fsum.hpp` | algorithm; no code copied |
+
+No third-party evaluator or hash-map library is used; everything else is
+C++17 standard library. All compatible with the repository's MIT license.
+
 ## Limitations
 
 * Supports the locked `HoldemSolverConfig` compact-encoder configs

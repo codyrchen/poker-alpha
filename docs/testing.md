@@ -16,7 +16,10 @@ clean Python 3.11 venv, core + `[dev]` only: 760 passed, 12 skipped — all Stre
 CI (`.github/workflows/tests.yml`): **core** — Python 3.11 and 3.12, `[dev]`
 only, non-slow suite; **vision + UI extras** — Python 3.12 with
 `[dev,vision,ui]`, the full non-slow suite (no hand-maintained file list:
-a new test file can not be forgotten), headless (no display, no Tesseract).
+a new test file can not be forgotten), headless (no display, no Tesseract);
+**native solver (Linux)** — builds `./cpp` and runs the native parity /
+checkpoint suite plus `experiments/validate_native_solver.py`;
+**native solver (macOS arm64)** — build + fast parity smoke.
 
 ## Layout
 
@@ -32,6 +35,7 @@ a new test file can not be forgotten), headless (no display, no Tesseract).
 | observer: live, geometry, calibration | `test_live_observer`, `test_capture_geometry`, `test_calibration_versioning` |
 | observer: test sessions and data | `test_observer_session`, `test_session_replay`, `test_annotation_tool`, `test_annotation_validation`, `test_fixture_export`, `test_observer_fixture_validation`, `test_observer_debug` (+ `observer_helpers.py`) |
 | UI, privacy, tooling | `test_ui`, `test_privacy`, `test_doctor_launcher` |
+| native backend parity (skipped unless `pip install ./cpp`) | `test_native_evaluator` (exhaustive 5-card under `slow`), `test_native_features`, `test_native_game_parity`, `test_native_mccfr_parity` (bitwise random-tape), `test_native_checkpoint` (+ `native_helpers.py`); one-command suite: `python experiments/validate_native_solver.py`; C++ sanitizer harness: `cpp/tests/native_selftest.cpp` |
 
 ## Rules
 

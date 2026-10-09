@@ -39,6 +39,24 @@ from poker_alpha.validation.abstraction_audit import generate_corpus  # noqa: E4
 
 
 def policies(path, game):
+    # Native checkpoints (pokeralpha.native_checkpoint/v1) are read directly
+    # from their arrays — no extension needed; Python checkpoints go through
+    # load_checkpoint as before.
+    with np.load(path, allow_pickle=False) as z:
+        if "format" in z.files and \
+                str(z["format"][()]) == "pokeralpha.native_checkpoint/v1":
+            if str(z["solver_config"][()]) != game.solver_config_signature():
+                raise SystemExit(f"native checkpoint config mismatch: {path}")
+            keys = z["keys"].tolist()
+            off = z["action_offsets"]
+            ss = z["strategy_sum"]
+            out = {}
+            for i, k in enumerate(keys):
+                lo, hi = int(off[i]), int(off[i + 1])
+                v = float(ss[lo:hi].sum())
+                if v > 0:
+                    out[k] = (v, ss[lo:hi] / v)
+            return out
     s = load_checkpoint(path, game)
     out = {k: (float(n.strategy_sum.sum()), n.average_strategy())
            for k, n in s.infosets.items() if n.strategy_sum.sum() > 0}
