@@ -53,3 +53,16 @@ disk then stopped growing (46 MB). The Python object count grows by ~5k/h:
 that is the tracker's event history, which is bounded (trimmed back to
 2,000 once it exceeds 4,000 events) — the 1-hour soak (Phase 71) checks the
 plateau.
+
+## Soak (60 min, 3 FPS, recording on) — Phase 71
+
+`python experiments/live_observer_perf.py soak --minutes 60 --fps 3 --out results/validation/live_observer_soak_1h.json`,
+run while all 4 cores were busy with training and solver experiments.
+
+10,786 steps, 2 late steps. **RSS: 321 MB at 5 min, 324.7 MB from 15 min to
+60 min (0 MB/h in the second half).** Tracker events grow to 3,990 and are
+trimmed back to ~2,100 at ~50 min; the Python object count follows the same
+saw-tooth (48.9k -> 47.3k), so it is bounded. Retained frames hit the
+2,000-frame limit at ~17 min; after that the session folder grows only by
+the event / observation streams (~3.5 MB/h; ~51 MB after 1 h), far inside
+the 2 GB limit for a 4 h session. No leak found.
