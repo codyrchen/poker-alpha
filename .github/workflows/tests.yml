@@ -51,4 +51,5 @@ jobs:
           tests/test_observer_fusion.py tests/test_observer_fixture_validation.py
           tests/test_pokernow_real.py tests/test_observer_session.py
           tests/test_session_replay.py tests/test_annotation_tool.py
+          tests/test_fixture_export.py
           && pytest -q tests/test_ui.py tests/test_live_observer.py

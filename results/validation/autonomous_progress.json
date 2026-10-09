@@ -2,8 +2,8 @@
  "run": "pre-real-test (Phases 41-80)",
  "branch": "claude/live-observer",
  "start_commit": "8a35231674b97982015454c2c649695713b43697",
- "head": "95ec4b4",
- "current_phase": 44,
+ "head": "152084e",
+ "current_phase": 47,
  "completed_phases": [
   {
    "phase": 41,
@@ -16,6 +16,10 @@
   {
    "phase": 43,
    "summary": "annotation workflow: Streamlit 'Annotate session' (prev/next/next-unreviewed, progress, prefill flagged, statuses), annotation_tool.py; partial schema (annotated groups, unknown=unscored)"
+  },
+  {
+   "phase": 44,
+   "summary": "fixture exporter experiments/export_observer_fixtures.py: crop to table+regions, mask name regions, report (not mask) unexplained text, --dry-run/--preview/--mask-box, never overwrite/commit/upload; tests/test_fixture_export.py (5)"
   },
   {
    "phase": 45,
@@ -59,6 +63,6 @@
   "session_docs": "docs/observer_sessions.md"
  },
  "unresolved": [],
- "next_step": "Phase 44: privacy-preserving fixture export (experiments/export_observer_fixtures.py)",
- "updated": "2026-10-09T05:40:25Z"
+ "next_step": "Phase 47: observer debugging UI (per-region crops, tracker accept/reject, debug report export)",
+ "updated": "2026-10-09T05:46:46Z"
 }

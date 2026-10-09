@@ -149,6 +149,44 @@ groups that carry ground truth in `annotated`; legacy complete annotations
 `poker_alpha/observer/annotation_tool.py`; page:
 `poker_alpha/ui/annotate_panel.py`.
 
+## 4. Privacy-preserving fixture export
+
+```bash
+python experiments/export_observer_fixtures.py --session ~/pokeralpha_sessions/<id> \
+    --output /tmp/pokeralpha_fixture_export --dry-run      # plan only, writes nothing
+python experiments/export_observer_fixtures.py --session ... --output /tmp/pv --preview
+python experiments/export_observer_fixtures.py --session ... --output /tmp/pokeralpha_fixture_export
+```
+
+By default the frames whose annotation is `partial` or `complete` are
+exported (`--frames 000012,000031` picks others). Per frame:
+
+1. **crop** to one box for the whole export: the located table plus every
+   calibrated recognition region, plus `--margin` (default 3% of the table
+   width). Browser tabs / URL bar, other windows and the desktop are gone.
+2. **mask** the calibrated `seatN_name` regions with their surrounding
+   colour (names are not used for recognition; `--keep-names` disables
+   this), plus every `--mask-box X0,Y0,X1,Y1` (crop coordinates).
+3. **report, do not mask**: text-like blobs inside the crop but outside all
+   recognition regions (felt logos, chat bubbles, notifications) are listed
+   per frame as `review_needed` in `manifest.json` and outlined in red by
+   `--preview`. Automatic masking of unknown text could hide UI the
+   recognizers need, so a human decides (re-run with `--mask-box`).
+4. write `raw/<session>_<frame>.png`, `annotations/<same>.json` (image path
+   rewritten, source session / frame / crop recorded), `calibration.json`
+   (a fixed table box is shifted into crop coordinates), `manifest.json`
+   (crop box, masked regions, review boxes, SHA-256 per image, warnings,
+   e.g. role still `unassigned`) and `README.txt`.
+
+The output directory must be new or empty (never overwritten). Nothing is
+committed or uploaded; the export is a valid `--fixture-dir` for
+`experiments/observer_validation.py`. Before sharing, open every image and
+check the review boxes.
+
+Code: `experiments/export_observer_fixtures.py`; tests:
+`tests/test_fixture_export.py` (synthetic frames pasted into a fake desktop
+with browser chrome and private text).
+
 ## 5. Dataset roles (no accuracy claims from tuning data)
 
 Every annotation has a role (`role` key, or `splits.json` mapping
