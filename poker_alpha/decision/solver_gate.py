@@ -47,7 +47,16 @@ REASONS = {
     "OFF_TREE_TRANSLATION": "observed bet sizes were translated onto the abstract tree",
     "ILLEGAL_SIZE_MASS": "a large share of the solver's mass was on sizes below the "
                          "NLHE minimum and was removed",
+    # Phase 58: exact flop / turn subgames show the compact encoders (v1 and
+    # the v2 release) merging strategically different hands (lifted
+    # strategies 1.4-9.6 BB/hand exploitable vs ~0.02 for raw keys).
+    "STREET_ABSTRACTION_ERROR": "flop / turn keys of this abstraction measurably merge "
+                                "strategically different hands (exact subgame study)",
 }
+
+#: streets (0 preflop .. 3 river) whose lookups are capped at LOW confidence
+#: for encoders measured to merge strategically different hands there.
+LOW_CONFIDENCE_STREETS = {"CompactHoldemEncoder": (1, 2)}   # v1 and v2 releases
 
 #: removed illegal-size mass at or above this lowers the status (heuristic).
 ILLEGAL_MASS_LOW = 0.2

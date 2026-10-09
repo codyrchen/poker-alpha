@@ -185,3 +185,16 @@ def test_large_illegal_size_mass_lowers_confidence():
                                                 "b150": 0.0, "a": 0.0}}, {key: 1000.0})
     rep = analyze(observe_manual(_hu("Ah Qd")), DecisionConfig(equity_simulations=200), solver=small)
     assert "ILLEGAL_SIZE_MASS" not in rep.details["solver"]["reasons"]
+
+
+def test_flop_and_turn_lookups_capped_at_low_for_compact_encoders():
+    from poker_alpha.decision import SolverStrategyProvider
+    from poker_alpha.decision.solver_gate import LOW_CONFIDENCE_STREETS, REASONS
+
+    assert "STREET_ABSTRACTION_ERROR" in REASONS
+    game = PRIMARY_CONFIG.build_game()
+    assert type(game.encoder).__name__ in LOW_CONFIDENCE_STREETS
+    prov = SolverStrategyProvider(game, {}, {})
+    assert prov._low_streets == (1, 2)
+    # preflop and river are unaffected; only flop (1) / turn (2) are capped
+    assert 0 not in prov._low_streets and 3 not in prov._low_streets

@@ -21,8 +21,8 @@ from typing import Dict, List, Mapping, Optional, Tuple
 from ..games.holdem import HoldemGame, HoldemState
 from ..holdem.observed import ObservedTableState
 from ..holdem.state import Street
-from .solver_gate import (ILLEGAL_MASS_LOW, REASONS, REJECT, GateThresholds, KeyStats, downgrade,
-                          gate)
+from .solver_gate import (ILLEGAL_MASS_LOW, LOW_CONFIDENCE_STREETS, REASONS, REJECT,
+                          GateThresholds, KeyStats, downgrade, gate)
 
 Strategy = Mapping[str, Mapping[str, float]]
 
@@ -67,6 +67,7 @@ class SolverStrategyProvider:
         # seed disagreement / collision) and thresholds. Without a table the
         # gate still applies the visit threshold and reports NO_STABILITY_DATA.
         self.confidence = confidence
+        self._low_streets = LOW_CONFIDENCE_STREETS.get(type(game.encoder).__name__, ())
         self.thresholds = thresholds or GateThresholds(
             reject_visits_below=min_visits, low_visits_below=min_visits)
 
@@ -321,4 +322,6 @@ class SolverStrategyProvider:
                 gate_d = downgrade(gate_d, "ILLEGAL_SIZE_MASS")
         if not exact:
             gate_d = downgrade(gate_d, "OFF_TREE_TRANSLATION")
+        if state.street in self._low_streets:
+            gate_d = downgrade(gate_d, "STREET_ABSTRACTION_ERROR")
         return SolverLookup(key, visits, exact, tuple(legal_out), gate_d)
