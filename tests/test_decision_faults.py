@@ -201,3 +201,12 @@ def test_solver_unavailable_and_corrupt_artifact(tmp_path):
     sol = [c for c in cascade(r) if c["source"] == "solver"][0]
     assert sol["status"] == "rejected" and sol["code"] == "INCOMPATIBLE_CHECKPOINT"
     assert r.recommended is not None and r.method != "solver"
+
+
+def test_few_rollout_samples_are_flagged():
+    few = recommend_action(state(), config=DecisionConfig(equity_simulations=200,
+                                                          rollout_simulations=120, seed=3))
+    assert any("rollout samples" in w for w in few.warnings)
+    enough = recommend_action(state(), config=DecisionConfig(equity_simulations=200,
+                                                             rollout_simulations=600, seed=3))
+    assert not any("rollout samples" in w for w in enough.warnings)

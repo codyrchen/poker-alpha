@@ -235,3 +235,24 @@ equilibrium, so the study shows model dependence, not which is correct.
 Latency: median 0.23 s (street) vs 3.0 s (showdown; 9-11 s preflop, where
 three future streets are simulated). **Decision: the live default stays
 "street"; "showdown" is offered for offline / post-hand analysis.**
+
+## Monte Carlo error calibration (Phase 62)
+
+`python experiments/mc_error_calibration.py --reps 100 --rollout-reps 40 --rollout-ref 40000`
+-> `results/validation/mc_error_calibration.json`. For n = 100 / 300 / 1000 /
+2000 / 5000 samples, repeated with independent seeds: bias, RMSE, SE ratio
+(mean reported SE / empirical SD; 1 = honest) and coverage of the nominal
+95% interval.
+
+**Equity** (5 spots; river, turn and 3-way turn references exact by
+enumeration, preflop/flop 2M-sample references; 100 reps): coverage
+0.89-0.99 (mean 0.94), SE ratio 0.85-1.17 (mean 1.00), |bias| <= 0.006
+(within noise). The reported equity SE is honest at every n.
+
+**Rollout EVs** (3 spots, all candidates; references 40k-sample estimates;
+40 reps): mean coverage 0.95, mean SE ratio 1.05, |bias| < 0.5 empirical
+SD. One failure: the **all-in candidate at n = 100** (preflop): coverage
+0.68 — rare, large outcomes make the normal-approximation SE too small.
+At n >= 300 every candidate covers >= 0.875 (40 reps: 0.875 is within ~2
+binomial SE of 0.95). The UI default is 1,000 samples; below 500 the report
+now warns that error bars for all-in / large bets are too narrow.

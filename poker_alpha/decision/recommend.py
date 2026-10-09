@@ -330,6 +330,7 @@ def recommend_action(state: ObservedTableState,
                 cands, rres = _attach_rollout_evs(state, hero, ranges, models, cfg,
                                                   cands, source=source)
                 cascade.append({"source": "Monte Carlo rollout", "status": "used for EVs only"})
+                _few_rollouts_warning(cfg, warnings)
             except Exception as exc:  # noqa: BLE001
                 warnings.append(f"rollout EVs unavailable ({type(exc).__name__}: {exc})")
                 cascade.append({"source": "Monte Carlo rollout", "status": "failed",
@@ -396,6 +397,7 @@ def recommend_action(state: ObservedTableState,
             rollout_failure = f"{type(exc).__name__}: {exc}"
             warnings.append(f"rollout failed ({rollout_failure}): heuristic fallback used")
     if res is not None:
+        _few_rollouts_warning(cfg, warnings)
         method = "Monte Carlo rollout"
         cascade.append({"source": method, "status": "used",
                         "simulations": cfg.rollout_simulations})
@@ -563,6 +565,18 @@ def _confidence_from_evs(cands, summaries, res) -> str:
     if gap > 1.5:
         return "medium"
     return "low"
+
+
+#: below this many rollout samples the reported SEs under-cover for all-in /
+#: large-bet candidates (Phase 62: 68% coverage of a nominal 95% at 100).
+MIN_RELIABLE_ROLLOUTS = 500
+
+
+def _few_rollouts_warning(cfg, warnings: List[str]) -> None:
+    if 0 < cfg.rollout_simulations < MIN_RELIABLE_ROLLOUTS:
+        warnings.append(f"only {cfg.rollout_simulations} rollout samples: EV error bars "
+                        "for all-in / large bets are too narrow below "
+                        f"{MIN_RELIABLE_ROLLOUTS} (rare large outcomes)")
 
 
 def _attach_rollout_evs(state, hero, ranges, models, cfg, cands,
