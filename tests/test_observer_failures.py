@@ -366,3 +366,16 @@ def test_pokernow_preset_unusable_frame_fails_safe():
     s = _session([Image.new("RGB", (1200, 700), (30, 30, 30))], cal)
     r = s.step()
     assert not r.ok and "felt" in r.error and not live_check(s, 0.3).ok
+
+
+def test_tracker_history_is_bounded():
+    tr = StateTracker(CAL, 0.5, 1.0)
+    tr.EVENT_KEEP, tr.FLAG_KEEP = 10, 5
+    for i in range(200):
+        tr.flags.append(f"f{i}")
+        tr.events.append(i)
+        tr.update(_obs())
+    assert len(tr.flags) <= 2 * tr.FLAG_KEEP + 5 and len(tr.events) <= 2 * tr.EVENT_KEEP + 5
+    assert tr.flag_total >= 200                      # monotonic despite trimming
+    assert "f199" in tr.flags                         # the newest entries are kept
+    assert tr._stable("pot") == 3.0                      # trimming never touches state

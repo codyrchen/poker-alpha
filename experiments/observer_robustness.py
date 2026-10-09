@@ -36,12 +36,12 @@ from PIL import Image, ImageEnhance, ImageFilter
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from poker_alpha.observer.calibration import TableCalibration, locate_table  # noqa: E402
+from poker_alpha.observer.calibration import TableCalibration  # noqa: E402
 from poker_alpha.observer.errors import CalibrationError  # noqa: E402
 from poker_alpha.observer.live import (CaptureSettings, LiveObserverSession,  # noqa: E402
                                        live_check)
 from poker_alpha.observer.pokernow import (PokerNowStyleAdapter, default_layout,  # noqa: E402
-                                           pokernow_hu_layout)
+                                           )
 from poker_alpha.observer.synthetic import random_table, render_table  # noqa: E402
 
 LABEL = "SYNTHETIC / DERIVED ROBUSTNESS ONLY - not real PokerNow accuracy"

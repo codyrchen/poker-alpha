@@ -25,7 +25,7 @@ def capture_tracker_state(tracker) -> Dict[str, tuple]:
     out = {k: (f.has_value, f.stable, f.stable_confidence, f.candidate,
                f.candidate_count, f.rejected, f.pinned)
            for k, f in tracker.fields.items()}
-    out["__flags__"] = len(tracker.flags)
+    out["__flags__"] = tracker.flag_total
     return out
 
 
@@ -98,7 +98,8 @@ def region_rows(session) -> List[dict]:
     if obs is None or tracker is None or cal is None:
         return []
     before = session.last_tracker_before or {}
-    flags_new = list(tracker.flags[before.get("__flags__", len(tracker.flags)):])
+    n_new = tracker.flag_total - before.get("__flags__", tracker.flag_total)
+    flags_new = list(tracker.flags[-n_new:]) if n_new > 0 else []
     by_region: Dict[str, List[str]] = {}
     for k, r in obs.fields.items():
         by_region.setdefault(r.region, []).append(k)

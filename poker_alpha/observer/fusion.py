@@ -78,6 +78,8 @@ class StateTracker:
         self._frame_no = 0
         self._last_collection = -10**9       # frame number of the last pot collection
         self._last_bet_activity = -10**9     # frame number of the last bet change
+        self._flags_dropped = 0
+        self._last_award = -10**9            # frame number of the last pot drop
         self.fields: Dict[str, FieldTracker] = {}
         c = self.cfg
         for name in ["pot", "dealer", "actor"]:
@@ -138,6 +140,7 @@ class StateTracker:
         if self.paused:
             return []
         self.timestamp = frame.timestamp
+        self._trim()
         before = len(self.events)
         fr = frame.fields
         self._frame_no += 1
@@ -225,9 +228,16 @@ class StateTracker:
                     and self._stable("pot") > pot_before)
         board_len = sum(1 for i in range(5) if self._stable(f"board_{i}") is not None)
         established = self._prev is not None and self._prev.hero_cards[0] is not None
-        if pot_rose or (established and board_len > board_len_before):
+        if pot_rose or pot_dropped or (established and board_len > board_len_before):
+            # bets go into the pot (pot rises / a street is dealt) or to the
+            # winner (pot awarded)
             self._last_collection = self._frame_no
+        if pot_dropped:
+            self._last_award = self._frame_no
         collected = self._frame_no - self._last_collection < self.cfg.collection_window
+        # winners' stacks may grow for a few frames after the pot dropped
+        # (stack readings often confirm a frame after the pot does)
+        awarded = self._frame_no - self._last_award < self.cfg.collection_window
 
         for s in range(self.cal.num_seats):
             in_hand = bool(self._stable(f"seat{s}.in_hand", False))
@@ -278,7 +288,7 @@ class StateTracker:
                            f"seat {s} stack disappearing while in the hand")
                 continue
             if stable is not None and reading.value is not None and \
-                    reading.value > stable + 1e-9 and not pot_dropped:
+                    reading.value > stable + 1e-9 and not awarded:
                 f = self.fields[name]
                 if reading.value == f.candidate:
                     f.candidate_count += 1
@@ -331,6 +341,23 @@ class StateTracker:
         if not self.cal.pot_includes_bets:
             total += sum(val(f"seat{s}.bet", 0.0) or 0.0 for s in range(n))
         return total
+
+    # Bounded history: a long session must not grow memory without limit.
+    EVENT_KEEP = 2000
+    FLAG_KEEP = 500
+
+    def _trim(self) -> None:
+        if len(self.events) > 2 * self.EVENT_KEEP:
+            del self.events[:-self.EVENT_KEEP]
+        if len(self.flags) > 2 * self.FLAG_KEEP:
+            drop = len(self.flags) - self.FLAG_KEEP
+            del self.flags[:drop]
+            self._flags_dropped += drop
+
+    @property
+    def flag_total(self) -> int:
+        """Flags raised since the tracker started (monotonic, survives trimming)."""
+        return self._flags_dropped + len(self.flags)
 
     def _update_pot(self, fr, pot_before, timestamp) -> None:
         """The pot changes with betting (bets made / collected), an award

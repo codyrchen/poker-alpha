@@ -127,8 +127,15 @@ class TableCalibration:
 
 
 def color_mask(image, color: RGB, tolerance: int) -> np.ndarray:
-    arr = np.asarray(image.convert("RGB"), dtype=np.int16)
-    diff = np.abs(arr - np.array(color, dtype=np.int16)).max(axis=2)
+    # Per-channel np.maximum: same result as .max(axis=2), ~10x faster
+    # (a reduction over a length-3 last axis is slow in NumPy).
+    arr = np.asarray(image.convert("RGB"))
+    if arr.size == 0:
+        return np.zeros(arr.shape[:2], dtype=bool)
+    diff = None
+    for ch in range(3):
+        d = np.abs(arr[..., ch].astype(np.int16) - int(color[ch]))
+        diff = d if diff is None else np.maximum(diff, d)
     return diff <= tolerance
 
 
@@ -176,9 +183,10 @@ def _plausible(box: Box) -> Box:
 
 
 def _hsv(arr: np.ndarray):
-    mx, mn = arr.max(axis=-1), arr.min(axis=-1)
-    sat = np.where(mx > 0, (mx - mn) / np.maximum(mx, 1e-9), 0.0)
     r, g, b = arr[..., 0], arr[..., 1], arr[..., 2]
+    mx = np.maximum(np.maximum(r, g), b)       # == arr.max(-1), much faster
+    mn = np.minimum(np.minimum(r, g), b)
+    sat = np.where(mx > 0, (mx - mn) / np.maximum(mx, 1e-9), 0.0)
     d = np.maximum(mx - mn, 1e-9)
     hue = np.where(mx == r, ((g - b) / d) % 6,
                    np.where(mx == g, (b - r) / d + 2, (r - g) / d + 4)) * 60.0

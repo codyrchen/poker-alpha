@@ -253,9 +253,12 @@ def _live_view(cfg, compute: bool, min_conf: float, save_dir: str, render_report
         st.info("No frame yet: press Start Live Observer or Capture one frame.")
         return
     frame = session.last_frame
+    scale, hint = _geometry_hint(session, frame)
     c1, c2 = st.columns(2)
     with c1:
-        _image(frame, f"raw captured frame {frame.size[0]}x{frame.size[1]} px")
+        _image(frame, f"raw captured frame {frame.size[0]}x{frame.size[1]} px · {scale}")
+        if hint:
+            st.caption(hint)
     with c2:
         _image(draw_overlay(frame, session.calibration, session.table_bbox(),
                             session.last_observation),
@@ -281,6 +284,33 @@ def _live_view(cfg, compute: bool, min_conf: float, save_dir: str, render_report
             st.warning(w)
     _region_debugger(session, save_dir)
     _decision(session, cfg, compute, min_conf, render_report)
+
+
+def _geometry_hint(session, frame):
+    """Scale label and (if the table is much smaller than the capture) a
+    suggested capture rectangle in monitor-relative points."""
+    from ..observer.geometry import CaptureGeometry, suggested_crop
+
+    cap = session.capture
+    if cap is None or not cap.monitor or not cap.monitor.get("width"):
+        return "scale unknown", None
+    try:
+        g = CaptureGeometry(cap.monitor, cap.rect, frame.size)
+    except (ValueError, ZeroDivisionError):
+        return "scale unknown", None
+    obs = session.last_observation
+    if obs is None or session.calibration is None:
+        return g.scale_label, None
+    tb = obs.table_bbox
+    boxes = [r.to_pixels(tb) for r in session.calibration.regions.values()]
+    rb = (min(b[0] for b in boxes), min(b[1] for b in boxes),
+          max(b[2] for b in boxes), max(b[3] for b in boxes))
+    area = (tb[2] - tb[0]) * (tb[3] - tb[1]) / max(1, frame.size[0] * frame.size[1])
+    if area > 0.35:
+        return g.scale_label, None
+    l, t, w, h = suggested_crop(g, tb, rb)
+    return g.scale_label, (f"Suggested capture rectangle (points, relative to the monitor): "
+                           f"left {l}, top {t}, width {w}, height {h}")
 
 
 def _region_debugger(session, save_dir: str) -> None:

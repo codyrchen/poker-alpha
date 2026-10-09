@@ -482,13 +482,21 @@ class TestSessionRecorder:
             sample.files["tracked_state"] = f"tracked_states/{sid}.json"
         rect = (self.capture or {}).get("rect")
         mon = (self.capture or {}).get("monitor") or {}
-        pts_w = rect[2] if rect and rect[2] else mon.get("width")
-        pts_h = rect[3] if rect and rect[3] else mon.get("height")
+        geometry = None
+        try:
+            from .geometry import CaptureGeometry
+
+            if mon and mon.get("width"):
+                geometry = CaptureGeometry(mon, tuple(rect) if rect else None,
+                                           (img_w, img_h)).summary()
+        except (ValueError, KeyError, ZeroDivisionError):
+            geometry = None
         diag = {**common, "reasons": list(reasons), "status": self.status,
                 "source_monitor": mon, "capture_rect": rect,
                 "captured_size": [img_w, img_h],
-                "pixels_per_point": ([img_w / pts_w, img_h / pts_h]
-                                     if pts_w and pts_h else None),
+                "pixels_per_point": (list(geometry["pixels_per_point"])
+                                     if geometry else None),
+                "geometry": geometry,
                 "table_bbox": list(obs.table_bbox) if obs is not None else None,
                 "timings_s": dict(session.last_timings),
                 "observer_fps": self.fps(),

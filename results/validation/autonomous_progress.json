@@ -2,8 +2,8 @@
  "run": "pre-real-test (Phases 41-80)",
  "branch": "claude/live-observer",
  "start_commit": "8a35231674b97982015454c2c649695713b43697",
- "head": "e04178d",
- "current_phase": 50,
+ "head": "6f11bc8",
+ "current_phase": 53,
  "completed_phases": [
   {
    "phase": 41,
@@ -40,9 +40,17 @@
   {
    "phase": 49,
    "summary": "robustness matrix experiments/observer_robustness.py -> results/validation/observer_robustness_v1.json + docs/observer_robustness.md (SYNTHETIC/DERIVED ONLY); fixes: pot plausibility+conservation, cut-off table detection; no confirmed-state change under any perturbation"
+  },
+  {
+   "phase": 51,
+   "summary": "state machine: tests/observer_timelines.py DSL + tests/test_observer_state_machine.py (16: HU fold/limp/raise/call/streets/showdown/all-in/split, consecutive hands, multiway side pots, delayed/duplicated/one-frame/out-of-order frames); fix: stack increases allowed within 3 frames of a pot drop; limitation: hero fold not observable when cards stay on screen"
+  },
+  {
+   "phase": 52,
+   "summary": "capture geometry poker_alpha/observer/geometry.py (CaptureGeometry points<->pixels, Retina, fractional, negative monitor offsets, suggested crop), recorder diagnostics + live caption; docs/capture_geometry.md; tests/test_capture_geometry.py"
   }
  ],
- "tests": "682 passed, 5 skipped (non-slow)",
+ "tests": "707 passed, 5 skipped (non-slow)",
  "ci": "run 30 green at 8a35231",
  "long_running": [
   {
@@ -76,6 +84,6 @@
   "robustness": "results/validation/observer_robustness_v1.json"
  },
  "unresolved": [],
- "next_step": "Phase 50: live observer performance profiling + soak",
- "updated": "2026-10-09T06:18:46Z"
+ "next_step": "Phase 50 soak result (running, ends ~07:00, results/validation/live_observer_soak.json); then Phase 53 calibration versioning",
+ "updated": "2026-10-09T06:37:51Z"
 }

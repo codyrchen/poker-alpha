@@ -1,0 +1,195 @@
+{
+ "what": "per-stage latency of one live observer step on a mocked screen",
+ "machine_note": "container CPU; real mss capture time not measured (no display)",
+ "frames": 120,
+ "stages": {
+  "synthetic_1280x800": {
+   "capture": {
+    "median_ms": 1.71,
+    "p95_ms": 1.89,
+    "p99_ms": 1.95,
+    "n": 120
+   },
+   "table_detection": {
+    "median_ms": 8.87,
+    "p95_ms": 9.78,
+    "p99_ms": 10.37,
+    "n": 120
+   },
+   "region_extraction": {
+    "median_ms": 0.2,
+    "p95_ms": 0.26,
+    "p99_ms": 0.29,
+    "n": 120
+   },
+   "ocr": {
+    "median_ms": 7.96,
+    "p95_ms": 9.42,
+    "p99_ms": 10.07,
+    "n": 120
+   },
+   "card_recognition": {
+    "median_ms": 11.56,
+    "p95_ms": 14.31,
+    "p99_ms": 15.59,
+    "n": 120
+   },
+   "state_tracker": {
+    "median_ms": 0.07,
+    "p95_ms": 0.09,
+    "p99_ms": 0.11,
+    "n": 120
+   },
+   "overlay_rendering": {
+    "median_ms": 7.52,
+    "p95_ms": 8.38,
+    "p99_ms": 8.97,
+    "n": 120
+   },
+   "decision_gate": {
+    "median_ms": 0.09,
+    "p95_ms": 0.12,
+    "p99_ms": 0.14,
+    "n": 120
+   },
+   "step_plus_overlay": {
+    "median_ms": 38.51,
+    "p95_ms": 44.33,
+    "p99_ms": 47.48,
+    "n": 120
+   }
+  },
+  "pokernow_tuning_frame_2x (timing only)": {
+   "capture": {
+    "median_ms": 0.42,
+    "p95_ms": 0.47,
+    "p99_ms": 0.51,
+    "n": 120
+   },
+   "table_detection": {
+    "median_ms": 27.83,
+    "p95_ms": 29.93,
+    "p99_ms": 35.69,
+    "n": 120
+   },
+   "region_extraction": {
+    "median_ms": 0.2,
+    "p95_ms": 0.28,
+    "p99_ms": 0.29,
+    "n": 120
+   },
+   "ocr": {
+    "median_ms": 12.01,
+    "p95_ms": 13.06,
+    "p99_ms": 15.69,
+    "n": 120
+   },
+   "card_recognition": {
+    "median_ms": 12.84,
+    "p95_ms": 13.61,
+    "p99_ms": 15.88,
+    "n": 120
+   },
+   "state_tracker": {
+    "median_ms": 0.07,
+    "p95_ms": 0.09,
+    "p99_ms": 0.09,
+    "n": 120
+   },
+   "overlay_rendering": {
+    "median_ms": 7.48,
+    "p95_ms": 8.21,
+    "p99_ms": 10.36,
+    "n": 120
+   },
+   "decision_gate": {
+    "median_ms": 0.09,
+    "p95_ms": 0.12,
+    "p99_ms": 0.13,
+    "n": 120
+   },
+   "step_plus_overlay": {
+    "median_ms": 66.71,
+    "p95_ms": 71.56,
+    "p99_ms": 81.9,
+    "n": 120
+   }
+  },
+  "decision": {
+   "equity_2000_no_rollout": {
+    "median_ms": 96.14,
+    "p95_ms": 96.8,
+    "p99_ms": 96.84,
+    "n": 5
+   },
+   "equity_2000_rollout_400": {
+    "median_ms": 192.04,
+    "p95_ms": 193.57,
+    "p99_ms": 193.82,
+    "n": 5
+   }
+  },
+  "streamlit_rerun": {
+   "median_ms": 210.34,
+   "p95_ms": 222.66,
+   "p99_ms": 222.89,
+   "n": 6,
+   "note": "full script rerun in AppTest incl. one observer step, both images and the tables; the live page reruns only the fragment, so this is an upper bound"
+  }
+ },
+ "budget": {
+  "synthetic_1280x800": {
+   "0.5_fps": {
+    "budget_ms": 2000.0,
+    "median_share": 0.124,
+    "p99_share": 0.129,
+    "keeps_up_p99": true
+   },
+   "1_fps": {
+    "budget_ms": 1000.0,
+    "median_share": 0.249,
+    "p99_share": 0.258,
+    "keeps_up_p99": true
+   },
+   "2_fps": {
+    "budget_ms": 500.0,
+    "median_share": 0.498,
+    "p99_share": 0.516,
+    "keeps_up_p99": true
+   },
+   "3_fps": {
+    "budget_ms": 333.3,
+    "median_share": 0.747,
+    "p99_share": 0.773,
+    "keeps_up_p99": true
+   }
+  },
+  "pokernow_tuning_frame_2x (timing only)": {
+   "0.5_fps": {
+    "budget_ms": 2000.0,
+    "median_share": 0.139,
+    "p99_share": 0.146,
+    "keeps_up_p99": true
+   },
+   "1_fps": {
+    "budget_ms": 1000.0,
+    "median_share": 0.277,
+    "p99_share": 0.292,
+    "keeps_up_p99": true
+   },
+   "2_fps": {
+    "budget_ms": 500.0,
+    "median_share": 0.554,
+    "p99_share": 0.584,
+    "keeps_up_p99": true
+   },
+   "3_fps": {
+    "budget_ms": 333.3,
+    "median_share": 0.831,
+    "p99_share": 0.877,
+    "keeps_up_p99": true
+   }
+  }
+ },
+ "decision_note": "decision runs only when the observed state changes (cached per state), not every frame"
+}
