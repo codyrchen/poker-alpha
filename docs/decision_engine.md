@@ -205,3 +205,33 @@ or hero seat) raise `ValueError` with the field named.
 
 Without an equity estimate the heuristic only ever picks *check* (never worse
 than folding) and says so in a warning.
+
+## Rollout options: depth and opponent response (Phases 59-61)
+
+`DecisionConfig(rollout_depth=..., rollout_response=..., rollout_response_params=...)`
+(passed to `rollout_action_evs`). Defaults are unchanged and pinned by the
+golden tests.
+
+* `rollout_depth="street"` (default, fast): the current street is resolved
+  (one opponent response, one re-raise round) and the hand is checked down.
+* `rollout_depth="showdown"` (heads-up only; multiway silently uses
+  "street" and says so in the candidate note): later streets are also played
+  — on each board one player may bet `opponent_bet_fraction` x pot and the
+  other calls or folds by its behaviour model on that street's hand strength
+  (no later-street raises).
+* `rollout_response`: `"behavior"` (default: `BehaviorModel` on absolute
+  hand strength), `"mdf_range"` (the responder defends the top
+  1/(1+size) of its own range, never raises), `"mdf_calibrated"` (defends
+  a + b/(1+size), parameters fitted in Phase 60). Adoption of a non-default
+  response model is decided in `docs/rollout_model.md`.
+
+Depth study (`python experiments/rollout_depth_study.py --sims 1000`,
+`results/validation/rollout_depth.json`): 7 heads-up spots x {regular,
+calling station}. The recommendation differs between depths in **6 of 14**;
+the median largest EV shift is 1.9 BB; acting on the fast recommendation
+costs up to **6.8 BB** if the showdown model is right (turn call vs fold
+with middle pair). Both depths are heuristic policies; neither is an
+equilibrium, so the study shows model dependence, not which is correct.
+Latency: median 0.23 s (street) vs 3.0 s (showdown; 9-11 s preflop, where
+three future streets are simulated). **Decision: the live default stays
+"street"; "showdown" is offered for offline / post-hand analysis.**

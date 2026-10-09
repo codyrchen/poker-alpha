@@ -115,7 +115,25 @@ def rollout_action_evs(obs: ObservedTableState, hero: Sequence,
                        opponent_bet_fraction: float = 0.66,
                        raise_multiplier: float = 3.0,
                        bootstrap: int = 1000,
-                       max_attempts_factor: int = 200) -> RolloutResult:
+                       max_attempts_factor: int = 200,
+                       response: str = "behavior",
+                       response_params: Optional[Sequence[float]] = None,
+                       depth: str = "street") -> RolloutResult:
+    """``response`` selects how opponents answer a bet (see :data:`RESPONSE_MODELS`):
+    "behavior" (default: BehaviorModel on absolute hand strength), "mdf_range"
+    (defend the top 1/(1+s) of their own range, no raises) or "mdf_calibrated"
+    (defend share a + b/(1+s) with ``response_params`` = (a, b)).
+
+    ``depth`` (see :data:`DEPTHS`): "street" (default, fast) resolves the
+    current street and checks the hand down; "showdown" (heads-up only,
+    ~10-50x slower) also plays one bet / call-or-fold round on every later
+    street with the behaviour models on that street's hand strength (no
+    raises on later streets)."""
+    if response not in RESPONSE_MODELS:
+        raise ValueError(f"response must be one of {RESPONSE_MODELS}")
+    if depth not in DEPTHS:
+        raise ValueError(f"depth must be one of {DEPTHS}")
+    fold_share = _fold_share(response, response_params)
     rng = np.random.default_rng(seed)
     hero_c = codes(hero)
     board = list(obs.board)
@@ -149,7 +167,24 @@ def rollout_action_evs(obs: ObservedTableState, hero: Sequence,
         probs.append(combo_cdf(w / w.sum()))
     sv = strength_vector(board) if board else strength_vector(())
     hero_strength = float(sv[COMBO_INDEX[tuple(sorted(hero_c))]])
+    rel_tab = {}
+    if fold_share is not None:
+        for s, cdf in zip(seats, probs):
+            w = np.diff(np.concatenate([[0.0], cdf]))
+            rel_tab[s] = _range_percentile(np.nan_to_num(sv, nan=0.0), w)
     need = 5 - len(board)
+    deep_on = depth == "showdown" and len(seats) == 1 and need > 0
+    if depth == "showdown" and len(seats) != 1:
+        raise RolloutError("depth='showdown' supports heads-up spots only")
+    hero_i = COMBO_INDEX[tuple(sorted(hero_c))]
+    hero_last = obs.dealer == obs.hero_seat        # HU: the button acts last postflop
+    future = [n for n in (3, 4, 5) if n > len(board)]
+    sv_cache: Dict[tuple, np.ndarray] = {}
+
+    def street_strength(b: tuple) -> np.ndarray:
+        if b not in sv_cache:
+            sv_cache[b] = strength_vector(list(b))
+        return sv_cache[b]
 
     n_opp = len(seats)
     labels = [c.label for c in candidates]
@@ -174,15 +209,23 @@ def rollout_action_evs(obs: ObservedTableState, hero: Sequence,
         ov = {s: evaluate_best_codes([int(COMBOS[i, 0]), int(COMBOS[i, 1])] + full)
               for s, i in zip(seats, idx)}
         strength = {s: float(sv[i]) for s, i in zip(seats, idx)}
+        rel = {s: float(rel_tab[s][i]) for s, i in zip(seats, idx)} if rel_tab else None
         u_resp = {s: float(x) for s, x in zip(seats, rng.random(n_opp))}
         u_bet = {s: float(x) for s, x in zip(seats, rng.random(n_opp))}
         u_hero = float(rng.random())
+        deep = None
+        if deep_on:
+            boards = [tuple(board + run[:n - len(board)]) for n in future]
+            deep = _deep_continuation(boards, street_strength, hero_i, idx[0], seats[0],
+                                      rng.random((len(boards), 4)), hero_last, models,
+                                      hero_model, pot0, hero_stack, opp_stack,
+                                      opponent_bet_fraction)
         for j, cand in enumerate(candidates):
             results[k, j] = _play(cand, hv, ov, strength, u_resp, u_bet, u_hero,
                                   seats, behind, models, hero_model,
                                   hero_strength, pot0, h0, level0, hero_stack,
                                   opp_stack, opp_bet, opponent_bet_fraction,
-                                  raise_multiplier) / bb
+                                  raise_multiplier, rel, fold_share, deep) / bb
         k += 1
 
     means = results.mean(axis=0)
@@ -204,6 +247,62 @@ def rollout_action_evs(obs: ObservedTableState, hero: Sequence,
                 diffs[(labels[a], labels[b])] = (
                     float(d.mean()), float(d.std(ddof=1) / math.sqrt(simulations)))
     return RolloutResult(evs, best, simulations, simulations / attempts, diffs)
+
+
+RESPONSE_MODELS = ("behavior", "mdf_range", "mdf_calibrated")
+DEPTHS = ("street", "showdown")
+
+
+def _deep_continuation(boards, street_strength, hero_i, opp_i, s, u, hero_last, models,
+                       hero_model, pot0, hero_stack, opp_stack, bet_frac):
+    """Later streets for depth="showdown" (heads-up): on each board one
+    player may bet ``bet_frac`` x pot (capped by the stacks); the other calls
+    or folds (a model "raise" counts as a call). Mutates ``add`` / ``in_hand``."""
+    def run(add, in_hand):
+        for k, b in enumerate(boards):
+            if not (in_hand["hero"] and in_hand[s]):
+                return
+            rem_h, rem_o = hero_stack - add["hero"], opp_stack[s] - add[s]
+            if min(rem_h, rem_o) <= 1e-9:
+                return                                    # all-in: run it out
+            sv = street_strength(b)
+            st = {"hero": float(sv[hero_i]), s: float(sv[opp_i])}
+            mdl = {"hero": hero_model, s: models[s]}
+            first, second = (s, "hero") if hero_last else ("hero", s)
+            bet = min(bet_frac * (pot0 + sum(add.values())), rem_h, rem_o)
+            for bettor, caller, ub, uc in ((first, second, u[k, 0], u[k, 1]),
+                                           (second, first, u[k, 2], u[k, 3])):
+                if _respond(mdl[bettor], st[bettor], False, bet_frac, ub) != "bet":
+                    continue
+                if _respond(mdl[caller], st[caller], True, bet_frac, uc) == "fold":
+                    in_hand[caller] = False               # uncalled bet never leaves
+                    return
+                add[bettor] += bet
+                add[caller] += bet
+                break
+    return run
+
+
+def _fold_share(response: str, params):
+    """Share of its own range a responder folds to a bet of ``size`` x pot."""
+    if response == "behavior":
+        return None
+    if response == "mdf_range":
+        return lambda size: size / (1.0 + size)
+    if params is None or len(params) != 2:
+        raise ValueError("mdf_calibrated needs response_params = (a, b)")
+    a, b = float(params[0]), float(params[1])
+    return lambda size: 1.0 - min(1.0, max(0.0, a + b / (1.0 + size)))
+
+
+def _range_percentile(strength: np.ndarray, weights: np.ndarray) -> np.ndarray:
+    """Percentile of every combo's strength within the weighted range."""
+    order = np.argsort(strength, kind="stable")
+    cw = np.cumsum(weights[order])
+    tot = cw[-1] if cw[-1] > 0 else 1.0
+    out = np.empty(len(strength))
+    out[order] = (cw - weights[order] / 2.0) / tot
+    return out
 
 
 def _respond(model: BehaviorModel, s: float, facing: bool, size: float,
@@ -252,9 +351,15 @@ def _settle(hv, ov, in_hand: Dict[str, bool], add: Dict[str, float],
 
 def _play(cand, hv, ov, strength, u_resp, u_bet, u_hero, seats, behind,
           models, hero_model, hero_strength, pot0, h0, level0, hero_stack,
-          opp_stack, opp_bet, bet_frac, raise_mult) -> float:
+          opp_stack, opp_bet, bet_frac, raise_mult, rel=None, fold_share=None,
+          deep=None) -> float:
     if cand.kind == "fold":
         return 0.0
+
+    def opp(s, facing, size, u):
+        if facing and fold_share is not None:
+            return "fold" if rel[s] < fold_share(size) else "call"
+        return _respond(models[s], strength[s], facing, size, u)
     in_hand = {"hero": True, **{s: True for s in seats}}
     add = {"hero": 0.0, **{s: 0.0 for s in seats}}
     to_call0 = max(0.0, level0 - h0)
@@ -272,7 +377,7 @@ def _play(cand, hv, ov, strength, u_resp, u_bet, u_hero, seats, behind,
         bettor = None
         for s in seats:
             if s in behind and can_act[s] and bettor is None:
-                if _respond(models[s], strength[s], False, bet_frac, u_bet[s]) == "bet":
+                if opp(s, False, bet_frac, u_bet[s]) == "bet":
                     bettor = s
         if bettor is not None:
             size = bet_frac * pot0
@@ -280,7 +385,7 @@ def _play(cand, hv, ov, strength, u_resp, u_bet, u_hero, seats, behind,
             for s in seats:
                 if s == bettor or not can_act[s]:
                     continue
-                r = _respond(models[s], strength[s], True, bet_frac, u_resp[s])
+                r = opp(s, True, bet_frac, u_resp[s])
                 if r == "fold":
                     in_hand[s] = False
                 else:
@@ -289,6 +394,8 @@ def _play(cand, hv, ov, strength, u_resp, u_bet, u_hero, seats, behind,
             if r == "fold":
                 return 0.0
             hero_put(size)
+        if deep is not None:
+            deep(add, in_hand)
         return _settle(hv, ov, in_hand, add, street_bet, pot0) - add["hero"]
 
     if cand.kind in ("call",) or (cand.kind == "all_in" and cand.raise_to <= level0 + 1e-9):
@@ -298,11 +405,13 @@ def _play(cand, hv, ov, strength, u_resp, u_bet, u_hero, seats, behind,
             if opp_bet[s] + 1e-9 >= level0 or not can_act[s]:
                 add[s] = 0.0
                 continue
-            r = _respond(models[s], strength[s], True, size, u_resp[s])
+            r = opp(s, True, size, u_resp[s])
             if r == "fold":
                 in_hand[s] = False
             else:
                 opp_put(s, level0)
+        if deep is not None:
+            deep(add, in_hand)
         return _settle(hv, ov, in_hand, add, street_bet, pot0) - add["hero"]
 
     # bet / raise / all-in above the current level
@@ -315,7 +424,7 @@ def _play(cand, hv, ov, strength, u_resp, u_bet, u_hero, seats, behind,
     for s in seats:
         if not can_act[s]:
             continue
-        r = _respond(models[s], strength[s], True, size, u_resp[s])
+        r = opp(s, True, size, u_resp[s])
         if r == "fold":
             in_hand[s] = False
         elif r == "raise" and raised_by is None and \
@@ -332,7 +441,7 @@ def _play(cand, hv, ov, strength, u_resp, u_bet, u_hero, seats, behind,
         rsize = (level - target) / max(pot0 + sum(add.values()), 1e-9)
         for s, at in called_at.items():
             if at + 1e-9 < level and can_act[s] and opp_stack[s] > add[s] + 1e-9:
-                r = _respond(models[s], strength[s], True, rsize, u_resp[s])
+                r = opp(s, True, rsize, u_resp[s])
                 if r == "fold":
                     in_hand[s] = False
                 else:
@@ -342,4 +451,6 @@ def _play(cand, hv, ov, strength, u_resp, u_bet, u_hero, seats, behind,
             in_hand["hero"] = False
             return -add["hero"]
         hero_put(level)
+    if deep is not None:
+        deep(add, in_hand)
     return _settle(hv, ov, in_hand, add, street_bet, pot0) - add["hero"]

@@ -64,6 +64,9 @@ class DecisionConfig:
     hero_model: str = "regular"           # hero's continuation policy in rollouts
     opponent_bet_fraction: float = 0.66   # size opponents bet when hero checks
     raise_multiplier: float = 3.0         # opponents' raise-to vs hero's bet
+    rollout_response: str = "behavior"    # opponents' answer to a bet (rollout.RESPONSE_MODELS)
+    rollout_response_params: Optional[Tuple[float, float]] = None
+    rollout_depth: str = "street"         # "showdown": play later streets too (HU, slower)
     observer_confidence: Optional[float] = None  # from screen recognition
 
 
@@ -578,13 +581,17 @@ def _attach_rollout_evs(state, hero, ranges, models, cfg, cands,
         simulations=cfg.rollout_simulations, seed=cfg.seed,
         hero_model=ARCHETYPE_MODELS[cfg.hero_model],
         opponent_bet_fraction=cfg.opponent_bet_fraction,
-        raise_multiplier=cfg.raise_multiplier)
+        raise_multiplier=cfg.raise_multiplier,
+        response=cfg.rollout_response, response_params=cfg.rollout_response_params,
+        depth=cfg.rollout_depth if len(ranges) == 1 else "street")
     out = []
     for c in cands:
         e = res.ev(c.label)
         note = c.note
         if source is not None:
             note = (note + "; " if note else "") + "EV from Monte Carlo rollout"
+        if cfg.rollout_depth != "street" and len(ranges) != 1:
+            note = (note + "; " if note else "") + "multiway: one-street rollout depth used"
         out.append(replace(c, ev_bb=e.ev_bb, ev_se_bb=e.se_bb,
                            samples=e.samples,
                            source=source or "Monte Carlo rollout", note=note))
