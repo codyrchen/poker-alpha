@@ -2,8 +2,8 @@
  "run": "pre-real-test (Phases 41-80)",
  "branch": "claude/live-observer",
  "start_commit": "8a35231674b97982015454c2c649695713b43697",
- "head": "bc3d164",
- "current_phase": 48,
+ "head": "071b303",
+ "current_phase": 49,
  "completed_phases": [
   {
    "phase": 41,
@@ -32,9 +32,13 @@
   {
    "phase": 47,
    "summary": "region debugger: poker_alpha/observer/debug.py (per-region crop/coords/raw/conf/fused/decision+reason/previous/agreeing), Live screen tabs, Export current debug report (JSON+HTML, local); tests/test_observer_debug.py"
+  },
+  {
+   "phase": 48,
+   "summary": "failure injection: tests/test_observer_failures.py (43); fixes: live_check (stale + not-settled gates), capture rect outside monitor error, table shape plausibility, tracker holds (hero-card change, bet shrink w/o collection, seat vacating in hand, board-cleared new hand needs visible new hero cards); docs/observer_failure_modes.md"
   }
  ],
- "tests": "608 passed, 5 skipped (non-slow)",
+ "tests": "682 passed, 5 skipped (non-slow)",
  "ci": "run 30 green at 8a35231",
  "long_running": [
   {
@@ -67,6 +71,6 @@
   "session_docs": "docs/observer_sessions.md"
  },
  "unresolved": [],
- "next_step": "Phase 48: observer failure-injection tests",
- "updated": "2026-10-09T05:48:38Z"
+ "next_step": "Phase 49: synthetic/derived robustness matrix",
+ "updated": "2026-10-09T06:05:05Z"
 }

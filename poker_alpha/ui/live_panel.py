@@ -24,7 +24,7 @@ import streamlit as st
 
 from ..observer.calibration import TableCalibration
 from ..observer.errors import ObserverDependencyError
-from ..observer.live import (CaptureSettings, LiveObserverSession, critical_check,
+from ..observer.live import (CaptureSettings, LiveObserverSession, live_check,
                              draw_overlay, fused_rows, list_monitors, mss_source_factory,
                              raw_rows, save_frame, seat_state_rows, transform_regions,
                              with_region)
@@ -209,7 +209,7 @@ def _calibration_editor(session: LiveObserverSession):
 
 def _decision(session, cfg, compute: bool, min_conf: float, render_report):
     tracker = session.tracker
-    check = critical_check(tracker, min_conf)
+    check = live_check(session, min_conf)
     st.metric("Critical confidence", f"{check.critical_confidence:.0%}")
     if not check.ok:
         st.error("No decision: critical state validation failed — " + "; ".join(check.problems))

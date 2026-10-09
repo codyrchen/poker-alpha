@@ -43,6 +43,13 @@ class TrackerConfig:
     high_confidence: float = 0.9
     min_confidence: float = 0.3
     stack_increase_confirm: int = 4
+    # A confirmed hero card can only change within a hand after this many
+    # agreeing frames (normally a new hand clears the cards first).
+    hero_change_confirm: int = 6
+    # A bet can only shrink right after a collection (pot rose / board grew,
+    # within this many frames) or a new hand; otherwise after
+    # ``stack_increase_confirm`` agreeing frames.
+    collection_window: int = 3
 
 
 @dataclass(frozen=True)
@@ -68,6 +75,8 @@ class StateTracker:
         self.actions: List[ObservedAction] = []
         self.timestamp: Optional[float] = None
         self._prev: Optional[TableSnapshot] = None
+        self._frame_no = 0
+        self._last_collection = -10**9       # frame number of the last pot collection
         self.fields: Dict[str, FieldTracker] = {}
         c = self.cfg
         for name in ["pot", "dealer", "actor"]:
@@ -117,8 +126,10 @@ class StateTracker:
         for name, f in self.fields.items():
             if name.startswith(("board_", "hero_card_")) or name.endswith(".bet"):
                 if not f.pinned:
-                    f.has_value, f.stable, f.candidate, f.candidate_count = \
-                        False, None, None, 0
+                    keep = name.startswith("hero_card_")   # new cards already seen count
+                    f.has_value, f.stable = False, None
+                    if not keep:
+                        f.candidate, f.candidate_count = None, 0
         self.events.append(TableEvent("new_hand", detail=reason))
 
     def update(self, frame: FrameObservation) -> List[TableEvent]:
@@ -128,6 +139,8 @@ class StateTracker:
         self.timestamp = frame.timestamp
         before = len(self.events)
         fr = frame.fields
+        self._frame_no += 1
+        board_len_before = sum(1 for i in range(5) if self._stable(f"board_{i}") is not None)
 
         # New-hand detection first: a confirmed dealer move with an empty
         # board starts a hand; a move with cards still out is suspicious.
@@ -153,9 +166,12 @@ class StateTracker:
                 continue
             stable = self._stable(name)
             if stable is not None and reading.value != stable:
+                # A cleared board is a new hand only if NEW hero cards are
+                # visible: an unreadable frame (every card "absent") is not.
                 if reading.value is None and all(fr[f"board_{j}"].value is None
                                                  for j in range(5)) \
-                        and all(fr[f"hero_card_{j}"].value != self._stable(f"hero_card_{j}")
+                        and all(fr[f"hero_card_{j}"].value is not None
+                                and fr[f"hero_card_{j}"].value != self._stable(f"hero_card_{j}")
                                 for j in range(2)):
                     self._new_hand("board cleared and hero cards changed")
                     break
@@ -173,8 +189,30 @@ class StateTracker:
                 self.fields[name].update(reading)
         for i in range(2):
             name = f"hero_card_{i}"
-            if name in fr:
-                self.fields[name].update(fr[name])
+            if name not in fr:
+                continue
+            reading, f = fr[name], self.fields[name]
+            stable = self._stable(name)
+            if stable is not None and reading.value != stable and not f.pinned:
+                # Hero cards cannot change (or vanish) within a hand; a new
+                # hand clears them first. Hold the change (occlusion, glare,
+                # a misread suit) unless it persists for many frames.
+                if reading.confidence < self.cfg.min_confidence:
+                    f.rejected += 1
+                    continue
+                if reading.value == f.candidate:
+                    f.candidate_count += 1
+                else:
+                    f.candidate, f.candidate_count = reading.value, 1
+                if f.candidate_count >= self.cfg.hero_change_confirm:
+                    self.flags.append(f"accepted {name} change {stable}->{reading.value} "
+                                      f"after {f.candidate_count} frames without a new hand")
+                    f.accept(reading.value, reading.confidence, frame.timestamp)
+                elif f.candidate_count == 1:
+                    self.flags.append(f"held {name} change {stable}->{reading.value}: "
+                                      "no new hand seen")
+                continue
+            f.update(reading)
 
         # Pot (award detection uses the pot dropping).
         pot_before = self._stable("pot")
@@ -182,17 +220,62 @@ class StateTracker:
             self.fields["pot"].update(fr["pot"])
         pot_dropped = (pot_before is not None and self._stable("pot") is not None
                        and self._stable("pot") < pot_before)
+        pot_rose = (pot_before is not None and self._stable("pot") is not None
+                    and self._stable("pot") > pot_before)
+        board_len = sum(1 for i in range(5) if self._stable(f"board_{i}") is not None)
+        established = self._prev is not None and self._prev.hero_cards[0] is not None
+        if pot_rose or (established and board_len > board_len_before):
+            self._last_collection = self._frame_no
+        collected = self._frame_no - self._last_collection < self.cfg.collection_window
 
         for s in range(self.cal.num_seats):
-            for k in ("occupied", "all_in", "in_hand", "bet"):
+            in_hand = bool(self._stable(f"seat{s}.in_hand", False))
+            for k in ("occupied", "all_in", "in_hand"):
                 name = f"seat{s}.{k}"
-                if name in fr:
-                    self.fields[name].update(fr[name])
+                if name not in fr:
+                    continue
+                if k == "occupied" and in_hand and fr[name].value is False \
+                        and self._stable(name) is True:
+                    self._hold(name, fr[name], frame.timestamp,
+                               f"seat {s} vacating while in the hand")
+                    continue
+                self.fields[name].update(fr[name])
+            name = f"seat{s}.bet"
+            reading = fr.get(name)
+            if reading is not None:
+                f = self.fields[name]
+                stable = self._stable(name)
+                if stable is not None and reading.value is not None and not f.pinned \
+                        and reading.value < stable - 1e-9 and not collected:
+                    # Bets only shrink when collected into the pot (pot rises /
+                    # board grows) or at a new hand; hold anything else.
+                    if reading.confidence < self.cfg.min_confidence:
+                        f.rejected += 1
+                    else:
+                        if reading.value == f.candidate:
+                            f.candidate_count += 1
+                        else:
+                            f.candidate, f.candidate_count = reading.value, 1
+                        if f.candidate_count >= self.cfg.stack_increase_confirm:
+                            self.flags.append(f"accepted bet decrease on seat {s} "
+                                              f"({stable} -> {reading.value}) without a "
+                                              f"collection after {f.candidate_count} frames")
+                            f.accept(reading.value, reading.confidence, frame.timestamp)
+                        elif f.candidate_count == 1:
+                            self.flags.append(f"held bet decrease on seat {s} "
+                                              f"({stable} -> {reading.value}): no collection seen")
+                else:
+                    f.update(reading)
             name = f"seat{s}.stack"
             reading = fr.get(name)
             if reading is None:
                 continue
             stable = self._stable(name)
+            if stable is not None and reading.value is None and in_hand:
+                # an occluded / unreadable stack of a player in the hand
+                self._hold(name, reading, frame.timestamp,
+                           f"seat {s} stack disappearing while in the hand")
+                continue
             if stable is not None and reading.value is not None and \
                     reading.value > stable + 1e-9 and not pot_dropped:
                 f = self.fields[name]
@@ -225,6 +308,25 @@ class StateTracker:
                 self._record_action(e, self._prev)
         self._prev = snap
         return self.events[before:]
+
+    def _hold(self, name: str, reading: FieldReading, timestamp, what: str) -> None:
+        """Hold an implausible change; accept it only if it persists for
+        ``stack_increase_confirm`` frames (flagged either way)."""
+        f = self.fields[name]
+        if f.pinned:
+            return
+        if reading.confidence < self.cfg.min_confidence:
+            f.rejected += 1
+            return
+        if reading.value == f.candidate:
+            f.candidate_count += 1
+        else:
+            f.candidate, f.candidate_count = reading.value, 1
+        if f.candidate_count >= self.cfg.stack_increase_confirm:
+            self.flags.append(f"accepted {what} after {f.candidate_count} frames")
+            f.accept(reading.value, reading.confidence, timestamp)
+        elif f.candidate_count == 1:
+            self.flags.append(f"held {what}")
 
     def _record_action(self, e: TableEvent, prev: TableSnapshot) -> None:
         street = {0: 0, 3: 1, 4: 2, 5: 3}.get(len(prev.board), 0)

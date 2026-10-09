@@ -30,6 +30,7 @@ from .pokernow import FrameObservation, PokerNowStyleAdapter
 from .regions import Region
 
 Rect = Tuple[int, int, int, int]  # left, top, width, height
+SMALL_TABLE_FRACTION = 0.08       # table area / capture area below this -> advisory warning
 
 PERMISSION_HELP = (
     "Screen capture failed or returned a blank frame. On macOS grant Screen "
@@ -58,6 +59,9 @@ def absolute_box(monitor: Dict[str, int], rect: Optional[Rect]) -> Rect:
     ml, mt, mw, mh = monitor["left"], monitor["top"], monitor["width"], monitor["height"]
     if not rect or rect[2] <= 0 or rect[3] <= 0:
         return (ml, mt, mw, mh)
+    if rect[0] < 0 or rect[1] < 0 or rect[0] >= mw or rect[1] >= mh:
+        raise ValueError(f"capture rectangle {tuple(rect)} starts outside the monitor "
+                         f"({mw}x{mh}); left/top are relative to the monitor's top-left")
     left = max(0, min(int(rect[0]), mw - 1))
     top = max(0, min(int(rect[1]), mh - 1))
     w = max(1, min(int(rect[2]), mw - left))
@@ -126,6 +130,9 @@ class LiveObserverSession:
         self.last_timings: Dict[str, float] = {}
         self.last_events: list = []
         self.last_tracker_before: Optional[dict] = None
+        # Fail-safe bookkeeping: was the latest frame captured AND recognized?
+        self.last_step_ok = False
+        self.bad_streak = 0
 
     # configuration; the tracker survives frames and is rebuilt only when
     # the calibration, blinds or seat layout change
@@ -160,7 +167,16 @@ class LiveObserverSession:
 
     def step(self, now: Optional[float] = None, recognize: bool = True) -> StepResult:
         """Capture one frame, read it and feed the tracker. Never raises:
-        failures are returned and kept in ``last_error``."""
+        failures are returned and kept in ``last_error``. A failed frame
+        leaves the tracker untouched (the last valid state is preserved) and
+        marks the state stale (``last_step_ok`` False) until a frame is read
+        again."""
+        res = self._step(now, recognize)
+        self.last_step_ok = bool(res.ok and recognize and self.adapter is not None)
+        self.bad_streak = 0 if self.last_step_ok else self.bad_streak + 1
+        return res
+
+    def _step(self, now: Optional[float] = None, recognize: bool = True) -> StepResult:
         now = time.time() if now is None else now
         self.last_timings, self.last_events = {}, []
         t0 = time.perf_counter()
@@ -193,6 +209,13 @@ class LiveObserverSession:
             return StepResult(False, self.last_error, self.last_warning)
         t2 = time.perf_counter()
         self.last_timings["recognition"] = t2 - t1
+        tl, tt, tr_, tb = obs.table_bbox
+        frac = max(0, tr_ - tl) * max(0, tb - tt) / max(1, img.size[0] * img.size[1])
+        if frac < SMALL_TABLE_FRACTION:
+            small = (f"the table covers only {frac:.1%} of the capture: crop the capture to "
+                     "the poker table (is PokerAlpha capturing its own window or a thumbnail?)")
+            self.last_warning = small if self.last_warning is None else \
+                f"{self.last_warning} {small}"
         self.last_observation = obs
         # Diagnostic only (debug panel): field-tracker state before the update.
         from .debug import capture_tracker_state
@@ -357,6 +380,50 @@ class CriticalCheck:
     ok: bool
     problems: Tuple[str, ...]
     critical_confidence: float
+
+
+def unsettled_fields(session: "LiveObserverSession") -> List[str]:
+    """Critical fields whose latest raw reading disagrees with the confirmed
+    (stable) value: the table is changing, or the frame was misread."""
+    obs, tr = session.last_observation, session.tracker
+    if obs is None or tr is None:
+        return []
+    snap = tr.snapshot()
+    hero = tr.cal.hero_seat
+    names = ["hero_card_0", "hero_card_1", "pot", f"seat{hero}.stack"]
+    names += [f"board_{i}" for i in range(5)]
+    names += [f"seat{s}.bet" for s in range(tr.cal.num_seats)
+              if snap.occupied[s] and snap.in_hand[s]]
+    out = []
+    for n in names:
+        if n not in obs.fields or tr.fields[n].pinned:
+            continue
+        raw, stable = obs.value(n), tr._stable(n)
+        if isinstance(raw, (int, float)) and isinstance(stable, (int, float)):
+            same = abs(raw - stable) < 1e-9
+        else:
+            same = raw == stable
+        if not same:
+            out.append(n)
+    return out
+
+
+def live_check(session: "LiveObserverSession", min_confidence: float = 0.6) -> CriticalCheck:
+    """:func:`critical_check` plus freshness: no decision from a preserved
+    (stale) state while the latest frame could not be captured or read, nor
+    while the latest frame disagrees with the confirmed critical state."""
+    base = critical_check(session.tracker, min_confidence)
+    if session.last_step_ok:
+        diff = unsettled_fields(session)
+        if diff:
+            return CriticalCheck(False, (f"state not settled: the latest frame disagrees "
+                                         f"with the confirmed state on {', '.join(diff)}",)
+                                 + base.problems, base.critical_confidence)
+        return base
+    why = session.last_error or "no frame recognized yet"
+    stale = (f"stale: the latest frame was not recognized ({why.split('. ')[0]}); "
+             f"{session.bad_streak} bad frame(s) in a row")
+    return CriticalCheck(False, (stale,) + base.problems, base.critical_confidence)
 
 
 def critical_check(tracker: StateTracker, min_confidence: float = 0.6) -> CriticalCheck:

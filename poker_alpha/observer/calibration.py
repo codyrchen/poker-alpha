@@ -142,14 +142,32 @@ def locate_table(image, calibration: TableCalibration,
     if calibration.table_bbox is not None:
         return tuple(int(v) for v in calibration.table_bbox)
     if calibration.table_detector == "green_oval":
-        return locate_hue_blob(image, calibration.felt_color)
+        return _plausible(locate_hue_blob(image, calibration.felt_color))
     mask = color_mask(image, calibration.felt_color, calibration.felt_tolerance)
     if mask.mean() < min_fraction:
         raise CalibrationError("table felt not found; recalibrate felt_color "
-                               "or set table_bbox")
+                               "or set table_bbox" + NOT_FOUND_HINT)
     rows = np.flatnonzero(mask.mean(axis=1) > 0.05)
     cols = np.flatnonzero(mask.mean(axis=0) > 0.05)
-    return (int(cols[0]), int(rows[0]), int(cols[-1]) + 1, int(rows[-1]) + 1)
+    if len(rows) == 0 or len(cols) == 0:
+        raise CalibrationError("table felt not found" + NOT_FOUND_HINT)
+    return _plausible((int(cols[0]), int(rows[0]), int(cols[-1]) + 1, int(rows[-1]) + 1))
+
+
+NOT_FOUND_HINT = ("; check that the capture shows the poker table (not another tab, "
+                  "a modal, or PokerAlpha's own window)")
+TABLE_ASPECT = (1.0, 3.5)      # width / height of any plausible poker table
+
+
+def _plausible(box: Box) -> Box:
+    """Reject 'tables' no poker client draws (a toolbar, a strip, a column):
+    a broad shape check, not tuned to any client."""
+    w, h = box[2] - box[0], box[3] - box[1]
+    aspect = w / max(h, 1)
+    if not TABLE_ASPECT[0] <= aspect <= TABLE_ASPECT[1]:
+        raise CalibrationError(f"felt-coloured region {w}x{h} is not table-shaped "
+                               f"(aspect {aspect:.1f})" + NOT_FOUND_HINT)
+    return box
 
 
 def _hsv(arr: np.ndarray):
@@ -187,7 +205,7 @@ def locate_hue_blob(image, felt_color: RGB, hue_tol: float = 25.0,
     mask = (dh <= hue_tol) & (sat >= min_sat) & (val >= min_val)
     if mask.mean() < min_fraction:
         raise CalibrationError("table felt not found (no large blob with the felt hue); "
-                               "check felt_color or set table_bbox")
+                               "check felt_color or set table_bbox" + NOT_FOUND_HINT)
     labels, n = ndimage.label(mask)
     sizes = ndimage.sum(mask, labels, range(1, n + 1))
     k = int(np.argmax(sizes)) + 1
