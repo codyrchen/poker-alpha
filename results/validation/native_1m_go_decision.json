@@ -1,0 +1,18 @@
+{
+ "format": "pokeralpha.compute_budget_record/v1",
+ "experiment": "1M extension of the three native seeds (resume from 300k)",
+ "question": "Is the 300k plateau structural (imperfect-recall noise) or undertraining? Does seed disagreement / preflop instability decline materially by 1M?",
+ "go_criteria": {
+  "correctness_validated": true,
+  "policy_still_moving_at_300k": "top-2000 L1 ~0.045 per 50k segment",
+  "seed_disagreement_trend": "median 0.595 (300k native) vs 0.617 (200k release lineage), same construction",
+  "runtime": "~25 min (3 parallel workers at ~770 it/s each)",
+  "memory": "~450MB/seed at 300k; projected < 700MB/seed at 1M",
+  "unresolved_question": "release_status.md lists longer training as the top rating-changing step"
+ },
+ "decision": "GO",
+ "command": "python experiments/train_native_multiseed.py --seeds 0,1,2 --milestones 400000,500000,750000,1000000 --out-dir results/native_training --jobs 3",
+ "checkpoint_interval": "milestones 400k/500k/750k/1M",
+ "output": "results/native_training/*.jsonl + checkpoints (gitignored)",
+ "stop_criterion": "all seeds at 1M; then rerun study at 1M (confidence table seeds 0-2 @1M, earlier=10k)"
+}

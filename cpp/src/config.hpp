@@ -48,6 +48,9 @@ struct NativeConfig {
             throw std::invalid_argument("preflop raise menu must have 0..3 entries");
         if (raise_cap < 1 || starting_stack <= 0)
             throw std::invalid_argument("invalid tree parameters");
+        if (raise_cap > 3)
+            throw std::invalid_argument(
+                "native backend supports raise_cap <= 3 (packed-key field width)");
         if (river_pct_buckets < 0 || river_pct_buckets > 20)
             throw std::invalid_argument("river_pct_buckets must be 0..20");
     }
