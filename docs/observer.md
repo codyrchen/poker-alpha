@@ -212,7 +212,7 @@ card and as exact pair/board, street, stacks / bets / pot (exact + MAE),
 dealer, seat occupancy, full state, and accuracy by reported confidence
 (calibration). A harness self-test runs it end to end on the synthetic image
 (`tests/test_annotation_validation.py`) — that proves the plumbing, not real
-accuracy. **Real screen validation: BLOCKED** (0 real fixtures, Phase 38).
+accuracy. **Real screen validation: BLOCKED** (1 real tuning frame, 0 validation / held-out frames).
 
 ## Adding real fixtures (unblocks Phase 30)
 

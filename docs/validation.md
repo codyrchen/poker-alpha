@@ -29,7 +29,7 @@ Every number below is copied from that file.
 | **NOT VALIDATED** | a converged heads-up Hold'em strategy |
 | **NOT VALIDATED** | a low-exploitability strategy (exploitability is not computed) |
 | **NOT VALIDATED** | equilibrium-quality real Hold'em play |
-| **NOT VALIDATED** | real PokerNow recognition accuracy (0 real fixtures) |
+| **NOT VALIDATED** | real PokerNow recognition accuracy (1 real tuning frame, 0 independent validation frames) |
 | **NOT VALIDATED** | profitability |
 | **NOT VALIDATED** | calibration of range priors / behaviour models against real opponents |
 
@@ -254,8 +254,11 @@ trajectory.
 * Real PokerNow: `tests/fixtures/pokernow/` (README, `raw/`, `annotations/`)
   defines the structure and the `pokeralpha.screenshot_annotation/v1`
   format; `python experiments/observer_validation.py --fixture-dir
-  tests/fixtures/pokernow` reports per-field accuracy and MAE. Current
-  output: `0 real fixtures found`, `real PokerNow accuracy: NOT MEASURED`.
+  tests/fixtures/pokernow` reports per-field accuracy and MAE per dataset
+  role. Current data: **1 real frame, role `tuning`** (the frame the
+  heads-up preset and PokerNow recognizers were tuned on) and **0
+  validation / 0 held-out frames**, so the output is
+  `REAL VALIDATION: BLOCKED` and real PokerNow accuracy is **not measured**.
 
 ## 7. CI
 

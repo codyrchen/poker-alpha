@@ -127,9 +127,10 @@ Stated up front, because they bound every number above:
 - **Multiplayer recommendations are approximate.** CFR's two-player
   zero-sum guarantees do not extend to 3–9 players; multiway advice is
   range-based EV estimation under heuristic opponent models.
-- **The screen observer is validated on synthetic frames only.** Exact
-  PokerNow visual accuracy is not validated without representative
-  screenshots.
+- **The screen observer is validated on synthetic frames only.** One real
+  PokerNow frame exists and it is a *tuning* frame (the preset was aligned
+  on it); there are 0 independent validation frames, so real PokerNow
+  accuracy is not measured (`REAL VALIDATION: BLOCKED`).
 - **Some realized-EV comparisons have wide confidence intervals** (~±17
   chips/100 at 3,000 hands); the exact-EV experiments, not the match results,
   are the load-bearing evidence.
@@ -189,6 +190,30 @@ python experiments/holdem_mccfr.py --iterations 2000 --encoder bucket \
     --checkpoint results/checkpoints/hu.npz --checkpoint-every 500
 streamlit run poker_alpha/ui/app.py
 ```
+
+### Live observer test kit (Phases 41-80)
+
+Read-only: it never clicks, types or acts. Use it only in private /
+play-money / test games where outside assistance is allowed.
+
+```bash
+python -m poker_alpha.doctor          # diagnose the install (changes nothing)
+./scripts/run_live_observer.sh        # doctor + Streamlit on 127.0.0.1 only
+```
+
+| doc | what |
+| --- | --- |
+| [real_pokernow_test_checklist.md](docs/real_pokernow_test_checklist.md) | step-by-step for the next real test and what to send back |
+| [observer_sessions.md](docs/observer_sessions.md) | test-session recorder, replay, annotation, dataset roles, metrics |
+| [privacy.md](docs/privacy.md) | what is stored where; Streamlit network defaults |
+| [capture_geometry.md](docs/capture_geometry.md) | Retina points vs pixels, capture rectangle |
+| [observer_failure_modes.md](docs/observer_failure_modes.md) | injected failures and the tracker's plausibility rules |
+| [observer_robustness.md](docs/observer_robustness.md) | synthetic / derived robustness matrix (not real accuracy) |
+| [observer_performance.md](docs/observer_performance.md) | per-stage latency, frame budget, soak |
+| [strategy_artifacts.md](docs/strategy_artifacts.md) | artifact provenance, integrity checks, determinism audit |
+
+Real data status: **1 real PokerNow frame (tuning), 0 independent
+validation frames — real recognition accuracy is not measured.**
 
 ### Solver quality and release candidate (Phases 32-40)
 
