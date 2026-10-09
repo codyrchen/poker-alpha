@@ -124,6 +124,17 @@ Stated up front, because they bound every number above:
   by discovering new information sets (58.6% new since iteration 2,000;
   median visits 1) — postflop canonical spots are unvisited and preflop
   policies differ across seeds. Treat solver output as untrained.
+- **The compact abstraction merges strategically different flop / turn
+  hands.** In exact flop / turn subgames the release encoder's strategies
+  are 1.4-9.6 BB/hand exploitable (raw keys ~0.02), although values stay
+  close (EV error mostly <= 0.17 BB); flop and turn solver lookups are
+  therefore capped at low confidence ([flop](docs/flop_abstraction.md),
+  [turn](docs/turn_abstraction.md)).
+- **Rollouts are heuristic.** Against exact river equilibria the default
+  rollout picks the equilibrium action 61% of the time (held-out), is
+  optimistic by ~0.8 BB and bets too often ([rollout model](docs/rollout_model.md));
+  recommendations change with the assumed opponent model in 6 of 7 test
+  spots ([ranges](docs/ranges.md)).
 - **Multiplayer recommendations are approximate.** CFR's two-player
   zero-sum guarantees do not extend to 3–9 players; multiway advice is
   range-based EV estimation under heuristic opponent models.
