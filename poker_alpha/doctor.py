@@ -93,6 +93,43 @@ def check_dependency(label: str, mod: str, required: bool, hint: str,
     return Check(label, "OK", v)
 
 
+def check_native_backend() -> Check:
+    """Native MCCFR training backend (optional; never compiles anything)."""
+    from .native import native_available, native_module, native_version
+
+    mod = native_module()
+    if mod is None:
+        try:
+            import poker_alpha_native  # noqa: F401
+            return Check("native MCCFR backend", "WARN",
+                         "installed but schema-incompatible",
+                         "pip install ./cpp  (rebuild against this checkout)")
+        except ImportError:
+            return Check("native MCCFR backend", "INFO",
+                         "not installed — training uses the Python backend",
+                         "pip install ./cpp")
+    from .native.backend import supports_config
+    from .solver_config import RELEASE_CONFIG
+
+    detail = (f"v{native_version()}, schema {mod.BACKEND_SCHEMA}, "
+              f"rng {mod.RNG_NAME}")
+    if not supports_config(RELEASE_CONFIG):
+        return Check("native MCCFR backend", "WARN",
+                     f"{detail}; release config unsupported", "")
+    try:  # one-iteration self-test (fast, in-memory)
+        from .native import NativeMCCFRSolver
+
+        solver = NativeMCCFRSolver(RELEASE_CONFIG, seed=0)
+        solver.train(1)
+        assert solver.iterations == 1 and native_available()
+    except Exception as exc:  # noqa: BLE001
+        return Check("native MCCFR backend", "FAIL",
+                     f"{detail}; self-test failed: {exc}",
+                     "pip install ./cpp  (rebuild)")
+    return Check("native MCCFR backend", "OK",
+                 f"{detail}; release config supported; self-test passed")
+
+
 def check_tesseract() -> Check:
     exe = shutil.which("tesseract")
     py = _version("pytesseract")
@@ -205,6 +242,7 @@ def run_checks(calibration=None, monitor=1, capture=True) -> List[Check]:
         checks.append(check_dependency(label, mod, req, hint, mv))
     checks.append(check_tesseract())
     checks.append(check_strategy())
+    checks.append(check_native_backend())
     checks += check_monitors(monitor, capture)
     checks.append(check_calibration(calibration))
     from .observer.session import DEFAULT_SESSION_ROOT

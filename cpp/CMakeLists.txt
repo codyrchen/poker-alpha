@@ -39,3 +39,24 @@ if(POKERALPHA_SANITIZE)
 endif()
 
 install(TARGETS poker_alpha_native LIBRARY DESTINATION .)
+
+# Standalone self-test (no Python): the sanitizer harness. Not built by
+# default pip installs; see cpp/tests/native_selftest.cpp for usage.
+option(POKERALPHA_BUILD_SELFTEST "Build the native self-test executable" OFF)
+if(POKERALPHA_BUILD_SELFTEST)
+  add_executable(native_selftest
+    tests/native_selftest.cpp
+    src/evaluator.cpp
+    src/features.cpp
+    src/game.cpp
+    src/key.cpp
+    src/solver.cpp
+  )
+  target_compile_options(native_selftest PRIVATE -Wall -Wextra -Wpedantic -ffp-contract=off)
+  if(POKERALPHA_SANITIZE)
+    foreach(san ${POKERALPHA_SANITIZE})
+      target_compile_options(native_selftest PRIVATE -fsanitize=${san} -fno-omit-frame-pointer -g)
+      target_link_options(native_selftest PRIVATE -fsanitize=${san})
+    endforeach()
+  endif()
+endif()

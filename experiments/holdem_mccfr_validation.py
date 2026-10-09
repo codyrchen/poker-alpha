@@ -97,24 +97,60 @@ def main() -> None:
                    help="continue from this checkpoint (same game/config)")
     p.add_argument("--max-seconds", type=float, default=float("inf"),
                    help="stop at the first milestone reached after this budget")
+    p.add_argument("--backend", choices=("python", "native", "auto"),
+                   default="python",
+                   help="training backend: 'python' (reference, default), "
+                        "'native' (require the C++ extension; needs a locked "
+                        "config flag), 'auto' (native when available)")
     args = p.parse_args()
     milestones = [int(x) for x in args.milestones.split(",")]
     args.ckpt_dir.mkdir(parents=True, exist_ok=True)
+    config = None
     if args.v2_config:
         from poker_alpha.solver_config import V2_CONFIG
 
-        game, tag = V2_CONFIG.build_game(), "v2"
+        config, tag = V2_CONFIG, "v2"
     elif args.legal_sizing_config:
         from poker_alpha.solver_config import LEGAL_SIZING_CONFIG
 
-        game, tag = LEGAL_SIZING_CONFIG.build_game(), "legal"
+        config, tag = LEGAL_SIZING_CONFIG, "legal"
     elif args.locked_config:
         from poker_alpha.solver_config import PRIMARY_CONFIG
 
-        game, tag = PRIMARY_CONFIG.build_game(), "locked"
+        config, tag = PRIMARY_CONFIG, "locked"
     else:
-        game, tag = make_game(args.encoder), args.encoder
-    if args.resume is not None:
+        tag = args.encoder
+    game = config.build_game() if config is not None else make_game(args.encoder)
+
+    # Backend selection (Phase 55). Native requires a locked config (the
+    # extension implements the HoldemSolverConfig game, not ad-hoc encoders)
+    # and uses its own checkpoint format; 'python' keeps the historical
+    # behavior and formats byte-identical.
+    backend = args.backend
+    if backend in ("native", "auto"):
+        from poker_alpha.native import native_available
+        from poker_alpha.native.backend import supports_config
+
+        usable = (config is not None and native_available()
+                  and supports_config(config))
+        if backend == "native" and not usable:
+            raise SystemExit(
+                "--backend native needs the extension installed "
+                "(pip install ./cpp) and a locked config flag "
+                "(--locked-config / --v2-config)")
+        backend = "native" if usable else "python"
+    print(f"solver backend: {backend}", flush=True)
+
+    if backend == "native":
+        from poker_alpha.native import NativeMCCFRSolver
+
+        if args.resume is not None:
+            solver = NativeMCCFRSolver.load_checkpoint(args.resume, config)
+            milestones = [m for m in milestones if m > solver.iterations]
+        else:
+            solver = NativeMCCFRSolver(config, seed=args.seed)
+        tag = tag + "_native"
+    elif args.resume is not None:
         from poker_alpha.solvers.serialize import load_checkpoint
 
         solver = load_checkpoint(args.resume, game)
@@ -130,16 +166,20 @@ def main() -> None:
             seg = time.perf_counter()
             solver.train(m - solver.iterations)
             seg = time.perf_counter() - seg
-            visits = infoset_visits(solver)
-            met = solver_metrics(solver)
+            # Analysis sees a uniform solver interface: the native backend
+            # materializes a Python view of its tables at milestones only.
+            view = solver._as_python_solver() if backend == "native" else solver
+            visits = infoset_visits(view)
+            met = solver_metrics(view)
             moves = []
             for key, old in prev_top.items():
-                node = solver.infosets.get(key)
+                node = view.infosets.get(key)
                 if node is not None:
                     moves.append(float(np.abs(node.average_strategy() - old).sum()))
             top = sorted(visits, key=lambda k: (-visits[k], k))[:args.top_n]
-            path = save_checkpoint(
-                solver, args.ckpt_dir / f"{tag}_seed{args.seed}_it{m}.npz")
+            ckpt = args.ckpt_dir / f"{tag}_seed{args.seed}_it{m}.npz"
+            path = (solver.save_checkpoint(ckpt) if backend == "native"
+                    else save_checkpoint(solver, ckpt))
             row = {
                 "seed": args.seed, "encoder": tag, "iterations": m,
                 "config_signature": game.solver_config_signature(),
@@ -164,7 +204,7 @@ def main() -> None:
             fh.flush()
             print(json.dumps(row), flush=True)
             prev_keys = met.infosets
-            prev_top = {k: solver.infosets[k].average_strategy().copy() for k in top}
+            prev_top = {k: view.infosets[k].average_strategy().copy() for k in top}
             if time.perf_counter() - t_start > args.max_seconds:
                 print(f"stopping: time budget exhausted after {m} iterations")
                 break
