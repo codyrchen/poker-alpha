@@ -80,3 +80,30 @@ the assumed opponent model (regular / nit / calling station / maniac / any
 two cards) changes the recommendation in 2 of 3 measured heads-up spots
 (e.g. top pair facing a flop bet: raise, call or all-in; best-action EV
 4.6-30.1 BB). Ranges are assumptions; read EVs as conditional on them.
+
+## Sensitivity to the assumed range / opponent model (Phase 63)
+
+`python experiments/range_sensitivity.py --sims 1500` ->
+`results/validation/range_sensitivity.json`. Seven heads-up spots (preflop
+to river), the default analysis (inferred range, `regular` model) versus five
+alternatives: the `nit`, `calling_station` and `maniac` archetypes (they
+change both the Bayesian range update and the rollout responses) and an
+explicit tight / wide range. **Model-relative only: there is no ground-truth
+opponent.**
+
+* The recommendation changes under at least one alternative in **6 of 7
+  spots**; on average 43% of the alternatives flip it.
+* Misspecification regret (EV of the best action under the alternative minus
+  EV of the default recommendation under it, rollout EVs, paired seeds):
+  0 in the flush-draw call spot; up to **3 BB** for preflop and turn spots;
+  **10-11 BB** on the flop c-bet spot (calling station / maniac prefer
+  all-in); **15-26 BB** on the river bluff-catcher (maniac or a wide range
+  -> call instead of fold).
+* Caveats that inflate the extremes: explicit tight / wide ranges are used
+  as given (no update on the betting line), and the rollout plays one
+  response and then checks down, which over-credits all-ins against
+  calling stations (see `docs/decision_engine.md`).
+
+Consequence: an EV or recommendation is only as good as the opponent model
+behind it. The report always names the model and shows the range; treat
+large-pot river decisions against unknown opponents as low confidence.
