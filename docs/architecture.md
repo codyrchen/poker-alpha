@@ -58,9 +58,11 @@ Optional dependency groups keep it that way: `[vision]` (Pillow, mss),
 | `opponent/` | archetypes and Bayesian beliefs (research), behaviour models, range priors and updates, player statistics |
 | `decision/` | `recommend_action` → `DecisionReport`, solver lookup, Monte Carlo action rollouts |
 | `history/` | canonical events, `pokeralpha.hand/v1` JSON, replay through the rules engine |
-| `observer/` | screen sources, calibration, OCR/card recognition, PokerNow-style adapter, smoothing and fusion |
+| `observer/` | screen sources, calibration (`calibration.py`, format v2 with geometry checksum), Retina geometry (`geometry.py`), OCR/card recognition, PokerNow adapter and heads-up preset, smoothing and fusion with plausibility rules (`fusion.py`), live loop and overlay (`live.py`), test-session recorder (`session.py`), replay (`session_replay.py`), annotation schema and scoring (`annotations.py`, `annotation_tool.py`, `sequence_metrics.py`), region debugger (`debug.py`) |
+| `doctor.py`, `live.py` | environment doctor (diagnose only) and the local live launcher |
+| `utils/` | provenance (git commit, file SHA-256) and the Streamlit privacy check |
 | `session/` | SQLite session store, post-session analysis |
-| `ui/` | Streamlit decision-support app (display only) |
+| `ui/` | Streamlit decision-support app (display only): live panel, test-session controls, calibration editor, region debugger (`live_panel.py`), annotation page (`annotate_panel.py`) |
 
 ## Versioned formats
 
@@ -71,13 +73,17 @@ Optional dependency groups keep it that way: `[vision]` (Pillow, mss),
 | solver config | `HoldemSolverConfig:v1:<hash>` (locked reference), `HoldemSolverConfig:v2:<hash>` (release: legal sizing, river percentiles, averaging recorded) |
 | solver confidence table | `pokeralpha.solver_confidence/v1` (`.npz`, per-key visits / movement / seed disagreement / collision) |
 | screenshot annotation | `pokeralpha.screenshot_annotation/v1` (validated by `validate_annotation`) |
-| strategy artifact | `pokeralpha.strategy_artifact/v1` (`.npz`, average strategy + visits) |
+| strategy artifact | `pokeralpha.strategy_artifact/v1` (`.npz`, average strategy + visits; committed v1 files get a `pokeralpha.strategy_artifact_manifest/v1` sidecar), `pokeralpha.strategy_artifact/v2` (adds config JSON, commit, content SHA-256) |
 | encoder signatures | `RawHoldemEncoder:v1`, `ToyHoldemEncoder:v1`, `HoldemBucketEncoder:v1:equity=..`, `TransitionHoldemEncoder:v1:..`, `CompactHoldemEncoder:v1:..:recall=imperfect` |
 | action abstraction | `ActionAbstraction:v1:bets=..:raises=..:allin=..` |
 | observed state | `pokeralpha.observed/v1` |
 | hand history | `pokeralpha.hand/v1` |
 | range priors | `pokeralpha.preflop_ranges/v1` |
-| calibration | `pokeralpha.calibration/v1` |
+| calibration | `pokeralpha.calibration/v2` (geometry checksum, provenance; v1 files migrate on load) |
+| observer test session | `pokeralpha.observer_session/v1` (folder: `session.json`, `manifest.jsonl`, `observations/stream.jsonl`, `events/`, `raw/`, `diagnostics/`) |
+| session replay report | `pokeralpha.session_replay_report/v1` |
+| fixture export | `pokeralpha.observer_fixture_export/v1` |
+| observer debug report | `pokeralpha.observer_debug_report/v1` |
 | session database | SQLite, `meta.schema_version` = 1 |
 
 ## What is (and is not) theoretically grounded
