@@ -197,7 +197,11 @@ def main() -> None:
     p.add_argument("--out", type=Path,
                    default=ROOT / "results" / "validation" / "holdem_training_v1.json")
     p.add_argument("--config", choices=sorted(CONFIGS), default="v1")
+    p.add_argument("--keep-its", default="",
+                   help="extra iterations whose strategy tables are kept for cross-play "
+                        "(e.g. the common final when one seed trained longer)")
     args = p.parse_args()
+    keep = {int(x) for x in args.keep_its.split(",") if x.strip()}
     global CFG, PREFIX
     CFG, PREFIX = CONFIGS[args.config]
     runs = load_runs(args.runs_dir)
@@ -232,7 +236,7 @@ def main() -> None:
             tops.setdefault(it, {})[seed] = top_visited(solver, 2000)
             print(f"[{seed}] it {it}: infosets {row['infosets']} ge5 "
                   f"{row['visits']['fraction_trained_ge5']:.3f} matrix {len(vis)}/{len(m)}", flush=True)
-            if r is runs[seed][-1] or it in (1000, 10000, 100000):
+            if r is runs[seed][-1] or it in (1000, 10000, 100000) or it in keep:
                 tables[(seed, it)] = _strategy_table(solver)
             if seed == seeds[0] and r is runs[seed][-1]:
                 art = export_solver(solver, args.artifact, meta={
@@ -282,6 +286,14 @@ def main() -> None:
     if s1 is not None and (s1, 100000) in tables and F > 100000:
         jobs.append(("final vs 100k (other seed)", f"seed{s0}@{F}", f"seed{s1}@100000"))
         jobs.append(("final vs 100k (same seed)", f"seed{s0}@{F}", f"seed{s0}@100000"))
+    last0 = runs[s0][-1]["iterations"]
+    if last0 > F and (s0, F) in tables:
+        # one seed trained longer: does the extra training change play?
+        jobs.append((f"seed {s0} {last0} vs same seed {F}", f"seed{s0}@{last0}", f"seed{s0}@{F}"))
+        if s1 is not None:
+            jobs.append((f"seed {s0} {last0} vs other seed {F}", f"seed{s0}@{last0}", f"seed{s1}@{F}"))
+        if s2 is not None:
+            jobs.append((f"seed {s0} {last0} vs other seed {F}", f"seed{s0}@{last0}", f"seed{s2}@{F}"))
     jobs.append(("final vs uniform random", f"seed{s0}@{F}", "uniform"))
     jobs.append(("final vs calling station", f"seed{s0}@{F}", "calling_station"))
     jobs.append(("control: uniform vs uniform", "uniform", "uniform"))
