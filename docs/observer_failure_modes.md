@@ -65,3 +65,11 @@ without extra delay (candidate counts survive the new-hand reset).
 The advisory warning "the table covers only x% of the capture ... is
 PokerAlpha capturing its own window?" appears when a found table covers less
 than 8% of the capture.
+
+## Added in Phase 49 (found by the robustness matrix)
+
+| rule | before | now |
+| --- | --- | --- |
+| a pot change needs evidence: bets moving, a new board card, a collection / bet change in the last 3 frames, or a drop to <= 2 BB (award / new hand) | a misread digit (479.5 -> 479.6) or lost decimal point (-> 4795) was confirmed after 2 frames | held, accepted after 4 agreeing frames (flagged) |
+| a pot change breaking chip conservation (stacks + pot [+ bets], raw readings of the same frame) by > 25% | — | never auto-accepted (`rejected pot ...: breaks chip conservation`); correct it manually if real |
+| the table felt must not touch the capture edge | a cut-off table mis-aligned every region (pot read 0, a seat "left") | `CalibrationError: table cut off ... widen the capture` -> stale, no decision |

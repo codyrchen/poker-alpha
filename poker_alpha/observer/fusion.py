@@ -77,6 +77,7 @@ class StateTracker:
         self._prev: Optional[TableSnapshot] = None
         self._frame_no = 0
         self._last_collection = -10**9       # frame number of the last pot collection
+        self._last_bet_activity = -10**9     # frame number of the last bet change
         self.fields: Dict[str, FieldTracker] = {}
         c = self.cfg
         for name in ["pot", "dealer", "actor"]:
@@ -217,7 +218,7 @@ class StateTracker:
         # Pot (award detection uses the pot dropping).
         pot_before = self._stable("pot")
         if "pot" in fr:
-            self.fields["pot"].update(fr["pot"])
+            self._update_pot(fr, pot_before, frame.timestamp)
         pot_dropped = (pot_before is not None and self._stable("pot") is not None
                        and self._stable("pot") < pot_before)
         pot_rose = (pot_before is not None and self._stable("pot") is not None
@@ -296,6 +297,8 @@ class StateTracker:
         self.fields["actor"].update(fr.get("actor", FieldReading(None, 0.0, "actor")))
 
         snap = self.snapshot()
+        if self._prev is not None and snap.bets != self._prev.bets:
+            self._last_bet_activity = self._frame_no
         # Only diff against an *established* baseline: the jump from "nothing
         # confirmed yet" to the first stable frame is not a sequence of actions.
         if self._prev is not None and self._prev.pot is not None \
@@ -308,6 +311,63 @@ class StateTracker:
                 self._record_action(e, self._prev)
         self._prev = snap
         return self.events[before:]
+
+    def _chips(self, fr=None, pot=None) -> Optional[float]:
+        """Chips in play: stacks + pot (+ bets when the pot display excludes
+        them). With ``fr``, raw readings of that frame replace stable values
+        where they are readable."""
+        n = self.cal.num_seats
+
+        def val(name, default=None):
+            if fr is not None and name in fr and fr[name].value is not None and \
+                    not isinstance(fr[name].value, str) and \
+                    fr[name].confidence >= self.cfg.min_confidence:
+                return float(fr[name].value)
+            return self._stable(name, default)
+        stacks = [val(f"seat{s}.stack") for s in range(n)]
+        if pot is None:
+            return None
+        total = sum(v for v in stacks if v) + pot
+        if not self.cal.pot_includes_bets:
+            total += sum(val(f"seat{s}.bet", 0.0) or 0.0 for s in range(n))
+        return total
+
+    def _update_pot(self, fr, pot_before, timestamp) -> None:
+        """The pot changes with betting (bets made / collected), an award
+        (drop to ~0) or a new hand. A change that breaks chip conservation
+        badly (raw readings of the same frame) is never auto-accepted; any
+        other unexplained change is held."""
+        reading, f = fr["pot"], self.fields["pot"]
+        established = self._prev is not None and self._prev.hero_cards[0] is not None
+        if (pot_before is None or reading.value is None or f.pinned or not established
+                or abs(reading.value - pot_before) < 1e-9):
+            f.update(reading)
+            return
+        award = reading.value <= 2 * self.bb + 1e-9
+        before, after = self._chips(pot=pot_before), self._chips(fr, pot=reading.value)
+        if not award and before and abs(after - before) > 0.25 * before:
+            if reading.confidence >= self.cfg.min_confidence and \
+                    f"pot {pot_before} -> {reading.value}" not in " ".join(self.flags[-3:]):
+                self.flags.append(f"rejected pot {pot_before} -> {reading.value}: breaks chip "
+                                  "conservation (correct it manually if real)")
+            f.rejected += 1
+            return
+        n = self.cal.num_seats
+        bets_moving = any(
+            fr.get(f"seat{s}.bet") is not None and fr[f"seat{s}.bet"].value is not None
+            and fr[f"seat{s}.bet"].confidence >= self.cfg.min_confidence
+            and abs(fr[f"seat{s}.bet"].value - self._stable(f"seat{s}.bet", 0.0)) > 1e-9
+            for s in range(n))
+        board_moving = any(
+            fr.get(f"board_{i}") is not None and fr[f"board_{i}"].value is not None
+            and self._stable(f"board_{i}") is None for i in range(5))
+        recent = (self._frame_no - max(self._last_bet_activity, self._last_collection)
+                  < self.cfg.collection_window)
+        if bets_moving or board_moving or recent or award:
+            f.update(reading)
+            return
+        self._hold("pot", reading, timestamp,
+                   f"pot change {pot_before} -> {reading.value} without betting activity")
 
     def _hold(self, name: str, reading: FieldReading, timestamp, what: str) -> None:
         """Hold an implausible change; accept it only if it persists for

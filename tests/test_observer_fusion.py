@@ -81,15 +81,34 @@ def test_board_fills_in_order():
     assert any("before earlier board" in w for w in tr.tracked().warnings)
 
 
+def _bet(pot, bet):
+    return table(pot=pot, seats=[SyntheticSeat("hero", 98.0),
+                                 SyntheticSeat("a", 99.5 - bet, bet=0.5 + bet),
+                                 SyntheticSeat("b", 99.0, bet=1.0)])
+
+
 def test_pot_needs_confirmation_or_high_confidence():
     tr = StateTracker(CAL, 0.5, 1.0)
     feed(tr, table(pot=3.0))
-    tr.update(frame(table(pot=33.0), conf=0.6))
+    tr.update(frame(_bet(33.0, 30.0), conf=0.6))       # a bet: the pot may move
     assert tr.snapshot().pot == 3.0
-    tr.update(frame(table(pot=33.0), conf=0.6))
+    tr.update(frame(_bet(33.0, 30.0), conf=0.6))
     assert tr.snapshot().pot == 33.0
-    tr.update(frame(table(pot=40.0), conf=0.95))
+    tr.update(frame(_bet(40.0, 37.0), conf=0.95))
     assert tr.snapshot().pot == 40.0
+
+
+def test_pot_change_without_betting_is_held_and_absurd_jumps_rejected():
+    tr = StateTracker(CAL, 0.5, 1.0)
+    feed(tr, table(pot=3.0))
+    feed(tr, table(pot=8.0), n=3)                       # nobody bet: misread?
+    assert tr.snapshot().pot == 3.0
+    assert any("held pot change" in w for w in tr.tracked().warnings)
+    feed(tr, table(pot=8.0), n=1)                       # persistent: accepted, flagged
+    assert tr.snapshot().pot == 8.0
+    feed(tr, table(pot=800.0), n=8)                     # more than all chips in play
+    assert tr.snapshot().pot == 8.0
+    assert any("breaks chip conservation" in w for w in tr.tracked().warnings)
 
 
 def test_stack_increase_without_award_is_held():
@@ -139,8 +158,8 @@ def test_pause_correct_resume():
     assert tr.snapshot().pot == 4.5
     assert "pot" in tr.tracked().manual_fields
     tr.release("pot")
-    feed(tr, table(pot=99.0), n=2)
-    assert tr.snapshot().pot == 99.0
+    feed(tr, table(pot=12.0), n=4)          # unpinned again: tracked (held, then accepted)
+    assert tr.snapshot().pot == 12.0
     with pytest.raises(KeyError):
         tr.correct("nonsense", 1)
 

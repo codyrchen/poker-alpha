@@ -2,8 +2,8 @@
  "run": "pre-real-test (Phases 41-80)",
  "branch": "claude/live-observer",
  "start_commit": "8a35231674b97982015454c2c649695713b43697",
- "head": "071b303",
- "current_phase": 49,
+ "head": "e04178d",
+ "current_phase": 50,
  "completed_phases": [
   {
    "phase": 41,
@@ -36,6 +36,10 @@
   {
    "phase": 48,
    "summary": "failure injection: tests/test_observer_failures.py (43); fixes: live_check (stale + not-settled gates), capture rect outside monitor error, table shape plausibility, tracker holds (hero-card change, bet shrink w/o collection, seat vacating in hand, board-cleared new hand needs visible new hero cards); docs/observer_failure_modes.md"
+  },
+  {
+   "phase": 49,
+   "summary": "robustness matrix experiments/observer_robustness.py -> results/validation/observer_robustness_v1.json + docs/observer_robustness.md (SYNTHETIC/DERIVED ONLY); fixes: pot plausibility+conservation, cut-off table detection; no confirmed-state change under any perturbation"
   }
  ],
  "tests": "682 passed, 5 skipped (non-slow)",
@@ -68,9 +72,10 @@
   "held_out": []
  },
  "outputs": {
-  "session_docs": "docs/observer_sessions.md"
+  "session_docs": "docs/observer_sessions.md",
+  "robustness": "results/validation/observer_robustness_v1.json"
  },
  "unresolved": [],
- "next_step": "Phase 49: synthetic/derived robustness matrix",
- "updated": "2026-10-09T06:05:05Z"
+ "next_step": "Phase 50: live observer performance profiling + soak",
+ "updated": "2026-10-09T06:18:46Z"
 }

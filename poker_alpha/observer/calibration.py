@@ -151,12 +151,17 @@ def locate_table(image, calibration: TableCalibration,
     cols = np.flatnonzero(mask.mean(axis=0) > 0.05)
     if len(rows) == 0 or len(cols) == 0:
         raise CalibrationError("table felt not found" + NOT_FOUND_HINT)
+    H, W = mask.shape
+    if cols[0] == 0 or rows[0] == 0 or cols[-1] == W - 1 or rows[-1] == H - 1:
+        raise CalibrationError(CUT_OFF)
     return _plausible((int(cols[0]), int(rows[0]), int(cols[-1]) + 1, int(rows[-1]) + 1))
 
 
 NOT_FOUND_HINT = ("; check that the capture shows the poker table (not another tab, "
                   "a modal, or PokerAlpha's own window)")
 TABLE_ASPECT = (1.0, 3.5)      # width / height of any plausible poker table
+CUT_OFF = ("the table felt touches the edge of the capture (table cut off): widen the "
+           "capture rectangle so the whole table and the player plates are inside")
 
 
 def _plausible(box: Box) -> Box:
@@ -212,6 +217,9 @@ def locate_hue_blob(image, felt_color: RGB, hue_tol: float = 25.0,
     if sizes[k - 1] < min_fraction * mask.size:
         raise CalibrationError("table felt not found (felt-hue blob too small)")
     ys, xs = np.nonzero(labels == k)
+    if xs.min() == 0 or ys.min() == 0 or xs.max() == mask.shape[1] - 1 \
+            or ys.max() == mask.shape[0] - 1:
+        raise CalibrationError(CUT_OFF)
     # Ellipse fitted by moments (a filled ellipse has semi-axis = 2 sigma):
     # unlike the blob's raw extent it barely moves when a badge, chip or the
     # dealer button touches the felt edge and joins the blob.
