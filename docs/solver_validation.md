@@ -372,3 +372,25 @@ All 338 preflop first-action keys are rejected (seed disagreement /
 movement): in practice the solver is not used for the first preflop
 decision, and recommendations there come from rollouts. Phase 65 checks
 whether longer training changes this.
+
+## Longer v2 training: 200k / 300k (Phase 65)
+
+`results/validation/holdem_training_v2_300k.json` (phase29 analysis over all
+checkpoints: seeds 0-2 to 200k, seed 0 to 300k; 200,000 duplicate deals per
+cross-play match) and `results/validation/holdem_training_v2_decision.json`.
+
+* **Play still improves** inside the abstract game: 200k beats 100k by
+  66-69 bb/100 (95% CI 57-78), 300k beats 200k by 20-37 bb/100 (CI 12-45).
+  The three seeds at 200k are indistinguishable from each other (-3 to +7
+  bb/100, every CI includes 0). Cross-play is not an exploitability bound.
+* **Seeds still disagree** on individual spots: canonical-matrix mean L1
+  0.87 (100k) -> 0.82 (200k) of a maximum 2. Example, BTN unopened AA:
+  limps 86% (seed 0) vs 36% (seeds 1, 2). First-in jam frequency 5-15% by
+  seed at 200k (4% for seed 0 at 300k). Sanity checks 10/10 per seed.
+* **The gate does not open up:** with a 200k confidence table built the
+  same way, 18.0% of visit-weighted decisions are accepted (19.5% at
+  100k); 335 of 338 preflop first-action keys are still rejected.
+* **Recommendation (not applied):** make seed 0 @ 200k with its 200k
+  confidence table the release strategy (same config signature). Changing
+  the release artifact is a product decision, so the release stays at
+  100k; the candidate files were exported outside the repository. No 1M run.
