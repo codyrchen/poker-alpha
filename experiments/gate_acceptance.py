@@ -69,8 +69,9 @@ def main(argv=None):
     a = p.parse_args(argv)
     table = ConfidenceTable.load(a.table)
     th = GateThresholds.calibrated()
-    res = {"format": "pokeralpha.gate_acceptance/v1", "table": str(a.table.relative_to(ROOT)
-                                                                   if a.table.is_absolute() else a.table),
+    tpath = a.table.resolve()
+    shown = tpath.relative_to(ROOT) if tpath.is_relative_to(ROOT) else tpath.name
+    res = {"format": "pokeralpha.gate_acceptance/v1", "table": str(shown),
            "config_signature": table.config_signature, "table_meta": table.meta,
            "thresholds": th.__dict__, "by_street": acceptance(table, th)}
     a.out.parent.mkdir(parents=True, exist_ok=True)

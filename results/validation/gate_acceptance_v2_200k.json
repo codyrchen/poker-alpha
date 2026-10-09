@@ -1,0 +1,121 @@
+{
+ "format": "pokeralpha.gate_acceptance/v1",
+ "table": "holdem_v2_seed0_200k_confidence.npz",
+ "config_signature": "HoldemSolverConfig:v2:733e52f1d1014e2e7973",
+ "table_meta": {
+  "collision": "range of the 0..7 strength ladder among >= 5 corpus members, /7",
+  "corpus_hands": 20000,
+  "earlier": 10000,
+  "final": 200000,
+  "seeds": [
+   0,
+   1,
+   2
+  ]
+ },
+ "thresholds": {
+  "reject_visits_below": 20.0,
+  "low_visits_below": 20.0,
+  "reject_seed_disagreement": 0.5,
+  "low_seed_disagreement": 0.2,
+  "reject_movement": 0.5,
+  "low_movement": 0.1,
+  "low_collision": 0.42857142857142855,
+  "source": "solver_gate_calibration.json"
+ },
+ "by_street": {
+  "preflop": {
+   "keys": 4298,
+   "share_keys": {
+    "SOLVER_ACCEPT": 0.0635,
+    "SOLVER_LOW_CONFIDENCE": 0.1003,
+    "SOLVER_REJECT": 0.8362
+   },
+   "share_visit_weighted": {
+    "SOLVER_ACCEPT": 0.0888,
+    "SOLVER_LOW_CONFIDENCE": 0.1272,
+    "SOLVER_REJECT": 0.784
+   },
+   "reason_counts": {
+    "HIGH_SEED_DISAGREEMENT": 3508,
+    "UNSTABLE_ACROSS_CHECKPOINTS": 3433,
+    "LOW_VISIT_COUNT": 376
+   }
+  },
+  "flop": {
+   "keys": 18464,
+   "share_keys": {
+    "SOLVER_ACCEPT": 0.075,
+    "SOLVER_LOW_CONFIDENCE": 0.0768,
+    "SOLVER_REJECT": 0.8482
+   },
+   "share_visit_weighted": {
+    "SOLVER_ACCEPT": 0.163,
+    "SOLVER_LOW_CONFIDENCE": 0.1457,
+    "SOLVER_REJECT": 0.6913
+   },
+   "reason_counts": {
+    "HIGH_SEED_DISAGREEMENT": 14254,
+    "UNSTABLE_ACROSS_CHECKPOINTS": 11904,
+    "LOW_VISIT_COUNT": 4724,
+    "NO_STABILITY_DATA": 150
+   }
+  },
+  "turn": {
+   "keys": 31067,
+   "share_keys": {
+    "SOLVER_ACCEPT": 0.0697,
+    "SOLVER_LOW_CONFIDENCE": 0.0814,
+    "SOLVER_REJECT": 0.849
+   },
+   "share_visit_weighted": {
+    "SOLVER_ACCEPT": 0.1856,
+    "SOLVER_LOW_CONFIDENCE": 0.1444,
+    "SOLVER_REJECT": 0.6699
+   },
+   "reason_counts": {
+    "HIGH_SEED_DISAGREEMENT": 23719,
+    "UNSTABLE_ACROSS_CHECKPOINTS": 19242,
+    "LOW_VISIT_COUNT": 8142,
+    "NO_STABILITY_DATA": 442
+   }
+  },
+  "river": {
+   "keys": 76668,
+   "share_keys": {
+    "SOLVER_ACCEPT": 0.0664,
+    "SOLVER_LOW_CONFIDENCE": 0.0858,
+    "SOLVER_REJECT": 0.8479
+   },
+   "share_visit_weighted": {
+    "SOLVER_ACCEPT": 0.1921,
+    "SOLVER_LOW_CONFIDENCE": 0.151,
+    "SOLVER_REJECT": 0.6569
+   },
+   "reason_counts": {
+    "HIGH_SEED_DISAGREEMENT": 54092,
+    "UNSTABLE_ACROSS_CHECKPOINTS": 40344,
+    "LOW_VISIT_COUNT": 27076,
+    "NO_STABILITY_DATA": 2004,
+    "HIGH_COLLISION_DISPERSION": 7
+   }
+  },
+  "all": {
+   "keys": 130497,
+   "share_keys": {
+    "SOLVER_ACCEPT": 0.0683,
+    "SOLVER_LOW_CONFIDENCE": 0.0839,
+    "SOLVER_REJECT": 0.8478
+   },
+   "share_visit_weighted": {
+    "SOLVER_ACCEPT": 0.18,
+    "SOLVER_LOW_CONFIDENCE": 0.1469,
+    "SOLVER_REJECT": 0.6731
+   }
+  },
+  "preflop_first_action_keys": {
+   "SOLVER_REJECT": 335,
+   "SOLVER_LOW_CONFIDENCE": 3
+  }
+ }
+}
