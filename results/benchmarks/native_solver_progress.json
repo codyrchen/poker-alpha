@@ -1,0 +1,15 @@
+{
+ "format": "pokeralpha.native_solver_progress/v1",
+ "branch": "claude/live-observer",
+ "starting_head": "b398c4e",
+ "current_phase": 1,
+ "completed_phases": [0],
+ "active_experiment": "python baseline profile 50k (experiments/profile_mccfr_baseline.py)",
+ "native_backend_status": "not started",
+ "correctness_status": "n/a",
+ "test_status": "783 passed, 6 skipped (POKERALPHA_SKIP_SLOW=1)",
+ "machine": {"cpu": "Apple M3 Pro", "cores": 12, "ram_gb": 18, "os": "macOS 25.5 arm64",
+             "compiler": "Apple clang 21", "python": "3.12.6", "numpy": "2.5.2"},
+ "known_failures": [],
+ "next_action": "finish baseline, write native_solver_baseline.md, commit, scaffold cpp build"
+}
