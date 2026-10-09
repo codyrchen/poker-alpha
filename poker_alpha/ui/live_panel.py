@@ -279,7 +279,46 @@ def _live_view(cfg, compute: bool, min_conf: float, save_dir: str, render_report
         st.dataframe(seat_state_rows(session.tracker), hide_index=True)
         for w in session.tracker.tracked().warnings[-5:]:
             st.warning(w)
+    _region_debugger(session, save_dir)
     _decision(session, cfg, compute, min_conf, render_report)
+
+
+def _region_debugger(session, save_dir: str) -> None:
+    from ..observer.debug import GROUPS, crop_png, region_rows, tracker_rows, write_debug_report
+
+    with st.expander("Region debugger (per region: crop, raw reading, tracker decision)",
+                     expanded=False):
+        rows = region_rows(session)
+        if not rows:
+            st.info("No recognized frame yet.")
+            return
+        tabs = st.tabs(list(GROUPS) + ["Tracker"])
+        for tab, group in zip(tabs, GROUPS):
+            with tab:
+                for r in [x for x in rows if x["group"] == group]:
+                    c1, c2 = st.columns([1, 4])
+                    png = crop_png(session, r["region"])
+                    if png:
+                        c1.image(png, caption=r["region"])
+                    else:
+                        c1.caption(f"{r['region']} (empty crop)")
+                    c2.caption(f"pixels {r['pixels']} · normalized {r['normalized']}")
+                    if r["fields"]:
+                        c2.dataframe([{k: (str(v) if v is not None else "—") for k, v in f.items()}
+                                      for f in r["fields"]], hide_index=True)
+                    else:
+                        c2.caption("no field read from this region")
+        with tabs[-1]:
+            st.dataframe([{k: str(v) for k, v in row.items()}
+                          for row in tracker_rows(session.tracker)], hide_index=True, height=300)
+            for fl in session.tracker.flags[-10:]:
+                st.caption(f"flag: {fl}")
+        if st.button("Export current debug report", key="live_debug_export"):
+            try:
+                paths = write_debug_report(session, Path(save_dir).expanduser() / "debug")
+                st.success(f"Wrote {paths['html']} and {paths['json']} (local only)")
+            except Exception as exc:  # noqa: BLE001
+                st.error(f"Cannot write debug report: {exc}")
 
 
 # -- observer test session (diagnostic recorder) -------------------------------------

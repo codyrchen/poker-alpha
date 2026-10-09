@@ -125,6 +125,7 @@ class LiveObserverSession:
         # per-step diagnostics (seconds) and the tracker events of the last step
         self.last_timings: Dict[str, float] = {}
         self.last_events: list = []
+        self.last_tracker_before: Optional[dict] = None
 
     # configuration; the tracker survives frames and is rebuilt only when
     # the calibration, blinds or seat layout change
@@ -193,6 +194,10 @@ class LiveObserverSession:
         t2 = time.perf_counter()
         self.last_timings["recognition"] = t2 - t1
         self.last_observation = obs
+        # Diagnostic only (debug panel): field-tracker state before the update.
+        from .debug import capture_tracker_state
+
+        self.last_tracker_before = capture_tracker_state(self.tracker)
         events = self.tracker.update(obs)
         self.last_events = list(events)
         self.last_timings["tracker"] = time.perf_counter() - t2

@@ -2,8 +2,8 @@
  "run": "pre-real-test (Phases 41-80)",
  "branch": "claude/live-observer",
  "start_commit": "8a35231674b97982015454c2c649695713b43697",
- "head": "152084e",
- "current_phase": 47,
+ "head": "bc3d164",
+ "current_phase": 48,
  "completed_phases": [
   {
    "phase": 41,
@@ -28,6 +28,10 @@
   {
    "phase": 46,
    "summary": "frame metrics (cards incl rank/suit/duplicates, numeric exact/MAE/rel, state occupied/in-hand/folded/all-in/dealer/actor/street/full, 0.1 confidence buckets) + sequence metrics (event P/R, false events, flicker, persistence) in sequence_metrics.py"
+  },
+  {
+   "phase": 47,
+   "summary": "region debugger: poker_alpha/observer/debug.py (per-region crop/coords/raw/conf/fused/decision+reason/previous/agreeing), Live screen tabs, Export current debug report (JSON+HTML, local); tests/test_observer_debug.py"
   }
  ],
  "tests": "608 passed, 5 skipped (non-slow)",
@@ -63,6 +67,6 @@
   "session_docs": "docs/observer_sessions.md"
  },
  "unresolved": [],
- "next_step": "Phase 47: observer debugging UI (per-region crops, tracker accept/reject, debug report export)",
- "updated": "2026-10-09T05:46:46Z"
+ "next_step": "Phase 48: observer failure-injection tests",
+ "updated": "2026-10-09T05:48:38Z"
 }

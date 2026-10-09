@@ -232,3 +232,23 @@ accuracy. **Real screen validation: BLOCKED** (0 real fixtures, Phase 38).
    anything about the real client. A few dozen screenshots across seat
    counts, streets, all-in and folded states are the minimum for a
    meaningful per-field accuracy.
+
+## Region debugger and debug reports (Phase 47)
+
+Live screen -> **Region debugger** (expander under the readings). Tabs
+Hero / Board / Seats / Pot/Bets / Dealer/Actor / Tracker. For every
+recognition region: the crop (2x), pixel box and normalized box, and for
+each field read from it the raw value, confidence, fused value, the
+tracker's decision for this frame (`accepted` with high confidence or after
+N agreeing frames, `pending` k/N, `agrees`, `rejected` below the minimum
+confidence or by a tracker rule such as a board-card change, `held` stack
+increase without a pot award, `pinned`), the previously accepted value and
+the agreeing-frame count. The Tracker tab lists every field tracker and
+the recent tracker flags.
+
+The explanation is derived by comparing each field tracker's state before
+and after the update (captured by `LiveObserverSession.step`); it does not
+change recognition or tracking. **Export current debug report** writes
+`<save folder>/debug/debug-<time>-f<frame>.json` and a self-contained
+`.html` with the crops embedded (local, never overwritten, folder carries a
+`*` .gitignore). Code: `poker_alpha/observer/debug.py`.

@@ -298,3 +298,14 @@ def test_streamlit_pokernow_heads_up_preset():
     _button(at, "Use default layout").click().run()
     assert at.session_state["live_cal"].client == "generic"
     assert not at.exception, at.exception
+
+
+def test_streamlit_region_debugger_export(tmp_path):
+    at, screen = _app()
+    at.checkbox(key="live_compute").set_value(False).run()
+    at.text_input(key="live_save_dir").set_value(str(tmp_path)).run()
+    _button(at, "Capture one frame").click().run()
+    assert not at.exception, at.exception
+    _button(at, "Export current debug report").click().run()
+    assert not at.exception, at.exception
+    assert list((tmp_path / "debug").glob("debug-*.html"))
