@@ -199,6 +199,10 @@ def main() -> None:
     st.set_page_config(page_title="PokerAlpha", layout="wide")
     st.title("PokerAlpha decision support")
     st.caption("Analysis only — PokerAlpha never clicks, bets or acts for you.")
+    from poker_alpha.utils.privacy import streamlit_privacy_issues
+
+    for issue in streamlit_privacy_issues():
+        st.warning("Privacy: " + issue)
     cfg = sidebar_config()
     mode = st.sidebar.radio("Input", ["Manual entry", "Hand-history replay",
                                       "Screen observer", "Live screen", "Annotate session"])

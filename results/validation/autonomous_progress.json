@@ -2,7 +2,7 @@
  "run": "pre-real-test (Phases 41-80)",
  "branch": "claude/live-observer",
  "start_commit": "8a35231674b97982015454c2c649695713b43697",
- "head": "536d101",
+ "head": "b029573",
  "current_phase": 56,
  "completed_phases": [
   {
@@ -60,9 +60,25 @@
   {
    "phase": 55,
    "summary": "strategy artifact v2 (config_json, commit, content_sha256; verified), v1 still loadable, sidecar manifests for committed artifacts (no rewrite), rejection tests incl corrupt/truncated/tampered/wrong config/encoder/abstraction/stack/blinds; docs/strategy_artifacts.md"
+  },
+  {
+   "phase": 72,
+   "summary": "privacy audit: no network code (test); Streamlit defaults fixed (.streamlit/config.toml 127.0.0.1 + gatherUsageStats false, launcher flags, in-app warning); docs/privacy.md"
+  },
+  {
+   "phase": 74,
+   "summary": "python -m poker_alpha.doctor (diagnose only, mocked tests)"
+  },
+  {
+   "phase": 75,
+   "summary": "python -m poker_alpha.live + scripts/run_live_observer.sh (doctor, stop on FAIL, local-only Streamlit)"
+  },
+  {
+   "phase": 76,
+   "summary": "docs/real_pokernow_test_checklist.md"
   }
  ],
- "tests": "726 passed, 5 skipped (non-slow)",
+ "tests": "737 passed, 5 skipped (non-slow)",
  "ci": "run 30 green at 8a35231",
  "long_running": [
   {
@@ -74,6 +90,15 @@
   {
    "phase": 50,
    "what": "30-min soak, results/validation/live_observer_soak.json, restarted 09:27"
+  },
+  {
+   "phase": 56,
+   "question": "how much strategic error do the v1/v2 compact encoders' flop keys cause in exactly solvable fixed-flop subgames?",
+   "command": "python experiments/flop_turn_abstraction.py flop --iters 300 --range 6 --turns 4 --rivers 3",
+   "expected": "compact encoders merge strategically different flop situations: exploitability >> raw CFR+ residual; pct20 changes only river keys so similar to compact",
+   "output": "results/validation/flop_abstraction_v1.json (written after every subgame)",
+   "checkpointing": "per-subgame incremental JSON; rerun with --only for missing rows",
+   "stop": "7 flops done; ~2 h on one core"
   }
  ],
  "config_signatures": {
@@ -101,6 +126,6 @@
  "unresolved": [
   "worker restarts kill background processes: long runs must be resumed from checkpoints (see long_running)"
  ],
- "next_step": "Phase 56: exact flop abstraction error (fixed-flop subgames)",
- "updated": "2026-10-09T09:39:43Z"
+ "next_step": "Phases 56/57 (flop running; turn next), 59/60 rollout response (harness ready, MDF candidate implemented), 50 soak result",
+ "updated": "2026-10-09T09:53:22Z"
 }
