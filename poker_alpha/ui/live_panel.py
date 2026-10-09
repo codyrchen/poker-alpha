@@ -24,7 +24,9 @@ import streamlit as st
 
 from ..observer.calibration import TableCalibration
 from ..observer.errors import ObserverDependencyError
-from ..observer.live import (CaptureSettings, LiveObserverSession, live_check,
+from ..observer.live import (KIND_COLORS, CalibrationHistory, CaptureSettings,
+                             LiveObserverSession, duplicate_calibration, live_check,
+                             region_pixels, reset_all_regions, reset_region,
                              draw_overlay, fused_rows, list_monitors, mss_source_factory,
                              raw_rows, save_frame, seat_state_rows, transform_regions,
                              with_region)
@@ -56,13 +58,32 @@ def _calibration() -> TableCalibration:
     return st.session_state.live_cal
 
 
-def _set_cal(cal: TableCalibration) -> None:
-    """Replace the calibration and drop editor widgets that hold old values."""
+def _history() -> CalibrationHistory:
+    if "live_cal_history" not in st.session_state:
+        st.session_state.live_cal_history = CalibrationHistory()
+    return st.session_state.live_cal_history
+
+
+def _base() -> TableCalibration:
+    """The layout 'Reset' returns to: the last preset applied or file loaded."""
+    if "live_cal_base" not in st.session_state:
+        st.session_state.live_cal_base = _calibration()
+    return st.session_state.live_cal_base
+
+
+def _set_cal(cal: TableCalibration, base: Optional[TableCalibration] = None,
+             record: bool = True) -> None:
+    """Replace the calibration (recording undo history) and drop editor
+    widgets that hold old values."""
+    if record and "live_cal" in st.session_state:
+        _history().push(st.session_state.live_cal)
+    if base is not None:
+        st.session_state.live_cal_base = base
     st.session_state.live_cal = cal
     for k in list(st.session_state.keys()):
         if str(k).startswith(("live_r", "live_dx", "live_dy", "live_sx", "live_sy", "live_bx", "live_by",
                                 "live_bbox_mode", "live_felt")) \
-                and k != "live_report":
+                and k not in ("live_report", "live_region", "live_reset_region"):
             del st.session_state[k]
 
 
@@ -117,7 +138,8 @@ def _calibration_editor(session: LiveObserverSession):
             side = c1.radio("Hero plate on screen", ["right", "left"], horizontal=True,
                             key="live_hu_side")
             if c2.button("Use PokerNow Heads-Up layout"):
-                _set_cal(pokernow_hu_layout(side))
+                lay = pokernow_hu_layout(side)
+                _set_cal(lay, base=lay)
                 st.rerun()
         else:
             c1, c2, c3 = st.columns(3)
@@ -125,24 +147,54 @@ def _calibration_editor(session: LiveObserverSession):
             hero = c2.number_input("Hero seat", 0, int(seats) - 1,
                                    min(cal.hero_seat, int(seats) - 1), key="live_hero")
             if c3.button("Use default layout"):
-                _set_cal(default_layout(int(seats), int(hero)))
+                lay = default_layout(int(seats), int(hero))
+                _set_cal(lay, base=lay)
                 st.rerun()
         st.caption(f"Active calibration: **{cal.name}** ({cal.num_seats} seats, hero seat "
                    f"{cal.hero_seat}, recognizers: {cal.client})")
-        path = st.text_input("Calibration JSON path", "pokernow_calibration.json", key="live_cal_path")
-        b1, b2 = st.columns(2)
+        hist = _history()
+        b = st.columns(3)
+        if b[0].button(f"Undo last change ({len(hist)})", disabled=len(hist) == 0,
+                       key="live_cal_undo"):
+            prev = hist.undo()
+            if prev is not None:
+                _set_cal(prev, record=False)
+                st.rerun()
+        if b[1].button("Duplicate calibration", key="live_cal_dup"):
+            _set_cal(duplicate_calibration(cal))
+            st.rerun()
+        if b[2].button("Reset all regions", key="live_cal_reset_all",
+                       help=f"back to the regions of '{_base().name}'"):
+            try:
+                _set_cal(reset_all_regions(cal, _base()))
+                st.rerun()
+            except ValueError as exc:
+                st.error(str(exc))
+        path = st.text_input("Calibration JSON path (Load / Save as)",
+                             "pokernow_calibration.json", key="live_cal_path")
+        b1, b2, b3 = st.columns(3)
         if b1.button("Load calibration"):
             try:
-                _set_cal(TableCalibration.load(Path(path).expanduser()))
+                loaded = TableCalibration.load(Path(path).expanduser())
+                _set_cal(loaded, base=loaded)
                 st.rerun()
             except Exception as exc:  # noqa: BLE001
                 st.error(f"Cannot load {path}: {exc}")
+        overwrite = b3.checkbox("Overwrite existing file", key="live_cal_overwrite")
         if b2.button("Save calibration"):
-            try:
-                cal.save(Path(path).expanduser())
-                st.success(f"Saved {Path(path).expanduser()}")
-            except Exception as exc:  # noqa: BLE001
-                st.error(f"Cannot save: {exc}")
+            target = Path(path).expanduser()
+            if target.exists() and not overwrite:
+                st.error(f"{target} exists: tick 'Overwrite existing file' or choose a new "
+                         "path (Save as)")
+            else:
+                try:
+                    cal.save(target)
+                    st.success(f"Saved {target}")
+                except Exception as exc:  # noqa: BLE001
+                    st.error(f"Cannot save: {exc}")
+        vis = st.multiselect("Show on overlay", list(KIND_COLORS), default=list(KIND_COLORS),
+                             key="live_vis")
+        st.session_state.live_overlay_kinds = set(vis)
 
         st.markdown("**Table bounds** (pixels of the captured frame)")
         modes = ["Detect felt colour", "PokerNow felt (hue)", "Fixed box"]
@@ -190,7 +242,12 @@ def _calibration_editor(session: LiveObserverSession):
 
         st.markdown("**Fine-tune one region**")
         name = st.selectbox("Region", sorted(cal.regions), key="live_region")
+        st.session_state.live_overlay_highlight = name
         r = cal.regions[name]
+        px = region_pixels(cal, name, session.table_bbox())
+        st.caption(f"{name}: normalized x {r.x:.3f} y {r.y:.3f} w {r.w:.3f} h {r.h:.3f} · "
+                   + (f"pixels {px} in the last frame" if px else "no table located yet")
+                   + " (highlighted on the overlay)")
         c = st.columns(5)
         x = c[0].number_input("x", -0.5, 1.5, float(r.x), 0.002, format="%.3f", key=f"live_rx_{name}")
         y = c[1].number_input("y", -0.5, 1.5, float(r.y), 0.002, format="%.3f", key=f"live_ry_{name}")
@@ -202,6 +259,9 @@ def _calibration_editor(session: LiveObserverSession):
                 st.rerun()
             except ValueError as exc:
                 st.error(f"Invalid region: {exc}")
+        if name in _base().regions and st.button(f"Reset region {name}", key="live_reset_region"):
+            _set_cal(reset_region(cal, _base(), name))
+            st.rerun()
     return _calibration()
 
 
@@ -261,7 +321,9 @@ def _live_view(cfg, compute: bool, min_conf: float, save_dir: str, render_report
             st.caption(hint)
     with c2:
         _image(draw_overlay(frame, session.calibration, session.table_bbox(),
-                            session.last_observation),
+                            session.last_observation,
+                            kinds=st.session_state.get("live_overlay_kinds"),
+                            highlight=st.session_state.get("live_overlay_highlight")),
                "calibration overlay: yellow table, magenta hero cards, cyan board, orange pot, "
                "green stacks, red bets, white dealer, blue seat")
     if st.button("Save current frame", key="live_save"):

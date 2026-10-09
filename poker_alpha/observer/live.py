@@ -282,9 +282,11 @@ KIND_COLORS = {"table": (255, 230, 0), "hero cards": (255, 0, 255), "board": (0,
 
 
 def draw_overlay(image, calibration: TableCalibration, bbox=None, readings: Optional[FrameObservation] = None,
-                 labels: bool = True):
+                 labels: bool = True, kinds=None, highlight: Optional[str] = None):
     """Copy of ``image`` with the table bounds and every calibrated region
-    drawn on it (colour per kind), optionally labelled with the reading."""
+    drawn on it (colour per kind), optionally labelled with the reading.
+    ``kinds`` limits the drawn categories (see :data:`KIND_COLORS`);
+    ``highlight`` draws one region thicker."""
     from PIL import ImageDraw
 
     out = image.convert("RGB").copy()
@@ -299,11 +301,14 @@ def draw_overlay(image, calibration: TableCalibration, bbox=None, readings: Opti
     if bbox is None:
         d.text((8, 8), "table not located: set a fixed table bbox or felt colour", fill=(255, 60, 60))
         return out
-    d.rectangle(bbox, outline=KIND_COLORS["table"], width=width * 2)
+    if kinds is None or "table" in kinds:
+        d.rectangle(bbox, outline=KIND_COLORS["table"], width=width * 2)
     for name, region in sorted(calibration.regions.items()):
         kind = region_kind(name)
+        if kinds is not None and kind not in kinds and name != highlight:
+            continue
         box = region.to_pixels(bbox)
-        d.rectangle(box, outline=KIND_COLORS[kind], width=width)
+        d.rectangle(box, outline=KIND_COLORS[kind], width=width * (3 if name == highlight else 1))
         # label every region except the small seat highlight / card-back boxes
         if labels and not name.endswith(("_cards", "_active")):
             text = name.replace("seat", "s").replace("hero_card_", "hero").replace("board_", "b")
@@ -332,6 +337,56 @@ def with_region(cal: TableCalibration, name: str, region: Region) -> TableCalibr
     regions = dict(cal.regions)
     regions[name] = region
     return replace(cal, regions=regions)
+
+
+def reset_region(cal: TableCalibration, base: TableCalibration, name: str) -> TableCalibration:
+    """Region ``name`` back to its value in ``base`` (the preset / loaded file)."""
+    if name not in base.regions:
+        raise KeyError(f"{name} not in the base layout")
+    return with_region(cal, name, base.regions[name])
+
+
+def reset_all_regions(cal: TableCalibration, base: TableCalibration) -> TableCalibration:
+    """Every region back to ``base``; table detector and colours are kept."""
+    if base.num_seats != cal.num_seats:
+        raise ValueError("base layout has a different seat count")
+    return replace(cal, regions=dict(base.regions))
+
+
+def duplicate_calibration(cal: TableCalibration, name: Optional[str] = None) -> TableCalibration:
+    """An independent copy (new name, fresh provenance; same geometry)."""
+    return replace(TableCalibration.from_dict(cal.to_dict(), verify=False),
+                   name=name or f"{cal.name}-copy", created=None, updated=None,
+                   source=f"duplicate of {cal.name}" + (f" ({cal.source})" if cal.source else ""))
+
+
+def region_pixels(cal: TableCalibration, name: str, bbox) -> Optional[Tuple[int, int, int, int]]:
+    """Pixel box of a region in the captured image (None if no table box)."""
+    return None if bbox is None else cal.regions[name].to_pixels(bbox)
+
+
+class CalibrationHistory:
+    """Bounded undo stack of calibration snapshots."""
+
+    def __init__(self, limit: int = 30) -> None:
+        self.limit = limit
+        self._stack: List[dict] = []
+
+    def push(self, cal: TableCalibration) -> None:
+        snap = cal.to_dict()
+        if self._stack and self._stack[-1].get("checksum") == snap.get("checksum") and \
+                self._stack[-1].get("name") == snap.get("name"):
+            return                                   # nothing changed
+        self._stack.append(snap)
+        del self._stack[:-self.limit]
+
+    def undo(self) -> Optional[TableCalibration]:
+        if not self._stack:
+            return None
+        return TableCalibration.from_dict(self._stack.pop(), verify=False)
+
+    def __len__(self) -> int:
+        return len(self._stack)
 
 
 # -- display rows ---------------------------------------------------------------

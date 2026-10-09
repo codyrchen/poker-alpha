@@ -2,8 +2,8 @@
  "run": "pre-real-test (Phases 41-80)",
  "branch": "claude/live-observer",
  "start_commit": "8a35231674b97982015454c2c649695713b43697",
- "head": "e7a9f61",
- "current_phase": 54,
+ "head": "89bb838",
+ "current_phase": 55,
  "completed_phases": [
   {
    "phase": 41,
@@ -52,6 +52,10 @@
   {
    "phase": 53,
    "summary": "calibration format v2 (schema_version, provenance, geometry checksum), v1 migration, refusal of tampered/unknown/newer files; sessions use geometry checksum; tests/test_calibration_versioning.py"
+  },
+  {
+   "phase": 54,
+   "summary": "calibration editor: undo history (30), reset region / all to base layout, duplicate, save-as with overwrite guard, pixel box of selected region + highlight, overlay category visibility; helpers in live.py; region selection survives edits (bug fix); click-to-place not added (no stable Streamlit input)"
   }
  ],
  "tests": "713 passed, 5 skipped (non-slow)",
@@ -93,6 +97,6 @@
  "unresolved": [
   "worker restarts kill background processes: long runs must be resumed from checkpoints (see long_running)"
  ],
- "next_step": "Phase 54: calibration wizard UX (undo, reset region/all, save as, duplicate, pixel coords, visibility toggles)",
- "updated": "2026-10-09T09:30:11Z"
+ "next_step": "Phase 55: strategy artifact config/metadata audit",
+ "updated": "2026-10-09T09:32:21Z"
 }

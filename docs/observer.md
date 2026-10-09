@@ -271,3 +271,24 @@ client, pot including bets — exactly what v1 meant) and marked
 `migrated_from: v1`. Geometry is never silently reinterpreted. Sessions
 identify calibrations by the geometry checksum. Tests:
 `tests/test_calibration_versioning.py`.
+
+## Calibration editor tools (Phase 54)
+
+In "Calibration / debug workflow":
+
+* **Undo last change (n)** — every preset, load, Apply, Update, reset and
+  duplicate is recorded (last 30 calibrations);
+* **Reset region X** / **Reset all regions** — back to the base layout = the
+  last preset applied or file loaded (detector settings and colours are
+  kept by "Reset all regions");
+* **Duplicate calibration** — an independent copy named `<name>-copy`;
+* **Load** / **Save** with a path field doubling as *Save as*: saving over an
+  existing file needs the **Overwrite existing file** tick;
+* the selected region's normalized box and its **pixel box** in the last
+  frame are shown, and the region is drawn thicker on the overlay;
+* **Show on overlay** — pick which categories (table, hero cards, board,
+  pot, stack, bet, dealer, seat) are drawn.
+
+Click-to-place regions on the image was not added: Streamlit has no stable
+built-in image click / drag input, and a custom component would be a
+frontend project of its own.

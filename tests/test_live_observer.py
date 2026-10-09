@@ -309,3 +309,62 @@ def test_streamlit_region_debugger_export(tmp_path):
     _button(at, "Export current debug report").click().run()
     assert not at.exception, at.exception
     assert list((tmp_path / "debug").glob("debug-*.html"))
+
+
+def test_calibration_edit_helpers():
+    from poker_alpha.observer.live import (CalibrationHistory, duplicate_calibration,
+                                           region_pixels, reset_all_regions, reset_region)
+
+    base = cal()
+    moved = transform_regions(base, dx=0.02)
+    assert reset_region(moved, base, "pot").regions["pot"] == base.regions["pot"]
+    assert reset_region(moved, base, "pot").regions["board_0"] != base.regions["board_0"]
+    assert reset_all_regions(moved, base).regions == base.regions
+    dup = duplicate_calibration(moved)
+    assert dup.name.endswith("-copy") and dup.geometry_checksum() == moved.geometry_checksum()
+    assert dup is not moved and "duplicate of" in dup.source
+    h = CalibrationHistory(limit=3)
+    for k in range(5):
+        h.push(transform_regions(base, dx=0.01 * k))
+    assert len(h) == 3
+    assert h.undo().regions["pot"].x == pytest.approx(base.regions["pot"].x + 0.04)
+    assert region_pixels(base, "pot", (0, 0, 1000, 500)) == base.regions["pot"].to_pixels(
+        (0, 0, 1000, 500))
+    assert region_pixels(base, "pot", None) is None
+    img = table_img()
+    only = draw_overlay(img, base, kinds={"pot"})
+    full = draw_overlay(img, base)
+    assert only.tobytes() != full.tobytes()
+
+
+def test_streamlit_calibration_undo_reset_duplicate_save_as(tmp_path):
+    at, screen = _app()
+    at.checkbox(key="live_compute").set_value(False).run()
+    _button(at, "Capture one frame").click().run()
+    start = at.session_state["live_cal"]
+    at.number_input(key="live_dx").set_value(0.02).run()
+    _button(at, "Apply").click().run()
+    assert at.session_state["live_cal"].regions["pot"].x == pytest.approx(
+        start.regions["pot"].x + 0.02)
+    [b for b in at.button if b.label.startswith("Undo last change")][0].click().run()
+    assert not at.exception, at.exception
+    assert at.session_state["live_cal"].regions["pot"] == start.regions["pot"]
+    at.selectbox(key="live_region").set_value("pot").run()
+    at.number_input(key="live_rw_pot").set_value(0.3).run()
+    _button(at, "Update").click().run()
+    assert at.session_state["live_cal"].regions["pot"].w == pytest.approx(0.3)
+    _button(at, "Reset region pot").click().run()
+    assert at.session_state["live_cal"].regions["pot"] == at.session_state["live_cal_base"].regions["pot"]
+    _button(at, "Reset all regions").click().run()
+    _button(at, "Duplicate calibration").click().run()
+    assert at.session_state["live_cal"].name.endswith("-copy")
+    out = tmp_path / "c.json"
+    out.write_text("{}")
+    at.text_input(key="live_cal_path").set_value(str(out)).run()
+    _button(at, "Save calibration").click().run()
+    assert any("exists" in str(e.value) for e in at.error) and out.read_text() == "{}"
+    at.checkbox(key="live_cal_overwrite").set_value(True).run()
+    _button(at, "Save calibration").click().run()
+    assert TableCalibration.load(out).name.endswith("-copy")
+    at.multiselect(key="live_vis").set_value(["pot", "table"]).run()
+    assert not at.exception, at.exception
