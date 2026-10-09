@@ -1,0 +1,32 @@
+{
+ "format": "pokeralpha.release_audit/v1",
+ "branch": "claude/live-observer",
+ "start_commit": "8a35231674b97982015454c2c649695713b43697",
+ "repository": {
+  "git_dir_mb": 24,
+  "pack_mb": 2.0,
+  "tracked_files": 456,
+  "tracked_mb": 33,
+  "largest_blobs_mb": {
+   "results/validation/preflop_audit_v1.json": 4.6,
+   "results/validation/preflop_audit_v2.json": 4.6,
+   "results/strategy/holdem_v2_seed0.npz": 2.2
+  }
+ },
+ "history_scan": {
+  "secrets_patterns": "none found (AWS keys, GitHub tokens, sk- keys, Slack tokens, private keys, password assignments) in all commits",
+  "emails": "only commit author metadata and the noreply co-author trailer; none in file contents",
+  "absolute_paths": "container scratch paths (/home/user/pa_ckpt, /tmp) in progress notes and result provenance; no user-machine paths",
+  "images": {
+   "results/figures/*.png": "generated plots",
+   "tests/fixtures/table.png": "synthetic render",
+   "tests/fixtures/pokernow/raw/hu_preflop_0001.png": "the only real screen data; one version in history (8a35231); cropped to the table, both player names and the chat preview painted over"
+  },
+  "finding": "the real frame still shows the table's own branding text ('Squads with Quads $1,000 Freeroll', 'No Limit Texas Hold'em', PokerNow logo) and an avatar emoji. Not personal data, but it identifies the game/club. Not removed: rewriting published history needs a force-push (excluded) and the user's decision."
+ },
+ "hard_stop": "not triggered: no personal or credential data found in history",
+ "branch_state": {
+  "merged_main": false,
+  "force_pushed": false
+ }
+}

@@ -61,3 +61,16 @@ exported image before sending it anywhere.
 The only real screen data committed is
 `tests/fixtures/pokernow/raw/hu_preflop_0001.png`, cropped to the table with
 the chat preview and both player names painted over.
+
+## Release / history audit (Phase 77)
+
+`results/validation/release_audit.json`. All commits on the branch were
+scanned for credential patterns, e-mail addresses, user-machine paths and
+images: no secrets, no personal paths, e-mail only in commit metadata. The
+only real screen data in history is `hu_preflop_0001.png` (one version).
+**Open item for the owner:** that frame still shows the table's own
+branding ("Squads with Quads $1,000 Freeroll" and the PokerNow logo). It is
+not personal data but identifies the game; removing it from history would
+need a force-push, which only the repository owner should decide. If this
+frame came from a real-prize game, note that PokerAlpha's live mode is meant
+only for games where outside assistance is allowed.
