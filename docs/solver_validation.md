@@ -390,7 +390,7 @@ cross-play match) and `results/validation/holdem_training_v2_decision.json`.
 * **The gate does not open up:** with a 200k confidence table built the
   same way, 18.0% of visit-weighted decisions are accepted (19.5% at
   100k); 335 of 338 preflop first-action keys are still rejected.
-* **Recommendation (not applied):** make seed 0 @ 200k with its 200k
-  confidence table the release strategy (same config signature). Changing
-  the release artifact is a product decision, so the release stays at
-  100k; the candidate files were exported outside the repository. No 1M run.
+* **Promoted (owner decision):** seed 0 @ 200k with its 200k confidence
+  table is now the release strategy (same config signature;
+  `results/strategy/holdem_v2_seed0_200k.npz`). The 100k pair is kept as the
+  previous release. Still EXPERIMENTAL: not converged, not GTO. No 1M run.

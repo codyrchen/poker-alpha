@@ -89,7 +89,7 @@ exact vs translated sizes, strategy description) and `response_model`
 
 ```python
 from poker_alpha.pipeline import observe_manual, analyze, load_solver
-report = analyze(observe_manual(state_dict), solver=load_solver("results/strategy/holdem_v2_seed0.npz"))
+report = analyze(observe_manual(state_dict), solver=load_solver("results/strategy/holdem_v2_seed0_200k.npz"))
 ```
 
 `observe_manual`, `observe_simulation`, `observe_hand_history` and

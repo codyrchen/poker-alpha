@@ -28,8 +28,10 @@ from dataclasses import replace
 from pathlib import Path
 from typing import List, Optional
 
+from .solver_config import RELEASE_STRATEGY
+
 ROOT = Path(__file__).resolve().parents[1]
-DEFAULT_STRATEGY = ROOT / "results" / "strategy" / "holdem_v2_seed0.npz"
+DEFAULT_STRATEGY = ROOT / RELEASE_STRATEGY
 
 
 def manual_hu_spot():

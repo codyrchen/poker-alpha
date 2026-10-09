@@ -178,7 +178,7 @@ UI / replay / session analysis
 | --- | --- | --- |
 | Research | Kuhn, Leduc, CFR/CFR+/MCCFR, exploitability, opponent-identification experiments — unchanged | [RESEARCH.md](RESEARCH.md) |
 | Hold'em engine | 2–9 seats, integer chips, antes, heads-up blind rules, min-raise and short-all-in reopening, side and split pots | [docs/holdem_engine.md](docs/holdem_engine.md) |
-| Solver | external-sampling MCCFR on HU Hold'em, **validated against exact solutions of reduced Hold'em games**; release config `HoldemSolverConfig` v2: compact encoder (**imperfect recall, no equilibrium guarantee**) with exact river-strength buckets and legal NLHE sizing; 3 seeds x 100k iterations; every lookup passes a **solver-confidence gate** calibrated on exact games (preflop keys are currently all rejected as too noisy) | [docs/abstraction.md](docs/abstraction.md) |
+| Solver | external-sampling MCCFR on HU Hold'em, **validated against exact solutions of reduced Hold'em games**; release config `HoldemSolverConfig` v2: compact encoder (**imperfect recall, no equilibrium guarantee**) with exact river-strength buckets and legal NLHE sizing; release strategy = seed 0 at **200k** iterations (3 seeds trained to 200k; previous release 100k kept for reproduction), **EXPERIMENTAL**: an MCCFR average strategy on an imperfect-recall abstraction — not converged (still improving in cross-play at 300k), no equilibrium guarantee, not GTO for Hold'em; every lookup passes a **solver-confidence gate** calibrated on exact games (preflop keys are currently all rejected as too noisy) | [docs/abstraction.md](docs/abstraction.md) |
 | Opponent / range modelling | 1,326-combo weighted ranges, versioned priors, Bayesian updates, Hold'em statistics with credible intervals and recency decay, exact joint multiway equity | [docs/ranges.md](docs/ranges.md) |
 | Observer | optional, read-only screenshot reader: calibration, template OCR, card recognition, smoothing, fusion rules, pause/correct/resume. Validated on synthetic images only — **real PokerNow accuracy: blocked on real fixtures, not measured** | [docs/observer.md](docs/observer.md) |
 | Decision analysis | one path for every input (`poker_alpha.pipeline`: manual / simulation / hand history / screenshot → `DecisionReport`); priority solver → rollout → heuristic with coded solver rejection reasons; uncertainty reported per source (observation, ranges, sampling, abstraction, response model) | [docs/decision_engine.md](docs/decision_engine.md) |
@@ -690,7 +690,7 @@ python experiments/holdem_mccfr_validation.py --locked-config --seed 0 \
     --milestones 1000,10000,100000 --ckpt-dir /tmp/ck --out /tmp/run0.jsonl   # ~70 min to 100k
 python experiments/phase29_analysis.py --runs-dir /tmp --artifact /tmp/strategy.npz
 python experiments/phase28_benchmark.py --root . --out /tmp/bench.json
-python experiments/final_benchmark.py --strategy results/strategy/holdem_v2_seed0.npz
+python experiments/final_benchmark.py --strategy results/strategy/holdem_v2_seed0_200k.npz
 ```
 
 **Solver quality (Phases 32-40)** — see [docs/solver_validation.md](docs/solver_validation.md):

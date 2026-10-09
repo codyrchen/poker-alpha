@@ -175,7 +175,20 @@ V2_CONFIG = HoldemSolverConfig(
 # river abstraction error; v1 remains the locked reference for reproducing
 # Phases 26-31 (its tests, fixtures and artifact are unchanged).
 RELEASE_CONFIG = V2_CONFIG
-RELEASE_STRATEGY = "results/strategy/holdem_v2_seed0.npz"
+# Current release strategy (promoted at the owner's request after Phase 65):
+# seed 0 of the v2 config at 200,000 iterations; its confidence table
+# (seeds 0-2 at 200k, movement vs 10k) sits next to it as
+# "<stem>_confidence.npz" and is picked up automatically. EXPERIMENTAL: an
+# MCCFR average strategy on an imperfect-recall abstraction, not converged,
+# not an equilibrium of Hold'em.
+RELEASE_STRATEGY = "results/strategy/holdem_v2_seed0_200k.npz"
+RELEASE_CONFIDENCE = "results/strategy/holdem_v2_seed0_200k_confidence.npz"
+RELEASE_ITERATIONS = 200_000
+# Previous release, kept in place for reproducing Phases 36-80 results.
+PREVIOUS_RELEASE_STRATEGIES = {
+    "v2@100k": ("results/strategy/holdem_v2_seed0.npz",
+                "results/strategy/holdem_v2_seed0_confidence.npz"),
+}
 
 KNOWN_CONFIGS = {"v1": PRIMARY_CONFIG, "v2-sizing-only": LEGAL_SIZING_CONFIG, "v2": V2_CONFIG}
 

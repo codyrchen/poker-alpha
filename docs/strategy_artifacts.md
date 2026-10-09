@@ -56,7 +56,7 @@ run that is resumed gives the same strategy as an uninterrupted one.
 
 ## Size and loading (Phase 67)
 
-Release artifact `holdem_v2_seed0.npz`: 124,381 infosets, 451,148 actions;
+Previous release artifact `holdem_v2_seed0.npz` (100k; the current release is the 200k file, 130,497 infosets, 2.4 MB): 124,381 infosets, 451,148 actions;
 2.2 MB on disk (`savez_compressed`; 34.6 MB uncompressed). Alternatives
 measured: storing keys/actions as bytes instead of unicode would save only
 13% on disk (1.9 MB) and needs a new format version, so the format is

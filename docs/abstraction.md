@@ -123,8 +123,10 @@ equilibrium guarantee**, with two evidence-backed changes
 
 The v2 signature also records `averaging=uniform` (simple external-sampling
 averaging) and the action-abstraction description. Release artifact:
-`results/strategy/holdem_v2_seed0.npz` (seed 0, 100k iterations, 2.2 MB)
-plus `holdem_v2_seed0_confidence.npz` for the solver-use gate. v1
+`results/strategy/holdem_v2_seed0_200k.npz` (seed 0, 200k iterations, 2.4 MB,
+EXPERIMENTAL — not converged, not GTO) plus `holdem_v2_seed0_200k_confidence.npz`
+for the solver-use gate; the previous release (100k, `holdem_v2_seed0.npz`)
+is kept for reproduction. v1
 (`PRIMARY_CONFIG`, artifact `holdem_v1_seed0.npz`, 300k) stays the locked
 reference; strategy files load under whichever known config their
 signature names (`solver_config.config_for_signature`).

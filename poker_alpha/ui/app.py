@@ -17,13 +17,14 @@ import streamlit as st
 
 from poker_alpha.decision import DecisionConfig, recommend_action
 from poker_alpha.holdem import ManualStateAdapter, validate
+from poker_alpha.solver_config import RELEASE_STRATEGY
 from poker_alpha.ui.view import (candidate_rows, headline, range_rows,
                                  seat_rows, solver_signal_rows, solver_status,
                                  source_rows, state_rows, uncertainty_rows)
 
 ROOT = Path(__file__).resolve().parents[2]
 FIXTURES = ROOT / "tests" / "fixtures"
-STRATEGY = ROOT / "results" / "strategy" / "holdem_v2_seed0.npz"
+STRATEGY = ROOT / RELEASE_STRATEGY
 
 EXAMPLE_STATE = {
     "format": "pokeralpha.observed/v1", "num_seats": 6, "hero_seat": 0,
