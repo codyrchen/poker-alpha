@@ -6,3 +6,10 @@ build/
 dist/
 .venv/
 .DS_Store
+
+# Local observer data: captured frames and test sessions never belong in Git
+# (each such directory also carries its own "*" .gitignore).
+pokeralpha_captures/
+pokeralpha_sessions/
+pokeralpha_fixture_export*/
+*.pokeralpha_session/

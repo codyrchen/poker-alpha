@@ -18,6 +18,7 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
+from typing import Optional
 
 import streamlit as st
 
@@ -29,6 +30,8 @@ from ..observer.live import (CaptureSettings, LiveObserverSession, critical_chec
                              with_region)
 from ..observer.pokernow import LAYOUT_PRESETS, default_layout, pokernow_hu_layout
 from ..observer.regions import Region
+from ..observer.session import (DEFAULT_SESSION_ROOT, POLICY_PRESETS, TRIGGER_LABELS,
+                                RetentionPolicy, SessionLimits, TestSessionRecorder)
 
 DEFAULT_SAVE_DIR = "~/pokeralpha_captures"
 
@@ -224,13 +227,24 @@ def _decision(session, cfg, compute: bool, min_conf: float, render_report):
                   store=lambda rep: st.session_state.__setitem__("live_report", (key, rep)))
 
 
+def _recorder() -> Optional[TestSessionRecorder]:
+    return st.session_state.get("ts_recorder")
+
+
 def _live_view(cfg, compute: bool, min_conf: float, save_dir: str, render_report):
     session = _session()
+    rec = _recorder()
     if session.running:
-        session.step()
+        result = session.step()
+        if rec is not None and rec.recording:
+            rec.on_step(session, result)
+            if not rec.recording:                # a session limit stopped the recording
+                session.stop()
     status = "RUNNING" if session.running else "stopped"
     st.caption(f"Observer {status} · frames {session.frames} · capture errors {session.errors} · "
                f"hand {session.tracker.hand_number}")
+    if rec is not None and rec.active:
+        _recorder_status(rec)
     if session.last_error:
         st.error(session.last_error)
     if session.last_warning:
@@ -268,10 +282,102 @@ def _live_view(cfg, compute: bool, min_conf: float, save_dir: str, render_report
     _decision(session, cfg, compute, min_conf, render_report)
 
 
+# -- observer test session (diagnostic recorder) -------------------------------------
+
+def _recorder_status(rec: TestSessionRecorder) -> None:
+    info = rec.summary()
+    fps = rec.fps()
+    st.caption(f"Test session **{rec.id}** · {info['status']} · seen {info['frames_seen']} · "
+               f"kept {info['frames_retained']} · {info['bytes_written'] / 1e6:.1f} MB · "
+               f"{'%.2f FPS' % fps if fps else 'FPS n/a'} · {rec.path}")
+    if rec.stop_reason:
+        st.warning(f"Session stopped: {rec.stop_reason}")
+
+
+def _test_session_controls(session: LiveObserverSession, cal: TableCalibration,
+                           capture: CaptureSettings, compute: bool) -> None:
+    st.markdown("#### Observer Test Session (diagnostic, read-only)")
+    st.caption("Records a small set of meaningful frames plus what the observer concluded "
+               "about them, for later replay, annotation and fixture export. Local files "
+               "only; nothing is uploaded. Decisions are off by default.")
+    rec = _recorder()
+    if rec is None or not rec.active:
+        c = st.columns(2)
+        root = c[0].text_input("Session folder", DEFAULT_SESSION_ROOT, key="ts_root")
+        preset = c[1].selectbox("Keep frames when", list(POLICY_PRESETS),
+                                index=list(POLICY_PRESETS).index("hybrid (default)"),
+                                key="ts_preset")
+        triggers = list(POLICY_PRESETS[preset])
+        if preset == "hybrid (default)":
+            triggers = st.multiselect("Hybrid triggers", [t for t in TRIGGER_LABELS if t != "manual"],
+                                      default=triggers, key="ts_triggers",
+                                      format_func=lambda t: TRIGGER_LABELS[t])
+        c = st.columns(5)
+        interval = c[0].number_input("Interval (s)", 1.0, 3600.0, 10.0, key="ts_interval")
+        low = c[1].number_input("Low-confidence threshold", 0.0, 1.0, 0.5, 0.05, key="ts_low")
+        max_min = c[2].number_input("Max minutes", 1, 24 * 60, 240, key="ts_max_min")
+        max_frames = c[3].number_input("Max kept frames", 1, 100000, 2000, key="ts_max_frames")
+        max_mb = c[4].number_input("Max disk (MB)", 10, 100000, 2000, key="ts_max_mb")
+        if st.button("Start session", key="ts_start"):
+            try:
+                rec = TestSessionRecorder(
+                    root, RetentionPolicy(tuple(triggers), float(interval), float(low)),
+                    SessionLimits(max_min * 60.0, int(max_frames), float(max_mb)))
+                rec.start(cal, capture.monitor, capture.rect, decisions_enabled=compute,
+                          meta={"blinds": [st.session_state.get("live_sb"),
+                                           st.session_state.get("live_bb")]})
+                st.session_state.ts_recorder = rec
+                session.start()
+                st.rerun()
+            except Exception as exc:  # noqa: BLE001
+                st.error(f"Cannot start session: {exc}")
+        return
+    rec.calibration_changed(cal)
+    rec.decisions_enabled = compute
+    b = st.columns(5)
+    if b[0].button("Pause capture", disabled=not rec.recording, key="ts_pause"):
+        rec.pause()
+        session.stop()
+        st.rerun()
+    if b[1].button("Resume capture", disabled=rec.recording, key="ts_resume"):
+        rec.resume()
+        session.start()
+        st.rerun()
+    if b[2].button("Stop session", disabled=rec.status == "stopped", key="ts_stop"):
+        rec.stop()
+        session.stop()
+        st.rerun()
+    if b[3].button("Reset tracker", key="ts_reset"):
+        session.reset_tracker()
+        rec.add_note("tracker reset by user", session.frames)
+    if b[4].button("Finish session", key="ts_finish"):
+        path = rec.finish()
+        session.stop()
+        st.session_state.ts_last_session = str(path)
+        st.session_state.pop("ts_recorder", None)
+        st.rerun()
+    note = st.text_input("Note (optional; attached to Mark or Add note)", key="ts_note")
+    b = st.columns(3)
+    if b[0].button("Mark current frame", key="ts_mark"):
+        smp = rec.mark(session, note)
+        st.success(f"Marked frame {smp.id}" if smp else "No frame to mark yet.")
+    if b[1].button("Save current frame", key="ts_save"):
+        smp = rec.save_current(session)
+        st.success(f"Saved frame {smp.id}" if smp else "No frame to save yet.")
+    if b[2].button("Add note", key="ts_add_note"):
+        rec.add_note(note, session.frames)
+        st.success("Note added.")
+
+
 def live_screen_mode(cfg, render_report) -> None:
     st.subheader("Live screen observer (read-only)")
     st.caption("Reads pixels only — never clicks, types or acts. Frames stay on this "
                "machine. Use only where real-time assistance is permitted.")
+    mode = st.radio("Mode", ["Live assistant", "Observer Test Session (diagnostic)"],
+                    horizontal=True, key="live_mode")
+    test_mode = mode.startswith("Observer Test Session")
+    if st.session_state.get("ts_last_session"):
+        st.info(f"Last finished test session: {st.session_state.ts_last_session}")
     session = _session()
     capture = _capture_controls(session)
     if capture is None:
@@ -283,12 +389,18 @@ def live_screen_mode(cfg, render_report) -> None:
     bb = c[1].number_input("Big blind", value=1.0, key="live_bb")
     fps = c[2].slider("Frames per second", 0.5, 3.0, 1.0, 0.5, key="live_fps")
     c = st.columns(2)
-    compute = c[0].checkbox("Compute decisions", value=True, key="live_compute",
-                            help="Turn off while calibrating the observer.")
+    if test_mode:
+        compute = c[0].checkbox("Compute decisions", value=False, key="ts_compute",
+                                help="Off by default in test sessions: they collect data.")
+    else:
+        compute = c[0].checkbox("Compute decisions", value=True, key="live_compute",
+                                help="Turn off while calibrating the observer.")
     min_conf = c[1].slider("Minimum critical confidence for a decision", 0.0, 1.0, 0.5, 0.05,
                            key="live_min_conf")
     save_dir = st.text_input("Save frames to (local folder)", DEFAULT_SAVE_DIR, key="live_save_dir")
     session.configure(capture, cal, sb, bb)
+    if test_mode:
+        _test_session_controls(session, cal, capture, compute)
     b = st.columns(4)
     if b[0].button("Start Live Observer", disabled=session.running):
         session.start()

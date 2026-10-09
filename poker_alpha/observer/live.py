@@ -122,6 +122,9 @@ class LiveObserverSession:
         self.last_error: Optional[str] = None
         self.last_warning: Optional[str] = None
         self.last_time: Optional[float] = None
+        # per-step diagnostics (seconds) and the tracker events of the last step
+        self.last_timings: Dict[str, float] = {}
+        self.last_events: list = []
 
     # configuration; the tracker survives frames and is rebuilt only when
     # the calibration, blinds or seat layout change
@@ -158,13 +161,17 @@ class LiveObserverSession:
         """Capture one frame, read it and feed the tracker. Never raises:
         failures are returned and kept in ``last_error``."""
         now = time.time() if now is None else now
+        self.last_timings, self.last_events = {}, []
+        t0 = time.perf_counter()
         try:
             img = self.grab()
         except Exception as exc:  # noqa: BLE001 - any capture failure is reported
             self.errors += 1
             self.source = None
             self.last_error = f"capture failed: {type(exc).__name__}: {exc}. {PERMISSION_HELP}"
+            self.last_timings["capture"] = time.perf_counter() - t0
             return StepResult(False, self.last_error)
+        self.last_timings["capture"] = time.perf_counter() - t0
         self.last_frame = img
         self.frames += 1
         self.last_time = now
@@ -172,16 +179,24 @@ class LiveObserverSession:
         self.last_warning = PERMISSION_HELP if is_blank(img) else None
         if not recognize or self.adapter is None:
             return StepResult(True, warning=self.last_warning)
+        t1 = time.perf_counter()
         try:
             obs = self.adapter.read_frame(img, timestamp=now)
         except CalibrationError as exc:
+            self.last_timings["recognition"] = time.perf_counter() - t1
             self.last_error = f"calibration: {exc}"
             return StepResult(False, self.last_error, self.last_warning)
         except Exception as exc:  # noqa: BLE001
+            self.last_timings["recognition"] = time.perf_counter() - t1
             self.last_error = f"recognition failed: {type(exc).__name__}: {exc}"
             return StepResult(False, self.last_error, self.last_warning)
+        t2 = time.perf_counter()
+        self.last_timings["recognition"] = t2 - t1
         self.last_observation = obs
         events = self.tracker.update(obs)
+        self.last_events = list(events)
+        self.last_timings["tracker"] = time.perf_counter() - t2
+        self.last_timings["total"] = time.perf_counter() - t0
         return StepResult(True, warning=self.last_warning,
                           events=tuple(f"{e.kind}" + (f" seat {e.seat}" if e.seat is not None else "")
                                        + (f" {e.amount:g}" if e.amount is not None else "")
@@ -203,8 +218,15 @@ def save_frame(image, directory, meta: Optional[dict] = None) -> Path:
     Local only; called only on an explicit user request."""
     d = Path(directory).expanduser()
     d.mkdir(parents=True, exist_ok=True)
+    ignore = d / ".gitignore"
+    if not ignore.exists():                    # captured frames never get committed
+        ignore.write_text("*\n")
     stamp = time.strftime("%Y%m%d-%H%M%S") + f"-{int(time.time() * 1000) % 1000:03d}"
     path = d / f"frame-{stamp}.png"
+    k = 1
+    while path.exists():                       # never overwrite an earlier capture
+        path = d / f"frame-{stamp}-{k}.png"
+        k += 1
     image.save(path)
     if meta is not None:
         path.with_suffix(".json").write_text(json.dumps(meta, indent=1, default=str))

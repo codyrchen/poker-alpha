@@ -1,22 +1,48 @@
 {
- "baseline_tests": "527 passed, 5 skipped, 196s",
- "branch": "claude/solver-quality-and-release",
- "checkpoints": "/home/user/pa_ckpt",
- "config_signature": "HoldemSolverConfig:v1:2e23c098860f7894c871",
- "current_phase": "complete (Phase 40 release candidate)",
- "experiments_running": [],
- "head": "311df46",
- "last_completed_phase": 40,
- "next_action": "none autonomous; recommended: 3 seeds of v2 to 300k, flop/turn exact abstraction error, real PokerNow fixtures",
- "open_bugs": [
-  "abstract b33 sizes below NLHE minimum (81% preflop, ~30% postflop)",
-  "betting-context collision: facing jam after any open size"
+ "run": "pre-real-test (Phases 41-80)",
+ "branch": "claude/live-observer",
+ "start_commit": "8a35231674b97982015454c2c649695713b43697",
+ "head": "8a35231",
+ "current_phase": 42,
+ "completed_phases": [
+  {
+   "phase": 41,
+   "summary": "observer test-session recorder: poker_alpha/observer/session.py + Live screen 'Observer Test Session' mode; policies manual/interval/state/warning/low-conf/new-hand/street/hybrid; limits 4h/2000 frames/2GB; self-ignoring session dirs; tests/test_observer_session.py (13)"
+  }
  ],
- "release_config": "HoldemSolverConfig:v2:733e52f1d1014e2e7973",
- "results": {
-  "phase32": "no rule/utility/MCCFR/averaging bug; preflop noise dominant (seed L1 ~0.9 at 1360 visits); b33 preflop sizes below NLHE min; BTN facing-jam key ignores open size"
+ "tests": "608 passed, 5 skipped (non-slow)",
+ "ci": "run 30 green at 8a35231",
+ "long_running": [
+  {
+   "phase": 65,
+   "what": "v2 seed0 100k->300k, seeds1-2 100k->200k",
+   "ckpt_dir": "/home/user/pa_ckpt/v2c",
+   "logs": "/home/user/pa_ckpt/v2c/seed{0,1,2}.log",
+   "resume": "latest /home/user/pa_ckpt/v2c/v2_seedS_itN.npz"
+  }
+ ],
+ "config_signatures": {
+  "release_v2": "HoldemSolverConfig:v2:733e52f1d1014e2e7973",
+  "locked_v1": "HoldemSolverConfig:v1:2e23c098860f7894c871"
  },
- "start_commit": "8335ea2",
- "updated": "2026-10-08T22:55:41Z",
- "v2_config": "HoldemSolverConfig:v2:733e52f1d1014e2e7973"
+ "seeds": {
+  "v2_training": [
+   0,
+   1,
+   2
+  ]
+ },
+ "real_pokernow": {
+  "tuning": [
+   "hu_preflop_0001"
+  ],
+  "validation": [],
+  "held_out": []
+ },
+ "outputs": {
+  "session_docs": "docs/observer_sessions.md"
+ },
+ "unresolved": [],
+ "next_step": "Phase 42: session replay (poker_alpha/observer/session_replay.py)",
+ "updated": "2026-10-09T05:30:06Z"
 }
