@@ -70,3 +70,25 @@ it/s. Online (median, `results/validation/latency_benchmark.json`):
 2. Longer v2 training (3 seeds to 300k, ~6.5 h) and a local best-response / exploitability estimate inside the abstraction.
 3. Exact abstraction-error measurement on flop and turn subgames.
 4. A better-calibrated rollout response model (the default model overfolds to large bets).
+
+## Pre-real-data release candidate (Phase 80)
+
+Branch `claude/live-observer`, Phases 41-80. Full suite: **783 passed, 0
+skipped** (slow included, Python 3.13); clean venvs: 3.11 core-only 760
+passed / 12 skipped (Streamlit), 3.12 all extras 773 passed.
+
+| status | component | evidence (this run) |
+| --- | --- | --- |
+| VALIDATED (synthetic) | live observer infrastructure: test-session recorder, stored / recompute replay, annotation, privacy-preserving export, dataset roles, metrics, debugger, calibration v2, Retina geometry | tests; replay reproduces recorded sessions exactly |
+| VALIDATED (synthetic / derived) | tracker plausibility rules under injected failures and perturbations | `docs/observer_failure_modes.md`, `docs/observer_robustness.md` |
+| VALIDATED | observer performance and stability | 3 FPS within budget at p99; 60-min soak with flat RSS |
+| **BLOCKED** | real PokerNow recognition accuracy | 1 real **tuning** frame, 0 validation / held-out frames |
+| VALIDATED | decision pipeline fault handling, golden end-to-end outputs, determinism / resume | `tests/test_decision_faults.py`, `test_golden_e2e.py`, `test_determinism_audit.py` |
+| VALIDATED | Monte Carlo error bars | equity coverage 0.89-0.99; rollout 0.95 mean (warning below 500 samples) |
+| PARTIALLY VALIDATED | v2 abstraction | river error measured earlier; flop / turn exploitability 1.4-9.6 BB/hand in exact subgames -> flop / turn solver lookups capped at low confidence |
+| PARTIALLY VALIDATED | rollouts | held-out agreement with exact river equilibria 0.61, optimistic, over-bet; response-model alternatives not adopted |
+| EXPERIMENTAL | trained HU strategy | release unchanged (seed 0, 100k); 200k is measurably stronger in cross-play, promotion awaits the owner's decision |
+
+Release strategy: unchanged (`results/strategy/holdem_v2_seed0.npz`, 100k).
+Gate thresholds: unchanged; added coded downgrade reasons
+`OFF_TREE_TRANSLATION`, `ILLEGAL_SIZE_MASS`, `STREET_ABSTRACTION_ERROR`.
