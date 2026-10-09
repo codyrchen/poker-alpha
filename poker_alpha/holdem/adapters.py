@@ -45,6 +45,18 @@ def _street(value: Any, board_len: int) -> Street:
     return Street(int(value))
 
 
+
+def _required_int(data, key: str, what: str) -> int:
+    """``int(data[key])`` with a clear error when the value is missing/unknown."""
+    v = data.get(key)
+    if v is None:
+        raise ValueError(f"{what} ({key!r}) is unknown: set it before analysing "
+                         "(it decides positions and who acts first)")
+    try:
+        return int(v)
+    except (TypeError, ValueError):
+        raise ValueError(f"{what} ({key!r}) must be a seat number, got {v!r}") from None
+
 class ManualStateAdapter:
     """Build an :class:`ObservedTableState` from a dict."""
 
@@ -79,8 +91,8 @@ class ManualStateAdapter:
                       for seat, c in data.get("shown_cards", {}).items())
         return ObservedTableState(
             num_seats=int(data.get("num_seats", len(seats))),
-            hero_seat=int(data["hero_seat"]),
-            dealer=int(data["dealer"]),
+            hero_seat=_required_int(data, "hero_seat", "hero seat"),
+            dealer=_required_int(data, "dealer", "dealer button seat"),
             seats=tuple(seats),
             street=_street(data.get("street"), len(board)),
             small_blind=float(data["small_blind"]),

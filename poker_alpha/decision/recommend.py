@@ -129,6 +129,10 @@ def infer_opponent_range(obs: ObservedTableState, seat: int,
 
 def _summary(seat: int, pos: str, line: str, r: WeightedRange,
              model: str) -> RangeSummary:
+    if r.is_empty():
+        return RangeSummary(seat=seat, position=pos, line=line + " (EMPTY)",
+                            live_combos=0, entropy_bits=0.0, effective_combos=0.0,
+                            top_classes=(), model=model)
     return RangeSummary(seat=seat, position=pos, line=line,
                         live_combos=r.num_live_combos,
                         entropy_bits=r.entropy_bits(),
@@ -184,22 +188,50 @@ def recommend_action(state: ObservedTableState,
         to_call_bb=state.amount_to_call / bb, pot_odds=pot_odds,
         spr=state.spr, effective_stack_bb=None if eff is None else eff / bb)
 
-    if errors or hero is None or len(hero) != 2 or state.actor not in (None, state.hero_seat):
-        if hero is None:
-            warnings.append("hero cards unknown: cannot evaluate")
-        if state.actor not in (None, state.hero_seat):
-            warnings.append("it is not the hero's turn")
+    # Refusal reasons (coded). Anything here means no recommendation at all:
+    # guessing would fabricate a decision from a state we cannot trust.
+    refuse: List[str] = sorted({i.code for i in errors})
+    if hero is None or len(hero) != 2:
+        refuse.append("HERO_CARDS_UNKNOWN")
+        warnings.append("hero cards unknown: cannot evaluate")
+    if state.actor not in (None, state.hero_seat):
+        refuse.append("NOT_HERO_TURN")
+        warnings.append("it is not the hero's turn")
+    if not errors and state.hero.stack is None:
+        refuse.append("HERO_STACK_UNKNOWN")
+        warnings.append("hero stack unknown: bet sizes, all-in and SPR cannot be "
+                        "evaluated — read or enter the hero's stack")
+    if not errors and state.hero.folded:
+        refuse.append("HERO_FOLDED")
+    if not errors and not state.hero.folded and not state.opponents_in_hand:
+        refuse.append("NO_OPPONENTS")
+    if not errors and state.hero.all_in:
+        refuse.append("HERO_ALL_IN")
+        warnings.append("hero is all-in: no decision to make")
+    if refuse:
         return DecisionReport(hero_equity=None, hero_equity_se=None,
                               opponent_ranges=(), candidates=(),
                               recommended=None, recommended_mix={},
                               mix_meaning="no recommendation",
                               method="none", confidence="low",
                               warnings=tuple(warnings),
-                              details={"source_cascade": [
+                              details={"refusal_codes": refuse, "source_cascade": [
                                   {"source": "none", "status": "no decision",
-                                   "reason": "invalid state, unknown hero cards or not hero's turn"}]},
+                                   "codes": refuse,
+                                   "reason": "invalid or incomplete state: " + ", ".join(refuse)}]},
                               uncertainty=_uncertainty(cfg, state, [], None, None, None, None),
                               **base)
+
+    # Documented assumptions (recommendation still made, confidence capped).
+    assumptions: List[str] = []
+    if state.actor is None:
+        assumptions.append("ACTOR_UNKNOWN")
+        warnings.append("actor unknown: assuming it is the hero's turn")
+    unknown_opp = [s for s in state.opponents_in_hand if state.seats[s].stack is None]
+    if unknown_opp:
+        assumptions.append("OPPONENT_STACK_UNKNOWN")
+        warnings.append("opponent stack unknown (seat " + ", ".join(map(str, unknown_opp))
+                        + "): assumed to cover the hero; all-in and SPR are approximate")
 
     # Opponent ranges & models.
     priors = cfg.priors or RangePriors.load()
@@ -222,25 +254,41 @@ def recommend_action(state: ObservedTableState,
         warnings.append("no opponents remain in the hand")
 
     # Hero equity vs the estimated ranges (all-in-now share, no side pots).
+    cascade: List[Dict[str, object]] = []
     equity = se = None
-    if ranges:
+    empty = [s for s, r in ranges.items() if r.is_empty()]
+    if empty:
+        warnings.append("opponent range empty after card removal (seat "
+                        + ", ".join(map(str, empty)) + "): equity and rollouts unavailable")
+        cascade.append({"source": "equity", "status": "failed", "code": "RANGE_EMPTY",
+                        "seats": empty})
+    elif ranges:
         try:
-            eq = multiway_equity(hero, state.board, list(ranges.values()),
-                                 simulations=cfg.equity_simulations,
-                                 seed=cfg.seed)
-        except SamplingError:
-            eq = multiway_equity(hero, state.board, list(ranges.values()),
-                                 simulations=cfg.equity_simulations,
-                                 seed=cfg.seed, method="importance")
-            warnings.append("equity used importance sampling (ranges overlap)")
-        equity, se = eq.expected_share, eq.std_error
+            try:
+                eq = multiway_equity(hero, state.board, list(ranges.values()),
+                                     simulations=cfg.equity_simulations,
+                                     seed=cfg.seed)
+            except SamplingError:
+                eq = multiway_equity(hero, state.board, list(ranges.values()),
+                                     simulations=cfg.equity_simulations,
+                                     seed=cfg.seed, method="importance")
+                warnings.append("equity used importance sampling (ranges overlap)")
+            equity, se = eq.expected_share, eq.std_error
+        except Exception as exc:  # noqa: BLE001 - reported, never hidden
+            warnings.append(f"equity estimate failed ({type(exc).__name__}: {exc})")
+            cascade.append({"source": "equity", "status": "failed", "code": "EQUITY_ERROR",
+                            "reason": f"{type(exc).__name__}: {exc}"})
+    usable_ranges = bool(ranges) and not empty
 
     # Method A: trained heads-up strategy.
     lookup = None
-    cascade: List[Dict[str, object]] = []
     solver_info: Dict[str, object] = {"used": False, "confidence": "not configured", "reasons": []}
     if cfg.solver is not None:
-        lookup = cfg.solver.lookup(state)
+        try:
+            lookup = cfg.solver.lookup(state)
+        except Exception as exc:  # noqa: BLE001 - a broken solver must not crash analysis
+            lookup = LookupMiss(f"solver lookup failed ({type(exc).__name__}: {exc})",
+                                code="SOLVER_ERROR")
         if isinstance(lookup, LookupMiss):
             warnings.append(f"solver strategy not used: {lookup.reason}")
             cascade.append({"source": "solver", "status": "rejected",
@@ -274,10 +322,16 @@ def recommend_action(state: ObservedTableState,
         solver_info = {"used": True, "confidence": gate_d["status"], "reasons": gate_d["reasons"],
                        **gate_d.get("signals", {})}
         rres = None
-        if cfg.rollout_simulations and ranges:
-            cands, rres = _attach_rollout_evs(state, hero, ranges, models, cfg,
-                                              cands, source=source)
-            cascade.append({"source": "Monte Carlo rollout", "status": "used for EVs only"})
+        if cfg.rollout_simulations and usable_ranges:
+            try:
+                cands, rres = _attach_rollout_evs(state, hero, ranges, models, cfg,
+                                                  cands, source=source)
+                cascade.append({"source": "Monte Carlo rollout", "status": "used for EVs only"})
+            except Exception as exc:  # noqa: BLE001
+                warnings.append(f"rollout EVs unavailable ({type(exc).__name__}: {exc})")
+                cascade.append({"source": "Monte Carlo rollout", "status": "failed",
+                                "code": "ROLLOUT_ERROR",
+                                "reason": f"{type(exc).__name__}: {exc}"})
         else:
             cascade.append({"source": "Monte Carlo rollout", "status": "not run"})
         cascade.append({"source": "heuristic fallback", "status": "not needed"})
@@ -308,6 +362,8 @@ def recommend_action(state: ObservedTableState,
         warnings.append("solver frequencies are from an abstracted heads-up "
                         "game (imperfect-recall abstraction): not a Hold'em "
                         "equilibrium and not proven optimal")
+        if assumptions:
+            confidence = "low"
         if cfg.observer_confidence is not None and cfg.observer_confidence < 0.9:
             warnings.append(f"observer confidence {cfg.observer_confidence:.0%}: "
                             "verify the recognized state")
@@ -319,17 +375,24 @@ def recommend_action(state: ObservedTableState,
             mix_meaning=f"solver average-strategy frequencies ({cfg.solver.description})",
             method=source, confidence=confidence, warnings=tuple(warnings),
             details={"infoset": lookup.infoset_key, "visits": lookup.visits,
-                     "source_cascade": cascade, "solver": solver_info},
+                     "source_cascade": cascade, "solver": solver_info,
+                     "assumptions": assumptions},
             uncertainty=_uncertainty(cfg, state, summaries, se, rres, lookup, source),
             **base)
 
     # Methods B/C: abstraction menu evaluated against ranges.
     menu = cfg.abstraction.menu(ctx)
-    if cfg.rollout_simulations and ranges:
+    res = rollout_failure = None
+    if cfg.rollout_simulations and usable_ranges:
         cands = [CandidateAction(label=l, kind=a.kind, amount_to=a.raise_to,
                                  added=a.add, probability=None, ev_bb=None,
                                  ev_se_bb=None) for l, a in menu]
-        cands, res = _attach_rollout_evs(state, hero, ranges, models, cfg, cands)
+        try:
+            cands, res = _attach_rollout_evs(state, hero, ranges, models, cfg, cands)
+        except Exception as exc:  # noqa: BLE001 - fall back to the heuristic, reported
+            rollout_failure = f"{type(exc).__name__}: {exc}"
+            warnings.append(f"rollout failed ({rollout_failure}): heuristic fallback used")
+    if res is not None:
         method = "Monte Carlo rollout"
         cascade.append({"source": method, "status": "used",
                         "simulations": cfg.rollout_simulations})
@@ -349,17 +412,30 @@ def recommend_action(state: ObservedTableState,
                             "response, so later-street value of smaller bets "
                             "is not credited; treat with caution")
     else:
-        res = None
-        cascade.append({"source": "Monte Carlo rollout", "status": "not run",
-                        "reason": "rollouts disabled (rollout_simulations=0)"
-                        if not cfg.rollout_simulations else "no opponent ranges"})
+        if rollout_failure is not None:
+            cascade.append({"source": "Monte Carlo rollout", "status": "failed",
+                            "code": "ROLLOUT_ERROR", "reason": rollout_failure})
+        else:
+            cascade.append({"source": "Monte Carlo rollout", "status": "not run",
+                            "reason": "rollouts disabled (rollout_simulations=0)"
+                            if not cfg.rollout_simulations else "no usable opponent ranges"})
         cands = _heuristic_candidates(menu, equity, state)
         method = "heuristic fallback"
         cascade.append({"source": method, "status": "used"})
         rec = _heuristic_choice(cands, equity, pot_odds)
+        if rec is None:
+            method = "none"
+            warnings.append("no recommendation: facing a bet with no equity estimate")
+            cascade[-1] = {"source": "heuristic fallback", "status": "no decision",
+                           "code": "NO_EQUITY"}
+        elif equity is None:
+            warnings.append(f"heuristic chose {rec} without an equity estimate "
+                            "(checking is never worse than folding)")
         mix = {rec: 1.0} if rec else {}
         cands = [_with_prob(c, mix.get(c.label, 0.0)) for c in cands]
         mix_meaning = "heuristic pot-odds choice (not a strategy)"
+        confidence = "low"
+    if assumptions:
         confidence = "low"
     if cfg.observer_confidence is not None and cfg.observer_confidence < 0.9:
         warnings.append(f"observer confidence {cfg.observer_confidence:.0%}: "
@@ -370,7 +446,8 @@ def recommend_action(state: ObservedTableState,
         opponent_ranges=tuple(summaries), candidates=tuple(cands),
         recommended=rec, recommended_mix=mix, mix_meaning=mix_meaning,
         method=method, confidence=confidence, warnings=tuple(warnings),
-        details={"source_cascade": cascade, "solver": solver_info},
+        details={"source_cascade": cascade, "solver": solver_info,
+                 "assumptions": assumptions},
         uncertainty=_uncertainty(cfg, state, summaries, se, res, None, method),
         **base)
 

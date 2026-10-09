@@ -166,3 +166,42 @@ report for every hero decision next to the action actually taken.
 snapshots, reports and EV gaps; `analyze` lists the largest EV deviations
 (with SE), uncertain decisions, range narrowing, player tendencies with
 credible intervals and hands worth reviewing.
+
+## Fault handling (Phase 68)
+
+`recommend_action` never invents a recommendation from a state it cannot
+trust. Tested in `tests/test_decision_faults.py`.
+
+**Refusals** (`recommended = None`, `method = "none"`, codes in
+`details["refusal_codes"]`):
+
+| code | when |
+| --- | --- |
+| validation error codes (`duplicate_cards`, `pot_below_bets`, `pot_mismatch`, `board_street`, `dealer`, ...) | `validate()` reports an error |
+| `HERO_CARDS_UNKNOWN` | hero cards missing |
+| `NOT_HERO_TURN` | a known actor other than the hero |
+| `HERO_STACK_UNKNOWN` | hero stack unreadable: sizes, all-in and SPR are undefined |
+| `HERO_FOLDED`, `HERO_ALL_IN`, `NO_OPPONENTS` | nothing to decide |
+
+Input errors that cannot even form a state (bad card string, unknown dealer
+or hero seat) raise `ValueError` with the field named.
+
+**Documented assumptions** (recommendation made, confidence capped at
+`low`, codes in `details["assumptions"]`, warning shown):
+
+* `ACTOR_UNKNOWN` — assumed to be the hero's turn;
+* `OPPONENT_STACK_UNKNOWN` — the opponent is assumed to cover the hero.
+
+**Component failures** (reported in the source cascade with a code):
+
+| failure | code | fallback |
+| --- | --- | --- |
+| solver `lookup()` raises | `SOLVER_ERROR` | treated as a solver rejection; rollout / heuristic |
+| missing / corrupt / wrong-config artifact | `INCOMPATIBLE_CHECKPOINT` / `CONFIG_MISMATCH` | same |
+| equity sampler raises | `EQUITY_ERROR` | no equity; rollouts if they work |
+| opponent range empty after card removal | `RANGE_EMPTY` | no equity, no rollouts |
+| rollout raises (e.g. `RolloutError`) | `ROLLOUT_ERROR` | heuristic fallback; on the solver path the solver frequencies are kept without EVs |
+| heuristic facing a bet without equity | `NO_EQUITY` | **no recommendation** |
+
+Without an equity estimate the heuristic only ever picks *check* (never worse
+than folding) and says so in a warning.
