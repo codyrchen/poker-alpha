@@ -1,0 +1,71 @@
+{
+ "format": "pokeralpha.abstraction_error_summary/v1",
+ "encoder": "CompactHoldemEncoder v2 (compact_river_pct20), imperfect recall",
+ "streets": {
+  "preflop": {
+   "status": "card mapping LOSSLESS (169 classes, suit isomorphism); betting context abstract",
+   "evidence": "encoder definition + preflop_disagreement_forensics.json",
+   "note": "preflop instability is near-equivalent MCCFR mixing, not abstraction (docs/preflop_disagreement.md)"
+  },
+  "flop": {
+   "status": "MEASURED EXACTLY on reduced subgames (7 boards, fixed runout samples, reduced bet menu)",
+   "evidence": "results/validation/flop_abstraction_v1.json",
+   "boards": 7,
+   "pot_bb": 5.0,
+   "raw_reference": {
+    "exploitability_bb_median": 0.023,
+    "exploitability_bb_max": 0.031,
+    "ev_error_bb_median": 0.0,
+    "ev_error_bb_max": 0.0
+   },
+   "release_encoder_pct20": {
+    "exploitability_bb_median": 3.706,
+    "exploitability_bb_max": 5.079,
+    "ev_error_bb_median": 0.0173,
+    "ev_error_bb_max": 0.131
+   },
+   "confidence_consequence": "street capped at LOW confidence (STREET_ABSTRACTION_ERROR)"
+  },
+  "turn": {
+   "status": "MEASURED EXACTLY on reduced subgames (7 boards, fixed runout samples, reduced bet menu)",
+   "evidence": "results/validation/turn_abstraction_v1.json",
+   "boards": 7,
+   "pot_bb": 5.0,
+   "raw_reference": {
+    "exploitability_bb_median": 0.011,
+    "exploitability_bb_max": 0.026,
+    "ev_error_bb_median": 0.0,
+    "ev_error_bb_max": 0.0
+   },
+   "release_encoder_pct20": {
+    "exploitability_bb_median": 5.127,
+    "exploitability_bb_max": 8.711,
+    "ev_error_bb_median": 0.0729,
+    "ev_error_bb_max": 0.6558
+   },
+   "confidence_consequence": "street capped at LOW confidence (STREET_ABSTRACTION_ERROR)"
+  },
+  "river": {
+   "status": "MEASURED EXACTLY on six 52-card river subgames",
+   "evidence": "results/validation/abstraction_error_river_pct.json + abstraction_error_v1.json",
+   "boards": 2,
+   "pot_bb": 5.0,
+   "compact_v1": {
+    "exploitability_bb_median": 5.739,
+    "exploitability_bb_max": 9.243,
+    "ev_error_bb_median": 0.3804
+   },
+   "release_encoder_pct20": {
+    "exploitability_bb_median": 0.424,
+    "exploitability_bb_max": 0.572,
+    "ev_error_bb_median": 0.0123
+   },
+   "note": "20 exact percentile buckets cut river exploitability 4-16x vs compact v1; not capped at LOW"
+  }
+ },
+ "full_game": {
+  "exact_exploitability": "NOT COMPUTED (infeasible: best_response_feasibility.json)",
+  "restricted_lbr_lower_bound": "~+103..+127 bb/100 for 200k/300k/1M (lbr_holdem.json) \u2014 an abstraction-level floor; candidates not separable at 10k hands",
+  "note": "per-street subgame errors are bounded (0.6-8.7 bb at 5 bb pots); the full-game floor compounds them"
+ }
+}

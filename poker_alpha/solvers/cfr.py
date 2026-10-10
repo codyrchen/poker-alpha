@@ -19,6 +19,7 @@ larger games) correct without special-casing the caller.
 
 from __future__ import annotations
 
+import math
 from typing import Dict, List
 
 import numpy as np
@@ -37,6 +38,19 @@ def regret_matching(regrets: np.ndarray) -> np.ndarray:
     if total > 0.0:
         return positive / total
     return np.full(len(regrets), 1.0 / len(regrets))
+
+
+def strategy_dot(strategy: np.ndarray, values: np.ndarray) -> float:
+    """``strategy · values`` computed identically on every machine.
+
+    ``strategy @ values`` dispatches to the BLAS ``ddot`` kernel, whose
+    summation order depends on the CPU (OpenBLAS picks SkylakeX, Haswell,
+    Zen... kernels at runtime). Those ULP-level differences changed CFR
+    strategy digests across machines and, through MCCFR's sampling, whole
+    training trajectories. Elementwise products are exact IEEE operations
+    and ``math.fsum`` is exactly rounded, so this is platform-independent.
+    """
+    return math.fsum((strategy * values).tolist())
 
 
 class InfoSet:
@@ -108,7 +122,7 @@ class CFRSolver:
             else:
                 child_values[i] = self._cfr(nxt, reach0, reach1 * strategy[i],
                                             reach_chance)
-        node_value = float(strategy @ child_values)
+        node_value = strategy_dot(strategy, child_values)
 
         # Regret update, weighted by the counterfactual reach (everyone but the
         # acting player). Values are converted to the acting player's sign.

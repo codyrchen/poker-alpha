@@ -1,0 +1,777 @@
+{
+ "format": "pokeralpha.flop_abstraction/v1",
+ "method": "Method (same as the river study, Phase 34A, extended to earlier streets): a subgame of the real ``HoldemGame`` rules starts at the flop (or turn) with a fixed preflop (and flop) line and hole cards dealt from explicit finite ranges. To stay exactly solvable in pure Python the remaining board cards come from a FIXED SAMPLE of turn / river cards (uniform over the sample minus dead cards) and the bet menu is reduced (one bet size + all-in, raise cap 1). Raw and abstract keys play IDENTICAL trees, so the comparison is exact for this game; it measures how each encoder's flop / turn / river keys merge strategically different situations, not the full 52-card error.",
+ "settings": {
+  "iters": 300,
+  "range_combos": 6,
+  "turn_sample": 4,
+  "river_sample": 3,
+  "bets": {
+   "b75": 0.75
+  },
+  "raise_cap": 1,
+  "stack_bb": 100,
+  "line": [
+   "b75c"
+  ],
+  "seed": 0
+ },
+ "encoders": {
+  "raw": "perfect information sets (reference)",
+  "bucket": "perfect-recall card buckets (v1 'bucket' encoder)",
+  "compact": "compact imperfect-recall encoder (v1 release)",
+  "compact_river_pct20": "compact + 20 river percentile buckets (release v2)"
+ },
+ "rows": [
+  {
+   "name": "A72 rainbow",
+   "board": [
+    "As",
+    "7d",
+    "2c"
+   ],
+   "line": [
+    "b75c"
+   ],
+   "turn_sample": [
+    "3d",
+    "2h",
+    "4s",
+    "7h"
+   ],
+   "river_sample": [
+    "Ad",
+    "Qd",
+    "Ah"
+   ],
+   "range_sizes": [
+    6,
+    6
+   ],
+   "ranges": [
+    [
+     "3c4c",
+     "3s6s",
+     "4s8s",
+     "Ac5h",
+     "AdJh",
+     "AdAh"
+    ],
+    [
+     "4dQd",
+     "3cKd",
+     "KdTh",
+     "2h9h",
+     "7c5s",
+     "TdTh"
+    ]
+   ],
+   "pot_bb": 5.0,
+   "encoders": {
+    "raw": {
+     "abstract_infosets": 3744,
+     "seconds": 284.7,
+     "exploitability_in_raw_game_bb": 0.023038054990569545,
+     "ev_p0_bb": 2.505144312781786,
+     "ev_error_vs_raw_bb": 0.0,
+     "weighted_l1_vs_raw": 0.0,
+     "collisions": {
+      "abstract_keys_reached": 3744,
+      "merged_keys": 0,
+      "reach_weighted_severity": 3.856096341770382e-17,
+      "max_severity": 1.3877787807814457e-16,
+      "reach_share_severity_gt_0_5": 0.0
+     }
+    },
+    "bucket": {
+     "abstract_infosets": 2331,
+     "seconds": 298.1,
+     "exploitability_in_raw_game_bb": 0.7332398428751549,
+     "ev_p0_bb": 2.5066729373930183,
+     "ev_error_vs_raw_bb": 0.0015286246112324875,
+     "weighted_l1_vs_raw": 0.05445195740640174,
+     "collisions": {
+      "abstract_keys_reached": 2331,
+      "merged_keys": 981,
+      "reach_weighted_severity": 0.016890513211473394,
+      "max_severity": 0.9045410313066278,
+      "reach_share_severity_gt_0_5": 0.008304150348468405
+     }
+    },
+    "compact": {
+     "abstract_infosets": 609,
+     "seconds": 285.9,
+     "exploitability_in_raw_game_bb": 3.5212876632621324,
+     "ev_p0_bb": 2.509120386932184,
+     "ev_error_vs_raw_bb": 0.0039760741503980235,
+     "weighted_l1_vs_raw": 0.12122869958022489,
+     "collisions": {
+      "abstract_keys_reached": 609,
+      "merged_keys": 504,
+      "reach_weighted_severity": 0.06643383373226107,
+      "max_severity": 0.9783867834421849,
+      "reach_share_severity_gt_0_5": 0.013135019826078889
+     }
+    },
+    "compact_river_pct20": {
+     "abstract_infosets": 789,
+     "seconds": 284.5,
+     "exploitability_in_raw_game_bb": 5.078974426367251,
+     "ev_p0_bb": 2.5097661569491128,
+     "ev_error_vs_raw_bb": 0.004621844167326916,
+     "weighted_l1_vs_raw": 0.11946187921819586,
+     "collisions": {
+      "abstract_keys_reached": 789,
+      "merged_keys": 618,
+      "reach_weighted_severity": 0.06636517989799133,
+      "max_severity": 0.9783867834421849,
+      "reach_share_severity_gt_0_5": 0.013176162506417025
+     }
+    }
+   }
+  },
+  {
+   "name": "K83 two-tone",
+   "board": [
+    "Kh",
+    "8h",
+    "3c"
+   ],
+   "line": [
+    "b75c"
+   ],
+   "turn_sample": [
+    "Ah",
+    "Ts",
+    "2d",
+    "Kc"
+   ],
+   "river_sample": [
+    "8c",
+    "4s",
+    "Ks"
+   ],
+   "range_sizes": [
+    6,
+    6
+   ],
+   "ranges": [
+    [
+     "2c4c",
+     "2s6s",
+     "4s7s",
+     "5hKs",
+     "QcKs",
+     "KdKs"
+    ],
+    [
+     "4dQd",
+     "2cAd",
+     "AdTh",
+     "9c3s",
+     "4s8s",
+     "TdTh"
+    ]
+   ],
+   "pot_bb": 5.0,
+   "encoders": {
+    "raw": {
+     "abstract_infosets": 3816,
+     "seconds": 301.0,
+     "exploitability_in_raw_game_bb": 0.01997485950775535,
+     "ev_p0_bb": 2.157978050452444,
+     "ev_error_vs_raw_bb": 0.0,
+     "weighted_l1_vs_raw": 0.0,
+     "collisions": {
+      "abstract_keys_reached": 3816,
+      "merged_keys": 0,
+      "reach_weighted_severity": 1.1565035312900937e-17,
+      "max_severity": 1.6675029412827058e-16,
+      "reach_share_severity_gt_0_5": 0.0
+     }
+    },
+    "bucket": {
+     "abstract_infosets": 3114,
+     "seconds": 302.6,
+     "exploitability_in_raw_game_bb": 0.3286492766009532,
+     "ev_p0_bb": 2.0488263188350517,
+     "ev_error_vs_raw_bb": 0.10915173161739222,
+     "weighted_l1_vs_raw": 0.11735767835841254,
+     "collisions": {
+      "abstract_keys_reached": 3114,
+      "merged_keys": 702,
+      "reach_weighted_severity": 0.008016521047791469,
+      "max_severity": 0.9976483360671848,
+      "reach_share_severity_gt_0_5": 0.006530600793668534
+     }
+    },
+    "compact": {
+     "abstract_infosets": 726,
+     "seconds": 282.5,
+     "exploitability_in_raw_game_bb": 2.1793830303297126,
+     "ev_p0_bb": 2.1272640106242666,
+     "ev_error_vs_raw_bb": 0.03071403982817733,
+     "weighted_l1_vs_raw": 0.2701490350510905,
+     "collisions": {
+      "abstract_keys_reached": 726,
+      "merged_keys": 567,
+      "reach_weighted_severity": 0.07104494121527322,
+      "max_severity": 0.9426897676955724,
+      "reach_share_severity_gt_0_5": 0.05372660390742303
+     }
+    },
+    "compact_river_pct20": {
+     "abstract_infosets": 942,
+     "seconds": 288.2,
+     "exploitability_in_raw_game_bb": 2.718529244915149,
+     "ev_p0_bb": 2.186606521530035,
+     "ev_error_vs_raw_bb": 0.028628471077591033,
+     "weighted_l1_vs_raw": 0.26635191856056306,
+     "collisions": {
+      "abstract_keys_reached": 942,
+      "merged_keys": 717,
+      "reach_weighted_severity": 0.06669608153830016,
+      "max_severity": 0.9596868490832114,
+      "reach_share_severity_gt_0_5": 0.05133772461054711
+     }
+    }
+   }
+  },
+  {
+   "name": "987 two-tone",
+   "board": [
+    "9s",
+    "8s",
+    "7d"
+   ],
+   "line": [
+    "b75c"
+   ],
+   "turn_sample": [
+    "2d",
+    "Ac",
+    "5s",
+    "Qd"
+   ],
+   "river_sample": [
+    "9d",
+    "3d",
+    "Ah"
+   ],
+   "range_sizes": [
+    6,
+    6
+   ],
+   "ranges": [
+    [
+     "2c3c",
+     "2s5s",
+     "3s6s",
+     "9hKh",
+     "8c9h",
+     "TsJs"
+    ],
+    [
+     "6dKd",
+     "5cAd",
+     "3d3s",
+     "7cQh",
+     "8hTs",
+     "9d6s"
+    ]
+   ],
+   "pot_bb": 5.0,
+   "encoders": {
+    "raw": {
+     "abstract_infosets": 4050,
+     "seconds": 331.1,
+     "exploitability_in_raw_game_bb": 0.02697927969951841,
+     "ev_p0_bb": 1.9909662424936478,
+     "ev_error_vs_raw_bb": 0.0,
+     "weighted_l1_vs_raw": 0.0,
+     "collisions": {
+      "abstract_keys_reached": 4050,
+      "merged_keys": 0,
+      "reach_weighted_severity": 3.706150829984085e-17,
+      "max_severity": 1.4224732503009818e-16,
+      "reach_share_severity_gt_0_5": 0.0
+     }
+    },
+    "bucket": {
+     "abstract_infosets": 3132,
+     "seconds": 327.4,
+     "exploitability_in_raw_game_bb": 1.0749920427761461,
+     "ev_p0_bb": 2.118788919283586,
+     "ev_error_vs_raw_bb": 0.1278226767899382,
+     "weighted_l1_vs_raw": 0.15868311273865524,
+     "collisions": {
+      "abstract_keys_reached": 3132,
+      "merged_keys": 873,
+      "reach_weighted_severity": 0.04836031976317552,
+      "max_severity": 0.9981343657827857,
+      "reach_share_severity_gt_0_5": 0.049014020251365274
+     }
+    },
+    "compact": {
+     "abstract_infosets": 684,
+     "seconds": 338.7,
+     "exploitability_in_raw_game_bb": 2.7185799487577063,
+     "ev_p0_bb": 1.9283438859889672,
+     "ev_error_vs_raw_bb": 0.06262235650468062,
+     "weighted_l1_vs_raw": 0.3183644962764306,
+     "collisions": {
+      "abstract_keys_reached": 684,
+      "merged_keys": 591,
+      "reach_weighted_severity": 0.11982403177310996,
+      "max_severity": 0.9677511256235006,
+      "reach_share_severity_gt_0_5": 0.10659408722970068
+     }
+    },
+    "compact_river_pct20": {
+     "abstract_infosets": 945,
+     "seconds": 324.6,
+     "exploitability_in_raw_game_bb": 2.7985812694228462,
+     "ev_p0_bb": 1.944577087352422,
+     "ev_error_vs_raw_bb": 0.04638915514122588,
+     "weighted_l1_vs_raw": 0.3212370545248448,
+     "collisions": {
+      "abstract_keys_reached": 945,
+      "merged_keys": 753,
+      "reach_weighted_severity": 0.11428686000070795,
+      "max_severity": 0.9481432661788558,
+      "reach_share_severity_gt_0_5": 0.09998479634069736
+     }
+    }
+   }
+  },
+  {
+   "name": "762 rainbow",
+   "board": [
+    "7c",
+    "6d",
+    "2h"
+   ],
+   "line": [
+    "b75c"
+   ],
+   "turn_sample": [
+    "2s",
+    "Qd",
+    "6c",
+    "Ac"
+   ],
+   "river_sample": [
+    "4h",
+    "9s",
+    "5h"
+   ],
+   "range_sizes": [
+    6,
+    6
+   ],
+   "ranges": [
+    [
+     "3c4c",
+     "3s8s",
+     "4s9s",
+     "Th7s",
+     "TcTs",
+     "7h7s"
+    ],
+    [
+     "4dKd",
+     "3cAd",
+     "AdJh",
+     "2dTs",
+     "5s6s",
+     "4h7s"
+    ]
+   ],
+   "pot_bb": 5.0,
+   "encoders": {
+    "raw": {
+     "abstract_infosets": 4140,
+     "seconds": 336.9,
+     "exploitability_in_raw_game_bb": 0.021921157520968126,
+     "ev_p0_bb": 2.5186975558181635,
+     "ev_error_vs_raw_bb": 0.0,
+     "weighted_l1_vs_raw": 0.0,
+     "collisions": {
+      "abstract_keys_reached": 4140,
+      "merged_keys": 0,
+      "reach_weighted_severity": 3.4116544098615815e-17,
+      "max_severity": 1.6653345369377348e-16,
+      "reach_share_severity_gt_0_5": 0.0
+     }
+    },
+    "bucket": {
+     "abstract_infosets": 2313,
+     "seconds": 328.5,
+     "exploitability_in_raw_game_bb": 1.0835719448780767,
+     "ev_p0_bb": 2.5200659434840027,
+     "ev_error_vs_raw_bb": 0.0013683876658392435,
+     "weighted_l1_vs_raw": 0.06840454907160179,
+     "collisions": {
+      "abstract_keys_reached": 2313,
+      "merged_keys": 990,
+      "reach_weighted_severity": 0.007744819658237758,
+      "max_severity": 0.9992172393537002,
+      "reach_share_severity_gt_0_5": 0.0025989263335653803
+     }
+    },
+    "compact": {
+     "abstract_infosets": 528,
+     "seconds": 325.8,
+     "exploitability_in_raw_game_bb": 1.8707318144116296,
+     "ev_p0_bb": 2.5171883757258176,
+     "ev_error_vs_raw_bb": 0.0015091800923459076,
+     "weighted_l1_vs_raw": 0.21421410159442644,
+     "collisions": {
+      "abstract_keys_reached": 528,
+      "merged_keys": 432,
+      "reach_weighted_severity": 0.021569414779061415,
+      "max_severity": 0.9818316040813585,
+      "reach_share_severity_gt_0_5": 0.006671444116623568
+     }
+    },
+    "compact_river_pct20": {
+     "abstract_infosets": 789,
+     "seconds": 325.6,
+     "exploitability_in_raw_game_bb": 2.2035807824478812,
+     "ev_p0_bb": 2.5184298819073727,
+     "ev_error_vs_raw_bb": 0.00026767391079074443,
+     "weighted_l1_vs_raw": 0.10107392520836696,
+     "collisions": {
+      "abstract_keys_reached": 789,
+      "merged_keys": 639,
+      "reach_weighted_severity": 0.019696991872320553,
+      "max_severity": 0.9499820210881218,
+      "reach_share_severity_gt_0_5": 0.0037932159876395994
+     }
+    }
+   }
+  },
+  {
+   "name": "paired KK5",
+   "board": [
+    "Ks",
+    "Kd",
+    "5c"
+   ],
+   "line": [
+    "b75c"
+   ],
+   "turn_sample": [
+    "Jh",
+    "3h",
+    "3c",
+    "Qh"
+   ],
+   "river_sample": [
+    "8h",
+    "Ts",
+    "6s"
+   ],
+   "range_sizes": [
+    6,
+    6
+   ],
+   "ranges": [
+    [
+     "2c3c",
+     "2s6s",
+     "3s7s",
+     "9c9d",
+     "Kc7d",
+     "KcKh"
+    ],
+    [
+     "3dJd",
+     "2cQd",
+     "Qd9h",
+     "Ac7d",
+     "4c4h",
+     "5dJs"
+    ]
+   ],
+   "pot_bb": 5.0,
+   "encoders": {
+    "raw": {
+     "abstract_infosets": 4158,
+     "seconds": 377.6,
+     "exploitability_in_raw_game_bb": 0.01330798427764246,
+     "ev_p0_bb": 2.512412763504477,
+     "ev_error_vs_raw_bb": 0.0,
+     "weighted_l1_vs_raw": 0.0,
+     "collisions": {
+      "abstract_keys_reached": 4158,
+      "merged_keys": 0,
+      "reach_weighted_severity": 1.345863867402831e-17,
+      "max_severity": 1.665334536937735e-16,
+      "reach_share_severity_gt_0_5": 0.0
+     }
+    },
+    "bucket": {
+     "abstract_infosets": 2349,
+     "seconds": 369.6,
+     "exploitability_in_raw_game_bb": 0.6534381031453719,
+     "ev_p0_bb": 2.5110921690488652,
+     "ev_error_vs_raw_bb": 0.0013205944556116123,
+     "weighted_l1_vs_raw": 0.04540639452038227,
+     "collisions": {
+      "abstract_keys_reached": 2349,
+      "merged_keys": 1206,
+      "reach_weighted_severity": 0.013866224917913962,
+      "max_severity": 0.9954356673643692,
+      "reach_share_severity_gt_0_5": 0.00028681568016660977
+     }
+    },
+    "compact": {
+     "abstract_infosets": 444,
+     "seconds": 355.8,
+     "exploitability_in_raw_game_bb": 6.190851863896434,
+     "ev_p0_bb": 2.5163148126600756,
+     "ev_error_vs_raw_bb": 0.0039020491555987746,
+     "weighted_l1_vs_raw": 0.2173620589091128,
+     "collisions": {
+      "abstract_keys_reached": 444,
+      "merged_keys": 375,
+      "reach_weighted_severity": 0.08825400586762473,
+      "max_severity": 0.9825992184087153,
+      "reach_share_severity_gt_0_5": 0.0008726500494385986
+     }
+    },
+    "compact_river_pct20": {
+     "abstract_infosets": 696,
+     "seconds": 353.5,
+     "exploitability_in_raw_game_bb": 4.890289157695605,
+     "ev_p0_bb": 2.5231925157249204,
+     "ev_error_vs_raw_bb": 0.010779752220443584,
+     "weighted_l1_vs_raw": 0.18205216141763755,
+     "collisions": {
+      "abstract_keys_reached": 696,
+      "merged_keys": 585,
+      "reach_weighted_severity": 0.08726350626675129,
+      "max_severity": 0.958367625972402,
+      "reach_share_severity_gt_0_5": 0.000780189226763478
+     }
+    }
+   }
+  },
+  {
+   "name": "monotone J84",
+   "board": [
+    "Jh",
+    "8h",
+    "4h"
+   ],
+   "line": [
+    "b75c"
+   ],
+   "turn_sample": [
+    "Kh",
+    "Ah",
+    "3s",
+    "6s"
+   ],
+   "river_sample": [
+    "Js",
+    "Qs",
+    "5d"
+   ],
+   "range_sizes": [
+    6,
+    6
+   ],
+   "ranges": [
+    [
+     "2c3c",
+     "3c6s",
+     "5d7d",
+     "JdQh",
+     "4sJs",
+     "KhAh"
+    ],
+    [
+     "Kc6s",
+     "5dAd",
+     "3c3h",
+     "Kc4s",
+     "8d9s",
+     "6dJd"
+    ]
+   ],
+   "pot_bb": 5.0,
+   "encoders": {
+    "raw": {
+     "abstract_infosets": 3672,
+     "seconds": 246.1,
+     "exploitability_in_raw_game_bb": 0.02398104121449296,
+     "ev_p0_bb": 2.3701480558302723,
+     "ev_error_vs_raw_bb": 0.0,
+     "weighted_l1_vs_raw": 0.0,
+     "collisions": {
+      "abstract_keys_reached": 3672,
+      "merged_keys": 0,
+      "reach_weighted_severity": 2.2124921588506723e-17,
+      "max_severity": 1.6653345369377348e-16,
+      "reach_share_severity_gt_0_5": 0.0
+     }
+    },
+    "bucket": {
+     "abstract_infosets": 2520,
+     "seconds": 237.8,
+     "exploitability_in_raw_game_bb": 0.40826319947081047,
+     "ev_p0_bb": 2.339176262004095,
+     "ev_error_vs_raw_bb": 0.03097179382617732,
+     "weighted_l1_vs_raw": 0.07904590597913666,
+     "collisions": {
+      "abstract_keys_reached": 2520,
+      "merged_keys": 846,
+      "reach_weighted_severity": 0.021022542312725795,
+      "max_severity": 0.9782261432550245,
+      "reach_share_severity_gt_0_5": 0.00956005408074847
+     }
+    },
+    "compact": {
+     "abstract_infosets": 477,
+     "seconds": 227.9,
+     "exploitability_in_raw_game_bb": 4.151002093131256,
+     "ev_p0_bb": 2.4982489402012606,
+     "ev_error_vs_raw_bb": 0.12810088437098832,
+     "weighted_l1_vs_raw": 0.41928394298831456,
+     "collisions": {
+      "abstract_keys_reached": 477,
+      "merged_keys": 378,
+      "reach_weighted_severity": 0.15714221878265064,
+      "max_severity": 0.9841052334615396,
+      "reach_share_severity_gt_0_5": 0.1349677022189588
+     }
+    },
+    "compact_river_pct20": {
+     "abstract_infosets": 675,
+     "seconds": 237.3,
+     "exploitability_in_raw_game_bb": 3.705699826731571,
+     "ev_p0_bb": 2.5011309542472686,
+     "ev_error_vs_raw_bb": 0.13098289841699629,
+     "weighted_l1_vs_raw": 0.4085735558481199,
+     "collisions": {
+      "abstract_keys_reached": 675,
+      "merged_keys": 534,
+      "reach_weighted_severity": 0.145156157502733,
+      "max_severity": 0.9841052334615396,
+      "reach_share_severity_gt_0_5": 0.12378437857986957
+     }
+    }
+   }
+  },
+  {
+   "name": "connected QJT",
+   "board": [
+    "Qc",
+    "Jd",
+    "Th"
+   ],
+   "line": [
+    "b75c"
+   ],
+   "turn_sample": [
+    "8d",
+    "5d",
+    "Tc",
+    "3c"
+   ],
+   "river_sample": [
+    "Td",
+    "Kd",
+    "3s"
+   ],
+   "range_sizes": [
+    6,
+    6
+   ],
+   "ranges": [
+    [
+     "2c3c",
+     "2s5s",
+     "3s6s",
+     "9dQh",
+     "JcQs",
+     "KsAs"
+    ],
+    [
+     "4dKd",
+     "4cAd",
+     "3d3s",
+     "Td7h",
+     "Jc6s",
+     "5dQd"
+    ]
+   ],
+   "pot_bb": 5.0,
+   "encoders": {
+    "raw": {
+     "abstract_infosets": 3744,
+     "seconds": 277.9,
+     "exploitability_in_raw_game_bb": 0.03062590388008507,
+     "ev_p0_bb": 0.5195990952712836,
+     "ev_error_vs_raw_bb": 0.0,
+     "weighted_l1_vs_raw": 0.0,
+     "collisions": {
+      "abstract_keys_reached": 3744,
+      "merged_keys": 0,
+      "reach_weighted_severity": 1.657538476688577e-17,
+      "max_severity": 1.387778780781446e-16,
+      "reach_share_severity_gt_0_5": 0.0
+     }
+    },
+    "bucket": {
+     "abstract_infosets": 2988,
+     "seconds": 281.7,
+     "exploitability_in_raw_game_bb": 1.96979949457211,
+     "ev_p0_bb": 0.9344454268282951,
+     "ev_error_vs_raw_bb": 0.41484633155701156,
+     "weighted_l1_vs_raw": 0.41861375236594706,
+     "collisions": {
+      "abstract_keys_reached": 2988,
+      "merged_keys": 693,
+      "reach_weighted_severity": 0.07703374437258254,
+      "max_severity": 0.9993299112731521,
+      "reach_share_severity_gt_0_5": 0.08340696879574191
+     }
+    },
+    "compact": {
+     "abstract_infosets": 672,
+     "seconds": 272.7,
+     "exploitability_in_raw_game_bb": 3.5735647782108333,
+     "ev_p0_bb": 0.5085771419301288,
+     "ev_error_vs_raw_bb": 0.011021953341154744,
+     "weighted_l1_vs_raw": 0.5226644185485202,
+     "collisions": {
+      "abstract_keys_reached": 672,
+      "merged_keys": 552,
+      "reach_weighted_severity": 0.14972435799106248,
+      "max_severity": 1.1296436120056552,
+      "reach_share_severity_gt_0_5": 0.12822228811853498
+     }
+    },
+    "compact_river_pct20": {
+     "abstract_infosets": 951,
+     "seconds": 279.2,
+     "exploitability_in_raw_game_bb": 4.196802721536661,
+     "ev_p0_bb": 0.5368800936087551,
+     "ev_error_vs_raw_bb": 0.017280998337471543,
+     "weighted_l1_vs_raw": 0.40178179686143756,
+     "collisions": {
+      "abstract_keys_reached": 951,
+      "merged_keys": 711,
+      "reach_weighted_severity": 0.12639743447430082,
+      "max_severity": 0.9258946868599609,
+      "reach_share_severity_gt_0_5": 0.10170249538247599
+     }
+    }
+   }
+  }
+ ],
+ "seconds": 8560.2
+}

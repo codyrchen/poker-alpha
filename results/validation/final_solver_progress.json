@@ -1,0 +1,29 @@
+{
+ "format": "pokeralpha.final_solver_progress/v1",
+ "branch": "claude/live-observer",
+ "starting_head": "177236f",
+ "current_phase": 63,
+ "completed_phases": "ALL (1-63)",
+ "native_backend": "0.1.0",
+ "release": "results/strategy/holdem_v2_native_seed0_2m.npz (PROMOTED, SolverConfidence v2)",
+ "recommended_candidate": "results/strategy/candidates/native_1m/holdem_v2_native_seed0_1000k.npz",
+ "local_checkpoints": "results/native_training/seed{0,1,2}/ 10k..1M (gitignored, required)",
+ "known_problems": [
+  "release_status flop/turn claim stale (fix Phase 15)"
+ ],
+ "next_action": "none \u2014 project complete; see docs/solver_status_final.md",
+ "in_flight": {
+  "phase3": "native_direct_exact_validation.py (4/7 games done)",
+  "phase6": "confidence_calibration_dataset.py (3/9 games done)",
+  "phase8_11": "policy_value_disagreement runs (1m + 200k canonical done; btn169 running)",
+  "phase18": "lbr_validation.py running"
+ },
+ "key_findings_so_far": [
+  "v1 movement signal at 1M: 71% of keys over REJECT threshold; rho vs seed disagreement falls 0.19->0.10; recent/EWMA movement rho 0.26-0.32 with 0.2-2.5% over threshold",
+  "Phase 8 @1M canonical: 57/84 states high policy L1; only 7 have significant EV consequence (max cross-regret 14.8bb at BTN vs jam A5s; QQ/JJ/KK vs x350 2.4-3.9bb); 50 are near-equivalent policies",
+  "flop/turn abstraction fully measured (7 exact subgames each) - docs stale"
+ ],
+ "confidence_methodology": "v2 adopted (recent movement, SHA binding)",
+ "training_final": "2M x 3 seeds; 3M NO-GO",
+ "test_status": "823 fast + 11 slow passed; native 6/6; CI 5/5 green"
+}

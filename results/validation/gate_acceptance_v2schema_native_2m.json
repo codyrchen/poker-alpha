@@ -1,0 +1,127 @@
+{
+ "format": "pokeralpha.gate_acceptance/v1",
+ "table": "results/strategy/candidates/native_2m/holdem_v2_native_seed0_2000k_confidence_v2.npz",
+ "config_signature": "HoldemSolverConfig:v2:733e52f1d1014e2e7973",
+ "table_meta": {
+  "collision": "range of the 0..7 strength ladder among >= 5 corpus members, /7",
+  "corpus_hands": 20000,
+  "earlier": 1500000,
+  "final": 2000000,
+  "movement_from": 1500000,
+  "movement_mode": "recent",
+  "movement_to": 2000000,
+  "schema": 2,
+  "seeds": [
+   0,
+   1,
+   2
+  ],
+  "strategy_artifact": "holdem_v2_native_seed0_2000k.npz",
+  "strategy_sha256": "f1860de75526111f9cd321e8f7f19fa94620a9856a930e5511432e5c64362da2"
+ },
+ "thresholds": {
+  "reject_visits_below": 20.0,
+  "low_visits_below": 20.0,
+  "reject_seed_disagreement": 0.5,
+  "low_seed_disagreement": 0.2,
+  "reject_movement": 0.5,
+  "low_movement": 0.1,
+  "low_collision": 0.42857142857142855,
+  "source": "solver_gate_calibration.json"
+ },
+ "by_street": {
+  "preflop": {
+   "keys": 4322,
+   "share_keys": {
+    "SOLVER_ACCEPT": 0.2693,
+    "SOLVER_LOW_CONFIDENCE": 0.1511,
+    "SOLVER_REJECT": 0.5796
+   },
+   "share_visit_weighted": {
+    "SOLVER_ACCEPT": 0.34,
+    "SOLVER_LOW_CONFIDENCE": 0.1759,
+    "SOLVER_REJECT": 0.4841
+   },
+   "reason_counts": {
+    "HIGH_SEED_DISAGREEMENT": 3093,
+    "UNSTABLE_ACROSS_CHECKPOINTS": 1240,
+    "LOW_VISIT_COUNT": 120
+   }
+  },
+  "flop": {
+   "keys": 19259,
+   "share_keys": {
+    "SOLVER_ACCEPT": 0.2723,
+    "SOLVER_LOW_CONFIDENCE": 0.136,
+    "SOLVER_REJECT": 0.5917
+   },
+   "share_visit_weighted": {
+    "SOLVER_ACCEPT": 0.4888,
+    "SOLVER_LOW_CONFIDENCE": 0.2357,
+    "SOLVER_REJECT": 0.2756
+   },
+   "reason_counts": {
+    "HIGH_SEED_DISAGREEMENT": 13545,
+    "UNSTABLE_ACROSS_CHECKPOINTS": 5514,
+    "LOW_VISIT_COUNT": 1529
+   }
+  },
+  "turn": {
+   "keys": 33127,
+   "share_keys": {
+    "SOLVER_ACCEPT": 0.2838,
+    "SOLVER_LOW_CONFIDENCE": 0.1705,
+    "SOLVER_REJECT": 0.5457
+   },
+   "share_visit_weighted": {
+    "SOLVER_ACCEPT": 0.5275,
+    "SOLVER_LOW_CONFIDENCE": 0.2398,
+    "SOLVER_REJECT": 0.2327
+   },
+   "reason_counts": {
+    "HIGH_SEED_DISAGREEMENT": 22636,
+    "UNSTABLE_ACROSS_CHECKPOINTS": 10460,
+    "LOW_VISIT_COUNT": 2787,
+    "NO_STABILITY_DATA": 4
+   }
+  },
+  "river": {
+   "keys": 87317,
+   "share_keys": {
+    "SOLVER_ACCEPT": 0.2982,
+    "SOLVER_LOW_CONFIDENCE": 0.1874,
+    "SOLVER_REJECT": 0.5144
+   },
+   "share_visit_weighted": {
+    "SOLVER_ACCEPT": 0.5296,
+    "SOLVER_LOW_CONFIDENCE": 0.2521,
+    "SOLVER_REJECT": 0.2183
+   },
+   "reason_counts": {
+    "HIGH_SEED_DISAGREEMENT": 55406,
+    "UNSTABLE_ACROSS_CHECKPOINTS": 24324,
+    "LOW_VISIT_COUNT": 14171,
+    "NO_STABILITY_DATA": 105,
+    "HIGH_COLLISION_DISPERSION": 7
+   }
+  },
+  "all": {
+   "keys": 144025,
+   "share_keys": {
+    "SOLVER_ACCEPT": 0.2906,
+    "SOLVER_LOW_CONFIDENCE": 0.1755,
+    "SOLVER_REJECT": 0.5339
+   },
+   "share_visit_weighted": {
+    "SOLVER_ACCEPT": 0.516,
+    "SOLVER_LOW_CONFIDENCE": 0.2432,
+    "SOLVER_REJECT": 0.2407
+   }
+  },
+  "preflop_first_action_keys": {
+   "SOLVER_REJECT": 265,
+   "SOLVER_LOW_CONFIDENCE": 58,
+   "SOLVER_ACCEPT": 15
+  }
+ }
+}

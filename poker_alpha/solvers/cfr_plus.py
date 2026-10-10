@@ -40,7 +40,7 @@ from typing import Dict
 import numpy as np
 
 from ..games.base import Game, State
-from .cfr import CFRSolver
+from .cfr import CFRSolver, strategy_dot
 
 
 class CFRPlusSolver(CFRSolver):
@@ -85,7 +85,7 @@ class CFRPlusSolver(CFRSolver):
                 child_values[i] = self._cfr_plus(nxt, update_player, reach0,
                                                  reach1 * strategy[i],
                                                  reach_chance)
-        node_value = float(strategy @ child_values)
+        node_value = strategy_dot(strategy, child_values)
 
         if player == update_player:
             sign = 1.0 if player == 0 else -1.0

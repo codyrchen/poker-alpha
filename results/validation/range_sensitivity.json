@@ -1,0 +1,797 @@
+{
+ "format": "pokeralpha.range_sensitivity/v1",
+ "sims": 1500,
+ "seed": 5,
+ "note": "model-relative: no ground-truth opponent; regret = EV(best under variant) - EV(default recommendation under variant), rollout EVs with paired seeds",
+ "variants": {
+  "default (inferred, regular)": {},
+  "model nit": {
+   "model": "nit"
+  },
+  "model calling_station": {
+   "model": "calling_station"
+  },
+  "model maniac": {
+   "model": "maniac"
+  },
+  "range tight": {
+   "range": "99+,AJs+,KQs,AQo+"
+  },
+  "range wide": {
+   "range": "22+,A2s+,K2s+,Q5s+,J7s+,T7s+,97s+,86s+,75s+,65s,54s,A2o+,K8o+,Q9o+,J9o+,T9o"
+  }
+ },
+ "summary": {
+  "mean_flip_rate_over_variants": 0.4285714285714285,
+  "spots_with_any_flip": 6,
+  "max_regret_bb": 26.28,
+  "max_equity_spread": 0.6547499999999999
+ },
+ "spots": {
+  "BB facing 3x open, KJo": {
+   "state": "PREFLOP hero=BB [Kc Jd] board [-] pot 4.0bb to call 2.0bb",
+   "variants": {
+    "default (inferred, regular)": {
+     "equity": 0.50475,
+     "recommended": "raise_100",
+     "method": "Monte Carlo rollout",
+     "flip_vs_default": false,
+     "evs_bb": {
+      "fold": 0.0,
+      "call": 0.98,
+      "raise_75": 2.323,
+      "raise_100": 2.552,
+      "all_in": 1.91
+     },
+     "regret_of_default_rec_bb": 0.0,
+     "opponent_range_combos": [
+      470
+     ]
+    },
+    "model nit": {
+     "equity": 0.50475,
+     "recommended": "raise_100",
+     "method": "Monte Carlo rollout",
+     "flip_vs_default": false,
+     "evs_bb": {
+      "fold": 0.0,
+      "call": 0.98,
+      "raise_75": 3.233,
+      "raise_100": 3.304,
+      "all_in": 3.0206666666666666
+     },
+     "regret_of_default_rec_bb": 0.0,
+     "opponent_range_combos": [
+      470
+     ]
+    },
+    "model calling_station": {
+     "equity": 0.50475,
+     "recommended": "call",
+     "method": "Monte Carlo rollout",
+     "flip_vs_default": true,
+     "evs_bb": {
+      "fold": 0.0,
+      "call": 0.98,
+      "raise_75": 0.888,
+      "raise_100": 0.938,
+      "all_in": -0.7053333333333334
+     },
+     "regret_of_default_rec_bb": 0.04200000000000004,
+     "opponent_range_combos": [
+      470
+     ]
+    },
+    "model maniac": {
+     "equity": 0.50475,
+     "recommended": "call",
+     "method": "Monte Carlo rollout",
+     "flip_vs_default": true,
+     "evs_bb": {
+      "fold": 0.0,
+      "call": 0.98,
+      "raise_75": 0.532,
+      "raise_100": 0.364,
+      "all_in": -1.08
+     },
+     "regret_of_default_rec_bb": 0.616,
+     "opponent_range_combos": [
+      470
+     ]
+    },
+    "range tight": {
+     "equity": 0.30075,
+     "recommended": "fold",
+     "method": "Monte Carlo rollout",
+     "flip_vs_default": true,
+     "evs_bb": {
+      "fold": 0.0,
+      "call": -0.13,
+      "raise_75": -3.193,
+      "raise_100": -3.106,
+      "all_in": -11.946
+     },
+     "regret_of_default_rec_bb": 3.106,
+     "opponent_range_combos": [
+      64
+     ]
+    },
+    "range wide": {
+     "equity": 0.5075,
+     "recommended": "raise_100",
+     "method": "Monte Carlo rollout",
+     "flip_vs_default": false,
+     "evs_bb": {
+      "fold": 0.0,
+      "call": 0.988,
+      "raise_75": 2.128,
+      "raise_100": 2.338,
+      "all_in": 1.696
+     },
+     "regret_of_default_rec_bb": 0.0,
+     "opponent_range_combos": [
+      477
+     ]
+    }
+   },
+   "equity_spread": 0.20674999999999993,
+   "flip_rate": 0.5,
+   "max_regret_bb": 3.106
+  },
+  "BTN open decision, A5s": {
+   "state": "PREFLOP hero=BTN [As 5s] board [-] pot 1.5bb to call 0.5bb",
+   "variants": {
+    "default (inferred, regular)": {
+     "equity": 0.60125,
+     "recommended": "raise_100",
+     "method": "Monte Carlo rollout",
+     "flip_vs_default": false,
+     "evs_bb": {
+      "fold": 0.0,
+      "call": 0.7286666666666667,
+      "raise_75": 1.2646666666666666,
+      "raise_100": 1.302,
+      "all_in": 0.952
+     },
+     "regret_of_default_rec_bb": 0.0,
+     "opponent_range_combos": [
+      1225
+     ]
+    },
+    "model nit": {
+     "equity": 0.60125,
+     "recommended": "raise_100",
+     "method": "Monte Carlo rollout",
+     "flip_vs_default": false,
+     "evs_bb": {
+      "fold": 0.0,
+      "call": 0.7286666666666667,
+      "raise_75": 1.387,
+      "raise_100": 1.4213333333333333,
+      "all_in": 1.026
+     },
+     "regret_of_default_rec_bb": 0.0,
+     "opponent_range_combos": [
+      1225
+     ]
+    },
+    "model calling_station": {
+     "equity": 0.60125,
+     "recommended": "raise_100",
+     "method": "Monte Carlo rollout",
+     "flip_vs_default": false,
+     "evs_bb": {
+      "fold": 0.0,
+      "call": 0.7286666666666667,
+      "raise_75": 1.0663333333333334,
+      "raise_100": 1.156,
+      "all_in": -0.6373333333333333
+     },
+     "regret_of_default_rec_bb": 0.0,
+     "opponent_range_combos": [
+      1225
+     ]
+    },
+    "model maniac": {
+     "equity": 0.60125,
+     "recommended": "raise_75",
+     "method": "Monte Carlo rollout",
+     "flip_vs_default": true,
+     "evs_bb": {
+      "fold": 0.0,
+      "call": 0.7286666666666667,
+      "raise_75": 1.0496666666666667,
+      "raise_100": 1.0206666666666666,
+      "all_in": 0.6766666666666666
+     },
+     "regret_of_default_rec_bb": 0.029000000000000137,
+     "opponent_range_combos": [
+      1225
+     ]
+    },
+    "range tight": {
+     "equity": 0.322875,
+     "recommended": "call",
+     "method": "Monte Carlo rollout",
+     "flip_vs_default": true,
+     "evs_bb": {
+      "fold": 0.0,
+      "call": 0.15866666666666668,
+      "raise_75": -0.6366666666666667,
+      "raise_100": -0.5066666666666667,
+      "all_in": -8.210666666666667
+     },
+     "regret_of_default_rec_bb": 0.6653333333333333,
+     "opponent_range_combos": [
+      64
+     ]
+    },
+    "range wide": {
+     "equity": 0.50325,
+     "recommended": "raise_100",
+     "method": "Monte Carlo rollout",
+     "flip_vs_default": false,
+     "evs_bb": {
+      "fold": 0.0,
+      "call": 0.5046666666666667,
+      "raise_75": 0.8916666666666667,
+      "raise_100": 0.996,
+      "all_in": 0.4646666666666667
+     },
+     "regret_of_default_rec_bb": 0.0,
+     "opponent_range_combos": [
+      472
+     ]
+    }
+   },
+   "equity_spread": 0.27837499999999993,
+   "flip_rate": 0.3333333333333333,
+   "max_regret_bb": 0.6653333333333333
+  },
+  "flop c-bet decision, top pair weak kicker": {
+   "state": "FLOP hero=BTN [Qs 6s] board [Qh 8c 3d] pot 5.0bb to call 0.0bb",
+   "variants": {
+    "default (inferred, regular)": {
+     "equity": 0.748625,
+     "recommended": "bet_75",
+     "method": "Monte Carlo rollout",
+     "flip_vs_default": false,
+     "evs_bb": {
+      "check": 3.7183333333333333,
+      "bet_33": 4.431866666666631,
+      "bet_75": 4.718333333333334,
+      "bet_100": 4.615,
+      "all_in": 0.5316666666666666
+     },
+     "regret_of_default_rec_bb": 0.0,
+     "opponent_range_combos": [
+      484
+     ]
+    },
+    "model nit": {
+     "equity": 0.748625,
+     "recommended": "bet_33",
+     "method": "Monte Carlo rollout",
+     "flip_vs_default": true,
+     "evs_bb": {
+      "check": 3.7183333333333333,
+      "bet_33": 4.282033333333312,
+      "bet_75": 4.154166666666667,
+      "bet_100": 4.015,
+      "all_in": 2.2933333333333334
+     },
+     "regret_of_default_rec_bb": 0.12786666666664548,
+     "opponent_range_combos": [
+      484
+     ]
+    },
+    "model calling_station": {
+     "equity": 0.748625,
+     "recommended": "all_in",
+     "method": "Monte Carlo rollout",
+     "flip_vs_default": true,
+     "evs_bb": {
+      "check": 3.7183333333333333,
+      "bet_33": 4.381666666666623,
+      "bet_75": 5.0616666666666665,
+      "bet_100": 5.398333333333333,
+      "all_in": 16.10333333333333
+     },
+     "regret_of_default_rec_bb": 11.041666666666664,
+     "opponent_range_combos": [
+      484
+     ]
+    },
+    "model maniac": {
+     "equity": 0.748625,
+     "recommended": "all_in",
+     "method": "Monte Carlo rollout",
+     "flip_vs_default": true,
+     "evs_bb": {
+      "check": 3.7183333333333333,
+      "bet_33": 5.21116666666661,
+      "bet_75": 6.506666666666667,
+      "bet_100": 7.171666666666667,
+      "all_in": 16.576666666666668
+     },
+     "regret_of_default_rec_bb": 10.07,
+     "opponent_range_combos": [
+      484
+     ]
+    },
+    "range tight": {
+     "equity": 0.565625,
+     "recommended": "bet_33",
+     "method": "Monte Carlo rollout",
+     "flip_vs_default": true,
+     "evs_bb": {
+      "check": 2.85,
+      "bet_33": 2.879700000000013,
+      "bet_75": 2.7466666666666666,
+      "bet_100": 2.6033333333333335,
+      "all_in": -6.708333333333333
+     },
+     "regret_of_default_rec_bb": 0.13303333333334644,
+     "opponent_range_combos": [
+      61
+     ]
+    },
+    "range wide": {
+     "equity": 0.74375,
+     "recommended": "bet_75",
+     "method": "Monte Carlo rollout",
+     "flip_vs_default": false,
+     "evs_bb": {
+      "check": 3.7183333333333333,
+      "bet_33": 4.475799999999963,
+      "bet_75": 4.7275,
+      "bet_100": 4.575,
+      "all_in": 0.6133333333333333
+     },
+     "regret_of_default_rec_bb": 0.0,
+     "opponent_range_combos": [
+      445
+     ]
+    }
+   },
+   "equity_spread": 0.18299999999999994,
+   "flip_rate": 0.6666666666666666,
+   "max_regret_bb": 11.041666666666664
+  },
+  "flop facing bet, flush draw": {
+   "state": "FLOP hero=BB [Ah 4h] board [Kh 9h 2c] pot 8.5bb to call 3.5bb",
+   "variants": {
+    "default (inferred, regular)": {
+     "equity": 0.4625,
+     "recommended": "call",
+     "method": "Monte Carlo rollout",
+     "flip_vs_default": false,
+     "evs_bb": {
+      "fold": 0.0,
+      "call": 2.12,
+      "raise_75": -0.9313333333333333,
+      "raise_100": -1.3186666666666667,
+      "all_in": -1.8986666666666667
+     },
+     "regret_of_default_rec_bb": 0.0,
+     "opponent_range_combos": [
+      406
+     ]
+    },
+    "model nit": {
+     "equity": 0.43875,
+     "recommended": "call",
+     "method": "Monte Carlo rollout",
+     "flip_vs_default": false,
+     "evs_bb": {
+      "fold": 0.0,
+      "call": 1.836,
+      "raise_75": -0.8,
+      "raise_100": -0.8866666666666667,
+      "all_in": 0.988
+     },
+     "regret_of_default_rec_bb": 0.0,
+     "opponent_range_combos": [
+      406
+     ]
+    },
+    "model calling_station": {
+     "equity": 0.428375,
+     "recommended": "call",
+     "method": "Monte Carlo rollout",
+     "flip_vs_default": false,
+     "evs_bb": {
+      "fold": 0.0,
+      "call": 1.76,
+      "raise_75": -1.7373333333333334,
+      "raise_100": -2.4833333333333334,
+      "all_in": -10.846666666666666
+     },
+     "regret_of_default_rec_bb": 0.0,
+     "opponent_range_combos": [
+      406
+     ]
+    },
+    "model maniac": {
+     "equity": 0.52775,
+     "recommended": "call",
+     "method": "Monte Carlo rollout",
+     "flip_vs_default": false,
+     "evs_bb": {
+      "fold": 0.0,
+      "call": 2.94,
+      "raise_75": 1.334,
+      "raise_100": 0.8966666666666666,
+      "all_in": 0.7573333333333333
+     },
+     "regret_of_default_rec_bb": 0.0,
+     "opponent_range_combos": [
+      406
+     ]
+    },
+    "range tight": {
+     "equity": 0.4145,
+     "recommended": "call",
+     "method": "Monte Carlo rollout",
+     "flip_vs_default": false,
+     "evs_bb": {
+      "fold": 0.0,
+      "call": 1.56,
+      "raise_75": -2.574,
+      "raise_100": -3.438,
+      "all_in": -6.566666666666666
+     },
+     "regret_of_default_rec_bb": 0.0,
+     "opponent_range_combos": [
+      54
+     ]
+    },
+    "range wide": {
+     "equity": 0.549375,
+     "recommended": "call",
+     "method": "Monte Carlo rollout",
+     "flip_vs_default": false,
+     "evs_bb": {
+      "fold": 0.0,
+      "call": 3.076,
+      "raise_75": 2.5953333333333335,
+      "raise_100": 2.5533333333333332,
+      "all_in": 2.8986666666666667
+     },
+     "regret_of_default_rec_bb": 0.0,
+     "opponent_range_combos": [
+      414
+     ]
+    }
+   },
+   "equity_spread": 0.13487499999999997,
+   "flip_rate": 0.0,
+   "max_regret_bb": 0.0
+  },
+  "turn facing bet, middle pair": {
+   "state": "TURN hero=BB [9c 8c] board [Kd 9s 4h 2c] pot 17.5bb to call 6.5bb",
+   "variants": {
+    "default (inferred, regular)": {
+     "equity": 0.295,
+     "recommended": "call",
+     "method": "Monte Carlo rollout",
+     "flip_vs_default": false,
+     "evs_bb": {
+      "fold": 0.0,
+      "call": 1.348,
+      "raise_75": -20.059333333333335,
+      "raise_100": -24.971333333333334,
+      "all_in": -28.166666666666668
+     },
+     "regret_of_default_rec_bb": 0.0,
+     "opponent_range_combos": [
+      414
+     ]
+    },
+    "model nit": {
+     "equity": 0.17725,
+     "recommended": "fold",
+     "method": "Monte Carlo rollout",
+     "flip_vs_default": true,
+     "evs_bb": {
+      "fold": 0.0,
+      "call": -1.852,
+      "raise_75": -24.465333333333334,
+      "raise_100": -27.29,
+      "all_in": -11.017333333333333
+     },
+     "regret_of_default_rec_bb": 1.852,
+     "opponent_range_combos": [
+      414
+     ]
+    },
+    "model calling_station": {
+     "equity": 0.1345,
+     "recommended": "fold",
+     "method": "Monte Carlo rollout",
+     "flip_vs_default": true,
+     "evs_bb": {
+      "fold": 0.0,
+      "call": -3.068,
+      "raise_75": -27.549333333333333,
+      "raise_100": -32.29933333333334,
+      "all_in": -65.628
+     },
+     "regret_of_default_rec_bb": 3.068,
+     "opponent_range_combos": [
+      414
+     ]
+    },
+    "model maniac": {
+     "equity": 0.541,
+     "recommended": "call",
+     "method": "Monte Carlo rollout",
+     "flip_vs_default": false,
+     "evs_bb": {
+      "fold": 0.0,
+      "call": 7.38,
+      "raise_75": 4.602666666666667,
+      "raise_100": 2.216666666666667,
+      "all_in": -2.74
+     },
+     "regret_of_default_rec_bb": 0.0,
+     "opponent_range_combos": [
+      414
+     ]
+    },
+    "range tight": {
+     "equity": 0.34525,
+     "recommended": "call",
+     "method": "Monte Carlo rollout",
+     "flip_vs_default": false,
+     "evs_bb": {
+      "fold": 0.0,
+      "call": 1.9,
+      "raise_75": -21.432666666666666,
+      "raise_100": -27.482,
+      "all_in": -29.822666666666667
+     },
+     "regret_of_default_rec_bb": 0.0,
+     "opponent_range_combos": [
+      63
+     ]
+    },
+    "range wide": {
+     "equity": 0.59975,
+     "recommended": "call",
+     "method": "Monte Carlo rollout",
+     "flip_vs_default": false,
+     "evs_bb": {
+      "fold": 0.0,
+      "call": 8.068,
+      "raise_75": 0.8686666666666667,
+      "raise_100": -1.5173333333333334,
+      "all_in": -4.870666666666667
+     },
+     "regret_of_default_rec_bb": 0.0,
+     "opponent_range_combos": [
+      422
+     ]
+    }
+   },
+   "equity_spread": 0.46525,
+   "flip_rate": 0.3333333333333333,
+   "max_regret_bb": 3.068
+  },
+  "river facing pot bet, bluff-catcher": {
+   "state": "RIVER hero=BB [Jc Jd] board [Ks 8s 4d 3c 2h] pot 48.0bb to call 24.0bb",
+   "variants": {
+    "default (inferred, regular)": {
+     "equity": 0.25325,
+     "recommended": "fold",
+     "method": "Monte Carlo rollout",
+     "flip_vs_default": false,
+     "evs_bb": {
+      "fold": 0.0,
+      "call": -7.176,
+      "raise_75": -39.31066666666667,
+      "all_in": -42.461333333333336
+     },
+     "regret_of_default_rec_bb": 0.0,
+     "opponent_range_combos": [
+      409
+     ]
+    },
+    "model nit": {
+     "equity": 0.088375,
+     "recommended": "fold",
+     "method": "Monte Carlo rollout",
+     "flip_vs_default": false,
+     "evs_bb": {
+      "fold": 0.0,
+      "call": -18.936,
+      "raise_75": -61.67733333333333,
+      "all_in": -61.49066666666667
+     },
+     "regret_of_default_rec_bb": 0.0,
+     "opponent_range_combos": [
+      409
+     ]
+    },
+    "model calling_station": {
+     "equity": 0.04425,
+     "recommended": "fold",
+     "method": "Monte Carlo rollout",
+     "flip_vs_default": false,
+     "evs_bb": {
+      "fold": 0.0,
+      "call": -21.0,
+      "raise_75": -72.90933333333334,
+      "all_in": -79.70933333333333
+     },
+     "regret_of_default_rec_bb": 0.0,
+     "opponent_range_combos": [
+      409
+     ]
+    },
+    "model maniac": {
+     "equity": 0.54775,
+     "recommended": "call",
+     "method": "Monte Carlo rollout",
+     "flip_vs_default": true,
+     "evs_bb": {
+      "fold": 0.0,
+      "call": 15.216,
+      "raise_75": 12.942666666666666,
+      "all_in": 13.130666666666666
+     },
+     "regret_of_default_rec_bb": 15.216,
+     "opponent_range_combos": [
+      409
+     ]
+    },
+    "range tight": {
+     "equity": 0.514375,
+     "recommended": "call",
+     "method": "Monte Carlo rollout",
+     "flip_vs_default": true,
+     "evs_bb": {
+      "fold": 0.0,
+      "call": 12.144,
+      "raise_75": -2.973333333333333,
+      "all_in": -4.058666666666666
+     },
+     "regret_of_default_rec_bb": 12.144,
+     "opponent_range_combos": [
+      61
+     ]
+    },
+    "range wide": {
+     "equity": 0.699,
+     "recommended": "call",
+     "method": "Monte Carlo rollout",
+     "flip_vs_default": true,
+     "evs_bb": {
+      "fold": 0.0,
+      "call": 26.28,
+      "raise_75": 19.473333333333333,
+      "all_in": 18.450666666666667
+     },
+     "regret_of_default_rec_bb": 26.28,
+     "opponent_range_combos": [
+      413
+     ]
+    }
+   },
+   "equity_spread": 0.6547499999999999,
+   "flip_rate": 0.5,
+   "max_regret_bb": 26.28
+  },
+  "river first to act, two pair": {
+   "state": "RIVER hero=BB [Ad 8d] board [Ac 8h 5s Tc 2d] pot 20.0bb to call 0.0bb",
+   "variants": {
+    "default (inferred, regular)": {
+     "equity": 0.9965,
+     "recommended": "bet_33",
+     "method": "Monte Carlo rollout",
+     "flip_vs_default": false,
+     "evs_bb": {
+      "check": 21.22640000000006,
+      "bet_33": 22.057999999999865,
+      "bet_75": 21.27,
+      "bet_100": 21.186666666666667,
+      "all_in": 20.06
+     },
+     "regret_of_default_rec_bb": 0.0,
+     "opponent_range_combos": [
+      358
+     ]
+    },
+    "model nit": {
+     "equity": 0.9895,
+     "recommended": "bet_33",
+     "method": "Monte Carlo rollout",
+     "flip_vs_default": false,
+     "evs_bb": {
+      "check": 20.12880000000002,
+      "bet_33": 20.348799999999944,
+      "bet_75": 19.66,
+      "bet_100": 19.453333333333333,
+      "all_in": 18.68
+     },
+     "regret_of_default_rec_bb": 0.0,
+     "opponent_range_combos": [
+      358
+     ]
+    },
+    "model calling_station": {
+     "equity": 0.9865,
+     "recommended": "bet_75",
+     "method": "Monte Carlo rollout",
+     "flip_vs_default": true,
+     "evs_bb": {
+      "check": 20.05360000000002,
+      "bet_33": 25.562399999999354,
+      "bet_75": 28.78,
+      "bet_100": 28.72,
+      "all_in": 26.3
+     },
+     "regret_of_default_rec_bb": 3.2176000000006475,
+     "opponent_range_combos": [
+      358
+     ]
+    },
+    "model maniac": {
+     "equity": 0.99975,
+     "recommended": "bet_100",
+     "method": "Monte Carlo rollout",
+     "flip_vs_default": true,
+     "evs_bb": {
+      "check": 25.363466666666675,
+      "bet_33": 26.696666666666506,
+      "bet_75": 28.886666666666667,
+      "bet_100": 29.746666666666666,
+      "all_in": 24.546666666666667
+     },
+     "regret_of_default_rec_bb": 3.0500000000001606,
+     "opponent_range_combos": [
+      358
+     ]
+    },
+    "range tight": {
+     "equity": 0.92525,
+     "recommended": "all_in",
+     "method": "Monte Carlo rollout",
+     "flip_vs_default": true,
+     "evs_bb": {
+      "check": 26.96559999999991,
+      "bet_33": 27.80159999999969,
+      "bet_75": 35.76,
+      "bet_100": 38.96,
+      "all_in": 46.026666666666664
+     },
+     "regret_of_default_rec_bb": 18.225066666666972,
+     "opponent_range_combos": [
+      50
+     ]
+    },
+    "range wide": {
+     "equity": 0.948625,
+     "recommended": "all_in",
+     "method": "Monte Carlo rollout",
+     "flip_vs_default": true,
+     "evs_bb": {
+      "check": 24.874400000000048,
+      "bet_33": 25.987599999999645,
+      "bet_75": 30.23,
+      "bet_100": 32.32,
+      "all_in": 33.27333333333333
+     },
+     "regret_of_default_rec_bb": 7.285733333333688,
+     "opponent_range_combos": [
+      365
+     ]
+    }
+   },
+   "equity_spread": 0.07450000000000001,
+   "flip_rate": 0.6666666666666666,
+   "max_regret_bb": 18.225066666666972
+  }
+ },
+ "seconds": 22.8
+}

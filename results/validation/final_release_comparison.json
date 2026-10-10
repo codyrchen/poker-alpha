@@ -1,0 +1,125 @@
+{
+ "format": "pokeralpha.final_release_comparison/v1",
+ "candidates": {
+  "release_200k_v1table": {
+   "artifact": "results/strategy/holdem_v2_seed0_200k.npz (now PREVIOUS_RELEASE 'v2@200k')",
+   "backend": "python",
+   "iterations": 200000,
+   "infosets": 130497,
+   "confidence": "schema 1 (movement 10k->200k)",
+   "gate_visit_weighted": {
+    "preflop": {
+     "SOLVER_ACCEPT": 0.0888,
+     "SOLVER_LOW_CONFIDENCE": 0.1272,
+     "SOLVER_REJECT": 0.784
+    },
+    "flop": {
+     "SOLVER_ACCEPT": 0.163,
+     "SOLVER_LOW_CONFIDENCE": 0.1457,
+     "SOLVER_REJECT": 0.6913
+    },
+    "turn": {
+     "SOLVER_ACCEPT": 0.1856,
+     "SOLVER_LOW_CONFIDENCE": 0.1444,
+     "SOLVER_REJECT": 0.6699
+    },
+    "river": {
+     "SOLVER_ACCEPT": 0.1921,
+     "SOLVER_LOW_CONFIDENCE": 0.151,
+     "SOLVER_REJECT": 0.6569
+    }
+   }
+  },
+  "native_2m_v2table": {
+   "artifact": "results/strategy/holdem_v2_native_seed0_2m.npz (NEW RELEASE)",
+   "sha256": "f1860de75526111f9cd321e8f7f19fa94620a9856a930e5511432e5c64362da2",
+   "confidence_sha256": "ef5c32238f173d6ec3dcdd8c68c8cae6f406ea863bcee3797e2102764945b422",
+   "backend": "native",
+   "iterations": 2000000,
+   "infosets": 147613,
+   "confidence": "schema 2 (recent movement 1.5M->2M, SHA-bound, seeds 0-2)",
+   "gate_visit_weighted": {
+    "preflop": {
+     "SOLVER_ACCEPT": 0.34,
+     "SOLVER_LOW_CONFIDENCE": 0.1759,
+     "SOLVER_REJECT": 0.4841
+    },
+    "flop": {
+     "SOLVER_ACCEPT": 0.4888,
+     "SOLVER_LOW_CONFIDENCE": 0.2357,
+     "SOLVER_REJECT": 0.2756
+    },
+    "turn": {
+     "SOLVER_ACCEPT": 0.5275,
+     "SOLVER_LOW_CONFIDENCE": 0.2398,
+     "SOLVER_REJECT": 0.2327
+    },
+    "river": {
+     "SOLVER_ACCEPT": 0.5296,
+     "SOLVER_LOW_CONFIDENCE": 0.2521,
+     "SOLVER_REJECT": 0.2183
+    }
+   }
+  }
+ },
+ "evidence": {
+  "exact_validation": "native MCCFR matches Python on all 7 exact games (ratio 1.04 median) and converges ~0; direct, not transitive",
+  "crossplay": "2M beats 200k release +50..+117 bb/100 (CIs exclude 0); 2M seeds pairwise within \u00b15; 2M vs 1M +12..+28 (mostly within noise)",
+  "seed_disagreement_median": {
+   "200k": 0.617,
+   "300k": 0.595,
+   "1M": 0.523,
+   "2M": 0.466
+  },
+  "canonical_ev_uncertainty": {
+   "median_cross_regret_bb": {
+    "200k": 1.909,
+    "1M": 1.088,
+    "2M": 0.797
+   },
+   "significant_states": {
+    "200k": 24,
+    "1M": 8,
+    "2M": 5
+   }
+  },
+  "lbr_lower_bound_bb_per_100": {
+   "200k": 123,
+   "300k": 127,
+   "1M": 103,
+   "note": "\u00b119-25 SE; not separable; an abstraction floor shared by all candidates"
+  },
+  "accepted_state_risk_heldout": {
+   "v1_rule": {
+    "coverage": 0.098,
+    "ev_regret_bb": 0.119,
+    "wrong_rate": 0.033
+   },
+   "v2_rule": {
+    "coverage": 0.165,
+    "ev_regret_bb": 0.123,
+    "wrong_rate": 0.03
+   },
+   "v2_mature_slice": {
+    "ev_regret_bb": 0.067,
+    "wrong_rate": 0.016
+   }
+  },
+  "sanity": "premiums call jams ~100%, 72o folds 99%, AA 4-bets 94%+; no negative off-policy results; 14/14 postflop canonical spots visited",
+  "artifact_integrity": "content SHA-256 verified; confidence table SHA-bound to the artifact and iteration-checked; mismatch tests green",
+  "load": "load_solver() on the new release passes; golden e2e unchanged"
+ },
+ "promotion_criteria_phase45": {
+  "1_signatures_match": true,
+  "2_native_correctness_green": true,
+  "3_three_comparable_seeds": true,
+  "4_matching_confidence_table": true,
+  "5_methodology_validated": true,
+  "6_accepted_risk_no_worse": "equal within 3% on held-out dataset; wrong-rate better; mature slice clearly better",
+  "7_no_sanity_regression": true,
+  "8_load_gate_tests_pass": true,
+  "9_ci_green": "verified post-push"
+ },
+ "decision": "PROMOTED: native 2M seed 0 + SolverConfidence v2 table. Status remains EXPERIMENTAL: imperfect-recall abstraction, restricted-LBR floor >= ~100 bb/100, not an equilibrium, not GTO.",
+ "previous_release_preserved": "results/strategy/holdem_v2_seed0_200k.npz + v1 table, PREVIOUS_RELEASE_STRATEGIES['v2@200k']"
+}

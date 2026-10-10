@@ -1,0 +1,106 @@
+         260497049 function calls (259039507 primitive calls) in 107.912 seconds
+
+   Ordered by: cumulative time
+   List reduced from 106 to 45 due to restriction <45>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+     2000    0.003    0.000  109.058    0.055 /Users/codychen/Projects/poker-alpha/poker_alpha/solvers/mccfr.py:91(iterate)
+1461542/4000    2.627    0.000  109.050    0.027 /Users/codychen/Projects/poker-alpha/poker_alpha/solvers/mccfr.py:57(_traverse)
+   686088    0.155    0.000   89.445    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/games/holdem.py:363(infoset_key)
+   686088    0.566    0.000   89.290    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/abstraction/holdem_v2.py:142(encode)
+   686088    0.757    0.000   85.119    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/abstraction/holdem_v2.py:125(card_part)
+   270805    1.026    0.000   64.204    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/abstraction/features.py:265(river_percentile)
+    53813   16.711    0.000   62.256    0.001 /Users/codychen/Projects/poker-alpha/poker_alpha/abstraction/features.py:229(_river_values)
+ 18913277   38.721    0.000   44.467    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/poker/evaluator.py:161(evaluate_best_codes)
+   686088    0.629    0.000   19.940    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/abstraction/features.py:223(card_features)
+   218242    0.477    0.000   19.103    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/abstraction/features.py:203(_features)
+    20089    1.404    0.000   11.392    0.001 /Users/codychen/Projects/poker-alpha/poker_alpha/abstraction/features.py:161(_is_current_nuts)
+  2342678    7.513    0.000    7.829    0.000 {built-in method builtins.sorted}
+ 56891380    5.391    0.000    5.391    0.000 {method 'get' of 'dict' objects}
+ 62857032    3.971    0.000    3.971    0.000 {method 'append' of 'list' objects}
+   267641    1.391    0.000    3.534    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/games/holdem.py:235(sample_chance)
+   507813    0.285    0.000    3.450    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/games/holdem.py:346(utility)
+   686088    0.305    0.000    3.273    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/abstraction/holdem_v2.py:43(_history)
+ 18445422    3.204    0.000    3.255    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/poker/evaluator.py:132(_straight_high_from_mask)
+   481480    0.292    0.000    3.165    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/poker/evaluator.py:148(evaluate_best)
+   218242    0.759    0.000    2.837    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/abstraction/cards.py:157(board_texture)
+   125263    0.995    0.000    2.591    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/abstraction/betting_history.py:63(betting_context)
+  1189901    1.379    0.000    2.587    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/games/holdem.py:402(next_state)
+   439149    0.738    0.000    1.954    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/solvers/mccfr.py:48(_sample)
+   218242    0.464    0.000    1.862    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/abstraction/features.py:93(made_hand_class)
+   699722    1.063    0.000    1.860    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/poker/cards.py:44(codes)
+   686088    0.154    0.000    1.845    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/solvers/cfr.py:67(current_strategy)
+  2812603    0.531    0.000    1.783    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/games/holdem.py:264(_replay)
+   104410    0.246    0.000    1.783    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/abstraction/cards.py:258(draw_type)
+   686088    0.895    0.000    1.691    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/solvers/cfr.py:30(regret_matching)
+  1497439    0.289    0.000    1.668    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/games/holdem.py:359(current_player)
+  3676654    0.436    0.000    1.357    0.000 {built-in method builtins.next}
+ 26515748    1.357    0.000    1.357    0.000 {built-in method builtins.len}
+  1600272    0.513    0.000    1.282    0.000 {built-in method builtins.max}
+  7258414    1.278    0.000    1.278    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/poker/evaluator.py:227(<genexpr>)
+   811351    0.272    0.000    1.197    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/games/holdem.py:366(legal_actions)
+   104410    0.526    0.000    1.147    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/abstraction/cards.py:245(straight_completing_ranks)
+  1003561    0.311    0.000    1.022    0.000 /Users/codychen/Projects/poker-alpha/.venv/lib/python3.12/site-packages/numpy/_core/fromnumeric.py:48(_wrapfunc)
+   267641    0.449    0.000    0.835    0.000 /Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/dataclasses.py:1540(replace)
+  2400662    0.585    0.000    0.681    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/abstraction/cards.py:192(<genexpr>)
+   267641    0.134    0.000    0.675    0.000 /Users/codychen/Projects/poker-alpha/.venv/lib/python3.12/site-packages/numpy/_core/fromnumeric.py:3325(prod)
+   125263    0.185    0.000    0.667    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/games/holdem.py:375(_legal_uncached)
+   439149    0.133    0.000    0.654    0.000 /Users/codychen/Projects/poker-alpha/.venv/lib/python3.12/site-packages/numpy/_core/fromnumeric.py:2876(cumsum)
+   564412    0.148    0.000    0.649    0.000 /Users/codychen/Projects/poker-alpha/.venv/lib/python3.12/site-packages/numpy/_core/fromnumeric.py:1459(searchsorted)
+   125263    0.484    0.000    0.623    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/games/holdem.py:274(_replay_uncached)
+  1492391    0.619    0.000    0.619    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/abstraction/cards.py:237(_has_straight)
+
+
+         260497049 function calls (259039507 primitive calls) in 107.912 seconds
+
+   Ordered by: internal time
+   List reduced from 106 to 45 due to restriction <45>
+
+   ncalls  tottime  percall  cumtime  percall filename:lineno(function)
+ 18913277   38.721    0.000   44.467    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/poker/evaluator.py:161(evaluate_best_codes)
+    53813   16.711    0.000   62.256    0.001 /Users/codychen/Projects/poker-alpha/poker_alpha/abstraction/features.py:229(_river_values)
+  2342678    7.513    0.000    7.829    0.000 {built-in method builtins.sorted}
+ 56891380    5.391    0.000    5.391    0.000 {method 'get' of 'dict' objects}
+ 62857032    3.971    0.000    3.971    0.000 {method 'append' of 'list' objects}
+ 18445422    3.204    0.000    3.255    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/poker/evaluator.py:132(_straight_high_from_mask)
+1461542/4000    2.627    0.000  109.050    0.027 /Users/codychen/Projects/poker-alpha/poker_alpha/solvers/mccfr.py:57(_traverse)
+    20089    1.404    0.000   11.392    0.001 /Users/codychen/Projects/poker-alpha/poker_alpha/abstraction/features.py:161(_is_current_nuts)
+   267641    1.391    0.000    3.534    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/games/holdem.py:235(sample_chance)
+  1189901    1.379    0.000    2.587    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/games/holdem.py:402(next_state)
+ 26515748    1.357    0.000    1.357    0.000 {built-in method builtins.len}
+  7258414    1.278    0.000    1.278    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/poker/evaluator.py:227(<genexpr>)
+   699722    1.063    0.000    1.860    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/poker/cards.py:44(codes)
+   270805    1.026    0.000   64.204    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/abstraction/features.py:265(river_percentile)
+   125263    0.995    0.000    2.591    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/abstraction/betting_history.py:63(betting_context)
+   686088    0.895    0.000    1.691    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/solvers/cfr.py:30(regret_matching)
+   218242    0.759    0.000    2.837    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/abstraction/cards.py:157(board_texture)
+   686088    0.757    0.000   85.119    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/abstraction/holdem_v2.py:125(card_part)
+   439149    0.738    0.000    1.954    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/solvers/mccfr.py:48(_sample)
+   686088    0.629    0.000   19.940    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/abstraction/features.py:223(card_features)
+  1492391    0.619    0.000    0.619    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/abstraction/cards.py:237(_has_straight)
+  2400662    0.585    0.000    0.681    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/abstraction/cards.py:192(<genexpr>)
+   686088    0.566    0.000   89.290    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/abstraction/holdem_v2.py:142(encode)
+  2812603    0.531    0.000    1.783    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/games/holdem.py:264(_replay)
+   104410    0.526    0.000    1.147    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/abstraction/cards.py:245(straight_completing_ranks)
+  1600272    0.513    0.000    1.282    0.000 {built-in method builtins.max}
+   125263    0.484    0.000    0.623    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/games/holdem.py:274(_replay_uncached)
+   218242    0.477    0.000   19.103    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/abstraction/features.py:203(_features)
+  8634020    0.469    0.000    0.469    0.000 {built-in method builtins.isinstance}
+   218242    0.464    0.000    1.862    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/abstraction/features.py:93(made_hand_class)
+   267641    0.449    0.000    0.835    0.000 /Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/dataclasses.py:1540(replace)
+   953729    0.438    0.000    0.438    0.000 {method 'reduce' of 'numpy.ufunc' objects}
+  3676654    0.436    0.000    1.357    0.000 {built-in method builtins.next}
+   430496    0.400    0.000    0.551    0.000 /Users/codychen/Projects/poker-alpha/.venv/lib/python3.12/site-packages/numpy/_core/numeric.py:323(full)
+  1461274    0.384    0.000    0.446    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/games/holdem.py:318(_betting_closed)
+   439149    0.328    0.000    0.328    0.000 {method 'cumsum' of 'numpy.ndarray' objects}
+  2613407    0.320    0.000    0.320    0.000 {built-in method builtins.getattr}
+  1003561    0.311    0.000    1.022    0.000 /Users/codychen/Projects/poker-alpha/.venv/lib/python3.12/site-packages/numpy/_core/fromnumeric.py:48(_wrapfunc)
+  1461542    0.307    0.000    0.532    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/games/holdem.py:339(is_terminal)
+   686088    0.305    0.000    3.273    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/abstraction/holdem_v2.py:43(_history)
+   481480    0.292    0.000    3.165    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/poker/evaluator.py:148(evaluate_best)
+  1497439    0.289    0.000    1.668    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/games/holdem.py:359(current_player)
+   507813    0.285    0.000    3.450    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/games/holdem.py:346(utility)
+    63862    0.282    0.000    0.385    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/games/holdem.py:184(_min_increment)
+   811351    0.272    0.000    1.197    0.000 /Users/codychen/Projects/poker-alpha/poker_alpha/games/holdem.py:366(legal_actions)
+
+

@@ -1,0 +1,135 @@
+{
+ "format": "pokeralpha.training_decision/v1",
+ "config_signature": "HoldemSolverConfig:v2:733e52f1d1014e2e7973",
+ "runs": {
+  "seed0": "100k -> 150k -> 200k -> 250k -> 300k",
+  "seed1": "100k -> 150k -> 200k",
+  "seed2": "100k -> 150k -> 200k"
+ },
+ "evidence": {
+  "crossplay_bb_per_100_ci95": {
+   "200k vs 100k, same seed": [
+    68.9,
+    [
+     60.0,
+     77.7
+    ]
+   ],
+   "200k vs 100k, other seed": [
+    66.3,
+    [
+     57.2,
+     75.5
+    ]
+   ],
+   "300k vs 200k, same seed": [
+    33.0,
+    [
+     25.3,
+     40.8
+    ]
+   ],
+   "300k vs 200k, other seeds": [
+    [
+     20.4,
+     [
+      12.3,
+      28.4
+     ]
+    ],
+    [
+     37.1,
+     [
+      29.0,
+      45.1
+     ]
+    ]
+   ],
+   "seeds vs seeds at 200k": [
+    [
+     5.8,
+     [
+      -2.6,
+      14.2
+     ]
+    ],
+    [
+     -3.4,
+     [
+      -11.9,
+      5.1
+     ]
+    ],
+    [
+     7.2,
+     [
+      -1.2,
+      15.6
+     ]
+    ]
+   ]
+  },
+  "seed_disagreement_matrix_mean_l1": {
+   "100k": [
+    0.871,
+    0.874,
+    0.87
+   ],
+   "150k": [
+    0.831,
+    0.858,
+    0.848
+   ],
+   "200k": [
+    0.811,
+    0.825,
+    0.827
+   ]
+  },
+  "sanity_checks_at_200k": "10/10 per seed",
+  "btn_first_in_jam_frequency_visit_weighted": {
+   "seed0@200k": 0.052,
+   "seed1@200k": 0.079,
+   "seed2@200k": 0.147,
+   "seed0@300k": 0.041
+  },
+  "btn_unopened_policies": {
+   "AA": {
+    "seed0@200k": "limp 0.86",
+    "seed1@200k": "limp 0.36 / 3.5x 0.58",
+    "seed2@200k": "limp 0.36 / mixed raises",
+    "seed0@300k": "limp 0.90"
+   },
+   "KK": {
+    "seed0@200k": "raises 0.77, jam 0.16",
+    "seed1@200k": "raises 0.92",
+    "seed2@200k": "limp 0.68",
+    "seed0@300k": "raises 0.84, jam 0.10"
+   },
+   "AKs": {
+    "seed0@200k": "raises 0.95",
+    "seed1@200k": "jam 0.44",
+    "seed2@200k": "jam 0.41",
+    "seed0@300k": "raises 0.97"
+   },
+   "72o": {
+    "seed0@200k": "fold 0.90",
+    "seed1@200k": "fold 0.97",
+    "seed2@200k": "fold 0.95",
+    "seed0@300k": "fold 0.93"
+   }
+  },
+  "gate_acceptance_visit_weighted": {
+   "release 100k table": 0.195,
+   "200k table": 0.18,
+   "preflop_first_action_keys_rejected": {
+    "100k": "338/338",
+    "200k": "335/338 (3 low)"
+   }
+  }
+ },
+ "reading": "training still improves play measurably inside the abstract game (cross-play, not exploitability); seeds remain far apart on individual preflop hands (e.g. AA limp vs raise), so the preflop strategy is noise-dominated and stays gated out",
+ "recommendation": "promote seed 0 @ 200k (with its 200k confidence table, same config signature) as the release strategy; 300k cannot be gated consistently because seeds 1-2 stop at 200k",
+ "decision": "NOT APPLIED: changing the release strategy is a product decision for the owner. Candidate files kept outside the repository: /home/user/pa_ckpt/v2c/holdem_v2_seed0_200k.npz (2.4 MB, format v2, 130,497 infosets) and holdem_v2_seed0_200k_confidence.npz; they disappear with this container unless the owner asks for them to be committed.",
+ "no_1M": "no 1M-iteration run was started"
+}

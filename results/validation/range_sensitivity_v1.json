@@ -1,0 +1,278 @@
+{
+ "format": "pokeralpha.range_sensitivity/v1",
+ "spots": {
+  "HU flop top pair facing a bet": {
+   "by_model": {
+    "regular": {
+     "recommended": "raise_100",
+     "best_ev_bb": 10.938,
+     "best_ev_se": 1.063,
+     "equity": 0.7087,
+     "evs": {
+      "fold": 0.0,
+      "call": 5.737,
+      "raise_75": 10.502,
+      "raise_100": 10.938,
+      "all_in": 10.007
+     },
+     "range_effective_combos": [
+      286
+     ]
+    },
+    "nit": {
+     "recommended": "call",
+     "best_ev_bb": 4.585,
+     "best_ev_se": 0.193,
+     "equity": 0.6292,
+     "evs": {
+      "fold": 0.0,
+      "call": 4.585,
+      "raise_75": 4.113,
+      "raise_100": 3.629,
+      "all_in": 2.055
+     },
+     "range_effective_combos": [
+      216
+     ]
+    },
+    "calling_station": {
+     "recommended": "all_in",
+     "best_ev_bb": 12.615,
+     "best_ev_se": 2.343,
+     "equity": 0.596,
+     "evs": {
+      "fold": 0.0,
+      "call": 3.839,
+      "raise_75": 2.525,
+      "raise_100": 3.071,
+      "all_in": 12.615
+     },
+     "range_effective_combos": [
+      199
+     ]
+    },
+    "maniac": {
+     "recommended": "all_in",
+     "best_ev_bb": 30.076,
+     "best_ev_se": 1.815,
+     "equity": 0.8053,
+     "evs": {
+      "fold": 0.0,
+      "call": 6.985,
+      "raise_75": 22.069,
+      "raise_100": 24.586,
+      "all_in": 30.076
+     },
+     "range_effective_combos": [
+      408
+     ]
+    },
+    "any_two_cards": {
+     "recommended": "raise_75",
+     "best_ev_bb": 12.398,
+     "best_ev_se": 0.553,
+     "equity": 0.8762,
+     "evs": {
+      "fold": 0.0,
+      "call": 8.244,
+      "raise_75": 12.398,
+      "raise_100": 12.115,
+      "all_in": 10.484
+     },
+     "range_effective_combos": [
+      1081
+     ]
+    }
+   },
+   "distinct_recommendations": [
+    "all_in",
+    "call",
+    "raise_100",
+    "raise_75"
+   ],
+   "recommendation_stable": false,
+   "best_ev_spread_bb": 25.491
+  },
+  "HU river bluff-catcher facing pot bet": {
+   "by_model": {
+    "regular": {
+     "recommended": "fold",
+     "best_ev_bb": 0.0,
+     "best_ev_se": 0,
+     "equity": 0.2395,
+     "evs": {
+      "fold": 0.0,
+      "call": -4.204,
+      "raise_75": -36.703,
+      "raise_100": -39.848,
+      "all_in": -40.033
+     },
+     "range_effective_combos": [
+      218
+     ]
+    },
+    "nit": {
+     "recommended": "fold",
+     "best_ev_bb": 0.0,
+     "best_ev_se": 0,
+     "equity": 0.1,
+     "evs": {
+      "fold": 0.0,
+      "call": -13.158,
+      "raise_75": -54.119,
+      "raise_100": -55.253,
+      "all_in": -54.967
+     },
+     "range_effective_combos": [
+      180
+     ]
+    },
+    "calling_station": {
+     "recommended": "fold",
+     "best_ev_bb": 0.0,
+     "best_ev_se": 0,
+     "equity": 0.0418,
+     "evs": {
+      "fold": 0.0,
+      "call": -17.14,
+      "raise_75": -67.507,
+      "raise_100": -77.671,
+      "all_in": -78.245
+     },
+     "range_effective_combos": [
+      150
+     ]
+    },
+    "maniac": {
+     "recommended": "call",
+     "best_ev_bb": 9.722,
+     "best_ev_se": 0.846,
+     "equity": 0.451,
+     "evs": {
+      "fold": 0.0,
+      "call": 9.722,
+      "raise_75": -1.546,
+      "raise_100": -1.607,
+      "all_in": -1.669
+     },
+     "range_effective_combos": [
+      323
+     ]
+    },
+    "any_two_cards": {
+     "recommended": "raise_75",
+     "best_ev_bb": 32.771,
+     "best_ev_se": 1.63,
+     "equity": 0.7765,
+     "evs": {
+      "fold": 0.0,
+      "call": 31.744,
+      "raise_75": 32.771,
+      "raise_100": 30.383,
+      "all_in": 30.358
+     },
+     "range_effective_combos": [
+      990
+     ]
+    }
+   },
+   "distinct_recommendations": [
+    "call",
+    "fold",
+    "raise_75"
+   ],
+   "recommendation_stable": false,
+   "best_ev_spread_bb": 32.771
+  },
+  "HU flop draw first to act": {
+   "by_model": {
+    "regular": {
+     "recommended": "all_in",
+     "best_ev_bb": 8.552,
+     "best_ev_se": 1.082,
+     "equity": 0.645,
+     "evs": {
+      "check": 1.86,
+      "bet_33": 3.1,
+      "bet_75": 3.355,
+      "bet_100": 3.412,
+      "all_in": 8.552
+     },
+     "range_effective_combos": [
+      427
+     ]
+    },
+    "nit": {
+     "recommended": "all_in",
+     "best_ev_bb": 5.875,
+     "best_ev_se": 0.709,
+     "equity": 0.645,
+     "evs": {
+      "check": 2.282,
+      "bet_33": 3.68,
+      "bet_75": 3.974,
+      "bet_100": 4.035,
+      "all_in": 5.875
+     },
+     "range_effective_combos": [
+      427
+     ]
+    },
+    "calling_station": {
+     "recommended": "all_in",
+     "best_ev_bb": 16.88,
+     "best_ev_se": 1.688,
+     "equity": 0.645,
+     "evs": {
+      "check": 2.444,
+      "bet_33": 3.34,
+      "bet_75": 3.744,
+      "bet_100": 4.148,
+      "all_in": 16.88
+     },
+     "range_effective_combos": [
+      427
+     ]
+    },
+    "maniac": {
+     "recommended": "all_in",
+     "best_ev_bb": 15.878,
+     "best_ev_se": 1.695,
+     "equity": 0.645,
+     "evs": {
+      "check": 0.768,
+      "bet_33": 1.835,
+      "bet_75": 0.972,
+      "bet_100": 0.812,
+      "all_in": 15.878
+     },
+     "range_effective_combos": [
+      427
+     ]
+    },
+    "any_two_cards": {
+     "recommended": "all_in",
+     "best_ev_bb": 7.558,
+     "best_ev_se": 0.9,
+     "equity": 0.7232,
+     "evs": {
+      "check": 2.377,
+      "bet_33": 3.648,
+      "bet_75": 3.868,
+      "bet_100": 4.013,
+      "all_in": 7.558
+     },
+     "range_effective_combos": [
+      1081
+     ]
+    }
+   },
+   "distinct_recommendations": [
+    "all_in"
+   ],
+   "recommendation_stable": true,
+   "best_ev_spread_bb": 11.005
+  }
+ },
+ "note": "model uncertainty: how recommendations and EVs move with the assumed opponent model"
+}

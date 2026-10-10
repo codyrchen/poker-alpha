@@ -1,0 +1,64 @@
+{
+ "format": "pokeralpha.observer_truth/v1",
+ "note": "SYNTHETIC fixture rendered by poker_alpha.observer.synthetic; not a real PokerNow screenshot.",
+ "small_blind": 0.5,
+ "big_blind": 1.0,
+ "table": {
+  "seats": [
+   {
+    "name": "hero",
+    "stack": 96.5,
+    "bet": 0.0,
+    "in_hand": true,
+    "all_in": false
+   },
+   {
+    "name": "sb",
+    "stack": 99.5,
+    "bet": 0.0,
+    "in_hand": false,
+    "all_in": false
+   },
+   {
+    "name": "bb",
+    "stack": 90.0,
+    "bet": 4.5,
+    "in_hand": true,
+    "all_in": false
+   },
+   {
+    "name": "utg",
+    "stack": 100.0,
+    "bet": 0.0,
+    "in_hand": false,
+    "all_in": false
+   },
+   {
+    "name": "hj",
+    "stack": 100.0,
+    "bet": 0.0,
+    "in_hand": false,
+    "all_in": false
+   },
+   {
+    "name": "co",
+    "stack": 100.0,
+    "bet": 0.0,
+    "in_hand": false,
+    "all_in": false
+   }
+  ],
+  "dealer": 0,
+  "hero_cards": [
+   "As",
+   "Ks"
+  ],
+  "board": [
+   "Qs",
+   "Js",
+   "4h"
+  ],
+  "pot": 13.5,
+  "actor": 0
+ }
+}

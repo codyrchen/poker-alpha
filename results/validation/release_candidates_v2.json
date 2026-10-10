@@ -1,0 +1,320 @@
+{
+ "format": "pokeralpha.release_candidates/v1",
+ "release_config": "HoldemSolverConfig:v2:733e52f1d1014e2e7973",
+ "candidates": {
+  "100k": {
+   "artifact": "holdem_v2_seed0.npz",
+   "bytes": 2230038,
+   "sha256": "34b3f52f7d27884e82bd95c15afc7b61a4e4e5993213545e9dea8c3d77f6a727",
+   "format": "pokeralpha.strategy_artifact/v1",
+   "seed": 0,
+   "iterations": 100000,
+   "infosets": 124381,
+   "config_signature": "HoldemSolverConfig:v2:733e52f1d1014e2e7973",
+   "game_signature": "HoldemGame:v1:stack=100:blinds=0.5/1:bets=b33=0.33,b75=0.75,b150=1.5:raise_cap=3:preflop=x200=2,x250=2.5,x350=3.5:min_raise=nlhe",
+   "encoder_signature": "CompactHoldemEncoder:v1:cards=v1:history=abstract:texture=1:river_blockers=1:betting=v1:river_pct=20:recall=imperfect",
+   "compatible_with_release_config": true,
+   "confidence_table": {
+    "file": "holdem_v2_seed0_confidence.npz",
+    "bytes": 1581604,
+    "sha256": "7aae4492115a2581414a60c8163df22fa4c69eedd56de8964aa51a5532ba2479",
+    "config_signature_matches": true,
+    "construction": {
+     "collision": "range of the 0..7 strength ladder among >= 5 corpus members, /7",
+     "corpus_hands": 20000,
+     "earlier": 10000,
+     "final": 100000,
+     "seeds": [
+      0,
+      1,
+      2
+     ]
+    },
+    "built_for_this_iteration": true,
+    "artifact_key_coverage": 1.0
+   },
+   "gate_acceptance_visit_weighted": {
+    "preflop": {
+     "SOLVER_ACCEPT": 0.0874,
+     "SOLVER_LOW_CONFIDENCE": 0.1283,
+     "SOLVER_REJECT": 0.7843
+    },
+    "flop": {
+     "SOLVER_ACCEPT": 0.1785,
+     "SOLVER_LOW_CONFIDENCE": 0.1524,
+     "SOLVER_REJECT": 0.6691
+    },
+    "turn": {
+     "SOLVER_ACCEPT": 0.2003,
+     "SOLVER_LOW_CONFIDENCE": 0.1583,
+     "SOLVER_REJECT": 0.6414
+    },
+    "river": {
+     "SOLVER_ACCEPT": 0.2096,
+     "SOLVER_LOW_CONFIDENCE": 0.1629,
+     "SOLVER_REJECT": 0.6275
+    },
+    "all": {
+     "SOLVER_ACCEPT": 0.1948,
+     "SOLVER_LOW_CONFIDENCE": 0.1578,
+     "SOLVER_REJECT": 0.6474
+    }
+   },
+   "preflop_first_action_keys": {
+    "SOLVER_REJECT": 338
+   },
+   "load_seconds_median_of_3": 1.121,
+   "load_includes": "artifact + checksums + confidence table"
+  },
+  "200k": {
+   "artifact": "holdem_v2_seed0_200k.npz",
+   "bytes": 2427692,
+   "sha256": "ee23b3f941697509831b584631bb80c86feb54c9c39fdd25b24b767f14c3a78d",
+   "format": "pokeralpha.strategy_artifact/v2",
+   "seed": 0,
+   "iterations": 200000,
+   "infosets": 130497,
+   "config_signature": "HoldemSolverConfig:v2:733e52f1d1014e2e7973",
+   "game_signature": "HoldemGame:v1:stack=100:blinds=0.5/1:bets=b33=0.33,b75=0.75,b150=1.5:raise_cap=3:preflop=x200=2,x250=2.5,x350=3.5:min_raise=nlhe",
+   "encoder_signature": "CompactHoldemEncoder:v1:cards=v1:history=abstract:texture=1:river_blockers=1:betting=v1:river_pct=20:recall=imperfect",
+   "compatible_with_release_config": true,
+   "confidence_table": {
+    "file": "holdem_v2_seed0_200k_confidence.npz",
+    "bytes": 1689812,
+    "sha256": "7d4be54855d6a4b3549a26be67652353b38760ea3e5ff49278b8e144e2991033",
+    "config_signature_matches": true,
+    "construction": {
+     "collision": "range of the 0..7 strength ladder among >= 5 corpus members, /7",
+     "corpus_hands": 20000,
+     "earlier": 10000,
+     "final": 200000,
+     "seeds": [
+      0,
+      1,
+      2
+     ]
+    },
+    "built_for_this_iteration": true,
+    "artifact_key_coverage": 1.0
+   },
+   "gate_acceptance_visit_weighted": {
+    "preflop": {
+     "SOLVER_ACCEPT": 0.0888,
+     "SOLVER_LOW_CONFIDENCE": 0.1272,
+     "SOLVER_REJECT": 0.784
+    },
+    "flop": {
+     "SOLVER_ACCEPT": 0.163,
+     "SOLVER_LOW_CONFIDENCE": 0.1457,
+     "SOLVER_REJECT": 0.6913
+    },
+    "turn": {
+     "SOLVER_ACCEPT": 0.1856,
+     "SOLVER_LOW_CONFIDENCE": 0.1444,
+     "SOLVER_REJECT": 0.6699
+    },
+    "river": {
+     "SOLVER_ACCEPT": 0.1921,
+     "SOLVER_LOW_CONFIDENCE": 0.151,
+     "SOLVER_REJECT": 0.6569
+    },
+    "all": {
+     "SOLVER_ACCEPT": 0.18,
+     "SOLVER_LOW_CONFIDENCE": 0.1469,
+     "SOLVER_REJECT": 0.6731
+    }
+   },
+   "preflop_first_action_keys": {
+    "SOLVER_REJECT": 335,
+    "SOLVER_LOW_CONFIDENCE": 3
+   },
+   "load_seconds_median_of_3": 0.873,
+   "load_includes": "artifact + checksums + confidence table"
+  },
+  "300k": {
+   "artifact": "holdem_v2_seed0_300k.npz",
+   "bytes": 2535191,
+   "sha256": "67b7904d56a7533569766c7b373ed495ae54c1ebe54d116f686f67efc2ea19c6",
+   "format": "pokeralpha.strategy_artifact/v2",
+   "seed": 0,
+   "iterations": 300000,
+   "infosets": 133882,
+   "config_signature": "HoldemSolverConfig:v2:733e52f1d1014e2e7973",
+   "game_signature": "HoldemGame:v1:stack=100:blinds=0.5/1:bets=b33=0.33,b75=0.75,b150=1.5:raise_cap=3:preflop=x200=2,x250=2.5,x350=3.5:min_raise=nlhe",
+   "encoder_signature": "CompactHoldemEncoder:v1:cards=v1:history=abstract:texture=1:river_blockers=1:betting=v1:river_pct=20:recall=imperfect",
+   "compatible_with_release_config": true,
+   "confidence_table": null,
+   "gate_acceptance_visit_weighted": null,
+   "load_seconds_median_of_3": 0.292,
+   "load_includes": "artifact + checksums (no confidence table exists)"
+  }
+ },
+ "canonical_policy_movement_seed0_matrix_l1": {
+  "100000->150000": {
+   "spots": 634,
+   "mean_l1": 0.1961768138801262,
+   "median_l1": 0.17514999999999997
+  },
+  "150000->200000": {
+   "spots": 636,
+   "mean_l1": 0.15083867924528302,
+   "median_l1": 0.14145000000000005
+  },
+  "200000->250000": {
+   "spots": 636,
+   "mean_l1": 0.11469528301886793,
+   "median_l1": 0.09734999999999999
+  },
+  "250000->300000": {
+   "spots": 636,
+   "mean_l1": 0.0925375786163522,
+   "median_l1": 0.07419999999999996
+  }
+ },
+ "seed_disagreement_matrix_mean_l1": {
+  "100000": {
+   "seed 0 vs seed 1": 0.8706671568627453,
+   "seed 0 vs seed 2": 0.8742350565428109,
+   "seed 1 vs seed 2": 0.8699963394342762
+  },
+  "200000": {
+   "seed 0 vs seed 1": 0.8110354838709677,
+   "seed 0 vs seed 2": 0.8250380126182966,
+   "seed 1 vs seed 2": 0.827024394184168
+  }
+ },
+ "seed_disagreement_300k": "not measurable: seeds 1 and 2 were trained to 200k only",
+ "crossplay": [
+  {
+   "match": "seed vs seed (final)",
+   "a": "seed0@200000",
+   "b": "seed1@200000",
+   "bb_per_100": 5.807858394941009,
+   "ci95_bb_per_100": [
+    -2.596929369473365,
+    14.212646159355385
+   ]
+  },
+  {
+   "match": "seed vs seed (final)",
+   "a": "seed1@200000",
+   "b": "seed2@200000",
+   "bb_per_100": -3.3746210477511522,
+   "ci95_bb_per_100": [
+    -11.893410043564815,
+    5.144167948062511
+   ]
+  },
+  {
+   "match": "seed vs seed (final)",
+   "a": "seed0@200000",
+   "b": "seed2@200000",
+   "bb_per_100": 7.211070605803586,
+   "ci95_bb_per_100": [
+    -1.209448607163091,
+    15.631589818770264
+   ]
+  },
+  {
+   "match": "final vs 1k (other seed)",
+   "a": "seed0@200000",
+   "b": "seed1@1000",
+   "bb_per_100": 450.846999945845,
+   "ci95_bb_per_100": [
+    438.55288255161014,
+    463.14111734007986
+   ]
+  },
+  {
+   "match": "final vs 10k (other seed)",
+   "a": "seed0@200000",
+   "b": "seed1@10000",
+   "bb_per_100": 307.92892185853634,
+   "ci95_bb_per_100": [
+    296.54276862681974,
+    319.31507509025295
+   ]
+  },
+  {
+   "match": "final vs 100k (other seed)",
+   "a": "seed0@200000",
+   "b": "seed1@100000",
+   "bb_per_100": 66.32006598681708,
+   "ci95_bb_per_100": [
+    57.169406199438086,
+    75.47072577419607
+   ]
+  },
+  {
+   "match": "final vs 100k (same seed)",
+   "a": "seed0@200000",
+   "b": "seed0@100000",
+   "bb_per_100": 68.8571074634979,
+   "ci95_bb_per_100": [
+    59.9841109138613,
+    77.73010401313448
+   ]
+  },
+  {
+   "match": "seed 0 300000 vs same seed 200000",
+   "a": "seed0@300000",
+   "b": "seed0@200000",
+   "bb_per_100": 33.00969318291335,
+   "ci95_bb_per_100": [
+    25.266809465578877,
+    40.75257690024783
+   ]
+  },
+  {
+   "match": "seed 0 300000 vs other seed 200000",
+   "a": "seed0@300000",
+   "b": "seed1@200000",
+   "bb_per_100": 20.35245333108822,
+   "ci95_bb_per_100": [
+    12.3448846847774,
+    28.360021977399043
+   ]
+  },
+  {
+   "match": "seed 0 300000 vs other seed 200000",
+   "a": "seed0@300000",
+   "b": "seed2@200000",
+   "bb_per_100": 37.067545429217006,
+   "ci95_bb_per_100": [
+    29.007190069426304,
+    45.12790078900771
+   ]
+  },
+  {
+   "match": "final vs uniform random",
+   "a": "seed0@200000",
+   "b": "uniform",
+   "bb_per_100": 473.3936340077793,
+   "ci95_bb_per_100": [
+    461.6070047510108,
+    485.18026326454793
+   ]
+  },
+  {
+   "match": "final vs calling station",
+   "a": "seed0@200000",
+   "b": "calling_station",
+   "bb_per_100": 449.67155632600003,
+   "ci95_bb_per_100": [
+    439.2448599296456,
+    460.0982527223545
+   ]
+  },
+  {
+   "match": "control: uniform vs uniform",
+   "a": "uniform",
+   "b": "uniform",
+   "bb_per_100": -6.311253872481136,
+   "ci95_bb_per_100": [
+    -20.24410621243145,
+    7.62159846746918
+   ]
+  }
+ ],
+ "crossplay_deals_per_match": 200000
+}

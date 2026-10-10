@@ -1,0 +1,36 @@
+{
+ "format": "pokeralpha.native_solver_progress/v1",
+ "branch": "claude/live-observer",
+ "starting_head": "b398c4e",
+ "current_phase": 106,
+ "completed_phases": "0-106 (see docs/native_solver_progress.md)",
+ "active_experiment": null,
+ "native_backend_status": "complete: 38.1x, validated, CI green",
+ "correctness_status": "parity: evaluator exhaustive, 20k+ states, 1000-iteration bitwise tape, ASan/UBSan clean",
+ "test_status": "811 passed, 12 skipped fast; native slow suites green",
+ "machine": {
+  "cpu": "Apple M3 Pro",
+  "cores": 12,
+  "ram_gb": 18,
+  "os": "macOS 25.5 arm64",
+  "compiler": "Apple clang 21",
+  "python": "3.12.6",
+  "numpy": "2.5.2"
+ },
+ "known_failures": [],
+ "next_action": "final full test matrix, git audit, final report",
+ "training": {
+  "plan": "B",
+  "seeds": [
+   0,
+   1,
+   2
+  ],
+  "milestones": "10k..300k..1M",
+  "study_300k": "results/validation/native_training_300k.json",
+  "study_1m": "results/validation/native_training_1m.json"
+ },
+ "python_warm_it_per_s": 21.0,
+ "native_warm_it_per_s": 772,
+ "release_decision": "1M candidate recommended, not auto-promoted; release unchanged"
+}

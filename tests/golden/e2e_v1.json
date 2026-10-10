@@ -1,0 +1,470 @@
+{
+ "manual_assumption_actor": {
+  "assumptions": [
+   "ACTOR_UNKNOWN"
+  ],
+  "bets": [
+   0.5,
+   1.0
+  ],
+  "candidates": [
+   [
+    "fold",
+    0.5,
+    0.0,
+    0.0
+   ],
+   [
+    "call",
+    1.0,
+    1.0,
+    0.8033
+   ],
+   [
+    "raise_75",
+    2.5,
+    0.0,
+    null
+   ],
+   [
+    "raise_100",
+    3.0,
+    0.0,
+    null
+   ],
+   [
+    "all_in",
+    100.0,
+    0.0,
+    null
+   ]
+  ],
+  "cascade": [
+   [
+    "solver",
+    "not configured",
+    null
+   ],
+   [
+    "Monte Carlo rollout",
+    "not run",
+    null
+   ],
+   [
+    "heuristic fallback",
+    "used",
+    null
+   ]
+  ],
+  "confidence": "low",
+  "dealer": 0,
+  "equity": 0.6517,
+  "method": "heuristic fallback",
+  "pot": 1.5,
+  "recommended": "call",
+  "refusal_codes": [],
+  "stacks": [
+   99.5,
+   99.0
+  ],
+  "state": "PREFLOP hero=BTN [As Ks] board [-] pot 1.5bb to call 0.5bb"
+ },
+ "manual_flop_heuristic": {
+  "assumptions": [],
+  "bets": [
+   0.0,
+   3.0
+  ],
+  "candidates": [
+   [
+    "fold",
+    0.0,
+    0.0,
+    0.0
+   ],
+   [
+    "call",
+    3.0,
+    1.0,
+    4.01
+   ],
+   [
+    "raise_75",
+    12.0,
+    0.0,
+    null
+   ],
+   [
+    "raise_100",
+    15.0,
+    0.0,
+    null
+   ],
+   [
+    "all_in",
+    94.0,
+    0.0,
+    null
+   ]
+  ],
+  "cascade": [
+   [
+    "solver",
+    "not configured",
+    null
+   ],
+   [
+    "Monte Carlo rollout",
+    "not run",
+    null
+   ],
+   [
+    "heuristic fallback",
+    "used",
+    null
+   ]
+  ],
+  "confidence": "low",
+  "dealer": 1,
+  "equity": 0.5842,
+  "method": "heuristic fallback",
+  "pot": 9.0,
+  "recommended": "call",
+  "refusal_codes": [],
+  "stacks": [
+   94.0,
+   91.0
+  ],
+  "state": "FLOP hero=BB [As Ks] board [Qh 7d 2c] pot 9.0bb to call 3.0bb"
+ },
+ "manual_flop_rollout": {
+  "assumptions": [],
+  "bets": [
+   0.0,
+   3.0
+  ],
+  "candidates": [
+   [
+    "fold",
+    0.0,
+    0.0,
+    0.0
+   ],
+   [
+    "call",
+    3.0,
+    0.115,
+    4.62
+   ],
+   [
+    "raise_75",
+    12.0,
+    0.18,
+    5.34
+   ],
+   [
+    "raise_100",
+    15.0,
+    0.113,
+    5.16
+   ],
+   [
+    "all_in",
+    94.0,
+    0.592,
+    5.945
+   ]
+  ],
+  "cascade": [
+   [
+    "solver",
+    "not configured",
+    null
+   ],
+   [
+    "Monte Carlo rollout",
+    "used",
+    null
+   ],
+   [
+    "heuristic fallback",
+    "not needed",
+    null
+   ]
+  ],
+  "confidence": "low",
+  "dealer": 1,
+  "equity": 0.5842,
+  "method": "Monte Carlo rollout",
+  "pot": 9.0,
+  "recommended": "all_in",
+  "refusal_codes": [],
+  "stacks": [
+   94.0,
+   91.0
+  ],
+  "state": "FLOP hero=BB [As Ks] board [Qh 7d 2c] pot 9.0bb to call 3.0bb"
+ },
+ "manual_preflop_rollout": {
+  "assumptions": [],
+  "bets": [
+   0.5,
+   1.0
+  ],
+  "candidates": [
+   [
+    "fold",
+    0.5,
+    0.0,
+    0.0
+   ],
+   [
+    "call",
+    1.0,
+    0.0,
+    0.82
+   ],
+   [
+    "raise_75",
+    2.5,
+    0.354,
+    1.3425
+   ],
+   [
+    "raise_100",
+    3.0,
+    0.318,
+    1.35
+   ],
+   [
+    "all_in",
+    100.0,
+    0.328,
+    0.985
+   ]
+  ],
+  "cascade": [
+   [
+    "solver",
+    "not configured",
+    null
+   ],
+   [
+    "Monte Carlo rollout",
+    "used",
+    null
+   ],
+   [
+    "heuristic fallback",
+    "not needed",
+    null
+   ]
+  ],
+  "confidence": "low",
+  "dealer": 0,
+  "equity": 0.6517,
+  "method": "Monte Carlo rollout",
+  "pot": 1.5,
+  "recommended": "raise_100",
+  "refusal_codes": [],
+  "stacks": [
+   99.5,
+   99.0
+  ],
+  "state": "PREFLOP hero=BTN [As Ks] board [-] pot 1.5bb to call 0.5bb"
+ },
+ "manual_refusal_hero_stack": {
+  "assumptions": [],
+  "bets": [
+   0.5,
+   1.0
+  ],
+  "candidates": [],
+  "cascade": [
+   [
+    "none",
+    "no decision",
+    null
+   ]
+  ],
+  "confidence": "low",
+  "dealer": 0,
+  "equity": null,
+  "method": "none",
+  "pot": 1.5,
+  "recommended": null,
+  "refusal_codes": [
+   "HERO_STACK_UNKNOWN"
+  ],
+  "stacks": [
+   null,
+   99.0
+  ],
+  "state": "PREFLOP hero=BTN [As Ks] board [-] pot 1.5bb to call 0.5bb"
+ },
+ "pokernow_tuning_frame_hu_preflop_0001": {
+  "assumptions": [],
+  "bets": [
+   0.0,
+   1.0
+  ],
+  "candidates": [],
+  "cascade": [
+   [
+    "none",
+    "no decision",
+    null
+   ]
+  ],
+  "confidence": "low",
+  "dealer": 1,
+  "equity": null,
+  "method": "none",
+  "pot": 1.0,
+  "recommended": null,
+  "refusal_codes": [
+   "NOT_HERO_TURN"
+  ],
+  "stacks": [
+   49.25,
+   49.75
+  ],
+  "state": "PREFLOP hero=BB [Js 7h] board [-] pot 2.0bb to call 2.0bb"
+ },
+ "release_solver_preflop": {
+  "assumptions": [],
+  "bets": [
+   0.5,
+   1.0
+  ],
+  "candidates": [
+   [
+    "fold",
+    0.5,
+    0.0,
+    0.0
+   ],
+   [
+    "call",
+    1.0,
+    1.0,
+    0.805
+   ],
+   [
+    "raise_75",
+    2.5,
+    0.0,
+    null
+   ],
+   [
+    "raise_100",
+    3.0,
+    0.0,
+    null
+   ],
+   [
+    "all_in",
+    100.0,
+    0.0,
+    null
+   ]
+  ],
+  "cascade": [
+   [
+    "solver",
+    "rejected",
+    "HIGH_SEED_DISAGREEMENT"
+   ],
+   [
+    "Monte Carlo rollout",
+    "not run",
+    null
+   ],
+   [
+    "heuristic fallback",
+    "used",
+    null
+   ]
+  ],
+  "confidence": "low",
+  "dealer": 0,
+  "equity": 0.6525,
+  "method": "heuristic fallback",
+  "pot": 1.5,
+  "recommended": "call",
+  "refusal_codes": [],
+  "stacks": [
+   99.5,
+   99.0
+  ],
+  "state": "PREFLOP hero=BTN [Ah Kd] board [-] pot 1.5bb to call 0.5bb"
+ },
+ "synthetic_flop_screenshot": {
+  "assumptions": [],
+  "bets": [
+   0.0,
+   6.0
+  ],
+  "candidates": [
+   [
+    "fold",
+    0.0,
+    0.0,
+    0.0
+   ],
+   [
+    "call",
+    6.0,
+    1.0,
+    2.83
+   ],
+   [
+    "raise_75",
+    15.0,
+    0.0,
+    null
+   ],
+   [
+    "raise_100",
+    18.0,
+    0.0,
+    null
+   ],
+   [
+    "all_in",
+    97.0,
+    0.0,
+    null
+   ]
+  ],
+  "cascade": [
+   [
+    "solver",
+    "not configured",
+    null
+   ],
+   [
+    "Monte Carlo rollout",
+    "not run",
+    null
+   ],
+   [
+    "heuristic fallback",
+    "used",
+    null
+   ]
+  ],
+  "confidence": "low",
+  "dealer": 1,
+  "equity": 0.7358,
+  "method": "heuristic fallback",
+  "pot": 6.0,
+  "recommended": "call",
+  "refusal_codes": [],
+  "stacks": [
+   97.0,
+   94.0
+  ],
+  "state": "FLOP hero=BB [Td Tc] board [9s 8h 2d] pot 6.0bb to call 6.0bb"
+ }
+}

@@ -1,0 +1,30 @@
+{
+ "format": "pokeralpha.best_response_feasibility/v1",
+ "config": "HoldemSolverConfig:v2:733e52f1d1014e2e7973",
+ "betting_tree_per_deal": {
+  "decision_nodes": {
+   "preflop": 106,
+   "flop": 3438,
+   "turn": 31006,
+   "river": 156550,
+   "total": 191100
+  },
+  "terminal_nodes": 313314,
+  "measured": "full betting-tree walk with one sampled runout per chance node, 5.0 s"
+ },
+ "public_tree_estimate": {
+  "flop_public_nodes": 75979800,
+  "flop_public_nodes_suit_isomorphic": 6033690,
+  "river_public_nodes": 8137343760000,
+  "river_public_nodes_suit_isomorphic": 646200828000,
+  "note": "each public node carries 1,326-hand range vectors per player; a vector best-response pass is ~1e3-1e6 ops per node (hand-strength sort + prefix sums at terminals)"
+ },
+ "infoset_key_cost_us": 11.4,
+ "conclusions": {
+  "exact_best_response_real_game": "INFEASIBLE here: ~6.5e11 river public nodes even with suit isomorphism (>=1e15 ops); needs a C++/GPU vector BR and days of cluster time",
+  "abstract_best_response": "NOT MEANINGFUL / NOT COMPUTED: the v2 abstraction is imperfect-recall; a best response inside an imperfect-recall abstraction is not a well-defined game value and finding one is NP-hard in general",
+  "exact_best_response_subgames": "DONE: fixed-runout flop/turn subgames (Phases 56-57) and 52-card river subgames (Phase 34) give exact exploitability of the abstraction on those subgames",
+  "local_best_response": "FEASIBLE, NOT IMPLEMENTED: LBR (Lisy & Bowling 2017) gives a sampled LOWER bound on real-game exploitability. Estimated 1-5 s per hand in this Python code base (range tracking through the abstract strategy for 1,326 combos per opponent action, equity vs range for each LBR decision); 10,000 hands ~3-14 CPU-hours per strategy, SE ~0.1 BB/hand. Recommended as the next solver-quality measurement."
+ },
+ "decision": "no exact BR attempted; LBR recorded as the recommended future measurement; no gate or strategy change"
+}

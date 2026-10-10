@@ -1,0 +1,67 @@
+{
+ "format": "pokeralpha.crossplay/v1",
+ "deals": 10000,
+ "note": "duplicate deals, seat swap; abstract game only",
+ "matches": {
+  "1M_s0 vs 300k_s0": {
+   "deals": 10000,
+   "mean_bb_per_hand": 0.55022958073424,
+   "stderr_bb_per_hand": 0.14952300910239355,
+   "bb_per_100": 55.022958073424,
+   "ci95_bb_per_100": [
+    25.716448289354865,
+    84.32946785749313
+   ],
+   "a_as_button_bb_per_hand": 0.89470883694448,
+   "a_as_bb_bb_per_hand": 0.20575032452399997
+  },
+  "1M_s1 vs 300k_s1": {
+   "deals": 10000,
+   "mean_bb_per_hand": 0.736919298653712,
+   "stderr_bb_per_hand": 0.1554367373052923,
+   "bb_per_100": 73.6919298653712,
+   "ci95_bb_per_100": [
+    43.226329353533906,
+    104.1575303772085
+   ],
+   "a_as_button_bb_per_hand": 0.7133470452679039,
+   "a_as_bb_bb_per_hand": 0.7604915520395199
+  },
+  "1M_s2 vs 300k_s2": {
+   "deals": 10000,
+   "mean_bb_per_hand": 0.66781559882,
+   "stderr_bb_per_hand": 0.14767117142595068,
+   "bb_per_100": 66.781559882,
+   "ci95_bb_per_100": [
+    37.838010282513665,
+    95.72510948148634
+   ],
+   "a_as_button_bb_per_hand": 0.86615168022,
+   "a_as_bb_bb_per_hand": 0.46947951741999994
+  },
+  "1M_s0 vs 300k_s1": {
+   "deals": 10000,
+   "mean_bb_per_hand": 0.63013717232872,
+   "stderr_bb_per_hand": 0.15202156016557247,
+   "bb_per_100": 63.013717232872004,
+   "ci95_bb_per_100": [
+    33.2174914404198,
+    92.8099430253242
+   ],
+   "a_as_button_bb_per_hand": 0.85804958766784,
+   "a_as_bb_bb_per_hand": 0.4022247569896
+  },
+  "1M_s0 vs 300k_s2": {
+   "deals": 10000,
+   "mean_bb_per_hand": 0.7438502969044,
+   "stderr_bb_per_hand": 0.15334664322666228,
+   "bb_per_100": 74.38502969043999,
+   "ci95_bb_per_100": [
+    44.32908761801419,
+    104.4409717628658
+   ],
+   "a_as_button_bb_per_hand": 0.9455050720128,
+   "a_as_bb_bb_per_hand": 0.5421955217960002
+  }
+ }
+}

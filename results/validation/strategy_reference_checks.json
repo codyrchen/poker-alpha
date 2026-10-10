@@ -1,0 +1,87 @@
+{
+ "format": "pokeralpha.strategy_reference_checks/v1",
+ "clairvoyance_game": {
+  "board": [
+   "Ks",
+   "8d",
+   "4c",
+   "2h",
+   "2s"
+  ],
+  "oop_value": [
+   "8s8h",
+   "8s8c",
+   "8h8c"
+  ],
+  "oop_air": [
+   "QsJh",
+   "QsJd",
+   "QsJc",
+   "QhJh",
+   "QhJd",
+   "QhJc",
+   "QdJh",
+   "QdJd",
+   "QdJc",
+   "QcJh",
+   "QcJd",
+   "QcJc"
+  ],
+  "ip": [
+   "AsKh",
+   "AsKd",
+   "AsKc",
+   "AhKh",
+   "AhKd",
+   "AhKc",
+   "AdKh",
+   "AdKd",
+   "AdKc",
+   "AcKh",
+   "AcKd",
+   "AcKc"
+  ],
+  "weights": "value : air = 1 : 2",
+  "pot": 10,
+  "results": [
+   {
+    "bet_size_pot_fraction": 0.5,
+    "iterations": 1500,
+    "exploitability": 0.000474112062753107,
+    "value_bet_freq": 1.0,
+    "expected_value_bet_freq": 1.0,
+    "bluff_share_of_bets": 0.2502,
+    "expected_bluff_share": 0.25,
+    "ip_call_freq": 0.6668,
+    "expected_call_freq": 0.6667,
+    "matches_theory": true
+   },
+   {
+    "bet_size_pot_fraction": 1.0,
+    "iterations": 1500,
+    "exploitability": 0.0008530935899063175,
+    "value_bet_freq": 1.0,
+    "expected_value_bet_freq": 1.0,
+    "bluff_share_of_bets": 0.3332,
+    "expected_bluff_share": 0.3333,
+    "ip_call_freq": 0.5001,
+    "expected_call_freq": 0.5,
+    "matches_theory": true
+   },
+   {
+    "bet_size_pot_fraction": 2.0,
+    "iterations": 1500,
+    "exploitability": 0.004396508555644774,
+    "value_bet_freq": 1.0,
+    "expected_value_bet_freq": 1.0,
+    "bluff_share_of_bets": 0.3996,
+    "expected_bluff_share": 0.4,
+    "ip_call_freq": 0.3341,
+    "expected_call_freq": 0.3333,
+    "matches_theory": true
+   }
+  ],
+  "polarization_grows_with_size": true
+ },
+ "source": "analytic indifference solution of the clairvoyant river game (standard toy game)"
+}

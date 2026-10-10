@@ -1,0 +1,229 @@
+{
+ "run": "pre-real-test (Phases 41-80)",
+ "branch": "claude/live-observer",
+ "start_commit": "8a35231674b97982015454c2c649695713b43697",
+ "head": "6082fd3",
+ "current_phase": 80,
+ "completed_phases": [
+  {
+   "phase": 41,
+   "summary": "observer test-session recorder: poker_alpha/observer/session.py + Live screen 'Observer Test Session' mode; policies manual/interval/state/warning/low-conf/new-hand/street/hybrid; limits 4h/2000 frames/2GB; self-ignoring session dirs; tests/test_observer_session.py (13)"
+  },
+  {
+   "phase": 42,
+   "summary": "session replay: poker_alpha/observer/session_replay.py (stored = exact tracker reproduction from per-frame stream incl. resets; recompute = re-recognize kept frames; --compare-calibration; --write-report/--compare-report for cross-commit diffs); tests/test_session_replay.py (8)"
+  },
+  {
+   "phase": 43,
+   "summary": "annotation workflow: Streamlit 'Annotate session' (prev/next/next-unreviewed, progress, prefill flagged, statuses), annotation_tool.py; partial schema (annotated groups, unknown=unscored)"
+  },
+  {
+   "phase": 44,
+   "summary": "fixture exporter experiments/export_observer_fixtures.py: crop to table+regions, mask name regions, report (not mask) unexplained text, --dry-run/--preview/--mask-box, never overwrite/commit/upload; tests/test_fixture_export.py (5)"
+  },
+  {
+   "phase": 45,
+   "summary": "dataset roles tuning/validation/held_out/unassigned (+splits.json); harness real_validation block only from validation+held_out; BLOCKED when none; hu_preflop_0001=tuning"
+  },
+  {
+   "phase": 46,
+   "summary": "frame metrics (cards incl rank/suit/duplicates, numeric exact/MAE/rel, state occupied/in-hand/folded/all-in/dealer/actor/street/full, 0.1 confidence buckets) + sequence metrics (event P/R, false events, flicker, persistence) in sequence_metrics.py"
+  },
+  {
+   "phase": 47,
+   "summary": "region debugger: poker_alpha/observer/debug.py (per-region crop/coords/raw/conf/fused/decision+reason/previous/agreeing), Live screen tabs, Export current debug report (JSON+HTML, local); tests/test_observer_debug.py"
+  },
+  {
+   "phase": 48,
+   "summary": "failure injection: tests/test_observer_failures.py (43); fixes: live_check (stale + not-settled gates), capture rect outside monitor error, table shape plausibility, tracker holds (hero-card change, bet shrink w/o collection, seat vacating in hand, board-cleared new hand needs visible new hero cards); docs/observer_failure_modes.md"
+  },
+  {
+   "phase": 49,
+   "summary": "robustness matrix experiments/observer_robustness.py -> results/validation/observer_robustness_v1.json + docs/observer_robustness.md (SYNTHETIC/DERIVED ONLY); fixes: pot plausibility+conservation, cut-off table detection; no confirmed-state change under any perturbation"
+  },
+  {
+   "phase": 50,
+   "summary": "perf doc + 30-min soak (RSS flat after warm-up)"
+  },
+  {
+   "phase": 51,
+   "summary": "state machine: tests/observer_timelines.py DSL + tests/test_observer_state_machine.py (16: HU fold/limp/raise/call/streets/showdown/all-in/split, consecutive hands, multiway side pots, delayed/duplicated/one-frame/out-of-order frames); fix: stack increases allowed within 3 frames of a pot drop; limitation: hero fold not observable when cards stay on screen"
+  },
+  {
+   "phase": 52,
+   "summary": "capture geometry poker_alpha/observer/geometry.py (CaptureGeometry points<->pixels, Retina, fractional, negative monitor offsets, suggested crop), recorder diagnostics + live caption; docs/capture_geometry.md; tests/test_capture_geometry.py"
+  },
+  {
+   "phase": 53,
+   "summary": "calibration format v2 (schema_version, provenance, geometry checksum), v1 migration, refusal of tampered/unknown/newer files; sessions use geometry checksum; tests/test_calibration_versioning.py"
+  },
+  {
+   "phase": 54,
+   "summary": "calibration editor: undo history (30), reset region / all to base layout, duplicate, save-as with overwrite guard, pixel box of selected region + highlight, overlay category visibility; helpers in live.py; region selection survives edits (bug fix); click-to-place not added (no stable Streamlit input)"
+  },
+  {
+   "phase": 55,
+   "summary": "strategy artifact v2 (config_json, commit, content_sha256; verified), v1 still loadable, sidecar manifests for committed artifacts (no rewrite), rejection tests incl corrupt/truncated/tampered/wrong config/encoder/abstraction/stack/blinds; docs/strategy_artifacts.md"
+  },
+  {
+   "phase": 56,
+   "summary": "flop abstraction: v2 2.2-5.1 BB exploitable, EV err small"
+  },
+  {
+   "phase": 57,
+   "summary": "turn abstraction: compact/v2 1.4-9.6 BB exploitable on small exact subgames"
+  },
+  {
+   "phase": 58,
+   "summary": "remediation: flop/turn gate cap; no v2 mutation; v3 deferred"
+  },
+  {
+   "phase": 59,
+   "summary": "rollout diagnosis: agreement 0.61, regret 0.24 BB, optimistic, over-bets"
+  },
+  {
+   "phase": 60,
+   "summary": "response v2 NOT adopted (held-out worse)"
+  },
+  {
+   "phase": 61,
+   "summary": "rollout depth option + study (fast default kept)"
+  },
+  {
+   "phase": 62,
+   "summary": "MC calibration: equity honest; rollout all-in at n=100 under-covers -> warning <500"
+  },
+  {
+   "phase": 63,
+   "summary": "range sensitivity: 6/7 spots flip; regret up to 26 BB"
+  },
+  {
+   "phase": 64,
+   "summary": "gate v2: 2 coded downgrade reasons; acceptance by street"
+  },
+  {
+   "phase": 65,
+   "summary": "training 200k/300k analysed; promotion of 200k recommended, NOT applied (product decision)"
+  },
+  {
+   "phase": 66,
+   "summary": "BR feasibility: exact infeasible, LBR recommended"
+  },
+  {
+   "phase": 67,
+   "summary": "artifact loading 2.28->0.66s, no format change"
+  },
+  {
+   "phase": 68,
+   "summary": "decision fault handling: coded refusals/assumptions/fallbacks, tests/test_decision_faults.py (20)"
+  },
+  {
+   "phase": 69,
+   "summary": "golden e2e tests (8 cases)"
+  },
+  {
+   "phase": 70,
+   "summary": "determinism/resume audit"
+  },
+  {
+   "phase": 71,
+   "summary": "1h soak: RSS flat 324.7 MB, events bounded"
+  },
+  {
+   "phase": 72,
+   "summary": "privacy audit: no network code (test); Streamlit defaults fixed (.streamlit/config.toml 127.0.0.1 + gatherUsageStats false, launcher flags, in-app warning); docs/privacy.md"
+  },
+  {
+   "phase": 73,
+   "summary": "install audit 3.11 core / 3.12 all extras"
+  },
+  {
+   "phase": 74,
+   "summary": "python -m poker_alpha.doctor (diagnose only, mocked tests)"
+  },
+  {
+   "phase": 75,
+   "summary": "python -m poker_alpha.live + scripts/run_live_observer.sh (doctor, stop on FAIL, local-only Streamlit)"
+  },
+  {
+   "phase": 76,
+   "summary": "docs/real_pokernow_test_checklist.md"
+  },
+  {
+   "phase": 77,
+   "summary": "release audit; branding on tuning frame flagged"
+  },
+  {
+   "phase": 78,
+   "summary": "docs consistency"
+  },
+  {
+   "phase": 79,
+   "summary": "test organization + CI full suite with extras"
+  },
+  {
+   "phase": 80,
+   "summary": "RC: 783 passed full suite"
+  }
+ ],
+ "tests": "783 passed, 0 skipped (full incl slow)",
+ "ci": "run 30 green at 8a35231",
+ "long_running": [
+  {
+   "phase": 65,
+   "what": "v2 seed0 ->300k (at 150k), seed1 ->200k (at 150k), seed2 ->200k (from 100k); restarted 09:26 after a worker restart killed them",
+   "ckpt_dir": "/home/user/pa_ckpt/v2c",
+   "resume": "latest v2_seedS_itN.npz in v2c (seed2 from v2b it100000 if none)"
+  },
+  {
+   "phase": 50,
+   "what": "30-min soak, results/validation/live_observer_soak.json, restarted 09:27"
+  },
+  {
+   "phase": 56,
+   "question": "how much strategic error do the v1/v2 compact encoders' flop keys cause in exactly solvable fixed-flop subgames?",
+   "command": "python experiments/flop_turn_abstraction.py flop --iters 300 --range 6 --turns 4 --rivers 3",
+   "expected": "compact encoders merge strategically different flop situations: exploitability >> raw CFR+ residual; pct20 changes only river keys so similar to compact",
+   "output": "results/validation/flop_abstraction_v1.json (written after every subgame)",
+   "checkpointing": "per-subgame incremental JSON; rerun with --only for missing rows",
+   "stop": "7 flops done; ~2 h on one core"
+  }
+ ],
+ "config_signatures": {
+  "release_v2": "HoldemSolverConfig:v2:733e52f1d1014e2e7973",
+  "locked_v1": "HoldemSolverConfig:v1:2e23c098860f7894c871"
+ },
+ "seeds": {
+  "v2_training": [
+   0,
+   1,
+   2
+  ]
+ },
+ "real_pokernow": {
+  "tuning": [
+   "hu_preflop_0001"
+  ],
+  "validation": [],
+  "held_out": []
+ },
+ "outputs": {
+  "session_docs": "docs/observer_sessions.md",
+  "robustness": "results/validation/observer_robustness_v1.json",
+  "soak_1h": "results/validation/live_observer_soak_1h.json",
+  "mc_calibration": "results/validation/mc_error_calibration.json",
+  "rollout_response": "results/validation/rollout_response_v1.json"
+ },
+ "unresolved": [
+  "worker restarts kill background processes: long runs must be resumed from checkpoints (see long_running)",
+  "Phase 71 1h soak running since 10:00 (log /home/user/pa_ckpt/soak_1h.log); question: does RSS/object count plateau once tracker event history trims at 4000; stop condition: 60 min wall; CPU oversubscribed (4 cores: 3 training + flop) so late_steps not representative",
+  "GATE FINDING: release solver rejected for all 169 BTN-open hands (156 HIGH_SEED_DISAGREEMENT, 13 UNSTABLE_ACROSS_CHECKPOINTS); facing-open spots OUTSIDE_ABSTRACTION. Solver effectively unused preflop. Revisit in Phase 64/65 (do not weaken gate without evidence).",
+  "Phase 62 run started ~10:22: question = are equity/rollout SEs honest (coverage of 95% CI, SE ratio) for n=100..5000; command = python experiments/mc_error_calibration.py --reps 100 --rollout-reps 40 --rollout-ref 40000; expected ~1.5-2h on contended CPU; no checkpointing (restart from scratch if killed); stop = completion; log /home/user/pa_ckpt/mc_calib.log",
+  "PRIVACY NOTE (Phase 77): real tuning frame shows table branding 'Squads with Quads $1,000 Freeroll' (not personal data; identifies the game). Names masked. Not rewriting history; report to user.",
+  "Phase 59/60 run started ~10:35: question = which rollout response model matches exact river equilibria on HELD-OUT games (agreement, EV regret); command = python experiments/rollout_response.py --iters 600 --sims 600 --range 10 --models behavior,mdf_range,mdf_calibrated; expected 20-40 min; stop = completion; log /home/user/pa_ckpt/rollout_response.log; adopt non-default only if held-out agreement AND regret improve",
+  "Phase 56 flop run RESTARTED ~10:27 with infoset-key cache (bucket encoder was 7.4 s/iter, now ~1 s): python experiments/flop_turn_abstraction.py flop --iters 300 --range 6 --turns 4 --rivers 3 -> results/validation/flop_abstraction_v1.json; expected ~2.5-3.5 h under contention; log /home/user/pa_ckpt/flop_abstraction.log; then turn: python experiments/flop_turn_abstraction.py turn --iters 300 --range 6 --rivers 3",
+  "PRODUCT DECISION for owner: promote seed0@200k artifact (files outside repo at /home/user/pa_ckpt/v2c/, lost with container)"
+ ],
+ "next_step": "Phase 80 RC: full suite incl slow, CI green, release_status update, final report",
+ "updated": "2026-10-09T15:22:19Z"
+}

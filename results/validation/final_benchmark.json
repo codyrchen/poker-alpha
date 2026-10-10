@@ -1,0 +1,146 @@
+{
+ "format": "pokeralpha.final_benchmark/v1",
+ "machine": "4-vCPU cloud container, CPython, single process per measurement",
+ "offline_training": {
+  "mccfr_iterations_per_second_single_core": 30.102163910192406,
+  "training_runs": {
+   "0": {
+    "iterations": 300000,
+    "wall_clock_seconds": 8407.125163961,
+    "checkpoint_mb": 27.758336,
+    "infosets": 86615
+   },
+   "1": {
+    "iterations": 300000,
+    "wall_clock_seconds": 8493.552917294,
+    "checkpoint_mb": 27.67602,
+    "infosets": 86366
+   },
+   "2": {
+    "iterations": 300000,
+    "wall_clock_seconds": 8402.773210886999,
+    "checkpoint_mb": 27.678724,
+    "infosets": 86375
+   }
+  },
+  "artifact_bytes": 1613612
+ },
+ "online": {
+  "strategy_artifact_load": {
+   "median_ms": 297.426411001652,
+   "p95_ms": 332.49899499787716,
+   "reps": 3
+  },
+  "sources": {
+   "manual (HU 100BB)": {
+    "observe": {
+     "median_ms": 0.01741200321703218,
+     "p95_ms": 0.04159099989919923,
+     "reps": 15
+    },
+    "analyze": {
+     "solver if eligible, else heuristic (equity 1500 sims)": {
+      "median_ms": 73.17795999915688,
+      "p95_ms": 79.74873900093371,
+      "reps": 15,
+      "method_used": "solver"
+     },
+     "heuristic (equity 1500 sims, no solver)": {
+      "median_ms": 74.96535599784693,
+      "p95_ms": 88.86387600068701,
+      "reps": 15,
+      "method_used": "heuristic fallback"
+     },
+     "rollout 400 sims (no solver)": {
+      "median_ms": 154.65504400344798,
+      "p95_ms": 160.82427999936044,
+      "reps": 5,
+      "method_used": "Monte Carlo rollout"
+     }
+    }
+   },
+   "simulation (6-max)": {
+    "observe": {
+     "median_ms": 0.03013400055351667,
+     "p95_ms": 0.05934799992246553,
+     "reps": 15
+    },
+    "analyze": {
+     "solver if eligible, else heuristic (equity 1500 sims)": {
+      "median_ms": 100.77877200092189,
+      "p95_ms": 109.36965200016857,
+      "reps": 15,
+      "method_used": "heuristic fallback"
+     },
+     "heuristic (equity 1500 sims, no solver)": {
+      "median_ms": 94.90933200140717,
+      "p95_ms": 107.22252999767079,
+      "reps": 15,
+      "method_used": "heuristic fallback"
+     },
+     "rollout 400 sims (no solver)": {
+      "median_ms": 232.71007999937865,
+      "p95_ms": 244.46498399993288,
+      "reps": 5,
+      "method_used": "Monte Carlo rollout"
+     }
+    }
+   },
+   "hand_history": {
+    "observe": {
+     "median_ms": 0.9247210000467021,
+     "p95_ms": 1.2784330028807744,
+     "reps": 15
+    },
+    "analyze": {
+     "solver if eligible, else heuristic (equity 1500 sims)": {
+      "median_ms": 87.64951000193832,
+      "p95_ms": 89.62627200162387,
+      "reps": 15,
+      "method_used": "heuristic fallback"
+     },
+     "heuristic (equity 1500 sims, no solver)": {
+      "median_ms": 87.85464500033413,
+      "p95_ms": 93.7479739986884,
+      "reps": 15,
+      "method_used": "heuristic fallback"
+     },
+     "rollout 400 sims (no solver)": {
+      "median_ms": 191.31124100022134,
+      "p95_ms": 224.00612700221245,
+      "reps": 5,
+      "method_used": "Monte Carlo rollout"
+     }
+    }
+   },
+   "screenshot (synthetic, 3 frames)": {
+    "observe": {
+     "median_ms": 247.91452199860942,
+     "p95_ms": 288.06503400119254,
+     "reps": 5
+    },
+    "analyze": {
+     "solver if eligible, else heuristic (equity 1500 sims)": {
+      "median_ms": 78.37100899996585,
+      "p95_ms": 80.76804899974377,
+      "reps": 15,
+      "method_used": "heuristic fallback"
+     },
+     "heuristic (equity 1500 sims, no solver)": {
+      "median_ms": 77.80965200072387,
+      "p95_ms": 88.55066700198222,
+      "reps": 15,
+      "method_used": "heuristic fallback"
+     },
+     "rollout 400 sims (no solver)": {
+      "median_ms": 186.7569449968869,
+      "p95_ms": 217.7890170023602,
+      "reps": 5,
+      "method_used": "Monte Carlo rollout"
+     }
+    }
+   }
+  }
+ },
+ "note": "online latency excludes training; solver lookups are dictionary reads after a one-off artifact load; equity and rollouts dominate online time"
+}

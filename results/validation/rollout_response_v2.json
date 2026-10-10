@@ -1,0 +1,66 @@
+{
+ "format": "pokeralpha.rollout_response_decision/v1",
+ "source": "results/validation/rollout_response_v1.json",
+ "question": "does an interpretable range-relative response model (mdf_range / mdf_calibrated) improve held-out action selection AND EV regret vs exact river equilibria?",
+ "adoption_rule": "adopt only if held-out agreement is higher AND held-out mean regret is lower than the current default",
+ "calibration_fit": {
+  "defend_share": "a + b/(1+s)",
+  "a_b": [
+   -0.009668786958735492,
+   0.9982867182395804
+  ]
+ },
+ "held_out": {
+  "behavior": {
+   "decisions": 480,
+   "agreement": 0.6125,
+   "mean_regret_bb": 0.23999026638479612,
+   "max_regret_bb": 4.432985920084381,
+   "mean_ev_bias_bb": 0.777465899274738,
+   "bet_size_bias_pot": 0.11411036067965798,
+   "bluff_bet_freq": {
+    "rollout": 0.4125,
+    "equilibrium": 0.3354726144981539
+   },
+   "value_bet_freq": {
+    "rollout": 0.725,
+    "equilibrium": 0.5861718937705196
+   }
+  },
+  "mdf_range": {
+   "decisions": 480,
+   "agreement": 0.5604166666666667,
+   "mean_regret_bb": 0.26346565284243745,
+   "max_regret_bb": 4.450043266152122,
+   "mean_ev_bias_bb": 1.0802933690657122,
+   "bet_size_bias_pot": 0.445360360679658,
+   "bluff_bet_freq": {
+    "rollout": 0.4875,
+    "equilibrium": 0.3354726144981539
+   },
+   "value_bet_freq": {
+    "rollout": 0.775,
+    "equilibrium": 0.5861718937705196
+   }
+  },
+  "mdf_calibrated": {
+   "decisions": 480,
+   "agreement": 0.5291666666666667,
+   "mean_regret_bb": 0.2960012710025989,
+   "max_regret_bb": 4.450043266152122,
+   "mean_ev_bias_bb": 1.1636984316703187,
+   "bet_size_bias_pot": 0.7318186940129913,
+   "bluff_bet_freq": {
+    "rollout": 0.6583333333333333,
+    "equilibrium": 0.3354726144981539
+   },
+   "value_bet_freq": {
+    "rollout": 0.75,
+    "equilibrium": 0.5861718937705196
+   }
+  }
+ },
+ "pilot_note": "a 4-game pilot had suggested mdf_range (0.75 vs 0.31 agreement); the 96-game run with a calibration / held-out split does not reproduce it",
+ "decision": "NOT ADOPTED: default stays response='behavior'. mdf_range and mdf_calibrated are available as opt-in options only.",
+ "why": "the responder-side fold frequency of mdf models is closer to equilibrium (fitted defend share a=-0.01, b=1.00: equilibrium defence ~= MDF), but hero-side decisions get worse: never-raising responders make bets look safer (EV bias +1.08 / +1.16 BB vs +0.78) and the rollout over-bets (bluff 0.49-0.66 vs equilibrium 0.34)."
+}

@@ -1,0 +1,79 @@
+{
+ "format": "pokeralpha.crossplay/v1",
+ "deals": 10000,
+ "note": "duplicate deals, seat swap; abstract game only",
+ "matches": {
+  "2M_s0 vs 1M_s0": {
+   "deals": 10000,
+   "mean_bb_per_hand": 0.1234894381088,
+   "stderr_bb_per_hand": 0.11810376556539007,
+   "bb_per_100": 12.34894381088,
+   "ci95_bb_per_100": [
+    -10.799394239936452,
+    35.49728186169645
+   ],
+   "a_as_button_bb_per_hand": 0.6433076209016001,
+   "a_as_bb_bb_per_hand": -0.396328744684
+  },
+  "2M_s1 vs 1M_s1": {
+   "deals": 10000,
+   "mean_bb_per_hand": 0.20700114762799998,
+   "stderr_bb_per_hand": 0.11441250561602309,
+   "bb_per_100": 20.7001147628,
+   "ci95_bb_per_100": [
+    -1.7247363379405272,
+    43.124965863540524
+   ],
+   "a_as_button_bb_per_hand": 0.11081525553199995,
+   "a_as_bb_bb_per_hand": 0.303187039724
+  },
+  "2M_s2 vs 1M_s2": {
+   "deals": 10000,
+   "mean_bb_per_hand": 0.280618323251288,
+   "stderr_bb_per_hand": 0.11554241046533219,
+   "bb_per_100": 28.061832325128798,
+   "ci95_bb_per_100": [
+    5.4155198739236905,
+    50.70814477633391
+   ],
+   "a_as_button_bb_per_hand": 0.45815235261776005,
+   "a_as_bb_bb_per_hand": 0.10308429388481599
+  },
+  "2M_s0 vs 2M_s1": {
+   "deals": 10000,
+   "mean_bb_per_hand": 0.053506286839519974,
+   "stderr_bb_per_hand": 0.1040934576613456,
+   "bb_per_100": 5.350628683951998,
+   "ci95_bb_per_100": [
+    -15.051689017671741,
+    25.752946385575736
+   ],
+   "a_as_button_bb_per_hand": 0.002265249231520033,
+   "a_as_bb_bb_per_hand": 0.10474732444751998
+  },
+  "2M_s0 vs 2M_s2": {
+   "deals": 10000,
+   "mean_bb_per_hand": 0.0027657405731999945,
+   "stderr_bb_per_hand": 0.10682673496316765,
+   "bb_per_100": 0.27657405731999946,
+   "ci95_bb_per_100": [
+    -20.66146599546086,
+    21.21461411010086
+   ],
+   "a_as_button_bb_per_hand": 0.35643579079040005,
+   "a_as_bb_bb_per_hand": -0.350904309644
+  },
+  "2M_s1 vs 2M_s2": {
+   "deals": 10000,
+   "mean_bb_per_hand": -0.04191156186959999,
+   "stderr_bb_per_hand": 0.10785480893417418,
+   "bb_per_100": -4.191156186959999,
+   "ci95_bb_per_100": [
+    -25.33069873805814,
+    16.94838636413814
+   ],
+   "a_as_button_bb_per_hand": 0.052767299408000005,
+   "a_as_bb_bb_per_hand": -0.13659042314719996
+  }
+ }
+}

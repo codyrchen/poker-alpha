@@ -1,0 +1,111 @@
+{
+ "format": "pokeralpha.abstraction_error_river_pct/v1",
+ "rows": [
+  {
+   "name": "dry_high",
+   "board": [
+    "Ks",
+    "7d",
+    "2c",
+    "Qh",
+    "4s"
+   ],
+   "range_sizes": [
+    14,
+    14
+   ],
+   "encoders": {
+    "raw": {
+     "abstract_infosets": 476,
+     "seconds": 182.1,
+     "infoset_table_kb_estimate": 202.4,
+     "exploitability_in_raw_game": 0.005642237989292975,
+     "ev_p0": 1.8874387512250925,
+     "ev_error_vs_raw": 0.0,
+     "weighted_l1_vs_raw": 0.0
+    },
+    "compact": {
+     "abstract_infosets": 99,
+     "seconds": 169.6,
+     "infoset_table_kb_estimate": 43.4,
+     "exploitability_in_raw_game": 9.242598900301594,
+     "ev_p0": 2.330840062306778,
+     "ev_error_vs_raw": 0.4434013110816857,
+     "weighted_l1_vs_raw": 0.19035005198806576
+    },
+    "compact_river_pct10": {
+     "abstract_infosets": 126,
+     "seconds": 218.9,
+     "infoset_table_kb_estimate": 55.3,
+     "exploitability_in_raw_game": 8.019606267717093,
+     "ev_p0": 2.2265082726366145,
+     "ev_error_vs_raw": 0.339069521411522,
+     "weighted_l1_vs_raw": 0.21044341377786568
+    },
+    "compact_river_pct20": {
+     "abstract_infosets": 171,
+     "seconds": 220.3,
+     "infoset_table_kb_estimate": 75.2,
+     "exploitability_in_raw_game": 0.5723725371459409,
+     "ev_p0": 1.8916420579367512,
+     "ev_error_vs_raw": 0.004203306711658694,
+     "weighted_l1_vs_raw": 0.1562620767021847
+    }
+   },
+   "pot_bb": 5.0
+  },
+  {
+   "name": "four_flush",
+   "board": [
+    "Qh",
+    "9h",
+    "5h",
+    "2h",
+    "Kc"
+   ],
+   "range_sizes": [
+    14,
+    14
+   ],
+   "encoders": {
+    "raw": {
+     "abstract_infosets": 476,
+     "seconds": 176.3,
+     "infoset_table_kb_estimate": 202.9,
+     "exploitability_in_raw_game": 0.018580889304780968,
+     "ev_p0": 1.9193314369868046,
+     "ev_error_vs_raw": 0.0,
+     "weighted_l1_vs_raw": 0.0
+    },
+    "compact": {
+     "abstract_infosets": 63,
+     "seconds": 175.0,
+     "infoset_table_kb_estimate": 27.6,
+     "exploitability_in_raw_game": 2.235604437894647,
+     "ev_p0": 2.2366696689103116,
+     "ev_error_vs_raw": 0.31733823192350696,
+     "weighted_l1_vs_raw": 0.5124265883956439
+    },
+    "compact_river_pct10": {
+     "abstract_infosets": 117,
+     "seconds": 225.6,
+     "infoset_table_kb_estimate": 51.4,
+     "exploitability_in_raw_game": 0.49394656570740014,
+     "ev_p0": 1.9135783659547172,
+     "ev_error_vs_raw": 0.005753071032087442,
+     "weighted_l1_vs_raw": 0.24854204004571548
+    },
+    "compact_river_pct20": {
+     "abstract_infosets": 162,
+     "seconds": 233.6,
+     "infoset_table_kb_estimate": 71.3,
+     "exploitability_in_raw_game": 0.27499660035929896,
+     "ev_p0": 1.9397754013249409,
+     "ev_error_vs_raw": 0.020443964338136222,
+     "weighted_l1_vs_raw": 0.1895192830702678
+    }
+   },
+   "pot_bb": 5.0
+  }
+ ]
+}

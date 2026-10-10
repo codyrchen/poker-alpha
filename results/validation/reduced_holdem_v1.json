@@ -1,0 +1,2320 @@
+{
+ "format": "pokeralpha.reduced_holdem/v1",
+ "machine": "4-vCPU container, CPython",
+ "note": "exact = exact for the defined reduced game; reference = CFR+ average strategy",
+ "preflop": {
+  "signature": "ReducedPreflopGame:v1:ranks=AKQJT:suits=sh:stack=10:open=2.5:eq=4000:seed=0",
+  "infosets": 360,
+  "reference": {
+   "algorithm": "CFR+",
+   "iterations": 2000,
+   "game_value_p0": -0.04533552970236948,
+   "exploitability": 2.825603726745035e-05,
+   "br_value_vs_p1_strategy": -0.04530944164744548,
+   "br_value_vs_p0_strategy": 0.04536595372198038,
+   "seconds": 458.5
+  },
+  "cfr": [
+   {
+    "iterations": 10,
+    "exploitability": 0.04108288500640604,
+    "ev_error": 0.004600241750726784,
+    "weighted_l1": 0.4787011532397215
+   },
+   {
+    "iterations": 30,
+    "exploitability": 0.019013242927368973,
+    "ev_error": 0.0005627230865642222,
+    "weighted_l1": 0.3741550634799835
+   },
+   {
+    "iterations": 100,
+    "exploitability": 0.007697086213494454,
+    "ev_error": 0.0007272347554077296,
+    "weighted_l1": 0.251578654793957
+   },
+   {
+    "iterations": 300,
+    "exploitability": 0.003620932373378835,
+    "ev_error": 0.0003382163819966172,
+    "weighted_l1": 0.1650158417280331
+   },
+   {
+    "iterations": 1000,
+    "exploitability": 0.0016893114141247473,
+    "ev_error": 4.0709264917941634e-05,
+    "weighted_l1": 0.09637142372003667
+   }
+  ],
+  "cfr_plus": [
+   {
+    "iterations": 10,
+    "exploitability": 0.05875337879655078,
+    "ev_error": 0.024674655066462728,
+    "weighted_l1": 0.52582124265175
+   },
+   {
+    "iterations": 30,
+    "exploitability": 0.01578258318965776,
+    "ev_error": 0.005925822433552656,
+    "weighted_l1": 0.3690858002174688
+   },
+   {
+    "iterations": 100,
+    "exploitability": 0.0035023191116231797,
+    "ev_error": 0.0009994055911549254,
+    "weighted_l1": 0.14962548492288266
+   },
+   {
+    "iterations": 300,
+    "exploitability": 0.0006029808406450045,
+    "ev_error": 2.9717388680759738e-05,
+    "weighted_l1": 0.06471659329594555
+   },
+   {
+    "iterations": 1000,
+    "exploitability": 8.578317940703337e-05,
+    "ev_error": 1.058264868193659e-05,
+    "weighted_l1": 0.012639912148752014
+   }
+  ],
+  "mccfr": {
+   "0": [
+    {
+     "iterations": 100,
+     "seconds": 0.1,
+     "exploitability": 0.5788189657295243,
+     "ev_error": 0.14335941755888776,
+     "weighted_l1": 1.1373559259749155
+    },
+    {
+     "iterations": 300,
+     "seconds": 0.6,
+     "exploitability": 0.4266592427261159,
+     "ev_error": 0.17161347885476272,
+     "weighted_l1": 1.0191295940870344
+    },
+    {
+     "iterations": 1000,
+     "seconds": 1.5,
+     "exploitability": 0.25909760739462906,
+     "ev_error": 0.06940434670762323,
+     "weighted_l1": 0.8766896232816755
+    },
+    {
+     "iterations": 3000,
+     "seconds": 3.7,
+     "exploitability": 0.13974326879041682,
+     "ev_error": 0.009442442932770793,
+     "weighted_l1": 0.7185824755050813
+    },
+    {
+     "iterations": 10000,
+     "seconds": 10.5,
+     "exploitability": 0.0658039695394779,
+     "ev_error": 0.00016308433439933545,
+     "weighted_l1": 0.5695510123240699
+    },
+    {
+     "iterations": 30000,
+     "seconds": 29.6,
+     "exploitability": 0.031618223404726586,
+     "ev_error": 5.293465696588895e-05,
+     "weighted_l1": 0.4464591313999951
+    },
+    {
+     "iterations": 100000,
+     "seconds": 95.7,
+     "exploitability": 0.016007369669377287,
+     "ev_error": 0.001335921672031594,
+     "weighted_l1": 0.3049061162690229
+    },
+    {
+     "iterations": 300000,
+     "seconds": 285.2,
+     "exploitability": 0.006970457088837249,
+     "ev_error": 0.0006377929431431728,
+     "weighted_l1": 0.2352934237710049
+    }
+   ],
+   "1": [
+    {
+     "iterations": 100,
+     "seconds": 0.1,
+     "exploitability": 0.5587931622943932,
+     "ev_error": 0.10949522445906713,
+     "weighted_l1": 1.0721024508197645
+    },
+    {
+     "iterations": 300,
+     "seconds": 0.5,
+     "exploitability": 0.4727709355523688,
+     "ev_error": 0.07972114958502774,
+     "weighted_l1": 0.9844587768284407
+    },
+    {
+     "iterations": 1000,
+     "seconds": 1.5,
+     "exploitability": 0.2788939747659531,
+     "ev_error": 0.04666346214882284,
+     "weighted_l1": 0.8826052440125103
+    },
+    {
+     "iterations": 3000,
+     "seconds": 3.7,
+     "exploitability": 0.13884854653745193,
+     "ev_error": 0.012108214767047813,
+     "weighted_l1": 0.7213080623127557
+    },
+    {
+     "iterations": 10000,
+     "seconds": 10.5,
+     "exploitability": 0.06278475252664587,
+     "ev_error": 0.010693122813567463,
+     "weighted_l1": 0.5498194002684146
+    },
+    {
+     "iterations": 30000,
+     "seconds": 30.7,
+     "exploitability": 0.03255126548561502,
+     "ev_error": 0.0031163992896036177,
+     "weighted_l1": 0.43575894340608284
+    },
+    {
+     "iterations": 100000,
+     "seconds": 102.2,
+     "exploitability": 0.014335859264765494,
+     "ev_error": 0.002491355095433301,
+     "weighted_l1": 0.36605357521731957
+    },
+    {
+     "iterations": 300000,
+     "seconds": 288.2,
+     "exploitability": 0.007080023466349821,
+     "ev_error": 0.001054302409458252,
+     "weighted_l1": 0.2567040585714818
+    }
+   ],
+   "2": [
+    {
+     "iterations": 100,
+     "seconds": 0.1,
+     "exploitability": 0.5967870324357545,
+     "ev_error": 0.14675969351065218,
+     "weighted_l1": 1.1329472341921243
+    },
+    {
+     "iterations": 300,
+     "seconds": 0.6,
+     "exploitability": 0.47831235578143544,
+     "ev_error": 0.18118386587658167,
+     "weighted_l1": 1.0314127023564132
+    },
+    {
+     "iterations": 1000,
+     "seconds": 1.5,
+     "exploitability": 0.28130277144992033,
+     "ev_error": 0.06015395112132473,
+     "weighted_l1": 0.885042393082268
+    },
+    {
+     "iterations": 3000,
+     "seconds": 3.6,
+     "exploitability": 0.15228504003090462,
+     "ev_error": 0.004792833121039765,
+     "weighted_l1": 0.7307242518239856
+    },
+    {
+     "iterations": 10000,
+     "seconds": 10.5,
+     "exploitability": 0.06383320997261109,
+     "ev_error": 0.01157297273996212,
+     "weighted_l1": 0.5512996902627543
+    },
+    {
+     "iterations": 30000,
+     "seconds": 29.8,
+     "exploitability": 0.033461958638525115,
+     "ev_error": 0.001269088770614435,
+     "weighted_l1": 0.42760114183148745
+    },
+    {
+     "iterations": 100000,
+     "seconds": 94.6,
+     "exploitability": 0.013387986112979599,
+     "ev_error": 0.0011679678857843337,
+     "weighted_l1": 0.35770034379821913
+    },
+    {
+     "iterations": 300000,
+     "seconds": 280.8,
+     "exploitability": 0.007862695974872741,
+     "ev_error": 0.0015863309254651181,
+     "weighted_l1": 0.25179813009962015
+    }
+   ]
+  },
+  "game": {
+   "deck": "AKQJT x {s,h} (10 cards, 45 hands)",
+   "stack_bb": 10,
+   "blinds": "0.5/1",
+   "actions": "fold / call-or-limp / raise to 2.5 BB / all-in",
+   "showdown": "expected pot share from a seeded equity table (4,000 boards per pair)"
+  }
+ },
+ "river": [
+  {
+   "signature": "RiverSubgame:v1:dry_high polarized vs bluff-catcher:pot=10:stack=20:bets=(0.5, 1.0):cap=2",
+   "infosets": 336,
+   "reference": {
+    "algorithm": "CFR+",
+    "iterations": 1500,
+    "game_value_p0": 2.7880955467857773,
+    "exploitability": 0.0005159868337343276,
+    "br_value_vs_p1_strategy": 2.7886038886477524,
+    "br_value_vs_p0_strategy": -2.787571914980284,
+    "seconds": 311.8
+   },
+   "cfr": [
+    {
+     "iterations": 10,
+     "exploitability": 0.7198521049113817,
+     "ev_error": 0.497179626030404,
+     "weighted_l1": 0.8532300110141684
+    },
+    {
+     "iterations": 30,
+     "exploitability": 0.4880698346486334,
+     "ev_error": 0.3522122032442119,
+     "weighted_l1": 0.6211241797883919
+    },
+    {
+     "iterations": 100,
+     "exploitability": 0.19640569012934872,
+     "ev_error": 0.16602318362953694,
+     "weighted_l1": 0.4834493901943322
+    },
+    {
+     "iterations": 300,
+     "exploitability": 0.07995154681190053,
+     "ev_error": 0.0881189193235774,
+     "weighted_l1": 0.3165074818496823
+    }
+   ],
+   "cfr_plus": [
+    {
+     "iterations": 10,
+     "exploitability": 1.0855616250096796,
+     "ev_error": 0.7024565487636836,
+     "weighted_l1": 0.83801874805905
+    },
+    {
+     "iterations": 30,
+     "exploitability": 0.27773539314081774,
+     "ev_error": 0.14251878379267202,
+     "weighted_l1": 0.5234021114386246
+    },
+    {
+     "iterations": 100,
+     "exploitability": 0.04044757480008965,
+     "ev_error": 0.03356008442055591,
+     "weighted_l1": 0.19983422111439883
+    },
+    {
+     "iterations": 300,
+     "exploitability": 0.006618142578155295,
+     "ev_error": 0.006165794326457696,
+     "weighted_l1": 0.03398159285285616
+    }
+   ],
+   "mccfr": {
+    "0": [
+     {
+      "iterations": 300,
+      "seconds": 0.2,
+      "exploitability": 2.8708870544113134,
+      "ev_error": 0.28010251036352996,
+      "weighted_l1": 1.0024563311303245
+     },
+     {
+      "iterations": 1000,
+      "seconds": 0.8,
+      "exploitability": 1.7086695916355885,
+      "ev_error": 0.0473053759520603,
+      "weighted_l1": 1.0236885892207415
+     },
+     {
+      "iterations": 3000,
+      "seconds": 2.2,
+      "exploitability": 0.7128044546668073,
+      "ev_error": 0.2803646140037439,
+      "weighted_l1": 0.8588133089227393
+     },
+     {
+      "iterations": 10000,
+      "seconds": 6.0,
+      "exploitability": 0.3580178796736113,
+      "ev_error": 0.14199388386006095,
+      "weighted_l1": 0.6758763881986447
+     },
+     {
+      "iterations": 30000,
+      "seconds": 16.6,
+      "exploitability": 0.19980610118996545,
+      "ev_error": 0.018696502368875656,
+      "weighted_l1": 0.5254436724351511
+     },
+     {
+      "iterations": 100000,
+      "seconds": 52.6,
+      "exploitability": 0.10530897239345327,
+      "ev_error": 0.01750513566719558,
+      "weighted_l1": 0.30718332778142665
+     }
+    ],
+    "1": [
+     {
+      "iterations": 300,
+      "seconds": 0.2,
+      "exploitability": 2.936396386792332,
+      "ev_error": 0.10037430129711078,
+      "weighted_l1": 1.1518210288794912
+     },
+     {
+      "iterations": 1000,
+      "seconds": 0.8,
+      "exploitability": 1.9248453103037881,
+      "ev_error": 0.0177541663774905,
+      "weighted_l1": 1.0886589901536363
+     },
+     {
+      "iterations": 3000,
+      "seconds": 2.1,
+      "exploitability": 0.7821415083450083,
+      "ev_error": 0.09989626730881929,
+      "weighted_l1": 0.9356222048323564
+     },
+     {
+      "iterations": 10000,
+      "seconds": 5.7,
+      "exploitability": 0.32689493781901,
+      "ev_error": 0.1234516286522207,
+      "weighted_l1": 0.6528453758308475
+     },
+     {
+      "iterations": 30000,
+      "seconds": 16.4,
+      "exploitability": 0.17766069524104577,
+      "ev_error": 0.06254885402594201,
+      "weighted_l1": 0.43267400250998034
+     },
+     {
+      "iterations": 100000,
+      "seconds": 52.0,
+      "exploitability": 0.07393972238832425,
+      "ev_error": 0.03231977249323181,
+      "weighted_l1": 0.2542760346097674
+     }
+    ],
+    "2": [
+     {
+      "iterations": 300,
+      "seconds": 0.2,
+      "exploitability": 3.0763045356068814,
+      "ev_error": 0.5074780200722229,
+      "weighted_l1": 0.9844303717099471
+     },
+     {
+      "iterations": 1000,
+      "seconds": 0.8,
+      "exploitability": 1.6232872354307404,
+      "ev_error": 0.14373090321115,
+      "weighted_l1": 1.0050512480962943
+     },
+     {
+      "iterations": 3000,
+      "seconds": 2.0,
+      "exploitability": 0.7030392674686021,
+      "ev_error": 0.18462801688214103,
+      "weighted_l1": 0.8302851357186929
+     },
+     {
+      "iterations": 10000,
+      "seconds": 5.9,
+      "exploitability": 0.30717932848546314,
+      "ev_error": 0.07437060131353368,
+      "weighted_l1": 0.5700697829746891
+     },
+     {
+      "iterations": 30000,
+      "seconds": 16.3,
+      "exploitability": 0.18050544888973685,
+      "ev_error": 0.019169505195527847,
+      "weighted_l1": 0.4644864388371211
+     },
+     {
+      "iterations": 100000,
+      "seconds": 52.4,
+      "exploitability": 0.06698672701257258,
+      "ev_error": 0.014908035213754278,
+      "weighted_l1": 0.26484753675807005
+     }
+    ]
+   },
+   "rollout_vs_equilibrium": [
+    {
+     "hero": "3c5c",
+     "equilibrium_mix": {
+      "c": 0.0009157457984265426,
+      "b50": 1.4626241784400891e-05,
+      "b100": 0.00012148540781315658,
+      "a": 0.998948142551976
+     },
+     "equilibrium_bet_freq": 0.9990842542015734,
+     "rollout_recommendation": "all_in",
+     "rollout_method": "Monte Carlo rollout",
+     "agrees": true
+    },
+    {
+     "hero": "6c5s",
+     "equilibrium_mix": {
+      "c": 0.9964108676065591,
+      "b50": 1.6376549281581486e-05,
+      "b100": 3.053053398584562e-05,
+      "a": 0.00354222531017354
+     },
+     "equilibrium_bet_freq": 0.0035891323934409414,
+     "rollout_recommendation": "all_in",
+     "rollout_method": "Monte Carlo rollout",
+     "agrees": false
+    },
+    {
+     "hero": "8d5s",
+     "equilibrium_mix": {
+      "c": 0.3287924357395235,
+      "b50": 1.626940517872378e-05,
+      "b100": 4.541054889183027e-05,
+      "a": 0.671145884306406
+     },
+     "equilibrium_bet_freq": 0.6712075642604765,
+     "rollout_recommendation": "all_in",
+     "rollout_method": "Monte Carlo rollout",
+     "agrees": true
+    },
+    {
+     "hero": "4c2h",
+     "equilibrium_mix": {
+      "c": 3.4201971555226535e-06,
+      "b50": 1.7655342593871474e-05,
+      "b100": 0.00010785913902821281,
+      "a": 0.9998710653212225
+     },
+     "equilibrium_bet_freq": 0.9999965798028445,
+     "rollout_recommendation": "bet_75",
+     "rollout_method": "Monte Carlo rollout",
+     "agrees": true
+    },
+    {
+     "hero": "4cQs",
+     "equilibrium_mix": {
+      "c": 3.457098125522953e-06,
+      "b50": 2.8446916415034405e-05,
+      "b100": 0.00016322417197693845,
+      "a": 0.9998048718134825
+     },
+     "equilibrium_bet_freq": 0.9999965429018745,
+     "rollout_recommendation": "bet_75",
+     "rollout_method": "Monte Carlo rollout",
+     "agrees": true
+    },
+    {
+     "hero": "Kc7s",
+     "equilibrium_mix": {
+      "c": 3.3851773183446305e-06,
+      "b50": 1.2402257955528495e-05,
+      "b100": 5.861410318777539e-05,
+      "a": 0.9999255984615383
+     },
+     "equilibrium_bet_freq": 0.9999966148226817,
+     "rollout_recommendation": "bet_100",
+     "rollout_method": "Monte Carlo rollout",
+     "agrees": true
+    }
+   ],
+   "compact_strategy_lookup": "not compatible: subgame pot 10 / stack 20 / bets 50%, 100%, all-in, cap 2 differ from the locked 100 BB tree; no lookup made",
+   "name": "dry_high polarized vs bluff-catcher",
+   "board": [
+    "Ks",
+    "7d",
+    "2c",
+    "Qh",
+    "4s"
+   ],
+   "range0": [
+    "3c5c",
+    "3d5s",
+    "3c6s",
+    "3h6h",
+    "6c5s",
+    "5s6s",
+    "3d8h",
+    "5c8h",
+    "8d5s",
+    "8c6h",
+    "8h6s",
+    "3d9d",
+    "4c2h",
+    "7c2h",
+    "4c7h",
+    "Qc2s",
+    "4cQs",
+    "Qc7h",
+    "2dKd",
+    "Kc4d",
+    "Kc7s",
+    "KcQs",
+    "4d4h",
+    "KdKh"
+   ],
+   "range1": [
+    "2d8d",
+    "9d2s",
+    "Jc2d",
+    "2dAh",
+    "4c5c",
+    "3d4h",
+    "4h6s",
+    "9c4d",
+    "4dTs",
+    "4cAd",
+    "5h5s",
+    "3h7s",
+    "6c7s",
+    "8d7h",
+    "9h7s",
+    "7cJs",
+    "Ad7s",
+    "TcTd",
+    "Qc3h",
+    "Qd5h",
+    "8cQd",
+    "Qc9s",
+    "ThQs",
+    "QcAh"
+   ],
+   "pot": 10,
+   "stack": 20
+  },
+  {
+   "signature": "RiverSubgame:v1:paired uncapped vs capped:pot=10:stack=20:bets=(0.5, 1.0):cap=2",
+   "infosets": 336,
+   "reference": {
+    "algorithm": "CFR+",
+    "iterations": 1500,
+    "game_value_p0": -0.7429299948431908,
+    "exploitability": 0.00015784115177430724,
+    "br_value_vs_p1_strategy": -0.7427501603978673,
+    "br_value_vs_p0_strategy": 0.743065842701416,
+    "seconds": 301.9
+   },
+   "cfr": [
+    {
+     "iterations": 10,
+     "exploitability": 0.6508173625367231,
+     "ev_error": 0.08242220901356156,
+     "weighted_l1": 0.63870715340192
+    },
+    {
+     "iterations": 30,
+     "exploitability": 0.239824728038192,
+     "ev_error": 0.02808188000289258,
+     "weighted_l1": 0.4820707125471859
+    },
+    {
+     "iterations": 100,
+     "exploitability": 0.13922197821217924,
+     "ev_error": 5.667162908606915e-05,
+     "weighted_l1": 0.3950726019742342
+    },
+    {
+     "iterations": 300,
+     "exploitability": 0.07126187423878488,
+     "ev_error": 0.00014798362302914647,
+     "weighted_l1": 0.3145655070263628
+    }
+   ],
+   "cfr_plus": [
+    {
+     "iterations": 10,
+     "exploitability": 1.180970362228959,
+     "ev_error": 0.9211026122515998,
+     "weighted_l1": 0.9238493395066186
+    },
+    {
+     "iterations": 30,
+     "exploitability": 0.18867997005795095,
+     "ev_error": 0.03156304600249804,
+     "weighted_l1": 0.41769791760557756
+    },
+    {
+     "iterations": 100,
+     "exploitability": 0.027108471725864836,
+     "ev_error": 0.006609263765356088,
+     "weighted_l1": 0.17464407334644053
+    },
+    {
+     "iterations": 300,
+     "exploitability": 0.00387568026468621,
+     "ev_error": 0.000918897941352248,
+     "weighted_l1": 0.04533990058061904
+    }
+   ],
+   "mccfr": {
+    "0": [
+     {
+      "iterations": 300,
+      "seconds": 0.2,
+      "exploitability": 3.785183499961393,
+      "ev_error": 1.566585560540354,
+      "weighted_l1": 1.2184267808728693
+     },
+     {
+      "iterations": 1000,
+      "seconds": 0.8,
+      "exploitability": 2.264275439552107,
+      "ev_error": 1.1168728047665253,
+      "weighted_l1": 1.062045217588063
+     },
+     {
+      "iterations": 3000,
+      "seconds": 2.2,
+      "exploitability": 1.0627359693461782,
+      "ev_error": 0.2708825069874975,
+      "weighted_l1": 0.7741328285017973
+     },
+     {
+      "iterations": 10000,
+      "seconds": 6.7,
+      "exploitability": 0.40483978079064514,
+      "ev_error": 0.03564887753450763,
+      "weighted_l1": 0.539864382268114
+     },
+     {
+      "iterations": 30000,
+      "seconds": 18.9,
+      "exploitability": 0.20493123269151825,
+      "ev_error": 0.009058068589458013,
+      "weighted_l1": 0.43490998728342767
+     },
+     {
+      "iterations": 100000,
+      "seconds": 58.2,
+      "exploitability": 0.11232420086547668,
+      "ev_error": 0.01602220796538245,
+      "weighted_l1": 0.3614428105329144
+     }
+    ],
+    "1": [
+     {
+      "iterations": 300,
+      "seconds": 0.2,
+      "exploitability": 3.884355666709694,
+      "ev_error": 2.1188732874609806,
+      "weighted_l1": 1.256851001235968
+     },
+     {
+      "iterations": 1000,
+      "seconds": 0.8,
+      "exploitability": 2.1940783345003623,
+      "ev_error": 1.307522219954378,
+      "weighted_l1": 1.065340934733099
+     },
+     {
+      "iterations": 3000,
+      "seconds": 2.3,
+      "exploitability": 1.1390784975880963,
+      "ev_error": 0.4103945422857015,
+      "weighted_l1": 0.8146384595751981
+     },
+     {
+      "iterations": 10000,
+      "seconds": 6.7,
+      "exploitability": 0.5190646300890319,
+      "ev_error": 0.010213073825222962,
+      "weighted_l1": 0.6122595769978577
+     },
+     {
+      "iterations": 30000,
+      "seconds": 18.1,
+      "exploitability": 0.24072567029839692,
+      "ev_error": 0.03976342579718595,
+      "weighted_l1": 0.48699798578292575
+     },
+     {
+      "iterations": 100000,
+      "seconds": 57.6,
+      "exploitability": 0.10926552844899468,
+      "ev_error": 0.0010723069317299938,
+      "weighted_l1": 0.39263343843095794
+     }
+    ],
+    "2": [
+     {
+      "iterations": 300,
+      "seconds": 0.2,
+      "exploitability": 3.931548851227893,
+      "ev_error": 1.7104846847292627,
+      "weighted_l1": 1.357910954081507
+     },
+     {
+      "iterations": 1000,
+      "seconds": 0.8,
+      "exploitability": 2.6995393094681446,
+      "ev_error": 1.1368853055025818,
+      "weighted_l1": 1.1769072689270643
+     },
+     {
+      "iterations": 3000,
+      "seconds": 2.2,
+      "exploitability": 1.2593745741362432,
+      "ev_error": 0.6593980223005987,
+      "weighted_l1": 0.8951031195323814
+     },
+     {
+      "iterations": 10000,
+      "seconds": 6.4,
+      "exploitability": 0.4945698933098628,
+      "ev_error": 0.08162605678242107,
+      "weighted_l1": 0.6002441960766205
+     },
+     {
+      "iterations": 30000,
+      "seconds": 18.4,
+      "exploitability": 0.21474066541769837,
+      "ev_error": 0.00877317593747795,
+      "weighted_l1": 0.46964584545066634
+     },
+     {
+      "iterations": 100000,
+      "seconds": 58.6,
+      "exploitability": 0.09438410653332502,
+      "ev_error": 0.0033254022221492763,
+      "weighted_l1": 0.3183515168103201
+     }
+    ]
+   },
+   "rollout_vs_equilibrium": [
+    {
+     "hero": "QcJh",
+     "equilibrium_mix": {
+      "c": 0.3335811925609837,
+      "b50": 1.2491054245057784e-05,
+      "b100": 0.00016214739542244993,
+      "a": 0.6662441689893488
+     },
+     "equilibrium_bet_freq": 0.6664188074390163,
+     "rollout_recommendation": "all_in",
+     "rollout_method": "Monte Carlo rollout",
+     "agrees": true
+    },
+    {
+     "hero": "7dKh",
+     "equilibrium_mix": {
+      "c": 0.9999203884954811,
+      "b50": 3.0376445821590743e-05,
+      "b100": 3.9097957778363505e-05,
+      "a": 1.0137100919051176e-05
+     },
+     "equilibrium_bet_freq": 7.961150451885057e-05,
+     "rollout_recommendation": "all_in",
+     "rollout_method": "Monte Carlo rollout",
+     "agrees": false
+    },
+    {
+     "hero": "3hAh",
+     "equilibrium_mix": {
+      "c": 0.9999743135596745,
+      "b50": 1.90070501246602e-05,
+      "b100": 4.936027759610152e-06,
+      "a": 1.74336244120205e-06
+     },
+     "equilibrium_bet_freq": 2.568644032552303e-05,
+     "rollout_recommendation": "all_in",
+     "rollout_method": "Monte Carlo rollout",
+     "agrees": false
+    },
+    {
+     "hero": "9sAs",
+     "equilibrium_mix": {
+      "c": 0.9999687398484581,
+      "b50": 1.7975472382887696e-05,
+      "b100": 1.1177797854589467e-05,
+      "a": 2.106881304578295e-06
+     },
+     "equilibrium_bet_freq": 3.1260151541867565e-05,
+     "rollout_recommendation": "all_in",
+     "rollout_method": "Monte Carlo rollout",
+     "agrees": false
+    },
+    {
+     "hero": "5c2h",
+     "equilibrium_mix": {
+      "c": 0.9999633652264723,
+      "b50": 2.326973382136335e-05,
+      "b100": 1.114810871833826e-05,
+      "a": 2.216930987914546e-06
+     },
+     "equilibrium_bet_freq": 3.66347735276662e-05,
+     "rollout_recommendation": "all_in",
+     "rollout_method": "Monte Carlo rollout",
+     "agrees": false
+    },
+    {
+     "hero": "QcTs",
+     "equilibrium_mix": {
+      "c": 0.0003528439529170222,
+      "b50": 3.353180009767029e-05,
+      "b100": 0.0002761179439075108,
+      "a": 0.9993375063030778
+     },
+     "equilibrium_bet_freq": 0.999647156047083,
+     "rollout_recommendation": "bet_75",
+     "rollout_method": "Monte Carlo rollout",
+     "agrees": true
+    }
+   ],
+   "compact_strategy_lookup": "not compatible: subgame pot 10 / stack 20 / bets 50%, 100%, all-in, cap 2 differ from the locked 100 BB tree; no lookup made",
+   "name": "paired uncapped vs capped",
+   "board": [
+    "Td",
+    "Tc",
+    "4s",
+    "8h",
+    "2d"
+   ],
+   "range0": [
+    "QcJh",
+    "Kc3s",
+    "5dKd",
+    "6dKd",
+    "7dKh",
+    "9dKs",
+    "KdJh",
+    "KdQs",
+    "3hAh",
+    "5hAh",
+    "6hAs",
+    "Ah7s",
+    "9sAs",
+    "QcAc",
+    "KcAd",
+    "2c5c",
+    "5c2h",
+    "2h7h",
+    "9c2h",
+    "2hJs",
+    "QcTs",
+    "AcTs",
+    "2cTs",
+    "ThTs"
+   ],
+   "range1": [
+    "QcJh",
+    "3hKh",
+    "Kc6d",
+    "Kd7s",
+    "JcKs",
+    "KdQh",
+    "5cAh",
+    "6dAs",
+    "9cAc",
+    "JdAh",
+    "QsAs",
+    "2c7d",
+    "7d2h",
+    "9d2h",
+    "Qc2s",
+    "Ac2s",
+    "4c5d",
+    "4d7d",
+    "4c9c",
+    "4hJs",
+    "4hKs",
+    "6d6s",
+    "3d8d",
+    "8d5s"
+   ],
+   "pot": 10,
+   "stack": 20
+  },
+  {
+   "signature": "RiverSubgame:v1:four-straight strong vs strong:pot=10:stack=20:bets=(0.5, 1.0):cap=2",
+   "infosets": 336,
+   "reference": {
+    "algorithm": "CFR+",
+    "iterations": 1500,
+    "game_value_p0": 0.32356006361063183,
+    "exploitability": 0.00025412498770882586,
+    "br_value_vs_p1_strategy": 0.32401216395819504,
+    "br_value_vs_p0_strategy": -0.3235039139827774,
+    "seconds": 284.0
+   },
+   "cfr": [
+    {
+     "iterations": 10,
+     "exploitability": 0.3647067291165121,
+     "ev_error": 0.0021276371654158077,
+     "weighted_l1": 0.4820743907690894
+    },
+    {
+     "iterations": 30,
+     "exploitability": 0.14399881657003205,
+     "ev_error": 0.011162492389284628,
+     "weighted_l1": 0.3373221978628426
+    },
+    {
+     "iterations": 100,
+     "exploitability": 0.05531715073898988,
+     "ev_error": 0.0035090793183510938,
+     "weighted_l1": 0.23334500916180137
+    },
+    {
+     "iterations": 300,
+     "exploitability": 0.023959857911009602,
+     "ev_error": 0.001593798135175739,
+     "weighted_l1": 0.1808457461018382
+    }
+   ],
+   "cfr_plus": [
+    {
+     "iterations": 10,
+     "exploitability": 0.5644539866210626,
+     "ev_error": 0.4738460490348112,
+     "weighted_l1": 0.8114918415606428
+    },
+    {
+     "iterations": 30,
+     "exploitability": 0.16735099498313824,
+     "ev_error": 0.2055180266970128,
+     "weighted_l1": 0.46536318625045947
+    },
+    {
+     "iterations": 100,
+     "exploitability": 0.02088000252324035,
+     "ev_error": 0.015175368150907642,
+     "weighted_l1": 0.12951384984423753
+    },
+    {
+     "iterations": 300,
+     "exploitability": 0.0028341901617052745,
+     "ev_error": 0.0020172621042007233,
+     "weighted_l1": 0.024974895161110393
+    }
+   ],
+   "mccfr": {
+    "0": [
+     {
+      "iterations": 300,
+      "seconds": 0.2,
+      "exploitability": 3.1240569522113963,
+      "ev_error": 0.24496076083930274,
+      "weighted_l1": 0.9217457197568899
+     },
+     {
+      "iterations": 1000,
+      "seconds": 0.8,
+      "exploitability": 1.6466363517928457,
+      "ev_error": 0.10888899116944345,
+      "weighted_l1": 0.8594508630820673
+     },
+     {
+      "iterations": 3000,
+      "seconds": 2.0,
+      "exploitability": 0.622731399661741,
+      "ev_error": 0.004224724198129748,
+      "weighted_l1": 0.7791957702689563
+     },
+     {
+      "iterations": 10000,
+      "seconds": 6.0,
+      "exploitability": 0.24676038122453817,
+      "ev_error": 0.041884530255511365,
+      "weighted_l1": 0.4911445244094984
+     },
+     {
+      "iterations": 30000,
+      "seconds": 16.7,
+      "exploitability": 0.10886038959054606,
+      "ev_error": 0.010730181016278262,
+      "weighted_l1": 0.28922238637413894
+     },
+     {
+      "iterations": 100000,
+      "seconds": 53.0,
+      "exploitability": 0.04469626560525414,
+      "ev_error": 0.0021608592621649714,
+      "weighted_l1": 0.1791929422170519
+     }
+    ],
+    "1": [
+     {
+      "iterations": 300,
+      "seconds": 0.2,
+      "exploitability": 3.0567505978126963,
+      "ev_error": 0.2573862364568079,
+      "weighted_l1": 0.9466930092089714
+     },
+     {
+      "iterations": 1000,
+      "seconds": 0.7,
+      "exploitability": 1.5635408435721532,
+      "ev_error": 0.3191661180964983,
+      "weighted_l1": 0.8425662795485763
+     },
+     {
+      "iterations": 3000,
+      "seconds": 2.0,
+      "exploitability": 0.5985789453249468,
+      "ev_error": 0.06732078777045053,
+      "weighted_l1": 0.6755476631535435
+     },
+     {
+      "iterations": 10000,
+      "seconds": 6.0,
+      "exploitability": 0.21063891425819262,
+      "ev_error": 0.06342571383476653,
+      "weighted_l1": 0.4482374639488012
+     },
+     {
+      "iterations": 30000,
+      "seconds": 16.3,
+      "exploitability": 0.09725288858680578,
+      "ev_error": 0.03411986678124246,
+      "weighted_l1": 0.30063293053088475
+     },
+     {
+      "iterations": 100000,
+      "seconds": 52.3,
+      "exploitability": 0.04385257363634337,
+      "ev_error": 0.001152663500818607,
+      "weighted_l1": 0.2263915439961277
+     }
+    ],
+    "2": [
+     {
+      "iterations": 300,
+      "seconds": 0.2,
+      "exploitability": 2.9315620349776745,
+      "ev_error": 0.09811682087480555,
+      "weighted_l1": 1.0486923668983321
+     },
+     {
+      "iterations": 1000,
+      "seconds": 0.8,
+      "exploitability": 1.5008411091426095,
+      "ev_error": 0.25222571045418035,
+      "weighted_l1": 0.983634698859253
+     },
+     {
+      "iterations": 3000,
+      "seconds": 2.1,
+      "exploitability": 0.6263738454367427,
+      "ev_error": 0.1646823365124438,
+      "weighted_l1": 0.7984006776222639
+     },
+     {
+      "iterations": 10000,
+      "seconds": 5.9,
+      "exploitability": 0.2448157418123461,
+      "ev_error": 0.09350891227894176,
+      "weighted_l1": 0.4810094299840611
+     },
+     {
+      "iterations": 30000,
+      "seconds": 16.1,
+      "exploitability": 0.10720745391015005,
+      "ev_error": 0.034618829934181194,
+      "weighted_l1": 0.33058199548612555
+     },
+     {
+      "iterations": 100000,
+      "seconds": 51.8,
+      "exploitability": 0.045853292488882036,
+      "ev_error": 0.002642801491657576,
+      "weighted_l1": 0.26134458308152325
+     }
+    ]
+   },
+   "rollout_vs_equilibrium": [
+    {
+     "hero": "Ac5h",
+     "equilibrium_mix": {
+      "c": 0.999840947406536,
+      "b50": 0.00015361303384377818,
+      "b100": 3.83146550324744e-06,
+      "a": 1.6080941170487748e-06
+     },
+     "equilibrium_bet_freq": 0.00015905259346404854,
+     "rollout_recommendation": "check",
+     "rollout_method": "Monte Carlo rollout",
+     "agrees": true
+    },
+    {
+     "hero": "Qd5h",
+     "equilibrium_mix": {
+      "c": 0.9997583242419623,
+      "b50": 0.0002359832123702738,
+      "b100": 4.0103350466918165e-06,
+      "a": 1.6822106208674428e-06
+     },
+     "equilibrium_bet_freq": 0.00024167575803768493,
+     "rollout_recommendation": "check",
+     "rollout_method": "Monte Carlo rollout",
+     "agrees": true
+    },
+    {
+     "hero": "2cTh",
+     "equilibrium_mix": {
+      "c": 0.8596291388214717,
+      "b50": 0.00011626488421139209,
+      "b100": 4.90774509514163e-05,
+      "a": 0.14020551884336543
+     },
+     "equilibrium_bet_freq": 0.14037086117852826,
+     "rollout_recommendation": "all_in",
+     "rollout_method": "Monte Carlo rollout",
+     "agrees": false
+    },
+    {
+     "hero": "Tc9h",
+     "equilibrium_mix": {
+      "c": 0.22355187599955192,
+      "b50": 9.023326034158621e-05,
+      "b100": 0.000846135047740894,
+      "a": 0.7755117556923655
+     },
+     "equilibrium_bet_freq": 0.776448124000448,
+     "rollout_recommendation": "all_in",
+     "rollout_method": "Monte Carlo rollout",
+     "agrees": true
+    },
+    {
+     "hero": "TdAd",
+     "equilibrium_mix": {
+      "c": 0.7773082492783535,
+      "b50": 0.00013085196816812897,
+      "b100": 4.8338647260474924e-05,
+      "a": 0.2225125601062179
+     },
+     "equilibrium_bet_freq": 0.2226917507216465,
+     "rollout_recommendation": "all_in",
+     "rollout_method": "Monte Carlo rollout",
+     "agrees": false
+    },
+    {
+     "hero": "Th5s",
+     "equilibrium_mix": {
+      "c": 0.8873415067967558,
+      "b50": 8.918616640379826e-05,
+      "b100": 3.278385264318399e-05,
+      "a": 0.11253652318419724
+     },
+     "equilibrium_bet_freq": 0.11265849320324417,
+     "rollout_recommendation": "all_in",
+     "rollout_method": "Monte Carlo rollout",
+     "agrees": false
+    }
+   ],
+   "compact_strategy_lookup": "not compatible: subgame pot 10 / stack 20 / bets 50%, 100%, all-in, cap 2 differ from the locked 100 BB tree; no lookup made",
+   "name": "four-straight strong vs strong",
+   "board": [
+    "9s",
+    "8d",
+    "7c",
+    "6h",
+    "2s"
+   ],
+   "range0": [
+    "Ac5h",
+    "5d7d",
+    "5d8h",
+    "5dJs",
+    "Qd5h",
+    "4h5s",
+    "5h7s",
+    "Ah5s",
+    "2cTh",
+    "5cTd",
+    "9cTd",
+    "Tc9d",
+    "Tc9h",
+    "TcQs",
+    "2dTd",
+    "5dTs",
+    "TdAd",
+    "Td3s",
+    "KdTh",
+    "5hTs",
+    "Th5s",
+    "4sTs",
+    "TcJs",
+    "TsJs"
+   ],
+   "range1": [
+    "5cQc",
+    "5c2h",
+    "5c6s",
+    "9c5h",
+    "2d5d",
+    "5dKd",
+    "5d4s",
+    "9d5s",
+    "4h5s",
+    "5hJs",
+    "5s7s",
+    "4cTc",
+    "8cTs",
+    "Tc9d",
+    "TcKh",
+    "QcTs",
+    "4dTh",
+    "TdQd",
+    "Td3s",
+    "AdTh",
+    "9hTh",
+    "ThAs",
+    "TcJd",
+    "TsJs"
+   ],
+   "pot": 10,
+   "stack": 20
+  },
+  {
+   "signature": "RiverSubgame:v1:four-flush thin value:pot=10:stack=20:bets=(0.5, 1.0):cap=2",
+   "infosets": 336,
+   "reference": {
+    "algorithm": "CFR+",
+    "iterations": 1500,
+    "game_value_p0": 4.563386540999663,
+    "exploitability": 0.0001706225981532583,
+    "br_value_vs_p1_strategy": 4.5636650491068655,
+    "br_value_vs_p0_strategy": -4.563323803910559,
+    "seconds": 307.5
+   },
+   "cfr": [
+    {
+     "iterations": 10,
+     "exploitability": 0.3816090183996419,
+     "ev_error": 0.03787425583031201,
+     "weighted_l1": 0.5940372118654706
+    },
+    {
+     "iterations": 30,
+     "exploitability": 0.1514515170722306,
+     "ev_error": 0.023687718815115666,
+     "weighted_l1": 0.4738190170790096
+    },
+    {
+     "iterations": 100,
+     "exploitability": 0.0640372635399502,
+     "ev_error": 0.022232548129604623,
+     "weighted_l1": 0.2813508478527013
+    },
+    {
+     "iterations": 300,
+     "exploitability": 0.029096446925591657,
+     "ev_error": 0.00863654668404834,
+     "weighted_l1": 0.19257651412965662
+    }
+   ],
+   "cfr_plus": [
+    {
+     "iterations": 10,
+     "exploitability": 0.3235795759573139,
+     "ev_error": 0.012899566438066223,
+     "weighted_l1": 0.638324061578587
+    },
+    {
+     "iterations": 30,
+     "exploitability": 0.10645044052597408,
+     "ev_error": 0.1041552968432331,
+     "weighted_l1": 0.49083230671387856
+    },
+    {
+     "iterations": 100,
+     "exploitability": 0.02291658785340278,
+     "ev_error": 0.02063352842667321,
+     "weighted_l1": 0.19725478096761453
+    },
+    {
+     "iterations": 300,
+     "exploitability": 0.0035690078929788704,
+     "ev_error": 0.0032180188896040463,
+     "weighted_l1": 0.07137253753603671
+    }
+   ],
+   "mccfr": {
+    "0": [
+     {
+      "iterations": 300,
+      "seconds": 0.2,
+      "exploitability": 3.362798635040825,
+      "ev_error": 2.850014045831319,
+      "weighted_l1": 0.8849910731853126
+     },
+     {
+      "iterations": 1000,
+      "seconds": 0.8,
+      "exploitability": 1.3737721652935015,
+      "ev_error": 1.2790485362228141,
+      "weighted_l1": 0.7803803701404507
+     },
+     {
+      "iterations": 3000,
+      "seconds": 2.1,
+      "exploitability": 0.5889771242582658,
+      "ev_error": 0.3104312636578097,
+      "weighted_l1": 0.6932477872978031
+     },
+     {
+      "iterations": 10000,
+      "seconds": 6.1,
+      "exploitability": 0.24279862179625145,
+      "ev_error": 0.00923523555049588,
+      "weighted_l1": 0.5301082693883206
+     },
+     {
+      "iterations": 30000,
+      "seconds": 17.2,
+      "exploitability": 0.13868504749153132,
+      "ev_error": 0.00201178109016098,
+      "weighted_l1": 0.4131382772016985
+     },
+     {
+      "iterations": 100000,
+      "seconds": 54.3,
+      "exploitability": 0.050866285422142,
+      "ev_error": 0.006738077553174904,
+      "weighted_l1": 0.29866903212111306
+     }
+    ],
+    "1": [
+     {
+      "iterations": 300,
+      "seconds": 0.2,
+      "exploitability": 3.3516479912566144,
+      "ev_error": 3.2078247059176332,
+      "weighted_l1": 1.0452480721111415
+     },
+     {
+      "iterations": 1000,
+      "seconds": 0.9,
+      "exploitability": 1.41896104111616,
+      "ev_error": 1.2550478432523136,
+      "weighted_l1": 0.8642358531197067
+     },
+     {
+      "iterations": 3000,
+      "seconds": 2.3,
+      "exploitability": 0.5294244176443685,
+      "ev_error": 0.21766530763277814,
+      "weighted_l1": 0.7734643280166269
+     },
+     {
+      "iterations": 10000,
+      "seconds": 6.3,
+      "exploitability": 0.23749310116839828,
+      "ev_error": 0.022946484997504513,
+      "weighted_l1": 0.6093409861752811
+     },
+     {
+      "iterations": 30000,
+      "seconds": 16.7,
+      "exploitability": 0.10099588597521869,
+      "ev_error": 0.029410951131197294,
+      "weighted_l1": 0.4207968245178149
+     },
+     {
+      "iterations": 100000,
+      "seconds": 53.2,
+      "exploitability": 0.05135570691919522,
+      "ev_error": 0.013714867365000494,
+      "weighted_l1": 0.30592500130563255
+     }
+    ],
+    "2": [
+     {
+      "iterations": 300,
+      "seconds": 0.2,
+      "exploitability": 4.021768726961597,
+      "ev_error": 3.0732800301866448,
+      "weighted_l1": 0.9710639634141592
+     },
+     {
+      "iterations": 1000,
+      "seconds": 0.8,
+      "exploitability": 1.5655134888986215,
+      "ev_error": 1.476683216576176,
+      "weighted_l1": 0.8355565563085128
+     },
+     {
+      "iterations": 3000,
+      "seconds": 2.0,
+      "exploitability": 0.5798995209776048,
+      "ev_error": 0.3209150314353426,
+      "weighted_l1": 0.761372288056612
+     },
+     {
+      "iterations": 10000,
+      "seconds": 6.0,
+      "exploitability": 0.22759043891444497,
+      "ev_error": 0.006655512379031059,
+      "weighted_l1": 0.6028330591764077
+     },
+     {
+      "iterations": 30000,
+      "seconds": 16.7,
+      "exploitability": 0.11920976243022219,
+      "ev_error": 0.005064273289174359,
+      "weighted_l1": 0.4325589381582049
+     },
+     {
+      "iterations": 100000,
+      "seconds": 55.0,
+      "exploitability": 0.053248303020758225,
+      "ev_error": 0.005424506880984836,
+      "weighted_l1": 0.3002859328646491
+     }
+    ]
+   },
+   "rollout_vs_equilibrium": [
+    {
+     "hero": "9cQd",
+     "equilibrium_mix": {
+      "c": 3.957953009585913e-07,
+      "b50": 7.61276089943021e-05,
+      "b100": 0.0002469344662996032,
+      "a": 0.9996765421294052
+     },
+     "equilibrium_bet_freq": 0.999999604204699,
+     "rollout_recommendation": "all_in",
+     "rollout_method": "Monte Carlo rollout",
+     "agrees": true
+    },
+    {
+     "hero": "TcJs",
+     "equilibrium_mix": {
+      "c": 4.609661928673014e-05,
+      "b50": 0.00019827160935274258,
+      "b100": 0.003927588269148827,
+      "a": 0.9958280435022117
+     },
+     "equilibrium_bet_freq": 0.9999539033807132,
+     "rollout_recommendation": "bet_33",
+     "rollout_method": "Monte Carlo rollout",
+     "agrees": true
+    },
+    {
+     "hero": "4c4h",
+     "equilibrium_mix": {
+      "c": 0.742416767192479,
+      "b50": 0.25753013593994345,
+      "b100": 4.843271767728971e-05,
+      "a": 4.664149900309028e-06
+     },
+     "equilibrium_bet_freq": 0.25758323280752105,
+     "rollout_recommendation": "bet_75",
+     "rollout_method": "Monte Carlo rollout",
+     "agrees": false
+    },
+    {
+     "hero": "Jc6h",
+     "equilibrium_mix": {
+      "c": 0.00012067288297842002,
+      "b50": 0.9744990648413171,
+      "b100": 0.025347542050713157,
+      "a": 3.272022499129047e-05
+     },
+     "equilibrium_bet_freq": 0.9998793271170215,
+     "rollout_recommendation": "bet_75",
+     "rollout_method": "Monte Carlo rollout",
+     "agrees": true
+    },
+    {
+     "hero": "6d7h",
+     "equilibrium_mix": {
+      "c": 0.12029470077505725,
+      "b50": 0.000149533082993344,
+      "b100": 0.00035099740726269457,
+      "a": 0.8792047687346868
+     },
+     "equilibrium_bet_freq": 0.8797052992249428,
+     "rollout_recommendation": "bet_75",
+     "rollout_method": "Monte Carlo rollout",
+     "agrees": true
+    },
+    {
+     "hero": "Qd8h",
+     "equilibrium_mix": {
+      "c": 7.562609519494411e-05,
+      "b50": 7.316384030370233e-05,
+      "b100": 0.0003001283040977102,
+      "a": 0.9995510817604036
+     },
+     "equilibrium_bet_freq": 0.999924373904805,
+     "rollout_recommendation": "bet_75",
+     "rollout_method": "Monte Carlo rollout",
+     "agrees": true
+    }
+   ],
+   "compact_strategy_lookup": "not compatible: subgame pot 10 / stack 20 / bets 50%, 100%, all-in, cap 2 differ from the locked 100 BB tree; no lookup made",
+   "name": "four-flush thin value",
+   "board": [
+    "Qh",
+    "9h",
+    "5h",
+    "2h",
+    "Kc"
+   ],
+   "range0": [
+    "9cQd",
+    "Kd2s",
+    "9dKs",
+    "5c5d",
+    "TcJs",
+    "6c3h",
+    "6d3h",
+    "3h5s",
+    "4c4h",
+    "3d4h",
+    "4h2s",
+    "4hAs",
+    "Jc6h",
+    "Jd6h",
+    "6hTs",
+    "6c7h",
+    "6d7h",
+    "7h5s",
+    "6h7h",
+    "Qc8h",
+    "Qd8h",
+    "8hJs",
+    "5cTh",
+    "5dTh"
+   ],
+   "range1": [
+    "9c7s",
+    "9cTs",
+    "9cAd",
+    "3cQs",
+    "6cQd",
+    "7sQs",
+    "TdQs",
+    "QdAd",
+    "6cKd",
+    "8sKs",
+    "KdAs",
+    "2c9d",
+    "2cQc",
+    "Qd5s",
+    "2sKs",
+    "KdQs",
+    "TcJd",
+    "Jc3h",
+    "3h2s",
+    "5c4h",
+    "Td4h",
+    "4hKs",
+    "4d6h",
+    "6h7s"
+   ],
+   "pot": 10,
+   "stack": 20
+  },
+  {
+   "signature": "RiverSubgame:v1:monotone bluff-heavy:pot=10:stack=20:bets=(0.5, 1.0):cap=2",
+   "infosets": 336,
+   "reference": {
+    "algorithm": "CFR+",
+    "iterations": 1500,
+    "game_value_p0": -1.6853457665152631,
+    "exploitability": 0.0009994003148343644,
+    "br_value_vs_p1_strategy": -1.6838876844272852,
+    "br_value_vs_p0_strategy": 1.685886485056954,
+    "seconds": 319.9
+   },
+   "cfr": [
+    {
+     "iterations": 10,
+     "exploitability": 0.4288235612514222,
+     "ev_error": 0.13562397139030358,
+     "weighted_l1": 0.6094144008436342
+    },
+    {
+     "iterations": 30,
+     "exploitability": 0.25462223170132225,
+     "ev_error": 0.1458844883513697,
+     "weighted_l1": 0.5489452956946729
+    },
+    {
+     "iterations": 100,
+     "exploitability": 0.11756920592136488,
+     "ev_error": 0.06883463068903573,
+     "weighted_l1": 0.446284566518222
+    },
+    {
+     "iterations": 300,
+     "exploitability": 0.06174083779455586,
+     "ev_error": 0.04797015056532783,
+     "weighted_l1": 0.37922720151147976
+    }
+   ],
+   "cfr_plus": [
+    {
+     "iterations": 10,
+     "exploitability": 1.7364954490745539,
+     "ev_error": 0.5184883588490821,
+     "weighted_l1": 0.6480527405749928
+    },
+    {
+     "iterations": 30,
+     "exploitability": 0.21234916285030025,
+     "ev_error": 0.02610785890639522,
+     "weighted_l1": 0.31021702393943185
+    },
+    {
+     "iterations": 100,
+     "exploitability": 0.041609281614196636,
+     "ev_error": 0.0008889896596158131,
+     "weighted_l1": 0.08297276964925315
+    },
+    {
+     "iterations": 300,
+     "exploitability": 0.005766877561117267,
+     "ev_error": 0.00024474132954699357,
+     "weighted_l1": 0.010630272450491834
+    }
+   ],
+   "mccfr": {
+    "0": [
+     {
+      "iterations": 300,
+      "seconds": 0.2,
+      "exploitability": 4.482245657489299,
+      "ev_error": 3.246022499237825,
+      "weighted_l1": 1.1325463530046094
+     },
+     {
+      "iterations": 1000,
+      "seconds": 0.8,
+      "exploitability": 1.4743233398447002,
+      "ev_error": 0.5889316063603296,
+      "weighted_l1": 0.9519798984841293
+     },
+     {
+      "iterations": 3000,
+      "seconds": 2.2,
+      "exploitability": 0.5686306088326566,
+      "ev_error": 0.04821213796307422,
+      "weighted_l1": 0.7036454066513014
+     },
+     {
+      "iterations": 10000,
+      "seconds": 6.5,
+      "exploitability": 0.24490207036189748,
+      "ev_error": 0.080679507726096,
+      "weighted_l1": 0.5610549796037135
+     },
+     {
+      "iterations": 30000,
+      "seconds": 18.0,
+      "exploitability": 0.12242559873855197,
+      "ev_error": 0.02544215839266384,
+      "weighted_l1": 0.42959026178740894
+     },
+     {
+      "iterations": 100000,
+      "seconds": 57.5,
+      "exploitability": 0.06104828456149447,
+      "ev_error": 0.00635763396234057,
+      "weighted_l1": 0.3464730334339444
+     }
+    ],
+    "1": [
+     {
+      "iterations": 300,
+      "seconds": 0.2,
+      "exploitability": 4.247319526614868,
+      "ev_error": 3.0264793893355644,
+      "weighted_l1": 1.149530546205201
+     },
+     {
+      "iterations": 1000,
+      "seconds": 0.9,
+      "exploitability": 1.7201969223630695,
+      "ev_error": 0.8556119834539557,
+      "weighted_l1": 0.9008978702987177
+     },
+     {
+      "iterations": 3000,
+      "seconds": 2.4,
+      "exploitability": 0.6388709237142813,
+      "ev_error": 0.004518152738042458,
+      "weighted_l1": 0.6915625030355335
+     },
+     {
+      "iterations": 10000,
+      "seconds": 6.5,
+      "exploitability": 0.25851007980711393,
+      "ev_error": 0.02371637468151455,
+      "weighted_l1": 0.554036084503576
+     },
+     {
+      "iterations": 30000,
+      "seconds": 17.9,
+      "exploitability": 0.1419280197512408,
+      "ev_error": 0.03057504679038514,
+      "weighted_l1": 0.4559892527554117
+     },
+     {
+      "iterations": 100000,
+      "seconds": 57.3,
+      "exploitability": 0.06732697188652415,
+      "ev_error": 0.008421227042254786,
+      "weighted_l1": 0.33704366586814666
+     }
+    ],
+    "2": [
+     {
+      "iterations": 300,
+      "seconds": 0.2,
+      "exploitability": 3.8699108651224425,
+      "ev_error": 2.8836766231609174,
+      "weighted_l1": 1.2095675355531958
+     },
+     {
+      "iterations": 1000,
+      "seconds": 0.8,
+      "exploitability": 1.5418001722490509,
+      "ev_error": 0.6658321110542014,
+      "weighted_l1": 0.9872278880354741
+     },
+     {
+      "iterations": 3000,
+      "seconds": 2.1,
+      "exploitability": 0.6794456923972652,
+      "ev_error": 0.01087944947608932,
+      "weighted_l1": 0.7348291768552327
+     },
+     {
+      "iterations": 10000,
+      "seconds": 6.1,
+      "exploitability": 0.31284810812664743,
+      "ev_error": 0.007206948270378932,
+      "weighted_l1": 0.5355647912186804
+     },
+     {
+      "iterations": 30000,
+      "seconds": 17.3,
+      "exploitability": 0.15456498106529215,
+      "ev_error": 0.017412765353863158,
+      "weighted_l1": 0.4085197448494643
+     },
+     {
+      "iterations": 100000,
+      "seconds": 55.5,
+      "exploitability": 0.058394855261434064,
+      "ev_error": 0.02036601661269577,
+      "weighted_l1": 0.31943043243549063
+     }
+    ]
+   },
+   "rollout_vs_equilibrium": [
+    {
+     "hero": "2c4c",
+     "equilibrium_mix": {
+      "c": 0.9998445382552502,
+      "b50": 1.2377271281427022e-05,
+      "b100": 2.8118707118421526e-06,
+      "a": 0.00014027260275651716
+     },
+     "equilibrium_bet_freq": 0.00015546174474978525,
+     "rollout_recommendation": "all_in",
+     "rollout_method": "Monte Carlo rollout",
+     "agrees": false
+    },
+    {
+     "hero": "4d7d",
+     "equilibrium_mix": {
+      "c": 0.9999326340361331,
+      "b50": 1.2456755369566048e-05,
+      "b100": 3.213455026555779e-06,
+      "a": 5.169575347073394e-05
+     },
+     "equilibrium_bet_freq": 6.736596386691662e-05,
+     "rollout_recommendation": "all_in",
+     "rollout_method": "Monte Carlo rollout",
+     "agrees": false
+    },
+    {
+     "hero": "9c7d",
+     "equilibrium_mix": {
+      "c": 0.9998318461808103,
+      "b50": 1.2377253919192344e-05,
+      "b100": 2.6896346526484532e-06,
+      "a": 0.00015308693061782944
+     },
+     "equilibrium_bet_freq": 0.00016815381918966477,
+     "rollout_recommendation": "all_in",
+     "rollout_method": "Monte Carlo rollout",
+     "agrees": false
+    },
+    {
+     "hero": "7hTs",
+     "equilibrium_mix": {
+      "c": 0.99927115764294,
+      "b50": 1.2295971187619823e-05,
+      "b100": 1.7348749756036014e-05,
+      "a": 0.000699197636116222
+     },
+     "equilibrium_bet_freq": 0.0007288423570599445,
+     "rollout_recommendation": "all_in",
+     "rollout_method": "Monte Carlo rollout",
+     "agrees": false
+    },
+    {
+     "hero": "7dQh",
+     "equilibrium_mix": {
+      "c": 0.9989286606475365,
+      "b50": 1.2329837691112132e-05,
+      "b100": 2.5704722028340005e-06,
+      "a": 0.001056439042569529
+     },
+     "equilibrium_bet_freq": 0.0010713393524635073,
+     "rollout_recommendation": "all_in",
+     "rollout_method": "Monte Carlo rollout",
+     "agrees": false
+    },
+    {
+     "hero": "8c8s",
+     "equilibrium_mix": {
+      "c": 4.6230840537856674e-06,
+      "b50": 1.7271464808996672e-05,
+      "b100": 0.00014020236697980657,
+      "a": 0.9998379030841573
+     },
+     "equilibrium_bet_freq": 0.9999953769159462,
+     "rollout_recommendation": "bet_75",
+     "rollout_method": "Monte Carlo rollout",
+     "agrees": true
+    }
+   ],
+   "compact_strategy_lookup": "not compatible: subgame pot 10 / stack 20 / bets 50%, 100%, all-in, cap 2 differ from the locked 100 BB tree; no lookup made",
+   "name": "monotone bluff-heavy",
+   "board": [
+    "As",
+    "Js",
+    "6s",
+    "8d",
+    "3c"
+   ],
+   "range0": [
+    "2c4c",
+    "2c5h",
+    "5d2h",
+    "4c7s",
+    "4d7d",
+    "7h2s",
+    "9c5d",
+    "9d4h",
+    "9c7d",
+    "4cTh",
+    "2dTs",
+    "5hTs",
+    "7hTs",
+    "2cQd",
+    "Qc2s",
+    "Qd5s",
+    "7dQh",
+    "Qd9h",
+    "ThQh",
+    "Ah8s",
+    "8c8s",
+    "5s7s",
+    "9sTs",
+    "QsKs"
+   ],
+   "range1": [
+    "5c3h",
+    "5d3h",
+    "3d9s",
+    "3dQh",
+    "4d4h",
+    "6c5d",
+    "6d7h",
+    "6d9h",
+    "Qc6d",
+    "7c7h",
+    "8c4s",
+    "8c7h",
+    "8cTs",
+    "8cKh",
+    "2cJc",
+    "4dJh",
+    "7dJd",
+    "JcTd",
+    "JcKd",
+    "KdKs",
+    "2dAh",
+    "Ac7h",
+    "TcAd",
+    "QhAh"
+   ],
+   "pot": 10,
+   "stack": 20
+  },
+  {
+   "signature": "RiverSubgame:v1:low connected mixed:pot=10:stack=20:bets=(0.5, 1.0):cap=2",
+   "infosets": 336,
+   "reference": {
+    "algorithm": "CFR+",
+    "iterations": 1500,
+    "game_value_p0": 0.973312852995112,
+    "exploitability": 0.00044603367623385903,
+    "br_value_vs_p1_strategy": 0.973839489900623,
+    "br_value_vs_p0_strategy": -0.9729474225481552,
+    "seconds": 317.2
+   },
+   "cfr": [
+    {
+     "iterations": 10,
+     "exploitability": 0.6056801649018185,
+     "ev_error": 0.09880661591852258,
+     "weighted_l1": 0.6733235124142789
+    },
+    {
+     "iterations": 30,
+     "exploitability": 0.3036085825975063,
+     "ev_error": 0.05719959716278977,
+     "weighted_l1": 0.6087428502049568
+    },
+    {
+     "iterations": 100,
+     "exploitability": 0.16364107669593964,
+     "ev_error": 0.044433411507227016,
+     "weighted_l1": 0.48978989067224243
+    },
+    {
+     "iterations": 300,
+     "exploitability": 0.08028204298816005,
+     "ev_error": 0.024430814886001517,
+     "weighted_l1": 0.3854229115487551
+    }
+   ],
+   "cfr_plus": [
+    {
+     "iterations": 10,
+     "exploitability": 1.158439084378672,
+     "ev_error": 0.164025476501234,
+     "weighted_l1": 0.7593814274755727
+    },
+    {
+     "iterations": 30,
+     "exploitability": 0.21889083752810667,
+     "ev_error": 0.042733699429933325,
+     "weighted_l1": 0.51467471398513
+    },
+    {
+     "iterations": 100,
+     "exploitability": 0.050134676286239965,
+     "ev_error": 0.02367156932377379,
+     "weighted_l1": 0.2699819187408179
+    },
+    {
+     "iterations": 300,
+     "exploitability": 0.008310659809456333,
+     "ev_error": 0.003528288483744202,
+     "weighted_l1": 0.09415164239358591
+    }
+   ],
+   "mccfr": {
+    "0": [
+     {
+      "iterations": 300,
+      "seconds": 0.2,
+      "exploitability": 3.3905606767097645,
+      "ev_error": 0.4222759015666796,
+      "weighted_l1": 1.0590847307107678
+     },
+     {
+      "iterations": 1000,
+      "seconds": 0.8,
+      "exploitability": 1.8806733111566774,
+      "ev_error": 0.03795679143181052,
+      "weighted_l1": 1.0207407210708381
+     },
+     {
+      "iterations": 3000,
+      "seconds": 2.2,
+      "exploitability": 0.9445389573747806,
+      "ev_error": 0.2833517346731438,
+      "weighted_l1": 0.7935882248252023
+     },
+     {
+      "iterations": 10000,
+      "seconds": 6.1,
+      "exploitability": 0.3622383377019291,
+      "ev_error": 0.059775833294230196,
+      "weighted_l1": 0.6118789038433902
+     },
+     {
+      "iterations": 30000,
+      "seconds": 17.2,
+      "exploitability": 0.18170002350994774,
+      "ev_error": 0.04750219574423964,
+      "weighted_l1": 0.5369566120536245
+     },
+     {
+      "iterations": 100000,
+      "seconds": 57.1,
+      "exploitability": 0.10698971364428217,
+      "ev_error": 0.033280018247519694,
+      "weighted_l1": 0.40146598191045413
+     }
+    ],
+    "1": [
+     {
+      "iterations": 300,
+      "seconds": 0.2,
+      "exploitability": 3.2490118923499764,
+      "ev_error": 0.5494803072192473,
+      "weighted_l1": 1.0842018976168146
+     },
+     {
+      "iterations": 1000,
+      "seconds": 0.8,
+      "exploitability": 2.2503478350764685,
+      "ev_error": 0.0005115112164006952,
+      "weighted_l1": 0.9736283420302909
+     },
+     {
+      "iterations": 3000,
+      "seconds": 2.1,
+      "exploitability": 0.907218171938269,
+      "ev_error": 0.26884290743929373,
+      "weighted_l1": 0.7998901984518991
+     },
+     {
+      "iterations": 10000,
+      "seconds": 6.2,
+      "exploitability": 0.3310666577419648,
+      "ev_error": 0.028192390314621063,
+      "weighted_l1": 0.5928950692325973
+     },
+     {
+      "iterations": 30000,
+      "seconds": 17.2,
+      "exploitability": 0.20377315611789004,
+      "ev_error": 0.0051728445818630675,
+      "weighted_l1": 0.4907302456238339
+     },
+     {
+      "iterations": 100000,
+      "seconds": 56.3,
+      "exploitability": 0.0938026108554249,
+      "ev_error": 0.009308889869366954,
+      "weighted_l1": 0.34345217218727125
+     }
+    ],
+    "2": [
+     {
+      "iterations": 300,
+      "seconds": 0.2,
+      "exploitability": 3.546605751049384,
+      "ev_error": 0.5648746338825299,
+      "weighted_l1": 1.1473502781896172
+     },
+     {
+      "iterations": 1000,
+      "seconds": 0.8,
+      "exploitability": 2.2644687167474125,
+      "ev_error": 0.07632612605011846,
+      "weighted_l1": 1.026420203078764
+     },
+     {
+      "iterations": 3000,
+      "seconds": 2.1,
+      "exploitability": 1.0963134331225872,
+      "ev_error": 0.2107945055736724,
+      "weighted_l1": 0.8592659299582919
+     },
+     {
+      "iterations": 10000,
+      "seconds": 6.3,
+      "exploitability": 0.47144622849884144,
+      "ev_error": 0.007299155016858849,
+      "weighted_l1": 0.686166355556153
+     },
+     {
+      "iterations": 30000,
+      "seconds": 17.4,
+      "exploitability": 0.2441848103578257,
+      "ev_error": 0.008739839675258598,
+      "weighted_l1": 0.518445903288851
+     },
+     {
+      "iterations": 100000,
+      "seconds": 57.0,
+      "exploitability": 0.1177736360179128,
+      "ev_error": 0.0029561069966181908,
+      "weighted_l1": 0.38909256491623717
+     }
+    ]
+   },
+   "rollout_vs_equilibrium": [
+    {
+     "hero": "7hTs",
+     "equilibrium_mix": {
+      "c": 0.998683635068887,
+      "b50": 1.592279652379602e-05,
+      "b100": 1.57334454355125e-05,
+      "a": 0.001284708689153707
+     },
+     "equilibrium_bet_freq": 0.0013163649311129788,
+     "rollout_recommendation": "all_in",
+     "rollout_method": "Monte Carlo rollout",
+     "agrees": false
+    },
+    {
+     "hero": "JdTs",
+     "equilibrium_mix": {
+      "c": 0.0023330854936193476,
+      "b50": 2.254679965623517e-05,
+      "b100": 0.20720987182399106,
+      "a": 0.7904344958827333
+     },
+     "equilibrium_bet_freq": 0.9976669145063807,
+     "rollout_recommendation": "all_in",
+     "rollout_method": "Monte Carlo rollout",
+     "agrees": true
+    },
+    {
+     "hero": "JdQh",
+     "equilibrium_mix": {
+      "c": 0.0044145713846323945,
+      "b50": 2.5061271932787248e-05,
+      "b100": 0.2401954693570044,
+      "a": 0.7553648979864304
+     },
+     "equilibrium_bet_freq": 0.9955854286153676,
+     "rollout_recommendation": "all_in",
+     "rollout_method": "Monte Carlo rollout",
+     "agrees": true
+    },
+    {
+     "hero": "AcQs",
+     "equilibrium_mix": {
+      "c": 0.9998856264686934,
+      "b50": 2.3599538603706193e-05,
+      "b100": 8.482861665910535e-06,
+      "a": 8.229113103701909e-05
+     },
+     "equilibrium_bet_freq": 0.00011437353130661077,
+     "rollout_recommendation": "all_in",
+     "rollout_method": "Monte Carlo rollout",
+     "agrees": false
+    },
+    {
+     "hero": "KdAd",
+     "equilibrium_mix": {
+      "c": 1.1201696878736466e-05,
+      "b50": 8.837612317582687e-05,
+      "b100": 0.002694260708040266,
+      "a": 0.9972061614719051
+     },
+     "equilibrium_bet_freq": 0.9999887983031213,
+     "rollout_recommendation": "bet_75",
+     "rollout_method": "Monte Carlo rollout",
+     "agrees": true
+    },
+    {
+     "hero": "9cKd",
+     "equilibrium_mix": {
+      "c": 0.05917927823730355,
+      "b50": 2.0262663275547763e-05,
+      "b100": 0.0009052929743208396,
+      "a": 0.9398951661251002
+     },
+     "equilibrium_bet_freq": 0.9408207217626965,
+     "rollout_recommendation": "bet_75",
+     "rollout_method": "Monte Carlo rollout",
+     "agrees": true
+    }
+   ],
+   "compact_strategy_lookup": "not compatible: subgame pot 10 / stack 20 / bets 50%, 100%, all-in, cap 2 differ from the locked 100 BB tree; no lookup made",
+   "name": "low connected mixed",
+   "board": [
+    "5d",
+    "4c",
+    "3h",
+    "Ks",
+    "9h"
+   ],
+   "range0": [
+    "7hTs",
+    "Jc2d",
+    "6hJh",
+    "8cJs",
+    "JdTs",
+    "6cQh",
+    "Qd7h",
+    "TcQd",
+    "JdQh",
+    "7cAc",
+    "8dAd",
+    "TsAs",
+    "AcQs",
+    "3d2h",
+    "8dKh",
+    "JdKh",
+    "KdAd",
+    "3c5s",
+    "3s9s",
+    "Kc3s",
+    "9cKd",
+    "2cAc",
+    "2d6h",
+    "6s7s"
+   ],
+   "range1": [
+    "8sQs",
+    "JhQs",
+    "7hAh",
+    "AdTh",
+    "QdAs",
+    "6c3s",
+    "3cTc",
+    "3dQd",
+    "6c4h",
+    "8d4s",
+    "Qc4s",
+    "2h5h",
+    "5c8s",
+    "5hJs",
+    "6d6s",
+    "9c6h",
+    "8s9s",
+    "Qc9s",
+    "QcQd",
+    "7cKc",
+    "TdKh",
+    "KcAd",
+    "3d5h",
+    "4s9s"
+   ],
+   "pot": 10,
+   "stack": 20
+  }
+ ],
+ "seconds": 5158
+}

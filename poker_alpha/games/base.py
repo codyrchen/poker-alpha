@@ -23,6 +23,8 @@ from __future__ import annotations
 from abc import ABC, abstractmethod
 from typing import Hashable, List, Tuple
 
+import numpy as np
+
 State = Hashable
 Action = str
 
@@ -31,6 +33,28 @@ class Game(ABC):
     """A two-player zero-sum extensive-form game with chance nodes."""
 
     num_players: int = 2
+
+    def signature(self) -> str:
+        """Deterministic, versioned identifier of this game's rules/config.
+
+        Stored in solver checkpoints so a checkpoint cannot be resumed against
+        a different game. Games with configuration must override this and
+        encode every parameter that changes the game tree.
+        """
+        return f"{type(self).__name__}:v1"
+
+    def solver_config_signature(self) -> str:
+        """Signature of the locked solver configuration this game was built
+        from (``HoldemSolverConfig.build_game``), or ``""``."""
+        cfg = getattr(self, "solver_config", None)
+        return cfg.signature() if cfg is not None else ""
+
+    def encoder_signature(self) -> "str | None":
+        """Signature of the information-state encoder, if the game has one.
+
+        ``None`` means information-set keys are the game's built-in keys.
+        """
+        return None
 
     @abstractmethod
     def root(self) -> State:
@@ -42,7 +66,27 @@ class Game(ABC):
 
     @abstractmethod
     def chance_outcomes(self, state: State) -> List[Tuple[float, State]]:
-        """Return ``(probability, successor)`` pairs for a chance node."""
+        """Return ``(probability, successor)`` pairs for a chance node.
+
+        Games whose chance trees are too large to enumerate (Hold'em) may
+        raise :class:`NotImplementedError` here and override
+        :meth:`sample_chance` instead; exact full-tree algorithms (CFR, CFR+,
+        exact evaluation) then do not apply to them.
+        """
+
+    def sample_chance(self, state: State, rng: np.random.Generator) -> State:
+        """Sample one chance successor of ``state`` using ``rng``.
+
+        The default samples from :meth:`chance_outcomes` with exactly one
+        ``rng.choice(n, p=...)`` call, so sampling solvers consume the RNG
+        stream identically to the pre-existing enumerating implementation
+        (seeded Kuhn/Leduc MCCFR results are unchanged). Games that cannot
+        enumerate their chance outcomes override this.
+        """
+        outcomes = self.chance_outcomes(state)
+        probs = np.array([p for p, _ in outcomes])
+        idx = int(rng.choice(len(probs), p=probs / probs.sum()))
+        return outcomes[idx][1]
 
     @abstractmethod
     def is_terminal(self, state: State) -> bool:

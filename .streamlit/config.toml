@@ -1,0 +1,11 @@
+# PokerAlpha privacy defaults (applied when Streamlit is started from the
+# repository root; ./scripts/run_live_observer.sh passes the same flags).
+[server]
+# Listen on this computer only: the live page shows captured screen frames.
+# Streamlit's default listens on every network interface (LAN-reachable).
+address = "127.0.0.1"
+
+[browser]
+serverAddress = "localhost"
+# Streamlit sends anonymous usage statistics by default; PokerAlpha turns it off.
+gatherUsageStats = false

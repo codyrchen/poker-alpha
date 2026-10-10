@@ -6,3 +6,19 @@ build/
 dist/
 .venv/
 .DS_Store
+
+# Local observer data: captured frames and test sessions never belong in Git
+# (each such directory also carries its own "*" .gitignore).
+pokeralpha_captures/
+pokeralpha_sessions/
+pokeralpha_fixture_export*/
+*.pokeralpha_session/
+
+# Native extension build trees
+cpp/build/
+cmake-build*/
+*.so.dSYM/
+
+# Native training outputs: logs are committed, checkpoints are not
+results/native_training/**/*.npz
+results/native_training/**/seed*/

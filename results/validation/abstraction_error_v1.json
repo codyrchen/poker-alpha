@@ -1,0 +1,1167 @@
+{
+ "format": "pokeralpha.abstraction_error/v1",
+ "part_a_setup": {
+  "tree": "HoldemGame river, line b75c/cc/cc (pot 5 BB, 97.5 BB behind), bets 33/75/150% + all-in, raise cap 2",
+  "solver": "CFR+ 400 iterations per encoder",
+  "ranges": "14 combos per player from river-strength percentile bands"
+ },
+ "part_a": [
+  {
+   "name": "dry_high",
+   "board": [
+    "Ks",
+    "7d",
+    "2c",
+    "Qh",
+    "4s"
+   ],
+   "encoders": {
+    "raw": {
+     "abstract_infosets": 476,
+     "seconds": 175.1,
+     "infoset_table_kb_estimate": 202.4,
+     "exploitability_in_raw_game": 0.0056,
+     "ev_p0": 1.8874,
+     "ev_error_vs_raw": 0.0,
+     "weighted_l1_vs_raw": 0.0
+    },
+    "bucket": {
+     "abstract_infosets": 476,
+     "seconds": 1124.9,
+     "infoset_table_kb_estimate": 206.3,
+     "exploitability_in_raw_game": 0.0056,
+     "ev_p0": 1.8874,
+     "ev_error_vs_raw": 0.0,
+     "weighted_l1_vs_raw": 0.0
+    },
+    "transition": {
+     "abstract_infosets": 476,
+     "seconds": 192.1,
+     "infoset_table_kb_estimate": 201.5,
+     "exploitability_in_raw_game": 0.0056,
+     "ev_p0": 1.8874,
+     "ev_error_vs_raw": 0.0,
+     "weighted_l1_vs_raw": 0.0
+    },
+    "compact": {
+     "abstract_infosets": 99,
+     "seconds": 173.2,
+     "infoset_table_kb_estimate": 43.4,
+     "exploitability_in_raw_game": 9.2426,
+     "ev_p0": 2.3308,
+     "ev_error_vs_raw": 0.4434,
+     "weighted_l1_vs_raw": 0.1904
+    }
+   },
+   "rebuilt_from_log": "/home/user/pa_ckpt/phase34_partA.log"
+  },
+  {
+   "name": "four_flush",
+   "board": [
+    "Qh",
+    "9h",
+    "5h",
+    "2h",
+    "Kc"
+   ],
+   "encoders": {
+    "raw": {
+     "abstract_infosets": 476,
+     "seconds": 174.3,
+     "infoset_table_kb_estimate": 202.9,
+     "exploitability_in_raw_game": 0.0186,
+     "ev_p0": 1.9193,
+     "ev_error_vs_raw": 0.0,
+     "weighted_l1_vs_raw": 0.0
+    },
+    "bucket": {
+     "abstract_infosets": 476,
+     "seconds": 1146.1,
+     "infoset_table_kb_estimate": 206.4,
+     "exploitability_in_raw_game": 0.0186,
+     "ev_p0": 1.9193,
+     "ev_error_vs_raw": 0.0,
+     "weighted_l1_vs_raw": 0.0
+    },
+    "transition": {
+     "abstract_infosets": 476,
+     "seconds": 198.7,
+     "infoset_table_kb_estimate": 201.6,
+     "exploitability_in_raw_game": 0.0186,
+     "ev_p0": 1.9193,
+     "ev_error_vs_raw": 0.0,
+     "weighted_l1_vs_raw": 0.0
+    },
+    "compact": {
+     "abstract_infosets": 63,
+     "seconds": 178.8,
+     "infoset_table_kb_estimate": 27.6,
+     "exploitability_in_raw_game": 2.2356,
+     "ev_p0": 2.2367,
+     "ev_error_vs_raw": 0.3173,
+     "weighted_l1_vs_raw": 0.5124
+    }
+   },
+   "rebuilt_from_log": "/home/user/pa_ckpt/phase34_partA.log"
+  }
+ ],
+ "part_b": {
+  "selection": "canonical-matrix keys (postflop, >= 20 visits on all seeds) with the highest seed disagreement at 300k",
+  "corpus": {
+   "hands": 30000,
+   "seed": 3
+  },
+  "severity": "0.5 * within-key equity range + 0.25 * (1 - top made-class share) + 0.25 * (1 - top action-line share); heuristic, from measured dispersion",
+  "rows": [
+   {
+    "key": "1|1|220|ufd|inr1foveracs3|f.c.b33.b75.b150.a",
+    "seed_disagreement_l1": 1.892,
+    "members_found": 1,
+    "sampled": 1,
+    "equity_min": 0.67,
+    "equity_max": 0.67,
+    "equity_std": 0.0,
+    "made_classes": [
+     [
+      "bottom_pair",
+      1
+     ]
+    ],
+    "draw_classes": {
+     "2": 1
+    },
+    "nut_status": {
+     "0": 1
+    },
+    "textures": [
+     [
+      "ufd",
+      1
+     ]
+    ],
+    "spr_buckets": {
+     "3": 1
+    },
+    "distinct_lines": 1,
+    "lines": [
+     [
+      "cc/cb150",
+      1
+     ]
+    ],
+    "distinct_preflop_classes": 1,
+    "top_preflop_classes": [
+     [
+      "T4o",
+      1
+     ]
+    ],
+    "severity": 0.0
+   },
+   {
+    "key": "1|1|400|prd|inr0fnoneans3|c.b33.b75.b150.a",
+    "seed_disagreement_l1": 1.695,
+    "members_found": 22,
+    "sampled": 22,
+    "equity_min": 0.7,
+    "equity_max": 0.887,
+    "equity_std": 0.057,
+    "made_classes": [
+     [
+      "overpair",
+      12
+     ],
+     [
+      "top_pair_good",
+      10
+     ]
+    ],
+    "draw_classes": {
+     "0": 22
+    },
+    "nut_status": {
+     "0": 22
+    },
+    "textures": [
+     [
+      "prd",
+      22
+     ]
+    ],
+    "spr_buckets": {
+     "3": 22
+    },
+    "distinct_lines": 1,
+    "lines": [
+     [
+      "cc/",
+      22
+     ]
+    ],
+    "distinct_preflop_classes": 12,
+    "top_preflop_classes": [
+     [
+      "KK",
+      6
+     ],
+     [
+      "AA",
+      3
+     ],
+     [
+      "JJ",
+      2
+     ],
+     [
+      "AQo",
+      2
+     ],
+     [
+      "KJo",
+      2
+     ]
+    ],
+    "severity": 0.207
+   },
+   {
+    "key": "1|1|400|urd|inr1foveracs3|f.c.b33.b75.b150.a",
+    "seed_disagreement_l1": 1.669,
+    "members_found": 11,
+    "sampled": 11,
+    "equity_min": 0.795,
+    "equity_max": 0.94,
+    "equity_std": 0.044,
+    "made_classes": [
+     [
+      "top_pair_good",
+      6
+     ],
+     [
+      "two_pair",
+      4
+     ],
+     [
+      "overpair",
+      1
+     ]
+    ],
+    "draw_classes": {
+     "0": 11
+    },
+    "nut_status": {
+     "0": 11
+    },
+    "textures": [
+     [
+      "urd",
+      11
+     ]
+    ],
+    "spr_buckets": {
+     "3": 11
+    },
+    "distinct_lines": 1,
+    "lines": [
+     [
+      "cc/cb150",
+      11
+     ]
+    ],
+    "distinct_preflop_classes": 10,
+    "top_preflop_classes": [
+     [
+      "KJo",
+      2
+     ],
+     [
+      "A8o",
+      1
+     ],
+     [
+      "QJo",
+      1
+     ],
+     [
+      "Q6s",
+      1
+     ],
+     [
+      "K8o",
+      1
+     ]
+    ],
+    "severity": 0.186
+   },
+   {
+    "key": "1|1|200|utc|inr1fsmallacs3|f.c.b33.b75.b150.a",
+    "seed_disagreement_l1": 1.647,
+    "members_found": 1,
+    "sampled": 1,
+    "equity_min": 0.67,
+    "equity_max": 0.67,
+    "equity_std": 0.0,
+    "made_classes": [
+     [
+      "bottom_pair",
+      1
+     ]
+    ],
+    "draw_classes": {
+     "0": 1
+    },
+    "nut_status": {
+     "0": 1
+    },
+    "textures": [
+     [
+      "utc",
+      1
+     ]
+    ],
+    "spr_buckets": {
+     "3": 1
+    },
+    "distinct_lines": 1,
+    "lines": [
+     [
+      "cc/cb33",
+      1
+     ]
+    ],
+    "distinct_preflop_classes": 1,
+    "top_preflop_classes": [
+     [
+      "A8o",
+      1
+     ]
+    ],
+    "severity": 0.0
+   },
+   {
+    "key": "1|1|300|ufd|inr1foveracs3|f.c.b33.b75.b150.a",
+    "seed_disagreement_l1": 1.642,
+    "members_found": 4,
+    "sampled": 4,
+    "equity_min": 0.565,
+    "equity_max": 0.66,
+    "equity_std": 0.038,
+    "made_classes": [
+     [
+      "top_pair_weak",
+      2
+     ],
+     [
+      "middle_pair",
+      2
+     ]
+    ],
+    "draw_classes": {
+     "0": 4
+    },
+    "nut_status": {
+     "0": 4
+    },
+    "textures": [
+     [
+      "ufd",
+      4
+     ]
+    ],
+    "spr_buckets": {
+     "3": 4
+    },
+    "distinct_lines": 1,
+    "lines": [
+     [
+      "cc/cb150",
+      4
+     ]
+    ],
+    "distinct_preflop_classes": 4,
+    "top_preflop_classes": [
+     [
+      "T8o",
+      1
+     ],
+     [
+      "T5s",
+      1
+     ],
+     [
+      "K3o",
+      1
+     ],
+     [
+      "A6s",
+      1
+     ]
+    ],
+    "severity": 0.173
+   },
+   {
+    "key": "1|1|310|utc|ior1fsmallacs3|f.c.b33.b75.b150.a",
+    "seed_disagreement_l1": 1.61,
+    "members_found": 3,
+    "sampled": 3,
+    "equity_min": 0.703,
+    "equity_max": 0.787,
+    "equity_std": 0.035,
+    "made_classes": [
+     [
+      "top_pair_weak",
+      2
+     ],
+     [
+      "middle_pair",
+      1
+     ]
+    ],
+    "draw_classes": {
+     "1": 3
+    },
+    "nut_status": {
+     "0": 3
+    },
+    "textures": [
+     [
+      "utc",
+      3
+     ]
+    ],
+    "spr_buckets": {
+     "3": 3
+    },
+    "distinct_lines": 3,
+    "lines": [
+     [
+      "cb75c/cb33",
+      1
+     ],
+     [
+      "b150c/cb33",
+      1
+     ],
+     [
+      "b33c/cb33",
+      1
+     ]
+    ],
+    "distinct_preflop_classes": 3,
+    "top_preflop_classes": [
+     [
+      "JTo",
+      1
+     ],
+     [
+      "K7o",
+      1
+     ],
+     [
+      "K4o",
+      1
+     ]
+    ],
+    "severity": 0.292
+   },
+   {
+    "key": "1|1|200|ufd|inr1fsmallacs3|f.c.b33.b75.b150.a",
+    "seed_disagreement_l1": 1.582,
+    "members_found": 2,
+    "sampled": 2,
+    "equity_min": 0.468,
+    "equity_max": 0.512,
+    "equity_std": 0.022,
+    "made_classes": [
+     [
+      "bottom_pair",
+      2
+     ]
+    ],
+    "draw_classes": {
+     "0": 2
+    },
+    "nut_status": {
+     "0": 2
+    },
+    "textures": [
+     [
+      "ufd",
+      2
+     ]
+    ],
+    "spr_buckets": {
+     "3": 2
+    },
+    "distinct_lines": 1,
+    "lines": [
+     [
+      "cc/cb33",
+      2
+     ]
+    ],
+    "distinct_preflop_classes": 2,
+    "top_preflop_classes": [
+     [
+      "J2s",
+      1
+     ],
+     [
+      "54o",
+      1
+     ]
+    ],
+    "severity": 0.022
+   },
+   {
+    "key": "1|1|320|urc|inr0fnoneans3|c.b33.b75.b150.a",
+    "seed_disagreement_l1": 1.564,
+    "members_found": 6,
+    "sampled": 6,
+    "equity_min": 0.65,
+    "equity_max": 0.792,
+    "equity_std": 0.054,
+    "made_classes": [
+     [
+      "top_pair_weak",
+      4
+     ],
+     [
+      "middle_pair",
+      2
+     ]
+    ],
+    "draw_classes": {
+     "2": 6
+    },
+    "nut_status": {
+     "0": 6
+    },
+    "textures": [
+     [
+      "urc",
+      6
+     ]
+    ],
+    "spr_buckets": {
+     "3": 6
+    },
+    "distinct_lines": 1,
+    "lines": [
+     [
+      "cc/",
+      6
+     ]
+    ],
+    "distinct_preflop_classes": 6,
+    "top_preflop_classes": [
+     [
+      "J9o",
+      1
+     ],
+     [
+      "42o",
+      1
+     ],
+     [
+      "87o",
+      1
+     ],
+     [
+      "T9o",
+      1
+     ],
+     [
+      "65o",
+      1
+     ]
+    ],
+    "severity": 0.155
+   },
+   {
+    "key": "1|1|310|prd|inr0fnoneans3|c.b33.b75.b150.a",
+    "seed_disagreement_l1": 1.561,
+    "members_found": 10,
+    "sampled": 10,
+    "equity_min": 0.6,
+    "equity_max": 0.853,
+    "equity_std": 0.073,
+    "made_classes": [
+     [
+      "middle_pair",
+      8
+     ],
+     [
+      "top_pair_weak",
+      2
+     ]
+    ],
+    "draw_classes": {
+     "1": 10
+    },
+    "nut_status": {
+     "0": 10
+    },
+    "textures": [
+     [
+      "prd",
+      10
+     ]
+    ],
+    "spr_buckets": {
+     "3": 10
+    },
+    "distinct_lines": 1,
+    "lines": [
+     [
+      "cc/",
+      10
+     ]
+    ],
+    "distinct_preflop_classes": 9,
+    "top_preflop_classes": [
+     [
+      "Q5s",
+      2
+     ],
+     [
+      "T6s",
+      1
+     ],
+     [
+      "K8s",
+      1
+     ],
+     [
+      "82s",
+      1
+     ],
+     [
+      "76s",
+      1
+     ]
+    ],
+    "severity": 0.176
+   },
+   {
+    "key": "1|1|501|prd|inr1fsmallacs3|f.c.b33.b75.b150.a",
+    "seed_disagreement_l1": 1.551,
+    "members_found": 4,
+    "sampled": 4,
+    "equity_min": 0.927,
+    "equity_max": 0.955,
+    "equity_std": 0.01,
+    "made_classes": [
+     [
+      "trips",
+      4
+     ]
+    ],
+    "draw_classes": {
+     "0": 4
+    },
+    "nut_status": {
+     "1": 4
+    },
+    "textures": [
+     [
+      "prd",
+      4
+     ]
+    ],
+    "spr_buckets": {
+     "3": 4
+    },
+    "distinct_lines": 1,
+    "lines": [
+     [
+      "cc/cb33",
+      4
+     ]
+    ],
+    "distinct_preflop_classes": 4,
+    "top_preflop_classes": [
+     [
+      "J6s",
+      1
+     ],
+     [
+      "98o",
+      1
+     ],
+     [
+      "QJo",
+      1
+     ],
+     [
+      "53s",
+      1
+     ]
+    ],
+    "severity": 0.014
+   },
+   {
+    "key": "1|1|400|ufd|inr1fsmallacs3|f.c.b33.b75.b150.a",
+    "seed_disagreement_l1": 1.55,
+    "members_found": 2,
+    "sampled": 2,
+    "equity_min": 0.74,
+    "equity_max": 0.748,
+    "equity_std": 0.004,
+    "made_classes": [
+     [
+      "two_pair",
+      1
+     ],
+     [
+      "top_pair_good",
+      1
+     ]
+    ],
+    "draw_classes": {
+     "0": 2
+    },
+    "nut_status": {
+     "0": 2
+    },
+    "textures": [
+     [
+      "ufd",
+      2
+     ]
+    ],
+    "spr_buckets": {
+     "3": 2
+    },
+    "distinct_lines": 1,
+    "lines": [
+     [
+      "cc/cb33",
+      2
+     ]
+    ],
+    "distinct_preflop_classes": 2,
+    "top_preflop_classes": [
+     [
+      "K7o",
+      1
+     ],
+     [
+      "KQo",
+      1
+     ]
+    ],
+    "severity": 0.129
+   },
+   {
+    "key": "1|1|310|utc|ior1fmediumacs3|f.c.b33.b75.b150.a",
+    "seed_disagreement_l1": 1.54,
+    "members_found": 5,
+    "sampled": 5,
+    "equity_min": 0.58,
+    "equity_max": 0.772,
+    "equity_std": 0.073,
+    "made_classes": [
+     [
+      "middle_pair",
+      3
+     ],
+     [
+      "top_pair_weak",
+      2
+     ]
+    ],
+    "draw_classes": {
+     "1": 5
+    },
+    "nut_status": {
+     "0": 5
+    },
+    "textures": [
+     [
+      "utc",
+      5
+     ]
+    ],
+    "spr_buckets": {
+     "3": 5
+    },
+    "distinct_lines": 3,
+    "lines": [
+     [
+      "b75c/cb75",
+      3
+     ],
+     [
+      "cb75b33c/cb75",
+      1
+     ],
+     [
+      "cb33c/cb75",
+      1
+     ]
+    ],
+    "distinct_preflop_classes": 5,
+    "top_preflop_classes": [
+     [
+      "94o",
+      1
+     ],
+     [
+      "QJo",
+      1
+     ],
+     [
+      "95o",
+      1
+     ],
+     [
+      "Q2s",
+      1
+     ],
+     [
+      "98s",
+      1
+     ]
+    ],
+    "severity": 0.296
+   },
+   {
+    "key": "1|0|501|urc|inr0fnoneans3|c.b33.b75.b150.a",
+    "seed_disagreement_l1": 1.524,
+    "members_found": 1,
+    "sampled": 1,
+    "equity_min": 0.927,
+    "equity_max": 0.927,
+    "equity_std": 0.0,
+    "made_classes": [
+     [
+      "set",
+      1
+     ]
+    ],
+    "draw_classes": {
+     "0": 1
+    },
+    "nut_status": {
+     "1": 1
+    },
+    "textures": [
+     [
+      "urc",
+      1
+     ]
+    ],
+    "spr_buckets": {
+     "3": 1
+    },
+    "distinct_lines": 1,
+    "lines": [
+     [
+      "cc/c",
+      1
+     ]
+    ],
+    "distinct_preflop_classes": 1,
+    "top_preflop_classes": [
+     [
+      "AA",
+      1
+     ]
+    ],
+    "severity": 0.0
+   },
+   {
+    "key": "1|1|501|utc|ior0fnoneans3|c.b33.b75.b150.a",
+    "seed_disagreement_l1": 1.515,
+    "members_found": 8,
+    "sampled": 8,
+    "equity_min": 0.802,
+    "equity_max": 0.948,
+    "equity_std": 0.049,
+    "made_classes": [
+     [
+      "set",
+      5
+     ],
+     [
+      "straight",
+      3
+     ]
+    ],
+    "draw_classes": {
+     "0": 8
+    },
+    "nut_status": {
+     "1": 8
+    },
+    "textures": [
+     [
+      "utc",
+      8
+     ]
+    ],
+    "spr_buckets": {
+     "3": 8
+    },
+    "distinct_lines": 4,
+    "lines": [
+     [
+      "b150c/",
+      4
+     ],
+     [
+      "cb33c/",
+      2
+     ],
+     [
+      "b75c/",
+      1
+     ],
+     [
+      "cb75c/",
+      1
+     ]
+    ],
+    "distinct_preflop_classes": 7,
+    "top_preflop_classes": [
+     [
+      "55",
+      2
+     ],
+     [
+      "86o",
+      1
+     ],
+     [
+      "98o",
+      1
+     ],
+     [
+      "87o",
+      1
+     ],
+     [
+      "77",
+      1
+     ]
+    ],
+    "severity": 0.291
+   },
+   {
+    "key": "1|1|501|urd|ior1foveracs3|f.c.b33.b75.b150.a",
+    "seed_disagreement_l1": 1.483,
+    "members_found": 0
+   },
+   {
+    "key": "1|0|220|ufd|ior0fnoneans3|c.b33.b75.b150.a",
+    "seed_disagreement_l1": 1.476,
+    "members_found": 9,
+    "sampled": 9,
+    "equity_min": 0.64,
+    "equity_max": 0.782,
+    "equity_std": 0.043,
+    "made_classes": [
+     [
+      "pocket_middle",
+      6
+     ],
+     [
+      "bottom_pair",
+      3
+     ]
+    ],
+    "draw_classes": {
+     "2": 9
+    },
+    "nut_status": {
+     "0": 9
+    },
+    "textures": [
+     [
+      "ufd",
+      9
+     ]
+    ],
+    "spr_buckets": {
+     "3": 9
+    },
+    "distinct_lines": 6,
+    "lines": [
+     [
+      "cb75c/c",
+      3
+     ],
+     [
+      "b150c/c",
+      2
+     ],
+     [
+      "cb33b75c/c",
+      1
+     ],
+     [
+      "cb33b33c/c",
+      1
+     ]
+    ],
+    "distinct_preflop_classes": 6,
+    "top_preflop_classes": [
+     [
+      "TT",
+      2
+     ],
+     [
+      "99",
+      2
+     ],
+     [
+      "88",
+      2
+     ],
+     [
+      "54o",
+      1
+     ],
+     [
+      "86o",
+      1
+     ]
+    ],
+    "severity": 0.321
+   },
+   {
+    "key": "1|1|410|urc|ior1fmediumacs3|f.c.b33.b75.b150.a",
+    "seed_disagreement_l1": 1.476,
+    "members_found": 0
+   },
+   {
+    "key": "1|0|310|prd|ior0fnoneans3|c.b33.b75.b150.a",
+    "seed_disagreement_l1": 1.452,
+    "members_found": 5,
+    "sampled": 5,
+    "equity_min": 0.593,
+    "equity_max": 0.8,
+    "equity_std": 0.077,
+    "made_classes": [
+     [
+      "middle_pair",
+      4
+     ],
+     [
+      "top_pair_weak",
+      1
+     ]
+    ],
+    "draw_classes": {
+     "1": 5
+    },
+    "nut_status": {
+     "0": 5
+    },
+    "textures": [
+     [
+      "prd",
+      5
+     ]
+    ],
+    "spr_buckets": {
+     "3": 5
+    },
+    "distinct_lines": 4,
+    "lines": [
+     [
+      "b75c/c",
+      2
+     ],
+     [
+      "cb150c/c",
+      1
+     ],
+     [
+      "b33b33c/c",
+      1
+     ],
+     [
+      "cb75c/c",
+      1
+     ]
+    ],
+    "distinct_preflop_classes": 5,
+    "top_preflop_classes": [
+     [
+      "92s",
+      1
+     ],
+     [
+      "T3s",
+      1
+     ],
+     [
+      "84s",
+      1
+     ],
+     [
+      "54s",
+      1
+     ],
+     [
+      "62s",
+      1
+     ]
+    ],
+    "severity": 0.304
+   },
+   {
+    "key": "1|1|310|utc|inr1fsmallacs3|f.c.b33.b75.b150.a",
+    "seed_disagreement_l1": 1.437,
+    "members_found": 1,
+    "sampled": 1,
+    "equity_min": 0.728,
+    "equity_max": 0.728,
+    "equity_std": 0.0,
+    "made_classes": [
+     [
+      "middle_pair",
+      1
+     ]
+    ],
+    "draw_classes": {
+     "1": 1
+    },
+    "nut_status": {
+     "0": 1
+    },
+    "textures": [
+     [
+      "utc",
+      1
+     ]
+    ],
+    "spr_buckets": {
+     "3": 1
+    },
+    "distinct_lines": 1,
+    "lines": [
+     [
+      "cc/cb33",
+      1
+     ]
+    ],
+    "distinct_preflop_classes": 1,
+    "top_preflop_classes": [
+     [
+      "AJo",
+      1
+     ]
+    ],
+    "severity": 0.0
+   },
+   {
+    "key": "1|1|410|urc|ior1foveracs3|f.c.b33.b75.b150.a",
+    "seed_disagreement_l1": 1.427,
+    "members_found": 0
+   }
+  ]
+ },
+ "seconds": 17
+}

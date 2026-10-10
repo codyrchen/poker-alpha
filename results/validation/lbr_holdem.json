@@ -1,0 +1,80 @@
+{
+ "format": "pokeralpha.lbr_holdem/v1",
+ "hands_per_seat": 10000,
+ "semantics": "restricted LBR (abstract action menu, myopic values, sampled equities): APPROXIMATE LOWER BOUND on real-game exploitability; validated on exact reduced games (lbr_validation.json). Use for ranking.",
+ "candidates": {
+  "release_200k": {
+   "seat0": {
+    "hands": 10000,
+    "mean_bb_per_hand": 1.0763027174682007,
+    "stderr_bb_per_hand": 0.35386999278564696,
+    "bb_per_100": 107.63027174682007,
+    "ci95_bb_per_100": [
+     38.27175316083327,
+     176.98879033280687
+    ]
+   },
+   "seat1": {
+    "hands": 10000,
+    "mean_bb_per_hand": 1.3903875488864,
+    "stderr_bb_per_hand": 0.3556062217736525,
+    "bb_per_100": 139.03875488864,
+    "ci95_bb_per_100": [
+     69.33993542100411,
+     208.7375743562759
+    ]
+   },
+   "lbr_lower_bound_bb_per_100": 123.3,
+   "lbr_se_bb_per_100": 25.1
+  },
+  "native_300k": {
+   "seat0": {
+    "hands": 10000,
+    "mean_bb_per_hand": 0.98005040801,
+    "stderr_bb_per_hand": 0.33440021215024146,
+    "bb_per_100": 98.00504080099999,
+    "ci95_bb_per_100": [
+     32.46259921955267,
+     163.5474823824473
+    ]
+   },
+   "seat1": {
+    "hands": 10000,
+    "mean_bb_per_hand": 1.5552148130591998,
+    "stderr_bb_per_hand": 0.34629209417615386,
+    "bb_per_100": 155.52148130592,
+    "ci95_bb_per_100": [
+     87.64823084739383,
+     223.39473176444614
+    ]
+   },
+   "lbr_lower_bound_bb_per_100": 126.8,
+   "lbr_se_bb_per_100": 24.1
+  },
+  "native_1m": {
+   "seat0": {
+    "hands": 10000,
+    "mean_bb_per_hand": 1.1406764226732256,
+    "stderr_bb_per_hand": 0.24770523190509436,
+    "bb_per_100": 114.06764226732255,
+    "ci95_bb_per_100": [
+     65.51741681392406,
+     162.61786772072105
+    ]
+   },
+   "seat1": {
+    "hands": 10000,
+    "mean_bb_per_hand": 0.9166918715840002,
+    "stderr_bb_per_hand": 0.28294552856787464,
+    "bb_per_100": 91.66918715840002,
+    "ci95_bb_per_100": [
+     36.21186355909659,
+     147.12651075770344
+    ]
+   },
+   "lbr_lower_bound_bb_per_100": 102.9,
+   "lbr_se_bb_per_100": 18.8
+  }
+ },
+ "seconds": 1030.2
+}

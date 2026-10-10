@@ -1,0 +1,67 @@
+{
+ "action_abstraction": [
+  [
+   "b33",
+   0.33
+  ],
+  [
+   "b75",
+   0.75
+  ],
+  [
+   "b150",
+   1.5
+  ]
+ ],
+ "artifact": "holdem_v1_seed0.npz",
+ "artifact_format": "pokeralpha.strategy_artifact/v1",
+ "averaging": "uniform",
+ "blinds": [
+  0.5,
+  1.0
+ ],
+ "bytes": 1613612,
+ "config": {
+  "bet_fractions": [
+   [
+    "b33",
+    0.33
+   ],
+   [
+    "b75",
+    0.75
+   ],
+   [
+    "b150",
+    1.5
+   ]
+  ],
+  "card_feature_tables": "ffa793631f72354c",
+  "config_version": 1,
+  "encoder": "compact",
+  "encoder_signature": "CompactHoldemEncoder:v1:cards=v1:history=abstract:texture=1:river_blockers=1:betting=v1:recall=imperfect",
+  "game_signature": "HoldemGame:v1:stack=100:blinds=0.5/1:bets=b33=0.33,b75=0.75,b150=1.5:raise_cap=3",
+  "perfect_recall": false,
+  "raise_cap": 3,
+  "reference_range": "uniform-random-hand (offline quality metrics only)",
+  "sampling": "external-sampling-mccfr",
+  "starting_stack": 100.0
+ },
+ "config_signature": "HoldemSolverConfig:v1:2e23c098860f7894c871",
+ "config_version": 1,
+ "encoder_signature": "CompactHoldemEncoder:v1:cards=v1:history=abstract:texture=1:river_blockers=1:betting=v1:recall=imperfect",
+ "first_committed_in": "7a81878c58ea79f6dd7a59b9446e5f2cd4757bef",
+ "format": "pokeralpha.strategy_artifact_manifest/v1",
+ "game_signature": "HoldemGame:v1:stack=100:blinds=0.5/1:bets=b33=0.33,b75=0.75,b150=1.5:raise_cap=3",
+ "generation_command": null,
+ "generation_commit": null,
+ "generation_commit_note": "not recorded when the artifact was generated",
+ "infosets": 83045,
+ "iterations": 300000,
+ "raise_cap": 3,
+ "sampler": "external-sampling MCCFR",
+ "seed": 0,
+ "sha256": "1d4dbbde5e8ed99d3fbf0490f6709935e69ca08c4efe6082ceb2bfdd749800b4",
+ "source_checkpoint": "locked_seed0_it300000.npz",
+ "starting_stack": 100.0
+}

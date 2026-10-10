@@ -1,0 +1,9 @@
+workload,median_ms,p95_ms,samples,label,hardware
+hand_evaluation_x500,1.8716829999902984,1.9360614998731762,15,baseline,Intel(R) Xeon(R) Processor @ 2.10GHz x4 | Linux | Python 3.13.16 | NumPy 2.5.3
+headsup_equity_1000,18.22777000052156,21.845005200339074,15,baseline,Intel(R) Xeon(R) Processor @ 2.10GHz x4 | Linux | Python 3.13.16 | NumPy 2.5.3
+multiway_equity_3way_1000,104.32945699994889,106.30310799951985,15,baseline,Intel(R) Xeon(R) Processor @ 2.10GHz x4 | Linux | Python 3.13.16 | NumPy 2.5.3
+multiway_equity_9way_300,621.7087449995233,699.6886357999756,15,baseline,Intel(R) Xeon(R) Processor @ 2.10GHz x4 | Linux | Python 3.13.16 | NumPy 2.5.3
+range_sampling_x1000,0.4033530003653141,0.42584100010572,15,baseline,Intel(R) Xeon(R) Processor @ 2.10GHz x4 | Linux | Python 3.13.16 | NumPy 2.5.3
+decision_rollout_1000,199.51616000071226,210.81589009936576,15,baseline,Intel(R) Xeon(R) Processor @ 2.10GHz x4 | Linux | Python 3.13.16 | NumPy 2.5.3
+end_to_end_recommendation,311.9452970004204,336.698994499784,15,baseline,Intel(R) Xeon(R) Processor @ 2.10GHz x4 | Linux | Python 3.13.16 | NumPy 2.5.3
+screen_recognition_frame,74.44395699985762,76.29157020028288,15,baseline,Intel(R) Xeon(R) Processor @ 2.10GHz x4 | Linux | Python 3.13.16 | NumPy 2.5.3

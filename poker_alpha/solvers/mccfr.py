@@ -22,7 +22,8 @@ Update rules per traversal for player ``i``:
   ``s(a) += σ(a)`` here (each infoset is reached with probability proportional
   to the opponent's own reach, which makes this unweighted tally correct in
   expectation);
-* at chance nodes: sample one outcome by its probability.
+* at chance nodes: sample one outcome via :meth:`Game.sample_chance`
+  (enumeration-free, so it also works for Hold'em).
 
 Sampling makes results stochastic, so the solver takes an explicit seed.
 """
@@ -34,7 +35,7 @@ from typing import Dict, List
 import numpy as np
 
 from ..games.base import Game, State
-from .cfr import CFRSolver
+from .cfr import CFRSolver, strategy_dot
 
 
 class MCCFRSolver(CFRSolver):
@@ -45,7 +46,13 @@ class MCCFRSolver(CFRSolver):
         self.rng = np.random.default_rng(seed)
 
     def _sample(self, probs: np.ndarray) -> int:
-        return int(self.rng.choice(len(probs), p=probs))
+        # Same draw as ``self.rng.choice(len(probs), p=probs)`` (one uniform
+        # double, inverse CDF with side="right"), without choice()'s argument
+        # validation overhead; tests/test_performance_equivalence.py checks it
+        # against Generator.choice.
+        cdf = np.cumsum(probs)
+        cdf /= cdf[-1]
+        return int(np.searchsorted(cdf, self.rng.random(), side="right"))
 
     def _traverse(self, state: State, update_player: int) -> float:
         """Sampled counterfactual value of ``state`` for ``update_player``."""
@@ -54,10 +61,10 @@ class MCCFRSolver(CFRSolver):
             u0 = game.utility(state)
             return u0 if update_player == 0 else -u0
         if game.is_chance(state):
-            outcomes = game.chance_outcomes(state)
-            probs = np.array([p for p, _ in outcomes])
-            idx = self._sample(probs / probs.sum())
-            return self._traverse(outcomes[idx][1], update_player)
+            # Delegated to the game so huge chance trees (Hold'em deals) can
+            # be sampled without being enumerated.
+            return self._traverse(game.sample_chance(state, self.rng),
+                                  update_player)
 
         player = game.current_player(state)
         key = game.infoset_key(state)
@@ -77,7 +84,7 @@ class MCCFRSolver(CFRSolver):
         for i, action in enumerate(actions):
             child_values[i] = self._traverse(game.next_state(state, action),
                                              update_player)
-        node_value = float(strategy @ child_values)
+        node_value = strategy_dot(strategy, child_values)
         node.regret_sum += child_values - node_value
         return node_value
 

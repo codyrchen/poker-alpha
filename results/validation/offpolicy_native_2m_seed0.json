@@ -1,0 +1,68 @@
+{
+ "format": "pokeralpha.offpolicy_robustness/v1",
+ "artifact": "results/strategy/candidates/native_2m/holdem_v2_native_seed0_2000k.npz",
+ "deals": 5000,
+ "note": "duplicate deals, seat swap; beating scripted bots is a sanity check, not equilibrium evidence",
+ "matches": {
+  "calling_station": {
+   "deals": 5000,
+   "mean_bb_per_hand": 1.8174370344000004,
+   "stderr_bb_per_hand": 0.21002149204869916,
+   "bb_per_100": 181.74370344000005,
+   "ci95_bb_per_100": [
+    140.57949099845501,
+    222.90791588154505
+   ],
+   "a_as_button_bb_per_hand": 2.1554208295999997,
+   "a_as_bb_bb_per_hand": 1.4794532392000002
+  },
+  "over_folder": {
+   "deals": 5000,
+   "mean_bb_per_hand": 0.581,
+   "stderr_bb_per_hand": 0.004497982477653048,
+   "bb_per_100": 58.099999999999994,
+   "ci95_bb_per_100": [
+    57.21839543438,
+    58.981604565619996
+   ],
+   "a_as_button_bb_per_hand": 0.662,
+   "a_as_bb_bb_per_hand": 0.5
+  },
+  "jam_maniac": {
+   "deals": 5000,
+   "mean_bb_per_hand": 2.61455,
+   "stderr_bb_per_hand": 0.35917336240366166,
+   "bb_per_100": 261.455,
+   "ci95_bb_per_100": [
+    191.0570209688823,
+    331.8529790311177
+   ],
+   "a_as_button_bb_per_hand": 2.0131,
+   "a_as_bb_bb_per_hand": 3.216
+  },
+  "max_aggressor": {
+   "deals": 5000,
+   "mean_bb_per_hand": 3.9021299700000003,
+   "stderr_bb_per_hand": 0.4079305994390428,
+   "bb_per_100": 390.21299700000003,
+   "ci95_bb_per_100": [
+    310.25859950994766,
+    470.16739449005246
+   ],
+   "a_as_button_bb_per_hand": 4.538921,
+   "a_as_bb_bb_per_hand": 3.26533894
+  },
+  "tight_passive": {
+   "deals": 5000,
+   "mean_bb_per_hand": 0.35654026920000004,
+   "stderr_bb_per_hand": 0.04567943013627247,
+   "bb_per_100": 35.65402692000001,
+   "ci95_bb_per_100": [
+    26.700858613290603,
+    44.60719522670941
+   ],
+   "a_as_button_bb_per_hand": 0.41568117839999996,
+   "a_as_bb_bb_per_hand": 0.29739936
+  }
+ }
+}

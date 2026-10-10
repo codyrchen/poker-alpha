@@ -1,0 +1,358 @@
+{
+ "format": "pokeralpha.canonical_suite/v1",
+ "config_signature": "HoldemSolverConfig:v1:2e23c098860f7894c871",
+ "spots": [
+  {
+   "name": "BTN open AA",
+   "group": "preflop unopened",
+   "position": "BTN",
+   "hole": [
+    "As",
+    "Ah"
+   ],
+   "board": [],
+   "streets": [
+    ""
+   ],
+   "key": "0|0|AA|inr0fnoneans3|f.c.b33.b75.b150.a",
+   "legal": [
+    "f",
+    "c",
+    "b33",
+    "b75",
+    "b150",
+    "a"
+   ]
+  },
+  {
+   "name": "BTN open AKs",
+   "group": "preflop unopened",
+   "position": "BTN",
+   "hole": [
+    "As",
+    "Ks"
+   ],
+   "board": [],
+   "streets": [
+    ""
+   ],
+   "key": "0|0|AKs|inr0fnoneans3|f.c.b33.b75.b150.a",
+   "legal": [
+    "f",
+    "c",
+    "b33",
+    "b75",
+    "b150",
+    "a"
+   ]
+  },
+  {
+   "name": "BTN open AKo",
+   "group": "preflop unopened",
+   "position": "BTN",
+   "hole": [
+    "Ad",
+    "Kc"
+   ],
+   "board": [],
+   "streets": [
+    ""
+   ],
+   "key": "0|0|AKo|inr0fnoneans3|f.c.b33.b75.b150.a",
+   "legal": [
+    "f",
+    "c",
+    "b33",
+    "b75",
+    "b150",
+    "a"
+   ]
+  },
+  {
+   "name": "BTN open 72o",
+   "group": "preflop unopened",
+   "position": "BTN",
+   "hole": [
+    "7c",
+    "2h"
+   ],
+   "board": [],
+   "streets": [
+    ""
+   ],
+   "key": "0|0|72o|inr0fnoneans3|f.c.b33.b75.b150.a",
+   "legal": [
+    "f",
+    "c",
+    "b33",
+    "b75",
+    "b150",
+    "a"
+   ]
+  },
+  {
+   "name": "BB flop first top pair",
+   "group": "BB first to act on flop",
+   "position": "BB",
+   "hole": [
+    "Qh",
+    "Jd"
+   ],
+   "board": [
+    "Qs",
+    "7s",
+    "2d"
+   ],
+   "streets": [
+    "b75c",
+    ""
+   ],
+   "key": "1|1|400|utd|ior0fnoneans3|c.b33.b75.b150.a",
+   "legal": [
+    "c",
+    "b33",
+    "b75",
+    "b150",
+    "a"
+   ]
+  },
+  {
+   "name": "BB flop first nut flush draw",
+   "group": "BB first to act on flop",
+   "position": "BB",
+   "hole": [
+    "As",
+    "5s"
+   ],
+   "board": [
+    "Qs",
+    "7s",
+    "2d"
+   ],
+   "streets": [
+    "b75c",
+    ""
+   ],
+   "key": "1|1|120|utd|ior0fnoneans3|c.b33.b75.b150.a",
+   "legal": [
+    "c",
+    "b33",
+    "b75",
+    "b150",
+    "a"
+   ]
+  },
+  {
+   "name": "BB flop first air",
+   "group": "BB first to act on flop",
+   "position": "BB",
+   "hole": [
+    "9h",
+    "8c"
+   ],
+   "board": [
+    "Qs",
+    "7s",
+    "2d"
+   ],
+   "streets": [
+    "b75c",
+    ""
+   ],
+   "key": "1|1|000|utd|ior0fnoneans3|c.b33.b75.b150.a",
+   "legal": [
+    "c",
+    "b33",
+    "b75",
+    "b150",
+    "a"
+   ]
+  },
+  {
+   "name": "BTN flop after check top pair",
+   "group": "BTN vs BB check",
+   "position": "BTN",
+   "hole": [
+    "Qh",
+    "Jd"
+   ],
+   "board": [
+    "Qs",
+    "7s",
+    "2d"
+   ],
+   "streets": [
+    "b75c",
+    "c"
+   ],
+   "key": "1|0|400|utd|ior0fnoneans3|c.b33.b75.b150.a",
+   "legal": [
+    "c",
+    "b33",
+    "b75",
+    "b150",
+    "a"
+   ]
+  },
+  {
+   "name": "BTN flop after check nut flush draw",
+   "group": "BTN vs BB check",
+   "position": "BTN",
+   "hole": [
+    "As",
+    "5s"
+   ],
+   "board": [
+    "Qs",
+    "7s",
+    "2d"
+   ],
+   "streets": [
+    "b75c",
+    "c"
+   ],
+   "key": "1|0|120|utd|ior0fnoneans3|c.b33.b75.b150.a",
+   "legal": [
+    "c",
+    "b33",
+    "b75",
+    "b150",
+    "a"
+   ]
+  },
+  {
+   "name": "BTN flop after check air",
+   "group": "BTN vs BB check",
+   "position": "BTN",
+   "hole": [
+    "9h",
+    "8c"
+   ],
+   "board": [
+    "Qs",
+    "7s",
+    "2d"
+   ],
+   "streets": [
+    "b75c",
+    "c"
+   ],
+   "key": "1|0|000|utd|ior0fnoneans3|c.b33.b75.b150.a",
+   "legal": [
+    "c",
+    "b33",
+    "b75",
+    "b150",
+    "a"
+   ]
+  },
+  {
+   "name": "BB facing c-bet strong made (set)",
+   "group": "BB facing flop bet",
+   "position": "BB",
+   "hole": [
+    "7h",
+    "7d"
+   ],
+   "board": [
+    "Qs",
+    "7s",
+    "2d"
+   ],
+   "streets": [
+    "b75c",
+    "cb75"
+   ],
+   "key": "1|1|501|utd|ior1fmediumacs3|f.c.b33.b75.b150.a",
+   "legal": [
+    "f",
+    "c",
+    "b33",
+    "b75",
+    "b150",
+    "a"
+   ]
+  },
+  {
+   "name": "BB facing c-bet medium (middle pair)",
+   "group": "BB facing flop bet",
+   "position": "BB",
+   "hole": [
+    "7c",
+    "6h"
+   ],
+   "board": [
+    "Qs",
+    "7s",
+    "2d"
+   ],
+   "streets": [
+    "b75c",
+    "cb75"
+   ],
+   "key": "1|1|300|utd|ior1fmediumacs3|f.c.b33.b75.b150.a",
+   "legal": [
+    "f",
+    "c",
+    "b33",
+    "b75",
+    "b150",
+    "a"
+   ]
+  },
+  {
+   "name": "BB facing c-bet draw (nut flush draw)",
+   "group": "BB facing flop bet",
+   "position": "BB",
+   "hole": [
+    "As",
+    "5s"
+   ],
+   "board": [
+    "Qs",
+    "7s",
+    "2d"
+   ],
+   "streets": [
+    "b75c",
+    "cb75"
+   ],
+   "key": "1|1|120|utd|ior1fmediumacs3|f.c.b33.b75.b150.a",
+   "legal": [
+    "f",
+    "c",
+    "b33",
+    "b75",
+    "b150",
+    "a"
+   ]
+  },
+  {
+   "name": "BB facing c-bet air",
+   "group": "BB facing flop bet",
+   "position": "BB",
+   "hole": [
+    "9h",
+    "8c"
+   ],
+   "board": [
+    "Qs",
+    "7s",
+    "2d"
+   ],
+   "streets": [
+    "b75c",
+    "cb75"
+   ],
+   "key": "1|1|000|utd|ior1fmediumacs3|f.c.b33.b75.b150.a",
+   "legal": [
+    "f",
+    "c",
+    "b33",
+    "b75",
+    "b150",
+    "a"
+   ]
+  }
+ ]
+}

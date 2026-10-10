@@ -1,0 +1,71 @@
+{
+ "action_abstraction": "postflop pot fractions; preflop raise-to multiples of the current bet; NLHE minimum bet/raise enforced",
+ "artifact": "holdem_v2_seed0.npz",
+ "artifact_format": "pokeralpha.strategy_artifact/v1",
+ "averaging": "uniform",
+ "blinds": [
+  0.5,
+  1.0
+ ],
+ "bytes": 2230038,
+ "config": {
+  "action_abstraction": "postflop pot fractions; preflop raise-to multiples of the current bet; NLHE minimum bet/raise enforced",
+  "averaging": "uniform",
+  "bet_fractions": [
+   [
+    "b33",
+    0.33
+   ],
+   [
+    "b75",
+    0.75
+   ],
+   [
+    "b150",
+    1.5
+   ]
+  ],
+  "card_feature_tables": "ffa793631f72354c",
+  "config_version": 2,
+  "encoder": "compact_river_pct20",
+  "encoder_signature": "CompactHoldemEncoder:v1:cards=v1:history=abstract:texture=1:river_blockers=1:betting=v1:river_pct=20:recall=imperfect",
+  "enforce_min_raise": true,
+  "game_signature": "HoldemGame:v1:stack=100:blinds=0.5/1:bets=b33=0.33,b75=0.75,b150=1.5:raise_cap=3:preflop=x200=2,x250=2.5,x350=3.5:min_raise=nlhe",
+  "perfect_recall": false,
+  "preflop_raise_multiples": [
+   [
+    "x200",
+    2.0
+   ],
+   [
+    "x250",
+    2.5
+   ],
+   [
+    "x350",
+    3.5
+   ]
+  ],
+  "raise_cap": 3,
+  "reference_range": "uniform-random-hand (offline quality metrics only)",
+  "sampling": "external-sampling-mccfr",
+  "starting_stack": 100.0
+ },
+ "config_signature": "HoldemSolverConfig:v2:733e52f1d1014e2e7973",
+ "config_version": 2,
+ "encoder_signature": "CompactHoldemEncoder:v1:cards=v1:history=abstract:texture=1:river_blockers=1:betting=v1:river_pct=20:recall=imperfect",
+ "first_committed_in": "48b64d64084d39e62bf4c61f0214805d3cbd8ca7",
+ "format": "pokeralpha.strategy_artifact_manifest/v1",
+ "game_signature": "HoldemGame:v1:stack=100:blinds=0.5/1:bets=b33=0.33,b75=0.75,b150=1.5:raise_cap=3:preflop=x200=2,x250=2.5,x350=3.5:min_raise=nlhe",
+ "generation_command": "python experiments/holdem_mccfr_validation.py --v2-config --seed 0 --milestones 1000,5000,10000,30000,100000 --ckpt-dir DIR --out DIR/v2_seed0.jsonl; then python experiments/phase29_analysis.py --config v2 --runs-dir DIR --artifact OUT.npz",
+ "generation_commit": null,
+ "generation_commit_note": "not recorded when the artifact was generated",
+ "infosets": 124381,
+ "iterations": 100000,
+ "raise_cap": 3,
+ "sampler": "external-sampling MCCFR",
+ "seed": 0,
+ "sha256": "34b3f52f7d27884e82bd95c15afc7b61a4e4e5993213545e9dea8c3d77f6a727",
+ "source_checkpoint": "v2_seed0_it100000.npz",
+ "starting_stack": 100.0
+}
