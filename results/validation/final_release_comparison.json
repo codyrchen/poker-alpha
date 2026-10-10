@@ -96,7 +96,7 @@
     "wrong_rate": 0.033
    },
    "v2_rule": {
-    "coverage": 0.173,
+    "coverage": 0.165,
     "ev_regret_bb": 0.123,
     "wrong_rate": 0.03
    },

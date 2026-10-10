@@ -15,7 +15,7 @@
   interval instead of 10k→final (which was measuring training distance, not
   instability). Thresholds, other signals, street caps unchanged.
 * Calibrated on a new 8,880-row exact-game dataset with exact EV-regret
-  targets; held-out: +75% coverage at equal accepted risk, lower
+  targets; held-out: ~1.7x the coverage at equal accepted risk, lower
   wrong-action rate. v2 tables SHA-bind to their strategy artifact.
 * Effect with street caps: preflop 34% / river 53% visit-weighted accepts
   (was 9/19%); flop and turn remain capped at LOW.

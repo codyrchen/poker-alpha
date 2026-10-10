@@ -35,7 +35,7 @@ project except the tabular exact-validation adapter (`cpp/src/tabular.cpp`).
 **v2 adopted** (`docs/solver_confidence_v2.md`): identical signals and
 thresholds to v1, movement redefined to the consecutive-recent horizon,
 tables SHA-bound to their strategy. Held-out exact-game calibration
-(8,880 rows, 9 games): +75% coverage at equal accepted EV regret, lower
+(8,880 rows, 9 games): ~1.7x the coverage at equal accepted EV regret, lower
 wrong-action rate; movement predicts EV regret at NO horizon (|rho|≤0.05);
 visits is the strongest regret predictor (AUC 0.74); seed disagreement the
 best wrong-action/L1 predictor. v1 tables still load with v1 semantics.

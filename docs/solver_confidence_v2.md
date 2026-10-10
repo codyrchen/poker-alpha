@@ -36,10 +36,10 @@ Risk-coverage with the SAME thresholds (held-out games):
 | rule | coverage | accepted EV regret | wrong-action |
 |---|---|---|---|
 | v1 (historical movement) | 9.8% | 0.119 bb | 3.3% |
-| **v2 (recent movement)** | **17.3%** | 0.123 bb | 3.0% |
+| **v2 (recent movement)** | **16.5%** | 0.123 bb | 3.0% |
 | no movement at all | 23.4% | 0.170 bb | 3.0% |
 
-v2 delivers ~1.75x the coverage at equal accepted risk; dropping movement
+v2 delivers ~1.7x the coverage at equal accepted risk; dropping movement
 entirely buys more coverage at visibly higher accepted regret, so movement
 is kept as a conjunction filter (it still correlates with L1 and costs
 nothing). Street-specific thresholds were evaluated and NOT adopted: the
