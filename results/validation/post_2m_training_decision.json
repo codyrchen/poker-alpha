@@ -1,0 +1,13 @@
+{
+ "format": "pokeralpha.post_2m_training_decision/v1",
+ "question": "Phase 34: is 3M justified?",
+ "evidence": {
+  "2m_improvement_marginal": "2M vs 1M head-to-head +12..+28 bb/100 per seed, 2 of 3 CIs include 0; 2M seeds pairwise within ±5 (all CIs include 0)",
+  "ev_uncertainty": "canonical median cross-regret 1.91 (200k) -> 1.09 (1M) -> 0.80 (2M); significant states 24 -> 8 -> 5; but summed significant regret flat 57 -> 57 (dominated by one jam-defense state)",
+  "seed_disagreement": "median 0.617 -> 0.595 -> 0.523 -> 0.466 (200k/300k/1M/2M) — declining slowly (~ -11%/doubling)",
+  "abstraction_floor": "restricted-LBR lower bound ~100 bb/100 for every candidate — 5-10x larger than any remaining training-level difference; more MCCFR cannot address the binding constraint",
+  "exact_games": "native MCCFR converges to ~0 exploitability on every exact game — the solver itself is not the limit"
+ },
+ "decision": "NO-GO for 3M (and for any training beyond it). Training floor determination (Phase 36): the full abstract game has reached MULTIPLE NEAR-EQUIVALENT POLICIES / LOW VALUE RISK for the bulk of states, with a small consequential jam/3-bet-defense cluster that shrinks slowly, and a measured ABSTRACTION floor (per-street exact subgame errors + ~100 bb/100 restricted-LBR bound) that training cannot cross. Final training milestone: 2,000,000 iterations x 3 seeds.",
+ "convergence_model": "seed disagreement ~ a*T^-0.2 (rough power fit over 4 points); recent movement per 100k halves roughly per doubling; both consistent with sampling convergence toward a structural mixing floor, not divergence"
+}
