@@ -119,6 +119,26 @@ class SolverStrategyProvider:
                     table = ConfidenceTable.load(cpath, config.signature())
                 except ValueError as exc:
                     return LookupMiss(f"confidence table rejected: {exc}", "CONFIG_MISMATCH")
+                # Schema-2 tables bind to their strategy artifact by SHA-256:
+                # a 1M strategy can never silently load a 200k table.
+                bound = table.meta.get("strategy_sha256")
+                if bound:
+                    from ..utils.provenance import file_sha256
+
+                    actual = file_sha256(path)
+                    if actual != bound:
+                        return LookupMiss(
+                            f"confidence table is bound to strategy sha256 "
+                            f"{bound[:12]}..., artifact is {actual[:12]}...",
+                            "CONFIG_MISMATCH")
+                # Cross-check iteration counts when both sides record them.
+                tf = table.meta.get("final")
+                ai = art.meta.get("iterations")
+                if table.schema >= 2 and tf is not None and ai is not None \
+                        and int(tf) != int(ai):
+                    return LookupMiss(
+                        f"confidence table built at {tf} iterations, artifact "
+                        f"is {ai}", "CONFIG_MISMATCH")
             thresholds = GateThresholds.calibrated()
             if min_visits is not None:
                 from dataclasses import replace as _r

@@ -70,7 +70,17 @@ def main():
     p.add_argument("--prefix", default="locked")
     p.add_argument("--seeds", default="0,1,2")
     p.add_argument("--final", type=int, required=True)
-    p.add_argument("--earlier", type=int, required=True)
+    p.add_argument("--earlier", type=int, required=True,
+                   help="movement baseline. Schema 1: an early checkpoint "
+                        "(historical 10k). Schema 2 (--schema 2): the "
+                        "previous mature milestone (recent movement)")
+    p.add_argument("--schema", type=int, choices=(1, 2), default=1,
+                   help="confidence schema: 2 = recent-movement semantics "
+                        "(solver_confidence/v2), validated in "
+                        "results/validation/confidence_signal_quality.json")
+    p.add_argument("--bind-artifact", type=Path, default=None,
+                   help="schema 2: record this strategy artifact's SHA-256 "
+                        "so loaders reject mismatched strategy/table pairs")
     p.add_argument("--corpus-hands", type=int, default=20000)
     p.add_argument("--audit", type=Path, default=ROOT / "results" / "validation" / "preflop_audit_v1.json")
     p.add_argument("--out", type=Path, required=True)
@@ -105,9 +115,19 @@ def main():
         for s in audit["surprises"]:
             if flagged & set(s["flags"]):
                 patho.append(audit["records"][s["state"]]["key"])
-    table = ConfidenceTable(cfg.signature(), stats, tuple(sorted(set(patho))), {
-        "seeds": seeds, "final": a.final, "earlier": a.earlier, "corpus_hands": a.corpus_hands,
-        "collision": "range of the 0..7 strength ladder among >= 5 corpus members, /7"})
+    meta = {"seeds": seeds, "final": a.final, "earlier": a.earlier,
+            "corpus_hands": a.corpus_hands,
+            "collision": "range of the 0..7 strength ladder among >= 5 corpus members, /7"}
+    if a.schema == 2:
+        meta.update({"schema": 2, "movement_mode": "recent",
+                     "movement_from": a.earlier, "movement_to": a.final})
+        if a.bind_artifact is not None:
+            from poker_alpha.utils.provenance import file_sha256
+
+            meta["strategy_sha256"] = file_sha256(a.bind_artifact)
+            meta["strategy_artifact"] = a.bind_artifact.name
+    table = ConfidenceTable(cfg.signature(), stats, tuple(sorted(set(patho))),
+                            meta, schema=a.schema)
     table.save(a.out)
     arr = np.array([[s.visits, s.movement, s.seed_disagreement, s.collision] for s in stats.values()])
     print("keys", len(stats), "pathological", len(set(patho)),

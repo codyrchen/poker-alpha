@@ -172,16 +172,38 @@ def gate(stats: Optional[KeyStats], th: GateThresholds,
 
 
 class ConfidenceTable:
-    """Per-key stability statistics (``pokeralpha.solver_confidence/v1`` npz)."""
+    """Per-key stability statistics.
+
+    Schema v1 (``pokeralpha.solver_confidence/v1``): ``movement`` is the L1
+    between a very early checkpoint (10k) and the final one — measured in the
+    final-trust project to penalize mature strategies (it tracks distance
+    traveled, not instability) and to carry no EV-regret signal at any
+    horizon.
+
+    Schema v2 (``pokeralpha.solver_confidence/v2``): identical layout and
+    thresholds, but ``movement`` is the RECENT movement — L1 between the
+    final checkpoint and the previous mature milestone (recorded in
+    ``meta["movement_from"/"movement_to"]``). Held-out exact-game
+    calibration: the unchanged ACCEPT thresholds then give ~1.75x the
+    coverage at equal accepted EV regret and no worse wrong-action rate
+    (results/validation/confidence_signal_quality.json). v2 tables may also
+    bind to their strategy artifact via ``meta["strategy_sha256"]``, which
+    loaders must verify (no silent strategy/table mismatches).
+    """
 
     FORMAT = "pokeralpha.solver_confidence/v1"
+    FORMAT_V2 = "pokeralpha.solver_confidence/v2"
 
     def __init__(self, config_signature: str, stats: Dict[str, KeyStats],
-                 pathological: Tuple[str, ...] = (), meta: Optional[dict] = None) -> None:
+                 pathological: Tuple[str, ...] = (), meta: Optional[dict] = None,
+                 schema: int = 1) -> None:
         self.config_signature = config_signature
         self.stats = stats
         self.pathological = frozenset(pathological)
         self.meta = meta or {}
+        if schema not in (1, 2):
+            raise ValueError(f"unknown confidence schema {schema}")
+        self.schema = schema
 
     def get(self, key: str) -> Optional[KeyStats]:
         return self.stats.get(key)
@@ -191,7 +213,8 @@ class ConfidenceTable:
         arr = np.array([[self.stats[k].visits, self.stats[k].movement, self.stats[k].seed_disagreement,
                          self.stats[k].collision] for k in keys], dtype=np.float32).reshape(-1, 4)
         path = Path(path)
-        np.savez_compressed(path, format=np.array(self.FORMAT), config_sig=np.array(self.config_signature),
+        fmt = self.FORMAT_V2 if self.schema == 2 else self.FORMAT
+        np.savez_compressed(path, format=np.array(fmt), config_sig=np.array(self.config_signature),
                             meta=np.array(json.dumps(self.meta, sort_keys=True)),
                             keys=np.array(keys, dtype=np.str_), stats=arr,
                             pathological=np.array(sorted(self.pathological), dtype=np.str_))
@@ -200,7 +223,12 @@ class ConfidenceTable:
     @classmethod
     def load(cls, path, config_signature: Optional[str] = None) -> "ConfidenceTable":
         with np.load(Path(path), allow_pickle=False) as z:
-            if str(z["format"][()]) != cls.FORMAT:
+            fmt = str(z["format"][()])
+            if fmt == cls.FORMAT:
+                schema = 1
+            elif fmt == cls.FORMAT_V2:
+                schema = 2
+            else:
                 raise ValueError("not a solver confidence table")
             sig = str(z["config_sig"][()])
             if config_signature is not None and sig != config_signature:
@@ -209,4 +237,4 @@ class ConfidenceTable:
             rows = z["stats"].astype(float).tolist()
             stats = {k: KeyStats(*r) for k, r in zip(keys, rows)}
             return cls(sig, stats, tuple(str(k) for k in z["pathological"]),
-                       json.loads(str(z["meta"][()])))
+                       json.loads(str(z["meta"][()])), schema=schema)
