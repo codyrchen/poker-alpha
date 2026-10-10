@@ -1,0 +1,77 @@
+{
+ "format": "pokeralpha.solver_confidence_v1_frozen/v1",
+ "frozen_at_commit": "334587d",
+ "schema": "pokeralpha.solver_confidence/v1",
+ "signals": {
+  "visits": "non-updating-player visits, primary seed, final checkpoint",
+  "movement": "L1(avg strategy at earlier=10k vs final) primary seed; NaN if absent earlier",
+  "seed_disagreement": "mean pairwise L1 across seeds 0-2 at final; NaN if <2 seeds have key",
+  "collision": "strength-ladder range among >=5 corpus members / 7; NaN otherwise"
+ },
+ "thresholds": {
+  "reject_visits_below": 20.0,
+  "low_visits_below": 20.0,
+  "reject_seed_disagreement": 0.5,
+  "low_seed_disagreement": 0.2,
+  "reject_movement": 0.5,
+  "low_movement": 0.1,
+  "low_collision": 0.42857142857142855,
+  "source": "solver_gate_calibration.json"
+ },
+ "decision_rule": "any reject reason -> REJECT; else any low reason -> LOW; else ACCEPT; visits<=0 or missing -> REJECT UNSEEN_STATE; NaN sd AND NaN mv adds NO_STABILITY_DATA (low)",
+ "reasons": {
+  "LOW_VISIT_COUNT": "information set visited too rarely",
+  "HIGH_SEED_DISAGREEMENT": "independently seeded runs disagree",
+  "UNSTABLE_ACROSS_CHECKPOINTS": "policy still moving between checkpoints",
+  "HIGH_COLLISION_DISPERSION": "the abstract key merges strategically different hands",
+  "CONFIG_MISMATCH": "strategy trained under a different solver config",
+  "INCOMPATIBLE_CHECKPOINT": "strategy file unreadable or unsupported",
+  "UNSEEN_STATE": "information set never visited in training",
+  "OUTSIDE_ABSTRACTION": "spot cannot be mapped into the abstract game",
+  "KNOWN_PATHOLOGICAL_BUCKET": "key flagged by the strategy audit",
+  "NO_STABILITY_DATA": "no checkpoint / seed stability data for this key",
+  "OFF_TREE_TRANSLATION": "observed bet sizes were translated onto the abstract tree",
+  "ILLEGAL_SIZE_MASS": "a large share of the solver's mass was on sizes below the NLHE minimum and was removed",
+  "STREET_ABSTRACTION_ERROR": "flop / turn keys of this abstraction measurably merge strategically different hands (exact subgame study)"
+ },
+ "lookup_time_rules": {
+  "LOW_CONFIDENCE_STREETS": {
+   "CompactHoldemEncoder": [
+    1,
+    2
+   ]
+  },
+  "ILLEGAL_MASS_LOW": 0.2,
+  "note": "spot rules only lower status (downgrade)"
+ },
+ "calibration_source": "results/validation/solver_gate_calibration.json (3 exact games x 3k/30k, movement horizon 3k->30k; production movement horizon 10k->final)",
+ "production_tables": {
+  "release_200k": {
+   "earlier": 10000,
+   "final": 200000,
+   "seeds": [
+    0,
+    1,
+    2
+   ]
+  },
+  "native_300k": {
+   "earlier": 10000,
+   "final": 300000,
+   "seeds": [
+    0,
+    1,
+    2
+   ]
+  },
+  "native_1m": {
+   "earlier": 10000,
+   "final": 1000000,
+   "seeds": [
+    0,
+    1,
+    2
+   ]
+  }
+ }
+}

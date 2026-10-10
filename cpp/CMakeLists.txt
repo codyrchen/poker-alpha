@@ -17,6 +17,7 @@ pybind11_add_module(poker_alpha_native
   src/game.cpp
   src/key.cpp
   src/solver.cpp
+  src/tabular.cpp
   src/bindings.cpp
 )
 

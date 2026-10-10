@@ -22,6 +22,7 @@
 #include "rng.hpp"
 #include "solver.hpp"
 #include "state.hpp"
+#include "tabular.hpp"
 
 namespace py = pybind11;
 using namespace pa;
@@ -306,6 +307,78 @@ PYBIND11_MODULE(poker_alpha_native, m) {
         .def("render_key_u64", &NativeSolverCore::render_key_u64)
         .def("tape_pos", &NativeSolverCore::tape_pos)
         .def("shrink_table_for_tests", &NativeSolverCore::shrink_table_for_tests);
+
+    // ---- tabular exact-validation adapter (Phase 3, final-trust) -------
+    py::class_<TabularMCCFR>(m, "TabularSolver")
+        .def(py::init([](py::array_t<int8_t> player,
+                         py::array_t<uint32_t> child_off,
+                         py::array_t<uint32_t> children,
+                         py::array_t<int32_t> term_idx,
+                         py::array_t<double> deal_weights,
+                         py::array_t<uint16_t> deal_h0,
+                         py::array_t<uint16_t> deal_h1, int n_h0, int n_h1,
+                         py::array_t<double> util, uint64_t seed) {
+                 TabularTree t;
+                 auto pl = player.unchecked<1>();
+                 auto co = child_off.unchecked<1>();
+                 auto ch = children.unchecked<1>();
+                 auto ti = term_idx.unchecked<1>();
+                 auto dw = deal_weights.unchecked<1>();
+                 auto d0 = deal_h0.unchecked<1>();
+                 auto d1 = deal_h1.unchecked<1>();
+                 auto ut = util.unchecked<1>();
+                 if (co.shape(0) != pl.shape(0) + 1 || ti.shape(0) != pl.shape(0))
+                     throw std::invalid_argument("inconsistent tree arrays");
+                 if (dw.shape(0) != d0.shape(0) || dw.shape(0) != d1.shape(0)
+                     || dw.shape(0) == 0)
+                     throw std::invalid_argument("inconsistent deal arrays");
+                 t.player.assign(pl.data(0), pl.data(0) + pl.shape(0));
+                 t.child_off.assign(co.data(0), co.data(0) + co.shape(0));
+                 t.children.assign(ch.data(0), ch.data(0) + ch.shape(0));
+                 t.term_idx.assign(ti.data(0), ti.data(0) + ti.shape(0));
+                 t.deal_h0.assign(d0.data(0), d0.data(0) + d0.shape(0));
+                 t.deal_h1.assign(d1.data(0), d1.data(0) + d1.shape(0));
+                 t.n_h0 = n_h0;
+                 t.n_h1 = n_h1;
+                 t.util.assign(ut.data(0), ut.data(0) + ut.shape(0));
+                 for (size_t i = 0; i < t.player.size(); ++i) {
+                     if (t.player[i] >= 0) {
+                         int n = t.num_actions(uint32_t(i));
+                         if (n < 1 || n > MAX_ACTIONS)
+                             throw std::invalid_argument("bad action count");
+                         if (t.n_h0 > 0xFFFF || t.n_h1 > 0xFFFF)
+                             throw std::invalid_argument("too many hands");
+                     } else if (t.term_idx[i] < 0) {
+                         throw std::invalid_argument("terminal without utility row");
+                     }
+                 }
+                 // Normalized cumulative deal weights.
+                 double total = 0.0;
+                 for (py::ssize_t i = 0; i < dw.shape(0); ++i) total += dw(i);
+                 double cum = 0.0;
+                 t.deal_cdf.resize(size_t(dw.shape(0)));
+                 for (py::ssize_t i = 0; i < dw.shape(0); ++i) {
+                     cum += dw(i);
+                     t.deal_cdf[size_t(i)] = cum / total;
+                 }
+                 return new TabularMCCFR(std::move(t), seed);
+             }),
+             py::arg("player"), py::arg("child_off"), py::arg("children"),
+             py::arg("term_idx"), py::arg("deal_weights"), py::arg("deal_h0"),
+             py::arg("deal_h1"), py::arg("n_h0"), py::arg("n_h1"),
+             py::arg("util"), py::arg("seed"))
+        .def("train",
+             [](TabularMCCFR& s, uint64_t n) {
+                 py::gil_scoped_release release;
+                 s.train(n);
+             })
+        .def_property_readonly("iterations", &TabularMCCFR::iterations)
+        .def("average_strategy", [](const TabularMCCFR& s) {
+            py::list out;
+            for (const auto& row : s.average_strategy())
+                out.append(py::make_tuple(row.node, row.hand, row.probs, row.visits));
+            return out;
+        });
 
     // ---- debug / parity API (tests only; not a training path) ----------
     m.def("debug_evaluate",
