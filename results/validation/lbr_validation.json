@@ -1,0 +1,169 @@
+{
+ "format": "pokeralpha.lbr_validation/v1",
+ "hands_per_seat": 6000,
+ "milestones": [
+  300,
+  3000,
+  30000
+ ],
+ "games": {
+  "reduced_preflop": {
+   "mccfr_300": {
+    "exact_exploitability": 0.47582,
+    "exact_br0": 0.51088,
+    "exact_br1": 0.44076,
+    "lbr_estimate": 0.29641,
+    "lbr_se": 0.02192,
+    "lbr_seat0": 0.22223,
+    "lbr_seat1": 0.37058,
+    "bias_exact_minus_lbr": 0.17941,
+    "upper_violation": false,
+    "capture_ratio": 0.623
+   },
+   "mccfr_3000": {
+    "exact_exploitability": 0.13937,
+    "exact_br0": 0.09436,
+    "exact_br1": 0.18439,
+    "lbr_estimate": 0.08398,
+    "lbr_se": 0.01647,
+    "lbr_seat0": -0.01904,
+    "lbr_seat1": 0.18701,
+    "bias_exact_minus_lbr": 0.05539,
+    "upper_violation": false,
+    "capture_ratio": 0.603
+   },
+   "mccfr_30000": {
+    "exact_exploitability": 0.02556,
+    "exact_br0": -0.02028,
+    "exact_br1": 0.0714,
+    "lbr_estimate": -0.0085,
+    "lbr_se": 0.01365,
+    "lbr_seat0": -0.05729,
+    "lbr_seat1": 0.04029,
+    "bias_exact_minus_lbr": 0.03406,
+    "upper_violation": false,
+    "capture_ratio": -0.333
+   },
+   "cfr_plus_ref": {
+    "exact_exploitability": 9e-05,
+    "exact_br0": -0.04524,
+    "exact_br1": 0.04542,
+    "lbr_estimate": -0.02058,
+    "lbr_se": 0.01398,
+    "lbr_seat0": -0.06208,
+    "lbr_seat1": 0.02091,
+    "bias_exact_minus_lbr": 0.02067,
+    "upper_violation": false,
+    "capture_ratio": -239.948
+   },
+   "_ranking_identical": true
+  },
+  "river_dry_high": {
+   "mccfr_300": {
+    "exact_exploitability": 2.91078,
+    "exact_br0": 5.41948,
+    "exact_br1": 0.40207,
+    "lbr_estimate": 2.72875,
+    "lbr_se": 0.11604,
+    "lbr_seat0": 5.0325,
+    "lbr_seat1": 0.425,
+    "bias_exact_minus_lbr": 0.18203,
+    "upper_violation": false,
+    "capture_ratio": 0.937
+   },
+   "mccfr_3000": {
+    "exact_exploitability": 0.67542,
+    "exact_br0": 3.22622,
+    "exact_br1": -1.87538,
+    "lbr_estimate": 0.565,
+    "lbr_se": 0.0949,
+    "lbr_seat0": 2.97833,
+    "lbr_seat1": -1.84833,
+    "bias_exact_minus_lbr": 0.11042,
+    "upper_violation": false,
+    "capture_ratio": 0.837
+   },
+   "mccfr_30000": {
+    "exact_exploitability": 0.16088,
+    "exact_br0": 2.90118,
+    "exact_br1": -2.57943,
+    "lbr_estimate": 0.18333,
+    "lbr_se": 0.11152,
+    "lbr_seat0": 2.86667,
+    "lbr_seat1": -2.5,
+    "bias_exact_minus_lbr": -0.02246,
+    "upper_violation": false,
+    "capture_ratio": 1.14
+   },
+   "cfr_plus_ref": {
+    "exact_exploitability": 0.00091,
+    "exact_br0": 2.78871,
+    "exact_br1": -2.78689,
+    "lbr_estimate": -0.01583,
+    "lbr_se": 0.11543,
+    "lbr_seat0": 2.845,
+    "lbr_seat1": -2.87667,
+    "bias_exact_minus_lbr": 0.01675,
+    "upper_violation": false,
+    "capture_ratio": -17.315
+   },
+   "_ranking_identical": true
+  },
+  "river_paired": {
+   "mccfr_300": {
+    "exact_exploitability": 4.14622,
+    "exact_br0": 1.73376,
+    "exact_br1": 6.55869,
+    "lbr_estimate": 3.63375,
+    "lbr_se": 0.14394,
+    "lbr_seat0": 0.72667,
+    "lbr_seat1": 6.54083,
+    "bias_exact_minus_lbr": 0.51247,
+    "upper_violation": false,
+    "capture_ratio": 0.876
+   },
+   "mccfr_3000": {
+    "exact_exploitability": 1.24291,
+    "exact_br0": 0.49294,
+    "exact_br1": 1.99287,
+    "lbr_estimate": 1.0875,
+    "lbr_se": 0.10327,
+    "lbr_seat0": 0.2175,
+    "lbr_seat1": 1.9575,
+    "bias_exact_minus_lbr": 0.15541,
+    "upper_violation": false,
+    "capture_ratio": 0.875
+   },
+   "mccfr_30000": {
+    "exact_exploitability": 0.20656,
+    "exact_br0": -0.54344,
+    "exact_br1": 0.95657,
+    "lbr_estimate": 0.17167,
+    "lbr_se": 0.08551,
+    "lbr_seat0": -0.73,
+    "lbr_seat1": 1.07333,
+    "bias_exact_minus_lbr": 0.0349,
+    "upper_violation": false,
+    "capture_ratio": 0.831
+   },
+   "cfr_plus_ref": {
+    "exact_exploitability": 0.00035,
+    "exact_br0": -0.74258,
+    "exact_br1": 0.74329,
+    "lbr_estimate": -0.10375,
+    "lbr_se": 0.08371,
+    "lbr_seat0": -0.82,
+    "lbr_seat1": 0.6125,
+    "bias_exact_minus_lbr": 0.1041,
+    "upper_violation": false,
+    "capture_ratio": -292.487
+   },
+   "_ranking_identical": true
+  }
+ },
+ "pooled_spearman": 0.9860139860139862,
+ "upper_violations": 0,
+ "go_criterion": "spearman >= 0.8 and no upper violations",
+ "go": true,
+ "seconds": 413.0
+}
