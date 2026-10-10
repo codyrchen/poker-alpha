@@ -42,8 +42,12 @@ abstraction is not computed. The observer is read-only and never acts.
 
 ## Performance (4-vCPU container, CPython 3.13, pure Python + NumPy)
 
-Offline: v2 training ~9 it/s per process (~3 h per seed to 100k); v1 ~30
-it/s. Online (median, `results/validation/latency_benchmark.json`):
+Offline (historical, that container): v2 training ~9 it/s per process
+(~3 h per seed to 100k); v1 ~30 it/s. **The optional native C++ backend
+(`pip install ./cpp`, `docs/native_solver.md`) now trains the same release
+config at ~837 it/s warm on an M3 Pro — a measured 38x over the Python
+reference on that machine (22 it/s), with bitwise random-tape parity. Three
+seeds reach 300k in ~7 minutes and 1M in ~28 minutes (parallel processes).** Online (median, `results/validation/latency_benchmark.json`):
 
 | step | median | p95 |
 | --- | --- | --- |
@@ -55,6 +59,37 @@ it/s. Online (median, `results/validation/latency_benchmark.json`):
 | rollout 100 / 400 / 1,000 | 34 / 86 / 192 ms | 35 / 88 / 193 ms |
 | observer frame (synthetic) / fusion | 74 ms / 0.08 ms | 74 ms / 0.13 ms |
 | full DecisionReport: solver path / heuristic / rollout 400 | 77 / 77 / 163 ms | 78 / 79 / 165 ms |
+
+## Native-backend training study (post-RC, 2026-10)
+
+Trained with the validated native backend, same config, fresh xoshiro seeds
+0-2 (no resumable Python checkpoints survive, so these are new independent
+seeds, Plan B): milestones to 300k and 1M, matching confidence tables at
+both (seeds 0-2, movement vs 10k — the release construction), evidence in
+`results/validation/native_training_{300k,1m}.json`.
+
+| milestone | median seed disagreement | median visits | gate accept (visit-weighted) | cross-play vs release 200k |
+| --- | --- | --- | --- | --- |
+| 200k (release, python lineage) | 0.617 | 74 | 18.0% | — |
+| 300k native | 0.595 | 106 | 18.1% | +27/-1/+23 bb/100 (CIs include 0) |
+| 1M native | **0.523** | **327** | 16.2% | **+52..+56 bb/100 (CIs exclude 0)** |
+
+1M also beats its own 300k ancestors by +55..+74 bb/100 (CIs exclude 0;
+`results/validation/crossplay_1m_vs_300k.json`), and consecutive movement
+per 100k iterations keeps falling (0.110 → 0.047 → ~0.017): the abstract
+game is still genuinely improving at 1M. Strategic sanity at 1M: premiums
+never fold to jams (AA/KK/QQ/AKs call ~100%, seed L1 < 0.01), AA 4-bets
+94%, 72o folds 98% first-in.
+
+**Best candidate: `results/strategy/candidates/native_1m/holdem_v2_native_seed0_1000k.npz`
+with its matching 3-seed confidence table.** NOT auto-promoted: visit-weighted
+gate acceptance falls to 16.2% because the movement signal compares against a
+fixed 10k snapshot (a construction that penalizes longer training), and
+canonical preflop seed disagreement remains severe (L1 up to 1.6) — two
+Phase-63 no-promote triggers. Promotion is an owner decision; everything
+needed (artifacts, table, gate report, cross-play) is committed. Cross-play
+is abstract-game head-to-head, not exploitability; all candidates remain
+EXPERIMENTAL.
 
 ## Readiness
 

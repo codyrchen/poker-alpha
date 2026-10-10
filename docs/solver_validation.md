@@ -394,3 +394,21 @@ cross-play match) and `results/validation/holdem_training_v2_decision.json`.
   table is now the release strategy (same config signature;
   `results/strategy/holdem_v2_seed0_200k.npz`). The 100k pair is kept as the
   previous release. Still EXPERIMENTAL: not converged, not GTO. No 1M run.
+
+## Native backend validation and the 300k/1M study (post-RC, 2026-10)
+
+The C++ training backend (`docs/native_solver.md`) is validated against this
+document's reference implementation by construction: on a shared random
+tape the two backends are bitwise-identical through 1,000 Hold'em
+iterations (`tests/test_native_mccfr_parity.py`), the evaluator matches on
+all 2,598,960 five-card hands, and 20k+ random reachable states match on
+mechanics and infoset keys. The exact reduced-game results above therefore
+transfer to the native solver: it computes the same updates the Python
+solver computed when it converged on the reduced preflop game and the six
+river subgames. Fresh native seeds 0-2 were trained to 300k and 1M
+(`results/validation/native_training_{300k,1m}.json`); findings and the
+promotion decision are summarized in `docs/release_status.md`. The
+preflop noise finding of Phase 32 persists at 1M (canonical seed L1 up to
+1.6 preflop), while median seed disagreement falls 0.617 -> 0.523 and the
+1M candidate wins abstract-game cross-play against every earlier milestone
+with 95% CIs excluding zero.

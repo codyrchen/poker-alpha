@@ -46,7 +46,9 @@ python -m poker_alpha.holdem_demo   # 6-max Hold'em decision report, ~2s
 ```
 
 Optional extras: `.[vision]` (screen observer: Pillow, mss), `.[ocr]`
-(Tesseract backend), `.[ui]` (Streamlit app).
+(Tesseract backend), `.[ui]` (Streamlit app); `pip install ./cpp` adds the
+optional native C++ training backend (38x MCCFR training, see
+`docs/native_solver.md`).
 
 The demo walks the full narrative in one deterministic run: equilibrium as a
 baseline, live Bayesian opponent identification, the exploitation/robustness
@@ -650,6 +652,38 @@ This is where the optimization cashes out in decision quality rather than
 vanity throughput: at a fixed 10 ms budget the old evaluator afforded ~171
 simulations, the new one ~1,354 — and since error scales as 1/√n, that is
 **≈2.8× tighter error bars for the same latency**.
+
+## Native training backend (C++)
+
+The release-v2 Hold'em MCCFR trainer also exists as an optional C++17
+backend (pybind11; `pip install ./cpp` — build deps resolve via pip, no
+Homebrew/sudo). It is **training-only**: the DecisionEngine, observer and
+UI never need it, and the Python `MCCFRSolver` remains the reference.
+
+* **Measured 38x**: 837 it/s warm vs 22 it/s Python on an M3 Pro
+  (median of 3 trials, full release config, populated tables —
+  `results/benchmarks/native_mccfr_v1.json`). Three seeds reach 300k in
+  ~7 min, 1M in ~28 min.
+* **Validated by construction**: on a shared random tape both backends are
+  *bitwise identical* through 1,000 iterations (trajectories, regret and
+  strategy sums, average strategies); evaluator parity is exhaustive over
+  all 2,598,960 five-card hands; 20k+ random reachable states match on
+  mechanics, legal actions and infoset keys; ASan/UBSan clean.
+* **Reproducible**: xoshiro256** RNG with state in versioned, checksummed
+  checkpoints; `train(a)+save+load+train(b)` is bit-identical to
+  `train(a+b)`. Artifacts use the standard strategy-artifact format with
+  `backend=native` provenance.
+* Training: `python experiments/holdem_mccfr_validation.py --v2-config
+  --backend native ...`, three parallel seeds via
+  `experiments/train_native_multiseed.py`, one-command validation via
+  `experiments/validate_native_solver.py`.
+
+Details: `docs/native_solver.md` (install, API, formats, limitations),
+`docs/native_solver_design.md`, `docs/native_solver_benchmark.md`. The
+1M-iteration three-seed study it enabled is summarized in
+`docs/release_status.md` — the 1M candidate beats the current release by
++52..+56 bb/100 in abstract-game cross-play but is deliberately not
+auto-promoted (gate-acceptance and preflop-noise caveats documented there).
 
 ## Reproducing the experiments
 
