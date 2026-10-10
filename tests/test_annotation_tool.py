@@ -163,7 +163,8 @@ def test_streamlit_annotate_mode(tmp_path):
     rec.finish()
     at = AppTest.from_file(str(ROOT / "poker_alpha" / "ui" / "app.py"), default_timeout=120)
     at.run()
-    at.sidebar.radio[0].set_value("Annotate session").run()
+    at.sidebar.radio[0].set_value("Developer").run()
+    [r for r in at.sidebar.radio if r.label == "Input"][0].set_value("Annotate session").run()
     at.text_input(key="ann_root").set_value(str(tmp_path / "sessions")).run()
     assert not at.exception, at.exception
     assert any("Annotated 0 /" in str(m.value) for m in at.markdown)

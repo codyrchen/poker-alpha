@@ -190,7 +190,8 @@ def _app():
     at.run()
     at.sidebar.slider[0].set_value(200)
     at.sidebar.slider[1].set_value(0)
-    at.sidebar.radio[0].set_value("Live screen").run()
+    at.sidebar.radio[0].set_value("Developer").run()
+    [r for r in at.sidebar.radio if r.label == "Input"][0].set_value("Live screen").run()
     assert not at.exception, at.exception
     return at, screen
 
