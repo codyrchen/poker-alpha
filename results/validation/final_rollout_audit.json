@@ -1,0 +1,89 @@
+{
+ "format": "pokeralpha.final_rollout_audit/v1",
+ "code_freshness": "poker_alpha/decision/rollout.py last changed at 1e2fd0d Rollout depth option and opponent response models (Phase 61; code for 59-60); every committed rollout study postdates or matches that commit, so the committed evidence is CURRENT (no blind reruns).",
+ "action_agreement_vs_exact_river": {
+  "spots": 36,
+  "agreements": 20,
+  "rate": 0.556,
+  "bias": "optimistic / over-bets (rollout_validation_v1.json)",
+  "source": "results/validation/rollout_validation_v1.json"
+ },
+ "response_model": {
+  "decision": "NOT ADOPTED: default stays response='behavior'. mdf_range and mdf_calibrated are available as opt-in options only.",
+  "held_out": {
+   "behavior": {
+    "decisions": 480,
+    "agreement": 0.6125,
+    "mean_regret_bb": 0.23999026638479612,
+    "max_regret_bb": 4.432985920084381,
+    "mean_ev_bias_bb": 0.777465899274738,
+    "bet_size_bias_pot": 0.11411036067965798,
+    "bluff_bet_freq": {
+     "rollout": 0.4125,
+     "equilibrium": 0.3354726144981539
+    },
+    "value_bet_freq": {
+     "rollout": 0.725,
+     "equilibrium": 0.5861718937705196
+    }
+   },
+   "mdf_range": {
+    "decisions": 480,
+    "agreement": 0.5604166666666667,
+    "mean_regret_bb": 0.26346565284243745,
+    "max_regret_bb": 4.450043266152122,
+    "mean_ev_bias_bb": 1.0802933690657122,
+    "bet_size_bias_pot": 0.445360360679658,
+    "bluff_bet_freq": {
+     "rollout": 0.4875,
+     "equilibrium": 0.3354726144981539
+    },
+    "value_bet_freq": {
+     "rollout": 0.775,
+     "equilibrium": 0.5861718937705196
+    }
+   },
+   "mdf_calibrated": {
+    "decisions": 480,
+    "agreement": 0.5291666666666667,
+    "mean_regret_bb": 0.2960012710025989,
+    "max_regret_bb": 4.450043266152122,
+    "mean_ev_bias_bb": 1.1636984316703187,
+    "bet_size_bias_pot": 0.7318186940129913,
+    "bluff_bet_freq": {
+     "rollout": 0.6583333333333333,
+     "equilibrium": 0.3354726144981539
+    },
+    "value_bet_freq": {
+     "rollout": 0.75,
+     "equilibrium": 0.5861718937705196
+    }
+   }
+  },
+  "source": "results/validation/rollout_response_v2.json",
+  "phase27_action": "NOT re-run: adoption rule was held-out and negative; evidence current"
+ },
+ "depth": {
+  "summary": {
+   "spots": 14,
+   "flips": 6,
+   "median_max_abs_ev_shift_bb": 1.8562232010317459,
+   "max_regret_of_fast_bb": 6.845600000000042,
+   "median_seconds_fast": 0.231,
+   "median_seconds_showdown": 2.972
+  },
+  "phase28_action": "fast mode stays default (median 0.23s vs 2.97s); showdown depth remains an opt-in validation mode (6/14 action flips, median |EV shift| 1.86 bb measured under the showdown-depth model)",
+  "source": "results/validation/rollout_depth.json"
+ },
+ "mc_uncertainty": {
+  "summary": "SE ratios (reported/empirical) 0.86-1.27 across 100..5000 samples and three spot types; no systematic under-reporting; Gaussian 95% intervals adequate at >=300 samples",
+  "min_samples_warning": "DecisionReport warns below 500 rollout samples (Phase 62, mc_error_calibration.json)",
+  "phase29_action": "no change required",
+  "source": "results/validation/mc_error_calibration.json"
+ },
+ "known_weaknesses": [
+  "rollout recommendations disagree with exact river equilibria in 16/36 root spots (over-betting with polarized ranges)",
+  "recommendations are sensitive to the assumed opponent response model (behavior default; alternatives opt-in)",
+  "rollout EV is a behaviour-model EV, not an equilibrium value \u2014 reflected in DecisionReport provenance"
+ ]
+}

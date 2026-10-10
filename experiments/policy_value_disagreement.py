@@ -206,7 +206,7 @@ def main() -> None:
     ap.add_argument("--deals", type=int, default=0, help="0 = mode default")
     ap.add_argument("--jobs", type=int, default=8)
     ap.add_argument("--artifacts", default="native_1m",
-                    choices=("native_1m", "native_300k", "release_200k"))
+                    choices=("native_1m", "native_300k", "release_200k", "native_2m"))
     ap.add_argument("--out", type=Path, default=None)
     args = ap.parse_args()
 
@@ -215,6 +215,8 @@ def main() -> None:
                       for s in (0, 1, 2)},
         "native_300k": {f"seed{s}": f"results/strategy/candidates/native_300k/holdem_v2_native_seed{s}_300k.npz"
                         for s in (0, 1, 2)},
+        "native_2m": {f"seed{s}": f"results/strategy/candidates/native_2m/holdem_v2_native_seed{s}_2000k.npz"
+                      for s in (0, 1, 2)},
         "release_200k": {"seed0": "results/strategy/holdem_v2_seed0_200k.npz",
                          "seed1": "results/strategy/candidates/v2_extension/holdem_v2_seed1_200k.npz",
                          "seed2": "results/strategy/candidates/v2_extension/holdem_v2_seed2_200k.npz"},
