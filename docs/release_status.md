@@ -25,7 +25,7 @@ abstraction is not computed. The observer is read-only and never acts.
 | PARTIALLY VALIDATED | gate thresholds | calibrated on exact games (seed disagreement vs true error, Spearman 0.61), applied to the full abstraction by extrapolation |
 | PARTIALLY VALIDATED | decision response models | rollouts disagree with exact river equilibria in 16 / 36 spots (they overbet); recommendations change with the assumed opponent model |
 | PARTIALLY VALIDATED | screen observer on synthetic images | synthetic fixtures; annotation validation and metrics harness ready |
-| EXPERIMENTAL | trained HU strategy (v2, 3 seeds x 200k; release = seed 0 @ 200k) | 10 / 10 sanity checks per seed (at 100k and 200k); not converged; preflop noise-dominated (all 169 BTN first-action keys gated out) |
+| EXPERIMENTAL | trained HU strategy (v2; release = NATIVE seed 0 @ 2M, SolverConfidence v2) | sanity green at 2M; seed disagreement still material but measured to be ~94% near-equivalent mixing preflop; restricted-LBR floor >= ~100 bb/100 (docs/solver_status_final.md) |
 | EXPERIMENTAL | range and opponent modelling | beliefs under heuristic priors; no ground-truth accuracy |
 | EXPERIMENTAL | real PokerNow recognition | heads-up preset aligned on 1 real annotated frame; all fields correct on it at 0.8x-3x, but the same frame was used for tuning, so accuracy is **not measured** (post-RC, `docs/observer.md`) |
 
@@ -34,10 +34,10 @@ abstraction is not computed. The observer is read-only and never acts.
 | | |
 | --- | --- |
 | config | `HoldemSolverConfig:v2:733e52f1d1014e2e7973` (compact encoder + 20 river percentile buckets, legal NLHE sizing, 100 BB, raise cap 3, external-sampling MCCFR, uniform averaging) |
-| artifact | **`results/strategy/holdem_v2_seed0_200k.npz`** (seed 0, 200,000 iterations, format v2, SHA-256 `ee23b3f9...`; promoted after Phase 65) |
-| confidence table | **`results/strategy/holdem_v2_seed0_200k_confidence.npz`** (seeds 0-2 at 200k, movement vs 10k; SHA-256 `7d4be548...`) |
-| use at decision time | gate: 18.0% of visit-weighted decisions accepted, 14.7% low confidence, 67.3% rejected -> rollout / heuristic; flop / turn lookups capped at low confidence; 335 of 338 preflop first-action keys rejected |
-| status | **EXPERIMENTAL** — not converged (300k still beats 200k by 20-37 bb/100 in cross-play), imperfect-recall abstraction, no equilibrium guarantee, not GTO |
+| artifact | **`results/strategy/holdem_v2_native_seed0_2m.npz`** (native backend, seed 0, 2,000,000 iterations, SHA-256 `f1860de7...`; promoted by the final-trust project) |
+| confidence table | **`results/strategy/holdem_v2_native_seed0_2m_confidence.npz`** (SolverConfidence v2: seeds 0-2 at 2M, recent movement 1.5M->2M, SHA-bound; SHA-256 `ef5c3223...`) |
+| use at decision time | gate (v2, after street caps): preflop 34% / river 53% visit-weighted accepted, flop & turn capped at LOW (72-77% low), rest rejected -> rollout / heuristic (results/validation/decision_pipeline_risk_summary.json) |
+| status | **EXPERIMENTAL** — imperfect-recall abstraction, no equilibrium guarantee, not GTO; restricted-LBR lower bound >= ~100 bb/100 in the full game; training stopped at 2M by evidence (post_2m_training_decision.json) |
 | previous release | `results/strategy/holdem_v2_seed0.npz` + `_confidence.npz` (seed 0, 100k) — archived in place (`solver_config.PREVIOUS_RELEASE_STRATEGIES`) so Phases 36-80 results stay reproducible |
 
 ## Performance (4-vCPU container, CPython 3.13, pure Python + NumPy)
@@ -124,10 +124,11 @@ passed / 12 skipped (Streamlit), 3.12 all extras 773 passed.
 | VALIDATED | Monte Carlo error bars | equity coverage 0.89-0.99; rollout 0.95 mean (warning below 500 samples) |
 | PARTIALLY VALIDATED | v2 abstraction | river error measured earlier; flop / turn exploitability 1.4-9.6 BB/hand in exact subgames -> flop / turn solver lookups capped at low confidence |
 | PARTIALLY VALIDATED | rollouts | held-out agreement with exact river equilibria 0.61, optimistic, over-bet; response-model alternatives not adopted |
-| EXPERIMENTAL | trained HU strategy | release promoted to seed 0 @ 200k (owner decision after Phase 65): +66-69 bb/100 vs 100k in cross-play; not converged, not GTO |
+| EXPERIMENTAL | trained HU strategy | release promoted to NATIVE seed 0 @ 2M (final-trust project): +50..+117 bb/100 vs the 200k release in cross-play with matching 3-seed v2 confidence data; not an equilibrium, not GTO |
 
-Release strategy: `results/strategy/holdem_v2_seed0_200k.npz` (200k) with
-`holdem_v2_seed0_200k_confidence.npz`; the 100k pair is the archived
+Release strategy (since the final-trust project):
+`results/strategy/holdem_v2_native_seed0_2m.npz` (native, 2M) with its
+SHA-bound v2 confidence table; the 200k and 100k pairs are archived
 previous release. Rows above that were measured with the 100k release say
 so (gate acceptance 19.5% at 100k vs 18.0% at 200k).
 Gate thresholds: unchanged; added coded downgrade reasons

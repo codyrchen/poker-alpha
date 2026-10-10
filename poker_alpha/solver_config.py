@@ -175,19 +175,23 @@ V2_CONFIG = HoldemSolverConfig(
 # river abstraction error; v1 remains the locked reference for reproducing
 # Phases 26-31 (its tests, fixtures and artifact are unchanged).
 RELEASE_CONFIG = V2_CONFIG
-# Current release strategy (promoted at the owner's request after Phase 65):
-# seed 0 of the v2 config at 200,000 iterations; its confidence table
-# (seeds 0-2 at 200k, movement vs 10k) sits next to it as
-# "<stem>_confidence.npz" and is picked up automatically. EXPERIMENTAL: an
-# MCCFR average strategy on an imperfect-recall abstraction, not converged,
-# not an equilibrium of Hold'em.
-RELEASE_STRATEGY = "results/strategy/holdem_v2_seed0_200k.npz"
-RELEASE_CONFIDENCE = "results/strategy/holdem_v2_seed0_200k_confidence.npz"
-RELEASE_ITERATIONS = 200_000
-# Previous release, kept in place for reproducing Phases 36-80 results.
+# Current release strategy (promoted by the final-trust project, 2026-10):
+# native-backend seed 0 of the v2 config at 2,000,000 iterations, with its
+# matching SolverConfidence v2 table (seeds 0-2 at 2M, recent movement
+# 1.5M -> 2M, SHA-bound to this artifact) as "<stem>_confidence.npz".
+# Promotion evidence: results/validation/final_release_comparison.json and
+# docs/final_release_comparison.md. EXPERIMENTAL: an MCCFR average strategy
+# on an imperfect-recall abstraction; restricted-LBR shows it remains
+# >= ~100 bb/100 exploitable in the full game; not an equilibrium, not GTO.
+RELEASE_STRATEGY = "results/strategy/holdem_v2_native_seed0_2m.npz"
+RELEASE_CONFIDENCE = "results/strategy/holdem_v2_native_seed0_2m_confidence.npz"
+RELEASE_ITERATIONS = 2_000_000
+# Previous releases, kept in place for reproducibility.
 PREVIOUS_RELEASE_STRATEGIES = {
     "v2@100k": ("results/strategy/holdem_v2_seed0.npz",
                 "results/strategy/holdem_v2_seed0_confidence.npz"),
+    "v2@200k": ("results/strategy/holdem_v2_seed0_200k.npz",
+                "results/strategy/holdem_v2_seed0_200k_confidence.npz"),
 }
 
 KNOWN_CONFIGS = {"v1": PRIMARY_CONFIG, "v2-sizing-only": LEGAL_SIZING_CONFIG, "v2": V2_CONFIG}

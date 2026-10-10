@@ -1,0 +1,35 @@
+{
+ "format": "pokeralpha.decision_pipeline_risk_summary/v1",
+ "release": "results/strategy/holdem_v2_native_seed0_2m.npz + SolverConfidence v2",
+ "paths_visit_weighted_by_street": {
+  "preflop": {
+   "accept": 0.34,
+   "low": 0.1759,
+   "reject_to_rollout": 0.4841
+  },
+  "flop": {
+   "accept": 0.0,
+   "low": 0.7245,
+   "reject_to_rollout": 0.2756
+  },
+  "turn": {
+   "accept": 0.0,
+   "low": 0.7673,
+   "reject_to_rollout": 0.2327
+  },
+  "river": {
+   "accept": 0.5296,
+   "low": 0.2521,
+   "reject_to_rollout": 0.2183
+  }
+ },
+ "street_caps": "flop/turn table-ACCEPTs are downgraded to LOW at lookup time (STREET_ABSTRACTION_ERROR) \u2014 abstraction risk never erased by stable training",
+ "path_quality": {
+  "solver_accepted": "held-out exact-game accepted risk: EV regret ~0.12 bb, wrong-action 3.0% (mature slice 0.067 bb / 1.6%); plus measured per-street abstraction error (abstraction_error_summary.json)",
+  "solver_low_confidence": "shown with reasons; DecisionReport treats as advisory",
+  "rollout_fallback": "20/36 exact-river root agreement, over-bet bias, behaviour-model EV (final_rollout_audit.json); SE-calibrated, warns < 500 samples",
+  "heuristic_fallback": "rules-based; used when rollout unavailable; weakest path"
+ },
+ "main_remaining_reliability_risk": "full-game abstraction floor (restricted-LBR >= ~100 bb/100) and rollout over-bet bias on the rejected-path; both documented, neither fixable by more training",
+ "note": "no single 'accuracy' number is meaningful across paths; see per-path evidence files"
+}

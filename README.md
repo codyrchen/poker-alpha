@@ -680,10 +680,11 @@ UI never need it, and the Python `MCCFRSolver` remains the reference.
 
 Details: `docs/native_solver.md` (install, API, formats, limitations),
 `docs/native_solver_design.md`, `docs/native_solver_benchmark.md`. The
-1M-iteration three-seed study it enabled is summarized in
-`docs/release_status.md` — the 1M candidate beats the current release by
-+52..+56 bb/100 in abstract-game cross-play but is deliberately not
-auto-promoted (gate-acceptance and preflop-noise caveats documented there).
+training studies it enabled (three seeds to 2M, exact-game confidence
+recalibration, a validated restricted-LBR exploitability lower bound) led
+to the current release: native seed 0 @ 2M with the SolverConfidence v2
+table — see `docs/solver_status_final.md` and
+`docs/final_release_comparison.md`.
 
 ## Reproducing the experiments
 
@@ -724,7 +725,7 @@ python experiments/holdem_mccfr_validation.py --locked-config --seed 0 \
     --milestones 1000,10000,100000 --ckpt-dir /tmp/ck --out /tmp/run0.jsonl   # ~70 min to 100k
 python experiments/phase29_analysis.py --runs-dir /tmp --artifact /tmp/strategy.npz
 python experiments/phase28_benchmark.py --root . --out /tmp/bench.json
-python experiments/final_benchmark.py --strategy results/strategy/holdem_v2_seed0_200k.npz
+python experiments/final_benchmark.py --strategy results/strategy/holdem_v2_native_seed0_2m.npz
 ```
 
 **Solver quality (Phases 32-40)** — see [docs/solver_validation.md](docs/solver_validation.md):
