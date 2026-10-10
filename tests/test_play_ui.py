@@ -192,7 +192,9 @@ def test_play_mode_demo_and_abstention_headless():
     at.run()
     assert not at.exception, at.exception
     md = " ".join(str(m.value) for m in at.markdown)
-    assert "pa-action" in md and "RECOMMENDED" in md        # action rows
+    assert "pa-action" in md                                 # action rows
+    # first demo spot is an accepted solver mix: distribution language
+    assert "HIGHEST FREQUENCY" in md
     assert "pa-card" in md                                   # card chips
     sel = [s for s in at.selectbox if s.key == "play_demo_spot"][0]
     sel.set_value("Preflop open decision — gate rejects (seed disagreement)").run()
@@ -218,3 +220,97 @@ def test_developer_mode_preserved_headless():
     assert set(inputs.options) == {"Manual entry", "Hand-history replay",
                                    "Screen observer", "Live screen",
                                    "Annotate session"}
+
+
+# ---------------------------------------------------------------------------
+# final UX pass: EV provenance, strategy language, zero bars, status split
+# ---------------------------------------------------------------------------
+
+def test_ev_edge_only_primary_when_decision_basis():
+    """Solver frequencies + attached rollout EVs must NOT present an EV edge
+    as the recommendation's explanation; rollout methods may."""
+    solver_used = {"used": True, "confidence": "SOLVER_ACCEPT", "reasons": []}
+    rep = _report([_cand("check", "check", 0.83, ev=0.5, source="solver"),
+                   _cand("bet_75", "bet", 0.09, ev=1.4, added=3.7,
+                         source="solver")],
+                  "check", method="solver", solver_info=solver_used)
+    vm = recommendation_vm(rep)
+    assert not vm.ev_is_decision_basis
+    w = why_vm(rep)
+    assert w.ev_line is None                       # never shown as the reason
+    assert w.ev_estimates_note is not None         # provenance-labeled instead
+    assert "did NOT produce the solver's frequencies" in w.ev_estimates_note
+
+    roll = _report([_cand("call", "call", 0.7, ev=0.8, added=2.0),
+                    _cand("fold", "fold", 0.3, ev=0.0)], "call",
+                   method="Monte Carlo rollout")
+    vm2 = recommendation_vm(roll)
+    assert vm2.ev_is_decision_basis
+    assert why_vm(roll).ev_line is not None
+
+
+def test_solver_mix_uses_highest_frequency_tag():
+    rep = _report([_cand("check", "check", 0.83, source="solver"),
+                   _cand("bet_75", "bet", 0.17, source="solver")],
+                  "check", method="solver",
+                  solver_info={"used": True, "confidence": "SOLVER_ACCEPT",
+                               "reasons": []})
+    assert recommendation_vm(rep).recommended_tag == "HIGHEST FREQUENCY"
+    roll = _report([_cand("call", "call", 1.0, ev=0.5, added=2.0)], "call")
+    assert recommendation_vm(roll).recommended_tag == "RECOMMENDED"
+
+
+def test_zero_frequency_bar_width():
+    rep = _report([_cand("call", "call", 0.996, ev=0.5, added=2.0),
+                   _cand("fold", "fold", 0.004),
+                   _cand("raise_75", "raise", 0.0, to=9.0)], "call")
+    vm = recommendation_vm(rep)
+    by = {a.label: a for a in vm.actions}
+    assert by["call"].bar_width_pct == pytest.approx(99.6)
+    # displays as 0% -> bar must be empty even though frequency is 0.4%
+    assert by["fold"].frequency_pct == 0 and by["fold"].bar_width_pct == 0.0
+    assert by["raise_75"].bar_width_pct == 0.0
+
+
+def test_solver_state_badge_semantics():
+    accepted = {"used": True, "confidence": "SOLVER_ACCEPT", "reasons": []}
+    low = {"used": True, "confidence": "SOLVER_LOW_CONFIDENCE",
+           "reasons": ["STREET_ABSTRACTION_ERROR"]}
+    rejected = {"used": False, "confidence": "rejected",
+                "reasons": ["HIGH_SEED_DISAGREEMENT"]}
+    off = {"used": False, "confidence": "not configured", "reasons": []}
+    mk = lambda info, method: recommendation_vm(_report(  # noqa: E731
+        [_cand("check", "check", 1.0)], "check", method=method,
+        solver_info=info))
+    assert mk(accepted, "solver").solver_state == "ACCEPTED"
+    assert mk(low, "solver").solver_state == "LOW CONFIDENCE"
+    rej = mk(rejected, "Monte Carlo rollout")
+    assert rej.solver_state == "REJECTED" and rej.source_kind == "rollout"
+    assert mk(off, "Monte Carlo rollout").solver_state == "OFF"
+
+
+@pytest.mark.slow
+def test_play_sidebar_is_minimal_and_status_split_headless():
+    pytest.importorskip("streamlit")
+    from streamlit.testing.v1 import AppTest
+
+    at = AppTest.from_file(str(APP), default_timeout=180)
+    at.run()
+    assert not at.exception
+    # Play Mode: no expanded engineering sliders in the sidebar main flow —
+    # they live inside the collapsed "Advanced analysis settings" expander.
+    exp = [e for e in at.sidebar.expander]
+    assert any("Advanced analysis settings" in str(e.label) for e in exp)
+    md = " ".join(str(m.value) for m in at.markdown)
+    assert "Decision confidence" in md
+    assert "Solver confidence" not in md            # old ambiguous label gone
+    assert ">ACCEPTED<" in md                        # gate state badge
+    assert "HIGHEST FREQUENCY" in md                 # distribution language
+    assert "EV edge" not in md                       # not primary for solver
+    # normal state has no bordered panels; exceptional states do
+    assert 'class="pa-panel' not in md
+    sel = [s for s in at.selectbox if s.key == "play_demo_spot"][0]
+    sel.set_value("Preflop open decision — gate rejects (seed disagreement)").run()
+    md = " ".join(str(m.value) for m in at.markdown)
+    assert 'class="pa-panel pa-abstain"' in md       # abstention stands out
+    assert ">REJECTED<" in md and ">Rollout<" in md

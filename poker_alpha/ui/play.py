@@ -140,15 +140,55 @@ def _demo(cfg) -> None:
 
 
 def _manual(cfg) -> None:
-    default = json.dumps(DEMO_SPOTS["River, checked to hero — solver accepted"],
-                         indent=1)
-    with st.expander("Observed state (pokeralpha.observed/v1 JSON)", expanded=False):
-        text = st.text_area("state", default, height=260, key="play_manual",
-                            label_visibility="collapsed")
+    """Simple heads-up hand entry; the full JSON editor stays available."""
+    use_json = st.toggle("Advanced JSON state", value=False, key="play_use_json")
+    if use_json:
+        default = json.dumps(
+            DEMO_SPOTS["River, checked to hero — solver accepted"], indent=1)
+        text = st.text_area("Observed state (pokeralpha.observed/v1 JSON)",
+                            default, height=260, key="play_manual")
+        try:
+            obs = ManualStateAdapter.from_dict(json.loads(text))
+        except (ValueError, KeyError, TypeError) as exc:
+            C.render_waiting("The entered state could not be parsed")
+            st.caption(f"Details: {exc}")
+            return
+        render_play_report(obs, cfg)
+        return
+    st.caption("Heads-up spot, blinds 0.5 / 1 — amounts in big blinds. "
+               "Use Advanced JSON state for anything else.")
+    c = st.columns(4)
+    hero_cards = c[0].text_input("Hero cards", "As Ks", key="pm_hero")
+    board = c[1].text_input("Board (0/3/4/5 cards)", "Qs Js 4h", key="pm_board")
+    position = c[2].selectbox("Hero position", ["BTN", "BB"], key="pm_pos")
+    pot = c[3].number_input("Pot (BB)", min_value=0.0, value=5.0, step=0.5,
+                            key="pm_pot")
+    c = st.columns(4)
+    to_call = c[0].number_input("To call (BB)", min_value=0.0, value=0.0,
+                                step=0.5, key="pm_tocall")
+    hero_stack = c[1].number_input("Hero stack (BB)", min_value=0.0,
+                                   value=97.5, step=0.5, key="pm_hstack")
+    opp_stack = c[2].number_input("Opponent stack (BB)", min_value=0.0,
+                                  value=97.5, step=0.5, key="pm_ostack")
+    hero_committed = c[3].number_input(
+        "Hero already in pot (BB)", min_value=0.0, value=2.5, step=0.5,
+        key="pm_committed",
+        help="Chips the hero has put in this hand — lets the solver map the "
+             "spot onto its trained 100 BB tree.")
+    dealer = 0 if position == "BTN" else 1
+    opp_committed = max(0.0, pot - hero_committed)
+    state = {
+        "num_seats": 2, "hero_seat": 0, "dealer": dealer,
+        "small_blind": 0.5, "big_blind": 1.0,
+        "hero_cards": hero_cards, "board": board, "pot": pot, "actor": 0,
+        "seats": [{"stack": hero_stack, "committed": hero_committed},
+                  {"stack": opp_stack, "committed": opp_committed,
+                   "bet": to_call}],
+    }
     try:
-        obs = ManualStateAdapter.from_dict(json.loads(text))
+        obs = ManualStateAdapter.from_dict(state)
     except (ValueError, KeyError, TypeError) as exc:
-        C.render_waiting("The entered state could not be parsed")
+        C.render_waiting("The entered hand could not be built")
         st.caption(f"Details: {exc}")
         return
     render_play_report(obs, cfg)
@@ -195,6 +235,8 @@ def _live(cfg) -> None:
     st.caption("Reads pixels only — never clicks, types or acts. Use only in "
                "private, play-money or test games where real-time assistance "
                "is permitted.")
+    from poker_alpha.observer.live import CaptureSettings, list_monitors
+
     try:
         session = LP._session()
     except ObserverDependencyError as exc:
@@ -202,14 +244,39 @@ def _live(cfg) -> None:
         st.caption(str(exc) + " — install the [vision] extra.")
         return
     with st.expander("Capture & table setup", expanded=not session.running):
-        capture = LP._capture_controls(session)
-        if capture is None:
+        lister = st.session_state.get("live_monitor_lister", list_monitors)
+        try:
+            monitors = [m for m in lister() if m["index"] >= 1] or lister()
+        except Exception as exc:  # noqa: BLE001
+            C.render_waiting("Screen capture is not available")
+            st.caption(f"{type(exc).__name__}: {exc}")
             return
-        c = st.columns(3)
-        side = c[0].radio("Hero plate", ["right", "left"], horizontal=True,
+        labels = [f"monitor {m['index']}: {m['width']}x{m['height']}"
+                  for m in monitors]
+        c = st.columns(4)
+        i = c[0].selectbox("Monitor", range(len(monitors)),
+                           format_func=lambda k: labels[k], key="play_monitor")
+        side = c[1].radio("Hero plate", ["right", "left"], horizontal=True,
                           key="play_hero_side")
-        sb = c[1].number_input("Small blind", value=0.5, key="play_sb")
-        bb = c[2].number_input("Big blind", value=1.0, key="play_bb")
+        sb = c[2].number_input("Small blind", value=0.5, key="play_sb")
+        bb = c[3].number_input("Big blind", value=1.0, key="play_bb")
+        mon = monitors[i]
+        with st.expander("Advanced capture settings"):
+            st.caption("Capture rectangle relative to the monitor, in screen "
+                       "points (width or height 0 = whole monitor). Crop to "
+                       "the PokerNow table.")
+            cc = st.columns(4)
+            left = cc[0].number_input("left", 0, max(0, mon["width"] - 1), 0,
+                                      key="play_cap_left")
+            top = cc[1].number_input("top", 0, max(0, mon["height"] - 1), 0,
+                                     key="play_cap_top")
+            width = cc[2].number_input("width", 0, mon["width"], 0,
+                                       key="play_cap_width")
+            height = cc[3].number_input("height", 0, mon["height"], 0,
+                                        key="play_cap_height")
+        rect = (int(left), int(top), int(width), int(height)) \
+            if width and height else None
+        capture = CaptureSettings(mon, rect)
         st.caption("Uses the PokerNow heads-up layout preset. For custom "
                    "calibration, use Developer Mode → Live screen.")
     cal = pokernow_hu_layout(hero_side=side)

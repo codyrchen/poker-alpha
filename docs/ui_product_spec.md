@@ -16,19 +16,26 @@ first-class state, not an error.
 
 | tier | content | where |
 |---|---|---|
-| primary | hero cards + board, pot / to-call / effective stack / SPR, the action list with frequencies, the recommended action, solver confidence | always visible, top of page |
-| secondary | method (solver / rollout / heuristic), EV edge, equity ± SE, pot odds | status strip under the actions |
+| primary | hero cards + board, pot / to-call / effective stack / SPR, the action list with frequencies, the primary action, the solver gate state | always visible, top of page |
+| secondary | method (solver / rollout / heuristic), decision confidence, EV edge (only when the EVs are the decision basis), equity ± SE, pot odds | status strip under the actions |
 | advanced | gate signals (visits, seed disagreement, movement, collision), source cascade, uncertainty map, opponent ranges, OCR internals | "Why this recommendation" → "Technical details" expander, or Developer Mode |
 
 ## States
 
-**Normal recommendation** — card panel; action rows (frequency-descending,
-stable ties) with a frequency bar, percentage and EV ± SE where measured;
-the recommended row carries an accent border and a RECOMMENDED tag; status
-strip with confidence badge (green only at HIGH), method, EV edge, equity,
-pot odds; a "Why this recommendation" expander explaining source, gate
-status and EV comparison in plain language, with the full tables one level
-deeper.
+**Normal recommendation** — a quiet, open region (bordered panels are
+reserved for exceptional states); action rows (frequency-descending,
+stable ties) with an exactly proportional frequency bar — a row displayed
+as 0% has no bar at all. The highlighted row is tagged **HIGHEST
+FREQUENCY** when the numbers are a solver mixed strategy (it is the most
+frequent action of a distribution, not a single prescribed action) and
+**RECOMMENDED** only for single-answer methods (rollout/heuristic). EV
+columns and the EV-edge stat appear only when the EVs are the actual
+decision basis (rollout); for solver output the separately computed
+rollout EV estimates are provenance-labeled inside the Why panel and
+never presented as the reason for the frequencies. The status strip
+separates **Solver** (gate state: ACCEPTED / LOW CONFIDENCE / REJECTED /
+OFF) from **Decision confidence** (the report's overall confidence) — a
+fallback's confidence is never labeled as solver confidence.
 
 **Abstention (solver withheld)** — when the confidence gate rejects the
 lookup: an amber-edged panel titled "Solver recommendation withheld" with
@@ -70,6 +77,16 @@ labels that state what actually happens:
 `streamlit run poker_alpha/ui/app.py`) → the app opens in Play → Demo with
 the first spot already analysed → switch spots from the dropdown.
 
+## Play settings & inputs stay simple
+
+The Play sidebar holds only the mode switch; sampling sliders and the
+solver toggle live inside a collapsed **Advanced analysis settings**
+expander with sensible defaults. Manual entry is a small form (cards,
+board, position, pot, to-call, stacks) with the raw
+`pokeralpha.observed/v1` JSON behind an "Advanced JSON state" toggle.
+Live capture asks only for monitor, hero side and blinds; pixel
+rectangles sit behind **Advanced capture settings**.
+
 ## Future compact overlay
 
 `poker_alpha.ui.viewmodel.compact_summary(report)` produces the minimal
@@ -103,8 +120,9 @@ AppTest for the demo, abstention and Developer-mode preservation).
 ## Visual snapshot
 
 `docs/ui_preview.html` is a static capture of the **real markup** the app
-emitted for the three key states (normal / abstention / low-confidence),
-generated headlessly through the actual pipeline — open it in any browser.
+emitted for four states (solver accepted / rejected→rollout fallback /
+solver low confidence / invalid state refused), generated headlessly
+through the actual pipeline — open it in any browser.
 Regenerate by re-running the snippet in the git history of this commit or
 simply by launching the app. Native OS screenshots were not captured in
 this environment (screen-recording permission is not granted to the build

@@ -133,6 +133,14 @@ class ActionVM:
     def frequency_pct(self) -> Optional[int]:
         return None if self.frequency is None else round(100 * self.frequency)
 
+    @property
+    def bar_width_pct(self) -> float:
+        """Exact proportional bar width; 0 whenever the displayed number is
+        0%, so the bar and the number can never contradict each other."""
+        if self.frequency is None or self.frequency_pct == 0:
+            return 0.0
+        return max(0.0, 100.0 * self.frequency)
+
 
 def _display_action(c: CandidateAction, big_blind_pot: Optional[float]) -> str:
     kind = c.kind.replace("_", "-")
@@ -200,6 +208,17 @@ class RecommendationVM:
     equity_se: Optional[float]
     pot_odds: Optional[float]
     refusal: Optional["RefusalVM"] = None
+    #: True only when the candidate EVs are the actual decision basis
+    #: (rollout/heuristic selection). Solver frequencies come from training;
+    #: any attached EVs there are separate rollout ESTIMATES and must not be
+    #: presented as the reason for the solver's mix.
+    ev_is_decision_basis: bool = False
+    #: Gate state of the trained strategy: ACCEPTED / LOW CONFIDENCE /
+    #: REJECTED / OFF (not configured).
+    solver_state: str = "OFF"
+    #: Tag for the emphasized action: solver output is a distribution, so
+    #: its top action is "HIGHEST FREQUENCY", not "RECOMMENDED".
+    recommended_tag: str = "RECOMMENDED"
 
 
 def _source_kind(method: str) -> str:
@@ -221,6 +240,19 @@ def _ev_edge(actions: List[ActionVM]) -> Optional[float]:
 
 def _solver_info(report: DecisionReport) -> Dict[str, object]:
     return dict(report.details.get("solver") or {})
+
+
+def _solver_state(info: Dict[str, object]) -> str:
+    conf = str(info.get("confidence", ""))
+    if info.get("used"):
+        if conf == "SOLVER_ACCEPT":
+            return "ACCEPTED"
+        if conf == "SOLVER_LOW_CONFIDENCE":
+            return "LOW CONFIDENCE"
+        return "ACCEPTED"
+    if conf == "not configured" or not info:
+        return "OFF"
+    return "REJECTED"
 
 
 def abstention_vm(report: DecisionReport) -> Optional[AbstentionVM]:
@@ -274,16 +306,22 @@ def recommendation_vm(report: DecisionReport) -> RecommendationVM:
     # deterministic candidate order (fold/check/call/bets).
     actions.sort(key=lambda a: -(a.frequency if a.frequency is not None else -1.0))
     rec = next((a for a in actions if a.recommended), None)
+    kind = _source_kind(report.method)
+    info = _solver_info(report)
     return RecommendationVM(
         actions=tuple(actions),
         recommended=rec,
         method=report.method,
-        source_kind=_source_kind(report.method),
+        source_kind=kind,
         confidence=CONFIDENCE_LABELS.get(report.confidence, report.confidence.upper()),
         mix_meaning=report.mix_meaning,
         ev_edge_bb=_ev_edge(actions),
         abstention=abstention_vm(report),
         warnings=tuple(report.warnings),
+        ev_is_decision_basis=(kind == "rollout"),
+        solver_state=_solver_state(info),
+        recommended_tag=("HIGHEST FREQUENCY" if kind == "solver"
+                         else "RECOMMENDED"),
         equity=report.hero_equity,
         equity_se=report.hero_equity_se,
         pot_odds=report.pot_odds,
@@ -370,7 +408,8 @@ class WhyVM:
     source_line: str
     gate_line: Optional[str]
     gate_reasons: Tuple[str, ...]
-    ev_line: Optional[str]
+    ev_line: Optional[str]              # only when EVs are the decision basis
+    ev_estimates_note: Optional[str]    # provenance-labeled estimates otherwise
     uncertainty: Tuple[Tuple[str, str], ...]
     warnings: Tuple[str, ...]
 
@@ -392,15 +431,26 @@ def why_vm(report: DecisionReport) -> WhyVM:
         gate_line = ("Confidence gate: " + status.replace("SOLVER_", "")
                      .replace("_", " ").lower())
     ev_line = None
-    if vm.recommended is not None and vm.recommended.ev_bb is not None:
-        ev_line = f"{vm.recommended.display}: {vm.recommended.ev_bb:+.2f} BB"
-        if vm.ev_edge_bb is not None:
-            ev_line += f" ({vm.ev_edge_bb:+.2f} BB vs the next-best action)"
+    ev_note = None
+    if vm.ev_is_decision_basis:
+        if vm.recommended is not None and vm.recommended.ev_bb is not None:
+            ev_line = f"{vm.recommended.display}: {vm.recommended.ev_bb:+.2f} BB"
+            if vm.ev_edge_bb is not None:
+                ev_line += f" ({vm.ev_edge_bb:+.2f} BB vs the next-best action)"
+    else:
+        # EVs attached to a solver mix are separate rollout ESTIMATES — they
+        # did not produce the frequencies and are labeled as such.
+        with_ev = [a for a in vm.actions if a.ev_bb is not None]
+        if with_ev:
+            parts = ", ".join(f"{a.display} {a.ev_bb:+.2f} BB" for a in with_ev[:4])
+            ev_note = ("Rollout EV estimates (computed separately — they did "
+                       "NOT produce the solver's frequencies): " + parts)
     return WhyVM(
         source_line=source_line,
         gate_line=gate_line,
         gate_reasons=tuple(reason_text(c) for c in (info.get("reasons") or ())),
         ev_line=ev_line,
+        ev_estimates_note=ev_note,
         uncertainty=tuple((k, str(v)) for k, v in report.uncertainty.items()),
         warnings=tuple(report.warnings),
     )

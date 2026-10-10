@@ -50,7 +50,7 @@ def render_hand(hand: HandVM, title: str = "") -> None:
         _stat("SPR", "—" if hand.spr is None else f"{hand.spr:.1f}"),
     ])
     st.markdown(
-        f'<div class="pa-panel">{head}'
+        f'<div class="pa-hand">{head}'
         f'<div class="pa-cardrow">{hero}<span class="pa-sep">|</span>{board}</div>'
         f'<div class="pa-stats">{stats}</div></div>',
         unsafe_allow_html=True)
@@ -58,22 +58,26 @@ def render_hand(hand: HandVM, title: str = "") -> None:
 
 def render_actions(vm: RecommendationVM, max_actions: int = 6) -> None:
     rows = []
-    for a in vm.actions[:max_actions]:
-        pct = a.frequency_pct
-        bar = 0 if pct is None else max(2, pct)
+    show_ev = vm.ev_is_decision_basis   # EVs in the main rows only when they
+    for a in vm.actions[:max_actions]:  # are the actual decision basis
+        width = a.bar_width_pct
+        fill = "" if width <= 0 else f'<div style="width:{width:.2f}%"></div>'
         ev = ""
-        if a.ev_bb is not None:
+        if show_ev and a.ev_bb is not None:
             ev = f"{a.ev_bb:+.2f} BB"
             if a.ev_se_bb:
                 ev += f" ±{a.ev_se_bb:.2f}"
-        tag = '<div class="pa-rec-tag">RECOMMENDED</div>' if a.recommended else ""
+        tag = (f'<div class="pa-rec-tag">{vm.recommended_tag}</div>'
+               if a.recommended else "")
+        pct = a.frequency_pct
         rows.append(
             f'<div class="pa-action{" rec" if a.recommended else ""}">'
             f'<span class="name">{html.escape(a.display)}{tag}</span>'
-            f'<span class="bar"><div style="width:{bar}%"></div></span>'
+            f'<span class="bar">{fill}</span>'
             f'<span class="freq">{"—" if pct is None else f"{pct}%"}</span>'
-            f'<span class="ev">{ev}</span></div>')
-    st.markdown(f'<div class="pa-panel">{"".join(rows)}'
+            + (f'<span class="ev">{ev}</span>' if show_ev else "")
+            + '</div>')
+    st.markdown(f'<div class="pa-actions">{"".join(rows)}'
                 f'<div class="pa-muted" style="margin-top:0.4rem">'
                 f'{html.escape(vm.mix_meaning)}</div></div>',
                 unsafe_allow_html=True)
@@ -82,15 +86,29 @@ def render_actions(vm: RecommendationVM, max_actions: int = 6) -> None:
 _SOURCE_NAMES = {"solver": "Solver", "rollout": "Rollout", "heuristic": "Heuristic"}
 
 
+_SOLVER_BADGE = {"ACCEPTED": "high", "LOW CONFIDENCE": "medium",
+                 "REJECTED": "neutral", "OFF": "neutral"}
+
+
 def render_status(vm: RecommendationVM) -> None:
-    badge = vm.confidence.lower() if vm.confidence.lower() in \
-        ("high", "medium", "low") else "neutral"
+    """Footer metadata row. 'Solver' is the gate state of the trained
+    strategy; 'Decision confidence' is the report's overall confidence —
+    never conflated, and a fallback's confidence is never labeled as
+    solver confidence."""
     parts = [
-        f'<span class="pa-stat"><span class="pa-badge {badge}">{vm.confidence}'
-        f'</span><br><span class="k">Solver confidence</span></span>',
+        f'<span class="pa-stat"><span class="pa-badge '
+        f'{_SOLVER_BADGE.get(vm.solver_state, "neutral")}">'
+        f'{html.escape(vm.solver_state)}</span><br>'
+        f'<span class="k">Solver</span></span>',
         _stat("Method", _SOURCE_NAMES.get(vm.source_kind, vm.method)),
     ]
-    if vm.ev_edge_bb is not None:
+    conf_badge = vm.confidence.lower() if vm.confidence.lower() in \
+        ("high", "medium", "low") else "neutral"
+    parts.append(
+        f'<span class="pa-stat"><span class="pa-badge {conf_badge}">'
+        f'{vm.confidence}</span><br>'
+        f'<span class="k">Decision confidence</span></span>')
+    if vm.ev_is_decision_basis and vm.ev_edge_bb is not None:
         parts.append(_stat("EV edge", f"{vm.ev_edge_bb:+.2f} BB"))
     if vm.equity is not None:
         eq = f"{vm.equity:.0%}"
@@ -99,7 +117,7 @@ def render_status(vm: RecommendationVM) -> None:
         parts.append(_stat("Equity", eq))
     if vm.pot_odds is not None:
         parts.append(_stat("Pot odds", f"{vm.pot_odds:.0%}"))
-    st.markdown(f'<div class="pa-panel"><div class="pa-status">'
+    st.markdown(f'<div class="pa-footer"><div class="pa-status">'
                 f'{"".join(parts)}</div></div>', unsafe_allow_html=True)
 
 
@@ -145,7 +163,7 @@ def render_live_status(vm: LiveStatusVM, solver_trust: Optional[str]) -> None:
         parts.append(f'<span class="pa-stat"><span class="pa-badge {tb}">'
                      f'{html.escape(solver_trust)}</span><br>'
                      f'<span class="k">Solver trust</span></span>')
-    st.markdown(f'<div class="pa-panel"><div class="pa-status">'
+    st.markdown(f'<div class="pa-actions"><div class="pa-status">'
                 f'{"".join(parts)}</div></div>', unsafe_allow_html=True)
 
 
@@ -169,6 +187,8 @@ def render_why(why: WhyVM, report) -> None:
                                       if why.gate_reasons else ""))
         if why.ev_line:
             st.write("EV: " + why.ev_line)
+        if why.ev_estimates_note:
+            st.caption(why.ev_estimates_note)
         for w in why.warnings:
             st.caption("⚠ " + w)
         def _str_rows(rows):
