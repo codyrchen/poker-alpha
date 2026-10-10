@@ -1,0 +1,21 @@
+{
+ "format": "pokeralpha.post_1m_training_decision/v1",
+ "question": "Is remaining error finite-sampling (A) or structural abstraction/near-equivalence (B)?",
+ "evidence": {
+  "A_sampling": [
+   "canonical EV uncertainty halves 200k->1M: median cross-regret 1.91->1.09 bb, significant-consequence states 24->8 (sum 102->57 bb)",
+   "median seed disagreement still declining: 0.617 (200k) -> 0.595 (300k) -> 0.523 (1M)",
+   "exact-game analogue: among high-disagreement infosets, median regret falls 0.10 (3k) -> 0.04 (30k) — regret shrinks with training even where L1 stays high"
+  ],
+  "B_structural": [
+   "policy L1 plateaus high: exact perfect-recall games show 37% of infosets at sd>=0.5 near convergence with tiny regret (near-equivalent mixing is intrinsic to MCCFR averages)",
+   "restricted-LBR lower bound ~+103..+127 bb/100 for ALL candidates (not separable at 10k hands): a full-game abstraction floor more training cannot fix",
+   "50/57 high-L1 canonical states at 1M already have no significant EV consequence"
+  ]
+ },
+ "decision": "GO for 2M (phase 32): decision-value uncertainty is still material at 8 canonical states and decreasing predictably; cost ~22 min for 3 seeds. 3M only if 2M materially reduces VALUE uncertainty again (phase 34 criteria).",
+ "command": "python experiments/train_native_multiseed.py --seeds 0,1,2 --milestones 1250000,1500000,2000000 --out-dir results/native_training --jobs 3",
+ "expected_duration": "~22 min (resume from 1M checkpoints)",
+ "output": "results/native_training/*.jsonl + checkpoints (gitignored)",
+ "stop_criterion": "all seeds at 2M; then canonical EV study + confidence/crossplay analysis at 2M"
+}

@@ -21,7 +21,7 @@ abstraction is not computed. The observer is read-only and never acts.
 | VALIDATED | solver tooling: config-bound checkpoints / artifacts, config inference, resume | signature tests; bit-identical resume and optimizations |
 | VALIDATED | rollout estimator | converges to closed forms within 3 SE (100-5,000 samples) |
 | VALIDATED | pipeline: solver -> rollout -> heuristic with a confidence gate and legal-size filter | tests over all four input sources; rejection reasons machine-readable |
-| PARTIALLY VALIDATED | compact abstraction (v2) | river error measured on exact subgames and cut 4-16x; flop/turn error not measured exactly |
+| PARTIALLY VALIDATED | compact abstraction (v2) | river, FLOP and TURN error all measured on exact subgames (river cut 4-16x by pct20; flop median 3.7 bb / turn 5.1 bb exploitable at 5 bb pots) — docs/abstraction_error_summary.md |
 | PARTIALLY VALIDATED | gate thresholds | calibrated on exact games (seed disagreement vs true error, Spearman 0.61), applied to the full abstraction by extrapolation |
 | PARTIALLY VALIDATED | decision response models | rollouts disagree with exact river equilibria in 16 / 36 spots (they overbet); recommendations change with the assumed opponent model |
 | PARTIALLY VALIDATED | screen observer on synthetic images | synthetic fixtures; annotation validation and metrics harness ready |
