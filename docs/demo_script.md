@@ -6,7 +6,9 @@ a live PokerNow game or any network beyond localhost.
 
 ## Product demo (3–5 minutes)
 
-Setup once: `.venv/bin/python -m poker_alpha.api` in one terminal,
+One command: `./scripts/demo_product.sh` (starts the engine, the
+Streamlit app and the web app, and prints this menu). Manual setup:
+`.venv/bin/python -m poker_alpha.api` in one terminal,
 `cd apps/web && npm run dev` in another.
 
 1. **Homepage** (http://localhost:3000, 20 s) — "High-performance

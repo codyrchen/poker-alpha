@@ -17,9 +17,14 @@ UI-side heuristics.
 * **ESTIMATED DECISION REGRET** exists only where
   `poker_alpha.analysis.regret_eligibility` says the comparison is valid:
   the EVs are the actual decision basis (rollout method), the real action
-  maps onto an analysed candidate, both EVs exist and share one
-  methodology. Everything else is **"EV regret unavailable"** with a
-  reason — solver frequencies are never read as EVs.
+  was itself EVALUATED (an EXACT mapping — for off-menu bet/raise sizes
+  the review injects the hero's exact size as an extra rollout candidate
+  on the same shared samples; a nearest-size translation yields
+  `ACTUAL_SIZE_NOT_EVALUATED` instead of a number), both EVs exist and
+  share one methodology. Uncertainty is the PAIRED-difference SE from the
+  common-random-number rollout — never an independent-SE combination.
+  Everything else is **"EV regret unavailable"** with a reason — solver
+  frequencies are never read as EVs.
 * **Strategy alignment** classifies the action's frequency in a solver
   mix with neutral language and documented thresholds
   (`COMMON >= 25%`, `MIXED 5–25%`, `RARE < 5%`, plus
@@ -41,6 +46,29 @@ Selecting a row re-renders that decision with the Play Mode renderers.
 Exports (JSON / CSV / Markdown) preserve provenance, confidence, regret
 eligibility and reason codes, and are written locally by the browser.
 
+## Hand Replay
+
+Step through every hero decision of a session (bundled, uploaded
+`pokeralpha.hand/v1` JSON, or the `pokeralpha-lines/v1` text format via
+the importer framework in `poker_alpha/history/importers/`). Each
+decision shows the full Play rendering plus two drill-downs:
+
+* **Modelled opponent range** — 13x13 matrices of the prior and each
+  street's posterior, computed by the same `infer_opponent_range` the
+  engine uses, under a selectable behavior archetype. Labeled MODELLED
+  OPPONENT RANGE: a belief model, never ground truth.
+* **Decision path** — the abstract infoset key, training visits, action
+  menu, gate verdict/reasons/signals and size-translation notes — only
+  what the engine actually recorded.
+
+## Model Sensitivity
+
+The same state analysed under all four behavior archetypes; verdicts
+ROBUST / SENSITIVE / HIGHLY SENSITIVE follow a documented rule
+(top-action agreement + total-variation distance, method changes cap the
+verdict at SENSITIVE). No archetype is claimed correct; EVs are never
+compared across methods.
+
 ## Strategy Explorer
 
 A 169-hand matrix for the heads-up preflop nodes the release abstraction
@@ -50,13 +78,16 @@ Cells the gate rejects are dimmed and show **no numbers**. Below the
 matrix, any pasted HU state is inspected the same way, labeled
 ACCEPTED / LOW CONFIDENCE / REJECTED / UNSUPPORTED.
 
-## What-if
+## What-if + Decision Stability
 
 One variable at a time (`villain_bet`, `pot`, `effective_stack`,
 `hero_cards`, `board_card`); the variant state is fully re-validated
 (duplicate cards, impossible stacks, illegal transitions are rejected
 with the reason) and re-analysed. Variants are compared by distribution,
-gate state, method and confidence — never by EV across methods.
+gate state, method and confidence — never by EV across methods. The same
+sweep reports **decision stability**: where the highest-frequency action,
+the gate state or the method changes across the swept values
+(descriptions of pipeline output, not causal inference).
 
 ## Trainer
 
