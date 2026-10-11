@@ -1,0 +1,270 @@
+{
+ "format": "pokeralpha.phase2.confidence_v3_candidate/v1",
+ "model": "L2 logistic regression on [1, log1p(visits), seed_disagreement, sd_missing, mv_recent, mv_missing]",
+ "target": "ev_regret >= 2% of pot",
+ "logo": {
+  "preflop_akqj_20bb": {
+   "v2": {
+    "coverage": 0.21726190476190477,
+    "mean_regret_pot": 0.019659143835616438,
+    "false_confidence_rate": 0.02054794520547945
+   },
+   "logistic_at_v2_coverage": {
+    "coverage": 0.21726190476190477,
+    "mean_regret_pot": 0.014665171232876714,
+    "false_confidence_rate": 0.07534246575342465
+   },
+   "logistic_clearly_better": false,
+   "weights": [
+    1.3072885015895879,
+    -0.5065333523539366,
+    0.8450832872568051,
+    0.0,
+    1.1754049954922485,
+    0.0
+   ]
+  },
+  "preflop_akqjt_10bb": {
+   "v2": {
+    "coverage": 0.14814814814814814,
+    "mean_regret_pot": 0.00800046875,
+    "false_confidence_rate": 0.025
+   },
+   "logistic_at_v2_coverage": {
+    "coverage": 0.14814814814814814,
+    "mean_regret_pot": 0.00679340625,
+    "false_confidence_rate": 0.0625
+   },
+   "logistic_clearly_better": false,
+   "weights": [
+    1.2765601860498825,
+    -0.48681840143496374,
+    0.8357412616441441,
+    0.0,
+    1.2088668025008171,
+    0.0
+   ]
+  },
+  "preflop_akqjt_5bb_jam": {
+   "v2": {
+    "coverage": 0.12222222222222222,
+    "mean_regret_pot": 0.004634696969696969,
+    "false_confidence_rate": 0.0
+   },
+   "logistic_at_v2_coverage": {
+    "coverage": 0.12222222222222222,
+    "mean_regret_pot": 0.007275530303030303,
+    "false_confidence_rate": 0.007575757575757576
+   },
+   "logistic_clearly_better": false,
+   "weights": [
+    1.350850444840619,
+    -0.4928808267234543,
+    0.6845399361946116,
+    0.0,
+    1.0505488696936496,
+    0.0
+   ]
+  },
+  "river_dry_high": {
+   "v2": {
+    "coverage": 0.09722222222222222,
+    "mean_regret_pot": 0.006945979591836735,
+    "false_confidence_rate": 0.0
+   },
+   "logistic_at_v2_coverage": {
+    "coverage": 0.09722222222222222,
+    "mean_regret_pot": 0.01745058163265306,
+    "false_confidence_rate": 0.07142857142857142
+   },
+   "logistic_clearly_better": false,
+   "weights": [
+    1.5298939875023556,
+    -0.5328337277609403,
+    0.7169662527048618,
+    0.0,
+    1.0708850029120698,
+    0.0
+   ]
+  },
+  "river_four-flush": {
+   "v2": {
+    "coverage": 0.2152777777777778,
+    "mean_regret_pot": 0.03894709216589862,
+    "false_confidence_rate": 0.041474654377880185
+   },
+   "logistic_at_v2_coverage": {
+    "coverage": 0.2152777777777778,
+    "mean_regret_pot": 0.015230921658986174,
+    "false_confidence_rate": 0.041474654377880185
+   },
+   "logistic_clearly_better": true,
+   "weights": [
+    1.2345116164274075,
+    -0.4846067931945835,
+    0.7789141157409407,
+    0.0,
+    1.2419650773596973,
+    0.0
+   ]
+  },
+  "river_four-straight": {
+   "v2": {
+    "coverage": 0.21726190476190477,
+    "mean_regret_pot": 0.014378374429223744,
+    "false_confidence_rate": 0.0502283105022831
+   },
+   "logistic_at_v2_coverage": {
+    "coverage": 0.21726190476190477,
+    "mean_regret_pot": 0.009587378995433792,
+    "false_confidence_rate": 0.136986301369863
+   },
+   "logistic_clearly_better": false,
+   "weights": [
+    1.3158060034213175,
+    -0.4983270779479439,
+    0.8617257794451988,
+    0.0,
+    1.1594046754791805,
+    0.0
+   ]
+  },
+  "river_low": {
+   "v2": {
+    "coverage": 0.1597222222222222,
+    "mean_regret_pot": 0.006481689440993789,
+    "false_confidence_rate": 0.049689440993788817
+   },
+   "logistic_at_v2_coverage": {
+    "coverage": 0.1597222222222222,
+    "mean_regret_pot": 0.007628391304347826,
+    "false_confidence_rate": 0.09937888198757763
+   },
+   "logistic_clearly_better": false,
+   "weights": [
+    1.4370436890387763,
+    -0.5095925735098144,
+    0.7161573448852596,
+    0.0,
+    1.1897767203954515,
+    0.0
+   ]
+  },
+  "river_monotone": {
+   "v2": {
+    "coverage": 0.18154761904761904,
+    "mean_regret_pot": 0.009285502732240438,
+    "false_confidence_rate": 0.00546448087431694
+   },
+   "logistic_at_v2_coverage": {
+    "coverage": 0.18154761904761904,
+    "mean_regret_pot": 0.024414879781420765,
+    "false_confidence_rate": 0.09836065573770492
+   },
+   "logistic_clearly_better": false,
+   "weights": [
+    1.4552580629853689,
+    -0.519648761250768,
+    0.6528314715947732,
+    0.0,
+    1.1304566626570212,
+    0.0
+   ]
+  },
+  "river_paired": {
+   "v2": {
+    "coverage": 0.1498015873015873,
+    "mean_regret_pot": 0.01354950331125828,
+    "false_confidence_rate": 0.052980132450331126
+   },
+   "logistic_at_v2_coverage": {
+    "coverage": 0.1498015873015873,
+    "mean_regret_pot": 0.006920423841059603,
+    "false_confidence_rate": 0.09933774834437085
+   },
+   "logistic_clearly_better": false,
+   "weights": [
+    1.4676233159010916,
+    -0.5200709672038362,
+    0.660323639705421,
+    0.0,
+    1.1385277382522134,
+    0.0
+   ]
+  }
+ },
+ "shift": {
+  "preflop->river": {
+   "v2": {
+    "coverage": 0.1701388888888889,
+    "mean_regret_pot": 0.016588788143828963,
+    "false_confidence_rate": 0.03595724003887269
+   },
+   "logistic_shifted": {
+    "coverage": 0.1701388888888889,
+    "mean_regret_pot": 0.016421009718172983,
+    "false_confidence_rate": 0.12730806608357628
+   },
+   "logistic_in_family_optimistic": {
+    "coverage": 0.1701388888888889,
+    "mean_regret_pot": 0.010079896987366374,
+    "false_confidence_rate": 0.0728862973760933
+   },
+   "weights_shifted": [
+    1.9729140362648747,
+    -0.6030753169785138,
+    0.3694306474804151,
+    0.0,
+    1.1947895856973068,
+    0.0
+   ],
+   "weights_in_family": [
+    1.1347243725023004,
+    -0.4667413401489573,
+    0.8947036609698349,
+    0.0,
+    1.1109228912666076,
+    0.0
+   ]
+  },
+  "river->preflop": {
+   "v2": {
+    "coverage": 0.15466101694915255,
+    "mean_regret_pot": 0.010872351598173517,
+    "false_confidence_rate": 0.01598173515981735
+   },
+   "logistic_shifted": {
+    "coverage": 0.15466101694915255,
+    "mean_regret_pot": 0.009963013698630138,
+    "false_confidence_rate": 0.045662100456621
+   },
+   "logistic_in_family_optimistic": {
+    "coverage": 0.15466101694915255,
+    "mean_regret_pot": 0.011095,
+    "false_confidence_rate": 0.0958904109589041
+   },
+   "weights_shifted": [
+    1.1347243725023004,
+    -0.4667413401489573,
+    0.8947036609698349,
+    0.0,
+    1.1109228912666076,
+    0.0
+   ],
+   "weights_in_family": [
+    1.9729140362648747,
+    -0.6030753169785138,
+    0.3694306474804151,
+    0.0,
+    1.1947895856973068,
+    0.0
+   ]
+  }
+ },
+ "logo_summary": {
+  "games_with_v2_acceptances": 9,
+  "games_logistic_clearly_better": 1
+ },
+ "decision": "KEEP v2: no clear held-out win across games",
+ "commit": "c7f255da2b030c5d01424d9f47f7fa9904e4779b"
+}

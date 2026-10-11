@@ -91,3 +91,37 @@ jackknife SE of v2-full accepted regret: see `jackknife` in the artifact.
   choice; a different coverage target would pick different thresholds.
 * No v3 candidate is proposed: no rule beat v2 full on both coverage and
   accepted regret out of sample.
+
+## Is there a v3? (Programs 47-49)
+
+`experiments/phase2_confidence_v3_candidate.py`,
+`results/phase2/confidence_v3_candidate.json`. An L2 logistic regression
+uses the same signals: log visits, seed disagreement, recent movement and
+missingness flags. It is trained leave-one-game-out and compared with v2
+**at v2's own coverage on each held-out game**.
+
+| held-out game | v2 regret / false-conf. | logistic regret / false-conf. |
+|---|---|---|
+| preflop AKQJ 20 bb | 0.020 / 2.1 % | 0.015 / 7.5 % |
+| preflop AKQJT 10 bb | 0.008 / 2.5 % | 0.007 / 6.2 % |
+| preflop 5 bb jam | 0.005 / 0.0 % | 0.007 / 0.8 % |
+| river dry high | 0.007 / 0.0 % | 0.018 / 7.1 % |
+| river four-flush | 0.039 / 4.1 % | **0.015 / 4.1 %** |
+| river four-straight | 0.014 / 5.0 % | 0.010 / 13.7 % |
+| river low | 0.007 / 5.0 % | 0.008 / 9.9 % |
+| river monotone | 0.009 / 0.5 % | 0.024 / 9.8 % |
+| river paired | 0.014 / 5.3 % | 0.007 / 9.9 % |
+
+The logistic score lowers accepted *mean regret* on 5 of 9 games, but its
+**false-confidence rate is higher on 8 of 9 games, often 2-7x**. It trades
+how often the accepted action is wrong for how much each mistake costs.
+Only one game shows a clear win on both metrics.
+
+**Distribution shift:** when the model is trained on one family and tested
+on the other, v2's false-confidence rate stays at 3.6 % (preflop to river)
+and 1.6 % (river to preflop). The shifted logistic model reaches 12.7 % and
+4.6 %. The rule's fixed thresholds transfer across game families better
+than a fitted score does.
+
+**Decision: keep v2.** No candidate met the Program 47 bar of a held-out
+win on multiple games with no false-confidence penalty.
