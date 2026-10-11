@@ -16,9 +16,10 @@ adds the full mix, demo/manual inputs and the EV provenance note.
 Resolution order in `src/sidecar.ts`:
 
 1. attach to an engine already on `127.0.0.1:8765` (never duplicates);
-2. `POKERALPHA_ENGINE_BIN` → the frozen PyInstaller engine
-   (`packaging/dist/pokeralpha-engine/pokeralpha-engine`);
-3. the repo's `.venv` Python running `python -m poker_alpha.api --port 0`
+2. the bundled frozen engine at `<Resources>/engine/pokeralpha-engine`
+   (packaged app — no environment variables needed);
+3. `POKERALPHA_ENGINE_BIN` (development override);
+4. the repo's `.venv` Python running `python -m poker_alpha.api --port 0`
    (free port read from stdout).
 
 Health (`/health` + API version) is checked before the overlay renders;
@@ -44,6 +45,9 @@ sidecar lines) — no stack traces at the user.
   independently validated — docs/observer_dataset.md); inputs are demo
   spots and manual states.
 
-Packaging status: unsigned local `.app` (233 MB) + frozen engine
-(227 MB); see `packaging/MANIFEST.md`. Signed/notarized distribution is
-BLOCKED on Apple credentials.
+Packaging status: **standalone** unsigned `.app` (485 MB) with the frozen
+engine embedded under `Contents/Resources/engine/` — verified outside the
+repository with no Python, no env vars and no pre-running API (see
+`packaging/MANIFEST.md`). Unsigned means Gatekeeper warns on first launch;
+signed/notarized *distribution* is BLOCKED on Apple credentials, but the
+standalone local bundle itself is not.

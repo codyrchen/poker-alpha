@@ -54,7 +54,15 @@ export async function startEngine(
   //    non-loopback hosts by design). POKERALPHA_ENGINE_BIN points at a
   //    frozen engine binary (packaging/dist/pokeralpha-engine); otherwise
   //    the repo's Python environment runs the module directly.
-  const frozen = process.env.POKERALPHA_ENGINE_BIN;
+  // In a packaged app the frozen engine ships inside the bundle
+  // (electron-builder extraResources -> <app>/Contents/Resources/engine);
+  // a normal user needs no environment variables and no repo checkout.
+  const bundled = process.resourcesPath
+    ? path.join(process.resourcesPath, "engine", "pokeralpha-engine")
+    : "";
+  const frozen = (bundled && existsSync(bundled))
+    ? bundled
+    : process.env.POKERALPHA_ENGINE_BIN;
   let child: ChildProcess;
   let launcher: string;
   if (frozen && existsSync(frozen)) {

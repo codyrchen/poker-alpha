@@ -30,6 +30,12 @@
     },
     "directories": {
       "output": "release"
-    }
+    },
+    "extraResources": [
+      {
+        "from": "../../packaging/dist/pokeralpha-engine",
+        "to": "engine"
+      }
+    ]
   }
 }
