@@ -1,0 +1,644 @@
+{
+ "format": "pokeralpha.hand/v1",
+ "hands": [
+  {
+   "events": [
+    {
+     "type": "HandStarted",
+     "hand_id": "demo-1",
+     "num_seats": 2,
+     "dealer": 0,
+     "small_blind": 0.5,
+     "big_blind": 1.0,
+     "hero_seat": 0,
+     "seats": [
+      {
+       "seat": 0,
+       "name": "hero",
+       "stack": 100
+      },
+      {
+       "seat": 1,
+       "name": "villain",
+       "stack": 100
+      }
+     ]
+    },
+    {
+     "type": "BlindPosted",
+     "seat": 0,
+     "amount": 0.5,
+     "blind": "sb"
+    },
+    {
+     "type": "BlindPosted",
+     "seat": 1,
+     "amount": 1.0,
+     "blind": "bb"
+    },
+    {
+     "type": "CardDealt",
+     "seat": 0,
+     "cards": [
+      "Ah",
+      "Kd"
+     ]
+    },
+    {
+     "type": "PlayerRaised",
+     "seat": 0,
+     "to": 2.5
+    },
+    {
+     "type": "PlayerCalled",
+     "seat": 1
+    },
+    {
+     "type": "FlopDealt",
+     "cards": [
+      "Qs",
+      "7d",
+      "2c"
+     ]
+    },
+    {
+     "type": "PlayerChecked",
+     "seat": 1
+    },
+    {
+     "type": "PlayerChecked",
+     "seat": 0
+    },
+    {
+     "type": "TurnDealt",
+     "card": "Th"
+    },
+    {
+     "type": "PlayerChecked",
+     "seat": 1
+    },
+    {
+     "type": "PlayerChecked",
+     "seat": 0
+    },
+    {
+     "type": "RiverDealt",
+     "card": "3h"
+    },
+    {
+     "type": "PlayerChecked",
+     "seat": 1
+    },
+    {
+     "type": "PlayerChecked",
+     "seat": 0
+    },
+    {
+     "type": "Showdown",
+     "seat": 1,
+     "cards": [
+      "Jc",
+      "Jd"
+     ]
+    }
+   ]
+  },
+  {
+   "events": [
+    {
+     "type": "HandStarted",
+     "hand_id": "demo-2",
+     "num_seats": 2,
+     "dealer": 0,
+     "small_blind": 0.5,
+     "big_blind": 1.0,
+     "hero_seat": 0,
+     "seats": [
+      {
+       "seat": 0,
+       "name": "hero",
+       "stack": 100
+      },
+      {
+       "seat": 1,
+       "name": "villain",
+       "stack": 100
+      }
+     ]
+    },
+    {
+     "type": "BlindPosted",
+     "seat": 0,
+     "amount": 0.5,
+     "blind": "sb"
+    },
+    {
+     "type": "BlindPosted",
+     "seat": 1,
+     "amount": 1.0,
+     "blind": "bb"
+    },
+    {
+     "type": "CardDealt",
+     "seat": 0,
+     "cards": [
+      "Qh",
+      "Jd"
+     ]
+    },
+    {
+     "type": "PlayerRaised",
+     "seat": 0,
+     "to": 2.5
+    },
+    {
+     "type": "PlayerCalled",
+     "seat": 1
+    },
+    {
+     "type": "FlopDealt",
+     "cards": [
+      "Qd",
+      "7s",
+      "2h"
+     ]
+    },
+    {
+     "type": "PlayerChecked",
+     "seat": 1
+    },
+    {
+     "type": "PlayerChecked",
+     "seat": 0
+    },
+    {
+     "type": "TurnDealt",
+     "card": "Tc"
+    },
+    {
+     "type": "PlayerChecked",
+     "seat": 1
+    },
+    {
+     "type": "PlayerChecked",
+     "seat": 0
+    },
+    {
+     "type": "RiverDealt",
+     "card": "3s"
+    },
+    {
+     "type": "PlayerChecked",
+     "seat": 1
+    },
+    {
+     "type": "PlayerBet",
+     "seat": 0,
+     "to": 3.75
+    },
+    {
+     "type": "PlayerFolded",
+     "seat": 1
+    }
+   ]
+  },
+  {
+   "events": [
+    {
+     "type": "HandStarted",
+     "hand_id": "demo-3",
+     "num_seats": 2,
+     "dealer": 1,
+     "small_blind": 0.5,
+     "big_blind": 1.0,
+     "hero_seat": 0,
+     "seats": [
+      {
+       "seat": 0,
+       "name": "hero",
+       "stack": 100
+      },
+      {
+       "seat": 1,
+       "name": "villain",
+       "stack": 100
+      }
+     ]
+    },
+    {
+     "type": "BlindPosted",
+     "seat": 1,
+     "amount": 0.5,
+     "blind": "sb"
+    },
+    {
+     "type": "BlindPosted",
+     "seat": 0,
+     "amount": 1.0,
+     "blind": "bb"
+    },
+    {
+     "type": "CardDealt",
+     "seat": 0,
+     "cards": [
+      "Ad",
+      "Qs"
+     ]
+    },
+    {
+     "type": "PlayerRaised",
+     "seat": 1,
+     "to": 2.5
+    },
+    {
+     "type": "PlayerRaised",
+     "seat": 0,
+     "to": 9.0
+    },
+    {
+     "type": "PlayerFolded",
+     "seat": 1
+    }
+   ]
+  },
+  {
+   "events": [
+    {
+     "type": "HandStarted",
+     "hand_id": "demo-4",
+     "num_seats": 2,
+     "dealer": 0,
+     "small_blind": 0.5,
+     "big_blind": 1.0,
+     "hero_seat": 0,
+     "seats": [
+      {
+       "seat": 0,
+       "name": "hero",
+       "stack": 100
+      },
+      {
+       "seat": 1,
+       "name": "villain",
+       "stack": 100
+      }
+     ]
+    },
+    {
+     "type": "BlindPosted",
+     "seat": 0,
+     "amount": 0.5,
+     "blind": "sb"
+    },
+    {
+     "type": "BlindPosted",
+     "seat": 1,
+     "amount": 1.0,
+     "blind": "bb"
+    },
+    {
+     "type": "CardDealt",
+     "seat": 0,
+     "cards": [
+      "Ts",
+      "Td"
+     ]
+    },
+    {
+     "type": "PlayerRaised",
+     "seat": 0,
+     "to": 2.5
+    },
+    {
+     "type": "PlayerRaised",
+     "seat": 1,
+     "to": 9.0
+    },
+    {
+     "type": "PlayerCalled",
+     "seat": 0
+    },
+    {
+     "type": "FlopDealt",
+     "cards": [
+      "9h",
+      "6c",
+      "2d"
+     ]
+    },
+    {
+     "type": "PlayerChecked",
+     "seat": 1
+    },
+    {
+     "type": "PlayerChecked",
+     "seat": 0
+    },
+    {
+     "type": "TurnDealt",
+     "card": "Kh"
+    },
+    {
+     "type": "PlayerBet",
+     "seat": 1,
+     "to": 9.0
+    },
+    {
+     "type": "PlayerFolded",
+     "seat": 0
+    }
+   ]
+  },
+  {
+   "events": [
+    {
+     "type": "HandStarted",
+     "hand_id": "demo-5",
+     "num_seats": 2,
+     "dealer": 0,
+     "small_blind": 0.5,
+     "big_blind": 1.0,
+     "hero_seat": 0,
+     "seats": [
+      {
+       "seat": 0,
+       "name": "hero",
+       "stack": 100
+      },
+      {
+       "seat": 1,
+       "name": "villain",
+       "stack": 100
+      }
+     ]
+    },
+    {
+     "type": "BlindPosted",
+     "seat": 0,
+     "amount": 0.5,
+     "blind": "sb"
+    },
+    {
+     "type": "BlindPosted",
+     "seat": 1,
+     "amount": 1.0,
+     "blind": "bb"
+    },
+    {
+     "type": "CardDealt",
+     "seat": 0,
+     "cards": [
+      "9h",
+      "9c"
+     ]
+    },
+    {
+     "type": "PlayerRaised",
+     "seat": 0,
+     "to": 2.5
+    },
+    {
+     "type": "PlayerCalled",
+     "seat": 1
+    },
+    {
+     "type": "FlopDealt",
+     "cards": [
+      "Qs",
+      "7d",
+      "2c"
+     ]
+    },
+    {
+     "type": "PlayerChecked",
+     "seat": 1
+    },
+    {
+     "type": "PlayerChecked",
+     "seat": 0
+    },
+    {
+     "type": "TurnDealt",
+     "card": "Th"
+    },
+    {
+     "type": "PlayerChecked",
+     "seat": 1
+    },
+    {
+     "type": "PlayerChecked",
+     "seat": 0
+    },
+    {
+     "type": "RiverDealt",
+     "card": "3h"
+    },
+    {
+     "type": "PlayerBet",
+     "seat": 1,
+     "to": 2.5
+    },
+    {
+     "type": "PlayerCalled",
+     "seat": 0
+    },
+    {
+     "type": "Showdown",
+     "seat": 1,
+     "cards": [
+      "Jc",
+      "Jd"
+     ]
+    }
+   ]
+  },
+  {
+   "events": [
+    {
+     "type": "HandStarted",
+     "hand_id": "demo-6",
+     "num_seats": 2,
+     "dealer": 1,
+     "small_blind": 0.5,
+     "big_blind": 1.0,
+     "hero_seat": 0,
+     "seats": [
+      {
+       "seat": 0,
+       "name": "hero",
+       "stack": 100
+      },
+      {
+       "seat": 1,
+       "name": "villain",
+       "stack": 100
+      }
+     ]
+    },
+    {
+     "type": "BlindPosted",
+     "seat": 1,
+     "amount": 0.5,
+     "blind": "sb"
+    },
+    {
+     "type": "BlindPosted",
+     "seat": 0,
+     "amount": 1.0,
+     "blind": "bb"
+    },
+    {
+     "type": "CardDealt",
+     "seat": 0,
+     "cards": [
+      "8d",
+      "7d"
+     ]
+    },
+    {
+     "type": "PlayerRaised",
+     "seat": 1,
+     "to": 2.5
+    },
+    {
+     "type": "PlayerCalled",
+     "seat": 0
+    },
+    {
+     "type": "FlopDealt",
+     "cards": [
+      "Ac",
+      "Kh",
+      "4s"
+     ]
+    },
+    {
+     "type": "PlayerChecked",
+     "seat": 0
+    },
+    {
+     "type": "PlayerBet",
+     "seat": 1,
+     "to": 2.5
+    },
+    {
+     "type": "PlayerFolded",
+     "seat": 0
+    }
+   ]
+  },
+  {
+   "events": [
+    {
+     "type": "HandStarted",
+     "hand_id": "demo-7",
+     "num_seats": 2,
+     "dealer": 0,
+     "small_blind": 0.5,
+     "big_blind": 1.0,
+     "hero_seat": 0,
+     "seats": [
+      {
+       "seat": 0,
+       "name": "hero",
+       "stack": 100
+      },
+      {
+       "seat": 1,
+       "name": "villain",
+       "stack": 100
+      }
+     ]
+    },
+    {
+     "type": "BlindPosted",
+     "seat": 0,
+     "amount": 0.5,
+     "blind": "sb"
+    },
+    {
+     "type": "BlindPosted",
+     "seat": 1,
+     "amount": 1.0,
+     "blind": "bb"
+    },
+    {
+     "type": "CardDealt",
+     "seat": 0,
+     "cards": [
+      "Kh",
+      "7c"
+     ]
+    },
+    {
+     "type": "PlayerRaised",
+     "seat": 0,
+     "to": 2.5
+    },
+    {
+     "type": "PlayerRaised",
+     "seat": 1,
+     "to": 11.0
+    },
+    {
+     "type": "PlayerFolded",
+     "seat": 0
+    }
+   ]
+  },
+  {
+   "events": [
+    {
+     "type": "HandStarted",
+     "hand_id": "demo-8",
+     "num_seats": 2,
+     "dealer": 0,
+     "small_blind": 0.5,
+     "big_blind": 1.0,
+     "hero_seat": 0,
+     "seats": [
+      {
+       "seat": 0,
+       "name": "hero",
+       "stack": 100
+      },
+      {
+       "seat": 1,
+       "name": "villain",
+       "stack": 100
+      }
+     ]
+    },
+    {
+     "type": "BlindPosted",
+     "seat": 0,
+     "amount": 0.5,
+     "blind": "sb"
+    },
+    {
+     "type": "BlindPosted",
+     "seat": 1,
+     "amount": 1.0,
+     "blind": "bb"
+    },
+    {
+     "type": "CardDealt",
+     "seat": 0,
+     "cards": [
+      "As",
+      "5s"
+     ]
+    },
+    {
+     "type": "PlayerRaised",
+     "seat": 0,
+     "to": 2.0
+    },
+    {
+     "type": "PlayerFolded",
+     "seat": 1
+    }
+   ]
+  }
+ ]
+}
