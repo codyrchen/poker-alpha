@@ -1,0 +1,43 @@
+{
+ "format": "pokeralpha.phase2.progress/v1",
+ "start_sha": "e32c3fcd2d4a5fa011fa876c6c10efd7fd3f349d",
+ "start_time_utc": "2026-10-11T09:36:46Z",
+ "branch": "claude/moonshot-phase2",
+ "baseline_tests": {
+  "python": "943 passed, 1 skipped (266 s)",
+  "native": "extension importable (poker_alpha_native)",
+  "web": "not yet run",
+  "desktop": "not yet run"
+ },
+ "workstreams": {
+  "P1_adaptive_abstraction": "DONE",
+  "P2_active_compute": "RUNNING",
+  "P3_cfr_family_benchmark": "NOT_STARTED",
+  "P4_confidence_ablation": "NOT_STARTED",
+  "P5_abstraction_science": "NOT_STARTED",
+  "P6_local_resolving": "NOT_STARTED",
+  "P7_native_systems": "NOT_STARTED",
+  "P8_artifact_engineering": "NOT_STARTED",
+  "P9_exhaustive_correctness": "NOT_STARTED",
+  "P10_redteam_phase2": "NOT_STARTED",
+  "P11_autonomous_loop": "NOT_STARTED",
+  "P12_bench_suite": "NOT_STARTED",
+  "P13_experiment_orchestration": "NOT_STARTED",
+  "P14_general_game": "NOT_STARTED",
+  "P15_agent_research": "NOT_STARTED",
+  "P16_llm_bench_prep": "NOT_STARTED",
+  "P17_strategy_compiler": "NOT_STARTED",
+  "P18_policy_geometry": "NOT_STARTED",
+  "P19_statistical_discipline": "NOT_STARTED",
+  "P20_system_reliability": "NOT_STARTED",
+  "P21_native_correctness_stress": "NOT_STARTED",
+  "P22_evaluator_stress": "NOT_STARTED",
+  "P23_memory_scale_limits": "NOT_STARTED",
+  "P24_research_report": "NOT_STARTED",
+  "P25_website_surfacing": "NOT_STARTED"
+ },
+ "notes": [
+  "P1 POSITIVE: error-guided (br_gain) splitting beats capacity-matched uniform by 24-31% and random by 44-57%; confirmed on independent seeds/boards and at higher capacity. positive_regret signal NEGATIVE.",
+  "P9: exhaustive reduced-deck Hold'em enumeration (9 cards, stack 4, b100, cap 1): 2,484,217 states, 0 invariant violations (12 s)."
+ ]
+}
