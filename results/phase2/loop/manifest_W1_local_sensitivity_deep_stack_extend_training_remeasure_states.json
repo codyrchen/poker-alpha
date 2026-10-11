@@ -1,0 +1,22 @@
+{
+ "format": "pokeralpha.phase2.loop_manifest/v1",
+ "weakness": "W1_local_sensitivity_deep_stack",
+ "rule": "sensitivity_low_visits",
+ "likely_source": "training coverage",
+ "experiment": "extend_training_remeasure_states",
+ "config": {
+  "seeds": [
+   0,
+   1,
+   2
+  ],
+  "from_iterations": 2000000,
+  "to_iterations": [
+   3000000,
+   4000000
+  ],
+  "script": "experiments/phase2_extend_training.py + phase2_research_loop.py run"
+ },
+ "release_action": "none (human gate)",
+ "created_utc": "2026-10-11T20:26:16Z"
+}

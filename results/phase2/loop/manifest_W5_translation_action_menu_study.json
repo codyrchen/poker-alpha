@@ -1,0 +1,22 @@
+{
+ "format": "pokeralpha.phase2.loop_manifest/v1",
+ "weakness": "W5_translation",
+ "rule": "high_translation_distance",
+ "likely_source": "action abstraction (off-tree sizes)",
+ "experiment": "action_menu_study",
+ "config": {
+  "seeds": [
+   0,
+   1,
+   2
+  ],
+  "from_iterations": 2000000,
+  "to_iterations": [
+   3000000,
+   4000000
+  ],
+  "script": "experiments/phase2_extend_training.py + phase2_research_loop.py run"
+ },
+ "release_action": "none (human gate)",
+ "created_utc": "2026-10-11T20:26:16Z"
+}
