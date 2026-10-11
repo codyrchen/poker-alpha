@@ -4,22 +4,33 @@
 for replacing the weakest recognizer component (card rank/suit) with a
 trained classifier — ONCE enough real labeled data exists.
 
-Hard gates (in code, tested):
+Hard gates (in code, tested — a COVERAGE check, not a count threshold):
 
-* ≥ 200 labeled hero cards across ≥ 4 train/validation sessions,
-  otherwise the command exits with
-  `insufficient real labeled data: …` and writes nothing. It never
-  trains on synthetic fixtures and claims success.
-* The held-out split is never touched by training or model selection;
-  final comparison happens once, via
-  `poker_alpha.observer.dataset baseline`.
+* ≥ 3 tuning sessions and ≥ 1 independent validation session;
+* every rank seen ≥ 5× and every suit ≥ 10× in tuning;
+* validation covers ≥ 8 distinct ranks and ≥ 3 suits (so per-class
+  failure is detectable);
+* no severe imbalance (top rank ≤ 50% of tuning labels);
+* a 200-card overall floor — a floor, not a sufficiency guarantee.
+
+Any unmet requirement makes the command exit with
+`insufficient real labeled data: …` listing all of them, writing
+nothing. It never trains on synthetic fixtures and claims success.
+The held-out split is never touched by training or model selection;
+final comparison happens once, via
+`poker_alpha.observer.dataset baseline`.
 
 Model + registry:
 
-* artifact: small, inspectable numpy softmax on normalized calibrated
-  card crops (`card_classifier.npz`);
+* architecture: TWO heads — a 13-way rank classifier and a 4-way suit
+  classifier — rather than one 52-class model. For small calibrated
+  crops this is the defensible factorization: suit is color/shape, rank
+  is a glyph, and per-class support stays meaningful at realistic
+  dataset sizes;
+* artifact: small, inspectable numpy softmax heads on normalized
+  calibrated card crops (`card_classifier.npz`);
 * metadata (`pokeralpha.model/v1`): model type, dataset root, split
-  hash, config, git commit, timestamp, validation accuracy, held-out
+  hash, config, git commit, timestamp, per-head validation metrics with per-class support, held-out
   status, artifact SHA-256, and an explicit claims-scope line. No opaque
   `model.pt` without provenance.
 

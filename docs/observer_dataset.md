@@ -39,3 +39,23 @@ privacy-safe fixture export is unchanged (docs/observer_sessions.md).
 Confidence calibration: the baseline's confidence buckets become
 reliability/risk-coverage curves once real held-out data exists; until
 then no precision/coverage numbers are published anywhere.
+
+## Collection targets (for annotators)
+
+These are COLLECTION TARGETS that make the recognition problems
+well-posed — not validated sample-complexity guarantees. Aim for:
+
+* **≥ 6 separate sessions**, recorded on different days/table instances
+  (splits are per session; more sessions = better splits);
+* within the tuning+validation pool: **every rank ≥ 5×, every suit
+  ≥ 10×** among labeled hero cards — deal until coverage fills rather
+  than stopping at a frame count;
+* **all four streets** represented, including fold and all-in states;
+* **varied pots/stacks/bet sizes** (the coverage report's buckets should
+  all be non-empty) and at least two window sizes/resolutions;
+* annotate completely: a frame with unknown hero cards still helps
+  coverage of pots/stacks, but only fully labeled cards feed the card
+  classifier.
+
+Run `coverage` after every session batch and collect toward the gaps it
+lists, rather than accumulating more of what is already covered.

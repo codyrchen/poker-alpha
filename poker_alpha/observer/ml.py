@@ -4,20 +4,43 @@
 
 This does NOT replace the template recognizer. It exists so that once
 enough REAL labeled data has been collected (see
-:mod:`poker_alpha.observer.dataset`), a small card rank/suit classifier can
-be trained and compared against the current recognizer baseline — with
-versioned provenance, deterministic session-level splits and the held-out
-set untouched until a final evaluation.
+:mod:`poker_alpha.observer.dataset`), a card classifier can be trained and
+compared against the current recognizer baseline — with versioned
+provenance, deterministic session-level splits and the held-out set
+untouched until a final evaluation.
 
-Data sufficiency is checked FIRST and the command fails gracefully with
-"insufficient real labeled data" when the dataset is too small. It never
-trains on synthetic fixtures and claims success.
+Architecture: TWO heads — a 13-way rank classifier and a 4-way suit
+classifier — rather than one 52-class model. For small calibrated crops
+this is the defensible choice: suit is mostly a color/shape cue and rank a
+glyph, the factorized heads need coverage of 13 + 4 classes instead of 52,
+and per-class support stays meaningful at realistic dataset sizes.
 
-Model artifacts are a plain ``.npz`` (softmax regression on normalized
-card-crop pixels — deliberately small and inspectable) plus a
-``pokeralpha.model/v1`` metadata JSON with: model type, dataset/split hash,
-training config, git commit, timestamp, validation metrics, held-out status
-and the artifact SHA. No opaque weights without provenance.
+Data sufficiency is a COVERAGE check, not a count threshold. Hitting a
+number of labels does not make the training problem identifiable; the gate
+requires (documented in ``SufficiencyRules``, pinned by tests):
+
+* >= 3 tuning sessions and >= 1 independent validation session
+  (session-level splits; one session's rendering must not be both
+  teacher and examiner);
+* every rank seen >= 5 times and every suit >= 10 times in tuning
+  (otherwise some classes are untrainable);
+* validation covers >= 8 distinct ranks and >= 3 suits (otherwise it
+  cannot detect per-class failure);
+* no severe imbalance (most frequent rank <= 50% of tuning labels);
+* and a floor of 200 labeled cards overall — a floor, not a guarantee.
+
+These are collection targets that make the problem well-posed, NOT a
+validated sample-complexity bound; accuracy claims only ever come from
+the dataset baseline command on real held-out sessions.
+
+If the gate fails the command exits with "insufficient real labeled
+data: …" listing every unmet requirement. It never trains on synthetic
+fixtures and claims success.
+
+Model artifacts are plain ``.npz`` weights plus a ``pokeralpha.model/v1``
+metadata JSON: model type, dataset/split hash, config, git commit,
+timestamp, per-head validation metrics with per-class support, held-out
+status and the artifact SHA. No opaque weights without provenance.
 """
 
 from __future__ import annotations
@@ -27,6 +50,8 @@ import hashlib
 import json
 import sys
 import time
+from collections import Counter
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
@@ -34,20 +59,74 @@ import numpy as np
 
 MODEL_FORMAT = "pokeralpha.model/v1"
 
-# Data sufficiency thresholds (documented; tests pin them). Below these the
-# scaffold refuses to train: a classifier fitted on a handful of frames from
-# one session would memorize that session's rendering, not learn cards.
-MIN_LABELED_CARDS = 200
-MIN_SESSIONS = 4
-
 CROP = (24, 18)          # (h, w) normalized card crop fed to the classifier
 RANKS = "AKQJT98765432"
 SUITS = "shdc"
 
 
+@dataclass(frozen=True)
+class SufficiencyRules:
+    """The documented coverage gate (see module docstring)."""
+
+    min_tuning_sessions: int = 3
+    min_validation_sessions: int = 1
+    min_per_rank: int = 5            # tuning examples per rank
+    min_per_suit: int = 10           # tuning examples per suit
+    min_val_ranks: int = 8           # distinct ranks validation must cover
+    min_val_suits: int = 3
+    max_rank_share: float = 0.5      # imbalance guard on tuning ranks
+    min_total_cards: int = 200       # overall floor (a floor, not sufficiency)
+
+
+RULES = SufficiencyRules()
+
+
 class InsufficientData(SystemExit):
-    def __init__(self, message: str):
-        super().__init__(f"insufficient real labeled data: {message}")
+    def __init__(self, problems: List[str]):
+        super().__init__("insufficient real labeled data: "
+                         + "; ".join(problems))
+        self.problems = problems
+
+
+def check_sufficiency(crops: Dict[str, list], sess: Dict[str, set],
+                      rules: SufficiencyRules = RULES) -> List[str]:
+    """Every unmet requirement, as human text. Empty list = trainable."""
+    problems: List[str] = []
+    tune, val = crops["tuning"], crops["validation"]
+    total = len(tune) + len(val)
+    if total < rules.min_total_cards:
+        problems.append(f"{total} labeled cards overall; floor is "
+                        f"{rules.min_total_cards}")
+    if len(sess["tuning"]) < rules.min_tuning_sessions:
+        problems.append(f"{len(sess['tuning'])} tuning sessions; need >= "
+                        f"{rules.min_tuning_sessions}")
+    if len(sess["validation"]) < rules.min_validation_sessions:
+        problems.append(f"{len(sess['validation'])} validation sessions; "
+                        f"need >= {rules.min_validation_sessions} "
+                        f"(independent of tuning)")
+    t_ranks = Counter(l[0] for _, l in tune)
+    t_suits = Counter(l[1] for _, l in tune)
+    missing_r = [r for r in RANKS if t_ranks.get(r, 0) < rules.min_per_rank]
+    if missing_r:
+        problems.append(f"ranks with < {rules.min_per_rank} tuning examples: "
+                        f"{''.join(missing_r)}")
+    missing_s = [s for s in SUITS if t_suits.get(s, 0) < rules.min_per_suit]
+    if missing_s:
+        problems.append(f"suits with < {rules.min_per_suit} tuning examples: "
+                        f"{''.join(missing_s)}")
+    if tune and max(t_ranks.values()) > rules.max_rank_share * len(tune):
+        top = t_ranks.most_common(1)[0]
+        problems.append(f"severe rank imbalance: {top[0]} is "
+                        f"{top[1] / len(tune):.0%} of tuning labels")
+    v_ranks = {l[0] for _, l in val}
+    v_suits = {l[1] for _, l in val}
+    if len(v_ranks) < rules.min_val_ranks:
+        problems.append(f"validation covers {len(v_ranks)} ranks; need >= "
+                        f"{rules.min_val_ranks} to detect per-class failure")
+    if len(v_suits) < rules.min_val_suits:
+        problems.append(f"validation covers {len(v_suits)} suits; need >= "
+                        f"{rules.min_val_suits}")
+    return problems
 
 
 # ---------------------------------------------------------------------------
@@ -61,8 +140,8 @@ def gather_card_crops(root: Path) -> Tuple[Dict[str, list], Dict[str, set]]:
     from PIL import Image
 
     from .calibration import TableCalibration
-    from .dataset import load_root_splits, session_dirs
-    from .dataset import load_fixture_annotations
+    from .dataset import (load_fixture_annotations, load_root_splits,
+                          session_dirs)
     from .pokernow import pokernow_hu_layout
 
     assign = load_root_splits(root)
@@ -122,6 +201,18 @@ def predict_softmax(W: np.ndarray, X: np.ndarray) -> np.ndarray:
     return np.argmax(Xb @ W, axis=1)
 
 
+def _head_metrics(W: np.ndarray, X: np.ndarray, y: np.ndarray,
+                  classes: List[str]) -> dict:
+    pred = predict_softmax(W, X)
+    per_class = {}
+    for i, c in enumerate(classes):
+        mask = y == i
+        per_class[c] = {"support": int(mask.sum()),
+                        "accuracy": float((pred[mask] == i).mean())
+                        if mask.any() else None}
+    return {"accuracy": float((pred == y).mean()), "per_class": per_class}
+
+
 # ---------------------------------------------------------------------------
 # training command with provenance
 # ---------------------------------------------------------------------------
@@ -143,46 +234,49 @@ def _split_hash(root: Path) -> str:
 def train_cards(root: Path, out_dir: Path, seed: int = 0,
                 epochs: int = 300) -> dict:
     crops, sess = gather_card_crops(root)
-    n_train = len(crops["tuning"])
-    n_val = len(crops["validation"])
-    n_sessions = len(sess["tuning"] | sess["validation"])
-    if n_train + n_val < MIN_LABELED_CARDS or n_sessions < MIN_SESSIONS:
-        raise InsufficientData(
-            f"{n_train + n_val} labeled cards across {n_sessions} "
-            f"train/validation sessions; need >= {MIN_LABELED_CARDS} cards "
-            f"from >= {MIN_SESSIONS} sessions. Collect and annotate real "
-            f"sessions first (python -m poker_alpha.observer.dataset).")
-    classes = sorted({lbl for lst in (crops["tuning"], crops["validation"])
-                      for _, lbl in lst})
-    idx = {c: i for i, c in enumerate(classes)}
-    Xt = np.stack([x for x, _ in crops["tuning"]])
-    yt = np.array([idx[l] for _, l in crops["tuning"]])
-    Xv = np.stack([x for x, _ in crops["validation"]])
-    yv = np.array([idx[l] for _, l in crops["validation"]])
-    W = train_softmax(Xt, yt, classes, epochs=epochs, seed=seed)
-    val_acc = float((predict_softmax(W, Xv) == yv).mean())
+    problems = check_sufficiency(crops, sess)
+    if problems:
+        raise InsufficientData(problems)
+
+    def head(selector, classes):
+        idx = {c: i for i, c in enumerate(classes)}
+        Xt = np.stack([x for x, _ in crops["tuning"]])
+        yt = np.array([idx[selector(l)] for _, l in crops["tuning"]])
+        Xv = np.stack([x for x, _ in crops["validation"]])
+        yv = np.array([idx[selector(l)] for _, l in crops["validation"]])
+        W = train_softmax(Xt, yt, classes, epochs=epochs, seed=seed)
+        return W, _head_metrics(W, Xv, yv, classes)
+
+    W_rank, rank_metrics = head(lambda l: l[0], list(RANKS))
+    W_suit, suit_metrics = head(lambda l: l[1], list(SUITS))
+
     out_dir.mkdir(parents=True, exist_ok=True)
     artifact = out_dir / "card_classifier.npz"
-    np.savez_compressed(artifact, W=W, classes=np.array(classes),
-                        crop=np.array(CROP))
+    np.savez_compressed(artifact, W_rank=W_rank, W_suit=W_suit,
+                        ranks=np.array(list(RANKS)),
+                        suits=np.array(list(SUITS)), crop=np.array(CROP))
     meta = {
         "format": MODEL_FORMAT,
-        "model_type": "softmax-regression card classifier (numpy)",
-        "task": "hero card rank+suit classification from calibrated crops",
+        "model_type": ("factorized softmax card classifier (numpy): "
+                       "13-way rank head + 4-way suit head"),
+        "task": "hero card recognition from calibrated crops",
         "dataset_root": str(root),
         "split_hash": _split_hash(root),
-        "train_cards": n_train, "validation_cards": n_val,
+        "train_cards": len(crops["tuning"]),
+        "validation_cards": len(crops["validation"]),
         "sessions": sorted(sess["tuning"] | sess["validation"]),
+        "sufficiency_rules": RULES.__dict__,
         "config": {"crop": CROP, "epochs": epochs, "lr": 0.5, "l2": 1e-4,
                    "seed": seed},
         "git_commit": _git_commit(),
         "timestamp": time.strftime("%Y-%m-%dT%H:%M:%S"),
-        "validation_accuracy": val_acc,
+        "validation": {"rank": rank_metrics, "suit": suit_metrics},
         "held_out_status": ("UNTOUCHED — evaluate once, at the end, via "
                             "poker_alpha.observer.dataset baseline"),
         "artifact_sha256": hashlib.sha256(artifact.read_bytes()).hexdigest(),
-        "claims": ("validation accuracy on the recorded sessions above; no "
-                   "claim about other tables, themes or resolutions"),
+        "claims": ("validation metrics on the recorded sessions above; no "
+                   "claim about other tables, themes, resolutions, or the "
+                   "held-out split"),
     }
     (out_dir / "card_classifier.json").write_text(json.dumps(meta, indent=1))
     return meta

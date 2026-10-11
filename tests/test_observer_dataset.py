@@ -154,6 +154,39 @@ def test_ml_scaffold_refuses_insufficient_data(tmp_path):
     assert not (tmp_path / "models").exists()         # nothing written
 
 
+def test_ml_gate_is_coverage_based_not_count_based():
+    """Hitting a label count must NOT pass the gate when coverage is
+    missing: 400 cards that are all the same rank are untrainable."""
+    from poker_alpha.observer.ml import check_sufficiency
+
+    x = None
+    crops = {"tuning": [(x, "As")] * 300, "validation": [(x, "Ah")] * 100,
+             "held_out": []}
+    sess = {"tuning": {"s1", "s2", "s3"}, "validation": {"s4"},
+            "held_out": set()}
+    problems = check_sufficiency(crops, sess)
+    assert problems                                   # count alone is not enough
+    text = "; ".join(problems)
+    assert "ranks with <" in text                     # missing rank coverage
+    assert "imbalance" in text                        # 100% aces
+    assert "validation covers" in text                # no validation diversity
+
+
+def test_ml_gate_passes_only_with_real_coverage():
+    from poker_alpha.observer.ml import RANKS, SUITS, check_sufficiency
+
+    x = None
+    deck = [r + s for r in RANKS for s in SUITS]
+    tune = [(x, deck[i % 52]) for i in range(260)]    # ~5 of every card
+    val = [(x, deck[(i * 7) % 52]) for i in range(60)]
+    crops = {"tuning": tune, "validation": val, "held_out": []}
+    sess = {"tuning": {"s1", "s2", "s3"}, "validation": {"s4"},
+            "held_out": set()}
+    assert check_sufficiency(crops, sess) == []
+    # losing the independent validation session fails it again
+    assert check_sufficiency(crops, {**sess, "validation": set()})
+
+
 def test_ml_cli_graceful_exit(tmp_path):
     root = _make_root(tmp_path, n_sessions=2, frames_per=1)
     assign_splits(root, seed=0)
