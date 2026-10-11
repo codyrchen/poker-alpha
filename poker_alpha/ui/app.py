@@ -45,6 +45,7 @@ EXAMPLE_STATE = {
 
 
 def sidebar_config() -> DecisionConfig:
+    """Developer Mode: full analysis controls, as before."""
     st.sidebar.header("Analysis settings")
     eq = st.sidebar.slider("Equity simulations", 200, 10000, 2000, step=200)
     ro = st.sidebar.slider("Rollout simulations (0 = heuristic only)", 0, 5000,
@@ -60,6 +61,29 @@ def sidebar_config() -> DecisionConfig:
             solver = prov
     return DecisionConfig(equity_simulations=eq, rollout_simulations=ro,
                           seed=int(seed), solver=solver, solver_unavailable=unavailable)
+
+
+def play_config() -> DecisionConfig:
+    """Play Mode: sensible defaults; the engineering knobs live in one
+    collapsed sidebar expander and are not removed."""
+    with st.sidebar.expander("Advanced analysis settings", expanded=False):
+        eq = st.slider("Equity simulations", 200, 10000, 2000, step=200,
+                       key="play_eq")
+        ro = st.slider("Rollout simulations (0 = heuristic only)", 0, 5000,
+                       1000, step=100, key="play_ro")
+        seed = st.number_input("Seed", value=0, step=1, key="play_seed")
+        use_solver = st.checkbox("Use HU solver strategy (gated)", value=True,
+                                 key="play_use_solver")
+    solver, unavailable = None, None
+    if use_solver:
+        prov = _load_solver(str(STRATEGY))
+        if hasattr(prov, "code"):
+            unavailable = prov
+        else:
+            solver = prov
+    return DecisionConfig(equity_simulations=eq, rollout_simulations=ro,
+                          seed=int(seed), solver=solver,
+                          solver_unavailable=unavailable)
 
 
 @st.cache_resource
@@ -196,15 +220,9 @@ def render_report(obs, cfg, conf, report=None, store=None) -> None:
             st.warning(w)
 
 
-def main() -> None:
-    st.set_page_config(page_title="PokerAlpha", layout="wide")
-    st.title("PokerAlpha decision support")
-    st.caption("Analysis only — PokerAlpha never clicks, bets or acts for you.")
-    from poker_alpha.utils.privacy import streamlit_privacy_issues
-
-    for issue in streamlit_privacy_issues():
-        st.warning("Privacy: " + issue)
-    cfg = sidebar_config()
+def developer_mode(cfg) -> None:
+    """The original engineering interface, unchanged: raw state, OCR,
+    calibration, annotation, full diagnostic tables."""
     mode = st.sidebar.radio("Input", ["Manual entry", "Hand-history replay",
                                       "Screen observer", "Live screen", "Annotate session"])
     if mode == "Annotate session":
@@ -224,6 +242,26 @@ def main() -> None:
     if obs is None:
         return
     render_report(obs, cfg, conf)
+
+
+def main() -> None:
+    st.set_page_config(page_title="PokerAlpha", layout="wide")
+    from poker_alpha.utils.privacy import streamlit_privacy_issues
+
+    top = st.sidebar.radio("Mode", ["Play", "Developer"], key="pa_mode")
+    for issue in streamlit_privacy_issues():
+        st.sidebar.warning("Privacy: " + issue)
+    if top == "Play":
+        st.markdown("## PokerAlpha")
+        st.caption("Analysis only — PokerAlpha never clicks, bets or acts for you.")
+        cfg = play_config()
+        from poker_alpha.ui.play import play_mode
+        play_mode(cfg)
+        return
+    cfg = sidebar_config()
+    st.title("PokerAlpha decision support — developer mode")
+    st.caption("Analysis only — PokerAlpha never clicks, bets or acts for you.")
+    developer_mode(cfg)
 
 
 main()

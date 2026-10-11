@@ -223,7 +223,8 @@ def test_streamlit_test_session_mode(tmp_path):
     at.session_state["live_source_factory"] = lambda monitor, rect: scr
     at.session_state["live_monitor_lister"] = lambda: [MON, MON]
     at.run()
-    at.sidebar.radio[0].set_value("Live screen").run()
+    at.sidebar.radio[0].set_value("Developer").run()
+    [r for r in at.sidebar.radio if r.label == "Input"][0].set_value("Live screen").run()
     at.radio(key="live_mode").set_value("Observer Test Session (diagnostic)").run()
     assert not at.exception, at.exception
     assert at.checkbox(key="ts_compute").value is False        # decisions off by default

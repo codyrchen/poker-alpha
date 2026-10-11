@@ -46,9 +46,12 @@ def test_streamlit_app_runs_headless(mode):
     at = AppTest.from_file(str(APP), default_timeout=120)
     at.run()
     assert not at.exception
+    at.sidebar.radio[0].set_value("Developer").run()   # Play / Developer switch
+    assert not at.exception, at.exception
     at.sidebar.slider[0].set_value(200)
     at.sidebar.slider[1].set_value(100)
-    at.sidebar.radio[0].set_value(mode).run()
+    inputs = [r for r in at.sidebar.radio if r.label == "Input"][0]
+    inputs.set_value(mode).run()
     assert not at.exception, at.exception
     if mode == "Screen observer":
         process = [b for b in at.button if b.label == "Process screenshot"][0]
