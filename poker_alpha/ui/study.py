@@ -268,6 +268,16 @@ def _whatif_tab(cfg) -> None:
             st.warning(f"{val}: rejected — {why}")
         st.caption("A rejected value describes an impossible state and was "
                    "not analysed.")
+        # decision stability: where do the action / gate / method change?
+        from poker_alpha.analysis.stability import sweep as _sweep
+
+        res = _sweep(base, var, values, config=cfg)
+        if res.points:
+            st.markdown("**Decision stability** — " + res.summary)
+            if res.boundaries:
+                st.caption("Boundaries are descriptions of where the "
+                           "pipeline's answer changes across this sweep — "
+                           "not causal claims.")
 
 
 # ---------------------------------------------------------------------------
@@ -343,15 +353,21 @@ def _trainer_tab(cfg) -> None:
 
 def study_mode(cfg, strategy_path: str) -> None:
     C.inject_styles()
-    tabs = st.tabs(["Session Review", "Strategy Explorer", "What-if",
-                    "Trainer"])
+    tabs = st.tabs(["Session Review", "Hand Replay", "Strategy Explorer",
+                    "What-if", "Model Sensitivity", "Trainer"])
+    from .study_extras import replay_tab, sensitivity_tab
+
     with tabs[0]:
         _review_tab(cfg)
     with tabs[1]:
-        _explorer_tab(cfg, strategy_path)
+        replay_tab(cfg)
     with tabs[2]:
-        _whatif_tab(cfg)
+        _explorer_tab(cfg, strategy_path)
     with tabs[3]:
+        _whatif_tab(cfg)
+    with tabs[4]:
+        sensitivity_tab(cfg)
+    with tabs[5]:
         _trainer_tab(cfg)
 
 
