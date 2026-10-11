@@ -1,0 +1,176 @@
+{
+ "format": "pokeralpha.phase2.exhaustive_correctness/v1",
+ "configs": [
+  {
+   "states": 2484217,
+   "chance_nodes": 480061,
+   "decision_nodes": 896616,
+   "terminal_nodes": 1107540,
+   "fold_terminals": 487620,
+   "showdown_terminals": 619920,
+   "max_depth": 14,
+   "infosets": 582336,
+   "violations": [],
+   "branching": {
+    "2": 819504,
+    "3": 76356,
+    "4": 756
+   },
+   "street_decisions": {
+    "0": 4536,
+    "1": 105840,
+    "2": 332640,
+    "3": 453600
+   },
+   "seconds": 12.618652333971113,
+   "truncated": false,
+   "violation_count": 0,
+   "compact_encoder_infosets": 534,
+   "raw_to_compact_ratio": 1090.5168539325844,
+   "metamorphic": {
+    "sampled": 3000,
+    "suit_permutation_failures": 0,
+    "hole_order_failures": 0,
+    "serialization_failures": 0,
+    "replay_failures": 0,
+    "examples": []
+   },
+   "config": {
+    "name": "akq_3suits_stack4_b100_cap1",
+    "ranks": "AKQ",
+    "suits": "shd",
+    "stack": 4.0,
+    "bets": {
+     "b100": 1.0
+    },
+    "raise_cap": 1,
+    "min_raise": false
+   },
+   "deck_size": 9,
+   "game_signature": "HoldemGame:v1:stack=4:blinds=0.5/1:bets=b100=1:raise_cap=1"
+  },
+  {
+   "states": 11755801,
+   "chance_nodes": 1937629,
+   "decision_nodes": 4168584,
+   "terminal_nodes": 5649588,
+   "fold_terminals": 2610468,
+   "showdown_terminals": 3039120,
+   "max_depth": 15,
+   "infosets": 2921184,
+   "violations": [],
+   "branching": {
+    "2": 3271968,
+    "3": 742392,
+    "4": 153468,
+    "5": 756
+   },
+   "street_decisions": {
+    "0": 10584,
+    "1": 347760,
+    "2": 1421280,
+    "3": 2388960
+   },
+   "seconds": 65.05963287502527,
+   "truncated": false,
+   "violation_count": 0,
+   "compact_encoder_infosets": 1260,
+   "raw_to_compact_ratio": 2318.4,
+   "metamorphic": {
+    "sampled": 3000,
+    "suit_permutation_failures": 0,
+    "hole_order_failures": 0,
+    "serialization_failures": 0,
+    "replay_failures": 0,
+    "examples": []
+   },
+   "config": {
+    "name": "akq_3suits_stack6_b50_b100_cap2_minraise",
+    "ranks": "AKQ",
+    "suits": "shd",
+    "stack": 6.0,
+    "bets": {
+     "b50": 0.5,
+     "b100": 1.0
+    },
+    "raise_cap": 2,
+    "min_raise": true
+   },
+   "deck_size": 9,
+   "game_signature": "HoldemGame:v1:stack=6:blinds=0.5/1:bets=b50=0.5,b100=1:raise_cap=2:min_raise=nlhe"
+  },
+  {
+   "states": 514081,
+   "chance_nodes": 145909,
+   "decision_nodes": 154224,
+   "terminal_nodes": 213948,
+   "fold_terminals": 77868,
+   "showdown_terminals": 136080,
+   "max_depth": 13,
+   "infosets": 85824,
+   "violations": [],
+   "branching": {
+    "2": 153468,
+    "3": 756
+   },
+   "street_decisions": {
+    "0": 3024,
+    "1": 30240,
+    "2": 60480,
+    "3": 60480
+   },
+   "seconds": 3.939582541817799,
+   "truncated": false,
+   "violation_count": 0,
+   "compact_encoder_infosets": 476,
+   "raw_to_compact_ratio": 180.30252100840337,
+   "metamorphic": {
+    "sampled": 3000,
+    "suit_permutation_failures": 0,
+    "hole_order_failures": 0,
+    "serialization_failures": 0,
+    "replay_failures": 0,
+    "examples": []
+   },
+   "config": {
+    "name": "akqj_2suits_plus_As_stack3_b100_cap1",
+    "ranks": "AKQJ",
+    "suits": "sh",
+    "extra": [
+     "Ad"
+    ],
+    "stack": 3.0,
+    "bets": {
+     "b100": 1.0
+    },
+    "raise_cap": 1,
+    "min_raise": false
+   },
+   "deck_size": 9,
+   "game_signature": "HoldemGame:v1:stack=3:blinds=0.5/1:bets=b100=1:raise_cap=1"
+  }
+ ],
+ "invariants": [
+  "contrib cache == replayed contributions",
+  "0 <= contrib <= stack",
+  "pot == sum(contrib)",
+  "board size matches street",
+  "no duplicate cards",
+  "valid current player",
+  "legal actions non-empty; 'c' always; 'f' iff facing",
+  "no raise vs all-in opponent",
+  "no raise without chips beyond the call",
+  "matched all-in closes betting",
+  "sized bets strictly below stack",
+  "folded => terminal",
+  "showdown only on the river",
+  "finite utility bounded by contributions",
+  "depth bound (no cycles)"
+ ],
+ "seconds": 201.5,
+ "commit": "1de6df8f5ea43abeca9c30a470857ea590606e7e",
+ "machine": {
+  "platform": "macOS-26.5.2-arm64-arm-64bit",
+  "python": "3.12.6"
+ }
+}

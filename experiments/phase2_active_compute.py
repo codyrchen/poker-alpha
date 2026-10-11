@@ -151,6 +151,8 @@ def main():
     ap.add_argument("--games", type=str, default="leduc,reduced_preflop")
     ap.add_argument("--workers", type=int, default=max(1, (os.cpu_count() or 2) - 2))
     ap.add_argument("--out", type=str, default=None)
+    ap.add_argument("--seed-base", type=int, default=0, help="independent seeds for confirmation runs")
+    ap.add_argument("--methods", type=str, default=",".join(METHODS))
     a = ap.parse_args()
     budgets = {"leduc": [2e4, 5e4, 1e5, 2e5, 5e5, 1e6, 2e6, 5e6],
                "kuhn": [1e3, 3e3, 1e4, 3e4, 1e5, 3e5],
@@ -161,10 +163,10 @@ def main():
     games = a.games.split(",")
     jobs = []
     for g in games:
-        for m in METHODS:
+        for m in a.methods.split(","):
             if m == "prio:oracle_br_gain" and g != "leduc":
                 continue
-            for s in range(a.seeds):
+            for s in range(a.seed_base, a.seed_base + a.seeds):
                 jobs.append((g, m, s, budgets[g], a.eps, a.refresh))
     t0 = time.time()
     if a.workers > 1:
@@ -177,7 +179,7 @@ def main():
     doc = {"format": "pokeralpha.phase2.active_compute/v1",
            "question": "Does importance-corrected prioritized root-chance sampling converge faster than "
                        "uniform ES-MCCFR at equal node traversals / wall time?",
-           "methods": METHODS, "eps": a.eps, "refresh_iterations": a.refresh, "seeds": a.seeds,
+           "methods": a.methods.split(","), "seed_base": a.seed_base, "eps": a.eps, "refresh_iterations": a.refresh, "seeds": a.seeds,
            "budgets_nodes": {g: budgets[g] for g in games},
            "metric": "exact exploitability (chips) of the average strategy; evaluation clock excluded from budgets",
            "summary": summary, "classification": verdict, "runs": rows,

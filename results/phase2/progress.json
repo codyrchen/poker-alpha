@@ -13,12 +13,12 @@
   "P1_adaptive_abstraction": "DONE",
   "P2_active_compute": "RUNNING",
   "P3_cfr_family_benchmark": "NOT_STARTED",
-  "P4_confidence_ablation": "NOT_STARTED",
+  "P4_confidence_ablation": "DONE",
   "P5_abstraction_science": "NOT_STARTED",
   "P6_local_resolving": "NOT_STARTED",
   "P7_native_systems": "NOT_STARTED",
   "P8_artifact_engineering": "NOT_STARTED",
-  "P9_exhaustive_correctness": "NOT_STARTED",
+  "P9_exhaustive_correctness": "DONE",
   "P10_redteam_phase2": "NOT_STARTED",
   "P11_autonomous_loop": "NOT_STARTED",
   "P12_bench_suite": "NOT_STARTED",
@@ -38,6 +38,9 @@
  },
  "notes": [
   "P1 POSITIVE: error-guided (br_gain) splitting beats capacity-matched uniform by 24-31% and random by 44-57%; confirmed on independent seeds/boards and at higher capacity. positive_regret signal NEGATIVE.",
-  "P9: exhaustive reduced-deck Hold'em enumeration (9 cards, stack 4, b100, cap 1): 2,484,217 states, 0 invariant violations (12 s)."
+  "P9: exhaustive reduced-deck Hold'em enumeration (9 cards, stack 4, b100, cap 1): 2,484,217 states, 0 invariant violations (12 s).",
+  "P4: seed disagreement carries false-confidence control, visits carry tail regret; recent movement alone anti-informative (AUC 0.47) and within noise inside the rule out of sample. No v3 proposed.",
+  "P9: 14.75M reachable states over 3 reduced configs, 0 violations; metamorphic and 5 fault-injection tests pass.",
+  "P2: first run had a node-accounting artifact (outcome-infoset walk charged to budget); fixed, uniform-prioritized now bit-identical to MCCFR. Rerun verdicts mixed; independent confirmation running."
  ]
 }

@@ -132,13 +132,16 @@ class PrioritizedMCCFR(MCCFRSolver):
         self.refresh = int(refresh)
         self.exact_game = exact_game or game
         root = game.root()
+        self._root = root
         if not game.is_chance(root):
             raise ValueError("prioritized sampling needs a root chance node")
         self.outcomes = game.chance_outcomes(root)
         self.p = np.array([p for p, _ in self.outcomes], dtype=np.float64)
         self.p /= self.p.sum()
         self.q = self.p.copy()
-        self.keys_by_outcome = outcome_infosets(game)
+        # built on the exact (uncounted) game so the one-off tree walk is not
+        # charged to the training budget of a CountingGame
+        self.keys_by_outcome = outcome_infosets(self.exact_game)
         self.visits: Dict[str, int] = defaultdict(int)
         self.outcome_visits = np.zeros(len(self.outcomes), dtype=np.int64)
         self._fixed = np.random.default_rng(seed + 12345).random(len(self.outcomes)) if signal == "random_fixed" else None
@@ -231,6 +234,9 @@ class PrioritizedMCCFR(MCCFRSolver):
         return node_value
 
     def _traverse_root(self, update_player: int) -> float:
+        # visit the root chance node exactly as the base traversal does
+        # (keeps node accounting identical to MCCFRSolver)
+        self.game.is_terminal(self._root)
         ci = int(self.rng.choice(len(self.q), p=self.q))
         self.outcome_visits[ci] += 1
         self._weight = float(self.p[ci] / self.q[ci])

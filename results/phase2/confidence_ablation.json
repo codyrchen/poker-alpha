@@ -1,0 +1,1443 @@
+{
+ "format": "pokeralpha.phase2.confidence_ablation/v1",
+ "rows": 8880,
+ "games": [
+  "preflop_akqj_20bb",
+  "preflop_akqjt_10bb",
+  "preflop_akqjt_5bb_jam",
+  "river_dry_high",
+  "river_four-flush",
+  "river_four-straight",
+  "river_low",
+  "river_monotone",
+  "river_paired"
+ ],
+ "release_thresholds": {
+  "v": 20.0,
+  "s": 0.2,
+  "m": 0.1
+ },
+ "grid": {
+  "v": [
+   0.0,
+   20.0,
+   50.0,
+   100.0
+  ],
+  "s": [
+   0.1,
+   0.2,
+   0.3,
+   0.4,
+   0.5,
+   1000000000.0
+  ],
+  "m": [
+   0.05,
+   0.1,
+   0.2,
+   0.3,
+   1000000000.0
+  ]
+ },
+ "metric_definitions": {
+  "coverage": "fraction of calibration rows the rule accepts",
+  "mean_regret_pot": "mean true EV regret of accepted rows, in pots (preflop pot 2 bb, river pot 10 chips)",
+  "tail95_regret_pot": "95th percentile of accepted true EV regret, in pots",
+  "false_confidence_rate": "fraction of accepted rows whose solver best action is not the true best action",
+  "auc": "ROC-AUC of the signal for classifying rows with regret >= 2% pot (larger signal = less confident)"
+ },
+ "fixed": {
+  "always_accept": {
+   "coverage": 1.0,
+   "accepted": 8880,
+   "mean_regret_pot": 0.13986659222972975,
+   "tail95_regret_pot": 0.746558,
+   "false_confidence_rate": 0.2505630630630631,
+   "coverage_ci95": [
+    1.0,
+    1.0
+   ],
+   "mean_regret_ci95": [
+    0.13370102608108111,
+    0.14669413539414417
+   ],
+   "false_confidence_ci95": [
+    0.24188907657657657,
+    0.2596846846846847
+   ]
+  },
+  "visits_only": {
+   "coverage": 0.7135135135135136,
+   "accepted": 6336,
+   "mean_regret_pot": 0.060451592645202015,
+   "tail95_regret_pot": 0.27284125000000004,
+   "false_confidence_rate": 0.22095959595959597,
+   "coverage_ci95": [
+    0.7040512387387388,
+    0.7227477477477477
+   ],
+   "mean_regret_ci95": [
+    0.056305226015725636,
+    0.06538001001311787
+   ],
+   "false_confidence_ci95": [
+    0.21155636984791712,
+    0.23118285946991612
+   ]
+  },
+  "seed_only": {
+   "coverage": 0.2731981981981982,
+   "accepted": 2426,
+   "mean_regret_pot": 0.04968611211871393,
+   "tail95_regret_pot": 0.29854400000000003,
+   "false_confidence_rate": 0.04699093157460841,
+   "coverage_ci95": [
+    0.26328828828828826,
+    0.2820974099099099
+   ],
+   "mean_regret_ci95": [
+    0.04435257903734625,
+    0.0558577529029939
+   ],
+   "false_confidence_ci95": [
+    0.038821145127485884,
+    0.05562545556702909
+   ]
+  },
+  "movement_only": {
+   "coverage": 0.5777027027027027,
+   "accepted": 5130,
+   "mean_regret_pot": 0.1868141,
+   "tail95_regret_pot": 0.8652949000000025,
+   "false_confidence_rate": 0.22573099415204678,
+   "coverage_ci95": [
+    0.5672269144144144,
+    0.5881756756756756
+   ],
+   "mean_regret_ci95": [
+    0.17707600823457018,
+    0.19680138999969876
+   ],
+   "false_confidence_ci95": [
+    0.2140059969651014,
+    0.2371356114721756
+   ]
+  },
+  "visits_seed": {
+   "coverage": 0.234009009009009,
+   "accepted": 2078,
+   "mean_regret_pot": 0.023154900866217517,
+   "tail95_regret_pot": 0.09379984999999993,
+   "false_confidence_rate": 0.030317613089509143,
+   "coverage_ci95": [
+    0.22488457207207208,
+    0.24256756756756756
+   ],
+   "mean_regret_ci95": [
+    0.02015655312932374,
+    0.026591966725631865
+   ],
+   "false_confidence_ci95": [
+    0.023555834148727983,
+    0.038272990403505416
+   ]
+  },
+  "v2_full": {
+   "coverage": 0.1652027027027027,
+   "accepted": 1467,
+   "mean_regret_pot": 0.014882040218132242,
+   "tail95_regret_pot": 0.046053,
+   "false_confidence_rate": 0.029993183367416496,
+   "coverage_ci95": [
+    0.1572072072072072,
+    0.1724127252252252
+   ],
+   "mean_regret_ci95": [
+    0.011569537067233637,
+    0.018745482957978968
+   ],
+   "false_confidence_ci95": [
+    0.0223463687150838,
+    0.03905306161602766
+   ]
+  },
+  "v2_minus_visits": {
+   "coverage": 0.2019144144144144,
+   "accepted": 1793,
+   "mean_regret_pot": 0.05117470440602343,
+   "tail95_regret_pot": 0.4236203999999989,
+   "false_confidence_rate": 0.051868377021751254,
+   "coverage_ci95": [
+    0.1927927927927928,
+    0.2099099099099099
+   ],
+   "mean_regret_ci95": [
+    0.0442941037689054,
+    0.059159946305831795
+   ],
+   "false_confidence_ci95": [
+    0.042063000815932214,
+    0.062321366964854054
+   ]
+  },
+  "v2_minus_seed": {
+   "coverage": 0.31024774774774777,
+   "accepted": 2755,
+   "mean_regret_pot": 0.04804145444646097,
+   "tail95_regret_pot": 0.23209300000000002,
+   "false_confidence_rate": 0.13430127041742287,
+   "coverage_ci95": [
+    0.30033502252252253,
+    0.31982263513513515
+   ],
+   "mean_regret_ci95": [
+    0.04195836282015903,
+    0.05500856236390542
+   ],
+   "false_confidence_ci95": [
+    0.12218895889728242,
+    0.14734317847153447
+   ]
+  },
+  "v2_minus_movement": {
+   "coverage": 0.234009009009009,
+   "accepted": 2078,
+   "mean_regret_pot": 0.023154900866217517,
+   "tail95_regret_pot": 0.09379984999999993,
+   "false_confidence_rate": 0.030317613089509143,
+   "coverage_ci95": [
+    0.22488457207207208,
+    0.24256756756756756
+   ],
+   "mean_regret_ci95": [
+    0.02015655312932374,
+    0.026591966725631865
+   ],
+   "false_confidence_ci95": [
+    0.023555834148727983,
+    0.038272990403505416
+   ]
+  },
+  "v1_gate": {
+   "coverage": 0.09842342342342342,
+   "accepted": 874,
+   "mean_regret_pot": 0.013962956521739131,
+   "tail95_regret_pot": 0.039772999999999996,
+   "false_confidence_rate": 0.03318077803203661,
+   "coverage_ci95": [
+    0.09245495495495495,
+    0.10461711711711712
+   ],
+   "mean_regret_ci95": [
+    0.009360965744099012,
+    0.019274508543735965
+   ],
+   "false_confidence_ci95": [
+    0.02242089696141891,
+    0.04577553308678889
+   ]
+  }
+ },
+ "nested": {
+  "visits_only": {
+   "coverage": 0.511936936936937,
+   "accepted": 4546,
+   "mean_regret_pot": 0.038717212274527055,
+   "tail95_regret_pot": 0.17221874999999998,
+   "false_confidence_rate": 0.2113946326440827,
+   "thresholds_per_heldout_game": {
+    "preflop_akqj_20bb": {
+     "v": 100.0,
+     "s": 0.1,
+     "m": 0.05
+    },
+    "preflop_akqjt_10bb": {
+     "v": 100.0,
+     "s": 0.1,
+     "m": 0.05
+    },
+    "preflop_akqjt_5bb_jam": {
+     "v": 100.0,
+     "s": 0.1,
+     "m": 0.05
+    },
+    "river_dry_high": {
+     "v": 100.0,
+     "s": 0.1,
+     "m": 0.05
+    },
+    "river_four-flush": {
+     "v": 100.0,
+     "s": 0.1,
+     "m": 0.05
+    },
+    "river_four-straight": {
+     "v": 100.0,
+     "s": 0.1,
+     "m": 0.05
+    },
+    "river_low": {
+     "v": 100.0,
+     "s": 0.1,
+     "m": 0.05
+    },
+    "river_monotone": {
+     "v": 100.0,
+     "s": 0.1,
+     "m": 0.05
+    },
+    "river_paired": {
+     "v": 100.0,
+     "s": 0.1,
+     "m": 0.05
+    }
+   }
+  },
+  "seed_only": {
+   "coverage": 0.2024774774774775,
+   "accepted": 1798,
+   "mean_regret_pot": 0.04097882591768631,
+   "tail95_regret_pot": 0.16198,
+   "false_confidence_rate": 0.03670745272525028,
+   "thresholds_per_heldout_game": {
+    "preflop_akqj_20bb": {
+     "v": 0.0,
+     "s": 0.1,
+     "m": 0.05
+    },
+    "preflop_akqjt_10bb": {
+     "v": 0.0,
+     "s": 0.1,
+     "m": 0.05
+    },
+    "preflop_akqjt_5bb_jam": {
+     "v": 0.0,
+     "s": 0.1,
+     "m": 0.05
+    },
+    "river_dry_high": {
+     "v": 0.0,
+     "s": 0.1,
+     "m": 0.05
+    },
+    "river_four-flush": {
+     "v": 0.0,
+     "s": 0.1,
+     "m": 0.05
+    },
+    "river_four-straight": {
+     "v": 0.0,
+     "s": 0.1,
+     "m": 0.05
+    },
+    "river_low": {
+     "v": 0.0,
+     "s": 0.1,
+     "m": 0.05
+    },
+    "river_monotone": {
+     "v": 0.0,
+     "s": 0.1,
+     "m": 0.05
+    },
+    "river_paired": {
+     "v": 0.0,
+     "s": 0.1,
+     "m": 0.05
+    }
+   }
+  },
+  "movement_only": {
+   "coverage": 1.0,
+   "accepted": 8880,
+   "mean_regret_pot": 0.13986659222972975,
+   "tail95_regret_pot": 0.746558,
+   "false_confidence_rate": 0.2505630630630631,
+   "thresholds_per_heldout_game": {
+    "preflop_akqj_20bb": {
+     "v": 0.0,
+     "s": 0.1,
+     "m": 1000000000.0
+    },
+    "preflop_akqjt_10bb": {
+     "v": 0.0,
+     "s": 0.1,
+     "m": 1000000000.0
+    },
+    "preflop_akqjt_5bb_jam": {
+     "v": 0.0,
+     "s": 0.1,
+     "m": 1000000000.0
+    },
+    "river_dry_high": {
+     "v": 0.0,
+     "s": 0.1,
+     "m": 1000000000.0
+    },
+    "river_four-flush": {
+     "v": 0.0,
+     "s": 0.1,
+     "m": 1000000000.0
+    },
+    "river_four-straight": {
+     "v": 0.0,
+     "s": 0.1,
+     "m": 1000000000.0
+    },
+    "river_low": {
+     "v": 0.0,
+     "s": 0.1,
+     "m": 1000000000.0
+    },
+    "river_monotone": {
+     "v": 0.0,
+     "s": 0.1,
+     "m": 1000000000.0
+    },
+    "river_paired": {
+     "v": 0.0,
+     "s": 0.1,
+     "m": 1000000000.0
+    }
+   }
+  },
+  "visits_seed": {
+   "coverage": 0.16058558558558558,
+   "accepted": 1426,
+   "mean_regret_pot": 0.013613465638148668,
+   "tail95_regret_pot": 0.057272500000000004,
+   "false_confidence_rate": 0.016830294530154277,
+   "thresholds_per_heldout_game": {
+    "preflop_akqj_20bb": {
+     "v": 50.0,
+     "s": 0.1,
+     "m": 0.05
+    },
+    "preflop_akqjt_10bb": {
+     "v": 50.0,
+     "s": 0.1,
+     "m": 0.05
+    },
+    "preflop_akqjt_5bb_jam": {
+     "v": 50.0,
+     "s": 0.1,
+     "m": 0.05
+    },
+    "river_dry_high": {
+     "v": 100.0,
+     "s": 0.1,
+     "m": 0.05
+    },
+    "river_four-flush": {
+     "v": 50.0,
+     "s": 0.1,
+     "m": 0.05
+    },
+    "river_four-straight": {
+     "v": 50.0,
+     "s": 0.1,
+     "m": 0.05
+    },
+    "river_low": {
+     "v": 50.0,
+     "s": 0.1,
+     "m": 0.05
+    },
+    "river_monotone": {
+     "v": 50.0,
+     "s": 0.1,
+     "m": 0.05
+    },
+    "river_paired": {
+     "v": 50.0,
+     "s": 0.1,
+     "m": 0.05
+    }
+   }
+  },
+  "v2_full": {
+   "coverage": 0.15304054054054053,
+   "accepted": 1359,
+   "mean_regret_pot": 0.017587334069168507,
+   "tail95_regret_pot": 0.05077,
+   "false_confidence_rate": 0.025754231052244298,
+   "thresholds_per_heldout_game": {
+    "preflop_akqj_20bb": {
+     "v": 20.0,
+     "s": 0.1,
+     "m": 0.2
+    },
+    "preflop_akqjt_10bb": {
+     "v": 50.0,
+     "s": 0.1,
+     "m": 0.2
+    },
+    "preflop_akqjt_5bb_jam": {
+     "v": 50.0,
+     "s": 0.1,
+     "m": 0.2
+    },
+    "river_dry_high": {
+     "v": 50.0,
+     "s": 0.1,
+     "m": 0.2
+    },
+    "river_four-flush": {
+     "v": 100.0,
+     "s": 0.5,
+     "m": 0.1
+    },
+    "river_four-straight": {
+     "v": 20.0,
+     "s": 0.1,
+     "m": 0.2
+    },
+    "river_low": {
+     "v": 50.0,
+     "s": 0.1,
+     "m": 0.2
+    },
+    "river_monotone": {
+     "v": 50.0,
+     "s": 0.1,
+     "m": 0.3
+    },
+    "river_paired": {
+     "v": 100.0,
+     "s": 0.4,
+     "m": 0.1
+    }
+   }
+  },
+  "v2_minus_visits": {
+   "coverage": 0.18896396396396398,
+   "accepted": 1678,
+   "mean_regret_pot": 0.039780754469606674,
+   "tail95_regret_pot": 0.15949014999999964,
+   "false_confidence_rate": 0.03694874851013111,
+   "thresholds_per_heldout_game": {
+    "preflop_akqj_20bb": {
+     "v": 0.0,
+     "s": 0.1,
+     "m": 0.3
+    },
+    "preflop_akqjt_10bb": {
+     "v": 0.0,
+     "s": 0.1,
+     "m": 0.2
+    },
+    "preflop_akqjt_5bb_jam": {
+     "v": 0.0,
+     "s": 0.1,
+     "m": 0.2
+    },
+    "river_dry_high": {
+     "v": 0.0,
+     "s": 0.1,
+     "m": 0.3
+    },
+    "river_four-flush": {
+     "v": 0.0,
+     "s": 0.1,
+     "m": 0.2
+    },
+    "river_four-straight": {
+     "v": 0.0,
+     "s": 0.1,
+     "m": 0.3
+    },
+    "river_low": {
+     "v": 0.0,
+     "s": 0.1,
+     "m": 0.3
+    },
+    "river_monotone": {
+     "v": 0.0,
+     "s": 0.1,
+     "m": 0.3
+    },
+    "river_paired": {
+     "v": 0.0,
+     "s": 0.1,
+     "m": 0.3
+    }
+   }
+  },
+  "v2_minus_seed": {
+   "coverage": 0.16193693693693695,
+   "accepted": 1438,
+   "mean_regret_pot": 0.01902708066759388,
+   "tail95_regret_pot": 0.04324524999999954,
+   "false_confidence_rate": 0.08484005563282336,
+   "thresholds_per_heldout_game": {
+    "preflop_akqj_20bb": {
+     "v": 100.0,
+     "s": 0.1,
+     "m": 0.05
+    },
+    "preflop_akqjt_10bb": {
+     "v": 100.0,
+     "s": 0.1,
+     "m": 0.05
+    },
+    "preflop_akqjt_5bb_jam": {
+     "v": 100.0,
+     "s": 0.1,
+     "m": 0.05
+    },
+    "river_dry_high": {
+     "v": 100.0,
+     "s": 0.1,
+     "m": 0.05
+    },
+    "river_four-flush": {
+     "v": 100.0,
+     "s": 0.1,
+     "m": 0.05
+    },
+    "river_four-straight": {
+     "v": 100.0,
+     "s": 0.1,
+     "m": 0.05
+    },
+    "river_low": {
+     "v": 100.0,
+     "s": 0.1,
+     "m": 0.05
+    },
+    "river_monotone": {
+     "v": 100.0,
+     "s": 0.1,
+     "m": 0.1
+    },
+    "river_paired": {
+     "v": 100.0,
+     "s": 0.1,
+     "m": 0.05
+    }
+   }
+  },
+  "v2_minus_movement": {
+   "coverage": 0.16058558558558558,
+   "accepted": 1426,
+   "mean_regret_pot": 0.013613465638148668,
+   "tail95_regret_pot": 0.057272500000000004,
+   "false_confidence_rate": 0.016830294530154277,
+   "thresholds_per_heldout_game": {
+    "preflop_akqj_20bb": {
+     "v": 50.0,
+     "s": 0.1,
+     "m": 0.05
+    },
+    "preflop_akqjt_10bb": {
+     "v": 50.0,
+     "s": 0.1,
+     "m": 0.05
+    },
+    "preflop_akqjt_5bb_jam": {
+     "v": 50.0,
+     "s": 0.1,
+     "m": 0.05
+    },
+    "river_dry_high": {
+     "v": 100.0,
+     "s": 0.1,
+     "m": 0.05
+    },
+    "river_four-flush": {
+     "v": 50.0,
+     "s": 0.1,
+     "m": 0.05
+    },
+    "river_four-straight": {
+     "v": 50.0,
+     "s": 0.1,
+     "m": 0.05
+    },
+    "river_low": {
+     "v": 50.0,
+     "s": 0.1,
+     "m": 0.05
+    },
+    "river_monotone": {
+     "v": 50.0,
+     "s": 0.1,
+     "m": 0.05
+    },
+    "river_paired": {
+     "v": 50.0,
+     "s": 0.1,
+     "m": 0.05
+    }
+   }
+  }
+ },
+ "per_game_fixed": {
+  "always_accept": {
+   "preflop_akqj_20bb": {
+    "coverage": 1.0,
+    "accepted": 672,
+    "mean_regret_pot": 0.2824151711309523,
+    "tail95_regret_pot": 1.7645474999999977,
+    "false_confidence_rate": 0.17857142857142858
+   },
+   "preflop_akqjt_10bb": {
+    "coverage": 1.0,
+    "accepted": 1080,
+    "mean_regret_pot": 0.12021366203703705,
+    "tail95_regret_pot": 0.627105,
+    "false_confidence_rate": 0.2657407407407407
+   },
+   "preflop_akqjt_5bb_jam": {
+    "coverage": 1.0,
+    "accepted": 1080,
+    "mean_regret_pot": 0.11272383333333333,
+    "tail95_regret_pot": 0.59621,
+    "false_confidence_rate": 0.3314814814814815
+   },
+   "river_dry_high": {
+    "coverage": 1.0,
+    "accepted": 1008,
+    "mean_regret_pot": 0.14866520436507935,
+    "tail95_regret_pot": 0.9529116499999981,
+    "false_confidence_rate": 0.25595238095238093
+   },
+   "river_four-flush": {
+    "coverage": 1.0,
+    "accepted": 1008,
+    "mean_regret_pot": 0.2216963214285714,
+    "tail95_regret_pot": 0.874376,
+    "false_confidence_rate": 0.21329365079365079
+   },
+   "river_four-straight": {
+    "coverage": 1.0,
+    "accepted": 1008,
+    "mean_regret_pot": 0.08219232638888889,
+    "tail95_regret_pot": 0.48380900000000004,
+    "false_confidence_rate": 0.21329365079365079
+   },
+   "river_low": {
+    "coverage": 1.0,
+    "accepted": 1008,
+    "mean_regret_pot": 0.09932028472222222,
+    "tail95_regret_pot": 0.6301933999999991,
+    "false_confidence_rate": 0.2569444444444444
+   },
+   "river_monotone": {
+    "coverage": 1.0,
+    "accepted": 1008,
+    "mean_regret_pot": 0.1323032242063492,
+    "tail95_regret_pot": 0.5931261499999999,
+    "false_confidence_rate": 0.20535714285714285
+   },
+   "river_paired": {
+    "coverage": 1.0,
+    "accepted": 1008,
+    "mean_regret_pot": 0.11012804464285715,
+    "tail95_regret_pot": 0.5033663499999999,
+    "false_confidence_rate": 0.30357142857142855
+   }
+  },
+  "visits_only": {
+   "preflop_akqj_20bb": {
+    "coverage": 0.8125,
+    "accepted": 546,
+    "mean_regret_pot": 0.10325915750915753,
+    "tail95_regret_pot": 0.539585,
+    "false_confidence_rate": 0.17582417582417584
+   },
+   "preflop_akqjt_10bb": {
+    "coverage": 0.7296296296296296,
+    "accepted": 788,
+    "mean_regret_pot": 0.04668726522842639,
+    "tail95_regret_pot": 0.2665185,
+    "false_confidence_rate": 0.2512690355329949
+   },
+   "preflop_akqjt_5bb_jam": {
+    "coverage": 0.6175925925925926,
+    "accepted": 667,
+    "mean_regret_pot": 0.04385774362818591,
+    "tail95_regret_pot": 0.15666449999999993,
+    "false_confidence_rate": 0.1664167916041979
+   },
+   "river_dry_high": {
+    "coverage": 0.6111111111111112,
+    "accepted": 616,
+    "mean_regret_pot": 0.04165655519480519,
+    "tail95_regret_pot": 0.20470675,
+    "false_confidence_rate": 0.18993506493506493
+   },
+   "river_four-flush": {
+    "coverage": 0.6875,
+    "accepted": 693,
+    "mean_regret_pot": 0.09755744155844155,
+    "tail95_regret_pot": 0.754211999999999,
+    "false_confidence_rate": 0.21212121212121213
+   },
+   "river_four-straight": {
+    "coverage": 0.7371031746031746,
+    "accepted": 743,
+    "mean_regret_pot": 0.026335691790040378,
+    "tail95_regret_pot": 0.13386919999999997,
+    "false_confidence_rate": 0.2180349932705249
+   },
+   "river_low": {
+    "coverage": 0.7549603174603174,
+    "accepted": 761,
+    "mean_regret_pot": 0.036604716162943494,
+    "tail95_regret_pot": 0.163702,
+    "false_confidence_rate": 0.23653088042049936
+   },
+   "river_monotone": {
+    "coverage": 0.7162698412698413,
+    "accepted": 722,
+    "mean_regret_pot": 0.06998261634349032,
+    "tail95_regret_pot": 0.3304915,
+    "false_confidence_rate": 0.2077562326869806
+   },
+   "river_paired": {
+    "coverage": 0.7936507936507936,
+    "accepted": 800,
+    "mean_regret_pot": 0.08672538625,
+    "tail95_regret_pot": 0.42797004999999927,
+    "false_confidence_rate": 0.29875
+   }
+  },
+  "seed_only": {
+   "preflop_akqj_20bb": {
+    "coverage": 0.35714285714285715,
+    "accepted": 240,
+    "mean_regret_pot": 0.08326352083333334,
+    "tail95_regret_pot": 0.31112074999999845,
+    "false_confidence_rate": 0.0125
+   },
+   "preflop_akqjt_10bb": {
+    "coverage": 0.27037037037037037,
+    "accepted": 292,
+    "mean_regret_pot": 0.07804375,
+    "tail95_regret_pot": 0.5124257499999987,
+    "false_confidence_rate": 0.04452054794520548
+   },
+   "preflop_akqjt_5bb_jam": {
+    "coverage": 0.24537037037037038,
+    "accepted": 265,
+    "mean_regret_pot": 0.04840471698113208,
+    "tail95_regret_pot": 0.16198,
+    "false_confidence_rate": 0.12830188679245283
+   },
+   "river_dry_high": {
+    "coverage": 0.18452380952380953,
+    "accepted": 186,
+    "mean_regret_pot": 0.027000123655913984,
+    "tail95_regret_pot": 0.15,
+    "false_confidence_rate": 0.03225806451612903
+   },
+   "river_four-flush": {
+    "coverage": 0.3492063492063492,
+    "accepted": 352,
+    "mean_regret_pot": 0.09243782670454546,
+    "tail95_regret_pot": 0.5,
+    "false_confidence_rate": 0.028409090909090908
+   },
+   "river_four-straight": {
+    "coverage": 0.34523809523809523,
+    "accepted": 348,
+    "mean_regret_pot": 0.03462078735632184,
+    "tail95_regret_pot": 0.15827024999999995,
+    "false_confidence_rate": 0.05459770114942529
+   },
+   "river_low": {
+    "coverage": 0.23115079365079366,
+    "accepted": 233,
+    "mean_regret_pot": 0.013777454935622317,
+    "tail95_regret_pot": 0.04742579999999999,
+    "false_confidence_rate": 0.055793991416309016
+   },
+   "river_monotone": {
+    "coverage": 0.25992063492063494,
+    "accepted": 262,
+    "mean_regret_pot": 0.02239795038167939,
+    "tail95_regret_pot": 0.11335634999999995,
+    "false_confidence_rate": 0.011450381679389313
+   },
+   "river_paired": {
+    "coverage": 0.24603174603174602,
+    "accepted": 248,
+    "mean_regret_pot": 0.025212322580645163,
+    "tail95_regret_pot": 0.12589694999999956,
+    "false_confidence_rate": 0.05241935483870968
+   }
+  },
+  "movement_only": {
+   "preflop_akqj_20bb": {
+    "coverage": 0.47470238095238093,
+    "accepted": 319,
+    "mean_regret_pot": 0.4433784482758621,
+    "tail95_regret_pot": 2.1227574999999996,
+    "false_confidence_rate": 0.12539184952978055
+   },
+   "preflop_akqjt_10bb": {
+    "coverage": 0.49444444444444446,
+    "accepted": 534,
+    "mean_regret_pot": 0.18972346441947566,
+    "tail95_regret_pot": 0.77241,
+    "false_confidence_rate": 0.20411985018726592
+   },
+   "preflop_akqjt_5bb_jam": {
+    "coverage": 0.6157407407407407,
+    "accepted": 665,
+    "mean_regret_pot": 0.15052158646616542,
+    "tail95_regret_pot": 0.696785,
+    "false_confidence_rate": 0.4150375939849624
+   },
+   "river_dry_high": {
+    "coverage": 0.6636904761904762,
+    "accepted": 669,
+    "mean_regret_pot": 0.1899550254110613,
+    "tail95_regret_pot": 1.222222,
+    "false_confidence_rate": 0.24962630792227206
+   },
+   "river_four-flush": {
+    "coverage": 0.6359126984126984,
+    "accepted": 641,
+    "mean_regret_pot": 0.2872676302652106,
+    "tail95_regret_pot": 0.992521,
+    "false_confidence_rate": 0.17160686427457097
+   },
+   "river_four-straight": {
+    "coverage": 0.6091269841269841,
+    "accepted": 614,
+    "mean_regret_pot": 0.10854510912052118,
+    "tail95_regret_pot": 0.525812,
+    "false_confidence_rate": 0.14332247557003258
+   },
+   "river_low": {
+    "coverage": 0.5436507936507936,
+    "accepted": 548,
+    "mean_regret_pot": 0.14460244525547447,
+    "tail95_regret_pot": 0.8290594999999973,
+    "false_confidence_rate": 0.25364963503649635
+   },
+   "river_monotone": {
+    "coverage": 0.625,
+    "accepted": 630,
+    "mean_regret_pot": 0.1489965492063492,
+    "tail95_regret_pot": 0.714705,
+    "false_confidence_rate": 0.14603174603174604
+   },
+   "river_paired": {
+    "coverage": 0.5059523809523809,
+    "accepted": 510,
+    "mean_regret_pot": 0.12653783725490197,
+    "tail95_regret_pot": 0.6662046999999978,
+    "false_confidence_rate": 0.26862745098039215
+   }
+  },
+  "visits_seed": {
+   "preflop_akqj_20bb": {
+    "coverage": 0.34226190476190477,
+    "accepted": 230,
+    "mean_regret_pot": 0.04107726086956522,
+    "tail95_regret_pot": 0.2018827499999998,
+    "false_confidence_rate": 0.013043478260869565
+   },
+   "preflop_akqjt_10bb": {
+    "coverage": 0.21666666666666667,
+    "accepted": 234,
+    "mean_regret_pot": 0.017131794871794868,
+    "tail95_regret_pot": 0.08570749999999999,
+    "false_confidence_rate": 0.03418803418803419
+   },
+   "preflop_akqjt_5bb_jam": {
+    "coverage": 0.1935185185185185,
+    "accepted": 209,
+    "mean_regret_pot": 0.012188947368421051,
+    "tail95_regret_pot": 0.053003999999999996,
+    "false_confidence_rate": 0.0
+   },
+   "river_dry_high": {
+    "coverage": 0.12896825396825398,
+    "accepted": 130,
+    "mean_regret_pot": 0.015579453846153847,
+    "tail95_regret_pot": 0.06210929999999999,
+    "false_confidence_rate": 0.0
+   },
+   "river_four-flush": {
+    "coverage": 0.29662698412698413,
+    "accepted": 299,
+    "mean_regret_pot": 0.03973124080267559,
+    "tail95_regret_pot": 0.10188349999999992,
+    "false_confidence_rate": 0.033444816053511704
+   },
+   "river_four-straight": {
+    "coverage": 0.30257936507936506,
+    "accepted": 305,
+    "mean_regret_pot": 0.02271587213114754,
+    "tail95_regret_pot": 0.11401840000000002,
+    "false_confidence_rate": 0.05573770491803279
+   },
+   "river_low": {
+    "coverage": 0.20932539682539683,
+    "accepted": 211,
+    "mean_regret_pot": 0.012712099526066351,
+    "tail95_regret_pot": 0.046053,
+    "false_confidence_rate": 0.04739336492890995
+   },
+   "river_monotone": {
+    "coverage": 0.23511904761904762,
+    "accepted": 237,
+    "mean_regret_pot": 0.014731700421940927,
+    "tail95_regret_pot": 0.08093519999999998,
+    "false_confidence_rate": 0.012658227848101266
+   },
+   "river_paired": {
+    "coverage": 0.22123015873015872,
+    "accepted": 223,
+    "mean_regret_pot": 0.02289151121076233,
+    "tail95_regret_pot": 0.13061269999999955,
+    "false_confidence_rate": 0.053811659192825115
+   }
+  },
+  "v2_full": {
+   "preflop_akqj_20bb": {
+    "coverage": 0.21726190476190477,
+    "accepted": 146,
+    "mean_regret_pot": 0.019659143835616438,
+    "tail95_regret_pot": 0.06400125000000001,
+    "false_confidence_rate": 0.02054794520547945
+   },
+   "preflop_akqjt_10bb": {
+    "coverage": 0.14814814814814814,
+    "accepted": 160,
+    "mean_regret_pot": 0.00800046875,
+    "tail95_regret_pot": 0.02868349999999999,
+    "false_confidence_rate": 0.025
+   },
+   "preflop_akqjt_5bb_jam": {
+    "coverage": 0.12222222222222222,
+    "accepted": 132,
+    "mean_regret_pot": 0.004634696969696969,
+    "tail95_regret_pot": 0.013762999999999987,
+    "false_confidence_rate": 0.0
+   },
+   "river_dry_high": {
+    "coverage": 0.09722222222222222,
+    "accepted": 98,
+    "mean_regret_pot": 0.006945979591836735,
+    "tail95_regret_pot": 0.025916649999999947,
+    "false_confidence_rate": 0.0
+   },
+   "river_four-flush": {
+    "coverage": 0.2152777777777778,
+    "accepted": 217,
+    "mean_regret_pot": 0.03894709216589862,
+    "tail95_regret_pot": 0.05730979999999985,
+    "false_confidence_rate": 0.041474654377880185
+   },
+   "river_four-straight": {
+    "coverage": 0.21726190476190477,
+    "accepted": 219,
+    "mean_regret_pot": 0.014378374429223744,
+    "tail95_regret_pot": 0.056383899999999904,
+    "false_confidence_rate": 0.0502283105022831
+   },
+   "river_low": {
+    "coverage": 0.1597222222222222,
+    "accepted": 161,
+    "mean_regret_pot": 0.006481689440993789,
+    "tail95_regret_pot": 0.039772999999999996,
+    "false_confidence_rate": 0.049689440993788817
+   },
+   "river_monotone": {
+    "coverage": 0.18154761904761904,
+    "accepted": 183,
+    "mean_regret_pot": 0.009285502732240438,
+    "tail95_regret_pot": 0.0338317,
+    "false_confidence_rate": 0.00546448087431694
+   },
+   "river_paired": {
+    "coverage": 0.1498015873015873,
+    "accepted": 151,
+    "mean_regret_pot": 0.01354950331125828,
+    "tail95_regret_pot": 0.0637385,
+    "false_confidence_rate": 0.052980132450331126
+   }
+  },
+  "v2_minus_visits": {
+   "preflop_akqj_20bb": {
+    "coverage": 0.22916666666666666,
+    "accepted": 154,
+    "mean_regret_pot": 0.08574938311688311,
+    "tail95_regret_pot": 0.44530599999999687,
+    "false_confidence_rate": 0.01948051948051948
+   },
+   "preflop_akqjt_10bb": {
+    "coverage": 0.2,
+    "accepted": 216,
+    "mean_regret_pot": 0.09239270833333334,
+    "tail95_regret_pot": 0.62394,
+    "false_confidence_rate": 0.041666666666666664
+   },
+   "preflop_akqjt_5bb_jam": {
+    "coverage": 0.17314814814814813,
+    "accepted": 187,
+    "mean_regret_pot": 0.05818288770053476,
+    "tail95_regret_pot": 0.4655144999999999,
+    "false_confidence_rate": 0.18181818181818182
+   },
+   "river_dry_high": {
+    "coverage": 0.1527777777777778,
+    "accepted": 154,
+    "mean_regret_pot": 0.023879220779220778,
+    "tail95_regret_pot": 0.15,
+    "false_confidence_rate": 0.03896103896103896
+   },
+   "river_four-flush": {
+    "coverage": 0.26686507936507936,
+    "accepted": 269,
+    "mean_regret_pot": 0.10721472862453532,
+    "tail95_regret_pot": 0.551465,
+    "false_confidence_rate": 0.03345724907063197
+   },
+   "river_four-straight": {
+    "coverage": 0.251984126984127,
+    "accepted": 254,
+    "mean_regret_pot": 0.027528610236220472,
+    "tail95_regret_pot": 0.149999,
+    "false_confidence_rate": 0.051181102362204724
+   },
+   "river_low": {
+    "coverage": 0.17857142857142858,
+    "accepted": 180,
+    "mean_regret_pot": 0.00855152222222222,
+    "tail95_regret_pot": 0.040816599999999904,
+    "false_confidence_rate": 0.05555555555555555
+   },
+   "river_monotone": {
+    "coverage": 0.20436507936507936,
+    "accepted": 206,
+    "mean_regret_pot": 0.01735969417475728,
+    "tail95_regret_pot": 0.10714300000000002,
+    "false_confidence_rate": 0.0048543689320388345
+   },
+   "river_paired": {
+    "coverage": 0.17162698412698413,
+    "accepted": 173,
+    "mean_regret_pot": 0.017849797687861275,
+    "tail95_regret_pot": 0.099999,
+    "false_confidence_rate": 0.046242774566473986
+   }
+  },
+  "v2_minus_seed": {
+   "preflop_akqj_20bb": {
+    "coverage": 0.3020833333333333,
+    "accepted": 203,
+    "mean_regret_pot": 0.061153201970443355,
+    "tail95_regret_pot": 0.08622099999999998,
+    "false_confidence_rate": 0.08866995073891626
+   },
+   "preflop_akqjt_10bb": {
+    "coverage": 0.25277777777777777,
+    "accepted": 273,
+    "mean_regret_pot": 0.039771630036630035,
+    "tail95_regret_pot": 0.26159,
+    "false_confidence_rate": 0.0989010989010989
+   },
+   "preflop_akqjt_5bb_jam": {
+    "coverage": 0.25462962962962965,
+    "accepted": 275,
+    "mean_regret_pot": 0.041236363636363634,
+    "tail95_regret_pot": 0.1753045000000004,
+    "false_confidence_rate": 0.12
+   },
+   "river_dry_high": {
+    "coverage": 0.2876984126984127,
+    "accepted": 290,
+    "mean_regret_pot": 0.01993536551724138,
+    "tail95_regret_pot": 0.11360065000000001,
+    "false_confidence_rate": 0.09655172413793103
+   },
+   "river_four-flush": {
+    "coverage": 0.3472222222222222,
+    "accepted": 350,
+    "mean_regret_pot": 0.09870265714285714,
+    "tail95_regret_pot": 0.8734935500000001,
+    "false_confidence_rate": 0.14
+   },
+   "river_four-straight": {
+    "coverage": 0.37103174603174605,
+    "accepted": 374,
+    "mean_regret_pot": 0.01715758823529412,
+    "tail95_regret_pot": 0.08001624999999982,
+    "false_confidence_rate": 0.10427807486631016
+   },
+   "river_low": {
+    "coverage": 0.31746031746031744,
+    "accepted": 320,
+    "mean_regret_pot": 0.033907334375,
+    "tail95_regret_pot": 0.176787,
+    "false_confidence_rate": 0.2
+   },
+   "river_monotone": {
+    "coverage": 0.35119047619047616,
+    "accepted": 354,
+    "mean_regret_pot": 0.04243546892655367,
+    "tail95_regret_pot": 0.2334387499999999,
+    "false_confidence_rate": 0.10451977401129943
+   },
+   "river_paired": {
+    "coverage": 0.3134920634920635,
+    "accepted": 316,
+    "mean_regret_pot": 0.07951210443037975,
+    "tail95_regret_pot": 0.45826725,
+    "false_confidence_rate": 0.23734177215189872
+   }
+  },
+  "v2_minus_movement": {
+   "preflop_akqj_20bb": {
+    "coverage": 0.34226190476190477,
+    "accepted": 230,
+    "mean_regret_pot": 0.04107726086956522,
+    "tail95_regret_pot": 0.2018827499999998,
+    "false_confidence_rate": 0.013043478260869565
+   },
+   "preflop_akqjt_10bb": {
+    "coverage": 0.21666666666666667,
+    "accepted": 234,
+    "mean_regret_pot": 0.017131794871794868,
+    "tail95_regret_pot": 0.08570749999999999,
+    "false_confidence_rate": 0.03418803418803419
+   },
+   "preflop_akqjt_5bb_jam": {
+    "coverage": 0.1935185185185185,
+    "accepted": 209,
+    "mean_regret_pot": 0.012188947368421051,
+    "tail95_regret_pot": 0.053003999999999996,
+    "false_confidence_rate": 0.0
+   },
+   "river_dry_high": {
+    "coverage": 0.12896825396825398,
+    "accepted": 130,
+    "mean_regret_pot": 0.015579453846153847,
+    "tail95_regret_pot": 0.06210929999999999,
+    "false_confidence_rate": 0.0
+   },
+   "river_four-flush": {
+    "coverage": 0.29662698412698413,
+    "accepted": 299,
+    "mean_regret_pot": 0.03973124080267559,
+    "tail95_regret_pot": 0.10188349999999992,
+    "false_confidence_rate": 0.033444816053511704
+   },
+   "river_four-straight": {
+    "coverage": 0.30257936507936506,
+    "accepted": 305,
+    "mean_regret_pot": 0.02271587213114754,
+    "tail95_regret_pot": 0.11401840000000002,
+    "false_confidence_rate": 0.05573770491803279
+   },
+   "river_low": {
+    "coverage": 0.20932539682539683,
+    "accepted": 211,
+    "mean_regret_pot": 0.012712099526066351,
+    "tail95_regret_pot": 0.046053,
+    "false_confidence_rate": 0.04739336492890995
+   },
+   "river_monotone": {
+    "coverage": 0.23511904761904762,
+    "accepted": 237,
+    "mean_regret_pot": 0.014731700421940927,
+    "tail95_regret_pot": 0.08093519999999998,
+    "false_confidence_rate": 0.012658227848101266
+   },
+   "river_paired": {
+    "coverage": 0.22123015873015872,
+    "accepted": 223,
+    "mean_regret_pot": 0.02289151121076233,
+    "tail95_regret_pot": 0.13061269999999955,
+    "false_confidence_rate": 0.053811659192825115
+   }
+  },
+  "v1_gate": {
+   "preflop_akqj_20bb": {
+    "coverage": 0.09077380952380952,
+    "accepted": 61,
+    "mean_regret_pot": 0.02281811475409836,
+    "tail95_regret_pot": 0.06094,
+    "false_confidence_rate": 0.04918032786885246
+   },
+   "preflop_akqjt_10bb": {
+    "coverage": 0.07685185185185185,
+    "accepted": 83,
+    "mean_regret_pot": 0.008350060240963856,
+    "tail95_regret_pot": 0.02797499999999998,
+    "false_confidence_rate": 0.024096385542168676
+   },
+   "preflop_akqjt_5bb_jam": {
+    "coverage": 0.05462962962962963,
+    "accepted": 59,
+    "mean_regret_pot": 0.0034296610169491527,
+    "tail95_regret_pot": 0.011936499999999987,
+    "false_confidence_rate": 0.0
+   },
+   "river_dry_high": {
+    "coverage": 0.061507936507936505,
+    "accepted": 62,
+    "mean_regret_pot": 0.004414306451612903,
+    "tail95_regret_pot": 0.02477039999999998,
+    "false_confidence_rate": 0.0
+   },
+   "river_four-flush": {
+    "coverage": 0.14384920634920634,
+    "accepted": 145,
+    "mean_regret_pot": 0.041677703448275864,
+    "tail95_regret_pot": 0.05453119999999999,
+    "false_confidence_rate": 0.04827586206896552
+   },
+   "river_four-straight": {
+    "coverage": 0.11904761904761904,
+    "accepted": 120,
+    "mean_regret_pot": 0.00996435,
+    "tail95_regret_pot": 0.04315679999999997,
+    "false_confidence_rate": 0.016666666666666666
+   },
+   "river_low": {
+    "coverage": 0.12103174603174603,
+    "accepted": 122,
+    "mean_regret_pot": 0.006266057377049179,
+    "tail95_regret_pot": 0.039772999999999996,
+    "false_confidence_rate": 0.05737704918032787
+   },
+   "river_monotone": {
+    "coverage": 0.12896825396825398,
+    "accepted": 130,
+    "mean_regret_pot": 0.003534292307692307,
+    "tail95_regret_pot": 0.015789,
+    "false_confidence_rate": 0.007692307692307693
+   },
+   "river_paired": {
+    "coverage": 0.09126984126984126,
+    "accepted": 92,
+    "mean_regret_pot": 0.012823054347826088,
+    "tail95_regret_pot": 0.08173085000000027,
+    "false_confidence_rate": 0.07608695652173914
+   }
+  }
+ },
+ "ablation_deltas": {
+  "v2_minus_visits": {
+   "coverage": 0.0367117117117117,
+   "mean_regret_pot": 0.03629266418789119,
+   "tail95_regret_pot": 0.3775673999999989,
+   "false_confidence_rate": 0.021875193654334758
+  },
+  "v2_minus_seed": {
+   "coverage": 0.14504504504504506,
+   "mean_regret_pot": 0.03315941422832873,
+   "tail95_regret_pot": 0.18604000000000004,
+   "false_confidence_rate": 0.10430808705000638
+  },
+  "v2_minus_movement": {
+   "coverage": 0.0688063063063063,
+   "mean_regret_pot": 0.008272860648085275,
+   "tail95_regret_pot": 0.04774684999999994,
+   "false_confidence_rate": 0.00032442972209264717
+  },
+  "visits_seed": {
+   "coverage": 0.0688063063063063,
+   "mean_regret_pot": 0.008272860648085275,
+   "tail95_regret_pot": 0.04774684999999994,
+   "false_confidence_rate": 0.00032442972209264717
+  }
+ },
+ "signal_auc": {
+  "visits": {
+   "auc_regret_2pct_pot": 0.7396061831026897,
+   "n": 8880
+  },
+  "seed_disagreement": {
+   "auc_regret_2pct_pot": 0.6274189029604054,
+   "n": 8880
+  },
+  "mv_recent": {
+   "auc_regret_2pct_pot": 0.47422840242878567,
+   "n": 8880
+  },
+  "mv_hist": {
+   "auc_regret_2pct_pot": 0.44185500417240875,
+   "n": 8880
+  },
+  "action_margin": {
+   "auc_regret_2pct_pot": 0.35869733623582245,
+   "n": 8880
+  }
+ },
+ "jackknife": {
+  "v2_full": {
+   "mean_regret_pot_leave_one_game_out": [
+    0.014354063588190762,
+    0.015724466717674065,
+    0.015895260674157304,
+    0.015450143900657413,
+    0.0107043472,
+    0.014970423878205127,
+    0.015917611791730474,
+    0.015679677570093458,
+    0.015034937689969602
+   ],
+   "jackknife_se": 0.004374264184933645
+  },
+  "visits_seed": {
+   "mean_regret_pot_leave_one_game_out": [
+    0.020924304112554113,
+    0.02391922125813449,
+    0.02438116318887105,
+    0.023660449178644766,
+    0.02036888308038224,
+    0.023230424703891712,
+    0.024335099625066952,
+    0.02423925638240087,
+    0.02318656442048517
+   ],
+   "jackknife_se": 0.003961356132694824
+  },
+  "seed_only": {
+   "mean_regret_pot_leave_one_game_out": [
+    0.04599966285452882,
+    0.04580587300843486,
+    0.04984324757056918,
+    0.05156985937499999,
+    0.04243027627772421,
+    0.05220908277189605,
+    0.053501304605563155,
+    0.05298994685767098,
+    0.05247284297520661
+   ],
+   "jackknife_se": 0.010517918747745929
+  },
+  "v1_gate": {
+   "mean_regret_pot_leave_one_game_out": [
+    0.013298547355473554,
+    0.014551920353982301,
+    0.014725489570552145,
+    0.014692040640394087,
+    0.008450421124828533,
+    0.01459933952254642,
+    0.015211655585106381,
+    0.01578516935483871,
+    0.014097062659846548
+   ],
+   "jackknife_se": 0.005780029881039386
+  }
+ },
+ "seconds": 35.6,
+ "commit": "1de6df8f5ea43abeca9c30a470857ea590606e7e",
+ "conclusions": [
+  "fixed release thresholds: v2_full coverage 0.165, accepted regret 0.0149 pot, false-confidence 0.030; always_accept regret 0.1399, v1 gate regret 0.0140 at coverage 0.098",
+  "v2_minus_visits: coverage +0.037, accepted regret +0.0363 pot, false-confidence +0.022 vs v2_full",
+  "v2_minus_seed: coverage +0.145, accepted regret +0.0332 pot, false-confidence +0.104 vs v2_full",
+  "v2_minus_movement: coverage +0.069, accepted regret +0.0083 pot, false-confidence +0.000 vs v2_full",
+  "visits_seed: coverage +0.069, accepted regret +0.0083 pot, false-confidence +0.000 vs v2_full"
+ ]
+}

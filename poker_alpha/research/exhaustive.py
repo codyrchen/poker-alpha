@@ -206,9 +206,9 @@ def _describe(s: HoldemState) -> dict:
 # --------------------------------------------------------------------------
 
 def permute_suits(state: HoldemState, perm: Sequence[int]) -> HoldemState:
-    """Apply a permutation of the four suits (card = rank * 4 + suit)."""
+    """Apply a permutation of the four suits (card code = suit * 13 + rank)."""
     def f(c: int) -> int:
-        return (c // 4) * 4 + perm[c % 4]
+        return perm[c // 13] * 13 + c % 13
     holes = None if state.holes is None else tuple(tuple(sorted(f(c) for c in h)) for h in state.holes)
     return replace(state, holes=holes, board=tuple(f(c) for c in state.board))
 
