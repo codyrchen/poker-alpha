@@ -1,0 +1,34 @@
+[
+ {
+  "seed": 0,
+  "iterations": 3000000,
+  "segment_seconds": 804.2,
+  "metrics": {
+   "iterations": 3000000,
+   "infosets": 148210,
+   "decision_nodes": 515873698,
+   "chance_nodes": 106810002,
+   "terminal_nodes": 380901667,
+   "feature_cache_entries": 505415,
+   "river_board_cache_entries": 1309,
+   "approx_table_bytes": 21705296
+  },
+  "artifact": "results/strategy/candidates/phase2_extension/holdem_v2_native_seed0_3000k.npz"
+ },
+ {
+  "seed": 0,
+  "iterations": 4000000,
+  "segment_seconds": 759.6,
+  "metrics": {
+   "iterations": 4000000,
+   "infosets": 148593,
+   "decision_nodes": 1043954759,
+   "chance_nodes": 214076259,
+   "terminal_nodes": 771366226,
+   "feature_cache_entries": 90281,
+   "river_board_cache_entries": 1449,
+   "approx_table_bytes": 21745128
+  },
+  "artifact": "results/strategy/candidates/phase2_extension/holdem_v2_native_seed0_4000k.npz"
+ }
+]

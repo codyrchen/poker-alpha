@@ -38,6 +38,88 @@
    "status": "done",
    "wall_seconds": null
   },
+  "loop_W1_local_sensitivity_training": {
+   "classification": "NULL",
+   "command": "python experiments/phase2_research_loop.py run",
+   "commit": "0703fb8685c6f4685ecef8ec3d103c8725ab754d",
+   "headline": {
+    "seed0": {
+     "control_change": -0.007583770527539776,
+     "failing_change": -0.013313516093174826
+    },
+    "seed1": {
+     "control_change": -0.006066942634007665,
+     "failing_change": -0.05577428744093632
+    },
+    "seed2": {
+     "control_change": -0.003348049558390763,
+     "failing_change": -0.008674763657743001
+    }
+   },
+   "inputs": {},
+   "mode": "confirmation",
+   "name": "loop_W1_local_sensitivity_training",
+   "notes": "",
+   "outputs": {
+    "results/phase2/loop/results.json": "6626a81e1a9fd4738b1a0872401e227f7a0968c90f2324ae78665579e4626b5b"
+   },
+   "peak_rss_mb": null,
+   "recorded_utc": "2026-10-11T21:11:54Z",
+   "seeds": [
+    0,
+    1,
+    2
+   ],
+   "status": "done",
+   "wall_seconds": null
+  },
+  "loop_W2_seed_disagreement_4m": {
+   "classification": "DESCRIPTIVE",
+   "command": "python experiments/phase2_research_loop.py run",
+   "commit": "0703fb8685c6f4685ecef8ec3d103c8725ab754d",
+   "headline": {
+    "0-100": {
+     "keys": 25400,
+     "ratio": 1.0034118585661091,
+     "seed_tv_2m": 0.3386318671265812,
+     "seed_tv_4m": 0.3397872311631946
+    },
+    "100-1000": {
+     "keys": 35675,
+     "ratio": 0.9367482148334385,
+     "seed_tv_2m": 0.30777814429199146,
+     "seed_tv_4m": 0.28831062723027145
+    },
+    "1000-10000": {
+     "keys": 46299,
+     "ratio": 0.900858505471901,
+     "seed_tv_2m": 0.24145247512148302,
+     "seed_tv_4m": 0.21751451588043055
+    },
+    "10000-inf": {
+     "keys": 30444,
+     "ratio": 0.8801026260241126,
+     "seed_tv_2m": 0.16477154848703934,
+     "seed_tv_4m": 0.14501587251750273
+    }
+   },
+   "inputs": {},
+   "mode": "confirmation",
+   "name": "loop_W2_seed_disagreement_4m",
+   "notes": "STRUCTURAL (training does not resolve it); researcher-directed follow-up of Program 18 (the loop rule table did not fire for W2)",
+   "outputs": {
+    "results/phase2/loop/results.json": "6626a81e1a9fd4738b1a0872401e227f7a0968c90f2324ae78665579e4626b5b"
+   },
+   "peak_rss_mb": null,
+   "recorded_utc": "2026-10-11T21:11:54Z",
+   "seeds": [
+    0,
+    1,
+    2
+   ],
+   "status": "done",
+   "wall_seconds": null
+  },
   "p10_redteam_confirmation": {
    "classification": "VALIDATION",
    "command": "python experiments/phase2_redteam.py && python experiments/phase2_redteam_overlap.py",

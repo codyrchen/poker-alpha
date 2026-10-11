@@ -59,12 +59,15 @@ def do_plan():
 
 
 def policies(path):
-    z = np.load(path, allow_pickle=False)
-    keys, off, probs, vis = z["keys"], z["action_offsets"], z["probs"].astype(np.float64), z["visits"]
+    with np.load(path, allow_pickle=False) as z:     # read each member ONCE
+        keys, off, probs, vis, acts = (z["keys"].tolist(), z["action_offsets"].tolist(),
+                                       z["probs"].astype(np.float64), z["visits"], z["actions"].tolist())
     out = {}
     for i, k in enumerate(keys):
-        p = probs[off[i]:off[i + 1]]
-        out[str(k)] = (tuple(z["actions"][off[i]:off[i + 1]]), p / p.sum() if p.sum() > 0 else p, float(vis[i]))
+        a, b = off[i], off[i + 1]
+        p = probs[a:b]
+        s = p.sum()
+        out[k] = (tuple(acts[a:b]), p / s if s > 0 else p, float(vis[i]))
     return out
 
 
