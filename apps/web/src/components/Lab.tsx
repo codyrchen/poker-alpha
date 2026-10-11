@@ -12,11 +12,13 @@ export function ProvenanceFooter({
   file,
   method,
   limitation,
+  reproduce = "python scripts/build_web_research_data.py",
 }: {
   envelope: { generated_from_commit?: string; strategy_sha256?: string; seed?: number };
   file: string;
   method: string;
   limitation: string;
+  reproduce?: string;
 }) {
   return (
     <footer className="labnote">
@@ -35,7 +37,7 @@ export function ProvenanceFooter({
           </a>
         </dd>
         <dt>Reproduce</dt>
-        <dd>python scripts/build_web_research_data.py</dd>
+        <dd>{reproduce}</dd>
         {envelope.generated_from_commit && (
           <>
             <dt>Commit</dt>
