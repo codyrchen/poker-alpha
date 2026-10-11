@@ -110,7 +110,7 @@ export default function ReplayPage() {
         <dd>{Math.round(P.visits).toLocaleString()}</dd>
       </dl>
       <p className="muted small" style={{ maxWidth: "44rem" }}>
-        Full Hold&nbsp;em has ~10<sup>160</sup> states, so the engine maps
+        Full Hold&rsquo;em has ~10<sup>160</sup> states, so the engine maps
         the real state into a compressed key — street, position, a
         river-strength percentile bucket, and the shape of the betting
         history. Strategically different hands CAN share a key; that risk is

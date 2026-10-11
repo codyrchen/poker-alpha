@@ -11,7 +11,7 @@ export default function OverviewPage() {
       <h1>PokerAlpha — one-page overview</h1>
       <p className="lead" style={{ maxWidth: "46rem" }}>
         An end-to-end research platform for decision-making under hidden
-        information, built independently by Cody Chen: a custom Hold&nbsp;em
+        information, built independently by Cody Chen: a custom Hold&rsquo;em
         engine, game-theoretic solvers, a {C.native_speedup.value}× C++
         training backend, an exact-game validation suite, a calibrated
         uncertainty layer, and a local analysis product.
@@ -19,7 +19,7 @@ export default function OverviewPage() {
 
       <h2>What was built (all implemented in this project)</h2>
       <ul style={{ marginLeft: "1.2rem", maxWidth: "46rem" }}>
-        <li><b>Game engine</b> — full HU/6-max Hold&nbsp;em rules: side pots, min-raise reopening, all-in semantics; property-fuzzed and exhaustively checked on reduced variants.</li>
+        <li><b>Game engine</b> — full HU/6-max Hold&rsquo;em rules: side pots, min-raise reopening, all-in semantics; property-fuzzed and exhaustively checked on reduced variants.</li>
         <li><b>Solvers</b> — CFR, CFR+, external-sampling MCCFR on a generic extensive-form Game interface (also runs Kuhn, Leduc, and a non-poker auction game).</li>
         <li><b>Native backend</b> — the complete training hot path in C++17/pybind11; bit-exact against Python on a shared random tape.</li>
         <li><b>Validation system</b> — nine-rung ladder from exact Kuhn equilibria to an honest restricted-LBR exploitability floor.</li>
@@ -86,7 +86,7 @@ export default function OverviewPage() {
       </p>
       <p className="muted small">
         PokerAlpha is an independent research and engineering project by
-        Cody Chen. The Hold&nbsp;em strategy is experimental — an abstract
+        Cody Chen. The Hold&rsquo;em strategy is experimental — an abstract
         MCCFR strategy, measurably exploitable, never claimed to be GTO.
       </p>
     </main>

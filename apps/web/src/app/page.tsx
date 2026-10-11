@@ -12,7 +12,7 @@ export default function Home() {
       <section className="hero">
         <h1>I built an end-to-end poker AI research platform.</h1>
         <p className="sub">
-          A custom Hold&nbsp;em engine, game-theoretic solvers that learn by
+          A custom Hold&rsquo;em engine, game-theoretic solvers that learn by
           self-play, a {C.native_speedup.value}× C++ training backend proven
           bit-identical to the Python reference, an exact-game validation
           system, a calibrated uncertainty layer that refuses weak answers —
@@ -140,7 +140,7 @@ export default function Home() {
         <div className="grid2">
           <div>
             <h3 style={{ marginTop: 0 }}>Trusted state</h3>
-            <p className="muted small">river value spot, 71k visits, seeds agree</p>
+            <p className="muted small">river value spot — the gate&rsquo;s evidence checks pass</p>
             <MixBar mix={H.mix} height={14} />
             <p className="mono small">check 83% · bet mixes behind it</p>
           </div>

@@ -39,7 +39,7 @@ result file; the limitations are measured, not disclaimed.
 | Training scale | 3 independent seeds × **2,000,000 iterations** (~50 min wall on a laptop), exact checkpoint resume |
 | Confidence calibration | abstention rule calibrated on **8,880 infosets with exact EV-regret targets**; v2 gives **1.7× the coverage at equal accepted risk**, held-out — [methodology](docs/solver_confidence_v2.md) |
 | Honest exploitability floor | validated restricted-LBR lower bound: every strategy in this family is still **≥ ~100 bb/100** exploitable in the full game — stated, not hidden |
-| Tests / CI | 835 tests; GitHub Actions on Linux + macOS arm64, including native C++ build + parity jobs |
+| Tests / CI | 944 tests; GitHub Actions on Linux + macOS arm64, including native C++ build + parity jobs |
 
 ## Architecture
 
@@ -226,7 +226,7 @@ reference detail: [docs/research_details.md](docs/research_details.md)):
 python3 -m venv .venv && source .venv/bin/activate
 python -m pip install -e ".[dev]"
 python -m poker_alpha.demo          # the research story, deterministic, ~12 s
-pytest                              # 835 tests (POKERALPHA_SKIP_SLOW=1 for the fast loop)
+pytest                              # 944 tests (POKERALPHA_SKIP_SLOW=1 for the fast loop)
 ```
 
 Optional:
@@ -352,7 +352,7 @@ poker_alpha/      the library: games/ solvers/ abstraction/ poker/ (card engine)
                   native/ (wrapper for the C++ backend) validation/
 cpp/              C++17 native MCCFR backend (pybind11, scikit-build-core)
 experiments/      seeded, parameterized scripts behind every reported number
-tests/            835 pytest tests incl. cross-language parity suites
+tests/            944 pytest tests incl. cross-language parity suites
 docs/             component docs; start at docs/solver_status_final.md
 results/          committed evidence: benchmarks/ validation/ (JSON),
                   strategy/ (release + preserved artifacts), data/, figures/

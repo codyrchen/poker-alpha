@@ -18,7 +18,7 @@ const STEPS: {
         Poker is hard for software for a specific reason: the most important
         information is <b>hidden</b>. Your opponent&rsquo;s cards are unknown,
         good play requires deliberately <b>randomizing</b> (or you become
-        predictable), and full no-limit Hold&nbsp;em has around 10
+        predictable), and full no-limit Hold&rsquo;em has around 10
         <sup>160</sup> states — far too many to ever enumerate.
       </>
     ),
@@ -139,7 +139,7 @@ const STEPS: {
         that produced every number on this site.
       </>
     ),
-    tech: "925 tests at the current commit; CI across Python 3.11/3.12, native Linux + macOS arm64, web and desktop. Claims live in a machine-checked registry.",
+    tech: "944 tests at the data-generation commit (see /evidence — the count is machine-checked, never quoted); CI across Python 3.11/3.12, native Linux + macOS arm64, web and desktop. Claims live in a machine-checked registry.",
     link: ["/evidence", "Evidence for every claim"],
   },
 ];
