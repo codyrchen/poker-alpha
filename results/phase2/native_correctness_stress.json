@@ -1,0 +1,25 @@
+{
+ "format": "pokeralpha.phase2.native_correctness_stress/v1",
+ "commit": "19686d47e5c861c4c64a911a4f0afeee9ad1d0da",
+ "native_backend": "0.1.0",
+ "checkpoint": {
+  "iterations": 100000,
+  "chunks": 10,
+  "continuous_hash": "8757c5db0dc98fdd9b721da979f004e18285a3f965af657afdf4ef4117df9b47",
+  "chunked_hash": "8757c5db0dc98fdd9b721da979f004e18285a3f965af657afdf4ef4117df9b47",
+  "identical": true,
+  "continuous_seconds": 62.75446341698989,
+  "chunked_with_save_load_seconds": 64.79971620789729,
+  "iterations_after": 100000
+ },
+ "shared_tape_parity": {
+  "iterations": 10000,
+  "iterate_value_mismatches": 0,
+  "first_mismatch": null,
+  "tape_position_python": 4484738,
+  "tape_position_native": 4484738,
+  "average_strategy_bit_identical": true,
+  "infosets": 102404,
+  "seconds": 440.728435582947
+ }
+}
