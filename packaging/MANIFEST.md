@@ -38,8 +38,8 @@ Build (frozen engine FIRST, then the shell):
     cd packaging && ../.venv/bin/pyinstaller --noconfirm pokeralpha_engine.spec
     cd ../apps/desktop && npm run pack
 
-Output: `apps/desktop/release/mac-arm64/PokerAlpha.app` — **485 MB**
-(Electron framework ~233 MB + the frozen engine ~227 MB under
+Output: `apps/desktop/release/mac-arm64/PokerAlpha.app` — **540 MB**
+(Electron 44 framework ~290 MB + the frozen engine ~227 MB under
 `Contents/Resources/engine/` via electron-builder extraResources).
 Signing explicitly disabled (`identity: null`): the app is a fully
 STANDALONE local build, but unsigned — Gatekeeper will warn, and

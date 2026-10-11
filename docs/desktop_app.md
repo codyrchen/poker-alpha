@@ -45,7 +45,7 @@ sidecar lines) — no stack traces at the user.
   independently validated — docs/observer_dataset.md); inputs are demo
   spots and manual states.
 
-Packaging status: **standalone** unsigned `.app` (485 MB) with the frozen
+Packaging status: **standalone** unsigned `.app` (540 MB) with the frozen
 engine embedded under `Contents/Resources/engine/` — verified outside the
 repository with no Python, no env vars and no pre-running API (see
 `packaging/MANIFEST.md`). Unsigned means Gatekeeper warns on first launch;

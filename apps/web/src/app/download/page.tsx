@@ -12,7 +12,7 @@ export default function DownloadPage() {
       <p>
         An Electron shell with a compact, always-on-top strategy overlay and
         the <b>engine bundled inside the app</b> — no Python, no environment
-        variables. Built from source it is fully standalone (~485 MB), but
+        variables. Built from source it is fully standalone (~540 MB), but
         <b> unsigned</b>: macOS Gatekeeper will warn on first launch, and
         there is no notarized installer yet (that requires Apple signing
         credentials).
