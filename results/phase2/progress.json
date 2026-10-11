@@ -17,17 +17,17 @@
   "P5_abstraction_science": "NOT_STARTED",
   "P6_local_resolving": "RUNNING",
   "P7_native_systems": "NOT_STARTED",
-  "P8_artifact_engineering": "NOT_STARTED",
+  "P8_artifact_engineering": "DONE",
   "P9_exhaustive_correctness": "DONE",
-  "P10_redteam_phase2": "NOT_STARTED",
+  "P10_redteam_phase2": "DONE",
   "P11_autonomous_loop": "NOT_STARTED",
-  "P12_bench_suite": "NOT_STARTED",
-  "P13_experiment_orchestration": "NOT_STARTED",
-  "P14_general_game": "NOT_STARTED",
+  "P12_bench_suite": "DONE",
+  "P13_experiment_orchestration": "DONE",
+  "P14_general_game": "DONE",
   "P15_agent_research": "NOT_STARTED",
   "P16_llm_bench_prep": "NOT_STARTED",
   "P17_strategy_compiler": "NOT_STARTED",
-  "P18_policy_geometry": "NOT_STARTED",
+  "P18_policy_geometry": "DONE",
   "P19_statistical_discipline": "NOT_STARTED",
   "P20_system_reliability": "NOT_STARTED",
   "P21_native_correctness_stress": "NOT_STARTED",
@@ -42,6 +42,8 @@
   "P4: seed disagreement carries false-confidence control, visits carry tail regret; recent movement alone anti-informative (AUC 0.47) and within noise inside the rule out of sample. No v3 proposed.",
   "P9: 14.75M reachable states over 3 reduced configs, 0 violations; metamorphic and 5 fault-injection tests pass.",
   "P2: first run had a node-accounting artifact (outcome-infoset walk charged to budget); fixed, uniform-prioritized now bit-identical to MCCFR. Rerun verdicts mixed; independent confirmation running.",
-  "P2 NULL after confirmation (seeds 100-119): no signal replicates; oracle BR also fails. Side effect: reduced-game sample_chance cache gives 3.8x MCCFR speedup with identical digest."
+  "P2 NULL after confirmation (seeds 100-119): no signal replicates; oracle BR also fails. Side effect: reduced-game sample_chance cache gives 3.8x MCCFR speedup with identical digest.",
+  "P10: 20k discovery + 10k independent confirmation; 17/18 top clusters confirmed; 90%/97.5% state-level confirmation. Model sensitivity occurs only on rollout fallback path. Collision signal inactive in release (1.4% of keys).",
+  "P6: first resolving run used profile cfvs in gadget (unsafe, 3/27 worse at 5 s); corrected to BR cfvs; rerun in progress."
  ]
 }

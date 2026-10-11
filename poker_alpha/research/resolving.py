@@ -23,8 +23,9 @@ Two resolving constructions:
 ``safe`` (re-solve gadget, Burch, Johanson & Bowling, AAAI 2014, "Solving
 Imperfect Information Games Using Decomposition")
     The opponent ``o`` enters the subtree through a gadget: for each of their
-    hands ``h`` they may *terminate* and receive their blueprint
-    counterfactual value ``t(h)`` at ``r``, or *follow* into the subtree. The
+    hands ``h`` they may *terminate* and receive their counterfactual
+    best-response value ``t(h)`` against the blueprint at ``r``, or *follow*
+    into the subtree. The
     resolver's range is the blueprint reach. At the gadget's equilibrium no
     opponent hand gains counterfactual value relative to the blueprint, so -
     to the extent the re-solve converges - the opponent's best response
@@ -106,8 +107,15 @@ class SubgameResolver:
         self.blueprint = blueprint_lifted
         self.reach = reach_at(raw, blueprint_lifted, root)
         self.nodes = subtree_nodes(raw, root)
-        # opponent's blueprint counterfactual values at the root (terminate payoffs)
-        self.t = raw._profile_pass(root, self.o, self.reach[self.o], self.reach[self.resolver], blueprint_lifted)
+        # Terminate payoffs: the opponent's counterfactual BEST-RESPONSE values
+        # at the root against the blueprint (Burch et al. 2014). With these the
+        # blueprint itself achieves the gadget optimum, so an exact re-solve
+        # can only lower every opponent hand's value (safety). Using the
+        # opponent's blueprint *profile* values instead (an earlier version of
+        # this module) is not safe: the measured study found re-solved
+        # strategies worse than the blueprint in 3/27 instances at 5 s.
+        self.t = raw._br_pass(root, self.o, self.reach[self.resolver], blueprint_lifted)
+        self.t_profile = raw._profile_pass(root, self.o, self.reach[self.o], self.reach[self.resolver], blueprint_lifted)
         self.gadget_regret = np.zeros((raw.n[self.o], 2))   # [terminate, follow]
         self.iterations = 0
 

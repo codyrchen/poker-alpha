@@ -1,0 +1,451 @@
+{
+ "format": "pokeralpha.phase2.general_games/v1",
+ "complexity": {
+  "kuhn": {
+   "game": "KuhnPoker:v1",
+   "nodes": 55,
+   "chance_nodes": 1,
+   "decision_nodes": 24,
+   "terminal_nodes": 30,
+   "infosets": 12,
+   "infosets_by_player": {
+    "0": 6,
+    "1": 6
+   },
+   "max_depth": 4,
+   "decision_branching_mean": 2.0,
+   "decision_branching_max": 2,
+   "histories_per_infoset_mean": 2.0,
+   "sequence_form_size": 24,
+   "branching": {
+    "chance:6": 1,
+    "decision:2": 24
+   },
+   "problems": [],
+   "ok": true
+  },
+  "leduc": {
+   "game": "LeducPoker:v1",
+   "nodes": 9451,
+   "chance_nodes": 151,
+   "decision_nodes": 3780,
+   "terminal_nodes": 5520,
+   "infosets": 288,
+   "infosets_by_player": {
+    "0": 144,
+    "1": 144
+   },
+   "max_depth": 10,
+   "decision_branching_mean": 2.3333333333333335,
+   "decision_branching_max": 3,
+   "histories_per_infoset_mean": 13.125,
+   "sequence_form_size": 672,
+   "branching": {
+    "chance:4": 150,
+    "chance:30": 1,
+    "decision:2": 2520,
+    "decision:3": 1260
+   },
+   "problems": [],
+   "ok": true
+  },
+  "auction_5x5": {
+   "game": "AuctionDuel:v1:values=5:bids=5",
+   "nodes": 776,
+   "chance_nodes": 1,
+   "decision_nodes": 150,
+   "terminal_nodes": 625,
+   "infosets": 10,
+   "infosets_by_player": {
+    "0": 5,
+    "1": 5
+   },
+   "max_depth": 3,
+   "decision_branching_mean": 5.0,
+   "decision_branching_max": 5,
+   "histories_per_infoset_mean": 15.0,
+   "sequence_form_size": 50,
+   "branching": {
+    "chance:25": 1,
+    "decision:5": 150
+   },
+   "problems": [],
+   "ok": true
+  },
+  "reduced_preflop_AKQJ_sh_8bb": {
+   "game": "ReducedPreflopGame:v1:ranks=AKQJ:suits=sh:stack=8:open=2.5:eq=300:seed=0",
+   "nodes": 9241,
+   "chance_nodes": 1,
+   "decision_nodes": 3360,
+   "terminal_nodes": 5880,
+   "infosets": 224,
+   "infosets_by_player": {
+    "0": 112,
+    "1": 112
+   },
+   "max_depth": 5,
+   "decision_branching_mean": 2.625,
+   "decision_branching_max": 4,
+   "histories_per_infoset_mean": 15.0,
+   "sequence_form_size": 588,
+   "branching": {
+    "chance:420": 1,
+    "decision:2": 1680,
+    "decision:3": 1260,
+    "decision:4": 420
+   },
+   "problems": [],
+   "ok": true
+  },
+  "river_subgame_6x6": {
+   "game": "RiverSubgame:v1::pot=10:stack=20:bets=(0.5, 1.0):cap=2",
+   "nodes": 1327,
+   "chance_nodes": 1,
+   "decision_nodes": 476,
+   "terminal_nodes": 850,
+   "infosets": 84,
+   "infosets_by_player": {
+    "0": 42,
+    "1": 42
+   },
+   "max_depth": 5,
+   "decision_branching_mean": 2.7142857142857144,
+   "decision_branching_max": 4,
+   "histories_per_infoset_mean": 5.666666666666667,
+   "sequence_form_size": 228,
+   "branching": {
+    "chance:34": 1,
+    "decision:2": 272,
+    "decision:3": 68,
+    "decision:4": 136
+   },
+   "problems": [],
+   "ok": true
+  },
+  "cheap_talk_3x3": {
+   "game": "SignalingGame:v1:prior=(0.5, 0.3, 0.2):payoff=((2.0, -1.0, -1.0), (-1.0, 2.0, -1.0), (-1.0, -1.0, 2.0)):cost=((0.0, 0.0, 0.0), (0.0, 0.0, 0.0), (0.0, 0.0, 0.0)):messages=3",
+   "nodes": 40,
+   "chance_nodes": 1,
+   "decision_nodes": 12,
+   "terminal_nodes": 27,
+   "infosets": 6,
+   "infosets_by_player": {
+    "0": 3,
+    "1": 3
+   },
+   "max_depth": 3,
+   "decision_branching_mean": 3.0,
+   "decision_branching_max": 3,
+   "histories_per_infoset_mean": 2.0,
+   "sequence_form_size": 18,
+   "branching": {
+    "chance:3": 1,
+    "decision:3": 12
+   },
+   "problems": [],
+   "ok": true
+  },
+  "costly_separating_3x3": {
+   "game": "SignalingGame:v1:prior=(0.5, 0.3, 0.2):payoff=((2.0, -1.0, -1.0), (-1.0, 2.0, -1.0), (-1.0, -1.0, 2.0)):cost=((0.0, 1.5, 3.0), (0.0, 0.0, 1.5), (0.0, 0.0, 0.0)):messages=3",
+   "nodes": 40,
+   "chance_nodes": 1,
+   "decision_nodes": 12,
+   "terminal_nodes": 27,
+   "infosets": 6,
+   "infosets_by_player": {
+    "0": 3,
+    "1": 3
+   },
+   "max_depth": 3,
+   "decision_branching_mean": 3.0,
+   "decision_branching_max": 3,
+   "histories_per_infoset_mean": 2.0,
+   "sequence_form_size": 18,
+   "branching": {
+    "chance:3": 1,
+    "decision:3": 12
+   },
+   "problems": [],
+   "ok": true
+  },
+  "beer_quiche_like_2x2": {
+   "game": "SignalingGame:v1:prior=(0.1, 0.9):payoff=((1.0, -1.0), (-1.0, 1.0)):cost=((0.0, 0.6), (0.6, 0.0)):messages=2",
+   "nodes": 15,
+   "chance_nodes": 1,
+   "decision_nodes": 6,
+   "terminal_nodes": 8,
+   "infosets": 4,
+   "infosets_by_player": {
+    "0": 2,
+    "1": 2
+   },
+   "max_depth": 3,
+   "decision_branching_mean": 2.0,
+   "decision_branching_max": 2,
+   "histories_per_infoset_mean": 1.5,
+   "sequence_form_size": 8,
+   "branching": {
+    "chance:2": 1,
+    "decision:2": 6
+   },
+   "problems": [],
+   "ok": true
+  }
+ },
+ "signaling": {
+  "cheap_talk_3x3": {
+   "no_information_value_receiver": 0.5,
+   "solvers": {
+    "cfr": {
+     "iterations": 3000,
+     "exploitability": 6.0634920634933254e-05,
+     "value_receiver": 0.49987873015873013,
+     "seconds": 0.38
+    },
+    "cfr+": {
+     "iterations": 3000,
+     "exploitability": 5.5537043214259896e-08,
+     "value_receiver": 0.4999998889259135,
+     "seconds": 0.57
+    },
+    "dcfr": {
+     "iterations": 3000,
+     "exploitability": 2.7763902288313602e-11,
+     "value_receiver": 0.4999999999444722,
+     "seconds": 0.59
+    },
+    "lcfr": {
+     "iterations": 3000,
+     "exploitability": 5.553704324201547e-08,
+     "value_receiver": 0.4999998889259135,
+     "seconds": 0.7
+    },
+    "es_mccfr": {
+     "iterations": 200000,
+     "exploitability": 0.00033073719467313634,
+     "value_receiver": 0.49957060134315334,
+     "seconds": 13.5
+    },
+    "os_mccfr": {
+     "iterations": 200000,
+     "exploitability": 0.006042077043295513,
+     "value_receiver": 0.49693431130660987,
+     "seconds": 13.87
+    }
+   },
+   "reference_cfr_plus_20000": {
+    "exploitability": 1.2499374868468749e-09,
+    "value_receiver": 0.499999997500125,
+    "strategy": {
+     "S0": {
+      "m0": 0.3333333333333333,
+      "m1": 0.3333333333333333,
+      "m2": 0.3333333333333333
+     },
+     "R0": {
+      "a0": 0.9999999966668334,
+      "a1": 1.6665833374997916e-09,
+      "a2": 1.6665833374997916e-09
+     },
+     "R1": {
+      "a0": 0.9999999966668334,
+      "a1": 1.6665833374997916e-09,
+      "a2": 1.6665833374997916e-09
+     },
+     "R2": {
+      "a0": 0.9999999966668334,
+      "a1": 1.6665833374997916e-09,
+      "a2": 1.6665833374997916e-09
+     },
+     "S1": {
+      "m0": 0.3333333333333333,
+      "m1": 0.3333333333333333,
+      "m2": 0.3333333333333333
+     },
+     "S2": {
+      "m0": 0.3333333333333333,
+      "m1": 0.3333333333333333,
+      "m2": 0.3333333333333333
+     }
+    }
+   },
+   "cheap_talk_oracle": {
+    "expected_value_receiver": 0.5,
+    "solved_value_receiver": 0.499999997500125,
+    "abs_error": 2.4998749736937498e-09
+   }
+  },
+  "costly_separating_3x3": {
+   "no_information_value_receiver": 0.5,
+   "solvers": {
+    "cfr": {
+     "iterations": 3000,
+     "exploitability": 0.0004435537029706671,
+     "value_receiver": 0.5006608732095739,
+     "seconds": 0.35
+    },
+    "cfr+": {
+     "iterations": 3000,
+     "exploitability": 5.538174255304007e-07,
+     "value_receiver": 0.5000004104944987,
+     "seconds": 0.83
+    },
+    "dcfr": {
+     "iterations": 3000,
+     "exploitability": 6.756604720159487e-10,
+     "value_receiver": 0.5000000004825519,
+     "seconds": 0.67
+    },
+    "lcfr": {
+     "iterations": 3000,
+     "exploitability": 4.793937427582939e-07,
+     "value_receiver": 0.5000003204372825,
+     "seconds": 0.68
+    },
+    "es_mccfr": {
+     "iterations": 200000,
+     "exploitability": 8.370448732492042e-05,
+     "value_receiver": 0.500075771442943,
+     "seconds": 13.44
+    },
+    "os_mccfr": {
+     "iterations": 200000,
+     "exploitability": 0.026209653673515076,
+     "value_receiver": 0.5004310621551528,
+     "seconds": 12.46
+    }
+   },
+   "reference_cfr_plus_20000": {
+    "exploitability": 1.2464422549651744e-08,
+    "value_receiver": 0.5000000092387427,
+    "strategy": {
+     "S0": {
+      "m0": 0.9999999785191251,
+      "m1": 1.8121804202931123e-08,
+      "m2": 3.359070759471389e-09
+     },
+     "R0": {
+      "a0": 0.9999999915850863,
+      "a1": 6.748330284143768e-09,
+      "a2": 1.6665833374997916e-09
+     },
+     "R1": {
+      "a0": 0.7291799138144642,
+      "a1": 0.12305004448049565,
+      "a2": 0.14777004170504024
+     },
+     "R2": {
+      "a0": 0.4323527245949292,
+      "a1": 1.6665833374997906e-09,
+      "a2": 0.5676472737384876
+     },
+     "S1": {
+      "m0": 0.9999999839577429,
+      "m1": 1.4375673735965893e-08,
+      "m2": 1.6665833374997916e-09
+     },
+     "S2": {
+      "m0": 0.9999999686684973,
+      "m1": 2.6331752699801645e-08,
+      "m2": 4.999750012499375e-09
+     }
+    }
+   },
+   "posterior_type_given_message": {
+    "m0": [
+     0.5,
+     0.3,
+     0.2
+    ],
+    "m1": [
+     0.4861,
+     0.2314,
+     0.2825
+    ],
+    "m2": [
+     0.5282,
+     0.1573,
+     0.3145
+    ]
+   },
+   "value_gain_vs_no_information": 9.238742659789523e-09
+  },
+  "beer_quiche_like_2x2": {
+   "no_information_value_receiver": 0.8,
+   "solvers": {
+    "cfr": {
+     "iterations": 3000,
+     "exploitability": 0.004023476091789047,
+     "value_receiver": 0.8594762415347703,
+     "seconds": 0.15
+    },
+    "cfr+": {
+     "iterations": 3000,
+     "exploitability": 6.870216306154031e-05,
+     "value_receiver": 0.8599998728822944,
+     "seconds": 0.29
+    },
+    "dcfr": {
+     "iterations": 3000,
+     "exploitability": 2.49094470325395e-05,
+     "value_receiver": 0.8600000100720282,
+     "seconds": 0.27
+    },
+    "lcfr": {
+     "iterations": 3000,
+     "exploitability": 0.00026147339802784497,
+     "value_receiver": 0.8600008685050352,
+     "seconds": 0.32
+    },
+    "es_mccfr": {
+     "iterations": 200000,
+     "exploitability": 0.00021718870423542702,
+     "value_receiver": 0.8599703374852883,
+     "seconds": 11.79
+    },
+    "os_mccfr": {
+     "iterations": 200000,
+     "exploitability": 0.004876240328896997,
+     "value_receiver": 0.8599823909828057,
+     "seconds": 12.27
+    }
+   },
+   "reference_cfr_plus_20000": {
+    "exploitability": 1.4142275982786945e-05,
+    "value_receiver": 0.8599999989915743,
+    "strategy": {
+     "S0": {
+      "m0": 0.8999688931720655,
+      "m1": 0.1000311068279345
+     },
+     "R0": {
+      "a0": 0.2999519202225623,
+      "a1": 0.7000480797774378
+     },
+     "R1": {
+      "a0": 2.4998750062496873e-09,
+      "a1": 0.999999997500125
+     },
+     "S1": {
+      "m0": 0.10003110682782779,
+      "m1": 0.8999688931721722
+     }
+    }
+   },
+   "posterior_type_given_message": {
+    "m0": [
+     0.4999,
+     0.5001
+    ],
+    "m1": [
+     0.0122,
+     0.9878
+    ]
+   },
+   "value_gain_vs_no_information": 0.059999998991574266
+  }
+ },
+ "solver_core_modifications_required": "none: solvers imported unchanged from poker_alpha.solvers / research.cfr_variants",
+ "seconds": 96.4,
+ "commit": "d41c67369eb15cd9e848b56ac44b1a1365875098"
+}

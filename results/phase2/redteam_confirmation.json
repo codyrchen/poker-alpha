@@ -1,0 +1,644 @@
+{
+ "format": "pokeralpha.phase2.redteam_confirmation/v1",
+ "discovery_seed": 101,
+ "confirmation_seed": 202,
+ "n_confirmation_scored": 10000,
+ "population_failure_rates_confirmation": {
+  "gate_rejected": 0.5029,
+  "seed_disagreement": 0.4896,
+  "low_visits": 0.0057,
+  "translation_distance": 0.1377,
+  "local_sensitivity": 0.0047,
+  "model_sensitivity": 0.4077
+ },
+ "cluster_confirmation": {
+  "gate_rejected": [
+   {
+    "cluster": "Preflop|spr>=8|bet0.4-0.9",
+    "discovery_rate": 0.8883580588383203,
+    "discovery_n": 3977,
+    "confirmation_rate": 0.8982528263103803,
+    "confirmation_ci95": [
+     0.8840263646598837,
+     0.9109100035045866
+    ],
+    "confirmation_n": 1946,
+    "confirmation_population_rate": 0.5029,
+    "confirmed_above_population": true,
+    "effect_size_rate_difference": 0.39535282631038027,
+    "lift": 1.7861460057871947
+   },
+   {
+    "cluster": "Flop|spr<1|betunopened",
+    "discovery_rate": 0.8571428571428571,
+    "discovery_n": 42,
+    "confirmation_rate": 0.7142857142857143,
+    "confirmation_ci95": [
+     0.500432261771624,
+     0.8618632425437179
+    ],
+    "confirmation_n": 21,
+    "confirmation_population_rate": 0.5029,
+    "confirmed_above_population": false,
+    "effect_size_rate_difference": 0.2113857142857143,
+    "lift": 1.4203334943044628
+   },
+   {
+    "cluster": "Preflop|spr3-8|bet0.9-2",
+    "discovery_rate": 0.746031746031746,
+    "discovery_n": 189,
+    "confirmation_rate": 0.676056338028169,
+    "confirmation_ci95": [
+     0.5606093871720553,
+     0.7734294361561472
+    ],
+    "confirmation_n": 71,
+    "confirmation_population_rate": 0.5029,
+    "confirmed_above_population": true,
+    "effect_size_rate_difference": 0.173156338028169,
+    "lift": 1.3443156453135197
+   }
+  ],
+  "seed_disagreement": [
+   {
+    "cluster": "Preflop|spr>=8|bet0.4-0.9",
+    "discovery_rate": 0.885592154890621,
+    "discovery_n": 3977,
+    "confirmation_rate": 0.8961973278520041,
+    "confirmation_ci95": [
+     0.8818560013377752,
+     0.9089774694426205
+    ],
+    "confirmation_n": 1946,
+    "confirmation_population_rate": 0.4896,
+    "confirmed_above_population": true,
+    "effect_size_rate_difference": 0.40659732785200414,
+    "lift": 1.8304683983905314
+   },
+   {
+    "cluster": "Preflop|spr3-8|bet0.4-0.9",
+    "discovery_rate": 0.7903225806451613,
+    "discovery_n": 62,
+    "confirmation_rate": 0.7105263157894737,
+    "confirmation_ci95": [
+     0.5524256173381024,
+     0.8299689373634387
+    ],
+    "confirmation_n": 38,
+    "confirmation_population_rate": 0.4896,
+    "confirmed_above_population": true,
+    "effect_size_rate_difference": 0.2209263157894737,
+    "lift": 1.4512383900928794
+   },
+   {
+    "cluster": "Preflop|spr3-8|bet0.9-2",
+    "discovery_rate": 0.7301587301587301,
+    "discovery_n": 189,
+    "confirmation_rate": 0.6619718309859155,
+    "confirmation_ci95": [
+     0.5461640065219604,
+     0.7611517109399859
+    ],
+    "confirmation_n": 71,
+    "confirmation_population_rate": 0.4896,
+    "confirmed_above_population": true,
+    "effect_size_rate_difference": 0.17237183098591552,
+    "lift": 1.3520666482555463
+   }
+  ],
+  "low_visits": [
+   {
+    "cluster": "River|spr3-8|bet0.4-0.9",
+    "discovery_rate": 0.07407407407407407,
+    "discovery_n": 54,
+    "confirmation_rate": 0.043478260869565216,
+    "confirmation_ci95": [
+     0.0077164669621267445,
+     0.20991586494059142
+    ],
+    "confirmation_n": 23,
+    "confirmation_population_rate": 0.0057,
+    "confirmed_above_population": true,
+    "effect_size_rate_difference": 0.03777826086956522,
+    "lift": 7.6277650648360025
+   },
+   {
+    "cluster": "Preflop|spr>=8|bet>=2",
+    "discovery_rate": 0.03773584905660377,
+    "discovery_n": 424,
+    "confirmation_rate": 0.041884816753926704,
+    "confirmation_ci95": [
+     0.02137375216179106,
+     0.08046076367055685
+    ],
+    "confirmation_n": 191,
+    "confirmation_population_rate": 0.0057,
+    "confirmed_above_population": true,
+    "effect_size_rate_difference": 0.03618481675392671,
+    "lift": 7.348213465601176
+   },
+   {
+    "cluster": "Preflop|spr>=8|bet0.9-2",
+    "discovery_rate": 0.031413612565445025,
+    "discovery_n": 764,
+    "confirmation_rate": 0.0480225988700565,
+    "confirmation_ci95": [
+     0.030195915669896035,
+     0.07555366738584707
+    ],
+    "confirmation_n": 354,
+    "confirmation_population_rate": 0.0057,
+    "confirmed_above_population": true,
+    "effect_size_rate_difference": 0.0423225988700565,
+    "lift": 8.425017345623948
+   }
+  ],
+  "translation_distance": [
+   {
+    "cluster": "Flop|spr3-8|bet0.9-2",
+    "discovery_rate": 0.9666666666666667,
+    "discovery_n": 60,
+    "confirmation_rate": 0.9090909090909091,
+    "confirmation_ci95": [
+     0.7642705646564897,
+     0.968596628950737
+    ],
+    "confirmation_n": 33,
+    "confirmation_population_rate": 0.1377,
+    "confirmed_above_population": true,
+    "effect_size_rate_difference": 0.771390909090909,
+    "lift": 6.601967386281112
+   },
+   {
+    "cluster": "Turn|spr<1|bet<0.4",
+    "discovery_rate": 0.975,
+    "discovery_n": 40,
+    "confirmation_rate": 1.0,
+    "confirmation_ci95": [
+     0.7846829880728186,
+     1.0
+    ],
+    "confirmation_n": 14,
+    "confirmation_population_rate": 0.1377,
+    "confirmed_above_population": true,
+    "effect_size_rate_difference": 0.8623000000000001,
+    "lift": 7.262164124909224
+   },
+   {
+    "cluster": "Flop|spr1-3|bet<0.4",
+    "discovery_rate": 0.9367088607594937,
+    "discovery_n": 79,
+    "confirmation_rate": 0.9210526315789473,
+    "confirmation_ci95": [
+     0.792003210797347,
+     0.972785898605735
+    ],
+    "confirmation_n": 38,
+    "confirmation_population_rate": 0.1377,
+    "confirmed_above_population": true,
+    "effect_size_rate_difference": 0.7833526315789474,
+    "lift": 6.688835378205864
+   }
+  ],
+  "local_sensitivity": [
+   {
+    "cluster": "Turn|spr>=8|bet0.9-2",
+    "discovery_rate": 0.10606060606060606,
+    "discovery_n": 132,
+    "confirmation_rate": 0.12048192771084337,
+    "confirmation_ci95": [
+     0.06677618440538881,
+     0.2077650492890618
+    ],
+    "confirmation_n": 83,
+    "confirmation_population_rate": 0.0047,
+    "confirmed_above_population": true,
+    "effect_size_rate_difference": 0.11578192771084338,
+    "lift": 25.63445270443476
+   },
+   {
+    "cluster": "River|spr>=8|bet0.9-2",
+    "discovery_rate": 0.1111111111111111,
+    "discovery_n": 63,
+    "confirmation_rate": 0.10256410256410256,
+    "confirmation_ci95": [
+     0.04061265558286986,
+     0.2357915870224483
+    ],
+    "confirmation_n": 39,
+    "confirmation_population_rate": 0.0047,
+    "confirmed_above_population": true,
+    "effect_size_rate_difference": 0.09786410256410256,
+    "lift": 21.822149481723947
+   },
+   {
+    "cluster": "Flop|spr>=8|bet0.9-2",
+    "discovery_rate": 0.06336088154269973,
+    "discovery_n": 363,
+    "confirmation_rate": 0.056818181818181816,
+    "confirmation_ci95": [
+     0.03115160867372349,
+     0.10141838625514724
+    ],
+    "confirmation_n": 176,
+    "confirmation_population_rate": 0.0047,
+    "confirmed_above_population": true,
+    "effect_size_rate_difference": 0.052118181818181814,
+    "lift": 12.088974854932301
+   }
+  ],
+  "model_sensitivity": [
+   {
+    "cluster": "Preflop|spr>=8|bet0.4-0.9",
+    "discovery_rate": 0.7578576816696002,
+    "discovery_n": 3977,
+    "confirmation_rate": 0.7584789311408017,
+    "confirmation_ci95": [
+     0.7389649451644571,
+     0.7769744008829347
+    ],
+    "confirmation_n": 1946,
+    "confirmation_population_rate": 0.4077,
+    "confirmed_above_population": true,
+    "effect_size_rate_difference": 0.35077893114080166,
+    "lift": 1.860384918177095
+   },
+   {
+    "cluster": "Preflop|spr>=8|bet>=2",
+    "discovery_rate": 0.5259433962264151,
+    "discovery_n": 424,
+    "confirmation_rate": 0.5026178010471204,
+    "confirmation_ci95": [
+     0.4323593517746932,
+     0.5727730224205504
+    ],
+    "confirmation_n": 191,
+    "confirmation_population_rate": 0.4077,
+    "confirmed_above_population": true,
+    "effect_size_rate_difference": 0.09491780104712039,
+    "lift": 1.232812855156047
+   },
+   {
+    "cluster": "Preflop|spr>=8|betunopened",
+    "discovery_rate": 0.48834565093803295,
+    "discovery_n": 1759,
+    "confirmation_rate": 0.5077951002227171,
+    "confirmation_ci95": [
+     0.4751325481524013,
+     0.540391242278202
+    ],
+    "confirmation_n": 898,
+    "confirmation_population_rate": 0.4077,
+    "confirmed_above_population": true,
+    "effect_size_rate_difference": 0.10009510022271711,
+    "lift": 1.2455116512698483
+   }
+  ]
+ },
+ "state_confirmation": {
+  "local_sensitivity": {
+   "candidates": 40,
+   "rescored": 40,
+   "confirmed": 36,
+   "confirmation_rate": 0.9,
+   "discovery_mean": 0.946885,
+   "confirmation_mean": 0.8909749999999999,
+   "shrinkage": "regression to the mean expected: discovery scores are the max of many noisy draws",
+   "strongest_confirmed": {
+    "street": "Turn",
+    "spr": 24.25,
+    "facing_bet_bb": 2.0,
+    "pot_bb": 4.0,
+    "gate": "REJECTED",
+    "gate_reasons": [
+     "HIGH_SEED_DISAGREEMENT",
+     "UNSTABLE_ACROSS_CHECKPOINTS"
+    ],
+    "method": "Monte Carlo rollout",
+    "top_action": "all_in",
+    "mix": {
+     "all_in": 0.973,
+     "raise_100": 0.027
+    },
+    "gate_rejected": true,
+    "seed_disagreement": 0.569,
+    "visits": 14341.0,
+    "translation_distance": 0.3333333333333333,
+    "local_sensitivity": 1.0,
+    "model_sensitivity": 1.0,
+    "key": null,
+    "collision": null,
+    "cluster": "Turn|spr>=8|bet0.9-2",
+    "fail": {
+     "gate_rejected": true,
+     "seed_disagreement": true,
+     "low_visits": false,
+     "translation_distance": true,
+     "local_sensitivity": true,
+     "model_sensitivity": true
+    },
+    "state": {
+     "format": "pokeralpha.observed/v1",
+     "num_seats": 2,
+     "hero_seat": 0,
+     "dealer": 0,
+     "small_blind": 0.5,
+     "big_blind": 1.0,
+     "ante": 0.0,
+     "street": "TURN",
+     "hero_cards": [
+      "Td",
+      "9h"
+     ],
+     "board": [
+      "6s",
+      "6c",
+      "5c",
+      "6h"
+     ],
+     "pot": 4.0,
+     "actor": 0,
+     "seats": [
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 99.0,
+       "bet": 0.0,
+       "committed": 1.0,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      },
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 97.0,
+       "bet": 2.0,
+       "committed": 3.0,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      }
+     ],
+     "actions": [
+      {
+       "street": 0,
+       "seat": 0,
+       "kind": "call",
+       "amount": 0.5
+      },
+      {
+       "street": 0,
+       "seat": 1,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 1,
+       "seat": 1,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 1,
+       "seat": 0,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 2,
+       "seat": 1,
+       "kind": "bet",
+       "amount": 2.0
+      }
+     ],
+     "shown_cards": {},
+     "hand_id": "",
+     "timestamp": null,
+     "source": "simulation"
+    }
+   }
+  },
+  "model_sensitivity": {
+   "candidates": 40,
+   "rescored": 40,
+   "confirmed": 39,
+   "confirmation_rate": 0.975,
+   "discovery_mean": 1.0,
+   "confirmation_mean": 0.957575,
+   "shrinkage": "regression to the mean expected: discovery scores are the max of many noisy draws",
+   "strongest_confirmed": {
+    "street": "River",
+    "spr": 2.43,
+    "facing_bet_bb": 9.5,
+    "pot_bb": 32.5,
+    "gate": "REJECTED",
+    "gate_reasons": [
+     "HIGH_SEED_DISAGREEMENT"
+    ],
+    "method": "Monte Carlo rollout",
+    "top_action": "all_in",
+    "mix": {
+     "all_in": 1.0
+    },
+    "gate_rejected": true,
+    "seed_disagreement": 0.7984,
+    "visits": 48.0,
+    "translation_distance": 0.3333333333333333,
+    "local_sensitivity": 0.0,
+    "model_sensitivity": 1.0,
+    "key": null,
+    "collision": null,
+    "cluster": "River|spr1-3|bet0.4-0.9",
+    "fail": {
+     "gate_rejected": true,
+     "seed_disagreement": true,
+     "low_visits": false,
+     "translation_distance": true,
+     "local_sensitivity": false,
+     "model_sensitivity": true
+    },
+    "state": {
+     "format": "pokeralpha.observed/v1",
+     "num_seats": 2,
+     "hero_seat": 0,
+     "dealer": 0,
+     "small_blind": 0.5,
+     "big_blind": 1.0,
+     "ante": 0.0,
+     "street": "RIVER",
+     "hero_cards": [
+      "Ac",
+      "5s"
+     ],
+     "board": [
+      "Kc",
+      "Qh",
+      "6s",
+      "Qd",
+      "8d"
+     ],
+     "pot": 32.5,
+     "actor": 0,
+     "seats": [
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 88.5,
+       "bet": 2.0,
+       "committed": 11.5,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      },
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 79.0,
+       "bet": 11.5,
+       "committed": 21.0,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      }
+     ],
+     "actions": [
+      {
+       "street": 0,
+       "seat": 0,
+       "kind": "raise",
+       "amount": 5.5
+      },
+      {
+       "street": 0,
+       "seat": 1,
+       "kind": "call",
+       "amount": 4.5
+      },
+      {
+       "street": 1,
+       "seat": 1,
+       "kind": "bet",
+       "amount": 1.5
+      },
+      {
+       "street": 1,
+       "seat": 0,
+       "kind": "call",
+       "amount": 1.5
+      },
+      {
+       "street": 2,
+       "seat": 1,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 2,
+       "seat": 0,
+       "kind": "bet",
+       "amount": 2.5
+      },
+      {
+       "street": 2,
+       "seat": 1,
+       "kind": "call",
+       "amount": 2.5
+      },
+      {
+       "street": 3,
+       "seat": 1,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 3,
+       "seat": 0,
+       "kind": "bet",
+       "amount": 2.0
+      },
+      {
+       "street": 3,
+       "seat": 1,
+       "kind": "raise",
+       "amount": 11.5
+      }
+     ],
+     "shown_cards": {},
+     "hand_id": "",
+     "timestamp": null,
+     "source": "simulation"
+    }
+   }
+  }
+ },
+ "overlap_with_abstraction_signals_confirmation": {
+  "gate_rejected": {
+   "n_fail": 5029,
+   "n_ok": 4971,
+   "mean_collision_fail": null,
+   "mean_collision_ok": 0.01351212021568622,
+   "high_collision_share_fail": null,
+   "high_collision_share_ok": 0.002527075812274368,
+   "visits_lt_100_share_fail": 0.023861602704314974,
+   "visits_lt_100_share_ok": 0.003621001810500905,
+   "collision_available_fail": 0,
+   "collision_available_ok": 2770
+  },
+  "seed_disagreement": {
+   "n_fail": 4896,
+   "n_ok": 5104,
+   "mean_collision_fail": null,
+   "mean_collision_ok": 0.01351212021568622,
+   "high_collision_share_fail": null,
+   "high_collision_share_ok": 0.002527075812274368,
+   "visits_lt_100_share_fail": 0.023080065359477125,
+   "visits_lt_100_share_ok": 0.004898119122257054,
+   "collision_available_fail": 0,
+   "collision_available_ok": 2770
+  },
+  "translation_distance": {
+   "n_fail": 1377,
+   "n_ok": 8623,
+   "mean_collision_fail": 0.0,
+   "mean_collision_ok": 0.014935583797865455,
+   "high_collision_share_fail": 0.0,
+   "high_collision_share_ok": 0.002793296089385475,
+   "visits_lt_100_share_fail": 0.03558460421205519,
+   "visits_lt_100_share_ok": 0.010321233909312305,
+   "collision_available_fail": 264,
+   "collision_available_ok": 2506
+  },
+  "local_sensitivity": {
+   "n_fail": 47,
+   "n_ok": 9953,
+   "mean_collision_fail": 0.0,
+   "mean_collision_ok": 0.013546352876384664,
+   "high_collision_share_fail": 0.0,
+   "high_collision_share_ok": 0.0025334781035106766,
+   "visits_lt_100_share_fail": 0.02127659574468085,
+   "visits_lt_100_share_ok": 0.013764694062091831,
+   "collision_available_fail": 7,
+   "collision_available_ok": 2763
+  },
+  "model_sensitivity": {
+   "n_fail": 4077,
+   "n_ok": 5923,
+   "mean_collision_fail": null,
+   "mean_collision_ok": 0.01351212021568622,
+   "high_collision_share_fail": null,
+   "high_collision_share_ok": 0.002527075812274368,
+   "visits_lt_100_share_fail": 0.023301447142506745,
+   "visits_lt_100_share_ok": 0.007259834543305757,
+   "collision_available_fail": 0,
+   "collision_available_ok": 2770
+  }
+ },
+ "rescore_config": {
+  "equity_simulations": 400,
+  "rollout_simulations": 400,
+  "decision_seed": 99
+ },
+ "wall_seconds": 176.4,
+ "commit": "d41c67369eb15cd9e848b56ac44b1a1365875098"
+}
