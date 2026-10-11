@@ -1,14 +1,14 @@
 {
  "format": "pokeralpha.redteam/v1",
  "seed": 7,
- "n_states_sampled": 120,
- "n_states_scored": 120,
+ "n_states_sampled": 400,
+ "n_states_scored": 400,
  "config": {
   "equity_simulations": 100,
   "rollout_simulations": 100,
   "seed": 0
  },
- "wall_seconds": 10.1,
+ "wall_seconds": 34.1,
  "discipline": "DISCOVERY results from random search; extreme values must be replicated with independent seeds/samples before becoming claims",
  "leaderboards": {
   "rejected_states": [
@@ -1782,6 +1782,73 @@
      "ante": 0.0,
      "street": "PREFLOP",
      "hero_cards": [
+      "7s",
+      "8s"
+     ],
+     "board": [],
+     "pot": 1.5,
+     "actor": 0,
+     "seats": [
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 99.5,
+       "bet": 0.5,
+       "committed": 0.5,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      },
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 99.0,
+       "bet": 1.0,
+       "committed": 1.0,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      }
+     ],
+     "actions": [],
+     "shown_cards": {},
+     "hand_id": "",
+     "timestamp": null,
+     "source": "simulation"
+    },
+    "street": "Preflop",
+    "spr": 66.0,
+    "facing_bet_bb": 0.5,
+    "pot_bb": 1.5,
+    "gate": "REJECTED",
+    "gate_reasons": [
+     "HIGH_SEED_DISAGREEMENT"
+    ],
+    "method": "Monte Carlo rollout",
+    "top_action": "all_in",
+    "mix": {
+     "all_in": 0.403,
+     "raise_100": 0.326,
+     "raise_75": 0.271
+    },
+    "gate_rejected": true,
+    "seed_disagreement": 1.8785,
+    "visits": 6115.0,
+    "translation_distance": 0.010101010101009998,
+    "local_sensitivity": 0.008,
+    "model_sensitivity": 0.684
+   },
+   {
+    "state": {
+     "format": "pokeralpha.observed/v1",
+     "num_seats": 2,
+     "hero_seat": 0,
+     "dealer": 0,
+     "small_blind": 0.5,
+     "big_blind": 1.0,
+     "ante": 0.0,
+     "street": "PREFLOP",
+     "hero_cards": [
       "3c",
       "9s"
      ],
@@ -1851,6 +1918,86 @@
     "translation_distance": 0.20000000000000004,
     "local_sensitivity": 0.02,
     "model_sensitivity": 0.935
+   },
+   {
+    "state": {
+     "format": "pokeralpha.observed/v1",
+     "num_seats": 2,
+     "hero_seat": 0,
+     "dealer": 0,
+     "small_blind": 0.5,
+     "big_blind": 1.0,
+     "ante": 0.0,
+     "street": "PREFLOP",
+     "hero_cards": [
+      "6s",
+      "8s"
+     ],
+     "board": [],
+     "pot": 3.0,
+     "actor": 0,
+     "seats": [
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 99.0,
+       "bet": 1.0,
+       "committed": 1.0,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      },
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 98.0,
+       "bet": 2.0,
+       "committed": 2.0,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      }
+     ],
+     "actions": [
+      {
+       "street": 0,
+       "seat": 0,
+       "kind": "call",
+       "amount": 0.5
+      },
+      {
+       "street": 0,
+       "seat": 1,
+       "kind": "raise",
+       "amount": 2.0
+      }
+     ],
+     "shown_cards": {},
+     "hand_id": "",
+     "timestamp": null,
+     "source": "simulation"
+    },
+    "street": "Preflop",
+    "spr": 32.67,
+    "facing_bet_bb": 1.0,
+    "pot_bb": 3.0,
+    "gate": "REJECTED",
+    "gate_reasons": [
+     "HIGH_SEED_DISAGREEMENT"
+    ],
+    "method": "Monte Carlo rollout",
+    "top_action": "raise_100",
+    "mix": {
+     "raise_100": 0.552,
+     "all_in": 0.423,
+     "raise_75": 0.025
+    },
+    "gate_rejected": true,
+    "seed_disagreement": 1.6403,
+    "visits": 3834.0,
+    "translation_distance": 0.010101010101009998,
+    "local_sensitivity": 0.006,
+    "model_sensitivity": 0.79
    },
    {
     "state": {
@@ -1927,6 +2074,159 @@
     "translation_distance": 0.3333333333333333,
     "local_sensitivity": 0.038,
     "model_sensitivity": 0.695
+   },
+   {
+    "state": {
+     "format": "pokeralpha.observed/v1",
+     "num_seats": 2,
+     "hero_seat": 0,
+     "dealer": 1,
+     "small_blind": 0.5,
+     "big_blind": 1.0,
+     "ante": 0.0,
+     "street": "PREFLOP",
+     "hero_cards": [
+      "5s",
+      "As"
+     ],
+     "board": [],
+     "pot": 2.0,
+     "actor": 0,
+     "seats": [
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 99.0,
+       "bet": 1.0,
+       "committed": 1.0,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      },
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 99.0,
+       "bet": 1.0,
+       "committed": 1.0,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      }
+     ],
+     "actions": [
+      {
+       "street": 0,
+       "seat": 1,
+       "kind": "call",
+       "amount": 0.5
+      }
+     ],
+     "shown_cards": {},
+     "hand_id": "",
+     "timestamp": null,
+     "source": "simulation"
+    },
+    "street": "Preflop",
+    "spr": 49.5,
+    "facing_bet_bb": 0.0,
+    "pot_bb": 2.0,
+    "gate": "REJECTED",
+    "gate_reasons": [
+     "HIGH_SEED_DISAGREEMENT"
+    ],
+    "method": "Monte Carlo rollout",
+    "top_action": "all_in",
+    "mix": {
+     "all_in": 0.999,
+     "bet_100": 0.001
+    },
+    "gate_rejected": true,
+    "seed_disagreement": 1.5548,
+    "visits": 6032.0,
+    "translation_distance": null,
+    "local_sensitivity": null,
+    "model_sensitivity": 0.987
+   },
+   {
+    "state": {
+     "format": "pokeralpha.observed/v1",
+     "num_seats": 2,
+     "hero_seat": 0,
+     "dealer": 0,
+     "small_blind": 0.5,
+     "big_blind": 1.0,
+     "ante": 0.0,
+     "street": "PREFLOP",
+     "hero_cards": [
+      "Kc",
+      "Jd"
+     ],
+     "board": [],
+     "pot": 4.0,
+     "actor": 0,
+     "seats": [
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 99.0,
+       "bet": 1.0,
+       "committed": 1.0,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      },
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 97.0,
+       "bet": 3.0,
+       "committed": 3.0,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      }
+     ],
+     "actions": [
+      {
+       "street": 0,
+       "seat": 0,
+       "kind": "call",
+       "amount": 0.5
+      },
+      {
+       "street": 0,
+       "seat": 1,
+       "kind": "raise",
+       "amount": 3.0
+      }
+     ],
+     "shown_cards": {},
+     "hand_id": "",
+     "timestamp": null,
+     "source": "simulation"
+    },
+    "street": "Preflop",
+    "spr": 24.25,
+    "facing_bet_bb": 2.0,
+    "pot_bb": 4.0,
+    "gate": "REJECTED",
+    "gate_reasons": [
+     "HIGH_SEED_DISAGREEMENT"
+    ],
+    "method": "Monte Carlo rollout",
+    "top_action": "raise_100",
+    "mix": {
+     "raise_100": 0.497,
+     "all_in": 0.316,
+     "raise_75": 0.187
+    },
+    "gate_rejected": true,
+    "seed_disagreement": 1.5421,
+    "visits": 1119.0,
+    "translation_distance": 0.3333333333333333,
+    "local_sensitivity": 0.018,
+    "model_sensitivity": 0.663
    },
    {
     "state": {
@@ -2005,1260 +2305,37 @@
      "small_blind": 0.5,
      "big_blind": 1.0,
      "ante": 0.0,
-     "street": "PREFLOP",
+     "street": "RIVER",
      "hero_cards": [
-      "9s",
-      "Ks"
-     ],
-     "board": [],
-     "pot": 2.0,
-     "actor": 0,
-     "seats": [
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 99.0,
-       "bet": 1.0,
-       "committed": 1.0,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      },
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 99.0,
-       "bet": 1.0,
-       "committed": 1.0,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      }
-     ],
-     "actions": [
-      {
-       "street": 0,
-       "seat": 1,
-       "kind": "call",
-       "amount": 0.5
-      }
-     ],
-     "shown_cards": {},
-     "hand_id": "",
-     "timestamp": null,
-     "source": "simulation"
-    },
-    "street": "Preflop",
-    "spr": 49.5,
-    "facing_bet_bb": 0.0,
-    "pot_bb": 2.0,
-    "gate": "REJECTED",
-    "gate_reasons": [
-     "HIGH_SEED_DISAGREEMENT"
-    ],
-    "method": "Monte Carlo rollout",
-    "top_action": "all_in",
-    "mix": {
-     "all_in": 0.984,
-     "bet_100": 0.016
-    },
-    "gate_rejected": true,
-    "seed_disagreement": 1.2896,
-    "visits": 6016.0,
-    "translation_distance": null,
-    "local_sensitivity": null,
-    "model_sensitivity": 0.181
-   },
-   {
-    "state": {
-     "format": "pokeralpha.observed/v1",
-     "num_seats": 2,
-     "hero_seat": 0,
-     "dealer": 0,
-     "small_blind": 0.5,
-     "big_blind": 1.0,
-     "ante": 0.0,
-     "street": "PREFLOP",
-     "hero_cards": [
-      "Jc",
-      "9d"
-     ],
-     "board": [],
-     "pot": 1.5,
-     "actor": 0,
-     "seats": [
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 99.5,
-       "bet": 0.5,
-       "committed": 0.5,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      },
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 99.0,
-       "bet": 1.0,
-       "committed": 1.0,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      }
-     ],
-     "actions": [],
-     "shown_cards": {},
-     "hand_id": "",
-     "timestamp": null,
-     "source": "simulation"
-    },
-    "street": "Preflop",
-    "spr": 66.0,
-    "facing_bet_bb": 0.5,
-    "pot_bb": 1.5,
-    "gate": "REJECTED",
-    "gate_reasons": [
-     "HIGH_SEED_DISAGREEMENT",
-     "UNSTABLE_ACROSS_CHECKPOINTS"
-    ],
-    "method": "Monte Carlo rollout",
-    "top_action": "raise_100",
-    "mix": {
-     "raise_100": 0.512,
-     "raise_75": 0.349,
-     "all_in": 0.139
-    },
-    "gate_rejected": true,
-    "seed_disagreement": 1.288,
-    "visits": 18114.0,
-    "translation_distance": 0.010101010101009998,
-    "local_sensitivity": 0.006,
-    "model_sensitivity": 0.59
-   },
-   {
-    "state": {
-     "format": "pokeralpha.observed/v1",
-     "num_seats": 2,
-     "hero_seat": 0,
-     "dealer": 0,
-     "small_blind": 0.5,
-     "big_blind": 1.0,
-     "ante": 0.0,
-     "street": "TURN",
-     "hero_cards": [
-      "6c",
-      "4h"
-     ],
-     "board": [
-      "7h",
-      "9s",
-      "Th",
+      "4c",
       "5h"
      ],
-     "pot": 2.0,
-     "actor": 0,
-     "seats": [
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 99.0,
-       "bet": 0.0,
-       "committed": 1.0,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      },
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 99.0,
-       "bet": 0.0,
-       "committed": 1.0,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      }
-     ],
-     "actions": [
-      {
-       "street": 0,
-       "seat": 0,
-       "kind": "call",
-       "amount": 0.5
-      },
-      {
-       "street": 0,
-       "seat": 1,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 1,
-       "seat": 1,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 1,
-       "seat": 0,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 2,
-       "seat": 1,
-       "kind": "check",
-       "amount": 0.0
-      }
-     ],
-     "shown_cards": {},
-     "hand_id": "",
-     "timestamp": null,
-     "source": "simulation"
-    },
-    "street": "Turn",
-    "spr": 49.5,
-    "facing_bet_bb": 0.0,
-    "pot_bb": 2.0,
-    "gate": "REJECTED",
-    "gate_reasons": [
-     "HIGH_SEED_DISAGREEMENT",
-     "UNSTABLE_ACROSS_CHECKPOINTS"
-    ],
-    "method": "Monte Carlo rollout",
-    "top_action": "all_in",
-    "mix": {
-     "all_in": 0.987,
-     "bet_100": 0.013
-    },
-    "gate_rejected": true,
-    "seed_disagreement": 1.2613,
-    "visits": 779.0,
-    "translation_distance": null,
-    "local_sensitivity": null,
-    "model_sensitivity": 0.916
-   },
-   {
-    "state": {
-     "format": "pokeralpha.observed/v1",
-     "num_seats": 2,
-     "hero_seat": 0,
-     "dealer": 1,
-     "small_blind": 0.5,
-     "big_blind": 1.0,
-     "ante": 0.0,
-     "street": "TURN",
-     "hero_cards": [
-      "Jc",
-      "Jh"
-     ],
      "board": [
-      "Td",
-      "2d",
-      "9d",
-      "8s"
-     ],
-     "pot": 10.0,
-     "actor": 0,
-     "seats": [
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 96.0,
-       "bet": 0.0,
-       "committed": 4.0,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      },
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 94.0,
-       "bet": 2.0,
-       "committed": 6.0,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      }
-     ],
-     "actions": [
-      {
-       "street": 0,
-       "seat": 1,
-       "kind": "raise",
-       "amount": 4.0
-      },
-      {
-       "street": 0,
-       "seat": 0,
-       "kind": "call",
-       "amount": 3.0
-      },
-      {
-       "street": 1,
-       "seat": 0,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 1,
-       "seat": 1,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 2,
-       "seat": 0,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 2,
-       "seat": 1,
-       "kind": "bet",
-       "amount": 2.0
-      }
-     ],
-     "shown_cards": {},
-     "hand_id": "",
-     "timestamp": null,
-     "source": "simulation"
-    },
-    "street": "Turn",
-    "spr": 9.4,
-    "facing_bet_bb": 2.0,
-    "pot_bb": 10.0,
-    "gate": "REJECTED",
-    "gate_reasons": [
-     "HIGH_SEED_DISAGREEMENT"
-    ],
-    "method": "Monte Carlo rollout",
-    "top_action": "call",
-    "mix": {
-     "call": 0.998,
-     "raise_75": 0.002
-    },
-    "gate_rejected": true,
-    "seed_disagreement": 1.2286,
-    "visits": 2258.0,
-    "translation_distance": 0.24242424242424246,
-    "local_sensitivity": 0.001,
-    "model_sensitivity": 0.923
-   },
-   {
-    "state": {
-     "format": "pokeralpha.observed/v1",
-     "num_seats": 2,
-     "hero_seat": 0,
-     "dealer": 1,
-     "small_blind": 0.5,
-     "big_blind": 1.0,
-     "ante": 0.0,
-     "street": "PREFLOP",
-     "hero_cards": [
+      "6h",
+      "Qd",
       "9c",
-      "9s"
-     ],
-     "board": [],
-     "pot": 2.0,
-     "actor": 0,
-     "seats": [
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 99.0,
-       "bet": 1.0,
-       "committed": 1.0,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      },
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 99.0,
-       "bet": 1.0,
-       "committed": 1.0,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      }
-     ],
-     "actions": [
-      {
-       "street": 0,
-       "seat": 1,
-       "kind": "call",
-       "amount": 0.5
-      }
-     ],
-     "shown_cards": {},
-     "hand_id": "",
-     "timestamp": null,
-     "source": "simulation"
-    },
-    "street": "Preflop",
-    "spr": 49.5,
-    "facing_bet_bb": 0.0,
-    "pot_bb": 2.0,
-    "gate": "REJECTED",
-    "gate_reasons": [
-     "HIGH_SEED_DISAGREEMENT",
-     "UNSTABLE_ACROSS_CHECKPOINTS"
-    ],
-    "method": "Monte Carlo rollout",
-    "top_action": "all_in",
-    "mix": {
-     "all_in": 0.688,
-     "bet_100": 0.306,
-     "bet_33": 0.006
-    },
-    "gate_rejected": true,
-    "seed_disagreement": 1.2069,
-    "visits": 9060.0,
-    "translation_distance": null,
-    "local_sensitivity": null,
-    "model_sensitivity": 0.278
-   },
-   {
-    "state": {
-     "format": "pokeralpha.observed/v1",
-     "num_seats": 2,
-     "hero_seat": 0,
-     "dealer": 0,
-     "small_blind": 0.5,
-     "big_blind": 1.0,
-     "ante": 0.0,
-     "street": "PREFLOP",
-     "hero_cards": [
-      "Kh",
-      "Js"
-     ],
-     "board": [],
-     "pot": 1.5,
-     "actor": 0,
-     "seats": [
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 99.5,
-       "bet": 0.5,
-       "committed": 0.5,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      },
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 99.0,
-       "bet": 1.0,
-       "committed": 1.0,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      }
-     ],
-     "actions": [],
-     "shown_cards": {},
-     "hand_id": "",
-     "timestamp": null,
-     "source": "simulation"
-    },
-    "street": "Preflop",
-    "spr": 66.0,
-    "facing_bet_bb": 0.5,
-    "pot_bb": 1.5,
-    "gate": "REJECTED",
-    "gate_reasons": [
-     "HIGH_SEED_DISAGREEMENT"
-    ],
-    "method": "Monte Carlo rollout",
-    "top_action": "raise_100",
-    "mix": {
-     "raise_100": 0.639,
-     "all_in": 0.304,
-     "raise_75": 0.057
-    },
-    "gate_rejected": true,
-    "seed_disagreement": 1.1852,
-    "visits": 18114.0,
-    "translation_distance": 0.010101010101009998,
-    "local_sensitivity": 0.003,
-    "model_sensitivity": 0.674
-   },
-   {
-    "state": {
-     "format": "pokeralpha.observed/v1",
-     "num_seats": 2,
-     "hero_seat": 0,
-     "dealer": 0,
-     "small_blind": 0.5,
-     "big_blind": 1.0,
-     "ante": 0.0,
-     "street": "RIVER",
-     "hero_cards": [
-      "2h",
-      "4s"
-     ],
-     "board": [
-      "4h",
-      "Jc",
-      "Js",
-      "Qh",
-      "3h"
-     ],
-     "pot": 21.5,
-     "actor": 0,
-     "seats": [
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 90.0,
-       "bet": 0.0,
-       "committed": 10.0,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      },
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 88.5,
-       "bet": 1.5,
-       "committed": 11.5,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      }
-     ],
-     "actions": [
-      {
-       "street": 0,
-       "seat": 0,
-       "kind": "raise",
-       "amount": 5.5
-      },
-      {
-       "street": 0,
-       "seat": 1,
-       "kind": "call",
-       "amount": 4.5
-      },
-      {
-       "street": 1,
-       "seat": 1,
-       "kind": "bet",
-       "amount": 2.0
-      },
-      {
-       "street": 1,
-       "seat": 0,
-       "kind": "call",
-       "amount": 2.0
-      },
-      {
-       "street": 2,
-       "seat": 1,
-       "kind": "bet",
-       "amount": 2.5
-      },
-      {
-       "street": 2,
-       "seat": 0,
-       "kind": "call",
-       "amount": 2.5
-      },
-      {
-       "street": 3,
-       "seat": 1,
-       "kind": "bet",
-       "amount": 1.5
-      }
-     ],
-     "shown_cards": {},
-     "hand_id": "",
-     "timestamp": null,
-     "source": "simulation"
-    },
-    "street": "River",
-    "spr": 4.12,
-    "facing_bet_bb": 1.5,
-    "pot_bb": 21.5,
-    "gate": "REJECTED",
-    "gate_reasons": [
-     "HIGH_SEED_DISAGREEMENT",
-     "UNSTABLE_ACROSS_CHECKPOINTS"
-    ],
-    "method": "Monte Carlo rollout",
-    "top_action": "call",
-    "mix": {
-     "call": 0.825,
-     "fold": 0.175
-    },
-    "gate_rejected": true,
-    "seed_disagreement": 1.1843,
-    "visits": 10487.0,
-    "translation_distance": 0.7727272727272727,
-    "local_sensitivity": 0.054,
-    "model_sensitivity": 0.825
-   }
-  ],
-  "local_sensitivity": [
-   {
-    "state": {
-     "format": "pokeralpha.observed/v1",
-     "num_seats": 2,
-     "hero_seat": 0,
-     "dealer": 0,
-     "small_blind": 0.5,
-     "big_blind": 1.0,
-     "ante": 0.0,
-     "street": "RIVER",
-     "hero_cards": [
-      "6d",
-      "Js"
-     ],
-     "board": [
-      "Ks",
       "5c",
-      "5s",
-      "As",
-      "2h"
+      "4d"
      ],
-     "pot": 6.0,
+     "pot": 9.0,
      "actor": 0,
      "seats": [
       {
        "occupied": true,
        "name": "",
-       "stack": 98.0,
+       "stack": 96.5,
        "bet": 0.0,
-       "committed": 2.0,
+       "committed": 3.5,
        "folded": false,
        "all_in": false,
        "sitting_out": false
       },
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 96.0,
-       "bet": 2.0,
-       "committed": 4.0,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      }
-     ],
-     "actions": [
-      {
-       "street": 0,
-       "seat": 0,
-       "kind": "call",
-       "amount": 0.5
-      },
-      {
-       "street": 0,
-       "seat": 1,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 1,
-       "seat": 1,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 1,
-       "seat": 0,
-       "kind": "bet",
-       "amount": 1.0
-      },
-      {
-       "street": 1,
-       "seat": 1,
-       "kind": "call",
-       "amount": 1.0
-      },
-      {
-       "street": 2,
-       "seat": 1,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 2,
-       "seat": 0,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 3,
-       "seat": 1,
-       "kind": "bet",
-       "amount": 2.0
-      }
-     ],
-     "shown_cards": {},
-     "hand_id": "",
-     "timestamp": null,
-     "source": "simulation"
-    },
-    "street": "River",
-    "spr": 16.0,
-    "facing_bet_bb": 2.0,
-    "pot_bb": 6.0,
-    "gate": "REJECTED",
-    "gate_reasons": [
-     "HIGH_SEED_DISAGREEMENT",
-     "UNSTABLE_ACROSS_CHECKPOINTS"
-    ],
-    "method": "Monte Carlo rollout",
-    "top_action": "call",
-    "mix": {
-     "call": 0.757,
-     "raise_100": 0.242,
-     "all_in": 0.001
-    },
-    "gate_rejected": true,
-    "seed_disagreement": 0.7439,
-    "visits": 8697.0,
-    "translation_distance": 0.3333333333333333,
-    "local_sensitivity": 0.081,
-    "model_sensitivity": 0.596
-   },
-   {
-    "state": {
-     "format": "pokeralpha.observed/v1",
-     "num_seats": 2,
-     "hero_seat": 0,
-     "dealer": 0,
-     "small_blind": 0.5,
-     "big_blind": 1.0,
-     "ante": 0.0,
-     "street": "TURN",
-     "hero_cards": [
-      "6c",
-      "4h"
-     ],
-     "board": [
-      "7h",
-      "9s",
-      "Th",
-      "5h"
-     ],
-     "pot": 10.5,
-     "actor": 0,
-     "seats": [
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 97.5,
-       "bet": 1.5,
-       "committed": 2.5,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      },
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 92.0,
-       "bet": 7.0,
-       "committed": 8.0,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      }
-     ],
-     "actions": [
-      {
-       "street": 0,
-       "seat": 0,
-       "kind": "call",
-       "amount": 0.5
-      },
-      {
-       "street": 0,
-       "seat": 1,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 1,
-       "seat": 1,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 1,
-       "seat": 0,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 2,
-       "seat": 1,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 2,
-       "seat": 0,
-       "kind": "bet",
-       "amount": 1.5
-      },
-      {
-       "street": 2,
-       "seat": 1,
-       "kind": "raise",
-       "amount": 7.0
-      }
-     ],
-     "shown_cards": {},
-     "hand_id": "",
-     "timestamp": null,
-     "source": "simulation"
-    },
-    "street": "Turn",
-    "spr": 8.76,
-    "facing_bet_bb": 5.5,
-    "pot_bb": 10.5,
-    "gate": "REJECTED",
-    "gate_reasons": [
-     "HIGH_SEED_DISAGREEMENT",
-     "UNSTABLE_ACROSS_CHECKPOINTS"
-    ],
-    "method": "Monte Carlo rollout",
-    "top_action": "all_in",
-    "mix": {
-     "all_in": 0.871,
-     "raise_100": 0.08,
-     "raise_75": 0.049
-    },
-    "gate_rejected": true,
-    "seed_disagreement": 1.0547,
-    "visits": 167.0,
-    "translation_distance": 0.8333333333333334,
-    "local_sensitivity": 0.08,
-    "model_sensitivity": 0.917
-   },
-   {
-    "state": {
-     "format": "pokeralpha.observed/v1",
-     "num_seats": 2,
-     "hero_seat": 0,
-     "dealer": 0,
-     "small_blind": 0.5,
-     "big_blind": 1.0,
-     "ante": 0.0,
-     "street": "RIVER",
-     "hero_cards": [
-      "2h",
-      "4s"
-     ],
-     "board": [
-      "4h",
-      "Jc",
-      "Js",
-      "Qh",
-      "3h"
-     ],
-     "pot": 21.5,
-     "actor": 0,
-     "seats": [
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 90.0,
-       "bet": 0.0,
-       "committed": 10.0,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      },
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 88.5,
-       "bet": 1.5,
-       "committed": 11.5,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      }
-     ],
-     "actions": [
-      {
-       "street": 0,
-       "seat": 0,
-       "kind": "raise",
-       "amount": 5.5
-      },
-      {
-       "street": 0,
-       "seat": 1,
-       "kind": "call",
-       "amount": 4.5
-      },
-      {
-       "street": 1,
-       "seat": 1,
-       "kind": "bet",
-       "amount": 2.0
-      },
-      {
-       "street": 1,
-       "seat": 0,
-       "kind": "call",
-       "amount": 2.0
-      },
-      {
-       "street": 2,
-       "seat": 1,
-       "kind": "bet",
-       "amount": 2.5
-      },
-      {
-       "street": 2,
-       "seat": 0,
-       "kind": "call",
-       "amount": 2.5
-      },
-      {
-       "street": 3,
-       "seat": 1,
-       "kind": "bet",
-       "amount": 1.5
-      }
-     ],
-     "shown_cards": {},
-     "hand_id": "",
-     "timestamp": null,
-     "source": "simulation"
-    },
-    "street": "River",
-    "spr": 4.12,
-    "facing_bet_bb": 1.5,
-    "pot_bb": 21.5,
-    "gate": "REJECTED",
-    "gate_reasons": [
-     "HIGH_SEED_DISAGREEMENT",
-     "UNSTABLE_ACROSS_CHECKPOINTS"
-    ],
-    "method": "Monte Carlo rollout",
-    "top_action": "call",
-    "mix": {
-     "call": 0.825,
-     "fold": 0.175
-    },
-    "gate_rejected": true,
-    "seed_disagreement": 1.1843,
-    "visits": 10487.0,
-    "translation_distance": 0.7727272727272727,
-    "local_sensitivity": 0.054,
-    "model_sensitivity": 0.825
-   },
-   {
-    "state": {
-     "format": "pokeralpha.observed/v1",
-     "num_seats": 2,
-     "hero_seat": 0,
-     "dealer": 0,
-     "small_blind": 0.5,
-     "big_blind": 1.0,
-     "ante": 0.0,
-     "street": "TURN",
-     "hero_cards": [
-      "Kh",
-      "Js"
-     ],
-     "board": [
-      "4s",
-      "Qc",
-      "9s",
-      "Ac"
-     ],
-     "pot": 7.5,
-     "actor": 0,
-     "seats": [
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 97.5,
-       "bet": 0.0,
-       "committed": 2.5,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      },
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 95.0,
-       "bet": 2.5,
-       "committed": 5.0,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      }
-     ],
-     "actions": [
-      {
-       "street": 0,
-       "seat": 0,
-       "kind": "raise",
-       "amount": 2.5
-      },
-      {
-       "street": 0,
-       "seat": 1,
-       "kind": "call",
-       "amount": 1.5
-      },
-      {
-       "street": 1,
-       "seat": 1,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 1,
-       "seat": 0,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 2,
-       "seat": 1,
-       "kind": "bet",
-       "amount": 2.5
-      }
-     ],
-     "shown_cards": {},
-     "hand_id": "",
-     "timestamp": null,
-     "source": "simulation"
-    },
-    "street": "Turn",
-    "spr": 12.67,
-    "facing_bet_bb": 2.5,
-    "pot_bb": 7.5,
-    "gate": "REJECTED",
-    "gate_reasons": [
-     "HIGH_SEED_DISAGREEMENT"
-    ],
-    "method": "Monte Carlo rollout",
-    "top_action": "fold",
-    "mix": {
-     "fold": 0.978,
-     "call": 0.022
-    },
-    "gate_rejected": true,
-    "seed_disagreement": 0.7944,
-    "visits": 28857.0,
-    "translation_distance": 0.3333333333333333,
-    "local_sensitivity": 0.045,
-    "model_sensitivity": 0.978
-   },
-   {
-    "state": {
-     "format": "pokeralpha.observed/v1",
-     "num_seats": 2,
-     "hero_seat": 0,
-     "dealer": 1,
-     "small_blind": 0.5,
-     "big_blind": 1.0,
-     "ante": 0.0,
-     "street": "PREFLOP",
-     "hero_cards": [
-      "Ac",
-      "9d"
-     ],
-     "board": [],
-     "pot": 4.0,
-     "actor": 0,
-     "seats": [
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 99.0,
-       "bet": 1.0,
-       "committed": 1.0,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      },
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 97.0,
-       "bet": 3.0,
-       "committed": 3.0,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      }
-     ],
-     "actions": [
-      {
-       "street": 0,
-       "seat": 1,
-       "kind": "raise",
-       "amount": 3.0
-      }
-     ],
-     "shown_cards": {},
-     "hand_id": "",
-     "timestamp": null,
-     "source": "simulation"
-    },
-    "street": "Preflop",
-    "spr": 24.25,
-    "facing_bet_bb": 2.0,
-    "pot_bb": 4.0,
-    "gate": "REJECTED",
-    "gate_reasons": [
-     "HIGH_SEED_DISAGREEMENT",
-     "UNSTABLE_ACROSS_CHECKPOINTS"
-    ],
-    "method": "Monte Carlo rollout",
-    "top_action": "all_in",
-    "mix": {
-     "all_in": 0.648,
-     "raise_100": 0.207,
-     "raise_75": 0.084,
-     "call": 0.061
-    },
-    "gate_rejected": true,
-    "seed_disagreement": 1.5698,
-    "visits": 18102.0,
-    "translation_distance": 0.3333333333333333,
-    "local_sensitivity": 0.038,
-    "model_sensitivity": 0.695
-   },
-   {
-    "state": {
-     "format": "pokeralpha.observed/v1",
-     "num_seats": 2,
-     "hero_seat": 0,
-     "dealer": 0,
-     "small_blind": 0.5,
-     "big_blind": 1.0,
-     "ante": 0.0,
-     "street": "PREFLOP",
-     "hero_cards": [
-      "8h",
-      "2s"
-     ],
-     "board": [],
-     "pot": 4.0,
-     "actor": 0,
-     "seats": [
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 99.0,
-       "bet": 1.0,
-       "committed": 1.0,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      },
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 97.0,
-       "bet": 3.0,
-       "committed": 3.0,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      }
-     ],
-     "actions": [
-      {
-       "street": 0,
-       "seat": 0,
-       "kind": "call",
-       "amount": 0.5
-      },
-      {
-       "street": 0,
-       "seat": 1,
-       "kind": "raise",
-       "amount": 3.0
-      }
-     ],
-     "shown_cards": {},
-     "hand_id": "",
-     "timestamp": null,
-     "source": "simulation"
-    },
-    "street": "Preflop",
-    "spr": 24.25,
-    "facing_bet_bb": 2.0,
-    "pot_bb": 4.0,
-    "gate": "REJECTED",
-    "gate_reasons": [
-     "UNSEEN_STATE"
-    ],
-    "method": "Monte Carlo rollout",
-    "top_action": "raise_100",
-    "mix": {
-     "raise_100": 0.548,
-     "raise_75": 0.38,
-     "all_in": 0.072
-    },
-    "gate_rejected": true,
-    "seed_disagreement": null,
-    "visits": null,
-    "translation_distance": 0.3333333333333333,
-    "local_sensitivity": 0.037,
-    "model_sensitivity": 0.856
-   },
-   {
-    "state": {
-     "format": "pokeralpha.observed/v1",
-     "num_seats": 2,
-     "hero_seat": 0,
-     "dealer": 0,
-     "small_blind": 0.5,
-     "big_blind": 1.0,
-     "ante": 0.0,
-     "street": "FLOP",
-     "hero_cards": [
-      "2h",
-      "4s"
-     ],
-     "board": [
-      "4h",
-      "Jc",
-      "Js"
-     ],
-     "pot": 13.0,
-     "actor": 0,
-     "seats": [
       {
        "occupied": true,
        "name": "",
        "stack": 94.5,
-       "bet": 0.0,
-       "committed": 5.5,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      },
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 92.5,
        "bet": 2.0,
-       "committed": 7.5,
+       "committed": 5.5,
        "folded": false,
        "all_in": false,
        "sitting_out": false
@@ -3267,18 +2344,54 @@
      "actions": [
       {
        "street": 0,
-       "seat": 0,
-       "kind": "raise",
-       "amount": 5.5
+       "seat": 1,
+       "kind": "call",
+       "amount": 0.5
       },
       {
        "street": 0,
-       "seat": 1,
-       "kind": "call",
-       "amount": 4.5
+       "seat": 0,
+       "kind": "check",
+       "amount": 0.0
       },
       {
        "street": 1,
+       "seat": 0,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 1,
+       "seat": 1,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 2,
+       "seat": 0,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 2,
+       "seat": 1,
+       "kind": "bet",
+       "amount": 2.5
+      },
+      {
+       "street": 2,
+       "seat": 0,
+       "kind": "call",
+       "amount": 2.5
+      },
+      {
+       "street": 3,
+       "seat": 0,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 3,
        "seat": 1,
        "kind": "bet",
        "amount": 2.0
@@ -3289,28 +2402,26 @@
      "timestamp": null,
      "source": "simulation"
     },
-    "street": "Flop",
-    "spr": 7.12,
+    "street": "River",
+    "spr": 10.5,
     "facing_bet_bb": 2.0,
-    "pot_bb": 13.0,
+    "pot_bb": 9.0,
     "gate": "REJECTED",
     "gate_reasons": [
-     "HIGH_SEED_DISAGREEMENT",
-     "UNSTABLE_ACROSS_CHECKPOINTS"
+     "HIGH_SEED_DISAGREEMENT"
     ],
     "method": "Monte Carlo rollout",
     "top_action": "call",
     "mix": {
-     "call": 0.941,
-     "raise_100": 0.057,
-     "raise_75": 0.002
+     "call": 0.997,
+     "fold": 0.003
     },
     "gate_rejected": true,
-    "seed_disagreement": 0.5155,
-    "visits": 16189.0,
-    "translation_distance": 0.4490358126721763,
-    "local_sensitivity": 0.03,
-    "model_sensitivity": 0.059
+    "seed_disagreement": 1.4672,
+    "visits": 7619.0,
+    "translation_distance": 0.1341991341991343,
+    "local_sensitivity": 0.002,
+    "model_sensitivity": 0.983
    },
    {
     "state": {
@@ -3324,12 +2435,22 @@
      "street": "PREFLOP",
      "hero_cards": [
       "3c",
-      "9s"
+      "Ad"
      ],
      "board": [],
-     "pot": 5.0,
+     "pot": 1.5,
      "actor": 0,
      "seats": [
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 99.5,
+       "bet": 0.5,
+       "committed": 0.5,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      },
       {
        "occupied": true,
        "name": "",
@@ -3339,13 +2460,379 @@
        "folded": false,
        "all_in": false,
        "sitting_out": false
+      }
+     ],
+     "actions": [],
+     "shown_cards": {},
+     "hand_id": "",
+     "timestamp": null,
+     "source": "simulation"
+    },
+    "street": "Preflop",
+    "spr": 66.0,
+    "facing_bet_bb": 0.5,
+    "pot_bb": 1.5,
+    "gate": "REJECTED",
+    "gate_reasons": [
+     "HIGH_SEED_DISAGREEMENT",
+     "UNSTABLE_ACROSS_CHECKPOINTS"
+    ],
+    "method": "Monte Carlo rollout",
+    "top_action": "all_in",
+    "mix": {
+     "all_in": 0.773,
+     "raise_100": 0.219,
+     "raise_75": 0.008
+    },
+    "gate_rejected": true,
+    "seed_disagreement": 1.4546,
+    "visits": 18138.0,
+    "translation_distance": 0.010101010101009998,
+    "local_sensitivity": 0.0,
+    "model_sensitivity": 0.294
+   },
+   {
+    "state": {
+     "format": "pokeralpha.observed/v1",
+     "num_seats": 2,
+     "hero_seat": 0,
+     "dealer": 1,
+     "small_blind": 0.5,
+     "big_blind": 1.0,
+     "ante": 0.0,
+     "street": "PREFLOP",
+     "hero_cards": [
+      "5s",
+      "As"
+     ],
+     "board": [],
+     "pot": 11.5,
+     "actor": 0,
+     "seats": [
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 97.0,
+       "bet": 3.0,
+       "committed": 3.0,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
       },
       {
        "occupied": true,
        "name": "",
-       "stack": 96.0,
+       "stack": 91.5,
+       "bet": 8.5,
+       "committed": 8.5,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      }
+     ],
+     "actions": [
+      {
+       "street": 0,
+       "seat": 1,
+       "kind": "call",
+       "amount": 0.5
+      },
+      {
+       "street": 0,
+       "seat": 0,
+       "kind": "raise",
+       "amount": 3.0
+      },
+      {
+       "street": 0,
+       "seat": 1,
+       "kind": "raise",
+       "amount": 8.5
+      }
+     ],
+     "shown_cards": {},
+     "hand_id": "",
+     "timestamp": null,
+     "source": "simulation"
+    },
+    "street": "Preflop",
+    "spr": 7.96,
+    "facing_bet_bb": 5.5,
+    "pot_bb": 11.5,
+    "gate": "REJECTED",
+    "gate_reasons": [
+     "HIGH_SEED_DISAGREEMENT",
+     "UNSTABLE_ACROSS_CHECKPOINTS"
+    ],
+    "method": "Monte Carlo rollout",
+    "top_action": "fold",
+    "mix": {
+     "fold": 0.456,
+     "call": 0.42,
+     "all_in": 0.077,
+     "raise_100": 0.047
+    },
+    "gate_rejected": true,
+    "seed_disagreement": 1.424,
+    "visits": 5376.0,
+    "translation_distance": 0.36231884057971014,
+    "local_sensitivity": 0.127,
+    "model_sensitivity": 0.847
+   }
+  ],
+  "local_sensitivity": [
+   {
+    "state": {
+     "format": "pokeralpha.observed/v1",
+     "num_seats": 2,
+     "hero_seat": 0,
+     "dealer": 1,
+     "small_blind": 0.5,
+     "big_blind": 1.0,
+     "ante": 0.0,
+     "street": "TURN",
+     "hero_cards": [
+      "Td",
+      "Ts"
+     ],
+     "board": [
+      "6c",
+      "Jh",
+      "3h",
+      "8d"
+     ],
+     "pot": 4.0,
+     "actor": 0,
+     "seats": [
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 99.0,
+       "bet": 0.0,
+       "committed": 1.0,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      },
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 97.0,
+       "bet": 2.0,
+       "committed": 3.0,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      }
+     ],
+     "actions": [
+      {
+       "street": 0,
+       "seat": 1,
+       "kind": "call",
+       "amount": 0.5
+      },
+      {
+       "street": 0,
+       "seat": 0,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 1,
+       "seat": 0,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 1,
+       "seat": 1,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 2,
+       "seat": 0,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 2,
+       "seat": 1,
+       "kind": "bet",
+       "amount": 2.0
+      }
+     ],
+     "shown_cards": {},
+     "hand_id": "",
+     "timestamp": null,
+     "source": "simulation"
+    },
+    "street": "Turn",
+    "spr": 24.25,
+    "facing_bet_bb": 2.0,
+    "pot_bb": 4.0,
+    "gate": "LOW CONFIDENCE",
+    "gate_reasons": [
+     "OFF_TREE_TRANSLATION",
+     "STREET_ABSTRACTION_ERROR"
+    ],
+    "method": "interpolated abstraction",
+    "top_action": "call",
+    "mix": {
+     "call": 0.9641,
+     "raise_150": 0.015,
+     "raise_33": 0.0103,
+     "raise_75": 0.0083,
+     "fold": 0.0023
+    },
+    "gate_rejected": false,
+    "seed_disagreement": 0.1769,
+    "visits": 29552.0,
+    "translation_distance": 0.3333333333333333,
+    "local_sensitivity": 0.9917,
+    "model_sensitivity": 0.0
+   },
+   {
+    "state": {
+     "format": "pokeralpha.observed/v1",
+     "num_seats": 2,
+     "hero_seat": 0,
+     "dealer": 0,
+     "small_blind": 0.5,
+     "big_blind": 1.0,
+     "ante": 0.0,
+     "street": "FLOP",
+     "hero_cards": [
+      "Qd",
+      "9h"
+     ],
+     "board": [
+      "4h",
+      "2c",
+      "Td"
+     ],
+     "pot": 8.0,
+     "actor": 0,
+     "seats": [
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 97.0,
+       "bet": 2.0,
+       "committed": 3.0,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      },
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 95.0,
        "bet": 4.0,
-       "committed": 4.0,
+       "committed": 5.0,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      }
+     ],
+     "actions": [
+      {
+       "street": 0,
+       "seat": 0,
+       "kind": "call",
+       "amount": 0.5
+      },
+      {
+       "street": 0,
+       "seat": 1,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 1,
+       "seat": 1,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 1,
+       "seat": 0,
+       "kind": "bet",
+       "amount": 2.0
+      },
+      {
+       "street": 1,
+       "seat": 1,
+       "kind": "raise",
+       "amount": 4.0
+      }
+     ],
+     "shown_cards": {},
+     "hand_id": "",
+     "timestamp": null,
+     "source": "simulation"
+    },
+    "street": "Flop",
+    "spr": 11.88,
+    "facing_bet_bb": 2.0,
+    "pot_bb": 8.0,
+    "gate": "REJECTED",
+    "gate_reasons": [
+     "HIGH_SEED_DISAGREEMENT"
+    ],
+    "method": "Monte Carlo rollout",
+    "top_action": "raise_100",
+    "mix": {
+     "raise_100": 0.573,
+     "all_in": 0.24,
+     "raise_75": 0.187
+    },
+    "gate_rejected": true,
+    "seed_disagreement": 1.1694,
+    "visits": 1211.0,
+    "translation_distance": 0.3333333333333333,
+    "local_sensitivity": 0.9054,
+    "model_sensitivity": 0.992
+   },
+   {
+    "state": {
+     "format": "pokeralpha.observed/v1",
+     "num_seats": 2,
+     "hero_seat": 0,
+     "dealer": 0,
+     "small_blind": 0.5,
+     "big_blind": 1.0,
+     "ante": 0.0,
+     "street": "FLOP",
+     "hero_cards": [
+      "6s",
+      "8s"
+     ],
+     "board": [
+      "Kd",
+      "7s",
+      "Ah"
+     ],
+     "pot": 9.0,
+     "actor": 0,
+     "seats": [
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 97.0,
+       "bet": 1.0,
+       "committed": 3.0,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      },
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 94.0,
+       "bet": 4.0,
+       "committed": 6.0,
        "folded": false,
        "all_in": false,
        "sitting_out": false
@@ -3362,6 +2849,30 @@
        "street": 0,
        "seat": 1,
        "kind": "raise",
+       "amount": 2.0
+      },
+      {
+       "street": 0,
+       "seat": 0,
+       "kind": "call",
+       "amount": 1.0
+      },
+      {
+       "street": 1,
+       "seat": 1,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 1,
+       "seat": 0,
+       "kind": "bet",
+       "amount": 1.0
+      },
+      {
+       "street": 1,
+       "seat": 1,
+       "kind": "raise",
        "amount": 4.0
       }
      ],
@@ -3370,28 +2881,429 @@
      "timestamp": null,
      "source": "simulation"
     },
-    "street": "Preflop",
-    "spr": 19.2,
+    "street": "Flop",
+    "spr": 10.44,
     "facing_bet_bb": 3.0,
-    "pot_bb": 5.0,
+    "pot_bb": 9.0,
     "gate": "REJECTED",
     "gate_reasons": [
-     "LOW_VISIT_COUNT",
      "HIGH_SEED_DISAGREEMENT"
     ],
     "method": "Monte Carlo rollout",
     "top_action": "raise_100",
     "mix": {
-     "raise_100": 0.943,
-     "all_in": 0.053,
-     "raise_75": 0.004
+     "raise_100": 0.602,
+     "all_in": 0.239,
+     "raise_75": 0.159
     },
     "gate_rejected": true,
-    "seed_disagreement": 1.873,
-    "visits": 2.0,
-    "translation_distance": 0.20000000000000004,
-    "local_sensitivity": 0.02,
-    "model_sensitivity": 0.935
+    "seed_disagreement": 0.767,
+    "visits": 720.0,
+    "translation_distance": 0.0,
+    "local_sensitivity": 0.561,
+    "model_sensitivity": 0.999
+   },
+   {
+    "state": {
+     "format": "pokeralpha.observed/v1",
+     "num_seats": 2,
+     "hero_seat": 0,
+     "dealer": 0,
+     "small_blind": 0.5,
+     "big_blind": 1.0,
+     "ante": 0.0,
+     "street": "PREFLOP",
+     "hero_cards": [
+      "3s",
+      "Ts"
+     ],
+     "board": [],
+     "pot": 3.5,
+     "actor": 0,
+     "seats": [
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 99.0,
+       "bet": 1.0,
+       "committed": 1.0,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      },
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 97.5,
+       "bet": 2.5,
+       "committed": 2.5,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      }
+     ],
+     "actions": [
+      {
+       "street": 0,
+       "seat": 0,
+       "kind": "call",
+       "amount": 0.5
+      },
+      {
+       "street": 0,
+       "seat": 1,
+       "kind": "raise",
+       "amount": 2.5
+      }
+     ],
+     "shown_cards": {},
+     "hand_id": "",
+     "timestamp": null,
+     "source": "simulation"
+    },
+    "street": "Preflop",
+    "spr": 27.86,
+    "facing_bet_bb": 1.5,
+    "pot_bb": 3.5,
+    "gate": "REJECTED",
+    "gate_reasons": [
+     "HIGH_SEED_DISAGREEMENT"
+    ],
+    "method": "Monte Carlo rollout",
+    "top_action": "raise_100",
+    "mix": {
+     "raise_100": 0.792,
+     "all_in": 0.194,
+     "raise_75": 0.014
+    },
+    "gate_rejected": true,
+    "seed_disagreement": 1.2827,
+    "visits": 316.0,
+    "translation_distance": 0.2987012987012986,
+    "local_sensitivity": 0.312,
+    "model_sensitivity": 0.837
+   },
+   {
+    "state": {
+     "format": "pokeralpha.observed/v1",
+     "num_seats": 2,
+     "hero_seat": 0,
+     "dealer": 1,
+     "small_blind": 0.5,
+     "big_blind": 1.0,
+     "ante": 0.0,
+     "street": "TURN",
+     "hero_cards": [
+      "2c",
+      "Ac"
+     ],
+     "board": [
+      "8s",
+      "3s",
+      "Qh",
+      "Td"
+     ],
+     "pot": 19.5,
+     "actor": 0,
+     "seats": [
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 93.0,
+       "bet": 2.5,
+       "committed": 7.0,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      },
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 87.5,
+       "bet": 8.0,
+       "committed": 12.5,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      }
+     ],
+     "actions": [
+      {
+       "street": 0,
+       "seat": 1,
+       "kind": "call",
+       "amount": 0.5
+      },
+      {
+       "street": 0,
+       "seat": 0,
+       "kind": "raise",
+       "amount": 4.5
+      },
+      {
+       "street": 0,
+       "seat": 1,
+       "kind": "call",
+       "amount": 3.5
+      },
+      {
+       "street": 1,
+       "seat": 0,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 1,
+       "seat": 1,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 2,
+       "seat": 0,
+       "kind": "bet",
+       "amount": 2.5
+      },
+      {
+       "street": 2,
+       "seat": 1,
+       "kind": "raise",
+       "amount": 8.0
+      }
+     ],
+     "shown_cards": {},
+     "hand_id": "",
+     "timestamp": null,
+     "source": "simulation"
+    },
+    "street": "Turn",
+    "spr": 4.49,
+    "facing_bet_bb": 5.5,
+    "pot_bb": 19.5,
+    "gate": "LOW CONFIDENCE",
+    "gate_reasons": [
+     "HIGH_SEED_DISAGREEMENT",
+     "OFF_TREE_TRANSLATION",
+     "STREET_ABSTRACTION_ERROR"
+    ],
+    "method": "interpolated abstraction",
+    "top_action": "fold",
+    "mix": {
+     "fold": 0.7634,
+     "raise_75": 0.1204,
+     "call": 0.0736,
+     "all_in": 0.0174,
+     "raise_33": 0.0157
+    },
+    "gate_rejected": false,
+    "seed_disagreement": 0.297,
+    "visits": 578.0,
+    "translation_distance": 0.18518518518518512,
+    "local_sensitivity": 0.2218,
+    "model_sensitivity": 0.0
+   },
+   {
+    "state": {
+     "format": "pokeralpha.observed/v1",
+     "num_seats": 2,
+     "hero_seat": 0,
+     "dealer": 0,
+     "small_blind": 0.5,
+     "big_blind": 1.0,
+     "ante": 0.0,
+     "street": "PREFLOP",
+     "hero_cards": [
+      "6d",
+      "Ah"
+     ],
+     "board": [],
+     "pot": 9.0,
+     "actor": 0,
+     "seats": [
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 97.5,
+       "bet": 2.5,
+       "committed": 2.5,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      },
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 93.5,
+       "bet": 6.5,
+       "committed": 6.5,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      }
+     ],
+     "actions": [
+      {
+       "street": 0,
+       "seat": 0,
+       "kind": "raise",
+       "amount": 2.5
+      },
+      {
+       "street": 0,
+       "seat": 1,
+       "kind": "raise",
+       "amount": 6.5
+      }
+     ],
+     "shown_cards": {},
+     "hand_id": "",
+     "timestamp": null,
+     "source": "simulation"
+    },
+    "street": "Preflop",
+    "spr": 10.39,
+    "facing_bet_bb": 4.0,
+    "pot_bb": 9.0,
+    "gate": "REJECTED",
+    "gate_reasons": [
+     "HIGH_SEED_DISAGREEMENT",
+     "UNSTABLE_ACROSS_CHECKPOINTS"
+    ],
+    "method": "Monte Carlo rollout",
+    "top_action": "call",
+    "mix": {
+     "call": 0.509,
+     "fold": 0.483,
+     "all_in": 0.008
+    },
+    "gate_rejected": true,
+    "seed_disagreement": 1.1626,
+    "visits": 14194.0,
+    "translation_distance": 0.34680134680134667,
+    "local_sensitivity": 0.163,
+    "model_sensitivity": 0.145
+   },
+   {
+    "state": {
+     "format": "pokeralpha.observed/v1",
+     "num_seats": 2,
+     "hero_seat": 0,
+     "dealer": 0,
+     "small_blind": 0.5,
+     "big_blind": 1.0,
+     "ante": 0.0,
+     "street": "TURN",
+     "hero_cards": [
+      "Kc",
+      "Jd"
+     ],
+     "board": [
+      "Qd",
+      "3c",
+      "Ah",
+      "5c"
+     ],
+     "pot": 10.5,
+     "actor": 0,
+     "seats": [
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 95.5,
+       "bet": 1.5,
+       "committed": 4.5,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      },
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 94.0,
+       "bet": 3.0,
+       "committed": 6.0,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      }
+     ],
+     "actions": [
+      {
+       "street": 0,
+       "seat": 0,
+       "kind": "call",
+       "amount": 0.5
+      },
+      {
+       "street": 0,
+       "seat": 1,
+       "kind": "raise",
+       "amount": 3.0
+      },
+      {
+       "street": 0,
+       "seat": 0,
+       "kind": "call",
+       "amount": 2.0
+      },
+      {
+       "street": 1,
+       "seat": 1,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 1,
+       "seat": 0,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 2,
+       "seat": 1,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 2,
+       "seat": 0,
+       "kind": "bet",
+       "amount": 1.5
+      },
+      {
+       "street": 2,
+       "seat": 1,
+       "kind": "raise",
+       "amount": 3.0
+      }
+     ],
+     "shown_cards": {},
+     "hand_id": "",
+     "timestamp": null,
+     "source": "simulation"
+    },
+    "street": "Turn",
+    "spr": 8.95,
+    "facing_bet_bb": 1.5,
+    "pot_bb": 10.5,
+    "gate": "REJECTED",
+    "gate_reasons": [
+     "HIGH_SEED_DISAGREEMENT"
+    ],
+    "method": "Monte Carlo rollout",
+    "top_action": "raise_75",
+    "mix": {
+     "raise_75": 0.577,
+     "all_in": 0.347,
+     "raise_100": 0.063,
+     "call": 0.013
+    },
+    "gate_rejected": true,
+    "seed_disagreement": 0.912,
+    "visits": 21595.0,
+    "translation_distance": 0.24242424242424246,
+    "local_sensitivity": 0.156,
+    "model_sensitivity": 0.653
    },
    {
     "state": {
@@ -3404,8 +3316,220 @@
      "ante": 0.0,
      "street": "PREFLOP",
      "hero_cards": [
-      "Jd",
-      "9h"
+      "5s",
+      "As"
+     ],
+     "board": [],
+     "pot": 11.5,
+     "actor": 0,
+     "seats": [
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 97.0,
+       "bet": 3.0,
+       "committed": 3.0,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      },
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 91.5,
+       "bet": 8.5,
+       "committed": 8.5,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      }
+     ],
+     "actions": [
+      {
+       "street": 0,
+       "seat": 1,
+       "kind": "call",
+       "amount": 0.5
+      },
+      {
+       "street": 0,
+       "seat": 0,
+       "kind": "raise",
+       "amount": 3.0
+      },
+      {
+       "street": 0,
+       "seat": 1,
+       "kind": "raise",
+       "amount": 8.5
+      }
+     ],
+     "shown_cards": {},
+     "hand_id": "",
+     "timestamp": null,
+     "source": "simulation"
+    },
+    "street": "Preflop",
+    "spr": 7.96,
+    "facing_bet_bb": 5.5,
+    "pot_bb": 11.5,
+    "gate": "REJECTED",
+    "gate_reasons": [
+     "HIGH_SEED_DISAGREEMENT",
+     "UNSTABLE_ACROSS_CHECKPOINTS"
+    ],
+    "method": "Monte Carlo rollout",
+    "top_action": "fold",
+    "mix": {
+     "fold": 0.456,
+     "call": 0.42,
+     "all_in": 0.077,
+     "raise_100": 0.047
+    },
+    "gate_rejected": true,
+    "seed_disagreement": 1.424,
+    "visits": 5376.0,
+    "translation_distance": 0.36231884057971014,
+    "local_sensitivity": 0.127,
+    "model_sensitivity": 0.847
+   },
+   {
+    "state": {
+     "format": "pokeralpha.observed/v1",
+     "num_seats": 2,
+     "hero_seat": 0,
+     "dealer": 1,
+     "small_blind": 0.5,
+     "big_blind": 1.0,
+     "ante": 0.0,
+     "street": "RIVER",
+     "hero_cards": [
+      "Kd",
+      "3s"
+     ],
+     "board": [
+      "8s",
+      "Ts",
+      "As",
+      "9s",
+      "8c"
+     ],
+     "pot": 8.0,
+     "actor": 0,
+     "seats": [
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 96.5,
+       "bet": 0.0,
+       "committed": 3.5,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      },
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 95.5,
+       "bet": 1.0,
+       "committed": 4.5,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      }
+     ],
+     "actions": [
+      {
+       "street": 0,
+       "seat": 1,
+       "kind": "call",
+       "amount": 0.5
+      },
+      {
+       "street": 0,
+       "seat": 0,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 1,
+       "seat": 0,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 1,
+       "seat": 1,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 2,
+       "seat": 0,
+       "kind": "bet",
+       "amount": 2.5
+      },
+      {
+       "street": 2,
+       "seat": 1,
+       "kind": "call",
+       "amount": 2.5
+      },
+      {
+       "street": 3,
+       "seat": 0,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 3,
+       "seat": 1,
+       "kind": "bet",
+       "amount": 1.0
+      }
+     ],
+     "shown_cards": {},
+     "hand_id": "",
+     "timestamp": null,
+     "source": "simulation"
+    },
+    "street": "River",
+    "spr": 11.94,
+    "facing_bet_bb": 1.0,
+    "pot_bb": 8.0,
+    "gate": "REJECTED",
+    "gate_reasons": [
+     "HIGH_SEED_DISAGREEMENT",
+     "UNSTABLE_ACROSS_CHECKPOINTS"
+    ],
+    "method": "Monte Carlo rollout",
+    "top_action": "raise_75",
+    "mix": {
+     "raise_75": 0.481,
+     "call": 0.297,
+     "all_in": 0.219,
+     "raise_100": 0.003
+    },
+    "gate_rejected": true,
+    "seed_disagreement": 1.2624,
+    "visits": 450.0,
+    "translation_distance": 0.5670995670995671,
+    "local_sensitivity": 0.088,
+    "model_sensitivity": 0.703
+   },
+   {
+    "state": {
+     "format": "pokeralpha.observed/v1",
+     "num_seats": 2,
+     "hero_seat": 0,
+     "dealer": 1,
+     "small_blind": 0.5,
+     "big_blind": 1.0,
+     "ante": 0.0,
+     "street": "PREFLOP",
+     "hero_cards": [
+      "4h",
+      "Jh"
      ],
      "board": [],
      "pot": 6.5,
@@ -3451,119 +3575,22 @@
     "pot_bb": 6.5,
     "gate": "REJECTED",
     "gate_reasons": [
-     "HIGH_SEED_DISAGREEMENT",
-     "UNSTABLE_ACROSS_CHECKPOINTS"
+     "HIGH_SEED_DISAGREEMENT"
     ],
     "method": "Monte Carlo rollout",
     "top_action": "all_in",
     "mix": {
-     "all_in": 0.863,
-     "raise_100": 0.135,
-     "raise_75": 0.002
+     "all_in": 0.419,
+     "raise_100": 0.399,
+     "raise_75": 0.166,
+     "fold": 0.016
     },
     "gate_rejected": true,
-    "seed_disagreement": 1.0712,
-    "visits": 18387.0,
+    "seed_disagreement": 0.9448,
+    "visits": 6129.0,
     "translation_distance": 0.07692307692307694,
-    "local_sensitivity": 0.019,
-    "model_sensitivity": 0.609
-   },
-   {
-    "state": {
-     "format": "pokeralpha.observed/v1",
-     "num_seats": 2,
-     "hero_seat": 0,
-     "dealer": 1,
-     "small_blind": 0.5,
-     "big_blind": 1.0,
-     "ante": 0.0,
-     "street": "FLOP",
-     "hero_cards": [
-      "Qc",
-      "3h"
-     ],
-     "board": [
-      "4s",
-      "7h",
-      "As"
-     ],
-     "pot": 4.0,
-     "actor": 0,
-     "seats": [
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 99.0,
-       "bet": 0.0,
-       "committed": 1.0,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      },
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 97.0,
-       "bet": 2.0,
-       "committed": 3.0,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      }
-     ],
-     "actions": [
-      {
-       "street": 0,
-       "seat": 1,
-       "kind": "call",
-       "amount": 0.5
-      },
-      {
-       "street": 0,
-       "seat": 0,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 1,
-       "seat": 0,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 1,
-       "seat": 1,
-       "kind": "bet",
-       "amount": 2.0
-      }
-     ],
-     "shown_cards": {},
-     "hand_id": "",
-     "timestamp": null,
-     "source": "simulation"
-    },
-    "street": "Flop",
-    "spr": 24.25,
-    "facing_bet_bb": 2.0,
-    "pot_bb": 4.0,
-    "gate": "LOW CONFIDENCE",
-    "gate_reasons": [
-     "OFF_TREE_TRANSLATION",
-     "STREET_ABSTRACTION_ERROR"
-    ],
-    "method": "interpolated abstraction",
-    "top_action": "fold",
-    "mix": {
-     "fold": 0.9821,
-     "raise_75": 0.0138,
-     "raise_150": 0.0041
-    },
-    "gate_rejected": false,
-    "seed_disagreement": 0.062,
-    "visits": 33895.0,
-    "translation_distance": 0.3333333333333333,
-    "local_sensitivity": 0.0175,
-    "model_sensitivity": 0.0
+    "local_sensitivity": 0.084,
+    "model_sensitivity": 0.983
    }
   ],
   "model_sensitivity": [
@@ -3680,6 +3707,548 @@
     "gate_rejected": true,
     "seed_disagreement": 0.5751,
     "visits": 11882.0,
+    "translation_distance": null,
+    "local_sensitivity": null,
+    "model_sensitivity": 1.0
+   },
+   {
+    "state": {
+     "format": "pokeralpha.observed/v1",
+     "num_seats": 2,
+     "hero_seat": 0,
+     "dealer": 0,
+     "small_blind": 0.5,
+     "big_blind": 1.0,
+     "ante": 0.0,
+     "street": "TURN",
+     "hero_cards": [
+      "2c",
+      "5h"
+     ],
+     "board": [
+      "Jd",
+      "6s",
+      "6h",
+      "7c"
+     ],
+     "pot": 4.0,
+     "actor": 0,
+     "seats": [
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 98.0,
+       "bet": 0.0,
+       "committed": 2.0,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      },
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 98.0,
+       "bet": 0.0,
+       "committed": 2.0,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      }
+     ],
+     "actions": [
+      {
+       "street": 0,
+       "seat": 0,
+       "kind": "call",
+       "amount": 0.5
+      },
+      {
+       "street": 0,
+       "seat": 1,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 1,
+       "seat": 1,
+       "kind": "bet",
+       "amount": 1.0
+      },
+      {
+       "street": 1,
+       "seat": 0,
+       "kind": "call",
+       "amount": 1.0
+      },
+      {
+       "street": 2,
+       "seat": 1,
+       "kind": "check",
+       "amount": 0.0
+      }
+     ],
+     "shown_cards": {},
+     "hand_id": "",
+     "timestamp": null,
+     "source": "simulation"
+    },
+    "street": "Turn",
+    "spr": 24.5,
+    "facing_bet_bb": 0.0,
+    "pot_bb": 4.0,
+    "gate": "REJECTED",
+    "gate_reasons": [
+     "HIGH_SEED_DISAGREEMENT"
+    ],
+    "method": "Monte Carlo rollout",
+    "top_action": "all_in",
+    "mix": {
+     "all_in": 1.0
+    },
+    "gate_rejected": true,
+    "seed_disagreement": 0.5154,
+    "visits": 24202.0,
+    "translation_distance": null,
+    "local_sensitivity": null,
+    "model_sensitivity": 1.0
+   },
+   {
+    "state": {
+     "format": "pokeralpha.observed/v1",
+     "num_seats": 2,
+     "hero_seat": 0,
+     "dealer": 0,
+     "small_blind": 0.5,
+     "big_blind": 1.0,
+     "ante": 0.0,
+     "street": "FLOP",
+     "hero_cards": [
+      "9c",
+      "4d"
+     ],
+     "board": [
+      "Tc",
+      "Jd",
+      "3h"
+     ],
+     "pot": 18.0,
+     "actor": 0,
+     "seats": [
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 91.0,
+       "bet": 0.0,
+       "committed": 9.0,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      },
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 91.0,
+       "bet": 0.0,
+       "committed": 9.0,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      }
+     ],
+     "actions": [
+      {
+       "street": 0,
+       "seat": 0,
+       "kind": "call",
+       "amount": 0.5
+      },
+      {
+       "street": 0,
+       "seat": 1,
+       "kind": "raise",
+       "amount": 2.5
+      },
+      {
+       "street": 0,
+       "seat": 0,
+       "kind": "raise",
+       "amount": 9.0
+      },
+      {
+       "street": 0,
+       "seat": 1,
+       "kind": "call",
+       "amount": 6.5
+      },
+      {
+       "street": 1,
+       "seat": 1,
+       "kind": "check",
+       "amount": 0.0
+      }
+     ],
+     "shown_cards": {},
+     "hand_id": "",
+     "timestamp": null,
+     "source": "simulation"
+    },
+    "street": "Flop",
+    "spr": 5.06,
+    "facing_bet_bb": 0.0,
+    "pot_bb": 18.0,
+    "gate": "REJECTED",
+    "gate_reasons": [
+     "HIGH_SEED_DISAGREEMENT"
+    ],
+    "method": "Monte Carlo rollout",
+    "top_action": "all_in",
+    "mix": {
+     "all_in": 1.0
+    },
+    "gate_rejected": true,
+    "seed_disagreement": 0.7803,
+    "visits": 63805.0,
+    "translation_distance": null,
+    "local_sensitivity": null,
+    "model_sensitivity": 1.0
+   },
+   {
+    "state": {
+     "format": "pokeralpha.observed/v1",
+     "num_seats": 2,
+     "hero_seat": 0,
+     "dealer": 1,
+     "small_blind": 0.5,
+     "big_blind": 1.0,
+     "ante": 0.0,
+     "street": "RIVER",
+     "hero_cards": [
+      "7h",
+      "6s"
+     ],
+     "board": [
+      "Qh",
+      "3d",
+      "Jd",
+      "3c",
+      "4h"
+     ],
+     "pot": 11.0,
+     "actor": 0,
+     "seats": [
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 94.5,
+       "bet": 0.0,
+       "committed": 5.5,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      },
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 94.5,
+       "bet": 0.0,
+       "committed": 5.5,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      }
+     ],
+     "actions": [
+      {
+       "street": 0,
+       "seat": 1,
+       "kind": "call",
+       "amount": 0.5
+      },
+      {
+       "street": 0,
+       "seat": 0,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 1,
+       "seat": 0,
+       "kind": "bet",
+       "amount": 1.0
+      },
+      {
+       "street": 1,
+       "seat": 1,
+       "kind": "raise",
+       "amount": 4.5
+      },
+      {
+       "street": 1,
+       "seat": 0,
+       "kind": "call",
+       "amount": 3.5
+      },
+      {
+       "street": 2,
+       "seat": 0,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 2,
+       "seat": 1,
+       "kind": "check",
+       "amount": 0.0
+      }
+     ],
+     "shown_cards": {},
+     "hand_id": "",
+     "timestamp": null,
+     "source": "simulation"
+    },
+    "street": "River",
+    "spr": 8.59,
+    "facing_bet_bb": 0.0,
+    "pot_bb": 11.0,
+    "gate": "REJECTED",
+    "gate_reasons": [
+     "HIGH_SEED_DISAGREEMENT"
+    ],
+    "method": "Monte Carlo rollout",
+    "top_action": "all_in",
+    "mix": {
+     "all_in": 0.943,
+     "bet_100": 0.053,
+     "bet_75": 0.004
+    },
+    "gate_rejected": true,
+    "seed_disagreement": 0.5941,
+    "visits": 13071.0,
+    "translation_distance": null,
+    "local_sensitivity": null,
+    "model_sensitivity": 1.0
+   },
+   {
+    "state": {
+     "format": "pokeralpha.observed/v1",
+     "num_seats": 2,
+     "hero_seat": 0,
+     "dealer": 0,
+     "small_blind": 0.5,
+     "big_blind": 1.0,
+     "ante": 0.0,
+     "street": "TURN",
+     "hero_cards": [
+      "9c",
+      "8h"
+     ],
+     "board": [
+      "2c",
+      "Qd",
+      "Ah",
+      "Jh"
+     ],
+     "pot": 12.0,
+     "actor": 0,
+     "seats": [
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 94.0,
+       "bet": 0.0,
+       "committed": 6.0,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      },
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 94.0,
+       "bet": 0.0,
+       "committed": 6.0,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      }
+     ],
+     "actions": [
+      {
+       "street": 0,
+       "seat": 0,
+       "kind": "call",
+       "amount": 0.5
+      },
+      {
+       "street": 0,
+       "seat": 1,
+       "kind": "raise",
+       "amount": 3.5
+      },
+      {
+       "street": 0,
+       "seat": 0,
+       "kind": "call",
+       "amount": 2.5
+      },
+      {
+       "street": 1,
+       "seat": 1,
+       "kind": "bet",
+       "amount": 2.5
+      },
+      {
+       "street": 1,
+       "seat": 0,
+       "kind": "call",
+       "amount": 2.5
+      },
+      {
+       "street": 2,
+       "seat": 1,
+       "kind": "check",
+       "amount": 0.0
+      }
+     ],
+     "shown_cards": {},
+     "hand_id": "",
+     "timestamp": null,
+     "source": "simulation"
+    },
+    "street": "Turn",
+    "spr": 7.83,
+    "facing_bet_bb": 0.0,
+    "pot_bb": 12.0,
+    "gate": "REJECTED",
+    "gate_reasons": [
+     "HIGH_SEED_DISAGREEMENT",
+     "UNSTABLE_ACROSS_CHECKPOINTS"
+    ],
+    "method": "Monte Carlo rollout",
+    "top_action": "all_in",
+    "mix": {
+     "all_in": 0.701,
+     "bet_100": 0.291,
+     "bet_75": 0.008
+    },
+    "gate_rejected": true,
+    "seed_disagreement": 0.5183,
+    "visits": 60689.0,
+    "translation_distance": null,
+    "local_sensitivity": null,
+    "model_sensitivity": 1.0
+   },
+   {
+    "state": {
+     "format": "pokeralpha.observed/v1",
+     "num_seats": 2,
+     "hero_seat": 0,
+     "dealer": 0,
+     "small_blind": 0.5,
+     "big_blind": 1.0,
+     "ante": 0.0,
+     "street": "TURN",
+     "hero_cards": [
+      "Ad",
+      "9h"
+     ],
+     "board": [
+      "7c",
+      "Ac",
+      "2s",
+      "8c"
+     ],
+     "pot": 41.0,
+     "actor": 0,
+     "seats": [
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 79.5,
+       "bet": 0.0,
+       "committed": 20.5,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      },
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 79.5,
+       "bet": 0.0,
+       "committed": 20.5,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      }
+     ],
+     "actions": [
+      {
+       "street": 0,
+       "seat": 0,
+       "kind": "raise",
+       "amount": 4.5
+      },
+      {
+       "street": 0,
+       "seat": 1,
+       "kind": "raise",
+       "amount": 18.5
+      },
+      {
+       "street": 0,
+       "seat": 0,
+       "kind": "call",
+       "amount": 14.0
+      },
+      {
+       "street": 1,
+       "seat": 1,
+       "kind": "bet",
+       "amount": 1.0
+      },
+      {
+       "street": 1,
+       "seat": 0,
+       "kind": "raise",
+       "amount": 2.0
+      },
+      {
+       "street": 1,
+       "seat": 1,
+       "kind": "call",
+       "amount": 1.0
+      },
+      {
+       "street": 2,
+       "seat": 1,
+       "kind": "check",
+       "amount": 0.0
+      }
+     ],
+     "shown_cards": {},
+     "hand_id": "",
+     "timestamp": null,
+     "source": "simulation"
+    },
+    "street": "Turn",
+    "spr": 1.94,
+    "facing_bet_bb": 0.0,
+    "pot_bb": 41.0,
+    "gate": "REJECTED",
+    "gate_reasons": [
+     "HIGH_SEED_DISAGREEMENT",
+     "UNSTABLE_ACROSS_CHECKPOINTS"
+    ],
+    "method": "Monte Carlo rollout",
+    "top_action": "bet_33",
+    "mix": {
+     "bet_33": 0.999,
+     "bet_75": 0.001
+    },
+    "gate_rejected": true,
+    "seed_disagreement": 0.6415,
+    "visits": 7177.0,
     "translation_distance": null,
     "local_sensitivity": null,
     "model_sensitivity": 1.0
@@ -3958,140 +4527,25 @@
      "small_blind": 0.5,
      "big_blind": 1.0,
      "ante": 0.0,
-     "street": "RIVER",
-     "hero_cards": [
-      "6d",
-      "Qd"
-     ],
-     "board": [
-      "4c",
-      "Th",
-      "Ac",
-      "4d",
-      "Kh"
-     ],
-     "pot": 3.5,
-     "actor": 0,
-     "seats": [
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 99.0,
-       "bet": 0.0,
-       "committed": 1.0,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      },
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 97.5,
-       "bet": 1.5,
-       "committed": 2.5,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      }
-     ],
-     "actions": [
-      {
-       "street": 0,
-       "seat": 0,
-       "kind": "call",
-       "amount": 0.5
-      },
-      {
-       "street": 0,
-       "seat": 1,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 1,
-       "seat": 1,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 1,
-       "seat": 0,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 2,
-       "seat": 1,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 2,
-       "seat": 0,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 3,
-       "seat": 1,
-       "kind": "bet",
-       "amount": 1.5
-      }
-     ],
-     "shown_cards": {},
-     "hand_id": "",
-     "timestamp": null,
-     "source": "simulation"
-    },
-    "street": "River",
-    "spr": 27.86,
-    "facing_bet_bb": 1.5,
-    "pot_bb": 3.5,
-    "gate": "REJECTED",
-    "gate_reasons": [
-     "HIGH_SEED_DISAGREEMENT",
-     "UNSTABLE_ACROSS_CHECKPOINTS"
-    ],
-    "method": "Monte Carlo rollout",
-    "top_action": "call",
-    "mix": {
-     "call": 1.0
-    },
-    "gate_rejected": true,
-    "seed_disagreement": 0.8957,
-    "visits": 454.0,
-    "translation_distance": 0.0,
-    "local_sensitivity": 0.001,
-    "model_sensitivity": 0.996
-   },
-   {
-    "state": {
-     "format": "pokeralpha.observed/v1",
-     "num_seats": 2,
-     "hero_seat": 0,
-     "dealer": 0,
-     "small_blind": 0.5,
-     "big_blind": 1.0,
-     "ante": 0.0,
      "street": "FLOP",
      "hero_cards": [
-      "6d",
-      "Js"
+      "6s",
+      "8s"
      ],
      "board": [
-      "Ks",
-      "5c",
-      "5s"
+      "Kd",
+      "7s",
+      "Ah"
      ],
-     "pot": 2.0,
+     "pot": 9.0,
      "actor": 0,
      "seats": [
       {
        "occupied": true,
        "name": "",
-       "stack": 99.0,
-       "bet": 0.0,
-       "committed": 1.0,
+       "stack": 97.0,
+       "bet": 1.0,
+       "committed": 3.0,
        "folded": false,
        "all_in": false,
        "sitting_out": false
@@ -4099,9 +4553,9 @@
       {
        "occupied": true,
        "name": "",
-       "stack": 99.0,
-       "bet": 0.0,
-       "committed": 1.0,
+       "stack": 94.0,
+       "bet": 4.0,
+       "committed": 6.0,
        "folded": false,
        "all_in": false,
        "sitting_out": false
@@ -4117,14 +4571,32 @@
       {
        "street": 0,
        "seat": 1,
-       "kind": "check",
-       "amount": 0.0
+       "kind": "raise",
+       "amount": 2.0
+      },
+      {
+       "street": 0,
+       "seat": 0,
+       "kind": "call",
+       "amount": 1.0
       },
       {
        "street": 1,
        "seat": 1,
        "kind": "check",
        "amount": 0.0
+      },
+      {
+       "street": 1,
+       "seat": 0,
+       "kind": "bet",
+       "amount": 1.0
+      },
+      {
+       "street": 1,
+       "seat": 1,
+       "kind": "raise",
+       "amount": 4.0
       }
      ],
      "shown_cards": {},
@@ -4133,449 +4605,26 @@
      "source": "simulation"
     },
     "street": "Flop",
-    "spr": 49.5,
-    "facing_bet_bb": 0.0,
-    "pot_bb": 2.0,
-    "gate": "REJECTED",
-    "gate_reasons": [
-     "HIGH_SEED_DISAGREEMENT",
-     "UNSTABLE_ACROSS_CHECKPOINTS"
-    ],
-    "method": "Monte Carlo rollout",
-    "top_action": "bet_100",
-    "mix": {
-     "bet_100": 0.855,
-     "all_in": 0.136,
-     "bet_75": 0.009
-    },
-    "gate_rejected": true,
-    "seed_disagreement": 0.5177,
-    "visits": 5073.0,
-    "translation_distance": null,
-    "local_sensitivity": null,
-    "model_sensitivity": 0.995
-   },
-   {
-    "state": {
-     "format": "pokeralpha.observed/v1",
-     "num_seats": 2,
-     "hero_seat": 0,
-     "dealer": 1,
-     "small_blind": 0.5,
-     "big_blind": 1.0,
-     "ante": 0.0,
-     "street": "RIVER",
-     "hero_cards": [
-      "5c",
-      "7h"
-     ],
-     "board": [
-      "2s",
-      "Ac",
-      "Jc",
-      "6s",
-      "Qh"
-     ],
-     "pot": 4.0,
-     "actor": 0,
-     "seats": [
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 98.0,
-       "bet": 0.0,
-       "committed": 2.0,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      },
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 98.0,
-       "bet": 0.0,
-       "committed": 2.0,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      }
-     ],
-     "actions": [
-      {
-       "street": 0,
-       "seat": 1,
-       "kind": "call",
-       "amount": 0.5
-      },
-      {
-       "street": 0,
-       "seat": 0,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 1,
-       "seat": 0,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 1,
-       "seat": 1,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 2,
-       "seat": 0,
-       "kind": "bet",
-       "amount": 1.0
-      },
-      {
-       "street": 2,
-       "seat": 1,
-       "kind": "call",
-       "amount": 1.0
-      }
-     ],
-     "shown_cards": {},
-     "hand_id": "",
-     "timestamp": null,
-     "source": "simulation"
-    },
-    "street": "River",
-    "spr": 24.5,
-    "facing_bet_bb": 0.0,
-    "pot_bb": 4.0,
-    "gate": "REJECTED",
-    "gate_reasons": [
-     "HIGH_SEED_DISAGREEMENT",
-     "UNSTABLE_ACROSS_CHECKPOINTS"
-    ],
-    "method": "Monte Carlo rollout",
-    "top_action": "bet_75",
-    "mix": {
-     "bet_75": 0.694,
-     "bet_100": 0.279,
-     "bet_33": 0.022,
-     "check": 0.005
-    },
-    "gate_rejected": true,
-    "seed_disagreement": 0.7792,
-    "visits": 34204.0,
-    "translation_distance": null,
-    "local_sensitivity": null,
-    "model_sensitivity": 0.995
-   },
-   {
-    "state": {
-     "format": "pokeralpha.observed/v1",
-     "num_seats": 2,
-     "hero_seat": 0,
-     "dealer": 0,
-     "small_blind": 0.5,
-     "big_blind": 1.0,
-     "ante": 0.0,
-     "street": "RIVER",
-     "hero_cards": [
-      "Tc",
-      "Ah"
-     ],
-     "board": [
-      "3c",
-      "8d",
-      "8c",
-      "9d",
-      "7h"
-     ],
-     "pot": 16.0,
-     "actor": 0,
-     "seats": [
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 92.0,
-       "bet": 0.0,
-       "committed": 8.0,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      },
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 92.0,
-       "bet": 0.0,
-       "committed": 8.0,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      }
-     ],
-     "actions": [
-      {
-       "street": 0,
-       "seat": 0,
-       "kind": "raise",
-       "amount": 5.5
-      },
-      {
-       "street": 0,
-       "seat": 1,
-       "kind": "call",
-       "amount": 4.5
-      },
-      {
-       "street": 1,
-       "seat": 1,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 1,
-       "seat": 0,
-       "kind": "bet",
-       "amount": 2.5
-      },
-      {
-       "street": 1,
-       "seat": 1,
-       "kind": "call",
-       "amount": 2.5
-      },
-      {
-       "street": 2,
-       "seat": 1,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 2,
-       "seat": 0,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 3,
-       "seat": 1,
-       "kind": "check",
-       "amount": 0.0
-      }
-     ],
-     "shown_cards": {},
-     "hand_id": "",
-     "timestamp": null,
-     "source": "simulation"
-    },
-    "street": "River",
-    "spr": 5.75,
-    "facing_bet_bb": 0.0,
-    "pot_bb": 16.0,
-    "gate": "REJECTED",
-    "gate_reasons": [
-     "UNSTABLE_ACROSS_CHECKPOINTS",
-     "HIGH_SEED_DISAGREEMENT"
-    ],
-    "method": "Monte Carlo rollout",
-    "top_action": "bet_33",
-    "mix": {
-     "bet_33": 0.553,
-     "all_in": 0.433,
-     "bet_100": 0.014
-    },
-    "gate_rejected": true,
-    "seed_disagreement": 0.3637,
-    "visits": 10935.0,
-    "translation_distance": null,
-    "local_sensitivity": null,
-    "model_sensitivity": 0.993
-   },
-   {
-    "state": {
-     "format": "pokeralpha.observed/v1",
-     "num_seats": 2,
-     "hero_seat": 0,
-     "dealer": 1,
-     "small_blind": 0.5,
-     "big_blind": 1.0,
-     "ante": 0.0,
-     "street": "RIVER",
-     "hero_cards": [
-      "Ac",
-      "9d"
-     ],
-     "board": [
-      "Ad",
-      "8c",
-      "Jd",
-      "3c",
-      "2s"
-     ],
-     "pot": 12.0,
-     "actor": 0,
-     "seats": [
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 94.0,
-       "bet": 0.0,
-       "committed": 6.0,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      },
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 94.0,
-       "bet": 0.0,
-       "committed": 6.0,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      }
-     ],
-     "actions": [
-      {
-       "street": 0,
-       "seat": 1,
-       "kind": "raise",
-       "amount": 3.0
-      },
-      {
-       "street": 0,
-       "seat": 0,
-       "kind": "call",
-       "amount": 2.0
-      },
-      {
-       "street": 1,
-       "seat": 0,
-       "kind": "bet",
-       "amount": 1.5
-      },
-      {
-       "street": 1,
-       "seat": 1,
-       "kind": "call",
-       "amount": 1.5
-      },
-      {
-       "street": 2,
-       "seat": 0,
-       "kind": "bet",
-       "amount": 1.5
-      },
-      {
-       "street": 2,
-       "seat": 1,
-       "kind": "call",
-       "amount": 1.5
-      }
-     ],
-     "shown_cards": {},
-     "hand_id": "",
-     "timestamp": null,
-     "source": "simulation"
-    },
-    "street": "River",
-    "spr": 7.83,
-    "facing_bet_bb": 0.0,
-    "pot_bb": 12.0,
+    "spr": 10.44,
+    "facing_bet_bb": 3.0,
+    "pot_bb": 9.0,
     "gate": "REJECTED",
     "gate_reasons": [
      "HIGH_SEED_DISAGREEMENT"
-    ],
-    "method": "Monte Carlo rollout",
-    "top_action": "bet_33",
-    "mix": {
-     "bet_33": 0.613,
-     "bet_100": 0.362,
-     "bet_75": 0.025
-    },
-    "gate_rejected": true,
-    "seed_disagreement": 1.1686,
-    "visits": 27835.0,
-    "translation_distance": null,
-    "local_sensitivity": null,
-    "model_sensitivity": 0.992
-   },
-   {
-    "state": {
-     "format": "pokeralpha.observed/v1",
-     "num_seats": 2,
-     "hero_seat": 0,
-     "dealer": 1,
-     "small_blind": 0.5,
-     "big_blind": 1.0,
-     "ante": 0.0,
-     "street": "PREFLOP",
-     "hero_cards": [
-      "8c",
-      "9c"
-     ],
-     "board": [],
-     "pot": 4.0,
-     "actor": 0,
-     "seats": [
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 99.0,
-       "bet": 1.0,
-       "committed": 1.0,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      },
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 97.0,
-       "bet": 3.0,
-       "committed": 3.0,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      }
-     ],
-     "actions": [
-      {
-       "street": 0,
-       "seat": 1,
-       "kind": "raise",
-       "amount": 3.0
-      }
-     ],
-     "shown_cards": {},
-     "hand_id": "",
-     "timestamp": null,
-     "source": "simulation"
-    },
-    "street": "Preflop",
-    "spr": 24.25,
-    "facing_bet_bb": 2.0,
-    "pot_bb": 4.0,
-    "gate": "REJECTED",
-    "gate_reasons": [
-     "HIGH_SEED_DISAGREEMENT",
-     "UNSTABLE_ACROSS_CHECKPOINTS"
     ],
     "method": "Monte Carlo rollout",
     "top_action": "raise_100",
     "mix": {
-     "raise_100": 0.946,
-     "all_in": 0.019,
-     "raise_75": 0.018,
-     "fold": 0.015,
-     "call": 0.002
+     "raise_100": 0.602,
+     "all_in": 0.239,
+     "raise_75": 0.159
     },
     "gate_rejected": true,
-    "seed_disagreement": 1.0946,
-    "visits": 5918.0,
-    "translation_distance": 0.3333333333333333,
-    "local_sensitivity": 0.012,
-    "model_sensitivity": 0.982
+    "seed_disagreement": 0.767,
+    "visits": 720.0,
+    "translation_distance": 0.0,
+    "local_sensitivity": 0.561,
+    "model_sensitivity": 0.999
    }
   ],
   "translation_distance": [
@@ -4970,6 +5019,379 @@
      "small_blind": 0.5,
      "big_blind": 1.0,
      "ante": 0.0,
+     "street": "FLOP",
+     "hero_cards": [
+      "Ad",
+      "9h"
+     ],
+     "board": [
+      "7c",
+      "Ac",
+      "2s"
+     ],
+     "pot": 38.0,
+     "actor": 0,
+     "seats": [
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 81.5,
+       "bet": 0.0,
+       "committed": 18.5,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      },
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 80.5,
+       "bet": 1.0,
+       "committed": 19.5,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      }
+     ],
+     "actions": [
+      {
+       "street": 0,
+       "seat": 0,
+       "kind": "raise",
+       "amount": 4.5
+      },
+      {
+       "street": 0,
+       "seat": 1,
+       "kind": "raise",
+       "amount": 18.5
+      },
+      {
+       "street": 0,
+       "seat": 0,
+       "kind": "call",
+       "amount": 14.0
+      },
+      {
+       "street": 1,
+       "seat": 1,
+       "kind": "bet",
+       "amount": 1.0
+      }
+     ],
+     "shown_cards": {},
+     "hand_id": "",
+     "timestamp": null,
+     "source": "simulation"
+    },
+    "street": "Flop",
+    "spr": 2.12,
+    "facing_bet_bb": 1.0,
+    "pot_bb": 38.0,
+    "gate": "LOW CONFIDENCE",
+    "gate_reasons": [
+     "HIGH_SEED_DISAGREEMENT",
+     "UNSTABLE_ACROSS_CHECKPOINTS",
+     "OFF_TREE_TRANSLATION",
+     "STREET_ABSTRACTION_ERROR"
+    ],
+    "method": "interpolated abstraction",
+    "top_action": "call",
+    "mix": {
+     "call": 0.7903,
+     "raise_33": 0.1582,
+     "all_in": 0.0398,
+     "raise_150": 0.0078,
+     "raise_75": 0.0039
+    },
+    "gate_rejected": false,
+    "seed_disagreement": 0.3594,
+    "visits": 87968.0,
+    "translation_distance": 0.9180999180999181,
+    "local_sensitivity": 0.0,
+    "model_sensitivity": 0.0
+   },
+   {
+    "state": {
+     "format": "pokeralpha.observed/v1",
+     "num_seats": 2,
+     "hero_seat": 0,
+     "dealer": 0,
+     "small_blind": 0.5,
+     "big_blind": 1.0,
+     "ante": 0.0,
+     "street": "RIVER",
+     "hero_cards": [
+      "Ad",
+      "5s"
+     ],
+     "board": [
+      "8d",
+      "4h",
+      "6s",
+      "Js",
+      "2c"
+     ],
+     "pot": 48.0,
+     "actor": 0,
+     "seats": [
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 77.0,
+       "bet": 0.0,
+       "committed": 23.0,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      },
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 75.0,
+       "bet": 2.0,
+       "committed": 25.0,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      }
+     ],
+     "actions": [
+      {
+       "street": 0,
+       "seat": 0,
+       "kind": "raise",
+       "amount": 5.5
+      },
+      {
+       "street": 0,
+       "seat": 1,
+       "kind": "raise",
+       "amount": 14.0
+      },
+      {
+       "street": 0,
+       "seat": 0,
+       "kind": "raise",
+       "amount": 23.0
+      },
+      {
+       "street": 0,
+       "seat": 1,
+       "kind": "call",
+       "amount": 9.0
+      },
+      {
+       "street": 1,
+       "seat": 1,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 1,
+       "seat": 0,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 2,
+       "seat": 1,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 2,
+       "seat": 0,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 3,
+       "seat": 1,
+       "kind": "bet",
+       "amount": 2.0
+      }
+     ],
+     "shown_cards": {},
+     "hand_id": "",
+     "timestamp": null,
+     "source": "simulation"
+    },
+    "street": "River",
+    "spr": 1.56,
+    "facing_bet_bb": 2.0,
+    "pot_bb": 48.0,
+    "gate": "LOW CONFIDENCE",
+    "gate_reasons": [
+     "HIGH_SEED_DISAGREEMENT",
+     "OFF_TREE_TRANSLATION"
+    ],
+    "method": "interpolated abstraction",
+    "top_action": "fold",
+    "mix": {
+     "fold": 0.9799,
+     "all_in": 0.0119,
+     "raise_33": 0.0072,
+     "call": 0.001
+    },
+    "gate_rejected": false,
+    "seed_disagreement": 0.4699,
+    "visits": 19109.0,
+    "translation_distance": 0.8682476943346508,
+    "local_sensitivity": 0.0,
+    "model_sensitivity": 0.0
+   },
+   {
+    "state": {
+     "format": "pokeralpha.observed/v1",
+     "num_seats": 2,
+     "hero_seat": 0,
+     "dealer": 1,
+     "small_blind": 0.5,
+     "big_blind": 1.0,
+     "ante": 0.0,
+     "street": "RIVER",
+     "hero_cards": [
+      "2h",
+      "Qh"
+     ],
+     "board": [
+      "4c",
+      "9d",
+      "6h",
+      "4s",
+      "7h"
+     ],
+     "pot": 23.0,
+     "actor": 0,
+     "seats": [
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 89.0,
+       "bet": 0.0,
+       "committed": 11.0,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      },
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 88.0,
+       "bet": 1.0,
+       "committed": 12.0,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      }
+     ],
+     "actions": [
+      {
+       "street": 0,
+       "seat": 1,
+       "kind": "call",
+       "amount": 0.5
+      },
+      {
+       "street": 0,
+       "seat": 0,
+       "kind": "raise",
+       "amount": 4.0
+      },
+      {
+       "street": 0,
+       "seat": 1,
+       "kind": "call",
+       "amount": 3.0
+      },
+      {
+       "street": 1,
+       "seat": 0,
+       "kind": "bet",
+       "amount": 1.5
+      },
+      {
+       "street": 1,
+       "seat": 1,
+       "kind": "call",
+       "amount": 1.5
+      },
+      {
+       "street": 2,
+       "seat": 0,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 2,
+       "seat": 1,
+       "kind": "bet",
+       "amount": 2.5
+      },
+      {
+       "street": 2,
+       "seat": 0,
+       "kind": "raise",
+       "amount": 5.5
+      },
+      {
+       "street": 2,
+       "seat": 1,
+       "kind": "call",
+       "amount": 3.0
+      },
+      {
+       "street": 3,
+       "seat": 0,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 3,
+       "seat": 1,
+       "kind": "bet",
+       "amount": 1.0
+      }
+     ],
+     "shown_cards": {},
+     "hand_id": "",
+     "timestamp": null,
+     "source": "simulation"
+    },
+    "street": "River",
+    "spr": 3.83,
+    "facing_bet_bb": 1.0,
+    "pot_bb": 23.0,
+    "gate": "LOW CONFIDENCE",
+    "gate_reasons": [
+     "OFF_TREE_TRANSLATION"
+    ],
+    "method": "interpolated abstraction",
+    "top_action": "fold",
+    "mix": {
+     "fold": 0.9912,
+     "call": 0.0059,
+     "all_in": 0.0027,
+     "raise_75": 0.0001,
+     "raise_33": 0.0001
+    },
+    "gate_rejected": false,
+    "seed_disagreement": 0.0287,
+    "visits": 10051.0,
+    "translation_distance": 0.862258953168044,
+    "local_sensitivity": 0.0,
+    "model_sensitivity": 0.0
+   },
+   {
+    "state": {
+     "format": "pokeralpha.observed/v1",
+     "num_seats": 2,
+     "hero_seat": 0,
+     "dealer": 0,
+     "small_blind": 0.5,
+     "big_blind": 1.0,
+     "ante": 0.0,
      "street": "TURN",
      "hero_cards": [
       "6c",
@@ -5076,6 +5498,142 @@
     "translation_distance": 0.8333333333333334,
     "local_sensitivity": 0.08,
     "model_sensitivity": 0.917
+   },
+   {
+    "state": {
+     "format": "pokeralpha.observed/v1",
+     "num_seats": 2,
+     "hero_seat": 0,
+     "dealer": 0,
+     "small_blind": 0.5,
+     "big_blind": 1.0,
+     "ante": 0.0,
+     "street": "RIVER",
+     "hero_cards": [
+      "2d",
+      "Qh"
+     ],
+     "board": [
+      "Kh",
+      "As",
+      "5c",
+      "4h",
+      "9d"
+     ],
+     "pot": 19.0,
+     "actor": 0,
+     "seats": [
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 91.0,
+       "bet": 0.0,
+       "committed": 9.0,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      },
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 90.0,
+       "bet": 1.0,
+       "committed": 10.0,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      }
+     ],
+     "actions": [
+      {
+       "street": 0,
+       "seat": 0,
+       "kind": "call",
+       "amount": 0.5
+      },
+      {
+       "street": 0,
+       "seat": 1,
+       "kind": "raise",
+       "amount": 2.0
+      },
+      {
+       "street": 0,
+       "seat": 0,
+       "kind": "raise",
+       "amount": 6.5
+      },
+      {
+       "street": 0,
+       "seat": 1,
+       "kind": "call",
+       "amount": 4.5
+      },
+      {
+       "street": 1,
+       "seat": 1,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 1,
+       "seat": 0,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 2,
+       "seat": 1,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 2,
+       "seat": 0,
+       "kind": "bet",
+       "amount": 2.5
+      },
+      {
+       "street": 2,
+       "seat": 1,
+       "kind": "call",
+       "amount": 2.5
+      },
+      {
+       "street": 3,
+       "seat": 1,
+       "kind": "bet",
+       "amount": 1.0
+      }
+     ],
+     "shown_cards": {},
+     "hand_id": "",
+     "timestamp": null,
+     "source": "simulation"
+    },
+    "street": "River",
+    "spr": 4.74,
+    "facing_bet_bb": 1.0,
+    "pot_bb": 19.0,
+    "gate": "LOW CONFIDENCE",
+    "gate_reasons": [
+     "OFF_TREE_TRANSLATION"
+    ],
+    "method": "interpolated abstraction",
+    "top_action": "fold",
+    "mix": {
+     "fold": 0.98,
+     "call": 0.0083,
+     "raise_150": 0.0059,
+     "raise_33": 0.0031,
+     "raise_75": 0.0025
+    },
+    "gate_rejected": false,
+    "seed_disagreement": 0.022,
+    "visits": 29892.0,
+    "translation_distance": 0.8316498316498318,
+    "local_sensitivity": 0.0,
+    "model_sensitivity": 0.0
    },
    {
     "state": {
@@ -5322,457 +5880,6 @@
     "translation_distance": 0.7245179063360881,
     "local_sensitivity": 0.0,
     "model_sensitivity": 0.0
-   },
-   {
-    "state": {
-     "format": "pokeralpha.observed/v1",
-     "num_seats": 2,
-     "hero_seat": 0,
-     "dealer": 0,
-     "small_blind": 0.5,
-     "big_blind": 1.0,
-     "ante": 0.0,
-     "street": "RIVER",
-     "hero_cards": [
-      "6c",
-      "4h"
-     ],
-     "board": [
-      "7h",
-      "9s",
-      "Th",
-      "5h",
-      "5c"
-     ],
-     "pot": 21.0,
-     "actor": 0,
-     "seats": [
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 90.5,
-       "bet": 1.5,
-       "committed": 9.5,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      },
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 88.5,
-       "bet": 3.5,
-       "committed": 11.5,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      }
-     ],
-     "actions": [
-      {
-       "street": 0,
-       "seat": 0,
-       "kind": "call",
-       "amount": 0.5
-      },
-      {
-       "street": 0,
-       "seat": 1,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 1,
-       "seat": 1,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 1,
-       "seat": 0,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 2,
-       "seat": 1,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 2,
-       "seat": 0,
-       "kind": "bet",
-       "amount": 1.5
-      },
-      {
-       "street": 2,
-       "seat": 1,
-       "kind": "raise",
-       "amount": 7.0
-      },
-      {
-       "street": 2,
-       "seat": 0,
-       "kind": "call",
-       "amount": 5.5
-      },
-      {
-       "street": 3,
-       "seat": 1,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 3,
-       "seat": 0,
-       "kind": "bet",
-       "amount": 1.5
-      },
-      {
-       "street": 3,
-       "seat": 1,
-       "kind": "raise",
-       "amount": 3.5
-      }
-     ],
-     "shown_cards": {},
-     "hand_id": "",
-     "timestamp": null,
-     "source": "simulation"
-    },
-    "street": "River",
-    "spr": 4.21,
-    "facing_bet_bb": 2.0,
-    "pot_bb": 21.0,
-    "gate": "LOW CONFIDENCE",
-    "gate_reasons": [
-     "OFF_TREE_TRANSLATION"
-    ],
-    "method": "interpolated abstraction",
-    "top_action": "fold",
-    "mix": {
-     "fold": 0.9911,
-     "raise_33": 0.0059,
-     "raise_75": 0.0019,
-     "all_in": 0.001,
-     "call": 0.0001
-    },
-    "gate_rejected": false,
-    "seed_disagreement": 0.013,
-    "visits": 828.0,
-    "translation_distance": 0.6212121212121212,
-    "local_sensitivity": 0.0,
-    "model_sensitivity": 0.0
-   },
-   {
-    "state": {
-     "format": "pokeralpha.observed/v1",
-     "num_seats": 2,
-     "hero_seat": 0,
-     "dealer": 1,
-     "small_blind": 0.5,
-     "big_blind": 1.0,
-     "ante": 0.0,
-     "street": "TURN",
-     "hero_cards": [
-      "Qc",
-      "2s"
-     ],
-     "board": [
-      "Qd",
-      "8h",
-      "Ts",
-      "7d"
-     ],
-     "pot": 8.0,
-     "actor": 0,
-     "seats": [
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 96.5,
-       "bet": 0.0,
-       "committed": 3.5,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      },
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 95.5,
-       "bet": 1.0,
-       "committed": 4.5,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      }
-     ],
-     "actions": [
-      {
-       "street": 0,
-       "seat": 1,
-       "kind": "raise",
-       "amount": 3.5
-      },
-      {
-       "street": 0,
-       "seat": 0,
-       "kind": "call",
-       "amount": 2.5
-      },
-      {
-       "street": 1,
-       "seat": 0,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 1,
-       "seat": 1,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 2,
-       "seat": 0,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 2,
-       "seat": 1,
-       "kind": "bet",
-       "amount": 1.0
-      }
-     ],
-     "shown_cards": {},
-     "hand_id": "",
-     "timestamp": null,
-     "source": "simulation"
-    },
-    "street": "Turn",
-    "spr": 11.94,
-    "facing_bet_bb": 1.0,
-    "pot_bb": 8.0,
-    "gate": "LOW CONFIDENCE",
-    "gate_reasons": [
-     "OFF_TREE_TRANSLATION",
-     "STREET_ABSTRACTION_ERROR"
-    ],
-    "method": "interpolated abstraction",
-    "top_action": "call",
-    "mix": {
-     "call": 0.9928,
-     "raise_75": 0.0061,
-     "raise_150": 0.0008,
-     "raise_33": 0.0002,
-     "all_in": 0.0
-    },
-    "gate_rejected": false,
-    "seed_disagreement": 0.0777,
-    "visits": 115573.0,
-    "translation_distance": 0.5670995670995671,
-    "local_sensitivity": 0.0,
-    "model_sensitivity": 0.0
-   },
-   {
-    "state": {
-     "format": "pokeralpha.observed/v1",
-     "num_seats": 2,
-     "hero_seat": 0,
-     "dealer": 0,
-     "small_blind": 0.5,
-     "big_blind": 1.0,
-     "ante": 0.0,
-     "street": "TURN",
-     "hero_cards": [
-      "2h",
-      "4s"
-     ],
-     "board": [
-      "4h",
-      "Jc",
-      "Js",
-      "Qh"
-     ],
-     "pot": 17.5,
-     "actor": 0,
-     "seats": [
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 92.5,
-       "bet": 0.0,
-       "committed": 7.5,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      },
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 90.0,
-       "bet": 2.5,
-       "committed": 10.0,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      }
-     ],
-     "actions": [
-      {
-       "street": 0,
-       "seat": 0,
-       "kind": "raise",
-       "amount": 5.5
-      },
-      {
-       "street": 0,
-       "seat": 1,
-       "kind": "call",
-       "amount": 4.5
-      },
-      {
-       "street": 1,
-       "seat": 1,
-       "kind": "bet",
-       "amount": 2.0
-      },
-      {
-       "street": 1,
-       "seat": 0,
-       "kind": "call",
-       "amount": 2.0
-      },
-      {
-       "street": 2,
-       "seat": 1,
-       "kind": "bet",
-       "amount": 2.5
-      }
-     ],
-     "shown_cards": {},
-     "hand_id": "",
-     "timestamp": null,
-     "source": "simulation"
-    },
-    "street": "Turn",
-    "spr": 5.14,
-    "facing_bet_bb": 2.5,
-    "pot_bb": 17.5,
-    "gate": "LOW CONFIDENCE",
-    "gate_reasons": [
-     "OFF_TREE_TRANSLATION",
-     "STREET_ABSTRACTION_ERROR"
-    ],
-    "method": "interpolated abstraction",
-    "top_action": "call",
-    "mix": {
-     "call": 0.9988,
-     "raise_150": 0.0007,
-     "all_in": 0.0003,
-     "raise_33": 0.0001,
-     "fold": 0.0001
-    },
-    "gate_rejected": false,
-    "seed_disagreement": 0.0286,
-    "visits": 72752.0,
-    "translation_distance": 0.49494949494949503,
-    "local_sensitivity": 0.0,
-    "model_sensitivity": 0.0
-   },
-   {
-    "state": {
-     "format": "pokeralpha.observed/v1",
-     "num_seats": 2,
-     "hero_seat": 0,
-     "dealer": 0,
-     "small_blind": 0.5,
-     "big_blind": 1.0,
-     "ante": 0.0,
-     "street": "FLOP",
-     "hero_cards": [
-      "2h",
-      "4s"
-     ],
-     "board": [
-      "4h",
-      "Jc",
-      "Js"
-     ],
-     "pot": 13.0,
-     "actor": 0,
-     "seats": [
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 94.5,
-       "bet": 0.0,
-       "committed": 5.5,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      },
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 92.5,
-       "bet": 2.0,
-       "committed": 7.5,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      }
-     ],
-     "actions": [
-      {
-       "street": 0,
-       "seat": 0,
-       "kind": "raise",
-       "amount": 5.5
-      },
-      {
-       "street": 0,
-       "seat": 1,
-       "kind": "call",
-       "amount": 4.5
-      },
-      {
-       "street": 1,
-       "seat": 1,
-       "kind": "bet",
-       "amount": 2.0
-      }
-     ],
-     "shown_cards": {},
-     "hand_id": "",
-     "timestamp": null,
-     "source": "simulation"
-    },
-    "street": "Flop",
-    "spr": 7.12,
-    "facing_bet_bb": 2.0,
-    "pot_bb": 13.0,
-    "gate": "REJECTED",
-    "gate_reasons": [
-     "HIGH_SEED_DISAGREEMENT",
-     "UNSTABLE_ACROSS_CHECKPOINTS"
-    ],
-    "method": "Monte Carlo rollout",
-    "top_action": "call",
-    "mix": {
-     "call": 0.941,
-     "raise_100": 0.057,
-     "raise_75": 0.002
-    },
-    "gate_rejected": true,
-    "seed_disagreement": 0.5155,
-    "visits": 16189.0,
-    "translation_distance": 0.4490358126721763,
-    "local_sensitivity": 0.03,
-    "model_sensitivity": 0.059
    }
   ],
   "low_visits": [
@@ -5856,6 +5963,739 @@
     "translation_distance": 0.20000000000000004,
     "local_sensitivity": 0.02,
     "model_sensitivity": 0.935
+   },
+   {
+    "state": {
+     "format": "pokeralpha.observed/v1",
+     "num_seats": 2,
+     "hero_seat": 0,
+     "dealer": 0,
+     "small_blind": 0.5,
+     "big_blind": 1.0,
+     "ante": 0.0,
+     "street": "PREFLOP",
+     "hero_cards": [
+      "4d",
+      "Th"
+     ],
+     "board": [],
+     "pot": 6.5,
+     "actor": 0,
+     "seats": [
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 99.0,
+       "bet": 1.0,
+       "committed": 1.0,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      },
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 94.5,
+       "bet": 5.5,
+       "committed": 5.5,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      }
+     ],
+     "actions": [
+      {
+       "street": 0,
+       "seat": 0,
+       "kind": "call",
+       "amount": 0.5
+      },
+      {
+       "street": 0,
+       "seat": 1,
+       "kind": "raise",
+       "amount": 5.5
+      }
+     ],
+     "shown_cards": {},
+     "hand_id": "",
+     "timestamp": null,
+     "source": "simulation"
+    },
+    "street": "Preflop",
+    "spr": 14.54,
+    "facing_bet_bb": 4.5,
+    "pot_bb": 6.5,
+    "gate": "REJECTED",
+    "gate_reasons": [
+     "LOW_VISIT_COUNT",
+     "HIGH_SEED_DISAGREEMENT"
+    ],
+    "method": "Monte Carlo rollout",
+    "top_action": "raise_100",
+    "mix": {
+     "raise_100": 0.691,
+     "all_in": 0.246,
+     "raise_75": 0.063
+    },
+    "gate_rejected": true,
+    "seed_disagreement": 1.014,
+    "visits": 3.0,
+    "translation_distance": 0.07692307692307694,
+    "local_sensitivity": 0.054,
+    "model_sensitivity": 0.833
+   },
+   {
+    "state": {
+     "format": "pokeralpha.observed/v1",
+     "num_seats": 2,
+     "hero_seat": 0,
+     "dealer": 1,
+     "small_blind": 0.5,
+     "big_blind": 1.0,
+     "ante": 0.0,
+     "street": "TURN",
+     "hero_cards": [
+      "7s",
+      "8s"
+     ],
+     "board": [
+      "6d",
+      "7h",
+      "As",
+      "Ts"
+     ],
+     "pot": 3.5,
+     "actor": 0,
+     "seats": [
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 99.0,
+       "bet": 0.0,
+       "committed": 1.0,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      },
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 97.5,
+       "bet": 1.5,
+       "committed": 2.5,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      }
+     ],
+     "actions": [
+      {
+       "street": 0,
+       "seat": 1,
+       "kind": "call",
+       "amount": 0.5
+      },
+      {
+       "street": 0,
+       "seat": 0,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 1,
+       "seat": 0,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 1,
+       "seat": 1,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 2,
+       "seat": 0,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 2,
+       "seat": 1,
+       "kind": "bet",
+       "amount": 1.5
+      }
+     ],
+     "shown_cards": {},
+     "hand_id": "",
+     "timestamp": null,
+     "source": "simulation"
+    },
+    "street": "Turn",
+    "spr": 27.86,
+    "facing_bet_bb": 1.5,
+    "pot_bb": 3.5,
+    "gate": "REJECTED",
+    "gate_reasons": [
+     "LOW_VISIT_COUNT",
+     "HIGH_SEED_DISAGREEMENT"
+    ],
+    "method": "Monte Carlo rollout",
+    "top_action": "call",
+    "mix": {
+     "call": 0.932,
+     "all_in": 0.061,
+     "raise_100": 0.005,
+     "fold": 0.001,
+     "raise_75": 0.001
+    },
+    "gate_rejected": true,
+    "seed_disagreement": 0.8242,
+    "visits": 6.0,
+    "translation_distance": 0.0,
+    "local_sensitivity": 0.061,
+    "model_sensitivity": 0.31
+   },
+   {
+    "state": {
+     "format": "pokeralpha.observed/v1",
+     "num_seats": 2,
+     "hero_seat": 0,
+     "dealer": 1,
+     "small_blind": 0.5,
+     "big_blind": 1.0,
+     "ante": 0.0,
+     "street": "RIVER",
+     "hero_cards": [
+      "4c",
+      "4h"
+     ],
+     "board": [
+      "5s",
+      "4d",
+      "8d",
+      "Qd",
+      "7s"
+     ],
+     "pot": 8.0,
+     "actor": 0,
+     "seats": [
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 97.0,
+       "bet": 0.0,
+       "committed": 3.0,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      },
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 95.0,
+       "bet": 2.0,
+       "committed": 5.0,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      }
+     ],
+     "actions": [
+      {
+       "street": 0,
+       "seat": 1,
+       "kind": "call",
+       "amount": 0.5
+      },
+      {
+       "street": 0,
+       "seat": 0,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 1,
+       "seat": 0,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 1,
+       "seat": 1,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 2,
+       "seat": 0,
+       "kind": "bet",
+       "amount": 2.0
+      },
+      {
+       "street": 2,
+       "seat": 1,
+       "kind": "call",
+       "amount": 2.0
+      },
+      {
+       "street": 3,
+       "seat": 0,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 3,
+       "seat": 1,
+       "kind": "bet",
+       "amount": 2.0
+      }
+     ],
+     "shown_cards": {},
+     "hand_id": "",
+     "timestamp": null,
+     "source": "simulation"
+    },
+    "street": "River",
+    "spr": 11.88,
+    "facing_bet_bb": 2.0,
+    "pot_bb": 8.0,
+    "gate": "REJECTED",
+    "gate_reasons": [
+     "LOW_VISIT_COUNT",
+     "HIGH_SEED_DISAGREEMENT",
+     "UNSTABLE_ACROSS_CHECKPOINTS"
+    ],
+    "method": "Monte Carlo rollout",
+    "top_action": "call",
+    "mix": {
+     "call": 1.0
+    },
+    "gate_rejected": true,
+    "seed_disagreement": 0.7193,
+    "visits": 7.0,
+    "translation_distance": 0.010101010101009998,
+    "local_sensitivity": 0.0,
+    "model_sensitivity": 0.996
+   },
+   {
+    "state": {
+     "format": "pokeralpha.observed/v1",
+     "num_seats": 2,
+     "hero_seat": 0,
+     "dealer": 0,
+     "small_blind": 0.5,
+     "big_blind": 1.0,
+     "ante": 0.0,
+     "street": "PREFLOP",
+     "hero_cards": [
+      "9c",
+      "4d"
+     ],
+     "board": [],
+     "pot": 3.5,
+     "actor": 0,
+     "seats": [
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 99.0,
+       "bet": 1.0,
+       "committed": 1.0,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      },
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 97.5,
+       "bet": 2.5,
+       "committed": 2.5,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      }
+     ],
+     "actions": [
+      {
+       "street": 0,
+       "seat": 0,
+       "kind": "call",
+       "amount": 0.5
+      },
+      {
+       "street": 0,
+       "seat": 1,
+       "kind": "raise",
+       "amount": 2.5
+      }
+     ],
+     "shown_cards": {},
+     "hand_id": "",
+     "timestamp": null,
+     "source": "simulation"
+    },
+    "street": "Preflop",
+    "spr": 27.86,
+    "facing_bet_bb": 1.5,
+    "pot_bb": 3.5,
+    "gate": "REJECTED",
+    "gate_reasons": [
+     "HIGH_SEED_DISAGREEMENT"
+    ],
+    "method": "Monte Carlo rollout",
+    "top_action": "raise_100",
+    "mix": {
+     "raise_100": 0.85,
+     "raise_75": 0.097,
+     "all_in": 0.053
+    },
+    "gate_rejected": true,
+    "seed_disagreement": 1.0695,
+    "visits": 45.0,
+    "translation_distance": 0.2987012987012986,
+    "local_sensitivity": 0.018,
+    "model_sensitivity": 0.839
+   },
+   {
+    "state": {
+     "format": "pokeralpha.observed/v1",
+     "num_seats": 2,
+     "hero_seat": 0,
+     "dealer": 0,
+     "small_blind": 0.5,
+     "big_blind": 1.0,
+     "ante": 0.0,
+     "street": "RIVER",
+     "hero_cards": [
+      "Qc",
+      "As"
+     ],
+     "board": [
+      "7s",
+      "2h",
+      "7c",
+      "2s",
+      "Ac"
+     ],
+     "pot": 2.0,
+     "actor": 0,
+     "seats": [
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 99.0,
+       "bet": 0.0,
+       "committed": 1.0,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      },
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 99.0,
+       "bet": 0.0,
+       "committed": 1.0,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      }
+     ],
+     "actions": [
+      {
+       "street": 0,
+       "seat": 0,
+       "kind": "call",
+       "amount": 0.5
+      },
+      {
+       "street": 0,
+       "seat": 1,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 1,
+       "seat": 1,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 1,
+       "seat": 0,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 2,
+       "seat": 1,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 2,
+       "seat": 0,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 3,
+       "seat": 1,
+       "kind": "check",
+       "amount": 0.0
+      }
+     ],
+     "shown_cards": {},
+     "hand_id": "",
+     "timestamp": null,
+     "source": "simulation"
+    },
+    "street": "River",
+    "spr": 49.5,
+    "facing_bet_bb": 0.0,
+    "pot_bb": 2.0,
+    "gate": "LOW CONFIDENCE",
+    "gate_reasons": [
+     "HIGH_SEED_DISAGREEMENT"
+    ],
+    "method": "solver",
+    "top_action": "bet_150",
+    "mix": {
+     "bet_150": 0.4887,
+     "check": 0.3405,
+     "bet_75": 0.1622,
+     "all_in": 0.0086
+    },
+    "gate_rejected": false,
+    "seed_disagreement": 0.3904,
+    "visits": 58.0,
+    "translation_distance": null,
+    "local_sensitivity": null,
+    "model_sensitivity": 0.0
+   },
+   {
+    "state": {
+     "format": "pokeralpha.observed/v1",
+     "num_seats": 2,
+     "hero_seat": 0,
+     "dealer": 0,
+     "small_blind": 0.5,
+     "big_blind": 1.0,
+     "ante": 0.0,
+     "street": "TURN",
+     "hero_cards": [
+      "6h",
+      "Js"
+     ],
+     "board": [
+      "Td",
+      "9s",
+      "Qh",
+      "9c"
+     ],
+     "pot": 2.0,
+     "actor": 0,
+     "seats": [
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 99.0,
+       "bet": 0.0,
+       "committed": 1.0,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      },
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 99.0,
+       "bet": 0.0,
+       "committed": 1.0,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      }
+     ],
+     "actions": [
+      {
+       "street": 0,
+       "seat": 0,
+       "kind": "call",
+       "amount": 0.5
+      },
+      {
+       "street": 0,
+       "seat": 1,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 1,
+       "seat": 1,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 1,
+       "seat": 0,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 2,
+       "seat": 1,
+       "kind": "check",
+       "amount": 0.0
+      }
+     ],
+     "shown_cards": {},
+     "hand_id": "",
+     "timestamp": null,
+     "source": "simulation"
+    },
+    "street": "Turn",
+    "spr": 49.5,
+    "facing_bet_bb": 0.0,
+    "pot_bb": 2.0,
+    "gate": "REJECTED",
+    "gate_reasons": [
+     "HIGH_SEED_DISAGREEMENT"
+    ],
+    "method": "Monte Carlo rollout",
+    "top_action": "all_in",
+    "mix": {
+     "all_in": 0.582,
+     "bet_100": 0.412,
+     "bet_75": 0.006
+    },
+    "gate_rejected": true,
+    "seed_disagreement": 0.8261,
+    "visits": 65.0,
+    "translation_distance": null,
+    "local_sensitivity": null,
+    "model_sensitivity": 0.75
+   },
+   {
+    "state": {
+     "format": "pokeralpha.observed/v1",
+     "num_seats": 2,
+     "hero_seat": 0,
+     "dealer": 0,
+     "small_blind": 0.5,
+     "big_blind": 1.0,
+     "ante": 0.0,
+     "street": "RIVER",
+     "hero_cards": [
+      "5h",
+      "Qh"
+     ],
+     "board": [
+      "4d",
+      "As",
+      "Qd",
+      "7d",
+      "9c"
+     ],
+     "pot": 4.0,
+     "actor": 0,
+     "seats": [
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 99.0,
+       "bet": 0.0,
+       "committed": 1.0,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      },
+      {
+       "occupied": true,
+       "name": "",
+       "stack": 97.0,
+       "bet": 2.0,
+       "committed": 3.0,
+       "folded": false,
+       "all_in": false,
+       "sitting_out": false
+      }
+     ],
+     "actions": [
+      {
+       "street": 0,
+       "seat": 0,
+       "kind": "call",
+       "amount": 0.5
+      },
+      {
+       "street": 0,
+       "seat": 1,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 1,
+       "seat": 1,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 1,
+       "seat": 0,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 2,
+       "seat": 1,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 2,
+       "seat": 0,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 3,
+       "seat": 1,
+       "kind": "bet",
+       "amount": 2.0
+      }
+     ],
+     "shown_cards": {},
+     "hand_id": "",
+     "timestamp": null,
+     "source": "simulation"
+    },
+    "street": "River",
+    "spr": 24.25,
+    "facing_bet_bb": 2.0,
+    "pot_bb": 4.0,
+    "gate": "REJECTED",
+    "gate_reasons": [
+     "HIGH_SEED_DISAGREEMENT",
+     "UNSTABLE_ACROSS_CHECKPOINTS"
+    ],
+    "method": "Monte Carlo rollout",
+    "top_action": "all_in",
+    "mix": {
+     "all_in": 0.397,
+     "raise_100": 0.335,
+     "raise_75": 0.267,
+     "call": 0.001
+    },
+    "gate_rejected": true,
+    "seed_disagreement": 1.2693,
+    "visits": 92.0,
+    "translation_distance": 0.3333333333333333,
+    "local_sensitivity": 0.025,
+    "model_sensitivity": 0.603
    },
    {
     "state": {
@@ -5978,234 +6818,6 @@
      "format": "pokeralpha.observed/v1",
      "num_seats": 2,
      "hero_seat": 0,
-     "dealer": 1,
-     "small_blind": 0.5,
-     "big_blind": 1.0,
-     "ante": 0.0,
-     "street": "RIVER",
-     "hero_cards": [
-      "9s",
-      "Ks"
-     ],
-     "board": [
-      "As",
-      "Qh",
-      "3d",
-      "9h",
-      "4s"
-     ],
-     "pot": 2.0,
-     "actor": 0,
-     "seats": [
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 99.0,
-       "bet": 0.0,
-       "committed": 1.0,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      },
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 99.0,
-       "bet": 0.0,
-       "committed": 1.0,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      }
-     ],
-     "actions": [
-      {
-       "street": 0,
-       "seat": 1,
-       "kind": "call",
-       "amount": 0.5
-      },
-      {
-       "street": 0,
-       "seat": 0,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 1,
-       "seat": 0,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 1,
-       "seat": 1,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 2,
-       "seat": 0,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 2,
-       "seat": 1,
-       "kind": "check",
-       "amount": 0.0
-      }
-     ],
-     "shown_cards": {},
-     "hand_id": "",
-     "timestamp": null,
-     "source": "simulation"
-    },
-    "street": "River",
-    "spr": 49.5,
-    "facing_bet_bb": 0.0,
-    "pot_bb": 2.0,
-    "gate": "REJECTED",
-    "gate_reasons": [
-     "HIGH_SEED_DISAGREEMENT",
-     "UNSTABLE_ACROSS_CHECKPOINTS"
-    ],
-    "method": "Monte Carlo rollout",
-    "top_action": "all_in",
-    "mix": {
-     "all_in": 0.359,
-     "bet_33": 0.342,
-     "bet_100": 0.264,
-     "bet_75": 0.028,
-     "check": 0.007
-    },
-    "gate_rejected": true,
-    "seed_disagreement": 1.0522,
-    "visits": 365.0,
-    "translation_distance": null,
-    "local_sensitivity": null,
-    "model_sensitivity": 0.636
-   },
-   {
-    "state": {
-     "format": "pokeralpha.observed/v1",
-     "num_seats": 2,
-     "hero_seat": 0,
-     "dealer": 0,
-     "small_blind": 0.5,
-     "big_blind": 1.0,
-     "ante": 0.0,
-     "street": "RIVER",
-     "hero_cards": [
-      "6d",
-      "Qd"
-     ],
-     "board": [
-      "4c",
-      "Th",
-      "Ac",
-      "4d",
-      "Kh"
-     ],
-     "pot": 3.5,
-     "actor": 0,
-     "seats": [
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 99.0,
-       "bet": 0.0,
-       "committed": 1.0,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      },
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 97.5,
-       "bet": 1.5,
-       "committed": 2.5,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      }
-     ],
-     "actions": [
-      {
-       "street": 0,
-       "seat": 0,
-       "kind": "call",
-       "amount": 0.5
-      },
-      {
-       "street": 0,
-       "seat": 1,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 1,
-       "seat": 1,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 1,
-       "seat": 0,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 2,
-       "seat": 1,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 2,
-       "seat": 0,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 3,
-       "seat": 1,
-       "kind": "bet",
-       "amount": 1.5
-      }
-     ],
-     "shown_cards": {},
-     "hand_id": "",
-     "timestamp": null,
-     "source": "simulation"
-    },
-    "street": "River",
-    "spr": 27.86,
-    "facing_bet_bb": 1.5,
-    "pot_bb": 3.5,
-    "gate": "REJECTED",
-    "gate_reasons": [
-     "HIGH_SEED_DISAGREEMENT",
-     "UNSTABLE_ACROSS_CHECKPOINTS"
-    ],
-    "method": "Monte Carlo rollout",
-    "top_action": "call",
-    "mix": {
-     "call": 1.0
-    },
-    "gate_rejected": true,
-    "seed_disagreement": 0.8957,
-    "visits": 454.0,
-    "translation_distance": 0.0,
-    "local_sensitivity": 0.001,
-    "model_sensitivity": 0.996
-   },
-   {
-    "state": {
-     "format": "pokeralpha.observed/v1",
-     "num_seats": 2,
-     "hero_seat": 0,
      "dealer": 0,
      "small_blind": 0.5,
      "big_blind": 1.0,
@@ -6213,263 +6825,13 @@
      "street": "RIVER",
      "hero_cards": [
       "2h",
-      "4s"
+      "2s"
      ],
      "board": [
-      "4h",
-      "Jc",
-      "Js",
-      "Qh",
-      "3h"
-     ],
-     "pot": 34.0,
-     "actor": 0,
-     "seats": [
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 85.5,
-       "bet": 4.5,
-       "committed": 14.5,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      },
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 80.5,
-       "bet": 9.5,
-       "committed": 19.5,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      }
-     ],
-     "actions": [
-      {
-       "street": 0,
-       "seat": 0,
-       "kind": "raise",
-       "amount": 5.5
-      },
-      {
-       "street": 0,
-       "seat": 1,
-       "kind": "call",
-       "amount": 4.5
-      },
-      {
-       "street": 1,
-       "seat": 1,
-       "kind": "bet",
-       "amount": 2.0
-      },
-      {
-       "street": 1,
-       "seat": 0,
-       "kind": "call",
-       "amount": 2.0
-      },
-      {
-       "street": 2,
-       "seat": 1,
-       "kind": "bet",
-       "amount": 2.5
-      },
-      {
-       "street": 2,
-       "seat": 0,
-       "kind": "call",
-       "amount": 2.5
-      },
-      {
-       "street": 3,
-       "seat": 1,
-       "kind": "bet",
-       "amount": 1.5
-      },
-      {
-       "street": 3,
-       "seat": 0,
-       "kind": "raise",
-       "amount": 4.5
-      },
-      {
-       "street": 3,
-       "seat": 1,
-       "kind": "raise",
-       "amount": 9.5
-      }
-     ],
-     "shown_cards": {},
-     "hand_id": "",
-     "timestamp": null,
-     "source": "simulation"
-    },
-    "street": "River",
-    "spr": 2.37,
-    "facing_bet_bb": 5.0,
-    "pot_bb": 34.0,
-    "gate": "LOW CONFIDENCE",
-    "gate_reasons": [
-     "HIGH_SEED_DISAGREEMENT",
-     "UNSTABLE_ACROSS_CHECKPOINTS",
-     "OFF_TREE_TRANSLATION"
-    ],
-    "method": "interpolated abstraction",
-    "top_action": "fold",
-    "mix": {
-     "fold": 0.7993,
-     "call": 0.2007
-    },
-    "gate_rejected": false,
-    "seed_disagreement": 0.2252,
-    "visits": 697.0,
-    "translation_distance": 0.24242424242424246,
-    "local_sensitivity": 0.0,
-    "model_sensitivity": 0.0
-   },
-   {
-    "state": {
-     "format": "pokeralpha.observed/v1",
-     "num_seats": 2,
-     "hero_seat": 0,
-     "dealer": 1,
-     "small_blind": 0.5,
-     "big_blind": 1.0,
-     "ante": 0.0,
-     "street": "RIVER",
-     "hero_cards": [
-      "4c",
-      "2d"
-     ],
-     "board": [
-      "5s",
-      "7s",
-      "7d",
-      "4d",
-      "8s"
-     ],
-     "pot": 14.0,
-     "actor": 0,
-     "seats": [
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 97.0,
-       "bet": 2.0,
-       "committed": 3.0,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      },
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 89.0,
-       "bet": 10.0,
-       "committed": 11.0,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      }
-     ],
-     "actions": [
-      {
-       "street": 0,
-       "seat": 1,
-       "kind": "call",
-       "amount": 0.5
-      },
-      {
-       "street": 0,
-       "seat": 0,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 1,
-       "seat": 0,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 1,
-       "seat": 1,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 2,
-       "seat": 0,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 2,
-       "seat": 1,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 3,
-       "seat": 0,
-       "kind": "bet",
-       "amount": 2.0
-      },
-      {
-       "street": 3,
-       "seat": 1,
-       "kind": "raise",
-       "amount": 10.0
-      }
-     ],
-     "shown_cards": {},
-     "hand_id": "",
-     "timestamp": null,
-     "source": "simulation"
-    },
-    "street": "River",
-    "spr": 6.36,
-    "facing_bet_bb": 8.0,
-    "pot_bb": 14.0,
-    "gate": "LOW CONFIDENCE",
-    "gate_reasons": [
-     "OFF_TREE_TRANSLATION"
-    ],
-    "method": "interpolated abstraction",
-    "top_action": "fold",
-    "mix": {
-     "fold": 0.9977,
-     "raise_75": 0.0013,
-     "call": 0.001
-    },
-    "gate_rejected": false,
-    "seed_disagreement": 0.0451,
-    "visits": 721.0,
-    "translation_distance": 1.6666666666666667,
-    "local_sensitivity": 0.0,
-    "model_sensitivity": 0.0
-   },
-   {
-    "state": {
-     "format": "pokeralpha.observed/v1",
-     "num_seats": 2,
-     "hero_seat": 0,
-     "dealer": 0,
-     "small_blind": 0.5,
-     "big_blind": 1.0,
-     "ante": 0.0,
-     "street": "TURN",
-     "hero_cards": [
-      "6c",
-      "4h"
-     ],
-     "board": [
-      "7h",
-      "9s",
-      "Th",
+      "Kc",
+      "9d",
+      "Kh",
+      "7c",
       "5h"
      ],
      "pot": 2.0,
@@ -6526,6 +6888,18 @@
        "seat": 1,
        "kind": "check",
        "amount": 0.0
+      },
+      {
+       "street": 2,
+       "seat": 0,
+       "kind": "check",
+       "amount": 0.0
+      },
+      {
+       "street": 3,
+       "seat": 1,
+       "kind": "check",
+       "amount": 0.0
       }
      ],
      "shown_cards": {},
@@ -6533,397 +6907,42 @@
      "timestamp": null,
      "source": "simulation"
     },
-    "street": "Turn",
+    "street": "River",
     "spr": 49.5,
     "facing_bet_bb": 0.0,
     "pot_bb": 2.0,
-    "gate": "REJECTED",
-    "gate_reasons": [
-     "HIGH_SEED_DISAGREEMENT",
-     "UNSTABLE_ACROSS_CHECKPOINTS"
-    ],
-    "method": "Monte Carlo rollout",
-    "top_action": "all_in",
+    "gate": "ACCEPTED",
+    "gate_reasons": [],
+    "method": "solver",
+    "top_action": "check",
     "mix": {
-     "all_in": 0.987,
-     "bet_100": 0.013
+     "check": 0.9756,
+     "bet_150": 0.0244
     },
-    "gate_rejected": true,
-    "seed_disagreement": 1.2613,
-    "visits": 779.0,
+    "gate_rejected": false,
+    "seed_disagreement": 0.1988,
+    "visits": 241.0,
     "translation_distance": null,
     "local_sensitivity": null,
-    "model_sensitivity": 0.916
-   },
-   {
-    "state": {
-     "format": "pokeralpha.observed/v1",
-     "num_seats": 2,
-     "hero_seat": 0,
-     "dealer": 0,
-     "small_blind": 0.5,
-     "big_blind": 1.0,
-     "ante": 0.0,
-     "street": "RIVER",
-     "hero_cards": [
-      "6c",
-      "4h"
-     ],
-     "board": [
-      "7h",
-      "9s",
-      "Th",
-      "5h",
-      "5c"
-     ],
-     "pot": 21.0,
-     "actor": 0,
-     "seats": [
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 90.5,
-       "bet": 1.5,
-       "committed": 9.5,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      },
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 88.5,
-       "bet": 3.5,
-       "committed": 11.5,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      }
-     ],
-     "actions": [
-      {
-       "street": 0,
-       "seat": 0,
-       "kind": "call",
-       "amount": 0.5
-      },
-      {
-       "street": 0,
-       "seat": 1,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 1,
-       "seat": 1,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 1,
-       "seat": 0,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 2,
-       "seat": 1,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 2,
-       "seat": 0,
-       "kind": "bet",
-       "amount": 1.5
-      },
-      {
-       "street": 2,
-       "seat": 1,
-       "kind": "raise",
-       "amount": 7.0
-      },
-      {
-       "street": 2,
-       "seat": 0,
-       "kind": "call",
-       "amount": 5.5
-      },
-      {
-       "street": 3,
-       "seat": 1,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 3,
-       "seat": 0,
-       "kind": "bet",
-       "amount": 1.5
-      },
-      {
-       "street": 3,
-       "seat": 1,
-       "kind": "raise",
-       "amount": 3.5
-      }
-     ],
-     "shown_cards": {},
-     "hand_id": "",
-     "timestamp": null,
-     "source": "simulation"
-    },
-    "street": "River",
-    "spr": 4.21,
-    "facing_bet_bb": 2.0,
-    "pot_bb": 21.0,
-    "gate": "LOW CONFIDENCE",
-    "gate_reasons": [
-     "OFF_TREE_TRANSLATION"
-    ],
-    "method": "interpolated abstraction",
-    "top_action": "fold",
-    "mix": {
-     "fold": 0.9911,
-     "raise_33": 0.0059,
-     "raise_75": 0.0019,
-     "all_in": 0.001,
-     "call": 0.0001
-    },
-    "gate_rejected": false,
-    "seed_disagreement": 0.013,
-    "visits": 828.0,
-    "translation_distance": 0.6212121212121212,
-    "local_sensitivity": 0.0,
-    "model_sensitivity": 0.0
-   },
-   {
-    "state": {
-     "format": "pokeralpha.observed/v1",
-     "num_seats": 2,
-     "hero_seat": 0,
-     "dealer": 0,
-     "small_blind": 0.5,
-     "big_blind": 1.0,
-     "ante": 0.0,
-     "street": "PREFLOP",
-     "hero_cards": [
-      "Jc",
-      "9d"
-     ],
-     "board": [],
-     "pot": 4.5,
-     "actor": 0,
-     "seats": [
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 99.0,
-       "bet": 1.0,
-       "committed": 1.0,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      },
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 96.5,
-       "bet": 3.5,
-       "committed": 3.5,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      }
-     ],
-     "actions": [
-      {
-       "street": 0,
-       "seat": 0,
-       "kind": "call",
-       "amount": 0.5
-      },
-      {
-       "street": 0,
-       "seat": 1,
-       "kind": "raise",
-       "amount": 3.5
-      }
-     ],
-     "shown_cards": {},
-     "hand_id": "",
-     "timestamp": null,
-     "source": "simulation"
-    },
-    "street": "Preflop",
-    "spr": 21.44,
-    "facing_bet_bb": 2.5,
-    "pot_bb": 4.5,
-    "gate": "REJECTED",
-    "gate_reasons": [
-     "HIGH_SEED_DISAGREEMENT",
-     "UNSTABLE_ACROSS_CHECKPOINTS"
-    ],
-    "method": "Monte Carlo rollout",
-    "top_action": "raise_100",
-    "mix": {
-     "raise_100": 0.501,
-     "raise_75": 0.348,
-     "all_in": 0.151
-    },
-    "gate_rejected": true,
-    "seed_disagreement": 1.1594,
-    "visits": 1034.0,
-    "translation_distance": 0.25925925925925924,
-    "local_sensitivity": 0.007,
-    "model_sensitivity": 0.665
-   },
-   {
-    "state": {
-     "format": "pokeralpha.observed/v1",
-     "num_seats": 2,
-     "hero_seat": 0,
-     "dealer": 1,
-     "small_blind": 0.5,
-     "big_blind": 1.0,
-     "ante": 0.0,
-     "street": "RIVER",
-     "hero_cards": [
-      "2s",
-      "9s"
-     ],
-     "board": [
-      "Qd",
-      "6d",
-      "Ts",
-      "4h",
-      "3d"
-     ],
-     "pot": 12.0,
-     "actor": 0,
-     "seats": [
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 94.5,
-       "bet": 0.0,
-       "committed": 5.5,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      },
-      {
-       "occupied": true,
-       "name": "",
-       "stack": 93.5,
-       "bet": 1.0,
-       "committed": 6.5,
-       "folded": false,
-       "all_in": false,
-       "sitting_out": false
-      }
-     ],
-     "actions": [
-      {
-       "street": 0,
-       "seat": 1,
-       "kind": "call",
-       "amount": 0.5
-      },
-      {
-       "street": 0,
-       "seat": 0,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 1,
-       "seat": 0,
-       "kind": "bet",
-       "amount": 1.5
-      },
-      {
-       "street": 1,
-       "seat": 1,
-       "kind": "raise",
-       "amount": 4.5
-      },
-      {
-       "street": 1,
-       "seat": 0,
-       "kind": "call",
-       "amount": 3.0
-      },
-      {
-       "street": 2,
-       "seat": 0,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 2,
-       "seat": 1,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 3,
-       "seat": 0,
-       "kind": "check",
-       "amount": 0.0
-      },
-      {
-       "street": 3,
-       "seat": 1,
-       "kind": "bet",
-       "amount": 1.0
-      }
-     ],
-     "shown_cards": {},
-     "hand_id": "",
-     "timestamp": null,
-     "source": "simulation"
-    },
-    "street": "River",
-    "spr": 7.79,
-    "facing_bet_bb": 1.0,
-    "pot_bb": 12.0,
-    "gate": "LOW CONFIDENCE",
-    "gate_reasons": [
-     "OFF_TREE_TRANSLATION"
-    ],
-    "method": "interpolated abstraction",
-    "top_action": "fold",
-    "mix": {
-     "fold": 0.9254,
-     "call": 0.0664,
-     "raise_75": 0.0072,
-     "all_in": 0.0006,
-     "raise_150": 0.0004
-    },
-    "gate_rejected": false,
-    "seed_disagreement": 0.1067,
-    "visits": 1069.0,
-    "translation_distance": 0.7245179063360881,
-    "local_sensitivity": 0.0,
     "model_sensitivity": 0.0
    }
   ]
  },
  "summary": {
   "gate_counts": {
-   "REJECTED": 63,
-   "ACCEPTED": 1,
-   "LOW CONFIDENCE": 56
+   "REJECTED": 212,
+   "ACCEPTED": 7,
+   "LOW CONFIDENCE": 181
   },
   "gate_reason_counts": {
-   "HIGH_SEED_DISAGREEMENT": 87,
-   "UNSTABLE_ACROSS_CHECKPOINTS": 71,
-   "STREET_ABSTRACTION_ERROR": 36,
-   "OFF_TREE_TRANSLATION": 34,
-   "LOW_VISIT_COUNT": 1,
+   "HIGH_SEED_DISAGREEMENT": 307,
+   "UNSTABLE_ACROSS_CHECKPOINTS": 219,
+   "STREET_ABSTRACTION_ERROR": 119,
+   "OFF_TREE_TRANSLATION": 102,
+   "LOW_VISIT_COUNT": 4,
    "HIGH_COLLISION_DISPERSION": 1,
-   "UNSEEN_STATE": 1
+   "UNSEEN_STATE": 1,
+   "OUTSIDE_ABSTRACTION": 4
   },
   "sampling": "random legal self-play snapshots at hero decision points, ~100bb HU; NOT the natural distribution of human play"
  },
@@ -6932,19 +6951,19 @@
    "street": "Preflop",
    "spr": "spr>13",
    "bet": "bet 50-100%pot",
-   "count": 18,
+   "count": 68,
    "signals": {
-    "gate_rejected": 18,
-    "mean_local_sensitivity": 0.004,
-    "mean_model_sensitivity": 0.702,
+    "gate_rejected": 68,
+    "mean_local_sensitivity": 0.011,
+    "mean_model_sensitivity": 0.726,
     "top_gate_reasons": [
      [
       "HIGH_SEED_DISAGREEMENT",
-      18
+      68
      ],
      [
       "UNSTABLE_ACROSS_CHECKPOINTS",
-      14
+      48
      ]
     ]
    },
@@ -6954,19 +6973,63 @@
    "street": "Preflop",
    "spr": "spr>13",
    "bet": "no bet",
-   "count": 9,
+   "count": 30,
    "signals": {
-    "gate_rejected": 9,
+    "gate_rejected": 30,
     "mean_local_sensitivity": 0.0,
-    "mean_model_sensitivity": 0.694,
+    "mean_model_sensitivity": 0.731,
     "top_gate_reasons": [
      [
       "HIGH_SEED_DISAGREEMENT",
-      9
+      30
      ],
      [
       "UNSTABLE_ACROSS_CHECKPOINTS",
-      6
+      22
+     ]
+    ]
+   },
+   "note": "descriptive grouping, not a causal diagnosis"
+  },
+  {
+   "street": "Turn",
+   "spr": "spr>13",
+   "bet": "no bet",
+   "count": 19,
+   "signals": {
+    "gate_rejected": 19,
+    "mean_local_sensitivity": 0.0,
+    "mean_model_sensitivity": 0.819,
+    "top_gate_reasons": [
+     [
+      "HIGH_SEED_DISAGREEMENT",
+      19
+     ],
+     [
+      "UNSTABLE_ACROSS_CHECKPOINTS",
+      10
+     ]
+    ]
+   },
+   "note": "descriptive grouping, not a causal diagnosis"
+  },
+  {
+   "street": "Flop",
+   "spr": "spr>13",
+   "bet": "no bet",
+   "count": 16,
+   "signals": {
+    "gate_rejected": 16,
+    "mean_local_sensitivity": 0.0,
+    "mean_model_sensitivity": 0.733,
+    "top_gate_reasons": [
+     [
+      "HIGH_SEED_DISAGREEMENT",
+      16
+     ],
+     [
+      "UNSTABLE_ACROSS_CHECKPOINTS",
+      15
      ]
     ]
    },
@@ -6976,11 +7039,103 @@
    "street": "Preflop",
    "spr": "spr>13",
    "bet": "bet>pot",
+   "count": 14,
+   "signals": {
+    "gate_rejected": 14,
+    "mean_local_sensitivity": 0.026,
+    "mean_model_sensitivity": 0.809,
+    "top_gate_reasons": [
+     [
+      "HIGH_SEED_DISAGREEMENT",
+      13
+     ],
+     [
+      "UNSTABLE_ACROSS_CHECKPOINTS",
+      4
+     ],
+     [
+      "LOW_VISIT_COUNT",
+      2
+     ]
+    ]
+   },
+   "note": "descriptive grouping, not a causal diagnosis"
+  },
+  {
+   "street": "River",
+   "spr": "spr 4-13",
+   "bet": "no bet",
+   "count": 10,
+   "signals": {
+    "gate_rejected": 10,
+    "mean_local_sensitivity": 0.0,
+    "mean_model_sensitivity": 0.89,
+    "top_gate_reasons": [
+     [
+      "HIGH_SEED_DISAGREEMENT",
+      10
+     ],
+     [
+      "UNSTABLE_ACROSS_CHECKPOINTS",
+      5
+     ]
+    ]
+   },
+   "note": "descriptive grouping, not a causal diagnosis"
+  },
+  {
+   "street": "River",
+   "spr": "spr>13",
+   "bet": "no bet",
+   "count": 8,
+   "signals": {
+    "gate_rejected": 8,
+    "mean_local_sensitivity": 0.0,
+    "mean_model_sensitivity": 0.821,
+    "top_gate_reasons": [
+     [
+      "HIGH_SEED_DISAGREEMENT",
+      8
+     ],
+     [
+      "UNSTABLE_ACROSS_CHECKPOINTS",
+      5
+     ]
+    ]
+   },
+   "note": "descriptive grouping, not a causal diagnosis"
+  },
+  {
+   "street": "Flop",
+   "spr": "spr 4-13",
+   "bet": "no bet",
    "count": 7,
    "signals": {
     "gate_rejected": 7,
-    "mean_local_sensitivity": 0.019,
-    "mean_model_sensitivity": 0.77,
+    "mean_local_sensitivity": 0.0,
+    "mean_model_sensitivity": 0.502,
+    "top_gate_reasons": [
+     [
+      "HIGH_SEED_DISAGREEMENT",
+      7
+     ],
+     [
+      "UNSTABLE_ACROSS_CHECKPOINTS",
+      5
+     ]
+    ]
+   },
+   "note": "descriptive grouping, not a causal diagnosis"
+  },
+  {
+   "street": "River",
+   "spr": "spr 4-13",
+   "bet": "bet<50%pot",
+   "count": 6,
+   "signals": {
+    "gate_rejected": 6,
+    "mean_local_sensitivity": 0.026,
+    "mean_model_sensitivity": 0.753,
     "top_gate_reasons": [
      [
       "HIGH_SEED_DISAGREEMENT",
@@ -6999,36 +7154,14 @@
    "note": "descriptive grouping, not a causal diagnosis"
   },
   {
-   "street": "Flop",
-   "spr": "spr>13",
-   "bet": "no bet",
-   "count": 7,
-   "signals": {
-    "gate_rejected": 7,
-    "mean_local_sensitivity": 0.0,
-    "mean_model_sensitivity": 0.889,
-    "top_gate_reasons": [
-     [
-      "HIGH_SEED_DISAGREEMENT",
-      7
-     ],
-     [
-      "UNSTABLE_ACROSS_CHECKPOINTS",
-      7
-     ]
-    ]
-   },
-   "note": "descriptive grouping, not a causal diagnosis"
-  },
-  {
-   "street": "River",
+   "street": "Turn",
    "spr": "spr 4-13",
    "bet": "no bet",
    "count": 4,
    "signals": {
     "gate_rejected": 4,
     "mean_local_sensitivity": 0.0,
-    "mean_model_sensitivity": 0.991,
+    "mean_model_sensitivity": 0.647,
     "top_gate_reasons": [
      [
       "HIGH_SEED_DISAGREEMENT",
@@ -7036,7 +7169,7 @@
      ],
      [
       "UNSTABLE_ACROSS_CHECKPOINTS",
-      3
+      4
      ]
     ]
    },
@@ -7044,42 +7177,16 @@
   },
   {
    "street": "Turn",
-   "spr": "spr>13",
-   "bet": "no bet",
-   "count": 4,
-   "signals": {
-    "gate_rejected": 4,
-    "mean_local_sensitivity": 0.0,
-    "mean_model_sensitivity": 0.837,
-    "top_gate_reasons": [
-     [
-      "HIGH_SEED_DISAGREEMENT",
-      4
-     ],
-     [
-      "UNSTABLE_ACROSS_CHECKPOINTS",
-      2
-     ]
-    ]
-   },
-   "note": "descriptive grouping, not a causal diagnosis"
-  },
-  {
-   "street": "River",
-   "spr": "spr>13",
-   "bet": "no bet",
+   "spr": "spr 4-13",
+   "bet": "bet<50%pot",
    "count": 3,
    "signals": {
     "gate_rejected": 3,
-    "mean_local_sensitivity": 0.0,
-    "mean_model_sensitivity": 0.836,
+    "mean_local_sensitivity": 0.052,
+    "mean_model_sensitivity": 0.773,
     "top_gate_reasons": [
      [
       "HIGH_SEED_DISAGREEMENT",
-      3
-     ],
-     [
-      "UNSTABLE_ACROSS_CHECKPOINTS",
       3
      ]
     ]
@@ -7095,6 +7202,76 @@
     "gate_rejected": 3,
     "mean_local_sensitivity": 0.027,
     "mean_model_sensitivity": 0.864,
+    "top_gate_reasons": [
+     [
+      "HIGH_SEED_DISAGREEMENT",
+      3
+     ],
+     [
+      "UNSTABLE_ACROSS_CHECKPOINTS",
+      3
+     ]
+    ]
+   },
+   "note": "descriptive grouping, not a causal diagnosis"
+  },
+  {
+   "street": "Turn",
+   "spr": "spr>13",
+   "bet": "bet 50-100%pot",
+   "count": 3,
+   "signals": {
+    "gate_rejected": 3,
+    "mean_local_sensitivity": 0.047,
+    "mean_model_sensitivity": 0.44,
+    "top_gate_reasons": [
+     [
+      "HIGH_SEED_DISAGREEMENT",
+      3
+     ],
+     [
+      "LOW_VISIT_COUNT",
+      1
+     ],
+     [
+      "UNSTABLE_ACROSS_CHECKPOINTS",
+      1
+     ]
+    ]
+   },
+   "note": "descriptive grouping, not a causal diagnosis"
+  },
+  {
+   "street": "Flop",
+   "spr": "spr>13",
+   "bet": "bet 50-100%pot",
+   "count": 3,
+   "signals": {
+    "gate_rejected": 3,
+    "mean_local_sensitivity": 0.002,
+    "mean_model_sensitivity": 0.09,
+    "top_gate_reasons": [
+     [
+      "HIGH_SEED_DISAGREEMENT",
+      3
+     ],
+     [
+      "UNSTABLE_ACROSS_CHECKPOINTS",
+      3
+     ]
+    ]
+   },
+   "note": "descriptive grouping, not a causal diagnosis"
+  },
+  {
+   "street": "Preflop",
+   "spr": "spr 4-13",
+   "bet": "bet 50-100%pot",
+   "count": 3,
+   "signals": {
+    "gate_rejected": 3,
+    "mean_local_sensitivity": 0.101,
+    "mean_model_sensitivity": 0.355,
     "top_gate_reasons": [
      [
       "HIGH_SEED_DISAGREEMENT",
@@ -7131,29 +7308,9 @@
    "rule": "mean model sensitivity >= 0.3"
   },
   {
-   "cluster": "Preflop/spr>13/bet>pot",
+   "cluster": "Turn/spr>13/no bet",
    "candidate": "abstraction-collision investigation",
    "rule": "HIGH_SEED_DISAGREEMENT in >=2 members and >=5 states"
-  },
-  {
-   "cluster": "Preflop/spr>13/bet>pot",
-   "candidate": "opponent-model robustness investigation",
-   "rule": "mean model sensitivity >= 0.3"
-  },
-  {
-   "cluster": "Flop/spr>13/no bet",
-   "candidate": "abstraction-collision investigation",
-   "rule": "HIGH_SEED_DISAGREEMENT in >=2 members and >=5 states"
-  },
-  {
-   "cluster": "Flop/spr>13/no bet",
-   "candidate": "opponent-model robustness investigation",
-   "rule": "mean model sensitivity >= 0.3"
-  },
-  {
-   "cluster": "River/spr 4-13/no bet",
-   "candidate": "opponent-model robustness investigation",
-   "rule": "mean model sensitivity >= 0.3"
   },
   {
    "cluster": "Turn/spr>13/no bet",
@@ -7161,12 +7318,92 @@
    "rule": "mean model sensitivity >= 0.3"
   },
   {
+   "cluster": "Flop/spr>13/no bet",
+   "candidate": "abstraction-collision investigation",
+   "rule": "HIGH_SEED_DISAGREEMENT in >=2 members and >=5 states"
+  },
+  {
+   "cluster": "Flop/spr>13/no bet",
+   "candidate": "opponent-model robustness investigation",
+   "rule": "mean model sensitivity >= 0.3"
+  },
+  {
+   "cluster": "Preflop/spr>13/bet>pot",
+   "candidate": "abstraction-collision investigation",
+   "rule": "HIGH_SEED_DISAGREEMENT in >=2 members and >=5 states"
+  },
+  {
+   "cluster": "Preflop/spr>13/bet>pot",
+   "candidate": "training-coverage investigation",
+   "rule": "LOW_VISIT_COUNT in >=2 members"
+  },
+  {
+   "cluster": "Preflop/spr>13/bet>pot",
+   "candidate": "opponent-model robustness investigation",
+   "rule": "mean model sensitivity >= 0.3"
+  },
+  {
+   "cluster": "River/spr 4-13/no bet",
+   "candidate": "abstraction-collision investigation",
+   "rule": "HIGH_SEED_DISAGREEMENT in >=2 members and >=5 states"
+  },
+  {
+   "cluster": "River/spr 4-13/no bet",
+   "candidate": "opponent-model robustness investigation",
+   "rule": "mean model sensitivity >= 0.3"
+  },
+  {
+   "cluster": "River/spr>13/no bet",
+   "candidate": "abstraction-collision investigation",
+   "rule": "HIGH_SEED_DISAGREEMENT in >=2 members and >=5 states"
+  },
+  {
    "cluster": "River/spr>13/no bet",
    "candidate": "opponent-model robustness investigation",
    "rule": "mean model sensitivity >= 0.3"
   },
   {
+   "cluster": "Flop/spr 4-13/no bet",
+   "candidate": "abstraction-collision investigation",
+   "rule": "HIGH_SEED_DISAGREEMENT in >=2 members and >=5 states"
+  },
+  {
+   "cluster": "Flop/spr 4-13/no bet",
+   "candidate": "opponent-model robustness investigation",
+   "rule": "mean model sensitivity >= 0.3"
+  },
+  {
+   "cluster": "River/spr 4-13/bet<50%pot",
+   "candidate": "abstraction-collision investigation",
+   "rule": "HIGH_SEED_DISAGREEMENT in >=2 members and >=5 states"
+  },
+  {
+   "cluster": "River/spr 4-13/bet<50%pot",
+   "candidate": "opponent-model robustness investigation",
+   "rule": "mean model sensitivity >= 0.3"
+  },
+  {
+   "cluster": "Turn/spr 4-13/no bet",
+   "candidate": "opponent-model robustness investigation",
+   "rule": "mean model sensitivity >= 0.3"
+  },
+  {
+   "cluster": "Turn/spr 4-13/bet<50%pot",
+   "candidate": "opponent-model robustness investigation",
+   "rule": "mean model sensitivity >= 0.3"
+  },
+  {
    "cluster": "River/spr>13/bet 50-100%pot",
+   "candidate": "opponent-model robustness investigation",
+   "rule": "mean model sensitivity >= 0.3"
+  },
+  {
+   "cluster": "Turn/spr>13/bet 50-100%pot",
+   "candidate": "opponent-model robustness investigation",
+   "rule": "mean model sensitivity >= 0.3"
+  },
+  {
+   "cluster": "Preflop/spr 4-13/bet 50-100%pot",
    "candidate": "opponent-model robustness investigation",
    "rule": "mean model sensitivity >= 0.3"
   }
