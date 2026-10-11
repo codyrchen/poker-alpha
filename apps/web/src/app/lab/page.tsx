@@ -13,7 +13,7 @@ const CARDS: {
     href: "/lab/phase2",
     title: "Research Phase II",
     question: "What did controlled experiments add — and what failed?",
-    insight: "Error-guided abstraction refinement beats equal-capacity uniform; 1.96× bit-identical native speedup; safe decision-time resolving; translation costs; five negative results.",
+    insight: "In exact river subgames: error-guided abstraction refinement beats equal-capacity uniform, safe decision-time resolving, translation costs. Plus 1.96× bit-identical native training speedup and five negative results. Research only; the release is unchanged.",
   },
   {
     href: "/learn",

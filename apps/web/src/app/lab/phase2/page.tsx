@@ -78,7 +78,8 @@ function Refinement() {
         <b>{Math.round(100 * pu.relative_mean)}% better than a uniform partition with identical capacity</b> (
         {pu.wins}/{pu.wins + pu.losses} wins, 95% CI of the gain {pu.ci95[0].toFixed(3)}–{pu.ci95[1].toFixed(3)}) and{" "}
         {Math.round(100 * pr.relative_mean)}% better than random splits. The solver&apos;s own positive regret as a
-        signal is no better than random ({R.negative_signal.toFixed(3)}).
+        signal is no better than random ({R.negative_signal.toFixed(3)}). These are exact single-street subgames; no new
+        Hold&apos;em abstraction or release was trained from this result.
       </p>
     </section>
   );
@@ -90,7 +91,7 @@ function Native() {
   const prof = Object.entries(N.profile_inclusive_before as Record<string, number>);
   return (
     <section>
-      <h2>2. Profile-driven native speedup</h2>
+      <h2>2. Profile-driven native training speedup</h2>
       <Question>Where does training time actually go, and can it be removed without changing a single bit of output?</Question>
       <Bars
         rows={prof.map(([k, v]) => ({ name: k, value: v }))}
@@ -188,7 +189,9 @@ function Resolving() {
         Exact value of the opponent&apos;s best response (chips; lower is better), mean over {s.n} instances. Unsafe
         resolving is worse than the blueprint in {s.unsafe_worse_count[bi]}/{s.n} instances at this budget; the safe
         re-solve gadget (Burch et al. 2014) in {s.safe_worse_count[bi]}/{s.n}, and never by more than 1e-4 chips at
-        budgets of one second or more.
+        budgets of one second or more. Scope: exact single-street river subgames with a coarse research blueprint;
+        &ldquo;safe&rdquo; is a measured property there, not a deployment guarantee for full Hold&apos;em, and the
+        release does not resolve at decision time.
       </p>
     </section>
   );
@@ -239,9 +242,10 @@ function Translation() {
         </table>
       </div>
       <p className="small">
-        Exact translation cost (chips, discovery / independent confirmation). On a release-like 33/75/150% menu the
-        deterministic nearest-in-log-space rule costs roughly 8× more than randomized pseudo-harmonic mapping (Ganzfried
-        &amp; Sandholm 2013). Single-street subgames only — a recommendation for follow-up, not a change to the release.
+        Exact translation cost (chips, discovery / independent confirmation), measured in exact single-street river
+        subgames. There, on a release-like 33/75/150% menu, the deterministic nearest-in-log-space rule costs roughly 8×
+        more than randomized pseudo-harmonic mapping (Ganzfried &amp; Sandholm 2013). This is a reduced-subgame result
+        and a recommendation for follow-up; the release still uses its nearest-in-log-space matcher.
       </p>
     </section>
   );
@@ -269,8 +273,9 @@ export default function Phase2Page() {
     <main>
       <h1>Research Phase II</h1>
       <Question>
-        New evidence from controlled experiments: abstraction refinement, native performance, decision-time resolving,
-        action translation — and the ideas that failed. Every comparison has a capacity- or compute-matched control and
+        New evidence from controlled experiments on exact reduced games (single-street river subgames, Leduc):
+        abstraction refinement, decision-time resolving, action translation; plus native training performance on the
+        release configuration — and the ideas that failed. Every comparison has a capacity- or compute-matched control and
         an independent confirmation run.
       </Question>
       <Refinement />

@@ -73,9 +73,9 @@ const STEPS: {
         A faster solver is worthless if it quietly becomes a <i>different</i>{" "}
         solver. The C++ and Python implementations run on a shared random
         tape and must produce <b>bit-for-bit identical</b> results — every
-        trajectory, every regret value, for 1,000 iterations. The hand
-        evaluator is checked on <b>all 2,598,960</b> possible five-card
-        hands.
+        trajectory, every regret value, for 10,000 iterations. The hand
+        evaluator is checked on <b>every</b> possible five-, six- and
+        seven-card hand (133,784,560 seven-card hands alone).
       </>
     ),
     tech: "The parity suite caught the compiler's FMA contraction changing betting arithmetic in the last ulp; -ffp-contract=off is required. Checkpoints resume bit-identically.",

@@ -21,7 +21,7 @@ const MEANING: Record<string, [string, string]> = {
   ],
   evaluator_hands: [
     "Exhaustive hand-evaluator parity",
-    "every possible 5-card hand compared between Python and C++ (plus 1M random 7-card hands)",
+    "every possible 5-, 6- and 7-card hand compared between Python and C++ (133,784,560 seven-card hands)",
   ],
   calibration_rows: [
     "Confidence calibration states",
@@ -98,8 +98,8 @@ export default function EvidencePage() {
           ["Kuhn poker", "exact CFR reaches the known equilibrium (game value −1/18)"],
           ["Leduc poker", "larger exact game; convergence + known-solution checks"],
           ["Exact reduced Hold'em subgames", "measures the ABSTRACTION's error directly, not just the solver's"],
-          ["Python ↔ C++ random-tape parity", "1,000 iterations bitwise identical: same trajectories, regrets, strategies"],
-          ["Exhaustive evaluator parity", "all 2,598,960 five-card hands + 1M random 7-card hands"],
+          ["Python ↔ C++ random-tape parity", "10,000 iterations bitwise identical: same trajectories, regrets, strategies (1,000 in CI)"],
+          ["Exhaustive evaluator parity", "all 2,598,960 five-, 20,358,520 six- and 133,784,560 seven-card hands"],
           ["Checkpoint identity", "train(a)+save+load+train(b) bit-identical to train(a+b)"],
           ["Three independent seeds", "cross-run disagreement measured, feeding the gate"],
           ["Confidence calibration", "8,880 exact EV-regret targets; leave-one-game-out"],

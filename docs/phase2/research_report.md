@@ -15,14 +15,19 @@ independent confirmation. Six findings are positive:
   subgames, splitting the bucket with the largest measured best-response
   gain lowers exploitability 24-31 % against a uniform abstraction with
   identical capacity, and 44-57 % against random splits. Confirmed on new
-  seeds and boards and at double capacity.
+  seeds and boards and at double capacity. No new Hold'em abstraction or
+  release was trained from it.
 * **Native speedup.** A profile-driven change made release-config training
-  1.96x faster with bit-identical output.
-* **Safe resolving.** Decision-time re-solving with a re-solve gadget never
+  1.96x faster with bit-identical output (A/B experiment, 858 → 1,678 it/s).
+  The separate fresh end-to-end benchmark measures 1,625 vs 21.9 it/s warm
+  training throughput, 74.2x the Python reference.
+* **Safe resolving (exact single-street river subgames only).** Decision-time
+  re-solving with a re-solve gadget never
   did worse than the blueprint beyond 1e-4 chips at budgets of 1 s or more,
   and closed 9-31 % of the gap to equilibrium. Unsafe resolving was 2-3x
   *more* exploitable.
-* **Translation.** Randomized pseudo-harmonic translation of off-tree bets
+* **Translation (reduced-subgame measurement; the release is unchanged).**
+  Randomized pseudo-harmonic translation of off-tree bets
   is about 8x cheaper than the deterministic nearest-in-log-space rule the
   release uses, in exact subgames. Confirmed on independent seeds.
 * **Red-team mechanism.** Confirmed local-sensitivity failures are

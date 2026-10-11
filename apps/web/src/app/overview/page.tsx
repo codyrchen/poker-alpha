@@ -30,7 +30,7 @@ export default function OverviewPage() {
 
       <h2>Hardest problems</h2>
       <ol style={{ marginLeft: "1.2rem", maxWidth: "46rem" }}>
-        <li>Keeping a 74× C++ port <i>provably the same algorithm</i> — down to disabling FMA contraction after the parity suite caught a last-ulp divergence.</li>
+        <li>Keeping a 74×-faster C++ training backend <i>provably the same algorithm</i> — down to disabling FMA contraction after the parity suite caught a last-ulp divergence.</li>
         <li>Discovering that policy movement does NOT predict strategy error, and rebuilding the confidence gate around signals that do (visits, cross-seed disagreement).</li>
         <li>Honest regret semantics: rollout EVs share common random numbers, so uncertainty must be the paired-difference SE; off-menu bet sizes are re-evaluated exactly rather than nearest-matched.</li>
       </ol>

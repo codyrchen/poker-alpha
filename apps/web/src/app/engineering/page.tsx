@@ -87,7 +87,7 @@ export default function EngineeringPage() {
         <tbody>
           {[
             ["Poker rules", "property/fuzz over engine-generated legal states + exhaustive reduced-variant enumeration"],
-            ["Hand evaluator", "exhaustive 5-card parity + 1M random 7-card hands"],
+            ["Hand evaluator", "exhaustive 5-, 6- and 7-card parity (all 133,784,560 seven-card hands)"],
             ["Native backend", "shared-random-tape bitwise parity, ASan/UBSan clean"],
             ["Checkpoints", "train(a)+save+load+train(b) ≡ train(a+b), bitwise"],
             ["Confidence gate", "calibrated + held-out against exact-game EV regret"],

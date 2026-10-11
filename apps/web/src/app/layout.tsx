@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "PokerAlpha",
     description:
-      "Game-theoretic solver · 74× native acceleration · calibrated " +
+      "Game-theoretic solver · 74× faster native training · calibrated " +
       "uncertainty · watch it learn, play against it, break it.",
     type: "website",
   },

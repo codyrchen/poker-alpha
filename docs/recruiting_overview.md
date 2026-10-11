@@ -71,8 +71,8 @@ to trust the strategy I computed?"*
 
 | result | number | source |
 | --- | --- | --- |
-| native training speedup | 74.2× warm (1,625 vs 22 it/s) | `results/benchmarks/native_mccfr_v1.json` |
-| cross-language parity | bitwise over 1,000 iterations | `tests/test_native_mccfr_parity.py` |
+| native training speedup | 74.2× warm training throughput, release config (1,625 vs 22 it/s; Phase I port 38.1×) | `results/benchmarks/native_mccfr_v2.json` |
+| cross-language parity | bitwise over 10,000 iterations (1,000 in CI) | `results/phase2/native_correctness_stress.json`, `tests/test_native_mccfr_parity.py` |
 | evaluator | all 2,598,960 five-card hands exact | `tests/test_native_evaluator.py` |
 | direct exact validation | exploitability ratio 1.04 vs Python on 7 games | `results/validation/native_direct_exact_validation.json` |
 | release training | 3 seeds × 2M iterations | `results/validation/native_training_2m.json` |
@@ -113,7 +113,7 @@ annotated frames. The observer is read-only by design.
 ### 30-second pitch (nontechnical)
 "I built a poker AI from scratch — not a wrapper around anything. That
 means the game engine itself, the learning algorithm that trains by
-self-play, a C++ rewrite that made training 74× faster while provably
+self-play, a C++ backend, then profiled and optimized, that made training 74× faster while provably
 staying the same algorithm, and a trust system that makes it refuse to
 answer when its own evidence is weak. Then I turned it into a product:
 you can watch it learn in the browser, play against it, and see exactly
