@@ -248,7 +248,8 @@ def main() -> None:
     st.set_page_config(page_title="PokerAlpha", layout="wide")
     from poker_alpha.utils.privacy import streamlit_privacy_issues
 
-    top = st.sidebar.radio("Mode", ["Play", "Developer"], key="pa_mode")
+    top = st.sidebar.radio("Mode", ["Play", "Study", "Developer"],
+                           key="pa_mode")
     for issue in streamlit_privacy_issues():
         st.sidebar.warning("Privacy: " + issue)
     if top == "Play":
@@ -257,6 +258,14 @@ def main() -> None:
         cfg = play_config()
         from poker_alpha.ui.play import play_mode
         play_mode(cfg)
+        return
+    if top == "Study":
+        st.markdown("## PokerAlpha — Study")
+        st.caption("Post-session analysis on your own machine; hand histories "
+                   "never leave it.")
+        cfg = play_config()
+        from poker_alpha.ui.study import study_mode
+        study_mode(cfg, str(STRATEGY))
         return
     cfg = sidebar_config()
     st.title("PokerAlpha decision support — developer mode")

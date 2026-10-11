@@ -10,9 +10,24 @@ NET = re.compile(r"^\s*(import|from)\s+(requests|urllib|http|socket|httpx|aiohtt
                  r"ftplib|websocket)\b", re.M)
 
 
+# The ONLY sanctioned network surface: the local product API, which binds
+# 127.0.0.1 exclusively (poker_alpha/api/__main__.py refuses other hosts;
+# tests/test_api.py and docs/local_api.md pin the policy). Everything else
+# in the package stays network-free.
+NET_ALLOWED = (ROOT / "poker_alpha" / "api",)
+
+
 def test_no_network_code_in_the_package():
     for p in list((ROOT / "poker_alpha").rglob("*.py")) + list((ROOT / "experiments").glob("*.py")):
+        if any(p.is_relative_to(a) for a in NET_ALLOWED):
+            continue
         assert not NET.search(p.read_text()), p
+
+
+def test_api_package_binds_loopback_only():
+    src = (ROOT / "poker_alpha" / "api" / "__main__.py").read_text()
+    assert 'refusing to bind a non-loopback host' in src
+    assert 'host="127.0.0.1"' in src
 
 
 def test_repository_streamlit_config_is_local_and_quiet():

@@ -446,13 +446,24 @@ def recommend_action(state: ObservedTableState,
         warnings.append(f"observer confidence {cfg.observer_confidence:.0%}: "
                         "verify the recognized state")
         confidence = "low"
+    details = {"source_cascade": cascade, "solver": solver_info,
+               "assumptions": assumptions}
+    if res is not None:
+        # The rollout evaluates every candidate on COMMON RANDOM NUMBERS
+        # (one shared sample tape), so the uncertainty of "EV(a) - EV(b)"
+        # is the paired-difference SE — usually far smaller than the
+        # independent-SE combination sqrt(se_a^2 + se_b^2), and the ONLY
+        # valid uncertainty for estimated decision regret. Preserved here
+        # so downstream analysis never has to reconstruct it from
+        # marginal SEs.
+        details["rollout_paired_differences"] = {
+            f"{a}|{b}": [m, s] for (a, b), (m, s) in res.differences.items()}
     return DecisionReport(
         hero_equity=equity, hero_equity_se=se,
         opponent_ranges=tuple(summaries), candidates=tuple(cands),
         recommended=rec, recommended_mix=mix, mix_meaning=mix_meaning,
         method=method, confidence=confidence, warnings=tuple(warnings),
-        details={"source_cascade": cascade, "solver": solver_info,
-                 "assumptions": assumptions},
+        details=details,
         uncertainty=_uncertainty(cfg, state, summaries, se, res, None, method),
         **base)
 

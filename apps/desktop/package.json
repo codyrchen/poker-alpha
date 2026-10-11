@@ -1,0 +1,41 @@
+{
+  "name": "pokeralpha-desktop",
+  "version": "0.1.0",
+  "private": true,
+  "description": "PokerAlpha desktop overlay (local development preview). Analysis only: never clicks, bets or controls a poker client.",
+  "main": "build/main.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "npm run build && electron .",
+    "smoke": "npm run build && electron . --smoke",
+    "typecheck": "tsc --noEmit",
+    "pack": "npm run build && electron-builder --dir"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "electron": "^44.7.0",
+    "electron-builder": "^26.15.3",
+    "typescript": "^5.6"
+  },
+  "build": {
+    "appId": "dev.pokeralpha.desktop",
+    "productName": "PokerAlpha",
+    "files": [
+      "build/**",
+      "renderer/**"
+    ],
+    "mac": {
+      "target": "dir",
+      "identity": null
+    },
+    "directories": {
+      "output": "release"
+    },
+    "extraResources": [
+      {
+        "from": "../../packaging/dist/pokeralpha-engine",
+        "to": "engine"
+      }
+    ]
+  }
+}

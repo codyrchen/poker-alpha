@@ -1,0 +1,23 @@
+# pokeralpha-lines/v1
+# Two heads-up hands in the reference line format.
+
+hand h1 seats=2 dealer=0 sb=0.5 bb=1 hero=0 stacks=100,100
+deal 0 Ah Kd
+raise 0 2.5
+call 1
+flop Qs 7d 2c
+check 1
+check 0
+turn Th
+check 1
+check 0
+river 3h
+check 1
+check 0
+show 1 Jc Jd
+
+hand h2 seats=2 dealer=1 sb=0.5 bb=1 hero=0 stacks=100,100
+deal 0 9h 9c
+raise 1 2.5
+raise 0 9
+fold 1

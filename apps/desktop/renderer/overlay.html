@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>PokerAlpha overlay</title>
+<style>
+  :root {
+    --bg: rgba(14, 16, 19, 0.92);
+    --ink: #e8eaed; --muted: #8a8f96; --accent: #2a78d6;
+    --good: #2e9e5b; --warn: #c2882a; --hair: rgba(128,131,138,0.3);
+  }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { background: transparent; height: 100%; }
+  body {
+    font: 12px/1.45 -apple-system, "Segoe UI", sans-serif; color: var(--ink);
+  }
+  #shell {
+    background: var(--bg); border: 1px solid var(--hair); border-radius: 10px;
+    height: 100%; display: flex; flex-direction: column; overflow: hidden;
+  }
+  header {
+    display: flex; align-items: center; gap: 0.5rem;
+    padding: 0.35rem 0.6rem; border-bottom: 1px solid var(--hair);
+    -webkit-app-region: drag; user-select: none;
+  }
+  header b { font-size: 0.78rem; letter-spacing: 0.03em; }
+  header .btns { margin-left: auto; display: flex; gap: 0.25rem;
+                 -webkit-app-region: no-drag; }
+  button {
+    background: transparent; border: 1px solid var(--hair); color: var(--muted);
+    border-radius: 5px; font-size: 0.68rem; padding: 0.1rem 0.45rem;
+    cursor: pointer;
+  }
+  button:hover { color: var(--ink); border-color: var(--accent); }
+  #body { padding: 0.5rem 0.65rem; overflow-y: auto; flex: 1; }
+  .row { display: flex; align-items: baseline; gap: 0.5rem; padding: 0.12rem 0; }
+  .row .name { flex: 0 0 7.2rem; font-weight: 600; white-space: nowrap;
+               overflow: hidden; text-overflow: ellipsis; }
+  .row .freq { margin-left: auto; font-family: ui-monospace, Menlo, monospace;
+               font-weight: 600; }
+  .row.top .name { color: var(--accent); }
+  .badge { display: inline-block; padding: 0 0.4rem; border-radius: 4px;
+           font-size: 0.66rem; font-weight: 700; letter-spacing: 0.04em;
+           background: rgba(138,143,150,0.18); color: var(--muted); }
+  .badge.good { background: rgba(46,158,91,0.2); color: var(--good); }
+  .badge.warn { background: rgba(194,136,42,0.2); color: var(--warn); }
+  .muted { color: var(--muted); }
+  .small { font-size: 0.7rem; }
+  #expanded { display: none; border-top: 1px solid var(--hair);
+              padding: 0.45rem 0.65rem; }
+  #expanded.open { display: block; }
+  textarea { width: 100%; background: rgba(0,0,0,0.3); color: var(--ink);
+             border: 1px solid var(--hair); border-radius: 6px;
+             font: 10px ui-monospace, Menlo, monospace; }
+  select { background: rgba(0,0,0,0.3); color: var(--ink);
+           border: 1px solid var(--hair); border-radius: 5px;
+           font-size: 0.7rem; max-width: 100%; }
+  .panel { border: 1px solid var(--hair); border-left: 3px solid var(--warn);
+           border-radius: 6px; padding: 0.4rem 0.5rem; margin: 0.3rem 0; }
+</style>
+</head>
+<body>
+<div id="shell">
+  <header>
+    <b>PokerAlpha</b>
+    <span id="conn" class="badge">starting…</span>
+    <span class="btns">
+      <button id="mode" title="compact / expanded">⇕</button>
+      <button id="ct" title="click-through (Cmd/Ctrl+Shift+O restores)">⊘</button>
+      <button id="hide" title="hide (Cmd/Ctrl+Shift+O shows)">—</button>
+      <button id="quit" title="quit">✕</button>
+    </span>
+  </header>
+  <div id="body"><div class="muted small">Connecting to the local engine…</div></div>
+  <div id="expanded">
+    <div class="small muted" style="margin-bottom:0.25rem">Input</div>
+    <select id="spot"></select>
+    <div class="small muted" style="margin:0.4rem 0 0.2rem">…or paste a state (JSON)</div>
+    <textarea id="manual" rows="5" spellcheck="false"></textarea>
+    <div style="margin-top:0.3rem; display:flex; gap:0.3rem">
+      <button id="analyze">Analyze</button>
+      <button id="logsbtn">Logs</button>
+    </div>
+    <pre id="logs" class="small muted" style="display:none; white-space:pre-wrap; max-height:8em; overflow:auto"></pre>
+    <div class="small muted" style="margin-top:0.4rem">
+      Analysis only — never clicks or bets. Private / play-money / test
+      games only for real-time use.
+    </div>
+  </div>
+</div>
+<script src="overlay.js"></script>
+</body>
+</html>
