@@ -26,6 +26,7 @@ def play_episode(game: Game, agents: Sequence[Agent],
     chance depths."""
     chance_rng = chance_rng or rng
     state = game.root()
+    public: List[Tuple[int, str]] = []          # (acting seat, action): public in these games
     while not game.is_terminal(state):
         if game.is_chance(state):
             outcomes = game.chance_outcomes(state)
@@ -44,8 +45,17 @@ def play_episode(game: Game, agents: Sequence[Agent],
         a = agents[player].choose_action(game.infoset_key(state), legal, rng)
         if a not in legal:
             raise ValueError(f"agent {player} chose illegal action {a!r}")
+        public.append((player, a))
         state = game.next_state(state, a)
-    return game.utility(state)
+    u0 = game.utility(state)
+    # Optional learning hook: adaptive agents see the PUBLIC action sequence
+    # and their own payoff after the hand - never the opponent's private
+    # information (no showdown cards are passed).
+    for seat, ag in enumerate(agents):
+        obs = getattr(ag, "observe_episode", None)
+        if obs is not None:
+            obs(seat, tuple(public), u0 if seat == 0 else -u0)
+    return u0
 
 
 @dataclass(frozen=True)
@@ -65,10 +75,15 @@ class MatchResult:
 def play_match(game: Game, a: Agent, b: Agent, hands: int,
                seed: int = 0) -> MatchResult:
     """``hands`` seat-swapped pairs: each chance seed is played once with
-    (a,b) and once with (b,a); the paired difference removes deal luck."""
+    (a,b) and once with (b,a); the paired difference removes deal luck.
+
+    Agents are reset ONCE per match (the documented ``Agent.reset``
+    contract), so adaptive agents can learn across hands. (Before Phase II
+    they were reset before every hand, which silently prevented any
+    cross-hand adaptation; stateless agents are unaffected.)"""
     utils: List[float] = []
+    a.reset(); b.reset()
     for h in range(hands):
-        a.reset(); b.reset()
         u_ab = play_episode(game, (a, b),
                             random.Random(hash((seed, h, "ab")) & 0x7FFFFFFF),
                             random.Random(hash((seed, h, "deal")) & 0x7FFFFFFF))
