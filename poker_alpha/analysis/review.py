@@ -34,8 +34,8 @@ from ..decision import DecisionConfig, DecisionReport
 from ..history import replay_hand
 from ..pipeline import Observation, analyze
 from ..poker.cards import card_str
-from ..session.store import actual_label as map_actual_label
 from .alignment import StrategyAlignment, solver_state, strategy_alignment
+from .mapping import ACTUAL_SIZE_LABEL, ActionMapping, map_action
 from .regret import RegretEligibility, regret_eligibility
 
 HIGH_REGRET_BB = 0.5      # bb of eligible regret before HIGH-PRIORITY
@@ -73,6 +73,8 @@ class DecisionRecord:
     alignment: StrategyAlignment
     category: str                         # one of CATEGORIES
     off_tree: bool                        # bet sizes were translated onto the tree
+    mapping_quality: str = "EXACT"        # EXACT / TRANSLATED / UNMAPPED
+    mapping_distance: Optional[float] = None  # |evaluated - actual| size, chips
     report: Optional[DecisionReport] = field(default=None, compare=False,
                                              repr=False)
     state: Any = field(default=None, compare=False, repr=False)
@@ -120,9 +122,16 @@ def categorize(regret: RegretEligibility, align: StrategyAlignment,
 def review_decision(report: DecisionReport, state, hand_index: int,
                     decision_index: int, actual_kind: str,
                     actual_amount: Optional[float]) -> DecisionRecord:
-    """Build one record from a report the engine already produced."""
-    label = map_actual_label(actual_kind, actual_amount, report)
-    reg = regret_eligibility(report, label)
+    """Build one record from a report the engine already produced.
+
+    The real action is mapped with explicit quality (EXACT / TRANSLATED /
+    UNMAPPED); EV regret only ever uses an EXACT mapping — a nearest-size
+    translation is shown for strategy alignment but never scored as if the
+    candidate EV were the EV of the action actually taken.
+    """
+    mapping = map_action(report, actual_kind, actual_amount)
+    label = mapping.label
+    reg = regret_eligibility(report, label, mapping)
     align = strategy_alignment(report, label)
     st = solver_state(report)
     info = report.details.get("solver", {}) if report.details else {}
@@ -145,6 +154,7 @@ def review_decision(report: DecisionReport, state, hand_index: int,
         regret=reg, alignment=align,
         category=categorize(reg, align, st, report.method),
         off_tree="OFF_TREE_TRANSLATION" in reasons,
+        mapping_quality=mapping.quality, mapping_distance=mapping.distance,
         report=report, state=state)
 
 
@@ -167,7 +177,16 @@ def review_hands(hands: Sequence[Sequence], config: Optional[DecisionConfig] = N
         for di, d in enumerate(res.decisions):
             obs = Observation(replace(d.state, source="hand_history"),
                               "hand_history")
-            report = analyze(obs, config=config, solver=solver)
+            cfg = config or DecisionConfig()
+            if d.action in ("bet", "raise") and d.amount is not None:
+                # Evaluate the hero's EXACT size alongside the menu, on the
+                # same common-random-number samples, so regret for it is a
+                # legitimate paired comparison instead of a nearest-size
+                # approximation (mapping.py).
+                cfg = replace(cfg, abstraction=replace(
+                    cfg.abstraction,
+                    extra_targets=((ACTUAL_SIZE_LABEL, float(d.amount)),)))
+            report = analyze(obs, config=cfg, solver=solver)
             records.append(review_decision(report, d.state, hi, di,
                                            d.action, d.amount))
             if progress:

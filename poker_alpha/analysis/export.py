@@ -28,6 +28,7 @@ CSV_COLUMNS = [
     "decision_confidence", "regret_eligible", "regret_reason",
     "estimated_regret_bb", "regret_uncertainty_bb", "regret_source",
     "alignment", "policy_surprise_bits", "category", "off_tree",
+    "mapping_quality", "mapping_distance",
 ]
 
 
@@ -54,7 +55,12 @@ def record_to_dict(r: DecisionRecord) -> Dict:
             "actual_ev_bb": r.regret.actual_ev,
             "estimated_regret_bb": r.regret.estimated_regret,
             "uncertainty_bb": r.regret.uncertainty,
+            "uncertainty_source": r.regret.uncertainty_source,
             "source": r.regret.source,
+        },
+        "action_mapping": {
+            "quality": r.mapping_quality,
+            "distance": r.mapping_distance,
         },
         "alignment": {
             "category": r.alignment.category,
@@ -81,7 +87,11 @@ def review_to_json(review: SessionReview, summary: SessionSummary,
         "semantics": {
             "estimated_regret": ("ESTIMATED DECISION REGRET under the rollout "
                                  "model; only present where the EVs were the "
-                                 "actual decision basis and same-method"),
+                                 "actual decision basis, same-method, and the "
+                                 "exact action taken was itself evaluated; "
+                                 "uncertainty is the paired-difference SE "
+                                 "(common random numbers), never an "
+                                 "independent-SE combination"),
             "alignment": "solver-mix frequency of the action actually taken",
         },
         "summary": {
@@ -139,6 +149,8 @@ def review_to_csv(review: SessionReview) -> str:
             "alignment": r.alignment.category,
             "policy_surprise_bits": r.alignment.surprise_bits,
             "category": r.category, "off_tree": r.off_tree,
+            "mapping_quality": r.mapping_quality,
+            "mapping_distance": r.mapping_distance,
         })
     return buf.getvalue()
 

@@ -129,12 +129,24 @@ class ActionAbstraction:
     raise_fractions: Tuple[float, ...] = (0.75, 1.0)
     include_all_in: bool = True
     version: int = 1
+    #: Extra absolute sizes to evaluate alongside the fraction menu:
+    #: ``(label, raise_to)`` street commitments. Used by session review to
+    #: include the EXACT size the hero really took, so its rollout EV shares
+    #: the same common-random-number samples as every other candidate and a
+    #: paired comparison is legitimate. Duplicates of fraction sizes are
+    #: dropped by the menu's dedup, keeping the fraction label.
+    extra_targets: Tuple[Tuple[str, float], ...] = ()
 
     def signature(self) -> str:
         bets = ",".join(format_number(f) for f in self.bet_fractions)
         raises = ",".join(format_number(f) for f in self.raise_fractions)
-        return (f"ActionAbstraction:v{self.version}:bets={bets}:"
-                f"raises={raises}:allin={int(self.include_all_in)}")
+        sig = (f"ActionAbstraction:v{self.version}:bets={bets}:"
+               f"raises={raises}:allin={int(self.include_all_in)}")
+        if self.extra_targets:
+            extras = ",".join(f"{l}={format_number(t)}"
+                              for l, t in self.extra_targets)
+            sig += f":extra={extras}"
+        return sig
 
     # -- menu ----------------------------------------------------------------
 
@@ -146,10 +158,12 @@ class ActionAbstraction:
         """Candidate ``(label, raise_to)`` sizes before legality filtering."""
         if ctx.facing_bet:
             base = ctx.pot + ctx.to_call
-            return [(self._label("raise", f), ctx.current_bet + f * base)
-                    for f in self.raise_fractions]
-        return [(self._label("bet", f), ctx.hero_street + f * ctx.pot)
-                for f in self.bet_fractions]
+            sized = [(self._label("raise", f), ctx.current_bet + f * base)
+                     for f in self.raise_fractions]
+        else:
+            sized = [(self._label("bet", f), ctx.hero_street + f * ctx.pot)
+                     for f in self.bet_fractions]
+        return sized + [(l, float(t)) for l, t in self.extra_targets]
 
     def menu(self, ctx: BettingContext) -> List[Tuple[str, ConcreteAction]]:
         """Legal abstract actions with their concrete wagers, in menu order."""

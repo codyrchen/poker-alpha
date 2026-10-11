@@ -9,6 +9,8 @@ import json
 
 import pytest
 
+from dataclasses import replace
+
 from poker_alpha.analysis import (categorize, confidence_report,
                                   detect_patterns, regret_eligibility,
                                   review_decision, review_hands,
@@ -57,9 +59,71 @@ def test_regret_valid_only_for_same_method_rollout_evs():
                    _cand("fold", "fold", ev=0.0, se=0.0)], "call")
     r = regret_eligibility(rep, "fold")
     assert r.eligible and r.estimated_regret == pytest.approx(1.0)
-    assert r.uncertainty == pytest.approx(0.1)
+    # no paired record on this synthetic report -> no uncertainty is
+    # invented (independent-SE combination would be wrong under CRN)
+    assert r.uncertainty is None
+    assert r.uncertainty_source == "unavailable"
     assert "rollout" in r.source.lower()
     assert "ESTIMATED" in r.display().upper() or "estimated" in r.display()
+
+
+def test_regret_uses_paired_se_not_independent_combination():
+    """Common random numbers make candidate EVs strongly correlated: the
+    paired-difference SE is the valid uncertainty and is much smaller than
+    sqrt(se_a^2 + se_b^2). The gate must read the paired record."""
+    rep = _report([_cand("call", "call", ev=1.0, se=0.10),
+                   _cand("fold", "fold", ev=0.0, se=0.08)], "call")
+    details = dict(rep.details)
+    details["rollout_paired_differences"] = {"call|fold": [0.97, 0.03]}
+    rep = replace(rep, details=details)
+    r = regret_eligibility(rep, "fold")
+    assert r.eligible
+    naive = (0.10 ** 2 + 0.08 ** 2) ** 0.5
+    assert r.uncertainty == pytest.approx(0.03)
+    assert abs(r.uncertainty - naive) > 0.09          # genuinely different
+    assert r.estimated_regret == pytest.approx(0.97)  # paired mean, not diff of means
+    assert "paired" in r.uncertainty_source
+    # reversed key is negated correctly
+    rep2 = replace(rep, details={**details,
+                                 "rollout_paired_differences":
+                                 {"fold|call": [-0.97, 0.03]}})
+    r2 = regret_eligibility(rep2, "fold")
+    assert r2.estimated_regret == pytest.approx(0.97)
+
+
+def test_action_mapping_quality():
+    from poker_alpha.analysis.mapping import map_action
+
+    rep = _report([_cand("check", "check"),
+                   _cand("bet_75", "bet", ev=1.0, to=3.75),
+                   _cand("bet_150", "bet", ev=0.8, to=7.5),
+                   _cand("all_in", "all_in", ev=0.2, to=97.5)], "bet_75")
+    assert map_action(rep, "check", None).quality == "EXACT"
+    assert map_action(rep, "fold", None).quality == "UNMAPPED"
+    m = map_action(rep, "bet", 3.75)
+    assert m.quality == "EXACT" and m.label == "bet_75"
+    off = map_action(rep, "bet", 3.0)                 # 60%-pot-ish, off-grid
+    assert off.quality == "TRANSLATED" and off.label == "bet_75"
+    assert off.distance == pytest.approx(0.75)
+    assert "translated" in off.note()
+    assert map_action(rep, "all_in", 97.5).quality == "EXACT"
+    assert map_action(rep, "raise", None).quality == "UNMAPPED"
+
+
+def test_no_false_regret_from_nearest_size_mapping():
+    from poker_alpha.analysis.mapping import map_action
+
+    rep = _report([_cand("check", "check", ev=0.0, se=0.01),
+                   _cand("bet_75", "bet", ev=1.0, se=0.02, to=3.75)],
+                  "bet_75")
+    m = map_action(rep, "bet", 3.0)                   # real 60%-pot bet
+    r = regret_eligibility(rep, m.label, m)
+    assert not r.eligible
+    assert r.reason == "ACTUAL_SIZE_NOT_EVALUATED"
+    assert "exact sizing" in r.display()
+    # with an EXACT mapping the same report scores normally
+    ok = map_action(rep, "bet", 3.75)
+    assert regret_eligibility(rep, ok.label, ok).eligible
 
 
 def test_regret_never_from_solver_frequencies():
@@ -237,3 +301,20 @@ def test_pattern_language_grading():
 
     assert _grade(3) == "Potential pattern"
     assert _grade(5) == "Repeated deviation"
+
+
+def test_review_mapping_and_paired_invariants(demo_review):
+    """End-to-end: no TRANSLATED mapping ever carries eligible regret, and
+    every eligible regret's uncertainty is paired (or identically zero)."""
+    for r in demo_review.records:
+        assert r.mapping_quality in ("EXACT", "TRANSLATED", "UNMAPPED")
+        if r.mapping_quality == "TRANSLATED":
+            assert not r.regret.eligible
+            assert r.regret.reason in ("ACTUAL_SIZE_NOT_EVALUATED",
+                                       "EV_NOT_DECISION_BASIS")
+        if r.regret.eligible:
+            assert r.regret.uncertainty_source in (
+                "paired (common random numbers)", "identical action")
+    # the exact-size injection really happens for off-menu aggression
+    labels = {r.actual_label for r in demo_review.records}
+    assert "actual_size" in labels
