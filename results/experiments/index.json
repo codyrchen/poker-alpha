@@ -1,6 +1,25 @@
 {
  "format": "pokeralpha.experiments.index/v1",
  "runs": {
+  "h13_nested_resolving": {
+   "classification": "POSITIVE",
+   "command": "python experiments/phase2_nested_resolving.py",
+   "commit": "8ef1c149938bb4c5000f5caa2706dc43dff7b76a",
+   "headline": "safe nested resolving -8-22% translation cost vs pseudo-harmonic; unsafe 15-30x worse",
+   "inputs": {},
+   "mode": "confirmation",
+   "name": "h13_nested_resolving",
+   "notes": "",
+   "outputs": {
+    "results/phase2/nested_resolving.json": "997193c325b19ce8d3b8fc93304fc26b821c1d5d84e776d2544aa819343c79e2",
+    "results/phase2/nested_resolving_confirm.json": "ae8152006d04eb36835ecd3b977619d92163e92b5810d7ddff32c0d7c509325a"
+   },
+   "peak_rss_mb": null,
+   "recorded_utc": "2026-10-11T21:39:36Z",
+   "seeds": "6100-6102 / 8800-8802",
+   "status": "done",
+   "wall_seconds": null
+  },
   "h1_h3_hypotheses": {
    "classification": "DESCRIPTIVE",
    "command": "python experiments/phase2_hypotheses.py",
@@ -112,6 +131,28 @@
    },
    "peak_rss_mb": null,
    "recorded_utc": "2026-10-11T21:11:54Z",
+   "seeds": [
+    0,
+    1,
+    2
+   ],
+   "status": "done",
+   "wall_seconds": null
+  },
+  "native_benchmark_v2": {
+   "classification": "POSITIVE",
+   "command": "python experiments/benchmark_native_solver.py --out results/benchmarks/native_mccfr_v2.json",
+   "commit": "8ef1c149938bb4c5000f5caa2706dc43dff7b76a",
+   "headline": "1,625 vs 21.9 it/s, 74.2x (Phase I 38.1x)",
+   "inputs": {},
+   "mode": "confirmation",
+   "name": "native_benchmark_v2",
+   "notes": "",
+   "outputs": {
+    "results/benchmarks/native_mccfr_v2.json": "4994e0b840cc95c7994e68e1f9e2a042eec715de1d28bf30584bee442251ef3e"
+   },
+   "peak_rss_mb": null,
+   "recorded_utc": "2026-10-11T21:39:36Z",
    "seeds": [
     0,
     1,

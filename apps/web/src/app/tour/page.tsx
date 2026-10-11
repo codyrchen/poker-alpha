@@ -51,17 +51,19 @@ const STEPS: {
     tech: "~60% of runtime in hand evaluation and river percentile tables; moving only helper functions native was measured and found insufficient — crossing the language boundary per node ate the gains.",
   },
   {
-    title: "The 38× C++ rewrite",
+    title: "The 74× native backend",
     plain: (
       <>
         So the <b>entire training hot path</b> moved to C++17: game rules,
         dealing, hand evaluator, state encoding, regret updates, and the
         recursive traversal itself. Python now crosses into C++ once per
-        training chunk. Measured result: <b>22 → 837 iterations/second,
-        38.1×</b>.
+        training chunk. That port gave 38×; a later profile showed most
+        native time rebuilding river-percentile tables, and removing that
+        (bit-identical output) doubled it again. Measured result:{" "}
+        <b>22 → 1,625 iterations/second, 74.2×</b>.
       </>
     ),
-    tech: "pybind11, GIL released, packed 64-bit infoset keys over fixed-size native nodes; one boundary crossing per chunk. Benchmark committed: results/benchmarks/native_mccfr_v1.json.",
+    tech: "pybind11, GIL released, packed 64-bit infoset keys over fixed-size native nodes; one boundary crossing per chunk. Benchmarks committed: results/benchmarks/native_mccfr_v1.json (port) and native_mccfr_v2.json (after Phase II profiling).",
     link: ["/engineering", "The full engineering story"],
   },
   {

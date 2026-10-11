@@ -171,7 +171,7 @@ export default function Home() {
           supervise against. <b>Stochastic training</b> — independent runs
           disagree, and telling harmless mixing from real uncertainty is a
           research problem. <b>Performance</b> — none of it is testable
-          without a 38× faster loop. <b>Trust</b> — a confident-looking
+          without a 74× faster loop. <b>Trust</b> — a confident-looking
           policy table says nothing about reliability.
         </p>
       </section>
@@ -184,7 +184,7 @@ export default function Home() {
               ["Recruiter", "/tour", "the 90-second tour"],
               ["Poker player", "/arena", "play it, then see your fingerprint"],
               ["Student", "/learn", "watch CFR converge live"],
-              ["Engineer", "/engineering", "the 38× + bit-exact story"],
+              ["Engineer", "/engineering", "the 74× + bit-exact story"],
               ["Quant / researcher", "/lab", "the research lab + evidence"],
               ["AI researcher", "/agents", "agent benchmarks + LLM harness"],
             ].map(([who, href, what]) => (

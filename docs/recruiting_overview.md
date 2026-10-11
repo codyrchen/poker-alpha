@@ -71,7 +71,7 @@ to trust the strategy I computed?"*
 
 | result | number | source |
 | --- | --- | --- |
-| native training speedup | 38.1× warm (837 vs 22 it/s) | `results/benchmarks/native_mccfr_v1.json` |
+| native training speedup | 74.2× warm (1,625 vs 22 it/s) | `results/benchmarks/native_mccfr_v1.json` |
 | cross-language parity | bitwise over 1,000 iterations | `tests/test_native_mccfr_parity.py` |
 | evaluator | all 2,598,960 five-card hands exact | `tests/test_native_evaluator.py` |
 | direct exact validation | exploitability ratio 1.04 vs Python on 7 games | `results/validation/native_direct_exact_validation.json` |
@@ -113,7 +113,7 @@ annotated frames. The observer is read-only by design.
 ### 30-second pitch (nontechnical)
 "I built a poker AI from scratch — not a wrapper around anything. That
 means the game engine itself, the learning algorithm that trains by
-self-play, a C++ rewrite that made training 38× faster while provably
+self-play, a C++ rewrite that made training 74× faster while provably
 staying the same algorithm, and a trust system that makes it refuse to
 answer when its own evidence is weak. Then I turned it into a product:
 you can watch it learn in the browser, play against it, and see exactly
@@ -157,7 +157,7 @@ polish vs scientific honesty (REJECTED cells show no numbers, ever).
 
 ### Resume bullets (factual)
 - SWE: "Built a C++17/pybind11 training backend for a Monte-Carlo
-  counterfactual-regret poker solver; 38.1× measured speedup with
+  counterfactual-regret poker solver; 74.2× measured speedup with
   bitwise cross-language parity enforced in CI."
 - Quant: "Calibrated a per-state abstention rule for solver output
   against exact EV-regret targets from 8,880 solved-game states;

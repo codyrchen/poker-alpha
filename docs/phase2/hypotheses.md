@@ -18,7 +18,7 @@ runtime. **Implemented** items have artifacts in `results/phase2/`.
 | H10 | DCFR's advantage grows with game depth (2-street vs 1-street) | P3 auction vs Leduc | 8 | open |
 | H11 | Outcome-sampling's variance can be cut by a baseline / control variate (VR-MCCFR) | P3: OS variance 0.65 ± 0.23 | 9 | open (literature: Schmid et al. 2019) |
 | H12 | The safe gadget's gap-closing plateau (22-32 %) rises with max-margin resolving | P6 plateau by 100 ms | 5 | open |
-| H13 | Resolving after off-tree bets beats translation at equal time | H4 + P6 | 4 | open |
+| H13 | Resolving after off-tree bets beats translation | H4 + P6 | 4 | **implemented and confirmed**: safe nested resolving -8-22 % vs pseudo-harmonic; unsafe 15-30x worse |
 | H14 | Error-guided refinement keeps beating uniform under multi-street imperfect recall | P1 single-street only | 3 | open (needs a fast multi-street exact solver) |
 | H15 | `equity_spread` refinement can be made value-aware cheaply (opponent-range-weighted spread) | P1: equity_spread second to br_gain | 10 | open |
 | H16 | Positive regret is a refinement anti-signal because it tracks resolved mass, not heterogeneity | P1 negative | 11 | explained in doc, not tested further |

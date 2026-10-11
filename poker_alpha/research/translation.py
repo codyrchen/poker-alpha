@@ -131,3 +131,92 @@ def evaluate_mappings(board, r0, r1, coarse_sizes, fine_sizes, iters=1500, pot=1
         r["coarse_world_no_offtree"] = float(cw.best_response_values(cl, opp).sum())
         res[f"us={us}"] = r
     return res
+
+
+# --------------------------------------------------------------------------
+# H13: resolve after off-tree bets instead of translating (nested solving)
+# --------------------------------------------------------------------------
+
+def _opp_estimate_on_fine(fine: RiverRangeSolver, coarse: RiverRangeSolver, coarse_lifted, opp: int,
+                          coarse_sizes, mapping: str):
+    """Opponent's blueprint policy carried onto the fine tree: an off-tree
+    size x gets the (mapping-weighted) probability of the coarse sizes it maps
+    to - an estimate of the range that would bet x (used only for reaches)."""
+    ctree = coarse.tree
+    index = {n.history: i for i, n in enumerate(ctree.nodes)}
+    out = [None] * len(fine.tree.nodes)
+    for i in fine.tree.decision_nodes_of(opp):
+        node = fine.tree.nodes[i]
+        hist_opts = []
+        for tok in node.history:
+            if tok.startswith("b") and _frac(tok) not in coarse_sizes:
+                hist_opts.append([(f"b{int(round(s * 100))}", p) for s, p in map_size(_frac(tok), coarse_sizes, mapping)])
+            else:
+                hist_opts.append([(tok, 1.0)])
+        pol = np.zeros((fine.n[opp], len(node.actions)))
+        tot = 0.0
+        for combo in itertools.product(*hist_opts):
+            j = index.get(tuple(t for t, _ in combo))
+            if j is None or ctree.nodes[j].player != opp:
+                continue
+            w = float(np.prod([p for _, p in combo]))
+            cnode, cp = ctree.nodes[j], coarse_lifted[j]
+            for ai, a in enumerate(node.actions):
+                if a in cnode.actions:
+                    pol[:, ai] += w * cp[:, cnode.actions.index(a)]
+                elif a.startswith("b"):
+                    for s, ps in map_size(_frac(a), coarse_sizes, mapping):
+                        t = f"b{int(round(s * 100))}"
+                        if t in cnode.actions:
+                            pol[:, ai] += w * ps * cp[:, cnode.actions.index(t)]
+            tot += w
+        out[i] = pol / tot if tot > 0 else np.full((fine.n[opp], len(node.actions)), 1.0 / len(node.actions))
+    return out
+
+
+def evaluate_nested_resolving(board, r0, r1, coarse_sizes, fine_sizes, iters=800, resolve_iters=300,
+                              pot=10.0, stack=20.0, raise_cap=2, us=1):
+    """Opponent BR value (lower is better for us) for: translation (each
+    mapping) vs re-solving every subtree that starts right after an
+    opponent's off-tree bet (unsafe and safe gadget; our blueprint =
+    pseudo-harmonic translation elsewhere)."""
+    from .resolving import SubgameResolver, subtree_nodes
+    opp = 1 - us
+    menus = (coarse_sizes, fine_sizes) if us == 0 else (fine_sizes, coarse_sizes)
+
+    def fine_solver():
+        return RiverRangeSolver(board, r0, r1, pot=pot, stack=stack, bets=menus[0], raise_cap=raise_cap, bets_p1=menus[1])
+    ev = fine_solver()
+    coarse = RiverRangeSolver(board, r0, r1, pot=pot, stack=stack, bets=coarse_sizes, raise_cap=raise_cap)
+    coarse.train(iters)
+    cl = coarse.lifted(coarse.average_strategy())
+    ref = fine_solver()
+    ref.train(iters)
+    out = {"restricted_menu_equilibrium": float(ev.best_response_values(ref.lifted(ref.average_strategy()), opp).sum())}
+    trans = {}
+    for m in MAPPINGS:
+        trans[m] = translated_strategy(ev, coarse, cl, us, coarse_sizes, m)
+        out[f"translate:{m}"] = float(ev.best_response_values(trans[m], opp).sum())
+    base_mapping = "pseudo_harmonic"
+    opp_est = _opp_estimate_on_fine(ev, coarse, cl, opp, coarse_sizes, base_mapping)
+    blueprint = [trans[base_mapping][i] if trans[base_mapping][i] is not None else opp_est[i] for i in range(len(ev.tree.nodes))]
+    # roots: our decision nodes whose last action is an opponent off-tree bet, not nested in another root
+    roots = []
+    for i in ev.tree.decision_nodes_of(us):
+        h = ev.tree.nodes[i].history
+        if h and h[-1].startswith("b") and _frac(h[-1]) not in coarse_sizes:
+            if not any(h[:k] == ev.tree.nodes[r].history for r in roots for k in range(len(h))):
+                roots.append(i)
+    out["resolve_roots"] = len(roots)
+    for mode in ("unsafe", "safe"):
+        comb = [None if x is None else x.copy() for x in blueprint]
+        for r in roots:
+            res = SubgameResolver(fine_solver(), blueprint, r, mode)
+            for _ in range(resolve_iters):
+                res.iterate()
+            part = res.combined()
+            for i in res.nodes:
+                if ev.tree.nodes[i].player == us:
+                    comb[i] = part[i]
+        out[f"resolve:{mode}"] = float(ev.best_response_values(comb, opp).sum())
+    return out

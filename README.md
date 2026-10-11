@@ -6,7 +6,7 @@
 ![License: MIT](https://img.shields.io/badge/license-MIT-green)
 
 **An end-to-end research system for decision-making under hidden
-information: a custom Hold'em engine, game-theoretic solvers, a 38×
+information: a custom Hold'em engine, game-theoretic solvers, a 74×
 bit-exact C++ training backend, an exact-game validation suite, a
 calibrated abstention layer — and an interactive laboratory where you
 can watch the solver learn, play against it, and inspect where it
@@ -21,7 +21,7 @@ Atlas, Red Team, Evidence).
 PokerAlpha solves imperfect-information games with CFR / CFR+ /
 external-sampling MCCFR, validates every solver against exactly solvable
 reduced games, trains large abstract Hold'em strategies on a C++17 native
-backend that is a measured **38× faster** than the Python reference (proven
+backend that is a measured **74× faster** than the Python reference (proven
 bitwise-equivalent), and — the part most systems skip — **quantifies when
 its own strategy should not be trusted**: a confidence/abstention layer
 calibrated against exact-game EV regret decides per decision whether to use
@@ -32,7 +32,7 @@ result file; the limitations are measured, not disclaimed.
 
 | Result | Measured outcome |
 | --- | --- |
-| Native MCCFR backend | **38.1× warm speedup** (837 vs 22 it/s, median of 3 trials) — [benchmark](docs/native_solver_benchmark.md) |
+| Native MCCFR backend | **74.2× warm speedup** (1,625 vs 22 it/s, median of 3 trials) — [benchmark](docs/native_solver_benchmark.md) |
 | Cross-language correctness | Python and C++ solvers **bitwise identical** over 1,000 training iterations on a shared random tape |
 | Hand evaluator | exact parity on **all 2,598,960** five-card hands + 1M random 7-card hands |
 | Exact-game validation | native MCCFR run directly on **7 exactly solved games**: exploitability ratio vs Python 1.04; both → ~0 — [report](docs/native_direct_exact_validation.md) |
@@ -86,14 +86,14 @@ no automation); details under [Safety](#safety--intended-use).
   expectation; independently seeded runs disagree, and the hard question is
   whether that disagreement is harmless mixing between near-equal actions
   or genuine EV uncertainty. This project measures the difference.
-- **Two-language equivalence**: a 38× C++ port is only useful if it is the
+- **Two-language equivalence**: a 74× C++ port is only useful if it is the
   *same algorithm* — down to IEEE evaluation order (clang's FMA contraction
   broke bit parity in the last ulp and had to be disabled).
 - **Trust under abstraction**: a confident-looking policy table says nothing
   about reliability; deciding *when to abstain* is its own calibrated,
   falsifiable sub-problem.
 
-## Native MCCFR: 38× faster
+## Native MCCFR: 74× faster
 
 ![Python vs native MCCFR throughput](results/figures/native_speedup.png)
 
@@ -104,6 +104,10 @@ Profiling put ~60% of Python training time in hand evaluation and river
 percentile tables; the fix was architectural, not micro: the **entire hot
 path moved to C++17** — game rules, dealing, evaluator, information-set
 encoder, regret matching, sampling, and the recursive traversal itself.
+That port gave 38.1×. Phase II then profiled the native trainer (69.5 % of
+CPU was river-percentile table construction), deduplicated it and replaced
+the infoset hash map, for a further **1.96× with bit-identical output**
+(`docs/phase2/native_systems.md`), giving 74.2× overall.
 Python crosses the pybind11 boundary **once per training chunk** (GIL
 released); there are no per-node callbacks. Infosets are packed 64-bit keys
 over fixed-size native nodes.

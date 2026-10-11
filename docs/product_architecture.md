@@ -10,7 +10,7 @@ poker-alpha/
 │   ├── history/ session/   hand histories, recorded sessions
 │   ├── observer/           screen recognition + dataset/ML tooling
 │   └── ui/                 Streamlit app: Play / Study / Developer
-├── cpp/                    native MCCFR training backend (bit-exact, 38.1x)
+├── cpp/                    native MCCFR training backend (bit-exact, 74.2x)
 ├── apps/
 │   ├── web/                Next.js product frontend (static-exportable)
 │   └── desktop/            Electron overlay preview + Python sidecar

@@ -75,7 +75,7 @@ export default function LearnPage() {
         This is the SAME vanilla-CFR algorithm as PokerAlpha&rsquo;s Python
         reference, ported to TypeScript and test-validated against a committed
         Python-generated trace at 13 checkpoints (strategies agree to 4+
-        decimals). Hold&rsquo;em adds abstraction, a 38× C++ backend,
+        decimals). Hold&rsquo;em adds abstraction, a 74× C++ backend,
         independent seeds and confidence gating on top of this exact idea.
       </p>
 
@@ -161,13 +161,13 @@ export default function LearnPage() {
       <p>
         PokerAlpha&rsquo;s Hold&rsquo;em strategy was trained by the sampling
         variant of this algorithm (external-sampling MCCFR) over an
-        abstraction with 144,025 information sets, accelerated 38.1× by a
+        abstraction with 144,025 information sets, accelerated 74.2× by a
         bit-exact C++17 backend, across three independent seeds — and then
         gated by a calibrated confidence layer because, unlike here,
         Hold&rsquo;em&rsquo;s exploitability cannot be computed exactly.
       </p>
       <p>
-        <Link className="btn" href="/engineering">The 38× engineering story</Link>{" "}
+        <Link className="btn" href="/engineering">The 74× engineering story</Link>{" "}
         <Link className="btn" href="/arena">Play against the trained Kuhn policy</Link>{" "}
         <Link className="btn" href="/lab">Research Lab</Link>
       </p>

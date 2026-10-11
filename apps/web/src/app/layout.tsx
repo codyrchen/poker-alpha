@@ -5,13 +5,13 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "PokerAlpha — an interactive laboratory for decision-making under hidden information",
   description:
-    "Custom Hold'em engine · game-theoretic solvers · 38× C++ training " +
+    "Custom Hold'em engine · game-theoretic solvers · 74× C++ training " +
     "backend (bit-exact) · exact-game validation · calibrated abstention · " +
     "play against it in the browser. Independent research project by Cody Chen.",
   openGraph: {
     title: "PokerAlpha",
     description:
-      "Game-theoretic solver · 38× native acceleration · calibrated " +
+      "Game-theoretic solver · 74× native acceleration · calibrated " +
       "uncertainty · watch it learn, play against it, break it.",
     type: "website",
   },

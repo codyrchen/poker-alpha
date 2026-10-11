@@ -60,3 +60,29 @@ Reproduce:
 python experiments/phase2_translation.py --workers 6
 python experiments/phase2_translation.py --workers 6 --seed-base 4242 --out results/phase2/translation_confirm.json
 ```
+
+## H13: re-solve after an off-tree bet instead of translating
+
+Nested subgame solving (Brown & Sandholm, NeurIPS 2017): when the opponent
+bets an off-tree size, the in-position player re-solves the response
+subtree with the actual size. Elsewhere it uses pseudo-harmonic
+translation. The opponent's range entering the subtree is estimated
+through the translated blueprint action. 400 CFR+ iterations per subtree.
+`evaluate_nested_resolving` in `poker_alpha/research/translation.py`;
+`results/phase2/nested_resolving.json` (seeds 6100+) and
+`nested_resolving_confirm.json` (seeds 8800+).
+
+| menu | pseudo-harmonic translation | safe nested resolve | unsafe nested resolve | safe beats PH |
+|---|---|---|---|---|
+| 50/100 % | 0.812 / 0.797 | **0.747 / 0.723** | 1.81 / 2.03 | 24/27, 26/27 |
+| 33/75/150 % | 0.092 / 0.061 | **0.073 / 0.048** | 1.41 / 1.39 | 20/27, 25/27 |
+
+Translation cost in chips, discovery / confirmation. Safe re-solving
+removes a further 8-22 % of the cost that remains after the best
+translation. On the release-like menu the chain is nearest-log 0.60 →
+pseudo-harmonic about 0.08 → safe nested resolving about 0.06. Unsafe
+re-solving, which trusts the estimated range, is 15-30x worse than
+translating. Safe re-solving lost to pseudo-harmonic in 1-4 of 27
+instances, because the gadget's values come from an *estimated* blueprint
+(no blueprint action exists for the off-tree size), so the CFR-D safety
+argument does not strictly apply here.

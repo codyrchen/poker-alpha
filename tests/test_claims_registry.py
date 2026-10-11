@@ -18,7 +18,7 @@ def _claims():
 
 def test_claims_match_authoritative_sources():
     c = _claims()
-    bench = json.loads((ROOT / "results/benchmarks/native_mccfr_v1.json").read_text())
+    bench = json.loads((ROOT / "results/benchmarks/native_mccfr_v2.json").read_text())
     assert c["native_speedup"]["value"] == bench["speedup_warm"]
     assert c["native_it_per_s"]["value"] == bench["native_warm_it_per_s_median"]
     calib = json.loads((ROOT / "results/validation/confidence_signal_quality.json").read_text())

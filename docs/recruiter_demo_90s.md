@@ -8,7 +8,7 @@ Run `./scripts/demo_product.sh` (opens the site) or just the static site.
 - **10–20s — watch it learn.** /learn → Run 10,000. Exploitability falls
   live on a log chart; the Jack rows literally learn to bluff. "This is
   the real algorithm in the browser, test-matched to the Python solver."
-- **20–30s — the 38×.** /engineering: 22 → 837 it/s, whole hot path in
+- **20–30s — the 74×.** /engineering: 22 → 1,625 it/s, whole hot path in
   C++17, and the FMA story ("the parity suite caught the compiler
   changing the algorithm in the last bit").
 - **30–40s — validation.** /evidence ladder: all 2,598,960 five-card

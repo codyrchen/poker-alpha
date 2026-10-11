@@ -2,21 +2,21 @@
  "format": "pokeralpha.claims/v1",
  "claims": {
   "native_speedup": {
-   "value": 38.11,
+   "value": 74.2,
    "units": "x",
-   "source": "results/benchmarks/native_mccfr_v1.json",
+   "source": "results/benchmarks/native_mccfr_v2.json",
    "script": "experiments (native benchmark)",
-   "qualifier": "warm median of 3 trials, 837 vs 21.96 it/s"
+   "qualifier": "warm median of 3 trials, 1625 vs 21.9 it/s (Phase II profile-driven native optimization; Phase I was 38.11x)"
   },
   "native_it_per_s": {
-   "value": 836.99,
+   "value": 1625.02,
    "units": "it/s",
-   "source": "results/benchmarks/native_mccfr_v1.json"
+   "source": "results/benchmarks/native_mccfr_v2.json"
   },
   "python_it_per_s": {
-   "value": 21.96,
+   "value": 21.9,
    "units": "it/s",
-   "source": "results/benchmarks/native_mccfr_v1.json"
+   "source": "results/benchmarks/native_mccfr_v2.json"
   },
   "release_iterations": {
    "value": 2000000,

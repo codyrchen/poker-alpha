@@ -389,7 +389,7 @@ def build_break_it(solver, fast: bool) -> None:
 
 
 def build_claims() -> None:
-    bench = json.load(open(ROOT / "results/benchmarks/native_mccfr_v1.json"))
+    bench = json.load(open(ROOT / "results/benchmarks/native_mccfr_v2.json"))
     calib = json.load(open(ROOT /
                            "results/validation/confidence_signal_quality.json"))
     # Coverage ratio of the PROMOTED v2 rule (sd<0.2 & recent mv<0.1 &
@@ -420,7 +420,7 @@ def build_claims() -> None:
         "claims": {
             "native_speedup": {
                 "value": bench["speedup_warm"], "units": "x",
-                "source": "results/benchmarks/native_mccfr_v1.json",
+                "source": "results/benchmarks/native_mccfr_v2.json",
                 "script": "experiments (native benchmark)",
                 "qualifier": "warm median of 3 trials, "
                              f"{bench['native_warm_it_per_s_median']:.0f} vs "
@@ -428,10 +428,10 @@ def build_claims() -> None:
             },
             "native_it_per_s": {"value": bench["native_warm_it_per_s_median"],
                                 "units": "it/s",
-                                "source": "results/benchmarks/native_mccfr_v1.json"},
+                                "source": "results/benchmarks/native_mccfr_v2.json"},
             "python_it_per_s": {"value": bench["python_warm_it_per_s_median"],
                                 "units": "it/s",
-                                "source": "results/benchmarks/native_mccfr_v1.json"},
+                                "source": "results/benchmarks/native_mccfr_v2.json"},
             "release_iterations": {"value": 2_000_000, "units": "iterations",
                                    "source": "poker_alpha/solver_config.py"},
             "training_seeds": {"value": 3, "units": "independent seeds",

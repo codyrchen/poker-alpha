@@ -21,4 +21,4 @@ family, so individual frequencies may differ across runs while
 exploitability still → 0 (stated on the page).
 
 The page ends by connecting the same algorithm family to the Hold'em
-system (abstraction + 38× native backend + seeds + gate).
+system (abstraction + 74× native backend + seeds + gate).

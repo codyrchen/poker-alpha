@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-// Engineering: the 38× story, the bit-exact story, the test matrix, and
+// Engineering: the 74× story, the bit-exact story, the test matrix, and
 // where each piece lives in the source tree.
 
 import Link from "next/link";
