@@ -5,8 +5,18 @@
 ![C++17](https://img.shields.io/badge/native%20backend-C%2B%2B17%20%2F%20pybind11-blue)
 ![License: MIT](https://img.shields.io/badge/license-MIT-green)
 
-**A high-performance research platform for imperfect-information
-decision-making, centered on heads-up no-limit Hold'em.**
+**An end-to-end research system for decision-making under hidden
+information: a custom Hold'em engine, game-theoretic solvers, a 38×
+bit-exact C++ training backend, an exact-game validation suite, a
+calibrated abstention layer — and an interactive laboratory where you
+can watch the solver learn, play against it, and inspect where it
+fails.**
+
+Interactive (no setup): `cd apps/web && npm install && npm run dev` →
+**/learn** (watch CFR converge live, browser port test-matched to the
+Python solver) · **/arena** (play it; get the exact exploitability of
+your own play) · **/lab** (Decision Surface, Trust Map, Microscope,
+Atlas, Red Team, Evidence).
 
 PokerAlpha solves imperfect-information games with CFR / CFR+ /
 external-sampling MCCFR, validates every solver against exactly solvable
