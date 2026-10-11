@@ -3,19 +3,27 @@ import Link from "next/link";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "PokerAlpha",
+  title: "PokerAlpha — an interactive laboratory for decision-making under hidden information",
   description:
-    "High-performance imperfect-information game solving: MCCFR in C++17, " +
-    "exact validation, calibrated abstention. Local-first analysis tools.",
+    "Custom Hold'em engine · game-theoretic solvers · 38× C++ training " +
+    "backend (bit-exact) · exact-game validation · calibrated abstention · " +
+    "play against it in the browser. Independent research project by Cody Chen.",
+  openGraph: {
+    title: "PokerAlpha",
+    description:
+      "Game-theoretic solver · 38× native acceleration · calibrated " +
+      "uncertainty · watch it learn, play against it, break it.",
+    type: "website",
+  },
 };
 
 const NAV = [
+  ["/overview", "Overview"],
+  ["/tour", "Tour"],
+  ["/lab", "Research Lab"],
+  ["/arena", "Arena"],
+  ["/engineering", "Engineering"],
   ["/analyze", "Analyze"],
-  ["/study", "Study"],
-  ["/strategy", "Strategy"],
-  ["/trainer", "Trainer"],
-  ["/research", "Research"],
-  ["/benchmarks", "Benchmarks"],
   ["/download", "Download"],
 ] as const;
 

@@ -171,3 +171,96 @@ footer.site {
   margin-top: 4rem; padding-top: 1.2rem; border-top: 1px solid var(--hairline);
   color: var(--muted); font-size: 0.82rem;
 }
+
+/* ---- moonshot additions -------------------------------------------------- */
+
+.question { font-size: 1.15rem; color: var(--ink); max-width: 44rem; }
+.labnote { margin-top: 2.4rem; padding-top: 1.2rem;
+           border-top: 1px solid var(--hairline); font-size: 0.86rem; }
+
+.mixbar { display: flex; width: 100%; border-radius: 3px; overflow: hidden;
+          background: rgba(128,131,138,0.15); }
+.mixbar span { height: 100%; }
+
+.chart { width: 100%; max-width: 620px; height: auto; display: block; }
+
+/* hero */
+.hero h1 { font-size: 2.1rem; line-height: 1.2; letter-spacing: -0.015em;
+           max-width: 46rem; }
+.hero .sub { color: var(--muted); font-size: 1.1rem; max-width: 44rem;
+             margin-top: 0.8rem; }
+.metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+               gap: 1px; background: var(--hairline);
+               border: 1px solid var(--hairline); border-radius: 10px;
+               overflow: hidden; margin: 1.6rem 0; }
+.metric { background: var(--bg); padding: 0.9rem 1rem; }
+.metric .n { font-size: 1.45rem; font-weight: 700;
+             font-variant-numeric: tabular-nums; }
+.metric .what { color: var(--muted); font-size: 0.8rem; margin-top: 0.15rem; }
+.metric a { font-size: 0.72rem; }
+
+/* pipeline (what I built) */
+.pipeline { display: grid; gap: 0.5rem; margin: 1.2rem 0; }
+.pipe-step { display: grid; grid-template-columns: 11rem 1fr; gap: 1rem;
+             padding: 0.7rem 0; border-bottom: 1px solid rgba(128,131,138,0.12); }
+.pipe-step b { font-size: 0.82rem; letter-spacing: 0.05em; }
+.pipe-step p { color: var(--muted); font-size: 0.92rem; }
+@media (max-width: 640px) { .pipe-step { grid-template-columns: 1fr; gap: 0.2rem; } }
+
+/* lab cards */
+.lab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem; margin-top: 1.4rem; }
+.lab-card { border: 1px solid var(--hairline); border-radius: 10px;
+            padding: 1rem 1.1rem; display: block; color: var(--ink); }
+.lab-card:hover { border-color: var(--accent); text-decoration: none; }
+.lab-card .q { color: var(--muted); font-size: 0.85rem; margin: 0.3rem 0 0.5rem; }
+.lab-card .insight { font-size: 0.82rem; }
+
+/* heatmaps */
+.heatmap { border-collapse: separate; border-spacing: 2px; }
+.heatmap td { width: 3.4rem; height: 2.5rem; text-align: center;
+              font-size: 0.66rem; border-radius: 3px; cursor: pointer;
+              font-variant-numeric: tabular-nums; }
+.heatmap td.sel { outline: 2px solid var(--ink); }
+.heatmap th { font-size: 0.66rem; color: var(--muted); font-weight: 500;
+              padding: 0.15rem; }
+
+/* tour */
+.tour-step { min-height: 46vh; }
+.tour-nav { display: flex; gap: 0.6rem; align-items: center; margin: 1.4rem 0; }
+.tour-progress { flex: 1; height: 4px; background: rgba(128,131,138,0.2);
+                 border-radius: 2px; }
+.tour-progress div { height: 100%; background: var(--accent); border-radius: 2px; }
+
+/* arena */
+.arena-table { border: 1px solid var(--hairline); border-radius: 12px;
+               padding: 1.4rem; margin: 1rem 0; text-align: center; }
+.arena-card { display: inline-block; min-width: 3.2rem; font-size: 2rem;
+              font-weight: 700; background: #f4f2ec; color: #111;
+              border-radius: 8px; border: 1px solid #c9c5ba;
+              padding: 0.5rem 0.6rem; margin: 0 0.3rem; }
+.arena-card.back { background: #2a3550; color: #2a3550; }
+.arena-actions { display: flex; gap: 0.8rem; justify-content: center;
+                 margin-top: 1rem; }
+.arena-actions button { font-size: 1rem; padding: 0.6rem 1.6rem; }
+
+/* atlas canvas */
+.atlas-wrap { position: relative; }
+.atlas-wrap canvas { width: 100%; height: auto; border: 1px solid var(--hairline);
+                     border-radius: 8px; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
+
+/* accessibility: visible focus */
+a:focus-visible, button:focus-visible, select:focus-visible,
+input:focus-visible, textarea:focus-visible, [tabindex]:focus-visible {
+  outline: 2px solid var(--accent); outline-offset: 2px;
+}
+
+@media print {
+  nav.top, footer.site { display: none; }
+  body { background: #fff; color: #111; }
+  .metric, .lab-card { background: #fff; }
+}
