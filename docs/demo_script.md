@@ -1,4 +1,46 @@
-# PokerAlpha — 5-minute demo script
+# PokerAlpha — demo scripts
+
+Two scripts: the **product demo** (the shipped surfaces, 3–5 min) and the
+original **research demo** (solver/validation story, 5 min). Neither needs
+a live PokerNow game or any network beyond localhost.
+
+## Product demo (3–5 minutes)
+
+Setup once: `.venv/bin/python -m poker_alpha.api` in one terminal,
+`cd apps/web && npm run dev` in another.
+
+1. **Homepage** (http://localhost:3000, 20 s) — "High-performance
+   imperfect-information game solving." Point at the two columns: what it
+   is (C++17, 38.1×, 2M iterations, exact validation) and what it is NOT
+   (not GTO — the engine says so itself).
+2. **Analyzer** (/analyze, 40 s) — demo spot 1: a solver-ACCEPTED river
+   mix. Read the row tag out loud: HIGHEST FREQUENCY, not "recommended" —
+   it is a distribution. Switch to the gate-rejected preflop spot: the
+   amber "Solver recommendation withheld" panel with the real reason
+   ("independently trained runs disagree here") and the rollout fallback.
+3. **Strategy explorer** (/strategy, 40 s) — the 169-hand matrix, live
+   from the artifact. The honest picture IS the demo: most preflop cells
+   are dimmed because the gate rejects them, and PokerAlpha shows no
+   numbers there. Click a lit cell for the full mix + training visits.
+4. **Session review** (Streamlit → Study, 60 s) —
+   `streamlit run poker_alpha/ui/app.py`, Mode → Study. The bundled demo
+   session: summary counts by gate state, ESTIMATED decision regret only
+   where a valid same-method comparison exists ("EV regret unavailable"
+   elsewhere, with the reason), review categories, click a row to get the
+   full Play-Mode rendering of that decision.
+5. **Trainer** (Study → Trainer, 30 s) — answer a spot, show the grading
+   language: "Common in solver mix — 83%", never right/wrong; uncertain
+   states are review-only.
+6. **Desktop overlay** (30 s) — `cd apps/desktop && npm start`: the
+   always-on-top compact summary, expanded state, click-through toggle,
+   and the engine sidecar in the logs. Unsigned local preview.
+7. **The engineering story** (30 s) — /benchmarks: 38.1× native backend
+   with bit-exact parity; API answers a full analysis in ~0.1 s warm.
+8. **Close on abstention** (20 s) — "Every surface obeys the same rule:
+   when the evidence is weak, PokerAlpha says so instead of inventing a
+   number. That discipline is the product."
+
+## Research demo (5 minutes)
 
 A live walkthrough using only offline, committed functionality. No PokerNow
 game, no network, no setup beyond the quick start. Commands assume the repo

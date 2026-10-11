@@ -228,7 +228,16 @@ python -m poker_alpha.holdem_demo                 # 6-max Hold'em decision repor
 python -m poker_alpha.platform_demo               # all four input sources, one pipeline
 ```
 
-Extras: `.[vision]` (screen observer), `.[ocr]`, `.[ui]` (Streamlit).
+Extras: `.[vision]` (screen observer), `.[ocr]`, `.[ui]` (Streamlit),
+`.[api]` (local product API).
+
+Product in 60 seconds:
+
+```bash
+pip install -e ".[ui,api]"
+streamlit run poker_alpha/ui/app.py   # Play / Study / Developer
+python -m poker_alpha.api             # local engine for apps/web + desktop
+```
 
 ## Hold'em decision-support platform
 
@@ -242,8 +251,18 @@ a `DecisionReport` with EV ± SE, provenance and warnings.
 | Solver | external-sampling MCCFR (Python reference + native backend) on a locked v2 config: compact imperfect-recall encoder, exact river-percentile buckets, legal NLHE sizing | [abstraction](docs/abstraction.md) |
 | Ranges / opponent | 1,326-combo weighted ranges, Bayesian updates, multiway equity, statistics with credible intervals | [ranges](docs/ranges.md) |
 | Decision engine | solver → rollout → heuristic with coded rejection reasons and per-source uncertainty | [decision_engine](docs/decision_engine.md) |
-| Observer | optional, read-only screenshot reader with calibration, template OCR, fusion, test-session recorder | [observer](docs/observer.md) |
+| Observer | optional, read-only screenshot reader with calibration, template OCR, fusion, test-session recorder; dataset/split/baseline tooling (`python -m poker_alpha.observer.dataset`) | [observer](docs/observer.md), [observer_dataset](docs/observer_dataset.md) |
 | UI | `streamlit run poker_alpha/ui/app.py` — display only | [architecture](docs/architecture.md) |
+
+### Product surfaces (v0.1)
+
+| surface | what it is | docs |
+| --- | --- | --- |
+| **Play** | the user-facing decision view: mixed-strategy rows, gate state, abstention as a first-class state | [ui_product_spec](docs/ui_product_spec.md) |
+| **Study** | session review with strict regret semantics, 169-hand strategy explorer, what-if, trainer | [study_mode](docs/study_mode.md) |
+| **Local API** | `python -m poker_alpha.api` — 127.0.0.1-only `pokeralpha.api/v1` engine for frontends | [local_api](docs/local_api.md) |
+| **Web** | Next.js app (analyzer, strategy, study, trainer, research) against the local engine; bundled real-engine outputs when offline, labeled as such | [web_app](docs/web_app.md) |
+| **Desktop** | Electron always-on-top overlay — local development preview, unsigned | [desktop_app](docs/desktop_app.md) |
 
 What the platform does **not** claim: a solved game, GTO play, a profitable
 bot, Nash guarantees for 3+ players, ground-truth opponent ranges, or
