@@ -111,6 +111,9 @@ class CellResult:
     visits: Optional[float] = None
     reasons: Tuple[str, ...] = ()          # gate / miss reason codes
     notes: Tuple[str, ...] = ()            # e.g. translation note
+    signals: Dict[str, Optional[float]] = None  # gate signals (visits,
+                                           # movement, seed_disagreement,
+                                           # collision) when available
 
 
 _STATUS = {ACCEPT: "ACCEPTED", LOW: "LOW CONFIDENCE"}
@@ -127,7 +130,8 @@ def lookup_cell(solver: SolverStrategyProvider, cls: str,
             "UNSTABLE_ACROSS_CHECKPOINTS", "HIGH_COLLISION_DISPERSION",
             "KNOWN_PATHOLOGICAL_BUCKET") else "UNSUPPORTED"
         return CellResult(cls, combo, status, reasons=tuple(res.reasons),
-                          notes=(res.reason,))
+                          notes=(res.reason,),
+                          signals=dict((res.gate or {}).get("signals", {})))
     assert isinstance(res, SolverLookup)
     mix = tuple(sorted(((label, p) for _, label, _, _, p in res.actions),
                        key=lambda x: -x[1]))
@@ -140,7 +144,8 @@ def lookup_cell(solver: SolverStrategyProvider, cls: str,
                       dominant_freq=mix[0][1] if mix else None,
                       mix=mix, visits=res.visits,
                       reasons=tuple(res.gate.get("reasons", ())) if res.gate else (),
-                      notes=notes)
+                      notes=notes,
+                      signals=dict((res.gate or {}).get("signals", {})))
 
 
 def preflop_matrix(solver: SolverStrategyProvider,

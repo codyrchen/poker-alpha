@@ -26,6 +26,9 @@ class AnalysisSettings(BaseModel):
 class AnalyzeRequest(BaseModel):
     state: Dict = Field(..., description="pokeralpha.observed/v1 manual state")
     settings: AnalysisSettings = AnalysisSettings()
+    include_receipt: bool = Field(
+        True, description="attach a pokeralpha.receipt/v1 reproducibility "
+                          "record to the response")
 
 
 class ActionOut(BaseModel):
@@ -82,6 +85,20 @@ class AnalyzeResponse(BaseModel):
     provenance: ProvenanceOut = ProvenanceOut()
     abstention: Optional[AbstentionOut] = None
     refusal: Optional[RefusalOut] = None
+    #: pokeralpha.receipt/v1 — state fingerprint, artifact SHA, config,
+    #: seeds, gate verdict and result; its receipt_id is a stable
+    #: reproducibility ID (not a cryptographic proof).
+    receipt: Optional[Dict] = None
+
+
+class VerifyReceiptRequest(BaseModel):
+    receipt: Dict
+
+
+class VerifyReceiptResponse(BaseModel):
+    api: str = API_VERSION
+    reproduced: bool
+    mismatches: List[str] = []
 
 
 class WhatIfRequest(BaseModel):

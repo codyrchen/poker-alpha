@@ -1,0 +1,58 @@
+{
+ "format": "pokeralpha.claims/v1",
+ "claims": {
+  "native_speedup": {
+   "value": 38.11,
+   "units": "x",
+   "source": "results/benchmarks/native_mccfr_v1.json",
+   "script": "experiments (native benchmark)",
+   "qualifier": "warm median of 3 trials, 837 vs 21.96 it/s"
+  },
+  "native_it_per_s": {
+   "value": 836.99,
+   "units": "it/s",
+   "source": "results/benchmarks/native_mccfr_v1.json"
+  },
+  "python_it_per_s": {
+   "value": 21.96,
+   "units": "it/s",
+   "source": "results/benchmarks/native_mccfr_v1.json"
+  },
+  "release_iterations": {
+   "value": 2000000,
+   "units": "iterations",
+   "source": "poker_alpha/solver_config.py"
+  },
+  "training_seeds": {
+   "value": 3,
+   "units": "independent seeds",
+   "source": "results/strategy/candidates/"
+  },
+  "evaluator_hands": {
+   "value": 2598960,
+   "units": "5-card hands",
+   "source": "native evaluator parity tests"
+  },
+  "calibration_rows": {
+   "value": 8880,
+   "units": "infosets",
+   "source": "results/validation/confidence_signal_quality.json"
+  },
+  "coverage_gain": {
+   "value": 1.68,
+   "units": "x",
+   "source": "results/validation/confidence_signal_quality.json",
+   "qualifier": "promoted v2 rule (sd<0.2, recent mv<0.1, visits>=20) coverage vs the v1 ACCEPT share, held-out games; accepted wrong-rate 3.0% vs 3.3%"
+  },
+  "test_count": {
+   "value": 925,
+   "units": "tests",
+   "source": "pytest --collect-only -q (this commit)"
+  },
+  "stored_infosets": {
+   "value": 144025,
+   "units": "infosets",
+   "source": "results/strategy/holdem_v2_native_seed0_2m.npz"
+  }
+ }
+}
