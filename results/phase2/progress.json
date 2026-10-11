@@ -14,8 +14,8 @@
   "P2_active_compute": "NEGATIVE_RESULT",
   "P3_cfr_family_benchmark": "NOT_STARTED",
   "P4_confidence_ablation": "DONE",
-  "P5_abstraction_science": "NOT_STARTED",
-  "P6_local_resolving": "RUNNING",
+  "P5_abstraction_science": "RUNNING",
+  "P6_local_resolving": "DONE",
   "P7_native_systems": "NOT_STARTED",
   "P8_artifact_engineering": "DONE",
   "P9_exhaustive_correctness": "DONE",
@@ -44,6 +44,7 @@
   "P2: first run had a node-accounting artifact (outcome-infoset walk charged to budget); fixed, uniform-prioritized now bit-identical to MCCFR. Rerun verdicts mixed; independent confirmation running.",
   "P2 NULL after confirmation (seeds 100-119): no signal replicates; oracle BR also fails. Side effect: reduced-game sample_chance cache gives 3.8x MCCFR speedup with identical digest.",
   "P10: 20k discovery + 10k independent confirmation; 17/18 top clusters confirmed; 90%/97.5% state-level confirmation. Model sensitivity occurs only on rollout fallback path. Collision signal inactive in release (1.4% of keys).",
-  "P6: first resolving run used profile cfvs in gadget (unsafe, 3/27 worse at 5 s); corrected to BR cfvs; rerun in progress."
+  "P6: first resolving run used profile cfvs in gadget (unsafe, 3/27 worse at 5 s); corrected to BR cfvs; rerun in progress.",
+  "P6: safe gadget never worse (>1e-4) at >=1s over 108 instance-settings; closes 9-31% of gap; unsafe 2-3x more exploitable."
  ]
 }

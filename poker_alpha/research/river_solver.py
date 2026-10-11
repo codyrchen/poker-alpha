@@ -68,16 +68,19 @@ class RiverTree:
     """Betting tree of ``RiverSubgame`` (OOP = player 0 acts first)."""
 
     def __init__(self, pot: float, stack: float, bets: Sequence[float] = (0.75,),
-                 raise_cap: int = 2, oop_only_bets: bool = False) -> None:
+                 raise_cap: int = 2, oop_only_bets: bool = False,
+                 bets_p1: Optional[Sequence[float]] = None) -> None:
         self.pot, self.stack = float(pot), float(stack)
         self.bets = tuple(float(b) for b in bets)
+        # optional per-player menus (action-abstraction studies); None = shared
+        self.menus = (self.bets, self.bets if bets_p1 is None else tuple(float(b) for b in bets_p1))
         self.raise_cap = int(raise_cap)
         self.oop_only_bets = oop_only_bets
         self.nodes: List[Node] = []
         self._build(())
 
-    def _tok(self, i: int) -> str:
-        return f"b{int(round(self.bets[i] * 100))}"
+    def _tok(self, frac: float) -> str:
+        return f"b{int(round(frac * 100))}"
 
     def _state(self, history):
         c = [0.0, 0.0]
@@ -115,10 +118,10 @@ class RiverTree:
         if n < self.raise_cap and level < self.stack - 1e-9:
             pot_now = self.pot + c[0] + c[1]
             owe = level - c[p]
-            for i, frac in enumerate(self.bets):
+            for frac in self.menus[p]:
                 to = c[p] + owe + frac * (pot_now + owe)
                 if to < self.stack - 1e-9:
-                    acts.append(self._tok(i))
+                    acts.append(self._tok(frac))
             acts.append("a")
         return acts
 
@@ -171,9 +174,9 @@ class RiverRangeSolver:
                  range1: Sequence[Tuple[Hand, float]], pot: float = 10.0, stack: float = 20.0,
                  bets: Sequence[float] = (0.75,), raise_cap: int = 2, oop_only_bets: bool = False,
                  cells: Optional[Sequence[Optional[np.ndarray]]] = None,
-                 algorithm: str = "cfr+") -> None:
+                 algorithm: str = "cfr+", bets_p1: Optional[Sequence[float]] = None) -> None:
         self.board = tuple(codes(board))
-        self.tree = RiverTree(pot, stack, bets, raise_cap, oop_only_bets)
+        self.tree = RiverTree(pot, stack, bets, raise_cap, oop_only_bets, bets_p1)
         self.hands = [[tuple(sorted(h)) for h, _ in range0], [tuple(sorted(h)) for h, _ in range1]]
         self.weights = [np.array([w for _, w in range0], dtype=np.float64),
                         np.array([w for _, w in range1], dtype=np.float64)]
