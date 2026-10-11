@@ -76,11 +76,32 @@ uses the splitmix64 finalizer.
 
 ## 21 / 23 Correctness stress and memory scale
 
-See `native_correctness_stress.json` (100k continuous vs 10 x 10k with
-save/load between chunks; 10k-iteration Python-vs-native shared-tape
-parity) and `native_memory.json` (1M-iteration run: infosets, peak RSS,
-segment throughput, and fits). The numbers are summarized in the research
-report.
+* **Checkpoint stress.** 100,000 continuous iterations versus 10 x 10,000
+  with save and reload in between: identical state hash.
+* **Shared-tape parity.** 10,000 iterations of Python versus native on one
+  random tape: zero value mismatches, identical tape position (4,484,738
+  uniforms consumed), bit-identical average strategy over 102,404 infosets.
+  This is 10x the previous longest parity run.
+* **Evaluator.** Exhaustive parity over all 20,358,520 six-card and all
+  133,784,560 seven-card hands, plus 200k suit-permutation checks, with zero
+  mismatches (`evaluator_stress.json`).
+* **Memory and scale** (1M-iteration run, seed 11):
+
+| iterations | infosets | peak RSS (MB) | segment it/s |
+|---|---|---|---|
+| 10k | 102,604 | 120.7 | 1,719 |
+| 100k | 132,684 | 131.5 | 1,590 |
+| 400k | 141,962 | 131.5 | 1,629 |
+| 1M | 145,955 | 131.5 | 1,480 |
+
+  The table saturates. The abstraction's reachable key space is about
+  146k infosets, using about 147 bytes per infoset of table, so RSS is
+  flat. Throughput falls about 14 % as the table fills. A linear fit gives
+  about 236 bytes of RSS per infoset. Reaching 8/16/32 GB would require
+  about 36M/72M/145M infosets, which is **unreachable at this
+  abstraction**. The iteration extrapolation in the artifact is labelled
+  as meaningless. The bottleneck is CPU in feature computation, not
+  memory.
 
 Reproduce:
 
