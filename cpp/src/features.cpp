@@ -218,7 +218,7 @@ inline uint64_t pack_cards_key(const int hole_sorted[2], const int* board_sorted
 
 }  // namespace
 
-const std::vector<uint32_t>& FeatureCache::river_values(const int* board_sorted) {
+const FeatureCache::RiverTable& FeatureCache::river_values(const int* board_sorted) {
     uint64_t bkey = 0;
     for (int i = 0; i < 5; ++i) bkey |= uint64_t(board_sorted[i]) << (6 * i);
     auto it = river_values_.find(bkey);
@@ -226,45 +226,79 @@ const std::vector<uint32_t>& FeatureCache::river_values(const int* board_sorted)
     if (river_values_.size() >= RIVER_CACHE_LIMIT) river_values_.clear();
 
     // All 1,081 two-card holdings from the 47 non-board cards (hero's own
-    // cards are NOT removed — features.py semantics). Rank-pair dedup for
-    // holdings that cannot make a flush.
+    // cards are NOT removed - features.py semantics). A 5-card board has at
+    // most one suit with >= 3 cards; only cards of that suit can contribute
+    // to a flush, so a holding's 7-card value depends only on the canonical
+    // ids of its two cards: the exact card for flush-suit cards (13 + rank)
+    // and the rank otherwise. Each distinct canonical pair is evaluated once
+    // and counted with its multiplicity - same values, same counts as the
+    // full enumeration, so percentiles are identical.
     int suit_n[4] = {};
     bool on_board[NUM_CARDS] = {};
     for (int i = 0; i < 5; ++i) {
         suit_n[suit_of(board_sorted[i])] += 1;
         on_board[board_sorted[i]] = true;
     }
-    int live[NUM_CARDS], nl = 0;
-    for (int c = 0; c < NUM_CARDS; ++c)
-        if (!on_board[c]) live[nl++] = c;
-    uint32_t by_ranks[13][13];
-    bool have[13][13] = {};
-    std::vector<uint32_t> vals;
-    vals.reserve(size_t(nl) * (nl - 1) / 2);
-    int cards[7];
-    for (int i = 0; i < 5; ++i) cards[2 + i] = board_sorted[i];
-    for (int i = 0; i < nl; ++i) {
-        for (int j = i + 1; j < nl; ++j) {
-            int x = live[i], y = live[j];
-            if (suit_n[suit_of(x)] >= 3 || suit_n[suit_of(y)] >= 3) {
-                cards[0] = x;
-                cards[1] = y;
-                vals.push_back(evaluate(cards, 7));
-                continue;
+    int fsuit = -1;
+    for (int s = 0; s < 4; ++s)
+        if (suit_n[s] >= 3) fsuit = s;
+    // representative card and count per canonical id (0..25)
+    int rep[26];
+    int cnt[26] = {};
+    for (int c = 0; c < NUM_CARDS; ++c) {
+        if (on_board[c]) continue;
+        int id = (suit_of(c) == fsuit) ? 13 + rank_of(c) : rank_of(c);
+        if (cnt[id] == 0) rep[id] = c;
+        // keep a representative of a NON-flush suit for rank ids; any suit
+        // other than fsuit gives the same value
+        cnt[id] += 1;
+    }
+    // For a pair of the same rank id, the two cards must be distinct cards
+    // of different (non-flush) suits; their value does not depend on which.
+    int second[13];
+    for (int r = 0; r < 13; ++r) second[r] = -1;
+    for (int c = 0; c < NUM_CARDS; ++c) {
+        if (on_board[c] || suit_of(c) == fsuit) continue;
+        int r = rank_of(c);
+        if (c != rep[r] && second[r] < 0) second[r] = c;
+    }
+    std::vector<std::pair<uint32_t, uint32_t>> vm;   // (value, multiplicity)
+    vm.reserve(26 * 27 / 2);
+    EvalCounts base;
+    for (int i = 0; i < 5; ++i) base.add(board_sorted[i]);
+    int x, y;
+    uint32_t total = 0;
+    for (int a = 0; a < 26; ++a) {
+        if (!cnt[a]) continue;
+        for (int b = a; b < 26; ++b) {
+            if (!cnt[b]) continue;
+            uint32_t mult;
+            if (a == b) {
+                if (a >= 13 || cnt[a] < 2) continue;      // flush-suit ids are single cards
+                mult = uint32_t(cnt[a] * (cnt[a] - 1) / 2);
+                x = rep[a];
+                y = second[a];
+            } else {
+                mult = uint32_t(cnt[a] * cnt[b]);
+                x = rep[a];
+                y = rep[b];
             }
-            int ra = rank_of(x), rb = rank_of(y);
-            if (ra > rb) std::swap(ra, rb);
-            if (!have[ra][rb]) {
-                cards[0] = x;
-                cards[1] = y;
-                by_ranks[ra][rb] = evaluate(cards, 7);
-                have[ra][rb] = true;
-            }
-            vals.push_back(by_ranks[ra][rb]);
+            vm.emplace_back(evaluate_with(base, x, y), mult);
+            total += mult;
         }
     }
-    std::sort(vals.begin(), vals.end());
-    return river_values_.emplace(bkey, std::move(vals)).first->second;
+    std::sort(vm.begin(), vm.end());
+    RiverTable t;
+    t.total = total;
+    for (const auto& [v, m] : vm) {
+        if (!t.vals.empty() && t.vals.back() == v) {
+            t.cum.back() += m;
+        } else {
+            t.vals.push_back(v);
+            t.cum.push_back((t.cum.empty() ? 0u : t.cum.back()) + m);
+        }
+    }
+    return river_values_.emplace(bkey, std::move(t)).first->second;
 }
 
 CardFeatures FeatureCache::compute(const int hole[2], const int* board, int board_n) {
@@ -280,15 +314,17 @@ CardFeatures FeatureCache::compute(const int hole[2], const int* board, int boar
     f.texture = texture_index(board, board_n);
     f.pct_bucket = 0;
     if (river_pct_buckets_ > 0 && board_n == 5) {
-        const auto& vals = river_values(board);
+        const auto& tab = river_values(board);
         int cards[7];
         cards[0] = hole[0];
         cards[1] = hole[1];
         for (int i = 0; i < 5; ++i) cards[2 + i] = board[i];
         uint32_t hv = evaluate(cards, 7);
-        auto lo = std::lower_bound(vals.begin(), vals.end(), hv) - vals.begin();
-        auto hi = std::upper_bound(vals.begin(), vals.end(), hv) - vals.begin();
-        double pct = (double(lo) + 0.5 * double(hi - lo)) / double(vals.size());
+        // lo = #holdings with value < hv; hi = #holdings with value <= hv
+        auto pos = std::lower_bound(tab.vals.begin(), tab.vals.end(), hv) - tab.vals.begin();
+        uint32_t lo = pos > 0 ? tab.cum[size_t(pos - 1)] : 0u;
+        uint32_t hi = (size_t(pos) < tab.vals.size() && tab.vals[size_t(pos)] == hv) ? tab.cum[size_t(pos)] : lo;
+        double pct = (double(lo) + 0.5 * double(hi - lo)) / double(tab.total);
         int b = int(pct * river_pct_buckets_);
         if (b > river_pct_buckets_ - 1) b = river_pct_buckets_ - 1;
         f.pct_bucket = uint8_t(b);

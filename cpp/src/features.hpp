@@ -39,11 +39,22 @@ public:
 
 private:
     CardFeatures compute(const int hole[2], const int* board, int board_n);
-    const std::vector<uint32_t>& river_values(const int* board_sorted);
+
+    // Compact river table for one board: the DISTINCT 7-card values of all
+    // 1,081 two-card holdings (47 non-board cards, hero's cards not removed),
+    // ascending, with cum[i] = number of holdings whose value is <= vals[i].
+    // Equivalent to the sorted 1,081-entry list (identical percentiles) but
+    // built from deduplicated canonical holdings (Phase II, Program 7).
+    struct RiverTable {
+        std::vector<uint32_t> vals;
+        std::vector<uint32_t> cum;
+        uint32_t total = 0;
+    };
+    const RiverTable& river_values(const int* board_sorted);
 
     int river_pct_buckets_;
     std::unordered_map<uint64_t, CardFeatures> cache_;
-    std::unordered_map<uint64_t, std::vector<uint32_t>> river_values_;
+    std::unordered_map<uint64_t, RiverTable> river_values_;
     static constexpr size_t CACHE_LIMIT = 1u << 20;         // mirror lru_cache(1M)
     static constexpr size_t RIVER_CACHE_LIMIT = 4096;       // mirror lru_cache(4096)
 };

@@ -38,8 +38,8 @@ int MCCFR::sample_from(const double* strategy, int n) {
 }
 
 uint32_t MCCFR::get_or_create(uint64_t key, const int* actions, int n) {
-    auto it = index_.find(key);
-    if (it != index_.end()) return it->second;
+    int64_t found = index_.find(key);
+    if (found >= 0) return uint32_t(found);
     Node node;
     node.num_actions = uint8_t(n);
     for (int i = 0; i < n; ++i) node.actions[size_t(i)] = uint8_t(actions[i]);
@@ -163,7 +163,7 @@ SolverMetrics MCCFR::metrics() const {
     m.river_boards = features_.river_board_entries();
     m.approx_table_bytes =
         nodes_.size() * sizeof(Node) +
-        index_.bucket_count() * (sizeof(uint64_t) + sizeof(uint32_t) + 8);
+        index_.capacity() * (sizeof(uint64_t) + sizeof(uint32_t));
     return m;
 }
 

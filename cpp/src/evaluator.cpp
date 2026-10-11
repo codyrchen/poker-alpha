@@ -38,18 +38,16 @@ inline uint32_t pack5(int cat, int a, int b, int c, int d, int e) {
 }  // namespace
 
 uint32_t evaluate(const int* cards, int n) {
-    int rank_count[13] = {};
-    int suit_count[4] = {};
-    uint32_t suit_mask[4] = {};
-    uint32_t rank_mask = 0;
-    for (int i = 0; i < n; ++i) {
-        int c = cards[i];
-        int r = c % 13, s = c / 13;
-        rank_count[r] += 1;
-        suit_count[s] += 1;
-        suit_mask[s] |= 1u << r;
-        rank_mask |= 1u << r;
-    }
+    EvalCounts h;
+    for (int i = 0; i < n; ++i) h.add(cards[i]);
+    return evaluate_counts(h);
+}
+
+uint32_t evaluate_counts(const EvalCounts& h) {
+    const int* rank_count = h.rank_count;
+    const int* suit_count = h.suit_count;
+    const uint32_t* suit_mask = h.suit_mask;
+    const uint32_t rank_mask = h.rank_mask;
 
     int flush_suit = -1;
     for (int s = 0; s < 4; ++s)

@@ -9,6 +9,7 @@
 
 #include "config.hpp"
 #include "features.hpp"
+#include "flat_index.hpp"
 #include "game.hpp"
 #include "key.hpp"
 #include "rng.hpp"
@@ -74,7 +75,7 @@ public:
     size_t tape_pos() const { return rnd_.tape_pos(); }
 
     // State access for checkpoint/export (coarse, not hot).
-    const std::unordered_map<uint64_t, uint32_t>& index() const { return index_; }
+    const FlatIndex& index() const { return index_; }
     const std::vector<Node>& nodes() const { return nodes_; }
     std::string render(uint64_t key) const { return render_key(game_.config(), key); }
 
@@ -86,10 +87,7 @@ public:
                       const double* regret, const double* strategy);
 
     // Force a tiny table (rehash test support).
-    void shrink_table_for_tests() {
-        index_.rehash(2);
-        index_.max_load_factor(1.0f);
-    }
+    void shrink_table_for_tests() { index_.shrink_for_tests(); }
 
 private:
     uint32_t get_or_create(uint64_t key, const int* actions, int n);
@@ -100,7 +98,7 @@ private:
     HoldemGame game_;
     FeatureCache features_;
     RandomSource rnd_;
-    std::unordered_map<uint64_t, uint32_t> index_;
+    FlatIndex index_;
     std::vector<Node> nodes_;
     uint64_t iterations_ = 0;
     uint64_t decision_nodes_ = 0, chance_nodes_ = 0, terminal_nodes_ = 0;
