@@ -20,21 +20,21 @@
   "P8_artifact_engineering": "DONE",
   "P9_exhaustive_correctness": "DONE",
   "P10_redteam_phase2": "DONE",
-  "P11_autonomous_loop": "NOT_STARTED",
+  "P11_autonomous_loop": "DONE",
   "P12_bench_suite": "DONE",
   "P13_experiment_orchestration": "DONE",
   "P14_general_game": "DONE",
-  "P15_agent_research": "RUNNING",
+  "P15_agent_research": "DONE",
   "P16_llm_bench_prep": "DONE",
   "P17_strategy_compiler": "DONE",
   "P18_policy_geometry": "DONE",
-  "P19_statistical_discipline": "NOT_STARTED",
+  "P19_statistical_discipline": "DONE",
   "P20_system_reliability": "DONE",
   "P21_native_correctness_stress": "DONE",
-  "P22_evaluator_stress": "RUNNING",
+  "P22_evaluator_stress": "DONE",
   "P23_memory_scale_limits": "DONE",
-  "P24_research_report": "NOT_STARTED",
-  "P25_website_surfacing": "NOT_STARTED"
+  "P24_research_report": "DONE",
+  "P25_website_surfacing": "DONE"
  },
  "notes": [
   "P1 POSITIVE: error-guided (br_gain) splitting beats capacity-matched uniform by 24-31% and random by 44-57%; confirmed on independent seeds/boards and at higher capacity. positive_regret signal NEGATIVE.",
@@ -48,6 +48,10 @@
   "P6: safe gadget never worse (>1e-4) at >=1s over 108 instance-settings; closes 9-31% of gap; unsafe 2-3x more exploitable.",
   "P7: 1.96x native speedup (858->1678 it/s) bit-identical; river percentile table was 69.5% of CPU.",
   "P5: adaptive beats uniform at 86% of 540 equal-infoset points; imperfect-recall Leduc gets worse with training; value-based collision (shared-action regret) predicts cell error (rho 0.93), policy dispersion does not (0.50).",
-  "P3: DCFR best at large node budgets on 4/5 games; equal-iteration comparisons misleading; Phase I CFR/CFR+ crossover reproduces (between 1 and 2 s here)."
- ]
+  "P3: DCFR best at large node budgets on 4/5 games; equal-iteration comparisons misleading; Phase I CFR/CFR+ crossover reproduces (between 1 and 2 s here).",
+  "P11 loop: W1 training-coverage diagnosis falsified as pre-registered (NULL); W2 seed disagreement structural on second doubling.",
+  "H4/H13 confirmed: pseudo-harmonic translation ~8x cheaper than nearest-log; safe nested resolving removes a further 8-22%.",
+  "Native benchmark v2: 74.2x (1,625 vs 21.9 it/s); claims updated. Tests: 1007 passed + 1 skipped."
+ ],
+ "end_time_utc": "2026-10-11T21:51:15Z"
 }

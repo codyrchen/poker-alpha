@@ -82,6 +82,8 @@ refinement signal.
 | Safe resolving (re-solve gadget) | closes 22-32 % of the gap (first action), 9-12 % (second) | 0/108 settings worse beyond 1e-4 at ≥ 1 s | local_resolving.md |
 | Pseudo-harmonic translation vs nearest-log | 0.60 → 0.076 chips IP cost (release-like menu) | 26/27 and 27/27 instance wins, two independent runs | action_translation.md |
 | Confirmed red-team clusters | 17/18 top clusters confirmed; local sensitivity 21-26x lift | independent 10k-state sample; 90 % / 97.5 % state-level confirmation | red_team_confirmation.md |
+| Safe nested resolving after off-tree bets vs pseudo-harmonic | a further 8-22 % lower translation cost | 24-26/27 instance wins, two independent runs | action_translation.md |
+| Native benchmark (repository script) | 1,625 vs 21.9 it/s: 74.2x (Phase I 38.1x) | 3 trials, median | native_systems.md |
 | Seed ensembling (3 seeds) | -20-26 % exploitability vs one seed | 8 reps x 3 games | hypotheses.md (H1) |
 | Bayesian adaptive agent | exploits archetypes 2-5x more than equilibrium; recency +0.15/hand after a regime switch | 5 seeds / 8 seeds; Bonferroni | agent_research.md |
 | Discounted CFR | best at large node budgets on 4/5 games, 1.4-2.7x better than CFR+ on poker games | 1 deterministic run per game; MCCFR 10 seeds | cfr_benchmark.md |
@@ -168,7 +170,8 @@ Ranked list in `docs/phase2/hypotheses.md`. Top open items:
 
 * a randomized off-tree matcher in the decision engine, validated
   end-to-end (H4 follow-up);
-* resolving after off-tree bets instead of translating (H13);
+* nested resolving after off-tree bets in the decision engine (H13 worked in
+  exact subgames);
 * max-margin resolving (H12);
 * error-guided refinement on a multi-street exact domain (H14);
 * a value-based collision signal for the release confidence table (H7).
