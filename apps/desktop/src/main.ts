@@ -11,6 +11,12 @@ import * as path from "path";
 import { EngineHandle, startEngine, stopEngine } from "./sidecar";
 
 const SMOKE = process.argv.includes("--smoke");
+// --shot <path>: capture the overlay after it renders, then quit (used to
+// produce the committed docs screenshot from the real app).
+const SHOT = (() => {
+  const i = process.argv.indexOf("--shot");
+  return i >= 0 ? process.argv[i + 1] : null;
+})();
 
 let win: BrowserWindow | null = null;
 let engine: EngineHandle | null = null;
@@ -74,6 +80,18 @@ app.whenReady().then(async () => {
     return;
   }
   createWindow();
+  if (SHOT) {
+    setTimeout(async () => {
+      try {
+        const img = await win!.webContents.capturePage();
+        require("fs").writeFileSync(SHOT, img.toPNG());
+        console.log(`SHOT OK ${SHOT}`);
+      } catch (e) {
+        console.log(`SHOT FAIL ${e}`);
+      }
+      app.quit();
+    }, 8000);
+  }
   // The restore chord always re-enables interaction, even in click-through.
   globalShortcut.register("CommandOrControl+Shift+O", () => {
     if (clickThrough) {
