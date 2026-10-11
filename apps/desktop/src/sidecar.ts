@@ -51,26 +51,40 @@ export async function startEngine(
     return { base: DEFAULT_BASE, owned: null };
   }
   // 2) launch our own on a free port (127.0.0.1 only — the API refuses
-  //    non-loopback hosts by design)
-  const py = pythonPath();
-  log(`launching sidecar: ${py} -m poker_alpha.api --port 0`);
-  const child = spawn(py, ["-m", "poker_alpha.api", "--port", "0"], {
-    cwd: repoRoot(),
-    stdio: ["ignore", "pipe", "pipe"],
-  });
+  //    non-loopback hosts by design). POKERALPHA_ENGINE_BIN points at a
+  //    frozen engine binary (packaging/dist/pokeralpha-engine); otherwise
+  //    the repo's Python environment runs the module directly.
+  const frozen = process.env.POKERALPHA_ENGINE_BIN;
+  let child: ChildProcess;
+  let launcher: string;
+  if (frozen && existsSync(frozen)) {
+    launcher = frozen;
+    log(`launching frozen engine: ${frozen} --port 0`);
+    child = spawn(frozen, ["--port", "0"], {
+      stdio: ["ignore", "pipe", "pipe"],
+    });
+  } else {
+    const py = pythonPath();
+    launcher = py;
+    log(`launching sidecar: ${py} -m poker_alpha.api --port 0`);
+    child = spawn(py, ["-m", "poker_alpha.api", "--port", "0"], {
+      cwd: repoRoot(),
+      stdio: ["ignore", "pipe", "pipe"],
+    });
+  }
   let port: number | null = null;
-  child.stdout.on("data", (b: Buffer) => {
+  child.stdout?.on("data", (b: Buffer) => {
     const m = /POKERALPHA_API_PORT=(\d+)/.exec(b.toString());
     if (m) port = Number(m[1]);
     log(b.toString().trim());
   });
-  child.stderr.on("data", (b: Buffer) => log(b.toString().trim()));
+  child.stderr?.on("data", (b: Buffer) => log(b.toString().trim()));
 
   const t0 = Date.now();
   while (Date.now() - t0 < 30000) {
     if (child.exitCode !== null)
       throw new Error(`engine exited with code ${child.exitCode} — is the ` +
-        `Python environment installed? (looked for ${py})`);
+        `Python environment installed? (looked for ${launcher})`);
     if (port !== null) {
       const base = `http://127.0.0.1:${port}`;
       if (await health(base, 1000)) {

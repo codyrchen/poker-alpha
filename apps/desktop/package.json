@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "description": "PokerAlpha desktop overlay (local development preview). Analysis only: never clicks, bets or controls a poker client.",
-  "main": "dist/main.js",
+  "main": "build/main.js",
   "scripts": {
     "build": "tsc",
     "start": "npm run build && electron .",
@@ -20,7 +20,16 @@
   "build": {
     "appId": "dev.pokeralpha.desktop",
     "productName": "PokerAlpha",
-    "files": ["dist/**", "renderer/**"],
-    "mac": { "target": "dir", "identity": null }
+    "files": [
+      "build/**",
+      "renderer/**"
+    ],
+    "mac": {
+      "target": "dir",
+      "identity": null
+    },
+    "directories": {
+      "output": "release"
+    }
   }
 }
