@@ -1,0 +1,175 @@
+{
+ "format": "pokeralpha.phase2.policy_geometry/v1",
+ "infosets": 144025,
+ "sources": {
+  "2m": "results/strategy/candidates/native_2m seeds 0-2",
+  "1m": "results/strategy/candidates/native_1m seeds 0-2"
+ },
+ "definitions": {
+  "tv": "total variation distance 0.5*L1",
+  "norm_entropy": "entropy / log(#actions)",
+  "seed_disagreement": "mean pairwise TV across the 3 seeds at the same key",
+  "pure": "max action prob >= 0.95"
+ },
+ "by_street": {
+  "preflop": {
+   "keys": 4322,
+   "visit_share": 0.03907943014960632,
+   "norm_entropy_mean": 0.40927103223366174,
+   "norm_entropy_median": 0.4158590875633758,
+   "pure_share": 0.34243405830633966,
+   "visits_median": 4492.0
+  },
+  "flop": {
+   "keys": 19259,
+   "visit_share": 0.13634680754925424,
+   "norm_entropy_mean": 0.40804906865922164,
+   "norm_entropy_median": 0.41418945559762416,
+   "pure_share": 0.3597279194142998,
+   "visits_median": 865.0
+  },
+  "turn": {
+   "keys": 33127,
+   "visit_share": 0.2969657948629436,
+   "norm_entropy_mean": 0.4098818706126527,
+   "norm_entropy_median": 0.4072994775349185,
+   "pure_share": 0.3572614483653817,
+   "visits_median": 1017.0
+  },
+  "river": {
+   "keys": 87317,
+   "visit_share": 0.5276079674381958,
+   "norm_entropy_mean": 0.41444551027605614,
+   "norm_entropy_median": 0.3882038236374121,
+   "pure_share": 0.369481315207806,
+   "visits_median": 414.0
+  }
+ },
+ "visits": {
+  "min": 1.0,
+  "median": 647.0,
+  "mean": 4891.947085575421,
+  "max": 537443.0,
+  "share_below_20": 0.12919284846380838,
+  "share_below_100": 0.2686755771567436,
+  "share_of_visits_in_top_1pct_keys": 0.20979295725653957,
+  "share_of_visits_in_bottom_50pct_keys": 0.0159667100391504,
+  "hill_tail_index_top5pct": 1.6383811074613712,
+  "deciles": [
+   1.0,
+   12.0,
+   48.0,
+   133.0,
+   302.0,
+   647.0,
+   1305.0,
+   2584.0,
+   5376.0,
+   12874.600000000006,
+   537443.0
+  ]
+ },
+ "visits_vs_entropy": {
+  "spearman": -0.3415050627962305,
+  "norm_entropy_by_visit_decile": [
+   0.7160285713517536,
+   0.5674535844284306,
+   0.47814659125138387,
+   0.42160702352906004,
+   0.38762022527590956,
+   0.35331637936585825,
+   0.33321616494126843,
+   0.3106243766723584,
+   0.29311802415295746,
+   0.26668251881492794
+  ]
+ },
+ "disagreement": {
+  "keys_in_all_seeds": 143105,
+  "mean": 0.26134734015261046,
+  "spearman_vs_entropy": 0.4545189086570585,
+  "spearman_vs_visits": -0.28404941686767116,
+  "by_street": {
+   "preflop": 0.30460903753437146,
+   "flop": 0.3058195162563945,
+   "turn": 0.28207670930457784,
+   "river": 0.24140260861311844
+  },
+  "spearman_vs_entropy_visits_ge_1000": 0.6984040105616598,
+  "mean_visits_ge_1000": 0.19690561063184417
+ },
+ "training_limited_test": {
+  "pure_noise_expectation": 0.7071067811865475,
+  "ratio_2m_over_1m": {
+   "0-20": {
+    "keys": 16194,
+    "sd_1m_mean": 0.3151114044876242,
+    "sd_2m_mean": 0.3351473587308223,
+    "ratio_of_means": 1.0635837166089779,
+    "median_per_key_ratio": 1.0
+   },
+   "20-100": {
+    "keys": 19898,
+    "sd_1m_mean": 0.3526743353674936,
+    "sd_2m_mean": 0.3430963922485945,
+    "ratio_of_means": 0.9728419616672171,
+    "median_per_key_ratio": 1.0
+   },
+   "100-1000": {
+    "keys": 42200,
+    "sd_1m_mean": 0.3145200462492905,
+    "sd_2m_mean": 0.29082729772969473,
+    "ratio_of_means": 0.9246701480489522,
+    "median_per_key_ratio": 0.969725215455914
+   },
+   "1000-10000": {
+    "keys": 45193,
+    "sd_1m_mean": 0.24416261881126644,
+    "sd_2m_mean": 0.21856286699259178,
+    "ratio_of_means": 0.8951528618782434,
+    "median_per_key_ratio": 0.8656692332260134
+   },
+   "10000-inf": {
+    "keys": 17864,
+    "sd_1m_mean": 0.1619108944431764,
+    "sd_2m_mean": 0.14209419346305116,
+    "ratio_of_means": 0.8776073651604708,
+    "median_per_key_ratio": 0.750353706647857
+   },
+   "street:preflop": {
+    "keys": 4322,
+    "sd_1m_mean": 0.328511618127479,
+    "sd_2m_mean": 0.30460903753437146,
+    "ratio_of_means": 0.9272397709117487
+   },
+   "street:flop": {
+    "keys": 19148,
+    "sd_1m_mean": 0.31917277237161645,
+    "sd_2m_mean": 0.3058586034744035,
+    "ratio_of_means": 0.9582853863182569
+   },
+   "street:turn": {
+    "keys": 32801,
+    "sd_1m_mean": 0.30196949814322527,
+    "sd_2m_mean": 0.2814076625034974,
+    "ratio_of_means": 0.9319075742213695
+   },
+   "street:river": {
+    "keys": 85078,
+    "sd_1m_mean": 0.25721975650451223,
+    "sd_2m_mean": 0.24142021541566666,
+    "ratio_of_means": 0.9385757093329322
+   }
+  },
+  "note": "visits are the 2M run's; the 1M run visited each key ~half as often"
+ },
+ "simplex_3action": {
+  "keys": 24014,
+  "vertex_share": 0.37548929790955277,
+  "edge_share": 0.30315649204630635,
+  "interior_share": 0.32135421004414094,
+  "mean_min_action_prob_interior": 0.13764003228225533
+ },
+ "seconds": 5.7,
+ "commit": "275a9d9c78ecfd2afdcb689f8226756fea6adec1"
+}
