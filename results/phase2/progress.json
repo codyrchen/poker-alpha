@@ -14,9 +14,9 @@
   "P2_active_compute": "NEGATIVE_RESULT",
   "P3_cfr_family_benchmark": "NOT_STARTED",
   "P4_confidence_ablation": "DONE",
-  "P5_abstraction_science": "RUNNING",
+  "P5_abstraction_science": "DONE",
   "P6_local_resolving": "DONE",
-  "P7_native_systems": "NOT_STARTED",
+  "P7_native_systems": "DONE",
   "P8_artifact_engineering": "DONE",
   "P9_exhaustive_correctness": "DONE",
   "P10_redteam_phase2": "DONE",
@@ -30,9 +30,9 @@
   "P18_policy_geometry": "DONE",
   "P19_statistical_discipline": "NOT_STARTED",
   "P20_system_reliability": "NOT_STARTED",
-  "P21_native_correctness_stress": "NOT_STARTED",
+  "P21_native_correctness_stress": "RUNNING",
   "P22_evaluator_stress": "NOT_STARTED",
-  "P23_memory_scale_limits": "NOT_STARTED",
+  "P23_memory_scale_limits": "RUNNING",
   "P24_research_report": "NOT_STARTED",
   "P25_website_surfacing": "NOT_STARTED"
  },
@@ -45,6 +45,8 @@
   "P2 NULL after confirmation (seeds 100-119): no signal replicates; oracle BR also fails. Side effect: reduced-game sample_chance cache gives 3.8x MCCFR speedup with identical digest.",
   "P10: 20k discovery + 10k independent confirmation; 17/18 top clusters confirmed; 90%/97.5% state-level confirmation. Model sensitivity occurs only on rollout fallback path. Collision signal inactive in release (1.4% of keys).",
   "P6: first resolving run used profile cfvs in gadget (unsafe, 3/27 worse at 5 s); corrected to BR cfvs; rerun in progress.",
-  "P6: safe gadget never worse (>1e-4) at >=1s over 108 instance-settings; closes 9-31% of gap; unsafe 2-3x more exploitable."
+  "P6: safe gadget never worse (>1e-4) at >=1s over 108 instance-settings; closes 9-31% of gap; unsafe 2-3x more exploitable.",
+  "P7: 1.96x native speedup (858->1678 it/s) bit-identical; river percentile table was 69.5% of CPU.",
+  "P5: adaptive beats uniform at 86% of 540 equal-infoset points; imperfect-recall Leduc gets worse with training; value-based collision (shared-action regret) predicts cell error (rho 0.93), policy dispersion does not (0.50)."
  ]
 }

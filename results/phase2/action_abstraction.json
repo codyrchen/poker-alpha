@@ -1,0 +1,1874 @@
+{
+ "format": "pokeralpha.phase2.action_abstraction/v1",
+ "definition": "restricted loss = exact value a player loses when limited to the menu while the opponent keeps the finest menu D (pot 10 chips, stack 20, raise cap 2); solver error bound reported",
+ "menus": {
+  "A_pot": [
+   1.0
+  ],
+  "B_half_pot": [
+   0.5,
+   1.0
+  ],
+  "C_third_3q_1.5": [
+   0.33,
+   0.75,
+   1.5
+  ],
+  "D_fine": [
+   0.25,
+   0.5,
+   0.75,
+   1.0,
+   1.5,
+   2.0
+  ]
+ },
+ "summary": {
+  "A_pot": {
+   "bets": [
+    1.0
+   ],
+   "p0_restricted_loss_mean": 0.013571033335667912,
+   "p1_restricted_loss_mean": 0.018176288667991706,
+   "p0_restricted_loss_max": 0.1510318788917362,
+   "p1_restricted_loss_max": 0.29531403171789355,
+   "decision_nodes": 8.0,
+   "infosets_mean": 256.0,
+   "iterations_per_second_mean": 3841.187726768823,
+   "solver_error_bound_max": 0.007613890094906539
+  },
+  "B_half_pot": {
+   "bets": [
+    0.5,
+    1.0
+   ],
+   "p0_restricted_loss_mean": 0.01241670044605178,
+   "p1_restricted_loss_mean": 0.01057881736785981,
+   "p0_restricted_loss_max": 0.15106634996986124,
+   "p1_restricted_loss_max": 0.1791628477812643,
+   "decision_nodes": 14.0,
+   "infosets_mean": 448.0,
+   "iterations_per_second_mean": 2154.492954546975,
+   "solver_error_bound_max": 0.007867127965971277
+  },
+  "C_third_3q_1.5": {
+   "bets": [
+    0.33,
+    0.75,
+    1.5
+   ],
+   "p0_restricted_loss_mean": 0.007212259249566904,
+   "p1_restricted_loss_mean": 0.004307504813013128,
+   "p0_restricted_loss_max": 0.10626386994023207,
+   "p1_restricted_loss_max": 0.05118819934478491,
+   "decision_nodes": 22.0,
+   "infosets_mean": 704.0,
+   "iterations_per_second_mean": 1338.6964321058747,
+   "solver_error_bound_max": 0.007613890094906539
+  },
+  "D_fine": {
+   "bets": [
+    0.25,
+    0.5,
+    0.75,
+    1.0,
+    1.5,
+    2.0
+   ],
+   "p0_restricted_loss_mean": 0.0,
+   "p1_restricted_loss_mean": 0.0,
+   "p0_restricted_loss_max": 0.0,
+   "p1_restricted_loss_max": 0.0,
+   "decision_nodes": 40.0,
+   "infosets_mean": 1280.0,
+   "iterations_per_second_mean": 700.9886938938375,
+   "solver_error_bound_max": 0.007613890094906539
+  }
+ },
+ "instances": [
+  {
+   "name": "dry_high polarized vs bluff-catcher",
+   "seed": 400,
+   "reference": {
+    "value_p0": 0.7019262595250695,
+    "exploitability_in_own_game": 0.005904651097206337,
+    "decision_nodes": 40,
+    "infosets": 1280,
+    "seconds": 0.8923084170091897,
+    "iterations_per_second": 672.4132469926267
+   },
+   "menus": {
+    "A_pot": {
+     "symmetric": {
+      "value_p0": 0.7061855233941757,
+      "exploitability_in_own_game": 0.0025745287305515285,
+      "decision_nodes": 8,
+      "infosets": 256,
+      "seconds": 0.17164850002154708,
+      "iterations_per_second": 3495.515544410128
+     },
+     "p0_restricted_loss": -0.003979458778697209,
+     "p1_restricted_loss": 0.0009351547508762437,
+     "solver_error_bound": 0.005904651097206337
+    },
+    "B_half_pot": {
+     "symmetric": {
+      "value_p0": 0.7065169526564199,
+      "exploitability_in_own_game": 0.0019431765849071692,
+      "decision_nodes": 14,
+      "infosets": 448,
+      "seconds": 0.29434212506748736,
+      "iterations_per_second": 2038.4442079516507
+     },
+     "p0_restricted_loss": -0.0037139056848336516,
+     "p1_restricted_loss": 6.202220196627195e-05,
+     "solver_error_bound": 0.005904651097206337
+    },
+    "C_third_3q_1.5": {
+     "symmetric": {
+      "value_p0": 0.7039918282801532,
+      "exploitability_in_own_game": 0.004568593184804792,
+      "decision_nodes": 22,
+      "infosets": 704,
+      "seconds": 0.4577812079805881,
+      "iterations_per_second": 1310.6697905900992
+     },
+     "p0_restricted_loss": -0.0019301385003935856,
+     "p1_restricted_loss": 0.00048098639984228697,
+     "solver_error_bound": 0.005904651097206337
+    },
+    "D_fine": {
+     "symmetric": {
+      "value_p0": 0.7019262595250695,
+      "exploitability_in_own_game": 0.005904651097206337,
+      "decision_nodes": 40,
+      "infosets": 1280,
+      "seconds": 0.8791243340820074,
+      "iterations_per_second": 682.4973177730627
+     },
+     "p0_restricted_loss": 0.0,
+     "p1_restricted_loss": 0.0,
+     "solver_error_bound": 0.005904651097206337
+    }
+   }
+  },
+  {
+   "name": "dry_high polarized vs bluff-catcher",
+   "seed": 401,
+   "reference": {
+    "value_p0": 2.8103345799008146,
+    "exploitability_in_own_game": 0.004290489882546433,
+    "decision_nodes": 40,
+    "infosets": 1280,
+    "seconds": 0.8953917080070823,
+    "iterations_per_second": 670.097784728708
+   },
+   "menus": {
+    "A_pot": {
+     "symmetric": {
+      "value_p0": 2.8139116577556282,
+      "exploitability_in_own_game": 0.0023676414379198985,
+      "decision_nodes": 8,
+      "infosets": 256,
+      "seconds": 0.1672369169536978,
+      "iterations_per_second": 3587.724594122478
+     },
+     "p0_restricted_loss": -0.003524349845362096,
+     "p1_restricted_loss": 0.00016583659191127254,
+     "solver_error_bound": 0.004290489882546433
+    },
+    "B_half_pot": {
+     "symmetric": {
+      "value_p0": 2.8139938105172515,
+      "exploitability_in_own_game": 0.002045716269491571,
+      "decision_nodes": 14,
+      "infosets": 448,
+      "seconds": 0.2847848341334611,
+      "iterations_per_second": 2106.8537649684567
+     },
+     "p0_restricted_loss": -0.003210828789577125,
+     "p1_restricted_loss": -0.0005451243064289457,
+     "solver_error_bound": 0.004459188810913561
+    },
+    "C_third_3q_1.5": {
+     "symmetric": {
+      "value_p0": 2.8124571959574016,
+      "exploitability_in_own_game": 0.0035531064441427507,
+      "decision_nodes": 22,
+      "infosets": 704,
+      "seconds": 0.4495738339610398,
+      "iterations_per_second": 1334.5972444917606
+     },
+     "p0_restricted_loss": -0.0021400551971639814,
+     "p1_restricted_loss": 0.00034770901404446164,
+     "solver_error_bound": 0.004290489882546433
+    },
+    "D_fine": {
+     "symmetric": {
+      "value_p0": 2.8103345799008146,
+      "exploitability_in_own_game": 0.004290489882546433,
+      "decision_nodes": 40,
+      "infosets": 1280,
+      "seconds": 0.9217495839111507,
+      "iterations_per_second": 650.9360139378541
+     },
+     "p0_restricted_loss": 0.0,
+     "p1_restricted_loss": 0.0,
+     "solver_error_bound": 0.004290489882546433
+    }
+   }
+  },
+  {
+   "name": "dry_high polarized vs bluff-catcher",
+   "seed": 402,
+   "reference": {
+    "value_p0": 5.0068768563101065,
+    "exploitability_in_own_game": 0.006075470340408451,
+    "decision_nodes": 40,
+    "infosets": 1280,
+    "seconds": 0.9155259169638157,
+    "iterations_per_second": 655.361021334925
+   },
+   "menus": {
+    "A_pot": {
+     "symmetric": {
+      "value_p0": 5.001255487118414,
+      "exploitability_in_own_game": 0.000874679591908567,
+      "decision_nodes": 8,
+      "infosets": 256,
+      "seconds": 0.1508257081732154,
+      "iterations_per_second": 3978.101659638366
+     },
+     "p0_restricted_loss": 0.00542186485751639,
+     "p1_restricted_loss": -0.0005648211433131323,
+     "solver_error_bound": 0.006258155818271938
+    },
+    "B_half_pot": {
+     "symmetric": {
+      "value_p0": 5.0012449150214575,
+      "exploitability_in_own_game": 0.000897784330590401,
+      "decision_nodes": 14,
+      "infosets": 448,
+      "seconds": 0.28966233413666487,
+      "iterations_per_second": 2071.3773566324835
+     },
+     "p0_restricted_loss": 0.004514210357156934,
+     "p1_restricted_loss": 0.00046626025234530744,
+     "solver_error_bound": 0.006599539838765711
+    },
+    "C_third_3q_1.5": {
+     "symmetric": {
+      "value_p0": 5.003733007183561,
+      "exploitability_in_own_game": 0.002632238962228417,
+      "decision_nodes": 22,
+      "infosets": 704,
+      "seconds": 0.4634240830782801,
+      "iterations_per_second": 1294.7104432176218
+     },
+     "p0_restricted_loss": 0.0032405502562191657,
+     "p1_restricted_loss": -0.0001641152143134761,
+     "solver_error_bound": 0.006075470340408451
+    },
+    "D_fine": {
+     "symmetric": {
+      "value_p0": 5.0068768563101065,
+      "exploitability_in_own_game": 0.006075470340408451,
+      "decision_nodes": 40,
+      "infosets": 1280,
+      "seconds": 0.9278944998513907,
+      "iterations_per_second": 646.6252360544162
+     },
+     "p0_restricted_loss": 0.0,
+     "p1_restricted_loss": 0.0,
+     "solver_error_bound": 0.006075470340408451
+    }
+   }
+  },
+  {
+   "name": "paired uncapped vs capped",
+   "seed": 400,
+   "reference": {
+    "value_p0": -1.7643443296178727,
+    "exploitability_in_own_game": 0.003004538988835348,
+    "decision_nodes": 40,
+    "infosets": 1280,
+    "seconds": 0.9060675830114633,
+    "iterations_per_second": 662.2022586944366
+   },
+   "menus": {
+    "A_pot": {
+     "symmetric": {
+      "value_p0": -1.7591991937504523,
+      "exploitability_in_own_game": 0.0006899275590641629,
+      "decision_nodes": 8,
+      "infosets": 256,
+      "seconds": 0.1550734171178192,
+      "iterations_per_second": 3869.135091955455
+     },
+     "p0_restricted_loss": 0.0008098811398007388,
+     "p1_restricted_loss": 0.004987787582606984,
+     "solver_error_bound": 0.003004538988835348
+    },
+    "B_half_pot": {
+     "symmetric": {
+      "value_p0": -1.763288466780201,
+      "exploitability_in_own_game": 0.001993297896316859,
+      "decision_nodes": 14,
+      "infosets": 448,
+      "seconds": 0.28075525001622736,
+      "iterations_per_second": 2137.0927167535447
+     },
+     "p0_restricted_loss": 6.91834379475953e-05,
+     "p1_restricted_loss": 0.0012888144336988816,
+     "solver_error_bound": 0.003004538988835348
+    },
+    "C_third_3q_1.5": {
+     "symmetric": {
+      "value_p0": -1.7632450344225792,
+      "exploitability_in_own_game": 0.002122839812371602,
+      "decision_nodes": 22,
+      "infosets": 704,
+      "seconds": 0.4816195829771459,
+      "iterations_per_second": 1245.7965190931025
+     },
+     "p0_restricted_loss": 0.00014060143037641915,
+     "p1_restricted_loss": 0.0006912334120461328,
+     "solver_error_bound": 0.003004538988835348
+    },
+    "D_fine": {
+     "symmetric": {
+      "value_p0": -1.7643443296178727,
+      "exploitability_in_own_game": 0.003004538988835348,
+      "decision_nodes": 40,
+      "infosets": 1280,
+      "seconds": 0.8848791671916842,
+      "iterations_per_second": 678.0586799259868
+     },
+     "p0_restricted_loss": 0.0,
+     "p1_restricted_loss": 0.0,
+     "solver_error_bound": 0.003004538988835348
+    }
+   }
+  },
+  {
+   "name": "paired uncapped vs capped",
+   "seed": 401,
+   "reference": {
+    "value_p0": -0.3228171513078193,
+    "exploitability_in_own_game": 0.002703313578236277,
+    "decision_nodes": 40,
+    "infosets": 1280,
+    "seconds": 0.8774036669638008,
+    "iterations_per_second": 683.8357560964631
+   },
+   "menus": {
+    "A_pot": {
+     "symmetric": {
+      "value_p0": -0.31495730817428,
+      "exploitability_in_own_game": 0.0006676425491861093,
+      "decision_nodes": 8,
+      "infosets": 256,
+      "seconds": 0.18280125013552606,
+      "iterations_per_second": 3282.2532644342923
+     },
+     "p0_restricted_loss": -0.0008569681716428246,
+     "p1_restricted_loss": 0.008429289967978093,
+     "solver_error_bound": 0.002703313578236277
+    },
+    "B_half_pot": {
+     "symmetric": {
+      "value_p0": -0.316462060552557,
+      "exploitability_in_own_game": 0.001252243979496248,
+      "decision_nodes": 14,
+      "infosets": 448,
+      "seconds": 0.2828850841615349,
+      "iterations_per_second": 2121.0026035073097
+     },
+     "p0_restricted_loss": -0.0010173603521885788,
+     "p1_restricted_loss": 0.006089903106666572,
+     "solver_error_bound": 0.002703313578236277
+    },
+    "C_third_3q_1.5": {
+     "symmetric": {
+      "value_p0": -0.31701140355659574,
+      "exploitability_in_own_game": 0.001309244719079089,
+      "decision_nodes": 22,
+      "infosets": 704,
+      "seconds": 0.46424312493763864,
+      "iterations_per_second": 1292.4262477351656
+     },
+     "p0_restricted_loss": -0.0006152494452784651,
+     "p1_restricted_loss": 0.005534370053833282,
+     "solver_error_bound": 0.002703313578236277
+    },
+    "D_fine": {
+     "symmetric": {
+      "value_p0": -0.3228171513078193,
+      "exploitability_in_own_game": 0.002703313578236277,
+      "decision_nodes": 40,
+      "infosets": 1280,
+      "seconds": 0.9070889998693019,
+      "iterations_per_second": 661.456593659995
+     },
+     "p0_restricted_loss": 0.0,
+     "p1_restricted_loss": 0.0,
+     "solver_error_bound": 0.002703313578236277
+    }
+   }
+  },
+  {
+   "name": "paired uncapped vs capped",
+   "seed": 402,
+   "reference": {
+    "value_p0": -0.6552531173226823,
+    "exploitability_in_own_game": 0.00496953979983783,
+    "decision_nodes": 40,
+    "infosets": 1280,
+    "seconds": 0.9052712919656187,
+    "iterations_per_second": 662.7847423474767
+   },
+   "menus": {
+    "A_pot": {
+     "symmetric": {
+      "value_p0": -0.6464220650199475,
+      "exploitability_in_own_game": 0.0008998931168162083,
+      "decision_nodes": 8,
+      "infosets": 256,
+      "seconds": 0.1892360830679536,
+      "iterations_per_second": 3170.642671696726
+     },
+     "p0_restricted_loss": 9.693326899995469e-05,
+     "p1_restricted_loss": 0.008775228710330651,
+     "solver_error_bound": 0.00496953979983783
+    },
+    "B_half_pot": {
+     "symmetric": {
+      "value_p0": -0.6490401697725923,
+      "exploitability_in_own_game": 0.0013310488251624397,
+      "decision_nodes": 14,
+      "infosets": 448,
+      "seconds": 0.2798623749986291,
+      "iterations_per_second": 2143.9109133656825
+     },
+     "p0_restricted_loss": -0.0007554416453241508,
+     "p1_restricted_loss": 0.0065766132680994405,
+     "solver_error_bound": 0.00496953979983783
+    },
+    "C_third_3q_1.5": {
+     "symmetric": {
+      "value_p0": -0.6545392568016347,
+      "exploitability_in_own_game": 0.0021859929747781726,
+      "decision_nodes": 22,
+      "infosets": 704,
+      "seconds": 0.45752345910295844,
+      "iterations_per_second": 1311.408165116577
+     },
+     "p0_restricted_loss": 0.0003723153653607536,
+     "p1_restricted_loss": 0.0009079512120548916,
+     "solver_error_bound": 0.00496953979983783
+    },
+    "D_fine": {
+     "symmetric": {
+      "value_p0": -0.6552531173226823,
+      "exploitability_in_own_game": 0.00496953979983783,
+      "decision_nodes": 40,
+      "infosets": 1280,
+      "seconds": 0.8818287909962237,
+      "iterations_per_second": 680.4041851731391
+     },
+     "p0_restricted_loss": 0.0,
+     "p1_restricted_loss": 0.0,
+     "solver_error_bound": 0.00496953979983783
+    }
+   }
+  },
+  {
+   "name": "four-straight strong vs strong",
+   "seed": 400,
+   "reference": {
+    "value_p0": -0.05738990679805739,
+    "exploitability_in_own_game": 0.0037428671063657604,
+    "decision_nodes": 40,
+    "infosets": 1280,
+    "seconds": 0.8698345830198377,
+    "iterations_per_second": 689.7863245640996
+   },
+   "menus": {
+    "A_pot": {
+     "symmetric": {
+      "value_p0": 0.1922988352211113,
+      "exploitability_in_own_game": 0.00034345554362004427,
+      "decision_nodes": 8,
+      "infosets": 256,
+      "seconds": 0.17613966716453433,
+      "iterations_per_second": 3406.3877243479305
+     },
+     "p0_restricted_loss": 0.03523042797758477,
+     "p1_restricted_loss": 0.29531403171789355,
+     "solver_error_bound": 0.0037428671063657604
+    },
+    "B_half_pot": {
+     "symmetric": {
+      "value_p0": 0.12136370710662114,
+      "exploitability_in_own_game": 0.0009090679354021441,
+      "decision_nodes": 14,
+      "infosets": 448,
+      "seconds": 0.27602999983355403,
+      "iterations_per_second": 2173.676775574393
+     },
+     "p0_restricted_loss": 0.03544966372847358,
+     "p1_restricted_loss": 0.1791628477812643,
+     "solver_error_bound": 0.0037428671063657604
+    },
+    "C_third_3q_1.5": {
+     "symmetric": {
+      "value_p0": -0.03303810651153777,
+      "exploitability_in_own_game": 0.0011467636417707011,
+      "decision_nodes": 22,
+      "infosets": 704,
+      "seconds": 0.4473968339152634,
+      "iterations_per_second": 1341.0912963984888
+     },
+     "p0_restricted_loss": 0.03339683982915495,
+     "p1_restricted_loss": 0.047670234277727846,
+     "solver_error_bound": 0.0037428671063657604
+    },
+    "D_fine": {
+     "symmetric": {
+      "value_p0": -0.05738990679805739,
+      "exploitability_in_own_game": 0.0037428671063657604,
+      "decision_nodes": 40,
+      "infosets": 1280,
+      "seconds": 0.8888302920386195,
+      "iterations_per_second": 675.0444999166726
+     },
+     "p0_restricted_loss": 0.0,
+     "p1_restricted_loss": 0.0,
+     "solver_error_bound": 0.0037428671063657604
+    }
+   }
+  },
+  {
+   "name": "four-straight strong vs strong",
+   "seed": 401,
+   "reference": {
+    "value_p0": 2.0056510275492627,
+    "exploitability_in_own_game": 0.0015192539947559425,
+    "decision_nodes": 40,
+    "infosets": 1280,
+    "seconds": 0.8989632499869913,
+    "iterations_per_second": 667.4355153102003
+   },
+   "menus": {
+    "A_pot": {
+     "symmetric": {
+      "value_p0": 1.934613767502163,
+      "exploitability_in_own_game": 0.0003106407691834123,
+      "decision_nodes": 8,
+      "infosets": 256,
+      "seconds": 0.14106091600842774,
+      "iterations_per_second": 4253.481523997425
+     },
+     "p0_restricted_loss": 0.1510318788917362,
+     "p1_restricted_loss": 0.07294936921055184,
+     "solver_error_bound": 0.002550896683002346
+    },
+    "B_half_pot": {
+     "symmetric": {
+      "value_p0": 1.9343131381131886,
+      "exploitability_in_own_game": 0.0008082663716868499,
+      "decision_nodes": 14,
+      "infosets": 448,
+      "seconds": 0.27682916703633964,
+      "iterations_per_second": 2167.4016738317077
+     },
+     "p0_restricted_loss": 0.15106634996986124,
+     "p1_restricted_loss": 0.06021121424062592,
+     "solver_error_bound": 0.002421708186675975
+    },
+    "C_third_3q_1.5": {
+     "symmetric": {
+      "value_p0": 1.985767035418069,
+      "exploitability_in_own_game": 0.0012908949594589991,
+      "decision_nodes": 22,
+      "infosets": 704,
+      "seconds": 0.4710377920418978,
+      "iterations_per_second": 1273.7831446582343
+     },
+     "p0_restricted_loss": 0.06332022349841382,
+     "p1_restricted_loss": 0.05118819934478491,
+     "solver_error_bound": 0.002453063866569849
+    },
+    "D_fine": {
+     "symmetric": {
+      "value_p0": 2.0056510275492627,
+      "exploitability_in_own_game": 0.0015192539947559425,
+      "decision_nodes": 40,
+      "infosets": 1280,
+      "seconds": 0.9155657910741866,
+      "iterations_per_second": 655.3324794890498
+     },
+     "p0_restricted_loss": 0.0,
+     "p1_restricted_loss": 0.0,
+     "solver_error_bound": 0.0015192539947559425
+    }
+   }
+  },
+  {
+   "name": "four-straight strong vs strong",
+   "seed": 402,
+   "reference": {
+    "value_p0": 1.1232075776955694,
+    "exploitability_in_own_game": 0.0022302417510655648,
+    "decision_nodes": 40,
+    "infosets": 1280,
+    "seconds": 0.8845873749814928,
+    "iterations_per_second": 678.2823460628218
+   },
+   "menus": {
+    "A_pot": {
+     "symmetric": {
+      "value_p0": 0.9761468511995494,
+      "exploitability_in_own_game": 0.0003899595653596988,
+      "decision_nodes": 8,
+      "infosets": 256,
+      "seconds": 0.15443470794707537,
+      "iterations_per_second": 3885.1370134077597
+     },
+     "p0_restricted_loss": 0.15090582785682494,
+     "p1_restricted_loss": 0.005663218551529958,
+     "solver_error_bound": 0.002941751299384898
+    },
+    "B_half_pot": {
+     "symmetric": {
+      "value_p0": 0.9759700586285193,
+      "exploitability_in_own_game": 0.0005836219120767261,
+      "decision_nodes": 14,
+      "infosets": 448,
+      "seconds": 0.2954641249962151,
+      "iterations_per_second": 2030.7033891430508
+     },
+     "p0_restricted_loss": 0.15099335037318462,
+     "p1_restricted_loss": 0.005346773100699531,
+     "solver_error_bound": 0.0022639196581075716
+    },
+    "C_third_3q_1.5": {
+     "symmetric": {
+      "value_p0": 1.0171353266273733,
+      "exploitability_in_own_game": 0.0012467760246490656,
+      "decision_nodes": 22,
+      "infosets": 704,
+      "seconds": 0.46808245801366866,
+      "iterations_per_second": 1281.8254342325283
+     },
+     "p0_restricted_loss": 0.10626386994023207,
+     "p1_restricted_loss": 0.00482455512448654,
+     "solver_error_bound": 0.002242674332935124
+    },
+    "D_fine": {
+     "symmetric": {
+      "value_p0": 1.1232075776955694,
+      "exploitability_in_own_game": 0.0022302417510655648,
+      "decision_nodes": 40,
+      "infosets": 1280,
+      "seconds": 0.8843285839539021,
+      "iterations_per_second": 678.4808394605466
+     },
+     "p0_restricted_loss": 0.0,
+     "p1_restricted_loss": 0.0,
+     "solver_error_bound": 0.0022302417510655648
+    }
+   }
+  },
+  {
+   "name": "four-flush thin value",
+   "seed": 400,
+   "reference": {
+    "value_p0": 3.9471873914576348,
+    "exploitability_in_own_game": 0.0038315536663666716,
+    "decision_nodes": 40,
+    "infosets": 1280,
+    "seconds": 0.904771083034575,
+    "iterations_per_second": 663.1511674617385
+   },
+   "menus": {
+    "A_pot": {
+     "symmetric": {
+      "value_p0": 3.9421918063943497,
+      "exploitability_in_own_game": 0.0008997676337689775,
+      "decision_nodes": 8,
+      "infosets": 256,
+      "seconds": 0.14443533401936293,
+      "iterations_per_second": 4154.108162477502
+     },
+     "p0_restricted_loss": 0.009007802879006821,
+     "p1_restricted_loss": 0.00402590235553113,
+     "solver_error_bound": 0.0038315536663666716
+    },
+    "B_half_pot": {
+     "symmetric": {
+      "value_p0": 3.9405411983141034,
+      "exploitability_in_own_game": 0.0014377317852940497,
+      "decision_nodes": 14,
+      "infosets": 448,
+      "seconds": 0.27120987488888204,
+      "iterations_per_second": 2212.308826313302
+     },
+     "p0_restricted_loss": 0.007261278718877495,
+     "p1_restricted_loss": 0.0011998260231904645,
+     "solver_error_bound": 0.0038315536663666716
+    },
+    "C_third_3q_1.5": {
+     "symmetric": {
+      "value_p0": 3.947378050760233,
+      "exploitability_in_own_game": 0.002749926631727906,
+      "decision_nodes": 22,
+      "infosets": 704,
+      "seconds": 0.46645012497901917,
+      "iterations_per_second": 1286.3111571188622
+     },
+     "p0_restricted_loss": 0.00029914592353685876,
+     "p1_restricted_loss": 0.0002387670328789504,
+     "solver_error_bound": 0.0038315536663666716
+    },
+    "D_fine": {
+     "symmetric": {
+      "value_p0": 3.9471873914576348,
+      "exploitability_in_own_game": 0.0038315536663666716,
+      "decision_nodes": 40,
+      "infosets": 1280,
+      "seconds": 0.8982772920280695,
+      "iterations_per_second": 667.9451939003832
+     },
+     "p0_restricted_loss": 0.0,
+     "p1_restricted_loss": 0.0,
+     "solver_error_bound": 0.0038315536663666716
+    }
+   }
+  },
+  {
+   "name": "four-flush thin value",
+   "seed": 401,
+   "reference": {
+    "value_p0": 4.759520926067747,
+    "exploitability_in_own_game": 0.003735268696178906,
+    "decision_nodes": 40,
+    "infosets": 1280,
+    "seconds": 0.8371697920374572,
+    "iterations_per_second": 716.7004898011829
+   },
+   "menus": {
+    "A_pot": {
+     "symmetric": {
+      "value_p0": 4.765582373014629,
+      "exploitability_in_own_game": 0.0006419840403788513,
+      "decision_nodes": 8,
+      "infosets": 256,
+      "seconds": 0.15838470798917115,
+      "iterations_per_second": 3788.244506793057
+     },
+     "p0_restricted_loss": 0.0017827899117079937,
+     "p1_restricted_loss": 0.003977583779041893,
+     "solver_error_bound": 0.00481952340192171
+    },
+    "B_half_pot": {
+     "symmetric": {
+      "value_p0": 4.761114006712535,
+      "exploitability_in_own_game": 0.0013466110374191764,
+      "decision_nodes": 14,
+      "infosets": 448,
+      "seconds": 0.2855245831888169,
+      "iterations_per_second": 2101.3952399440896
+     },
+     "p0_restricted_loss": -0.0003120818332558173,
+     "p1_restricted_loss": 0.001657258296714481,
+     "solver_error_bound": 0.003735268696178906
+    },
+    "C_third_3q_1.5": {
+     "symmetric": {
+      "value_p0": 4.760027874958191,
+      "exploitability_in_own_game": 0.0032827452918615663,
+      "decision_nodes": 22,
+      "infosets": 704,
+      "seconds": 0.48346954118460417,
+      "iterations_per_second": 1241.0295766096685
+     },
+     "p0_restricted_loss": 0.00019972398081335996,
+     "p1_restricted_loss": 0.00032166506328934474,
+     "solver_error_bound": 0.003735268696178906
+    },
+    "D_fine": {
+     "symmetric": {
+      "value_p0": 4.759520926067747,
+      "exploitability_in_own_game": 0.003735268696178906,
+      "decision_nodes": 40,
+      "infosets": 1280,
+      "seconds": 0.8945763751398772,
+      "iterations_per_second": 670.7085238039996
+     },
+     "p0_restricted_loss": 0.0,
+     "p1_restricted_loss": 0.0,
+     "solver_error_bound": 0.003735268696178906
+    }
+   }
+  },
+  {
+   "name": "four-flush thin value",
+   "seed": 402,
+   "reference": {
+    "value_p0": 4.965789360341423,
+    "exploitability_in_own_game": 0.00407085413592112,
+    "decision_nodes": 40,
+    "infosets": 1280,
+    "seconds": 0.8484872919507325,
+    "iterations_per_second": 707.1408207193739
+   },
+   "menus": {
+    "A_pot": {
+     "symmetric": {
+      "value_p0": 4.96331292250877,
+      "exploitability_in_own_game": 0.0007384715140812403,
+      "decision_nodes": 8,
+      "infosets": 256,
+      "seconds": 0.16575675015337765,
+      "iterations_per_second": 3619.76208778713
+     },
+     "p0_restricted_loss": 0.0027362712014395996,
+     "p1_restricted_loss": -0.0011861296592785564,
+     "solver_error_bound": 0.00407085413592112
+    },
+    "B_half_pot": {
+     "symmetric": {
+      "value_p0": 4.969764437763663,
+      "exploitability_in_own_game": 0.0012730045064941464,
+      "decision_nodes": 14,
+      "infosets": 448,
+      "seconds": 0.2901817918755114,
+      "iterations_per_second": 2067.669360375999
+     },
+     "p0_restricted_loss": -0.003554808550153332,
+     "p1_restricted_loss": 9.829734006228108e-05,
+     "solver_error_bound": 0.00407085413592112
+    },
+    "C_third_3q_1.5": {
+     "symmetric": {
+      "value_p0": 4.96565917868391,
+      "exploitability_in_own_game": 0.0030369427028520413,
+      "decision_nodes": 22,
+      "infosets": 704,
+      "seconds": 0.4714275000151247,
+      "iterations_per_second": 1272.7301652549975
+     },
+     "p0_restricted_loss": 0.00036899091951347884,
+     "p1_restricted_loss": 0.00014025071408241274,
+     "solver_error_bound": 0.00407085413592112
+    },
+    "D_fine": {
+     "symmetric": {
+      "value_p0": 4.965789360341423,
+      "exploitability_in_own_game": 0.00407085413592112,
+      "decision_nodes": 40,
+      "infosets": 1280,
+      "seconds": 0.8850974161177874,
+      "iterations_per_second": 677.891482986945
+     },
+     "p0_restricted_loss": 0.0,
+     "p1_restricted_loss": 0.0,
+     "solver_error_bound": 0.00407085413592112
+    }
+   }
+  },
+  {
+   "name": "monotone bluff-heavy",
+   "seed": 400,
+   "reference": {
+    "value_p0": -2.642188578256361,
+    "exploitability_in_own_game": 0.0072759088109253245,
+    "decision_nodes": 40,
+    "infosets": 1280,
+    "seconds": 0.8485900408122689,
+    "iterations_per_second": 707.0551987926715
+   },
+   "menus": {
+    "A_pot": {
+     "symmetric": {
+      "value_p0": -2.6366693742345637,
+      "exploitability_in_own_game": 0.001888466339779571,
+      "decision_nodes": 8,
+      "infosets": 256,
+      "seconds": 0.16282850014977157,
+      "iterations_per_second": 3684.8586055150845
+     },
+     "p0_restricted_loss": -0.005499837741576918,
+     "p1_restricted_loss": 0.0024649511499470478,
+     "solver_error_bound": 0.0072759088109253245
+    },
+    "B_half_pot": {
+     "symmetric": {
+      "value_p0": -2.6367307721298197,
+      "exploitability_in_own_game": 0.0020360836394157644,
+      "decision_nodes": 14,
+      "infosets": 448,
+      "seconds": 0.2746188750024885,
+      "iterations_per_second": 2184.8461799814854
+     },
+     "p0_restricted_loss": -0.005339971081875561,
+     "p1_restricted_loss": 0.0017180951485071816,
+     "solver_error_bound": 0.0072759088109253245
+    },
+    "C_third_3q_1.5": {
+     "symmetric": {
+      "value_p0": -2.637381869526866,
+      "exploitability_in_own_game": 0.004363280634463784,
+      "decision_nodes": 22,
+      "infosets": 704,
+      "seconds": 0.462634583003819,
+      "iterations_per_second": 1296.9199062125606
+     },
+     "p0_restricted_loss": -0.0027582546506756955,
+     "p1_restricted_loss": 0.0016078917349782174,
+     "solver_error_bound": 0.0072759088109253245
+    },
+    "D_fine": {
+     "symmetric": {
+      "value_p0": -2.642188578256361,
+      "exploitability_in_own_game": 0.0072759088109253245,
+      "decision_nodes": 40,
+      "infosets": 1280,
+      "seconds": 0.8570868328679353,
+      "iterations_per_second": 700.0457561485504
+     },
+     "p0_restricted_loss": 0.0,
+     "p1_restricted_loss": 0.0,
+     "solver_error_bound": 0.0072759088109253245
+    }
+   }
+  },
+  {
+   "name": "monotone bluff-heavy",
+   "seed": 401,
+   "reference": {
+    "value_p0": -2.5963382340768373,
+    "exploitability_in_own_game": 0.00500784855009484,
+    "decision_nodes": 40,
+    "infosets": 1280,
+    "seconds": 0.8215265409089625,
+    "iterations_per_second": 730.3476760910747
+   },
+   "menus": {
+    "A_pot": {
+     "symmetric": {
+      "value_p0": -2.5912909319926625,
+      "exploitability_in_own_game": 0.0019369332071219603,
+      "decision_nodes": 8,
+      "infosets": 256,
+      "seconds": 0.15344925015233457,
+      "iterations_per_second": 3910.0875332030523
+     },
+     "p0_restricted_loss": -0.004876502615551281,
+     "p1_restricted_loss": 0.0024323820550891107,
+     "solver_error_bound": 0.00500784855009484
+    },
+    "B_half_pot": {
+     "symmetric": {
+      "value_p0": -2.5914594448243267,
+      "exploitability_in_own_game": 0.0021244158552136128,
+      "decision_nodes": 14,
+      "infosets": 448,
+      "seconds": 0.2991704170126468,
+      "iterations_per_second": 2005.5458891666963
+     },
+     "p0_restricted_loss": -0.004495927487848661,
+     "p1_restricted_loss": 0.0007508342241822064,
+     "solver_error_bound": 0.00500784855009484
+    },
+    "C_third_3q_1.5": {
+     "symmetric": {
+      "value_p0": -2.5934120883231353,
+      "exploitability_in_own_game": 0.0038650560597948136,
+      "decision_nodes": 22,
+      "infosets": 704,
+      "seconds": 0.4813687920104712,
+      "iterations_per_second": 1246.4455734532708
+     },
+     "p0_restricted_loss": -0.0027545590879500814,
+     "p1_restricted_loss": 0.0005064799973935052,
+     "solver_error_bound": 0.00500784855009484
+    },
+    "D_fine": {
+     "symmetric": {
+      "value_p0": -2.5963382340768373,
+      "exploitability_in_own_game": 0.00500784855009484,
+      "decision_nodes": 40,
+      "infosets": 1280,
+      "seconds": 0.8582275421358645,
+      "iterations_per_second": 699.1152934882333
+     },
+     "p0_restricted_loss": 0.0,
+     "p1_restricted_loss": 0.0,
+     "solver_error_bound": 0.00500784855009484
+    }
+   }
+  },
+  {
+   "name": "monotone bluff-heavy",
+   "seed": 402,
+   "reference": {
+    "value_p0": -1.5062031006542798,
+    "exploitability_in_own_game": 0.005302185478149979,
+    "decision_nodes": 40,
+    "infosets": 1280,
+    "seconds": 0.8351206658408046,
+    "iterations_per_second": 718.4590497421308
+   },
+   "menus": {
+    "A_pot": {
+     "symmetric": {
+      "value_p0": -1.5018730391781872,
+      "exploitability_in_own_game": 0.002101476400915403,
+      "decision_nodes": 8,
+      "infosets": 256,
+      "seconds": 0.16394391702488065,
+      "iterations_per_second": 3659.7881207690193
+     },
+     "p0_restricted_loss": -0.0033860496674200657,
+     "p1_restricted_loss": 0.0019642588151322915,
+     "solver_error_bound": 0.005302185478149979
+    },
+    "B_half_pot": {
+     "symmetric": {
+      "value_p0": -1.5024583733942474,
+      "exploitability_in_own_game": 0.002153485056711535,
+      "decision_nodes": 14,
+      "infosets": 448,
+      "seconds": 0.2848785419482738,
+      "iterations_per_second": 2106.1607374729674
+     },
+     "p0_restricted_loss": -0.003197414091327122,
+     "p1_restricted_loss": 0.0006795603115166138,
+     "solver_error_bound": 0.005302185478149979
+    },
+    "C_third_3q_1.5": {
+     "symmetric": {
+      "value_p0": -1.5045499447217936,
+      "exploitability_in_own_game": 0.00514809187521359,
+      "decision_nodes": 22,
+      "infosets": 704,
+      "seconds": 0.46207879204303026,
+      "iterations_per_second": 1298.4798487443372
+     },
+     "p0_restricted_loss": -0.0015344705944204673,
+     "p1_restricted_loss": 0.0006344758214424928,
+     "solver_error_bound": 0.005302185478149979
+    },
+    "D_fine": {
+     "symmetric": {
+      "value_p0": -1.5062031006542798,
+      "exploitability_in_own_game": 0.005302185478149979,
+      "decision_nodes": 40,
+      "infosets": 1280,
+      "seconds": 0.8806191249750555,
+      "iterations_per_second": 681.3388251328242
+     },
+     "p0_restricted_loss": 0.0,
+     "p1_restricted_loss": 0.0,
+     "solver_error_bound": 0.005302185478149979
+    }
+   }
+  },
+  {
+   "name": "low connected mixed",
+   "seed": 400,
+   "reference": {
+    "value_p0": -2.0076649964796838,
+    "exploitability_in_own_game": 0.005793151989579082,
+    "decision_nodes": 40,
+    "infosets": 1280,
+    "seconds": 0.8212726670317352,
+    "iterations_per_second": 730.5734430058843
+   },
+   "menus": {
+    "A_pot": {
+     "symmetric": {
+      "value_p0": -2.001120358927161,
+      "exploitability_in_own_game": 0.001862170478839742,
+      "decision_nodes": 8,
+      "infosets": 256,
+      "seconds": 0.155811624834314,
+      "iterations_per_second": 3850.803819278724
+     },
+     "p0_restricted_loss": -0.0031502512780670067,
+     "p1_restricted_loss": 0.0046533100327996735,
+     "solver_error_bound": 0.005793151989579082
+    },
+    "B_half_pot": {
+     "symmetric": {
+      "value_p0": -2.0034922425996635,
+      "exploitability_in_own_game": 0.004264503497352301,
+      "decision_nodes": 14,
+      "infosets": 448,
+      "seconds": 0.28965566703118384,
+      "iterations_per_second": 2071.4250342473188
+     },
+     "p0_restricted_loss": -0.0025671828320077417,
+     "p1_restricted_loss": 0.0013599129954915412,
+     "solver_error_bound": 0.005793151989579082
+    },
+    "C_third_3q_1.5": {
+     "symmetric": {
+      "value_p0": -2.006073184395915,
+      "exploitability_in_own_game": 0.007355265227781738,
+      "decision_nodes": 22,
+      "infosets": 704,
+      "seconds": 0.45877974992617965,
+      "iterations_per_second": 1307.8170954505806
+     },
+     "p0_restricted_loss": -0.002524956600969297,
+     "p1_restricted_loss": -0.001447604311648032,
+     "solver_error_bound": 0.006149663886919843
+    },
+    "D_fine": {
+     "symmetric": {
+      "value_p0": -2.0076649964796838,
+      "exploitability_in_own_game": 0.005793151989579082,
+      "decision_nodes": 40,
+      "infosets": 1280,
+      "seconds": 0.911340958205983,
+      "iterations_per_second": 658.3704974493057
+     },
+     "p0_restricted_loss": 0.0,
+     "p1_restricted_loss": 0.0,
+     "solver_error_bound": 0.005793151989579082
+    }
+   }
+  },
+  {
+   "name": "low connected mixed",
+   "seed": 401,
+   "reference": {
+    "value_p0": 0.7363595875161297,
+    "exploitability_in_own_game": 0.007613890094906539,
+    "decision_nodes": 40,
+    "infosets": 1280,
+    "seconds": 0.8583871249575168,
+    "iterations_per_second": 698.98532090599
+   },
+   "menus": {
+    "A_pot": {
+     "symmetric": {
+      "value_p0": 0.7436603673156224,
+      "exploitability_in_own_game": 0.0018634898232190444,
+      "decision_nodes": 8,
+      "infosets": 256,
+      "seconds": 0.1765652080066502,
+      "iterations_per_second": 3398.177969339245
+     },
+     "p0_restricted_loss": -0.0021656396253187937,
+     "p1_restricted_loss": 0.005822359430632473,
+     "solver_error_bound": 0.007613890094906539
+    },
+    "B_half_pot": {
+     "symmetric": {
+      "value_p0": 0.7401289030307063,
+      "exploitability_in_own_game": 0.0026373061931622144,
+      "decision_nodes": 14,
+      "infosets": 448,
+      "seconds": 0.30135645787231624,
+      "iterations_per_second": 1990.9976518711871
+     },
+     "p0_restricted_loss": -0.0017375409073421277,
+     "p1_restricted_loss": 0.0020413816042953448,
+     "solver_error_bound": 0.007867127965971277
+    },
+    "C_third_3q_1.5": {
+     "symmetric": {
+      "value_p0": 0.738051006577762,
+      "exploitability_in_own_game": 0.0048820147204325925,
+      "decision_nodes": 22,
+      "infosets": 704,
+      "seconds": 0.44883912499062717,
+      "iterations_per_second": 1336.7818592296949
+     },
+     "p0_restricted_loss": -0.0015560581149256514,
+     "p1_restricted_loss": 0.0001281349623183381,
+     "solver_error_bound": 0.007613890094906539
+    },
+    "D_fine": {
+     "symmetric": {
+      "value_p0": 0.7363595875161297,
+      "exploitability_in_own_game": 0.007613890094906539,
+      "decision_nodes": 40,
+      "infosets": 1280,
+      "seconds": 0.894842250039801,
+      "iterations_per_second": 670.5092433591653
+     },
+     "p0_restricted_loss": 0.0,
+     "p1_restricted_loss": 0.0,
+     "solver_error_bound": 0.007613890094906539
+    }
+   }
+  },
+  {
+   "name": "low connected mixed",
+   "seed": 402,
+   "reference": {
+    "value_p0": 2.624381321321396,
+    "exploitability_in_own_game": 0.005800708900333351,
+    "decision_nodes": 40,
+    "infosets": 1280,
+    "seconds": 0.8334534999448806,
+    "iterations_per_second": 719.8961910168716
+   },
+   "menus": {
+    "A_pot": {
+     "symmetric": {
+      "value_p0": 2.6214955712427876,
+      "exploitability_in_own_game": 0.0027711837178117094,
+      "decision_nodes": 8,
+      "infosets": 256,
+      "seconds": 0.15988433314487338,
+      "iterations_per_second": 3752.7129031231084
+     },
+     "p0_restricted_loss": 0.006783756718535372,
+     "p1_restricted_loss": 0.004593825982944999,
+     "solver_error_bound": 0.005800708900333351
+    },
+    "B_half_pot": {
+     "symmetric": {
+      "value_p0": 2.6191257525671334,
+      "exploitability_in_own_game": 0.002757028220344404,
+      "decision_nodes": 14,
+      "infosets": 448,
+      "seconds": 0.3001145829912275,
+      "iterations_per_second": 1999.236405041798
+     },
+     "p0_restricted_loss": 0.00787191638526874,
+     "p1_restricted_loss": 0.0014102583867865448,
+     "solver_error_bound": 0.005800708900333351
+    },
+    "C_third_3q_1.5": {
+     "symmetric": {
+      "value_p0": 2.6259530823438615,
+      "exploitability_in_own_game": 0.004059855435873505,
+      "decision_nodes": 22,
+      "infosets": 704,
+      "seconds": 0.4399953749962151,
+      "iterations_per_second": 1363.650697476448
+     },
+     "p0_restricted_loss": -0.0016345160481123777,
+     "p1_restricted_loss": 0.00010064821788136058,
+     "solver_error_bound": 0.005800708900333351
+    },
+    "D_fine": {
+     "symmetric": {
+      "value_p0": 2.624381321321396,
+      "exploitability_in_own_game": 0.005800708900333351,
+      "decision_nodes": 40,
+      "infosets": 1280,
+      "seconds": 0.873729957966134,
+      "iterations_per_second": 686.7110307132862
+     },
+     "p0_restricted_loss": 0.0,
+     "p1_restricted_loss": 0.0,
+     "solver_error_bound": 0.005800708900333351
+    }
+   }
+  },
+  {
+   "name": "paired_low_ace_river",
+   "seed": 400,
+   "reference": {
+    "value_p0": -0.9319288672708876,
+    "exploitability_in_own_game": 0.006178641372907356,
+    "decision_nodes": 40,
+    "infosets": 1280,
+    "seconds": 0.8300162078812718,
+    "iterations_per_second": 722.8774502266417
+   },
+   "menus": {
+    "A_pot": {
+     "symmetric": {
+      "value_p0": -0.9275249009103976,
+      "exploitability_in_own_game": 0.002212277569875354,
+      "decision_nodes": 8,
+      "infosets": 256,
+      "seconds": 0.170245542190969,
+      "iterations_per_second": 3524.3213553689643
+     },
+     "p0_restricted_loss": -0.0037893575211340735,
+     "p1_restricted_loss": 0.0021231498131045745,
+     "solver_error_bound": 0.006178641372907356
+    },
+    "B_half_pot": {
+     "symmetric": {
+      "value_p0": -0.9279352477241732,
+      "exploitability_in_own_game": 0.0023604461335663407,
+      "decision_nodes": 14,
+      "infosets": 448,
+      "seconds": 0.28784545813687146,
+      "iterations_per_second": 2084.451857894864
+     },
+     "p0_restricted_loss": -0.003597026417182736,
+     "p1_restricted_loss": 0.0005361199053433019,
+     "solver_error_bound": 0.006178641372907356
+    },
+    "C_third_3q_1.5": {
+     "symmetric": {
+      "value_p0": -0.9297894114489789,
+      "exploitability_in_own_game": 0.00532084389733517,
+      "decision_nodes": 22,
+      "infosets": 704,
+      "seconds": 0.46788695896975696,
+      "iterations_per_second": 1282.3610243832047
+     },
+     "p0_restricted_loss": -0.0019307286942520374,
+     "p1_restricted_loss": 0.0005722284768813202,
+     "solver_error_bound": 0.006178641372907356
+    },
+    "D_fine": {
+     "symmetric": {
+      "value_p0": -0.9319288672708876,
+      "exploitability_in_own_game": 0.006178641372907356,
+      "decision_nodes": 40,
+      "infosets": 1280,
+      "seconds": 0.864191957982257,
+      "iterations_per_second": 694.2901914996978
+     },
+     "p0_restricted_loss": 0.0,
+     "p1_restricted_loss": 0.0,
+     "solver_error_bound": 0.006178641372907356
+    }
+   }
+  },
+  {
+   "name": "paired_low_ace_river",
+   "seed": 401,
+   "reference": {
+    "value_p0": 0.9244516743298226,
+    "exploitability_in_own_game": 0.005442573706087361,
+    "decision_nodes": 40,
+    "infosets": 1280,
+    "seconds": 0.8441070420667529,
+    "iterations_per_second": 710.8103239263716
+   },
+   "menus": {
+    "A_pot": {
+     "symmetric": {
+      "value_p0": 0.9239885901259929,
+      "exploitability_in_own_game": 0.001578396659083603,
+      "decision_nodes": 8,
+      "infosets": 256,
+      "seconds": 0.15872970805503428,
+      "iterations_per_second": 3780.010732407886
+     },
+     "p0_restricted_loss": 0.00140536990398199,
+     "p1_restricted_loss": 0.0004004463770366229,
+     "solver_error_bound": 0.005442573706087361
+    },
+    "B_half_pot": {
+     "symmetric": {
+      "value_p0": 0.9235746293382954,
+      "exploitability_in_own_game": 0.0017893755732348304,
+      "decision_nodes": 14,
+      "infosets": 448,
+      "seconds": 0.285345499869436,
+      "iterations_per_second": 2102.7140791585593
+     },
+     "p0_restricted_loss": 0.0015829759706131874,
+     "p1_restricted_loss": -7.484539976887472e-05,
+     "solver_error_bound": 0.005442573706087361
+    },
+    "C_third_3q_1.5": {
+     "symmetric": {
+      "value_p0": 0.9240309644514137,
+      "exploitability_in_own_game": 0.004844057947953062,
+      "decision_nodes": 22,
+      "infosets": 704,
+      "seconds": 0.4524573339149356,
+      "iterations_per_second": 1326.0918876227195
+     },
+     "p0_restricted_loss": 0.000491694448935931,
+     "p1_restricted_loss": 0.0004533588417980905,
+     "solver_error_bound": 0.005442573706087361
+    },
+    "D_fine": {
+     "symmetric": {
+      "value_p0": 0.9244516743298226,
+      "exploitability_in_own_game": 0.005442573706087361,
+      "decision_nodes": 40,
+      "infosets": 1280,
+      "seconds": 0.9028232919517905,
+      "iterations_per_second": 664.5818792544391
+     },
+     "p0_restricted_loss": 0.0,
+     "p1_restricted_loss": 0.0,
+     "solver_error_bound": 0.005442573706087361
+    }
+   }
+  },
+  {
+   "name": "paired_low_ace_river",
+   "seed": 402,
+   "reference": {
+    "value_p0": 2.7154515030406605,
+    "exploitability_in_own_game": 0.0045196096256336915,
+    "decision_nodes": 40,
+    "infosets": 1280,
+    "seconds": 0.857146916911006,
+    "iterations_per_second": 699.9966845383818
+   },
+   "menus": {
+    "A_pot": {
+     "symmetric": {
+      "value_p0": 2.71669725171007,
+      "exploitability_in_own_game": 0.0020506057860829596,
+      "decision_nodes": 8,
+      "infosets": 256,
+      "seconds": 0.14615425001829863,
+      "iterations_per_second": 4105.2518139217955
+     },
+     "p0_restricted_loss": -0.0011199190413591076,
+     "p1_restricted_loss": 0.00032497830790623183,
+     "solver_error_bound": 0.0045196096256336915
+    },
+    "B_half_pot": {
+     "symmetric": {
+      "value_p0": 2.7165164481182544,
+      "exploitability_in_own_game": 0.0017669421484856063,
+      "decision_nodes": 14,
+      "infosets": 448,
+      "seconds": 0.26554241706617177,
+      "iterations_per_second": 2259.526017082548
+     },
+     "p0_restricted_loss": -0.0008201868295127923,
+     "p1_restricted_loss": -0.00018721017846834442,
+     "solver_error_bound": 0.004743038818206369
+    },
+    "C_third_3q_1.5": {
+     "symmetric": {
+      "value_p0": 2.7151761971071346,
+      "exploitability_in_own_game": 0.0029283574788450117,
+      "decision_nodes": 22,
+      "infosets": 704,
+      "seconds": 0.41190141602419317,
+      "iterations_per_second": 1456.6592312097291
+     },
+     "p0_restricted_loss": 0.0003977581747660608,
+     "p1_restricted_loss": 0.0003474335976765275,
+     "solver_error_bound": 0.0045196096256336915
+    },
+    "D_fine": {
+     "symmetric": {
+      "value_p0": 2.7154515030406605,
+      "exploitability_in_own_game": 0.0045196096256336915,
+      "decision_nodes": 40,
+      "infosets": 1280,
+      "seconds": 0.7934367079287767,
+      "iterations_per_second": 756.2039845197827
+     },
+     "p0_restricted_loss": 0.0,
+     "p1_restricted_loss": 0.0,
+     "solver_error_bound": 0.0045196096256336915
+    }
+   }
+  },
+  {
+   "name": "broadway_dry",
+   "seed": 400,
+   "reference": {
+    "value_p0": -3.6505894053353565,
+    "exploitability_in_own_game": 0.0030208708588697064,
+    "decision_nodes": 40,
+    "infosets": 1280,
+    "seconds": 0.8200790418777615,
+    "iterations_per_second": 731.6367927488558
+   },
+   "menus": {
+    "A_pot": {
+     "symmetric": {
+      "value_p0": -3.6566882859430367,
+      "exploitability_in_own_game": 0.0003184891142713475,
+      "decision_nodes": 8,
+      "infosets": 256,
+      "seconds": 0.14500533393584192,
+      "iterations_per_second": 4137.77882312572
+     },
+     "p0_restricted_loss": 0.006840578632661298,
+     "p1_restricted_loss": -0.0015417852492576323,
+     "solver_error_bound": 0.0030208708588697064
+    },
+    "B_half_pot": {
+     "symmetric": {
+      "value_p0": -3.6552619412869163,
+      "exploitability_in_own_game": 0.0011816347772783953,
+      "decision_nodes": 14,
+      "infosets": 448,
+      "seconds": 0.2642489578574896,
+      "iterations_per_second": 2270.586059694442
+     },
+     "p0_restricted_loss": 0.002891348378236458,
+     "p1_restricted_loss": 0.00014783270802087856,
+     "solver_error_bound": 0.003375211673579015
+    },
+    "C_third_3q_1.5": {
+     "symmetric": {
+      "value_p0": -3.6475025479120253,
+      "exploitability_in_own_game": 0.004090013101605949,
+      "decision_nodes": 22,
+      "infosets": 704,
+      "seconds": 0.41019416600465775,
+      "iterations_per_second": 1462.72192470233
+     },
+     "p0_restricted_loss": -0.00021303855766330315,
+     "p1_restricted_loss": 0.0006186687665268309,
+     "solver_error_bound": 0.0033287910182253633
+    },
+    "D_fine": {
+     "symmetric": {
+      "value_p0": -3.6505894053353565,
+      "exploitability_in_own_game": 0.0030208708588697064,
+      "decision_nodes": 40,
+      "infosets": 1280,
+      "seconds": 0.7819277921225876,
+      "iterations_per_second": 767.334280792432
+     },
+     "p0_restricted_loss": 0.0,
+     "p1_restricted_loss": 0.0,
+     "solver_error_bound": 0.0030208708588697064
+    }
+   }
+  },
+  {
+   "name": "broadway_dry",
+   "seed": 401,
+   "reference": {
+    "value_p0": -1.9280611845576197,
+    "exploitability_in_own_game": 0.004715515007481685,
+    "decision_nodes": 40,
+    "infosets": 1280,
+    "seconds": 0.8161132500972599,
+    "iterations_per_second": 735.1920826288451
+   },
+   "menus": {
+    "A_pot": {
+     "symmetric": {
+      "value_p0": -1.9149034654510673,
+      "exploitability_in_own_game": 0.0005136137490157067,
+      "decision_nodes": 8,
+      "infosets": 256,
+      "seconds": 0.13784533296711743,
+      "iterations_per_second": 4352.704491947711
+     },
+     "p0_restricted_loss": 0.007005314782126737,
+     "p1_restricted_loss": 0.00964254411316623,
+     "solver_error_bound": 0.005165418456064108
+    },
+    "B_half_pot": {
+     "symmetric": {
+      "value_p0": -1.9265746215556319,
+      "exploitability_in_own_game": 0.001215375854212497,
+      "decision_nodes": 14,
+      "infosets": 448,
+      "seconds": 0.25383079098537564,
+      "iterations_per_second": 2363.779420419364
+     },
+     "p0_restricted_loss": 0.006651341581898063,
+     "p1_restricted_loss": -0.00014043757459059059,
+     "solver_error_bound": 0.005483080757547554
+    },
+    "C_third_3q_1.5": {
+     "symmetric": {
+      "value_p0": -1.9367317272622495,
+      "exploitability_in_own_game": 0.0030337864402288917,
+      "decision_nodes": 22,
+      "infosets": 704,
+      "seconds": 0.4109956659376621,
+      "iterations_per_second": 1459.8694091606435
+     },
+     "p0_restricted_loss": 0.011794594233304645,
+     "p1_restricted_loss": 0.0010366463101074697,
+     "solver_error_bound": 0.004715515007481685
+    },
+    "D_fine": {
+     "symmetric": {
+      "value_p0": -1.9280611845576197,
+      "exploitability_in_own_game": 0.004715515007481685,
+      "decision_nodes": 40,
+      "infosets": 1280,
+      "seconds": 0.7803902919404209,
+      "iterations_per_second": 768.8460584358565
+     },
+     "p0_restricted_loss": 0.0,
+     "p1_restricted_loss": 0.0,
+     "solver_error_bound": 0.004715515007481685
+    }
+   }
+  },
+  {
+   "name": "broadway_dry",
+   "seed": 402,
+   "reference": {
+    "value_p0": -2.2001175413661143,
+    "exploitability_in_own_game": 0.002230392832580641,
+    "decision_nodes": 40,
+    "infosets": 1280,
+    "seconds": 0.8528399579226971,
+    "iterations_per_second": 703.5317639917442
+   },
+   "menus": {
+    "A_pot": {
+     "symmetric": {
+      "value_p0": -2.160114910453655,
+      "exploitability_in_own_game": 0.00024222981512944664,
+      "decision_nodes": 8,
+      "infosets": 256,
+      "seconds": 0.13950620801188052,
+      "iterations_per_second": 4300.883871410964
+     },
+     "p0_restricted_loss": 0.028797627068901654,
+     "p1_restricted_loss": 0.04468276538271798,
+     "solver_error_bound": 0.002230392832580641
+    },
+    "B_half_pot": {
+     "symmetric": {
+      "value_p0": -2.1987759686517294,
+      "exploitability_in_own_game": 0.0011957203262480398,
+      "decision_nodes": 14,
+      "infosets": 448,
+      "seconds": 0.24380429205484688,
+      "iterations_per_second": 2460.990308837641
+     },
+     "p0_restricted_loss": 0.008500407064468973,
+     "p1_restricted_loss": 0.008060764530835485,
+     "solver_error_bound": 0.002230392832580641
+    },
+    "C_third_3q_1.5": {
+     "symmetric": {
+      "value_p0": -2.197605053152911,
+      "exploitability_in_own_game": 0.0009446844250795561,
+      "decision_nodes": 22,
+      "infosets": 704,
+      "seconds": 0.4122427918482572,
+      "iterations_per_second": 1455.452980293357
+     },
+     "p0_restricted_loss": 4.601802719550463e-05,
+     "p1_restricted_loss": 0.001280837720502248,
+     "solver_error_bound": 0.002230392832580641
+    },
+    "D_fine": {
+     "symmetric": {
+      "value_p0": -2.2001175413661143,
+      "exploitability_in_own_game": 0.002230392832580641,
+      "decision_nodes": 40,
+      "infosets": 1280,
+      "seconds": 0.7466150829568505,
+      "iterations_per_second": 803.6269474007881
+     },
+     "p0_restricted_loss": 0.0,
+     "p1_restricted_loss": 0.0,
+     "solver_error_bound": 0.002230392832580641
+    }
+   }
+  },
+  {
+   "name": "two_tone_middling",
+   "seed": 400,
+   "reference": {
+    "value_p0": -1.819493501146643,
+    "exploitability_in_own_game": 0.006163042134017527,
+    "decision_nodes": 40,
+    "infosets": 1280,
+    "seconds": 0.818466791883111,
+    "iterations_per_second": 733.0780013927416
+   },
+   "menus": {
+    "A_pot": {
+     "symmetric": {
+      "value_p0": -1.8159221360015012,
+      "exploitability_in_own_game": 0.002173318920916656,
+      "decision_nodes": 8,
+      "infosets": 256,
+      "seconds": 0.13808366702869534,
+      "iterations_per_second": 4345.191671910866
+     },
+     "p0_restricted_loss": -0.00343157590057408,
+     "p1_restricted_loss": 0.0012457306352522401,
+     "solver_error_bound": 0.006163042134017527
+    },
+    "B_half_pot": {
+     "symmetric": {
+      "value_p0": -1.8154481107543021,
+      "exploitability_in_own_game": 0.002385277354431947,
+      "decision_nodes": 14,
+      "infosets": 448,
+      "seconds": 0.25414220802485943,
+      "iterations_per_second": 2360.8829271732375
+     },
+     "p0_restricted_loss": -0.003520972560675961,
+     "p1_restricted_loss": 0.0005549244263591824,
+     "solver_error_bound": 0.006163042134017527
+    },
+    "C_third_3q_1.5": {
+     "symmetric": {
+      "value_p0": -1.8188264890661272,
+      "exploitability_in_own_game": 0.005261435015878502,
+      "decision_nodes": 22,
+      "infosets": 704,
+      "seconds": 0.4060298749245703,
+      "iterations_per_second": 1477.723776142
+     },
+     "p0_restricted_loss": -0.0030194990032466063,
+     "p1_restricted_loss": -0.0005783793293454575,
+     "solver_error_bound": 0.006163042134017527
+    },
+    "D_fine": {
+     "symmetric": {
+      "value_p0": -1.819493501146643,
+      "exploitability_in_own_game": 0.006163042134017527,
+      "decision_nodes": 40,
+      "infosets": 1280,
+      "seconds": 0.7519751659128815,
+      "iterations_per_second": 797.8986902733857
+     },
+     "p0_restricted_loss": 0.0,
+     "p1_restricted_loss": 0.0,
+     "solver_error_bound": 0.006163042134017527
+    }
+   }
+  },
+  {
+   "name": "two_tone_middling",
+   "seed": 401,
+   "reference": {
+    "value_p0": 0.35052122952833054,
+    "exploitability_in_own_game": 0.005661390391585447,
+    "decision_nodes": 40,
+    "infosets": 1280,
+    "seconds": 0.8186801250558347,
+    "iterations_per_second": 732.8869745788436
+   },
+   "menus": {
+    "A_pot": {
+     "symmetric": {
+      "value_p0": 0.355595367742499,
+      "exploitability_in_own_game": 0.0010904987243101627,
+      "decision_nodes": 8,
+      "infosets": 256,
+      "seconds": 0.14395154197700322,
+      "iterations_per_second": 4168.069280535058
+     },
+     "p0_restricted_loss": -0.0019211361588870601,
+     "p1_restricted_loss": 0.0035403835155956576,
+     "solver_error_bound": 0.005661390391585447
+    },
+    "B_half_pot": {
+     "symmetric": {
+      "value_p0": 0.35629528591574844,
+      "exploitability_in_own_game": 0.0018969630074164578,
+      "decision_nodes": 14,
+      "infosets": 448,
+      "seconds": 0.2613158330786973,
+      "iterations_per_second": 2296.072124413928
+     },
+     "p0_restricted_loss": -0.001257602280734349,
+     "p1_restricted_loss": 0.0038623185768216217,
+     "solver_error_bound": 0.005661390391585447
+    },
+    "C_third_3q_1.5": {
+     "symmetric": {
+      "value_p0": 0.35134740734663944,
+      "exploitability_in_own_game": 0.0028307762519488022,
+      "decision_nodes": 22,
+      "infosets": 704,
+      "seconds": 0.42060066713020205,
+      "iterations_per_second": 1426.5312608604654
+     },
+     "p0_restricted_loss": -0.0015347126308614678,
+     "p1_restricted_loss": -0.0009351903197390432,
+     "solver_error_bound": 0.005661390391585447
+    },
+    "D_fine": {
+     "symmetric": {
+      "value_p0": 0.35052122952833054,
+      "exploitability_in_own_game": 0.005661390391585447,
+      "decision_nodes": 40,
+      "infosets": 1280,
+      "seconds": 0.7955588328186423,
+      "iterations_per_second": 754.1868372879692
+     },
+     "p0_restricted_loss": 0.0,
+     "p1_restricted_loss": 0.0,
+     "solver_error_bound": 0.005661390391585447
+    }
+   }
+  },
+  {
+   "name": "two_tone_middling",
+   "seed": 402,
+   "reference": {
+    "value_p0": 2.4230411320617797,
+    "exploitability_in_own_game": 0.004963962269237454,
+    "decision_nodes": 40,
+    "infosets": 1280,
+    "seconds": 0.811271500075236,
+    "iterations_per_second": 739.5797830249885
+   },
+   "menus": {
+    "A_pot": {
+     "symmetric": {
+      "value_p0": 2.429837448673917,
+      "exploitability_in_own_game": 0.002078338371660715,
+      "decision_nodes": 8,
+      "infosets": 256,
+      "seconds": 0.14114545891061425,
+      "iterations_per_second": 4250.933785832762
+     },
+     "p0_restricted_loss": -0.003737378682200365,
+     "p1_restricted_loss": 0.004938041258048642,
+     "solver_error_bound": 0.004963962269237454
+    },
+    "B_half_pot": {
+     "symmetric": {
+      "value_p0": 2.429922681518395,
+      "exploitability_in_own_game": 0.002129702356693075,
+      "decision_nodes": 14,
+      "infosets": 448,
+      "seconds": 0.2675873751286417,
+      "iterations_per_second": 2242.2582519506086
+     },
+     "p0_restricted_loss": -0.002502862578749099,
+     "p1_restricted_loss": 0.0032938535279782855,
+     "solver_error_bound": 0.004963962269237454
+    },
+    "C_third_3q_1.5": {
+     "symmetric": {
+      "value_p0": 2.4238815330333776,
+      "exploitability_in_own_game": 0.0033967235961027686,
+      "decision_nodes": 22,
+      "infosets": 704,
+      "seconds": 0.4107006669510156,
+      "iterations_per_second": 1460.9180074001736
+     },
+     "p0_restricted_loss": -0.0014550891636035956,
+     "p1_restricted_loss": -0.00020480697017699612,
+     "solver_error_bound": 0.004963962269237454
+    },
+    "D_fine": {
+     "symmetric": {
+      "value_p0": 2.4230411320617797,
+      "exploitability_in_own_game": 0.004963962269237454,
+      "decision_nodes": 40,
+      "infosets": 1280,
+      "seconds": 0.7516402921173722,
+      "iterations_per_second": 798.2541732958446
+     },
+     "p0_restricted_loss": 0.0,
+     "p1_restricted_loss": 0.0,
+     "solver_error_bound": 0.004963962269237454
+    }
+   }
+  }
+ ],
+ "seconds": 21.8,
+ "commit": "d5f727a05d5c40b52032e0e24bfeefb31b53d9e2"
+}
