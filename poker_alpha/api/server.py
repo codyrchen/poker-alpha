@@ -147,7 +147,7 @@ def create_app() -> FastAPI:
 
     @app.get("/demo-spots", response_model=list[S.DemoSpot])
     def demo_spots() -> list[S.DemoSpot]:
-        from ..ui.play import DEMO_SPOTS
+        from ..demo_spots import DEMO_SPOTS
 
         return [S.DemoSpot(name=k, state=v) for k, v in DEMO_SPOTS.items()]
 

@@ -64,7 +64,7 @@ def test_all_nodes_queryable(solver):
 
 
 def test_inspect_state_validates(solver):
-    from poker_alpha.ui.play import DEMO_SPOTS
+    from poker_alpha.demo_spots import DEMO_SPOTS
 
     good = DEMO_SPOTS["River, checked to hero — solver accepted"]
     r = inspect_state(solver, good)

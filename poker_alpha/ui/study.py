@@ -204,7 +204,7 @@ def _explorer_tab(cfg, strategy_path: str) -> None:
     st.divider()
     st.markdown("**Postflop / arbitrary state** — paste any heads-up state "
                 "to see how (and whether) the trained strategy answers it.")
-    from poker_alpha.ui.play import DEMO_SPOTS
+    from poker_alpha.demo_spots import DEMO_SPOTS
 
     default = json.dumps(DEMO_SPOTS["River, checked to hero — solver accepted"],
                          indent=1)
@@ -239,7 +239,7 @@ def _explorer_tab(cfg, strategy_path: str) -> None:
 # ---------------------------------------------------------------------------
 
 def _whatif_tab(cfg) -> None:
-    from poker_alpha.ui.play import DEMO_SPOTS
+    from poker_alpha.demo_spots import DEMO_SPOTS
 
     st.caption("Change ONE variable at a time; each variant is re-validated "
                "and re-analysed by the real engine. Methods are compared by "
