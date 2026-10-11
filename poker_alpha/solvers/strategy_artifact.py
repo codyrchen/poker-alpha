@@ -44,6 +44,7 @@ import json
 import os
 from dataclasses import dataclass
 from pathlib import Path
+from collections.abc import Mapping
 from typing import Dict, Optional, Tuple, Union
 
 import numpy as np
@@ -158,8 +159,83 @@ def read_config_signature(path: PathLike) -> str:
         raise StrategyArtifactError(f"cannot read {path}: {type(exc).__name__}: {exc}") from exc
 
 
-def load_artifact(path: PathLike, game=None) -> StrategyArtifact:
-    """Read an artifact; if ``game`` is given, require matching signatures."""
+class _ArrayIndex:
+    """Sorted fixed-width byte keys -> row index via binary search."""
+
+    def __init__(self, keys) -> None:
+        kb = np.char.encode(np.asarray(keys, dtype=str), "utf-8")
+        order = np.argsort(kb, kind="stable")
+        self.sorted = kb[order]
+        self.rows = order.astype(np.int64)
+
+    def find(self, key: str) -> int:
+        kb = key.encode("utf-8")
+        if len(kb) > self.sorted.dtype.itemsize:
+            return -1
+        i = int(np.searchsorted(self.sorted, kb))
+        if i < len(self.sorted) and self.sorted[i] == kb:
+            return int(self.rows[i])
+        return -1
+
+    def __len__(self) -> int:
+        return len(self.sorted)
+
+    def keys(self):
+        for i in np.argsort(self.rows):
+            yield self.sorted[i].decode("utf-8")
+
+
+class ArrayStrategyView(Mapping):
+    """Read-only ``{key: {action: prob}}`` view over the artifact arrays
+    (Phase II, H23): identical lookups to the eager dict, without one Python
+    dict per information set."""
+
+    def __init__(self, index: "_ArrayIndex", offsets, action_ids, vocab, probs) -> None:
+        self._ix, self._off, self._aid, self._vocab, self._p = index, offsets, action_ids, vocab, probs
+
+    def __getitem__(self, key):
+        r = self._ix.find(key) if isinstance(key, str) else -1
+        if r < 0:
+            raise KeyError(key)
+        a, b = int(self._off[r]), int(self._off[r + 1])
+        return {self._vocab[t]: float(p) for t, p in zip(self._aid[a:b].tolist(), self._p[a:b].tolist())}
+
+    def __contains__(self, key) -> bool:
+        return isinstance(key, str) and self._ix.find(key) >= 0
+
+    def __iter__(self):
+        return self._ix.keys()
+
+    def __len__(self) -> int:
+        return len(self._ix)
+
+
+class ArrayVisitsView(Mapping):
+    def __init__(self, index: "_ArrayIndex", visits) -> None:
+        self._ix, self._v = index, visits
+
+    def __getitem__(self, key):
+        r = self._ix.find(key) if isinstance(key, str) else -1
+        if r < 0:
+            raise KeyError(key)
+        return float(self._v[r])
+
+    def __contains__(self, key) -> bool:
+        return isinstance(key, str) and self._ix.find(key) >= 0
+
+    def __iter__(self):
+        return self._ix.keys()
+
+    def __len__(self) -> int:
+        return len(self._ix)
+
+
+def load_artifact(path: PathLike, game=None, lazy: bool = False) -> StrategyArtifact:
+    """Read an artifact; if ``game`` is given, require matching signatures.
+
+    ``lazy=True`` (Phase II) validates exactly as before but serves lookups
+    from the arrays through read-only Mapping views instead of building a
+    dict per information set (several times less memory; same values)."""
     manifest = None
     mp = manifest_path(path)
     if mp.exists():
@@ -219,6 +295,16 @@ def load_artifact(path: PathLike, game=None) -> StrategyArtifact:
         commit = str(d["commit"][()]) or None
     elif manifest is not None:
         config, commit = manifest.get("config"), manifest.get("generation_commit")
+    if lazy:
+        vocab = sorted(set(acts))
+        tid = {t: i for i, t in enumerate(vocab)}
+        aid = np.fromiter((tid[t] for t in acts), dtype=np.uint8, count=len(acts))
+        ix = _ArrayIndex(d["keys"])
+        del keys, acts
+        strategy = ArrayStrategyView(ix, np.asarray(off, np.int64), aid, vocab, np.asarray(probs, np.float32))
+        vis = ArrayVisitsView(ix, np.asarray(visits, np.float32))
+        return StrategyArtifact(art_cfg, art_game, art_enc, json.loads(str(d["meta"][()])),
+                                strategy, vis, fmt, config, commit, content, manifest)
     offl, pl = off.tolist(), probs.tolist()
     strategy = {k: dict(zip(acts[offl[i]:offl[i + 1]], pl[offl[i]:offl[i + 1]]))
                 for i, k in enumerate(keys)}
