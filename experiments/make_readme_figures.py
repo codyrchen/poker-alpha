@@ -3,7 +3,7 @@
     python experiments/make_readme_figures.py
 
 Outputs (committed):
-  results/figures/native_speedup.png       <- results/benchmarks/native_mccfr_v1.json
+  results/figures/native_speedup.png       <- results/benchmarks/native_mccfr_v2.json
   results/figures/confidence_risk_coverage.png
                                            <- results/validation/confidence_signal_quality.json
 
@@ -44,7 +44,7 @@ def style_axes(ax):
 
 
 def native_speedup():
-    data = json.loads((ROOT / "results/benchmarks/native_mccfr_v1.json").read_text())
+    data = json.loads((ROOT / "results/benchmarks/native_mccfr_v2.json").read_text())
     py = data["python_warm_it_per_s_median"]
     nat = data["native_warm_it_per_s_median"]
     speedup = data["speedup_warm"]

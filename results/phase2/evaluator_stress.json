@@ -1,0 +1,24 @@
+{
+ "format": "pokeralpha.phase2.evaluator_stress/v1",
+ "exhaustive": {
+  "6_card": {
+   "hands": 20358520,
+   "mismatches": 0,
+   "examples": [],
+   "seconds": 8.1
+  },
+  "7_card": {
+   "hands": 133784560,
+   "mismatches": 0,
+   "examples": [],
+   "seconds": 61.2
+  }
+ },
+ "suit_permutation": {
+  "samples": 200000,
+  "permutations": "random one of 24 per sample",
+  "failures": 0,
+  "seconds": 1.6
+ },
+ "commit": "56f17aee66d10b2024edd143587d5f5df82a6bb7"
+}

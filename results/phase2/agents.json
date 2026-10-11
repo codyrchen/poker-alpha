@@ -1,0 +1,631 @@
+{
+ "format": "pokeralpha.phase2.agents/v1",
+ "game": "Kuhn",
+ "agents": {
+  "random": {
+   "algorithm": "uniform random",
+   "information": "legal actions",
+   "adaptive": "no",
+   "source": "none",
+   "limitations": "baseline only"
+  },
+  "tight": {
+   "algorithm": "scripted (tight): bet/call only with K; otherwise pass/fold",
+   "information": "own card only",
+   "adaptive": "no",
+   "source": "hand-written rule",
+   "limitations": "deterministic"
+  },
+  "aggressive": {
+   "algorithm": "scripted (aggressive): always bet / always call",
+   "information": "own card only",
+   "adaptive": "no",
+   "source": "hand-written rule",
+   "limitations": "deterministic"
+  },
+  "cfr_eq": {
+   "algorithm": "fixed average strategy (Kuhn CFR+ 3000)",
+   "information": "own information set only",
+   "adaptive": "no",
+   "source": "CFR-family training",
+   "limitations": "uniform fallback on unseen infosets"
+  },
+  "br_vs_tight": {
+   "algorithm": "fixed average strategy (static best response to tight)",
+   "information": "own information set only",
+   "adaptive": "no",
+   "source": "CFR-family training",
+   "limitations": "uniform fallback on unseen infosets"
+  },
+  "br_vs_aggressive": {
+   "algorithm": "fixed average strategy (static best response to aggressive)",
+   "information": "own information set only",
+   "adaptive": "no",
+   "source": "CFR-family training",
+   "limitations": "uniform fallback on unseen infosets"
+  },
+  "bayes": {
+   "algorithm": "Bayesian posterior over 4 candidate strategies + exact Bayes best response (decay 1, refresh every 20 hands)",
+   "information": "own infoset keys + public actions and own payoff after each hand",
+   "adaptive": "yes",
+   "source": "exact best response on the mixture's realization-equivalent strategy",
+   "limitations": "opponent assumed to be one of the candidates (misspecification not modelled)"
+  },
+  "bayes_recency": {
+   "algorithm": "Bayesian posterior over 4 candidate strategies + exact Bayes best response (decay 0.97, refresh every 20 hands)",
+   "information": "own infoset keys + public actions and own payoff after each hand",
+   "adaptive": "yes",
+   "source": "exact best response on the mixture's realization-equivalent strategy",
+   "limitations": "opponent assumed to be one of the candidates (misspecification not modelled)"
+  }
+ },
+ "payoff_matrix": {
+  "agents": [
+   "random",
+   "tight",
+   "aggressive",
+   "cfr_eq",
+   "br_vs_tight",
+   "br_vs_aggressive",
+   "bayes",
+   "bayes_recency"
+  ],
+  "mean": [
+   [
+    0.0,
+    -0.0522,
+    -0.37285,
+    -0.1547,
+    0.37355,
+    -0.1656,
+    -0.45875,
+    -0.45345
+   ],
+   [
+    0.0522,
+    0.0,
+    0.00905,
+    0.00395,
+    -0.2467,
+    0.1685,
+    -0.2541,
+    -0.2427
+   ],
+   [
+    0.37285,
+    -0.00905,
+    0.0,
+    -0.10835,
+    1.1658,
+    -0.3322,
+    -0.33605,
+    -0.33465
+   ],
+   [
+    0.1547,
+    -0.00395,
+    0.10835,
+    0.0,
+    0.19175,
+    0.04865,
+    -0.00625,
+    -0.0027
+   ],
+   [
+    -0.37355,
+    0.2467,
+    -1.1658,
+    -0.19175,
+    0.0,
+    -0.3306,
+    -0.98395,
+    -1.1026
+   ],
+   [
+    0.1656,
+    -0.1685,
+    0.3322,
+    -0.04865,
+    0.3306,
+    0.0,
+    -0.15855,
+    0.1711
+   ],
+   [
+    0.45875,
+    0.2541,
+    0.33605,
+    0.00625,
+    0.98395,
+    0.15855,
+    0.0,
+    0.08375
+   ],
+   [
+    0.45345,
+    0.2427,
+    0.33465,
+    0.0027,
+    1.1026,
+    -0.1711,
+    -0.08375,
+    0.0
+   ]
+  ],
+  "se": [
+   [
+    0.0,
+    0.00514,
+    0.00779,
+    0.00521,
+    0.0074,
+    0.00312,
+    0.00736,
+    0.00732
+   ],
+   [
+    0.00514,
+    0.0,
+    0.00704,
+    0.00374,
+    0.00558,
+    0.00236,
+    0.00562,
+    0.00558
+   ],
+   [
+    0.00779,
+    0.00704,
+    0.0,
+    0.00603,
+    0.00235,
+    0.00236,
+    0.00235,
+    0.00235
+   ],
+   [
+    0.00521,
+    0.00374,
+    0.00603,
+    0.0,
+    0.00653,
+    0.00337,
+    0.00305,
+    0.00587
+   ],
+   [
+    0.0074,
+    0.00558,
+    0.00235,
+    0.00653,
+    0.0,
+    0.00237,
+    0.00355,
+    0.004
+   ],
+   [
+    0.00312,
+    0.00236,
+    0.00236,
+    0.00337,
+    0.00237,
+    0.0,
+    0.00246,
+    0.00459
+   ],
+   [
+    0.00736,
+    0.00562,
+    0.00235,
+    0.00305,
+    0.00355,
+    0.00246,
+    0.0,
+    0.00187
+   ],
+   [
+    0.00732,
+    0.00558,
+    0.00235,
+    0.00587,
+    0.004,
+    0.00459,
+    0.00187,
+    0.0
+   ]
+  ],
+  "units": "chips per hand to the row agent, seat-swapped",
+  "hands_per_match": 2000,
+  "match_seeds": 5
+ },
+ "non_transitivity": {
+  "significant_3_cycles": [
+   [
+    "random",
+    "br_vs_tight",
+    "tight"
+   ],
+   [
+    "tight",
+    "br_vs_aggressive",
+    "br_vs_tight"
+   ],
+   [
+    "tight",
+    "br_vs_aggressive",
+    "bayes_recency"
+   ]
+  ],
+  "meta_game_nash_support": {
+   "bayes": 1.0
+  },
+  "meta_game_value": -0.0,
+  "definition": "cycle = A beats B beats C beats A, each with |mean| > 1.96 SE",
+  "note": "meta-game Nash computed on point estimates. bayes vs cfr_eq = +0.0063 (SE 0.0031, z=2.05) is not significant after Bonferroni correction over 28 pairings (|z| > 3.12 required) and theory bounds the true value by cfr_eq's exact exploitability 3.92e-05; the Nash support on bayes is therefore an artifact of sampling noise between two agents whose true payoff difference is ~0. cfr_eq is an exact equilibrium of the meta-game up to its exploitability.",
+  "cfr_eq_exact_exploitability": 3.9231193684124976e-05,
+  "bonferroni_z_threshold": 3.1237346303238454,
+  "pairs_significant_after_bonferroni": 24,
+  "cycles_significant_after_bonferroni": [
+   [
+    "random",
+    "br_vs_tight",
+    "tight"
+   ],
+   [
+    "tight",
+    "br_vs_aggressive",
+    "br_vs_tight"
+   ],
+   [
+    "tight",
+    "br_vs_aggressive",
+    "bayes_recency"
+   ]
+  ]
+ },
+ "fingerprints_vs_random": {
+  "random": {
+   "J": {
+    "open_bet": 0.4885906040268456,
+    "call_vs_bet": 0.46842105263157896
+   },
+   "Q": {
+    "open_bet": 0.506578947368421,
+    "call_vs_bet": 0.5028409090909091
+   },
+   "K": {
+    "open_bet": 0.5227882037533512,
+    "call_vs_bet": 0.4843304843304843
+   }
+  },
+  "tight": {
+   "J": {
+    "open_bet": 0.0,
+    "call_vs_bet": 0.0
+   },
+   "Q": {
+    "open_bet": 0.0,
+    "call_vs_bet": 0.0
+   },
+   "K": {
+    "open_bet": 1.0,
+    "call_vs_bet": 1.0
+   }
+  },
+  "aggressive": {
+   "J": {
+    "open_bet": 1.0,
+    "call_vs_bet": 1.0
+   },
+   "Q": {
+    "open_bet": 1.0,
+    "call_vs_bet": 1.0
+   },
+   "K": {
+    "open_bet": 1.0,
+    "call_vs_bet": 1.0
+   }
+  },
+  "cfr_eq": {
+   "J": {
+    "open_bet": 0.2248062015503876,
+    "call_vs_bet": 0.0
+   },
+   "Q": {
+    "open_bet": 0.0,
+    "call_vs_bet": 0.46108949416342415
+   },
+   "K": {
+    "open_bet": 0.778393351800554,
+    "call_vs_bet": 1.0
+   }
+  },
+  "br_vs_tight": {
+   "J": {
+    "open_bet": 1.0,
+    "call_vs_bet": 0.0
+   },
+   "Q": {
+    "open_bet": 0.0,
+    "call_vs_bet": 0.0
+   },
+   "K": {
+    "open_bet": 0.0,
+    "call_vs_bet": 0.0
+   }
+  },
+  "br_vs_aggressive": {
+   "J": {
+    "open_bet": 0.0,
+    "call_vs_bet": 0.0
+   },
+   "Q": {
+    "open_bet": 0.0,
+    "call_vs_bet": 1.0
+   },
+   "K": {
+    "open_bet": 0.0,
+    "call_vs_bet": 1.0
+   }
+  },
+  "bayes": {
+   "J": {
+    "open_bet": 0.9986282578875172,
+    "call_vs_bet": 0.0
+   },
+   "Q": {
+    "open_bet": 1.0,
+    "call_vs_bet": 1.0
+   },
+   "K": {
+    "open_bet": 0.37549407114624506,
+    "call_vs_bet": 1.0
+   }
+  },
+  "bayes_recency": {
+   "J": {
+    "open_bet": 0.9986282578875172,
+    "call_vs_bet": 0.0
+   },
+   "Q": {
+    "open_bet": 1.0,
+    "call_vs_bet": 1.0
+   },
+   "K": {
+    "open_bet": 1.0,
+    "call_vs_bet": 1.0
+   }
+  }
+ },
+ "regime_shift": {
+  "opponent": "tight then aggressive",
+  "switch_at_hand": 1500,
+  "hands": 3000,
+  "seeds": 8,
+  "summary": {
+   "cfr_eq": {
+    "before": {
+     "mean": -0.01,
+     "se": 0.01676826178155038
+    },
+    "after": {
+     "mean": 0.10991666666666666,
+     "se": 0.01912923363245583
+    },
+    "after_first_200": {
+     "mean": 0.125,
+     "se": 0.02436698586202241
+    },
+    "window_means": [
+     -0.0462,
+     0.0738,
+     0.005,
+     0.0062,
+     -0.12,
+     -0.0162,
+     0.02,
+     -0.0038,
+     -0.0812,
+     0.055,
+     -0.01,
+     -0.0013,
+     0.0438,
+     -0.0212,
+     -0.0537,
+     0.1588,
+     0.0913,
+     0.1575,
+     0.1213,
+     0.1588,
+     0.0975,
+     0.0838,
+     0.1662,
+     0.0125,
+     0.0138,
+     0.0588,
+     0.1762,
+     0.1362,
+     0.085,
+     0.1312
+    ]
+   },
+   "bayes": {
+    "before": {
+     "mean": 0.26125,
+     "se": 0.012219187032942565
+    },
+    "after": {
+     "mean": 0.18224999999999997,
+     "se": 0.009298350681536234
+    },
+    "after_first_200": {
+     "mean": 0.1375,
+     "se": 0.03698455275999891
+    },
+    "window_means": [
+     0.1762,
+     0.285,
+     0.3062,
+     0.2662,
+     0.245,
+     0.2775,
+     0.2825,
+     0.22,
+     0.2213,
+     0.2888,
+     0.3313,
+     0.2725,
+     0.2712,
+     0.2588,
+     0.2163,
+     0.1262,
+     0.1488,
+     0.1562,
+     0.1138,
+     0.2313,
+     0.4138,
+     0.1937,
+     0.15,
+     0.1562,
+     0.1775,
+     0.15,
+     0.2275,
+     0.1488,
+     0.1475,
+     0.1925
+    ]
+   },
+   "bayes_recency": {
+    "before": {
+     "mean": 0.26125,
+     "se": 0.012219187032942565
+    },
+    "after": {
+     "mean": 0.3314166666666667,
+     "se": 0.009021524085507769
+    },
+    "after_first_200": {
+     "mean": 0.186875,
+     "se": 0.0370199933916024
+    },
+    "window_means": [
+     0.1762,
+     0.285,
+     0.3062,
+     0.2662,
+     0.245,
+     0.2775,
+     0.2825,
+     0.22,
+     0.2213,
+     0.2888,
+     0.3313,
+     0.2725,
+     0.2712,
+     0.2588,
+     0.2163,
+     0.16,
+     0.2138,
+     0.3838,
+     0.245,
+     0.3638,
+     0.5462,
+     0.36,
+     0.2988,
+     0.3388,
+     0.35,
+     0.3125,
+     0.3975,
+     0.3125,
+     0.3238,
+     0.365
+    ]
+   },
+   "br_vs_tight": {
+    "before": {
+     "mean": 0.24191666666666667,
+     "se": 0.00952476929687697
+    },
+    "after": {
+     "mean": -1.1639166666666667,
+     "se": 0.0024958298553120037
+    },
+    "after_first_200": {
+     "mean": -1.175625,
+     "se": 0.007035465006461404
+    },
+    "window_means": [
+     0.2338,
+     0.275,
+     0.3425,
+     0.3,
+     0.245,
+     0.2125,
+     0.2487,
+     0.1575,
+     0.2275,
+     0.2062,
+     0.2412,
+     0.2188,
+     0.2288,
+     0.2412,
+     0.25,
+     -1.1825,
+     -1.1688,
+     -1.1588,
+     -1.1738,
+     -1.165,
+     -1.1612,
+     -1.1437,
+     -1.145,
+     -1.1763,
+     -1.1612,
+     -1.1562,
+     -1.1625,
+     -1.1637,
+     -1.175,
+     -1.165
+    ]
+   }
+  }
+ },
+ "posterior_calibration": {
+  "definition": "mean posterior mass on the TRUE archetype after N hands (well-specified case)",
+  "by_true_archetype": {
+   "cfr_eq": {
+    "5": 0.43775929257808993,
+    "10": 0.6264282797181147,
+    "20": 0.7812318353148883,
+    "50": 0.914288026156266,
+    "100": 0.9997736567249491,
+    "200": 0.9999997123228631
+   },
+   "tight": {
+    "5": 0.6274576482482934,
+    "10": 0.9006314741593671,
+    "20": 0.9909629100483451,
+    "50": 0.9999707230325564,
+    "100": 0.999999998481868,
+    "200": 1.0
+   },
+   "aggressive": {
+    "5": 0.9571858363183039,
+    "10": 0.9990120062316817,
+    "20": 0.9999990459213802,
+    "50": 0.9999999999999993,
+    "100": 1.0,
+    "200": 1.0
+   },
+   "random": {
+    "5": 0.5201428052990317,
+    "10": 0.6609949970530608,
+    "20": 0.7914605109531847,
+    "50": 0.9184553147344244,
+    "100": 0.9833373591068962,
+    "200": 0.9999999927292209
+   }
+  }
+ },
+ "seconds": 42.8,
+ "commit": "56f17aee66d10b2024edd143587d5f5df82a6bb7"
+}

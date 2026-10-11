@@ -1,0 +1,907 @@
+{
+ "format": "pokeralpha.phase2.hypotheses/v1",
+ "H1_seed_ensembling": {
+  "question": "does averaging 3 independent seeds beat 1 seed, and 1 seed at 3x the iterations?",
+  "summary": {
+   "leduc": {
+    "reps": 8,
+    "single_seed_mean": 0.10391251898989995,
+    "ensemble_of_3_mean": 0.07636277359149855,
+    "single_3x_longer_mean": 0.05431190039620395,
+    "ensemble_vs_single_ratio": 0.7390514481949033,
+    "ensemble_vs_3x_longer_ratio": 1.4151727088519217,
+    "ensemble_beats_3x_longer": 0
+   },
+   "reduced_preflop": {
+    "reps": 8,
+    "single_seed_mean": 0.028263727685483693,
+    "ensemble_of_3_mean": 0.02271381805806321,
+    "single_3x_longer_mean": 0.01585370246074044,
+    "ensemble_vs_single_ratio": 0.8036680845538966,
+    "ensemble_vs_3x_longer_ratio": 1.4410636868594904,
+    "ensemble_beats_3x_longer": 0
+   },
+   "river": {
+    "reps": 8,
+    "single_seed_mean": 0.12185291107045942,
+    "ensemble_of_3_mean": 0.09458470362791696,
+    "single_3x_longer_mean": 0.06552294176303716,
+    "ensemble_vs_single_ratio": 0.7767701728290699,
+    "ensemble_vs_3x_longer_ratio": 1.5324920619931293,
+    "ensemble_beats_3x_longer": 1
+   }
+  },
+  "runs": [
+   {
+    "game": "leduc",
+    "base_iters": 20000,
+    "k": 3,
+    "rep": 0,
+    "single_mean": 0.12119923217026453,
+    "single_best": 0.09730598419465616,
+    "ensemble": 0.07920591329167198,
+    "single_k_times_longer": 0.045922396433235035
+   },
+   {
+    "game": "leduc",
+    "base_iters": 20000,
+    "k": 3,
+    "rep": 1,
+    "single_mean": 0.10034522148931822,
+    "single_best": 0.09190558805521928,
+    "ensemble": 0.0696386346065158,
+    "single_k_times_longer": 0.04936395484430624
+   },
+   {
+    "game": "leduc",
+    "base_iters": 20000,
+    "k": 3,
+    "rep": 2,
+    "single_mean": 0.09369811362323942,
+    "single_best": 0.09230673496255726,
+    "ensemble": 0.07293262459207749,
+    "single_k_times_longer": 0.05755883637565477
+   },
+   {
+    "game": "leduc",
+    "base_iters": 20000,
+    "k": 3,
+    "rep": 3,
+    "single_mean": 0.12292700500097237,
+    "single_best": 0.10852247352279026,
+    "ensemble": 0.08777365673001568,
+    "single_k_times_longer": 0.0578038796160336
+   },
+   {
+    "game": "leduc",
+    "base_iters": 20000,
+    "k": 3,
+    "rep": 4,
+    "single_mean": 0.09788948236358819,
+    "single_best": 0.09273173632165597,
+    "ensemble": 0.07027212175395255,
+    "single_k_times_longer": 0.054304429370260046
+   },
+   {
+    "game": "leduc",
+    "base_iters": 20000,
+    "k": 3,
+    "rep": 5,
+    "single_mean": 0.08983575708603884,
+    "single_best": 0.08404149002507841,
+    "ensemble": 0.07512314922462485,
+    "single_k_times_longer": 0.058877330657935795
+   },
+   {
+    "game": "leduc",
+    "base_iters": 20000,
+    "k": 3,
+    "rep": 6,
+    "single_mean": 0.10290477169919619,
+    "single_best": 0.08835439745658234,
+    "ensemble": 0.08143955571902975,
+    "single_k_times_longer": 0.05277796458363791
+   },
+   {
+    "game": "leduc",
+    "base_iters": 20000,
+    "k": 3,
+    "rep": 7,
+    "single_mean": 0.10250056848658173,
+    "single_best": 0.08773258081107685,
+    "ensemble": 0.07451653281410031,
+    "single_k_times_longer": 0.057886411288568154
+   },
+   {
+    "game": "reduced_preflop",
+    "base_iters": 20000,
+    "k": 3,
+    "rep": 0,
+    "single_mean": 0.02880021206959783,
+    "single_best": 0.027349272068703984,
+    "ensemble": 0.02221974315202094,
+    "single_k_times_longer": 0.015012454224264622
+   },
+   {
+    "game": "reduced_preflop",
+    "base_iters": 20000,
+    "k": 3,
+    "rep": 1,
+    "single_mean": 0.02845543330906668,
+    "single_best": 0.025275469427572344,
+    "ensemble": 0.022710811061468324,
+    "single_k_times_longer": 0.017128073174695932
+   },
+   {
+    "game": "reduced_preflop",
+    "base_iters": 20000,
+    "k": 3,
+    "rep": 2,
+    "single_mean": 0.02819749235442211,
+    "single_best": 0.025842035495272926,
+    "ensemble": 0.022401835526407832,
+    "single_k_times_longer": 0.017417419202318905
+   },
+   {
+    "game": "reduced_preflop",
+    "base_iters": 20000,
+    "k": 3,
+    "rep": 3,
+    "single_mean": 0.027032656728663618,
+    "single_best": 0.02319573233117653,
+    "ensemble": 0.022699469993294485,
+    "single_k_times_longer": 0.01584441314728417
+   },
+   {
+    "game": "reduced_preflop",
+    "base_iters": 20000,
+    "k": 3,
+    "rep": 4,
+    "single_mean": 0.02979365610770983,
+    "single_best": 0.028207302659848943,
+    "ensemble": 0.023426170078838012,
+    "single_k_times_longer": 0.014792215663157686
+   },
+   {
+    "game": "reduced_preflop",
+    "base_iters": 20000,
+    "k": 3,
+    "rep": 5,
+    "single_mean": 0.029614011418991098,
+    "single_best": 0.027578856937904076,
+    "ensemble": 0.02515559991869553,
+    "single_k_times_longer": 0.014723674723565103
+   },
+   {
+    "game": "reduced_preflop",
+    "base_iters": 20000,
+    "k": 3,
+    "rep": 6,
+    "single_mean": 0.027106436110535304,
+    "single_best": 0.023625131687749275,
+    "ensemble": 0.022284728078837995,
+    "single_k_times_longer": 0.01725315303021846
+   },
+   {
+    "game": "reduced_preflop",
+    "base_iters": 20000,
+    "k": 3,
+    "rep": 7,
+    "single_mean": 0.027109923384883064,
+    "single_best": 0.02624917534683839,
+    "ensemble": 0.02081218665494255,
+    "single_k_times_longer": 0.014658216520418658
+   },
+   {
+    "game": "river",
+    "base_iters": 20000,
+    "k": 3,
+    "rep": 0,
+    "single_mean": 0.13356481486279947,
+    "single_best": 0.11881348816167558,
+    "ensemble": 0.10603692861915004,
+    "single_k_times_longer": 0.06766804648787828
+   },
+   {
+    "game": "river",
+    "base_iters": 20000,
+    "k": 3,
+    "rep": 1,
+    "single_mean": 0.15211440399301965,
+    "single_best": 0.11466931956593296,
+    "ensemble": 0.14212484396661274,
+    "single_k_times_longer": 0.05216599998627536
+   },
+   {
+    "game": "river",
+    "base_iters": 20000,
+    "k": 3,
+    "rep": 2,
+    "single_mean": 0.12485676901341725,
+    "single_best": 0.10311631396350807,
+    "ensemble": 0.08688642411746117,
+    "single_k_times_longer": 0.08243674167555004
+   },
+   {
+    "game": "river",
+    "base_iters": 20000,
+    "k": 3,
+    "rep": 3,
+    "single_mean": 0.08225171541371872,
+    "single_best": 0.06348352165212079,
+    "ensemble": 0.07304363762865074,
+    "single_k_times_longer": 0.06037314733399923
+   },
+   {
+    "game": "river",
+    "base_iters": 20000,
+    "k": 3,
+    "rep": 4,
+    "single_mean": 0.13600582110132864,
+    "single_best": 0.12083049892383735,
+    "ensemble": 0.10279077484352594,
+    "single_k_times_longer": 0.05022674613583722
+   },
+   {
+    "game": "river",
+    "base_iters": 20000,
+    "k": 3,
+    "rep": 5,
+    "single_mean": 0.11325420540317539,
+    "single_best": 0.07993821959525893,
+    "ensemble": 0.08376780938760464,
+    "single_k_times_longer": 0.08929606599973816
+   },
+   {
+    "game": "river",
+    "base_iters": 20000,
+    "k": 3,
+    "rep": 6,
+    "single_mean": 0.10792946307998268,
+    "single_best": 0.06948155874591033,
+    "ensemble": 0.08662510630256914,
+    "single_k_times_longer": 0.053477230900060624
+   },
+   {
+    "game": "river",
+    "base_iters": 20000,
+    "k": 3,
+    "rep": 7,
+    "single_mean": 0.12484609569623362,
+    "single_best": 0.09591012536026655,
+    "ensemble": 0.07540210415776127,
+    "single_k_times_longer": 0.06853955558495839
+   }
+  ]
+ },
+ "H2_imperfect_recall_release_algorithm": {
+  "es_mccfr_checkpoints": [
+   100,
+   300,
+   1000,
+   3000,
+   10000,
+   30000,
+   100000
+  ],
+  "dcfr_checkpoints": [
+   10,
+   30,
+   100,
+   300,
+   1000,
+   3000
+  ],
+  "summary": {
+   "perfect|es_mccfr": {
+    "mean_curve": [
+     2.3394,
+     1.5861,
+     0.7917,
+     0.3955,
+     0.1629,
+     0.0901,
+     0.0427
+    ],
+    "runs": 4
+   },
+   "forget_round1_history|es_mccfr": {
+    "mean_curve": [
+     1.6487,
+     0.8926,
+     0.5419,
+     0.4857,
+     0.5194,
+     0.6986,
+     0.8209
+    ],
+    "runs": 4
+   },
+   "round1_raise_count_only|es_mccfr": {
+    "mean_curve": [
+     2.1085,
+     1.2971,
+     0.6681,
+     0.4167,
+     0.3576,
+     0.2857,
+     0.2945
+    ],
+    "runs": 4
+   },
+   "perfect|dcfr": {
+    "mean_curve": [
+     0.7788,
+     0.0638,
+     0.0078,
+     0.0011,
+     0.0002,
+     0.0
+    ],
+    "runs": 1
+   },
+   "forget_round1_history|dcfr": {
+    "mean_curve": [
+     0.4568,
+     0.6855,
+     0.8958,
+     0.9315,
+     0.9372,
+     0.9372
+    ],
+    "runs": 1
+   },
+   "round1_raise_count_only|dcfr": {
+    "mean_curve": [
+     0.4459,
+     0.3288,
+     0.3854,
+     0.3631,
+     0.3907,
+     0.3807
+    ],
+    "runs": 1
+   }
+  },
+  "runs": [
+   {
+    "abstraction": "perfect",
+    "algorithm": "es_mccfr",
+    "seed": 0,
+    "curve": [
+     {
+      "iterations": 100,
+      "exploitability": 2.2718552326715695
+     },
+     {
+      "iterations": 300,
+      "exploitability": 1.6954905024142068
+     },
+     {
+      "iterations": 1000,
+      "exploitability": 0.8456910408638192
+     },
+     {
+      "iterations": 3000,
+      "exploitability": 0.40412667877876374
+     },
+     {
+      "iterations": 10000,
+      "exploitability": 0.15988033798570075
+     },
+     {
+      "iterations": 30000,
+      "exploitability": 0.09796342795744417
+     },
+     {
+      "iterations": 100000,
+      "exploitability": 0.04390783596019282
+     }
+    ]
+   },
+   {
+    "abstraction": "perfect",
+    "algorithm": "es_mccfr",
+    "seed": 1,
+    "curve": [
+     {
+      "iterations": 100,
+      "exploitability": 2.0255021333178997
+     },
+     {
+      "iterations": 300,
+      "exploitability": 1.5108878663592609
+     },
+     {
+      "iterations": 1000,
+      "exploitability": 0.7090023354174257
+     },
+     {
+      "iterations": 3000,
+      "exploitability": 0.32115216199741675
+     },
+     {
+      "iterations": 10000,
+      "exploitability": 0.19202557659373432
+     },
+     {
+      "iterations": 30000,
+      "exploitability": 0.08033353164345435
+     },
+     {
+      "iterations": 100000,
+      "exploitability": 0.038169086254937826
+     }
+    ]
+   },
+   {
+    "abstraction": "perfect",
+    "algorithm": "es_mccfr",
+    "seed": 2,
+    "curve": [
+     {
+      "iterations": 100,
+      "exploitability": 2.6490181013639322
+     },
+     {
+      "iterations": 300,
+      "exploitability": 1.5162581176087933
+     },
+     {
+      "iterations": 1000,
+      "exploitability": 0.7758718124439193
+     },
+     {
+      "iterations": 3000,
+      "exploitability": 0.3732851297284332
+     },
+     {
+      "iterations": 10000,
+      "exploitability": 0.1419990049059624
+     },
+     {
+      "iterations": 30000,
+      "exploitability": 0.0937073031947104
+     },
+     {
+      "iterations": 100000,
+      "exploitability": 0.04261933887399781
+     }
+    ]
+   },
+   {
+    "abstraction": "perfect",
+    "algorithm": "es_mccfr",
+    "seed": 3,
+    "curve": [
+     {
+      "iterations": 100,
+      "exploitability": 2.4112356174411174
+     },
+     {
+      "iterations": 300,
+      "exploitability": 1.621658122689476
+     },
+     {
+      "iterations": 1000,
+      "exploitability": 0.8362383642186999
+     },
+     {
+      "iterations": 3000,
+      "exploitability": 0.48330166540941144
+     },
+     {
+      "iterations": 10000,
+      "exploitability": 0.1578471922832881
+     },
+     {
+      "iterations": 30000,
+      "exploitability": 0.08852990238962725
+     },
+     {
+      "iterations": 100000,
+      "exploitability": 0.046183179273994374
+     }
+    ]
+   },
+   {
+    "abstraction": "forget_round1_history",
+    "algorithm": "es_mccfr",
+    "seed": 0,
+    "curve": [
+     {
+      "iterations": 100,
+      "exploitability": 1.606748398880784
+     },
+     {
+      "iterations": 300,
+      "exploitability": 0.7926166281000078
+     },
+     {
+      "iterations": 1000,
+      "exploitability": 0.44446699642296006
+     },
+     {
+      "iterations": 3000,
+      "exploitability": 0.4891025119261012
+     },
+     {
+      "iterations": 10000,
+      "exploitability": 0.5594398911554317
+     },
+     {
+      "iterations": 30000,
+      "exploitability": 0.6017750601422163
+     },
+     {
+      "iterations": 100000,
+      "exploitability": 0.8191028500728319
+     }
+    ]
+   },
+   {
+    "abstraction": "forget_round1_history",
+    "algorithm": "es_mccfr",
+    "seed": 1,
+    "curve": [
+     {
+      "iterations": 100,
+      "exploitability": 1.706851694283967
+     },
+     {
+      "iterations": 300,
+      "exploitability": 0.8756240822374619
+     },
+     {
+      "iterations": 1000,
+      "exploitability": 0.617226375966598
+     },
+     {
+      "iterations": 3000,
+      "exploitability": 0.3891521405083078
+     },
+     {
+      "iterations": 10000,
+      "exploitability": 0.5558092225871352
+     },
+     {
+      "iterations": 30000,
+      "exploitability": 0.7633079995230687
+     },
+     {
+      "iterations": 100000,
+      "exploitability": 0.7748114726954853
+     }
+    ]
+   },
+   {
+    "abstraction": "forget_round1_history",
+    "algorithm": "es_mccfr",
+    "seed": 2,
+    "curve": [
+     {
+      "iterations": 100,
+      "exploitability": 1.741618802808726
+     },
+     {
+      "iterations": 300,
+      "exploitability": 0.8723038306527808
+     },
+     {
+      "iterations": 1000,
+      "exploitability": 0.5732589332009626
+     },
+     {
+      "iterations": 3000,
+      "exploitability": 0.6186757087873991
+     },
+     {
+      "iterations": 10000,
+      "exploitability": 0.49017380775843655
+     },
+     {
+      "iterations": 30000,
+      "exploitability": 0.7474044135409792
+     },
+     {
+      "iterations": 100000,
+      "exploitability": 0.8784674747202139
+     }
+    ]
+   },
+   {
+    "abstraction": "forget_round1_history",
+    "algorithm": "es_mccfr",
+    "seed": 3,
+    "curve": [
+     {
+      "iterations": 100,
+      "exploitability": 1.53938170440628
+     },
+     {
+      "iterations": 300,
+      "exploitability": 1.0298382354303093
+     },
+     {
+      "iterations": 1000,
+      "exploitability": 0.5325211856229366
+     },
+     {
+      "iterations": 3000,
+      "exploitability": 0.4460633255958095
+     },
+     {
+      "iterations": 10000,
+      "exploitability": 0.47222226826285907
+     },
+     {
+      "iterations": 30000,
+      "exploitability": 0.6819281951620987
+     },
+     {
+      "iterations": 100000,
+      "exploitability": 0.8112233292113673
+     }
+    ]
+   },
+   {
+    "abstraction": "round1_raise_count_only",
+    "algorithm": "es_mccfr",
+    "seed": 0,
+    "curve": [
+     {
+      "iterations": 100,
+      "exploitability": 2.2340650751967086
+     },
+     {
+      "iterations": 300,
+      "exploitability": 1.3417447305140375
+     },
+     {
+      "iterations": 1000,
+      "exploitability": 0.5684996994788818
+     },
+     {
+      "iterations": 3000,
+      "exploitability": 0.3462525456274385
+     },
+     {
+      "iterations": 10000,
+      "exploitability": 0.34977129017441877
+     },
+     {
+      "iterations": 30000,
+      "exploitability": 0.30682520903417193
+     },
+     {
+      "iterations": 100000,
+      "exploitability": 0.3376945440764942
+     }
+    ]
+   },
+   {
+    "abstraction": "round1_raise_count_only",
+    "algorithm": "es_mccfr",
+    "seed": 1,
+    "curve": [
+     {
+      "iterations": 100,
+      "exploitability": 2.0783405376701984
+     },
+     {
+      "iterations": 300,
+      "exploitability": 1.4819095768932986
+     },
+     {
+      "iterations": 1000,
+      "exploitability": 0.7662108007034026
+     },
+     {
+      "iterations": 3000,
+      "exploitability": 0.44524920389877376
+     },
+     {
+      "iterations": 10000,
+      "exploitability": 0.4389602935009689
+     },
+     {
+      "iterations": 30000,
+      "exploitability": 0.30375853738365965
+     },
+     {
+      "iterations": 100000,
+      "exploitability": 0.2858849945370865
+     }
+    ]
+   },
+   {
+    "abstraction": "round1_raise_count_only",
+    "algorithm": "es_mccfr",
+    "seed": 2,
+    "curve": [
+     {
+      "iterations": 100,
+      "exploitability": 2.088005255581174
+     },
+     {
+      "iterations": 300,
+      "exploitability": 1.182172690233652
+     },
+     {
+      "iterations": 1000,
+      "exploitability": 0.6017873642005522
+     },
+     {
+      "iterations": 3000,
+      "exploitability": 0.44482240336155043
+     },
+     {
+      "iterations": 10000,
+      "exploitability": 0.33849707735186974
+     },
+     {
+      "iterations": 30000,
+      "exploitability": 0.2857103172617792
+     },
+     {
+      "iterations": 100000,
+      "exploitability": 0.26595913260798804
+     }
+    ]
+   },
+   {
+    "abstraction": "round1_raise_count_only",
+    "algorithm": "es_mccfr",
+    "seed": 3,
+    "curve": [
+     {
+      "iterations": 100,
+      "exploitability": 2.0335300598231973
+     },
+     {
+      "iterations": 300,
+      "exploitability": 1.182640184384893
+     },
+     {
+      "iterations": 1000,
+      "exploitability": 0.73574353558443
+     },
+     {
+      "iterations": 3000,
+      "exploitability": 0.43033952963903666
+     },
+     {
+      "iterations": 10000,
+      "exploitability": 0.30314427669453403
+     },
+     {
+      "iterations": 30000,
+      "exploitability": 0.2463113642372935
+     },
+     {
+      "iterations": 100000,
+      "exploitability": 0.28855429417496714
+     }
+    ]
+   },
+   {
+    "abstraction": "perfect",
+    "algorithm": "dcfr",
+    "seed": 0,
+    "curve": [
+     {
+      "iterations": 10,
+      "exploitability": 0.7788020469962049
+     },
+     {
+      "iterations": 30,
+      "exploitability": 0.06377842416211725
+     },
+     {
+      "iterations": 100,
+      "exploitability": 0.007759096072989073
+     },
+     {
+      "iterations": 300,
+      "exploitability": 0.0011278628446977496
+     },
+     {
+      "iterations": 1000,
+      "exploitability": 0.0001543353380789314
+     },
+     {
+      "iterations": 3000,
+      "exploitability": 1.4186905593717436e-05
+     }
+    ]
+   },
+   {
+    "abstraction": "forget_round1_history",
+    "algorithm": "dcfr",
+    "seed": 0,
+    "curve": [
+     {
+      "iterations": 10,
+      "exploitability": 0.4567679113602163
+     },
+     {
+      "iterations": 30,
+      "exploitability": 0.6855379882099641
+     },
+     {
+      "iterations": 100,
+      "exploitability": 0.8958034633949399
+     },
+     {
+      "iterations": 300,
+      "exploitability": 0.9315369328938674
+     },
+     {
+      "iterations": 1000,
+      "exploitability": 0.9372418108890251
+     },
+     {
+      "iterations": 3000,
+      "exploitability": 0.9372066547306199
+     }
+    ]
+   },
+   {
+    "abstraction": "round1_raise_count_only",
+    "algorithm": "dcfr",
+    "seed": 0,
+    "curve": [
+     {
+      "iterations": 10,
+      "exploitability": 0.4459394516528733
+     },
+     {
+      "iterations": 30,
+      "exploitability": 0.32875954183336337
+     },
+     {
+      "iterations": 100,
+      "exploitability": 0.3854114200908698
+     },
+     {
+      "iterations": 300,
+      "exploitability": 0.3630863085013697
+     },
+     {
+      "iterations": 1000,
+      "exploitability": 0.39071706115569976
+     },
+     {
+      "iterations": 3000,
+      "exploitability": 0.3807290460227119
+     }
+    ]
+   }
+  ]
+ },
+ "commit": "e274932b89fcf83559391b548213e305fe1b4b56",
+ "H3_size_boundary_discontinuity": {
+  "question": "are confirmed local-sensitivity failures caused by the +10% perturbation moving the state across an abstraction boundary (faced-size class edges at 0.5 / 0.9 / 1.25 pot)?",
+  "failing_states": 81,
+  "failing_key_changes_share": 0.8025,
+  "control_states_facing_bet": 593,
+  "control_key_changes_share": 0.0489,
+  "changed_fields_failing": {
+   "betting_context+legal_set": 46,
+   "betting_context": 15,
+   "texture": 4
+  },
+  "changed_fields_control": {
+   "betting_context+legal_set": 19,
+   "betting_context": 7,
+   "texture": 3
+  },
+  "size_edges_pot_fraction": [
+   0.5,
+   0.9,
+   1.25
+  ],
+  "conclusion": "local sensitivity is predominantly an action-abstraction boundary discontinuity (16x enrichment of key changes), not policy noise",
+  "pre_registered_prediction_for_W1": "recorded 2026-10-11T20:33:48Z BEFORE the 4M artifacts existed: the W1 'training coverage' experiment should be NULL (failing-set jumps will not shrink more than controls), because a jump across a bucket boundary is not removed by more iterations"
+ }
+}

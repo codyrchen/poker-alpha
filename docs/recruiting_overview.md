@@ -71,8 +71,8 @@ to trust the strategy I computed?"*
 
 | result | number | source |
 | --- | --- | --- |
-| native training speedup | 38.1× warm (837 vs 22 it/s) | `results/benchmarks/native_mccfr_v1.json` |
-| cross-language parity | bitwise over 1,000 iterations | `tests/test_native_mccfr_parity.py` |
+| native training speedup | 74.2× warm training throughput, release config (1,625 vs 22 it/s; Phase I port 38.1×) | `results/benchmarks/native_mccfr_v2.json` |
+| cross-language parity | bitwise over 10,000 iterations (1,000 in CI) | `results/phase2/native_correctness_stress.json`, `tests/test_native_mccfr_parity.py` |
 | evaluator | all 2,598,960 five-card hands exact | `tests/test_native_evaluator.py` |
 | direct exact validation | exploitability ratio 1.04 vs Python on 7 games | `results/validation/native_direct_exact_validation.json` |
 | release training | 3 seeds × 2M iterations | `results/validation/native_training_2m.json` |
@@ -105,3 +105,74 @@ annotated frames. The observer is read-only by design.
    extrapolation caveat.
 5. Where the next real gain is: the measured abstraction floor (LBR +
    exact subgames) says better buckets, not more iterations.
+
+---
+
+## Interview artifacts (moonshot sprint additions)
+
+### 30-second pitch (nontechnical)
+"I built a poker AI from scratch — not a wrapper around anything. That
+means the game engine itself, the learning algorithm that trains by
+self-play, a C++ backend, then profiled and optimized, that made training 74× faster while provably
+staying the same algorithm, and a trust system that makes it refuse to
+answer when its own evidence is weak. Then I turned it into a product:
+you can watch it learn in the browser, play against it, and see exactly
+where it fails."
+
+### 2-minute pitch (technical) — added beats
+CFR family implemented from the ground up; external-sampling MCCFR at
+Hold'em scale on an imperfect-recall abstraction whose error is measured
+by exactly solving subgames; full hot path in C++17 with shared-random-
+tape bitwise parity (FMA contraction caught and disabled); confidence
+gate calibrated on 8,880 exact EV-regret targets with the negative
+result that policy movement predicts nothing; automated red team that
+searches legal states for fragility; the whole thing generalized to a
+Game interface running Kuhn, Leduc and a non-poker auction.
+
+### Hardest bugs (all real)
+1. **FMA contraction broke cross-language bit parity** — one fused
+   multiply-add in betting arithmetic, last-ulp difference, forked whole
+   MCCFR trajectories through sampling. Fix: -ffp-contract=off + fsum
+   dot product; the parity suite exists because of this class of bug.
+2. **BLAS dot-product dispatch** made CFR digests machine-dependent
+   (OpenBLAS picks CPU kernels at runtime) — replaced with an exactly
+   rounded fsum.
+3. **Paired rollout uncertainty** — regret was initially reported with
+   sqrt(se_a²+se_b²), wrong under common random numbers; fixed by
+   preserving the paired-difference table in the report.
+4. **Nearest-size regret** — mapping a real 60%-pot bet to the 75% node
+   and scoring its EV as "your EV" was quietly dishonest; fixed by
+   injecting the exact size into the rollout menu on the same sample
+   tape (EXACT/TRANSLATED/UNMAPPED mapping semantics).
+5. **A stale frozen engine** 500'd on /demo-spots because the bundled
+   binary predated a refactor — caught by the standalone outside-repo
+   smoke test, which is why that test exists.
+
+### Tradeoff stories
+accuracy vs abstraction (measured subgame error, permanent LOW caps) ·
+compute vs convergence (2M stopping decision: movement under the noise
+floor) · coverage vs confidence (v2 rule: 1.68× coverage at equal
+accepted risk, movement kept only as a cheap conjunction) · product
+polish vs scientific honesty (REJECTED cells show no numbers, ever).
+
+### Resume bullets (factual)
+- SWE: "Built a C++17/pybind11 training backend for a Monte-Carlo
+  counterfactual-regret poker solver; 74.2× measured speedup with
+  bitwise cross-language parity enforced in CI."
+- Quant: "Calibrated a per-state abstention rule for solver output
+  against exact EV-regret targets from 8,880 solved-game states;
+  shipped the negative result that policy movement is not a trust
+  signal."
+- Research eng: "Built an automated red team that generates legal poker
+  states and clusters measured solver fragility; discovery/confirmation
+  split enforced."
+- ML systems: "Designed reproducibility receipts (content-addressed
+  analysis records with seeds and artifact SHAs) with a verifier that
+  re-runs and compares."
+
+### "What would you change?"
+Collect the independent labeled PokerNow sessions the observer
+validation is blocked on; spend the next large compute budget on
+abstraction refinement where the red team's clusters point (preflop
+seed-disagreement regions), with the adaptive-refinement experiment
+design already written.

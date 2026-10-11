@@ -1,0 +1,100 @@
+{
+ "format": "pokeralpha.phase2.native_memory/v1",
+ "native_backend": "0.1.0",
+ "commit": "19686d47e5c861c4c64a911a4f0afeee9ad1d0da",
+ "config": "HoldemSolverConfig:v2:733e52f1d1014e2e7973",
+ "baseline_process_rss_mb": 38.5625,
+ "milestones": [
+  {
+   "iterations": 10000,
+   "infosets": 102604,
+   "segment_it_per_s": 1718.7937544266995,
+   "peak_rss_mb": 120.71875,
+   "approx_table_bytes": 16962272,
+   "feature_cache_entries": 246161,
+   "river_board_cache_entries": 937
+  },
+  {
+   "iterations": 25000,
+   "infosets": 117180,
+   "segment_it_per_s": 1641.2963660398148,
+   "peak_rss_mb": 128.140625,
+   "approx_table_bytes": 18478176,
+   "feature_cache_entries": 167613,
+   "river_board_cache_entries": 600
+  },
+  {
+   "iterations": 50000,
+   "infosets": 125969,
+   "segment_it_per_s": 1560.2663244077596,
+   "peak_rss_mb": 130.46875,
+   "approx_table_bytes": 19392232,
+   "feature_cache_entries": 505412,
+   "river_board_cache_entries": 2622
+  },
+  {
+   "iterations": 100000,
+   "infosets": 132684,
+   "segment_it_per_s": 1590.0145011427708,
+   "peak_rss_mb": 131.53125,
+   "approx_table_bytes": 20090592,
+   "feature_cache_entries": 1044322,
+   "river_board_cache_entries": 2952
+  },
+  {
+   "iterations": 200000,
+   "infosets": 137808,
+   "segment_it_per_s": 1634.4870568718857,
+   "peak_rss_mb": 131.53125,
+   "approx_table_bytes": 20623488,
+   "feature_cache_entries": 397113,
+   "river_board_cache_entries": 2894
+  },
+  {
+   "iterations": 400000,
+   "infosets": 141962,
+   "segment_it_per_s": 1629.4975419991013,
+   "peak_rss_mb": 131.53125,
+   "approx_table_bytes": 21055504,
+   "feature_cache_entries": 323285,
+   "river_board_cache_entries": 1899
+  },
+  {
+   "iterations": 700000,
+   "infosets": 144710,
+   "segment_it_per_s": 1516.0133202279915,
+   "peak_rss_mb": 131.53125,
+   "approx_table_bytes": 21341296,
+   "feature_cache_entries": 899032,
+   "river_board_cache_entries": 3392
+  },
+  {
+   "iterations": 1000000,
+   "infosets": 145955,
+   "segment_it_per_s": 1480.3107463531705,
+   "peak_rss_mb": 131.53125,
+   "approx_table_bytes": 21470776,
+   "feature_cache_entries": 148456,
+   "river_board_cache_entries": 2500
+  }
+ ],
+ "fit_rss_mb_per_infoset": 0.00022506885473291946,
+ "fit_rss_intercept_mb": 100.11449439982168,
+ "fit_infosets_vs_iterations_exponent_tail": 0.03605505927696517,
+ "bytes_per_infoset_table_only": 147.10545031002707,
+ "extrapolation": {
+  "8GB": {
+   "infosets": 35952933.22660084,
+   "iterations_for_that_table_at_this_abstraction": 1.9900885580252725e+72
+  },
+  "16GB": {
+   "infosets": 72350683.63822989,
+   "iterations_for_that_table_at_this_abstraction": 5.276322468992989e+80
+  },
+  "32GB": {
+   "infosets": 145146184.461488,
+   "iterations_for_that_table_at_this_abstraction": 1.283740228661424e+89
+  }
+ },
+ "extrapolation_label": "EXTRAPOLATION from a linear RSS-vs-infosets fit and a 4-point power-law fit of infosets vs iterations; the abstraction's reachable key space is finite, so the iteration estimates are upper-bound-unsafe and likely never reached"
+}

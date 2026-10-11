@@ -94,11 +94,28 @@ export function apiBase(): string {
   return DEFAULT_API;
 }
 
+/** Thrown when the local engine speaks a different API version: the web
+ *  app must never render responses whose contract it does not understand. */
+export class ApiVersionError extends Error {
+  constructor(public got: unknown) {
+    super(`engine API version ${JSON.stringify(got)} is not ${API_VERSION}`);
+    this.name = "ApiVersionError";
+  }
+}
+
+export function requireApiVersion<T extends { api?: unknown }>(j: T): T {
+  if (!j || j.api !== API_VERSION) throw new ApiVersionError(j?.api);
+  return j;
+}
+
+/** Healthy AND speaking this client's API version. A running engine with a
+ *  different version is reported as not connected (the UI falls back to the
+ *  bundled pre-computed data rather than mis-rendering live output). */
 export async function checkHealth(base: string): Promise<boolean> {
   try {
     const r = await fetch(`${base}/health`, { signal: AbortSignal.timeout(1500) });
     const j = await r.json();
-    return j.status === "ok";
+    return j.status === "ok" && j.api === API_VERSION;
   } catch {
     return false;
   }
@@ -115,7 +132,7 @@ export async function analyze(
     body: JSON.stringify({ state, settings }),
   });
   if (!r.ok) throw new Error(`${r.status}: ${await r.text()}`);
-  return r.json();
+  return requireApiVersion(await r.json());
 }
 
 export async function preflopMatrix(
@@ -124,7 +141,7 @@ export async function preflopMatrix(
 ): Promise<PreflopMatrixResponse> {
   const r = await fetch(`${base}/strategy/preflop?node=${encodeURIComponent(node)}`);
   if (!r.ok) throw new Error(`${r.status}`);
-  return r.json();
+  return requireApiVersion(await r.json());
 }
 
 export async function sessionReview(
@@ -137,7 +154,7 @@ export async function sessionReview(
     body: JSON.stringify({ hands }),
   });
   if (!r.ok) throw new Error(`${r.status}: ${await r.text()}`);
-  const j = await r.json();
+  const j = requireApiVersion(await r.json());
   return j.review;
 }
 

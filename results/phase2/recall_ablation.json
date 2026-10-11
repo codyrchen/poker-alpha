@@ -1,0 +1,244 @@
+{
+ "format": "pokeralpha.phase2.recall_ablation/v1",
+ "game": "Leduc",
+ "solver": "CFR+ on the abstract game",
+ "metric": "exact exploitability of the lifted strategy in real Leduc (chips)",
+ "results": [
+  {
+   "abstraction": "perfect",
+   "description": "perfect recall (identity)",
+   "infosets": 288,
+   "table_bytes": 10752,
+   "curve": [
+    {
+     "iterations": 10,
+     "exploitability_in_leduc": 0.6104389015904067,
+     "train_seconds": 0.4843126670457423
+    },
+    {
+     "iterations": 30,
+     "exploitability_in_leduc": 0.0817692540896661,
+     "train_seconds": 1.541756167076528
+    },
+    {
+     "iterations": 100,
+     "exploitability_in_leduc": 0.013415994971658532,
+     "train_seconds": 5.185156292049214
+    },
+    {
+     "iterations": 300,
+     "exploitability_in_leduc": 0.002371990594771542,
+     "train_seconds": 15.110915167024359
+    },
+    {
+     "iterations": 1000,
+     "exploitability_in_leduc": 0.00025010103818067647,
+     "train_seconds": 49.13083141692914
+    },
+    {
+     "iterations": 3000,
+     "exploitability_in_leduc": 3.414497571689601e-05,
+     "train_seconds": 146.053912792122
+    }
+   ],
+   "seconds_per_iteration": 0.048684637597374
+  },
+  {
+   "abstraction": "merge_JQ_round1_only",
+   "description": "card abstraction in round 1, exact in round 2 (perfect recall)",
+   "infosets": 282,
+   "table_bytes": 10528,
+   "curve": [
+    {
+     "iterations": 10,
+     "exploitability_in_leduc": 0.6499204477865513,
+     "train_seconds": 0.5043246671557426
+    },
+    {
+     "iterations": 30,
+     "exploitability_in_leduc": 0.19564123867674613,
+     "train_seconds": 1.5645952501799911
+    },
+    {
+     "iterations": 100,
+     "exploitability_in_leduc": 0.13469351221925147,
+     "train_seconds": 5.2402697501238436
+    },
+    {
+     "iterations": 300,
+     "exploitability_in_leduc": 0.12761319254897557,
+     "train_seconds": 15.588046958204359
+    },
+    {
+     "iterations": 1000,
+     "exploitability_in_leduc": 0.1302607428303244,
+     "train_seconds": 50.70046600000933
+    },
+    {
+     "iterations": 3000,
+     "exploitability_in_leduc": 0.1306038603944418,
+     "train_seconds": 149.8432679581456
+    }
+   ],
+   "seconds_per_iteration": 0.04994775598604853
+  },
+  {
+   "abstraction": "merge_JQ_both_rounds",
+   "description": "card abstraction in both rounds (perfect recall)",
+   "infosets": 192,
+   "table_bytes": 7168,
+   "curve": [
+    {
+     "iterations": 10,
+     "exploitability_in_leduc": 1.153992612941434,
+     "train_seconds": 0.5141410001087934
+    },
+    {
+     "iterations": 30,
+     "exploitability_in_leduc": 0.7692258093032414,
+     "train_seconds": 1.6141429580748081
+    },
+    {
+     "iterations": 100,
+     "exploitability_in_leduc": 0.7451301614038224,
+     "train_seconds": 5.346143000060692
+    },
+    {
+     "iterations": 300,
+     "exploitability_in_leduc": 0.7408944961104311,
+     "train_seconds": 15.718177875038236
+    },
+    {
+     "iterations": 1000,
+     "exploitability_in_leduc": 0.7318464567177299,
+     "train_seconds": 50.78339237510227
+    },
+    {
+     "iterations": 3000,
+     "exploitability_in_leduc": 0.7286408576429714,
+     "train_seconds": 150.49450620799325
+    }
+   ],
+   "seconds_per_iteration": 0.05016483540266442
+  },
+  {
+   "abstraction": "round1_raise_count_only",
+   "description": "round-1 history compressed to its raise count (imperfect recall)",
+   "infosets": 180,
+   "table_bytes": 6720,
+   "curve": [
+    {
+     "iterations": 10,
+     "exploitability_in_leduc": 0.5597124470976653,
+     "train_seconds": 0.5340877920389175
+    },
+    {
+     "iterations": 30,
+     "exploitability_in_leduc": 0.2800740688696565,
+     "train_seconds": 1.6521233750972897
+    },
+    {
+     "iterations": 100,
+     "exploitability_in_leduc": 0.3712781458351748,
+     "train_seconds": 5.4115981250070035
+    },
+    {
+     "iterations": 300,
+     "exploitability_in_leduc": 0.3911621174789709,
+     "train_seconds": 15.989652208983898
+    },
+    {
+     "iterations": 1000,
+     "exploitability_in_leduc": 0.3935487014780632,
+     "train_seconds": 52.230951874982566
+    },
+    {
+     "iterations": 3000,
+     "exploitability_in_leduc": 0.3968299275759072,
+     "train_seconds": 154.31068212492391
+    }
+   ],
+   "seconds_per_iteration": 0.051436894041641305
+  },
+  {
+   "abstraction": "forget_round1_history",
+   "description": "round-1 betting forgotten in round 2 (imperfect recall)",
+   "infosets": 72,
+   "table_bytes": 2688,
+   "curve": [
+    {
+     "iterations": 10,
+     "exploitability_in_leduc": 0.4785421766296214,
+     "train_seconds": 0.5189784998074174
+    },
+    {
+     "iterations": 30,
+     "exploitability_in_leduc": 0.5481272728236914,
+     "train_seconds": 1.6120293748099357
+    },
+    {
+     "iterations": 100,
+     "exploitability_in_leduc": 0.8589633441420241,
+     "train_seconds": 5.334670124808326
+    },
+    {
+     "iterations": 300,
+     "exploitability_in_leduc": 0.931005634031616,
+     "train_seconds": 15.67342595779337
+    },
+    {
+     "iterations": 1000,
+     "exploitability_in_leduc": 0.9433934666640872,
+     "train_seconds": 50.96021824982017
+    },
+    {
+     "iterations": 3000,
+     "exploitability_in_leduc": 0.9393621301046242,
+     "train_seconds": 151.35706454189494
+    }
+   ],
+   "seconds_per_iteration": 0.05045235484729831
+  },
+  {
+   "abstraction": "forget_own_rank_round2",
+   "description": "round 2 keeps only pair/above/below the public card (imperfect recall)",
+   "infosets": 228,
+   "table_bytes": 8512,
+   "curve": [
+    {
+     "iterations": 10,
+     "exploitability_in_leduc": 0.9180775899241529,
+     "train_seconds": 0.5324655410367996
+    },
+    {
+     "iterations": 30,
+     "exploitability_in_leduc": 0.543655210665489,
+     "train_seconds": 1.6384867911692709
+    },
+    {
+     "iterations": 100,
+     "exploitability_in_leduc": 0.4319710117006808,
+     "train_seconds": 5.405321541009471
+    },
+    {
+     "iterations": 300,
+     "exploitability_in_leduc": 0.44357504569956463,
+     "train_seconds": 15.96141866617836
+    },
+    {
+     "iterations": 1000,
+     "exploitability_in_leduc": 0.44582661104802124,
+     "train_seconds": 51.597918041050434
+    },
+    {
+     "iterations": 3000,
+     "exploitability_in_leduc": 0.4440501944323555,
+     "train_seconds": 152.61838270816952
+    }
+   ],
+   "seconds_per_iteration": 0.05087279423605651
+  }
+ ],
+ "seconds": 154.4,
+ "commit": "d5f727a05d5c40b52032e0e24bfeefb31b53d9e2"
+}

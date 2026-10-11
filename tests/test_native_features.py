@@ -70,3 +70,29 @@ def test_monotone_and_paired_boards():
     ]
     for hole, board in cases:
         _assert_match(hole, board)
+
+
+def _flush_heavy_boards(n, seed):
+    """Boards with exactly 3, 4 or 5 cards of one suit (the cases where the
+    native river table deduplicates flush-suit holdings by exact card)."""
+    rng = np.random.default_rng(seed)
+    for i in range(n):
+        k = 3 + i % 3
+        suit = int(rng.integers(4))
+        suited = rng.choice(13, size=k, replace=False) * 0 + suit * 13 + rng.choice(13, size=k, replace=False)
+        others = [c for c in range(52) if c // 13 != suit]
+        rest = rng.choice(others, size=5 - k, replace=False).tolist()
+        board = [int(c) for c in suited] + rest
+        live = [c for c in range(52) if c not in board]
+        hole = rng.choice(live, size=2, replace=False).tolist()
+        yield tuple(hole), tuple(board)
+
+
+def test_river_percentile_fine_buckets_on_flush_boards():
+    # 255 buckets resolves percentile differences of < 1/255; pins the
+    # deduplicated native river table (Phase II) against the Python
+    # 1,081-holding enumeration on the boards where dedup is most delicate.
+    for hole, board in _flush_heavy_boards(900, seed=31):
+        _assert_match(hole, board, buckets=255)
+    for hole, board in _random_cases(600, 5, seed=32):
+        _assert_match(hole, board, buckets=255)

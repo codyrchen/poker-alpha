@@ -50,6 +50,11 @@ cleanup() {
   for pid in ${PIDS[@]+"${PIDS[@]}"}; do
     kill "$pid" 2>/dev/null || true
   done
+  # final sweep for the exact services this script starts (spawn chains
+  # like npm->next-server can escape the parent/child kills above)
+  pkill -f "streamlit run poker_alpha/ui/app.py" 2>/dev/null || true
+  pkill -f "poker_alpha.api" 2>/dev/null || true
+  pkill -f "next-server (v" 2>/dev/null || true
   wait 2>/dev/null || true
 }
 trap cleanup EXIT INT TERM
@@ -142,9 +147,15 @@ cat <<MENU
  4. Strategy explorer        http://localhost:8501   (Study -> Strategy Explorer)
  5. Trainer                  http://localhost:8501   (Study -> Trainer)
 ${WEB:+ 6. Web product frontend     http://localhost:3000}
-${WEB:+ 7. Research / benchmarks    http://localhost:3000/benchmarks}
- 8. Desktop overlay          ./scripts/demo_product.sh --desktop
- 9. Research story (CLI)     .venv/bin/python -m poker_alpha.demo
+${WEB:+ 7. 90-second tour           http://localhost:3000/tour}
+${WEB:+ 8. Watch a Solver Learn     http://localhost:3000/learn}
+${WEB:+ 9. Arena (play it)          http://localhost:3000/arena}
+${WEB:+10. Research Lab             http://localhost:3000/lab}
+${WEB:+11. Decision Surface         http://localhost:3000/surface}
+${WEB:+12. Trust Map                http://localhost:3000/trust}
+${WEB:+13. Engineering story        http://localhost:3000/engineering}
+14. Desktop overlay          ./scripts/demo_product.sh --desktop
+15. Research story (CLI)     .venv/bin/python -m poker_alpha.demo
 ============================================================
  API: http://127.0.0.1:8765/docs   Logs: /tmp/pokeralpha_demo_*.log
  Everything is local; nothing is uploaded. Ctrl-C to stop.

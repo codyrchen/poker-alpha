@@ -13,7 +13,7 @@ Streamlit app and the web app, and prints this menu). Manual setup:
 
 1. **Homepage** (http://localhost:3000, 20 s) — "High-performance
    imperfect-information game solving." Point at the two columns: what it
-   is (C++17, 38.1×, 2M iterations, exact validation) and what it is NOT
+   is (C++17, 74.2×, 2M iterations, exact validation) and what it is NOT
    (not GTO — the engine says so itself).
 2. **Analyzer** (/analyze, 40 s) — demo spot 1: a solver-ACCEPTED river
    mix. Read the row tag out loud: HIGHEST FREQUENCY, not "recommended" —
@@ -36,7 +36,7 @@ Streamlit app and the web app, and prints this menu). Manual setup:
 6. **Desktop overlay** (30 s) — `cd apps/desktop && npm start`: the
    always-on-top compact summary, expanded state, click-through toggle,
    and the engine sidecar in the logs. The packaged app bundles the engine (standalone, unsigned).
-7. **The engineering story** (30 s) — /benchmarks: 38.1× native backend
+7. **The engineering story** (30 s) — /benchmarks: 74.2× native backend
    with bit-exact parity; API answers a full analysis in ~0.1 s warm.
 8. **Close on abstention** (20 s) — "Every surface obeys the same rule:
    when the evidence is weak, PokerAlpha says so instead of inventing a
@@ -51,7 +51,7 @@ done once.
 
 ## 0. One-line framing (15 s)
 
-> "PokerAlpha solves imperfect-information games, accelerates training 38×
+> "PokerAlpha solves imperfect-information games, accelerates training 74×
 > with a bitwise-verified C++ backend, and — the interesting part —
 > calibrates *when not to trust its own strategy* against exactly solved
 > games."
@@ -68,7 +68,7 @@ budget, the regime-change failure and its fix, and the performance work.
 Point out: every printed number is computed live or read from a committed
 CSV, and it says which.
 
-## 2. The 38× native backend (60 s)
+## 2. The 74× native backend (60 s)
 
 ```bash
 python experiments/validate_native_solver.py
@@ -78,7 +78,7 @@ python experiments/validate_native_solver.py
 **bitwise random-tape MCCFR parity**, exact checkpoint resume, artifact
 round trip. Then show the headline:
 
-- open `results/figures/native_speedup.png` (837 vs 22 it/s, 38.1×);
+- open `results/figures/native_speedup.png` (1,625 vs 22 it/s, 74.2×);
 - mention: entire hot path in C++17, one pybind crossing per training
   chunk, GIL released, `-ffp-contract=off` because the parity suite caught
   FMA changing results in the last ulp.

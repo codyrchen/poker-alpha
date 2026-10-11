@@ -109,6 +109,18 @@ class ReducedPreflopGame(Game):
         p = 1.0 / len(self._deals)
         return [(p, PFState(d, ())) for d in self._deals]
 
+    def sample_chance(self, s, rng):
+        # Same single ``rng.choice`` draw as Game.sample_chance (identical RNG
+        # stream and results), without rebuilding every deal state per call;
+        # Phase II profiling found the rebuild dominated MCCFR on this game.
+        cache = self.__dict__.get("_chance_cache")
+        if cache is None:
+            outs = self.chance_outcomes(s)
+            probs = np.array([q for q, _ in outs])
+            cache = self.__dict__["_chance_cache"] = ([o for _, o in outs], probs / probs.sum())
+        states, probs = cache
+        return states[int(rng.choice(len(probs), p=probs))]
+
     def is_terminal(self, s):
         h = s.history
         if not h or s.holes is None:
@@ -238,6 +250,16 @@ class RiverSubgame(Game):
 
     def chance_outcomes(self, s):
         return [(w, RState(d, ())) for d, w in self._deals]
+
+    def sample_chance(self, s, rng):
+        # see ReducedPreflopGame.sample_chance (identical RNG consumption)
+        cache = self.__dict__.get("_chance_cache")
+        if cache is None:
+            outs = self.chance_outcomes(s)
+            probs = np.array([q for q, _ in outs])
+            cache = self.__dict__["_chance_cache"] = ([o for _, o in outs], probs / probs.sum())
+        states, probs = cache
+        return states[int(rng.choice(len(probs), p=probs))]
 
     def is_terminal(self, s):
         h = s.history

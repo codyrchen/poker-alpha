@@ -1,0 +1,3968 @@
+{
+ "format": "pokeralpha.phase2.translation/v1",
+ "question": "how much worst-case value does action translation cost, by mapping and by off-tree size?",
+ "definition": "cost = opponent best-response value vs our translated strategy minus vs our best strategy restricted to the coarse menu in the same fine game (chips, pot 10); us=0 OOP, us=1 IP",
+ "fine_menu": [
+  0.25,
+  0.5,
+  0.75,
+  1.0,
+  1.5,
+  2.0
+ ],
+ "coarse_menus": {
+  "B_50_100": [
+   0.5,
+   1.0
+  ],
+  "C_33_75_150": [
+   0.33,
+   0.75,
+   1.5
+  ]
+ },
+ "summary": {
+  "B_50_100": {
+   "us=0": {
+    "translation_cost_vs_restricted_equilibrium": {
+     "nearest": 0.16135927779459835,
+     "nearest_log": 0.16053412645771914,
+     "pseudo_harmonic": 0.16060006126560344
+    },
+    "restricted_equilibrium_br_value": -0.9924941440482729,
+    "cost_by_single_offtree_size": {
+     "0.25": {
+      "nearest": 0.09472758405871472,
+      "nearest_log": 0.09472758405871472,
+      "pseudo_harmonic": 0.09472758405871472
+     },
+     "0.75": {
+      "nearest": 0.04853987842893327,
+      "nearest_log": 0.028460467998020076,
+      "pseudo_harmonic": 0.002755728744587242
+     },
+     "1.5": {
+      "nearest": 0.06656936661801859,
+      "nearest_log": 0.06656936661801859,
+      "pseudo_harmonic": 0.06656936661801859
+     },
+     "2.0": {
+      "nearest": 0.0,
+      "nearest_log": 0.0,
+      "pseudo_harmonic": 0.0
+     }
+    }
+   },
+   "us=1": {
+    "translation_cost_vs_restricted_equilibrium": {
+     "nearest": 0.8194702903955868,
+     "nearest_log": 0.8837457378311664,
+     "pseudo_harmonic": 0.8087159748955182
+    },
+    "restricted_equilibrium_br_value": 1.0072997890243474,
+    "cost_by_single_offtree_size": {
+     "0.25": {
+      "nearest": 0.5045933145234271,
+      "nearest_log": 0.5045933145234271,
+      "pseudo_harmonic": 0.5045933145234271
+     },
+     "0.75": {
+      "nearest": 0.14114534279079868,
+      "nearest_log": 0.40754346114636764,
+      "pseudo_harmonic": 0.0038505997288506835
+     },
+     "1.5": {
+      "nearest": 0.3556014016810043,
+      "nearest_log": 0.3556014016810043,
+      "pseudo_harmonic": 0.3556014016810043
+     },
+     "2.0": {
+      "nearest": 0.0,
+      "nearest_log": 0.0,
+      "pseudo_harmonic": 0.0
+     }
+    }
+   }
+  },
+  "C_33_75_150": {
+   "us=0": {
+    "translation_cost_vs_restricted_equilibrium": {
+     "nearest": 0.06527358448016585,
+     "nearest_log": 0.09604579958131043,
+     "pseudo_harmonic": 0.0237649430987813
+    },
+    "restricted_equilibrium_br_value": -0.9959141806185626,
+    "cost_by_single_offtree_size": {
+     "0.25": {
+      "nearest": 0.02036117552688646,
+      "nearest_log": 0.02036117552688646,
+      "pseudo_harmonic": 0.02036117552688646
+     },
+     "2.0": {
+      "nearest": 0.0,
+      "nearest_log": 0.0,
+      "pseudo_harmonic": 0.0
+     }
+    }
+   },
+   "us=1": {
+    "translation_cost_vs_restricted_equilibrium": {
+     "nearest": 0.22009983758205132,
+     "nearest_log": 0.6012239684642633,
+     "pseudo_harmonic": 0.07560385085849997
+    },
+    "restricted_equilibrium_br_value": 1.0071495897177054,
+    "cost_by_single_offtree_size": {
+     "0.25": {
+      "nearest": 0.06292135211639738,
+      "nearest_log": 0.06292135211639738,
+      "pseudo_harmonic": 0.06292135211639738
+     },
+     "2.0": {
+      "nearest": 0.0,
+      "nearest_log": 0.0,
+      "pseudo_harmonic": 0.0
+     }
+    }
+   }
+  }
+ },
+ "instances": [
+  {
+   "name": "dry_high polarized vs bluff-catcher",
+   "seed": 4242,
+   "coarse": "B_50_100",
+   "full_fine": {
+    "us=0": {
+     "restricted_menu_equilibrium": -2.6512485157988106,
+     "nearest": -2.6516199017475452,
+     "nearest_log": -2.6516199017475452,
+     "pseudo_harmonic": -2.6516199017475452,
+     "coarse_world_no_offtree": -2.6516199017475452
+    },
+    "us=1": {
+     "restricted_menu_equilibrium": 2.6542289773003183,
+     "nearest": 3.9646216684881725,
+     "nearest_log": 3.9646216684881725,
+     "pseudo_harmonic": 3.9646216684881725,
+     "coarse_world_no_offtree": 2.65395066189339
+    }
+   },
+   "single": {
+    "0.25": {
+     "us=0": {
+      "restricted_menu_equilibrium": -2.6515181175089304,
+      "nearest": -2.6516199017475452,
+      "nearest_log": -2.6516199017475452,
+      "pseudo_harmonic": -2.6516199017475452,
+      "coarse_world_no_offtree": -2.6516199017475452
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 2.6544346940687125,
+      "nearest": 3.3167339717326354,
+      "nearest_log": 3.3167339717326354,
+      "pseudo_harmonic": 3.3167339717326354,
+      "coarse_world_no_offtree": 2.65395066189339
+     }
+    },
+    "0.75": {
+     "us=0": {
+      "restricted_menu_equilibrium": -2.6500557453639746,
+      "nearest": -2.6516199017475452,
+      "nearest_log": -2.6516199017475452,
+      "pseudo_harmonic": -2.6516199017475452,
+      "coarse_world_no_offtree": -2.6516199017475452
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 2.654455603318542,
+      "nearest": 2.7099589437079294,
+      "nearest_log": 3.0764401370372902,
+      "pseudo_harmonic": 2.65395066189339,
+      "coarse_world_no_offtree": 2.65395066189339
+     }
+    },
+    "1.5": {
+     "us=0": {
+      "restricted_menu_equilibrium": -2.6512857157988954,
+      "nearest": -2.6516199017475452,
+      "nearest_log": -2.6516199017475452,
+      "pseudo_harmonic": -2.6516199017475452,
+      "coarse_world_no_offtree": -2.6516199017475452
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 2.6537382053638665,
+      "nearest": 3.301838358648927,
+      "nearest_log": 3.301838358648927,
+      "pseudo_harmonic": 3.301838358648927,
+      "coarse_world_no_offtree": 2.65395066189339
+     }
+    },
+    "2.0": {
+     "us=0": {
+      "restricted_menu_equilibrium": -2.6516199017475452,
+      "nearest": -2.6516199017475452,
+      "nearest_log": -2.6516199017475452,
+      "pseudo_harmonic": -2.6516199017475452,
+      "coarse_world_no_offtree": -2.6516199017475452
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 2.65395066189339,
+      "nearest": 2.65395066189339,
+      "nearest_log": 2.65395066189339,
+      "pseudo_harmonic": 2.65395066189339,
+      "coarse_world_no_offtree": 2.65395066189339
+     }
+    }
+   }
+  },
+  {
+   "name": "dry_high polarized vs bluff-catcher",
+   "seed": 4242,
+   "coarse": "C_33_75_150",
+   "full_fine": {
+    "us=0": {
+     "restricted_menu_equilibrium": -2.650819897887045,
+     "nearest": -2.650687892658792,
+     "nearest_log": -2.650694187012196,
+     "pseudo_harmonic": -2.6506941454280004,
+     "coarse_world_no_offtree": -2.6506932079195904
+    },
+    "us=1": {
+     "restricted_menu_equilibrium": 2.6540325587995888,
+     "nearest": 2.818606460943986,
+     "nearest_log": 3.2842953002607693,
+     "pseudo_harmonic": 2.654492401483572,
+     "coarse_world_no_offtree": 2.654492401483572
+    }
+   },
+   "single": {
+    "0.25": {
+     "us=0": {
+      "restricted_menu_equilibrium": -2.6505110868801802,
+      "nearest": -2.6506932079195904,
+      "nearest_log": -2.6506932079195904,
+      "pseudo_harmonic": -2.6506932079195904,
+      "coarse_world_no_offtree": -2.6506932079195904
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 2.6533965249571194,
+      "nearest": 2.654492401483572,
+      "nearest_log": 2.654492401483572,
+      "pseudo_harmonic": 2.654492401483572,
+      "coarse_world_no_offtree": 2.654492401483572
+     }
+    },
+    "2.0": {
+     "us=0": {
+      "restricted_menu_equilibrium": -2.6506932079195904,
+      "nearest": -2.6506932079195904,
+      "nearest_log": -2.6506932079195904,
+      "pseudo_harmonic": -2.6506932079195904,
+      "coarse_world_no_offtree": -2.6506932079195904
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 2.654492401483572,
+      "nearest": 2.654492401483572,
+      "nearest_log": 2.654492401483572,
+      "pseudo_harmonic": 2.654492401483572,
+      "coarse_world_no_offtree": 2.654492401483572
+     }
+    }
+   }
+  },
+  {
+   "name": "dry_high polarized vs bluff-catcher",
+   "seed": 4243,
+   "coarse": "B_50_100",
+   "full_fine": {
+    "us=0": {
+     "restricted_menu_equilibrium": -2.0114208100417397,
+     "nearest": -1.9912112067820653,
+     "nearest_log": -1.9912112067820653,
+     "pseudo_harmonic": -1.9912112067820653,
+     "coarse_world_no_offtree": -2.0115956229124308
+    },
+    "us=1": {
+     "restricted_menu_equilibrium": 2.020019821211088,
+     "nearest": 3.052098126507108,
+     "nearest_log": 3.1637364410942417,
+     "pseudo_harmonic": 3.052098126507108,
+     "coarse_world_no_offtree": 2.0140227054157025
+    }
+   },
+   "single": {
+    "0.25": {
+     "us=0": {
+      "restricted_menu_equilibrium": -2.011574627001298,
+      "nearest": -1.9912112067820653,
+      "nearest_log": -1.9912112067820653,
+      "pseudo_harmonic": -1.9912112067820653,
+      "coarse_world_no_offtree": -2.0115956229124308
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 2.0143098340265806,
+      "nearest": 2.5362614433843707,
+      "nearest_log": 2.5362614433843707,
+      "pseudo_harmonic": 2.5362614433843707,
+      "coarse_world_no_offtree": 2.0140227054157025
+     }
+    },
+    "0.75": {
+     "us=0": {
+      "restricted_menu_equilibrium": -2.0114730163253283,
+      "nearest": -2.0115956229124308,
+      "nearest_log": -2.0115956229124308,
+      "pseudo_harmonic": -2.0115956229124308,
+      "coarse_world_no_offtree": -2.0115956229124308
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 2.0142322030532833,
+      "nearest": 2.1359057571941835,
+      "nearest_log": 2.626872153206486,
+      "pseudo_harmonic": 2.0158932648266177,
+      "coarse_world_no_offtree": 2.0140227054157025
+     }
+    },
+    "1.5": {
+     "us=0": {
+      "restricted_menu_equilibrium": -2.0116730335590773,
+      "nearest": -2.0115956229124308,
+      "nearest_log": -2.0115956229124308,
+      "pseudo_harmonic": -2.0115956229124308,
+      "coarse_world_no_offtree": -2.0115956229124308
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 2.0200049324979963,
+      "nearest": 2.5298593885384397,
+      "nearest_log": 2.5298593885384397,
+      "pseudo_harmonic": 2.5298593885384397,
+      "coarse_world_no_offtree": 2.0140227054157025
+     }
+    },
+    "2.0": {
+     "us=0": {
+      "restricted_menu_equilibrium": -2.0115956229124308,
+      "nearest": -2.0115956229124308,
+      "nearest_log": -2.0115956229124308,
+      "pseudo_harmonic": -2.0115956229124308,
+      "coarse_world_no_offtree": -2.0115956229124308
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 2.0140227054157025,
+      "nearest": 2.0140227054157025,
+      "nearest_log": 2.0140227054157025,
+      "pseudo_harmonic": 2.0140227054157025,
+      "coarse_world_no_offtree": 2.0140227054157025
+     }
+    }
+   }
+  },
+  {
+   "name": "dry_high polarized vs bluff-catcher",
+   "seed": 4243,
+   "coarse": "C_33_75_150",
+   "full_fine": {
+    "us=0": {
+     "restricted_menu_equilibrium": -2.0167887539333766,
+     "nearest": -2.0167298585798314,
+     "nearest_log": -2.016738242806969,
+     "pseudo_harmonic": -2.016738242806969,
+     "coarse_world_no_offtree": -2.016736756919271
+    },
+    "us=1": {
+     "restricted_menu_equilibrium": 2.0199181358963814,
+     "nearest": 2.178549896732496,
+     "nearest_log": 2.6918393137993575,
+     "pseudo_harmonic": 2.0228320104566606,
+     "coarse_world_no_offtree": 2.019906883382079
+    }
+   },
+   "single": {
+    "0.25": {
+     "us=0": {
+      "restricted_menu_equilibrium": -2.0169536912680655,
+      "nearest": -2.016736756919271,
+      "nearest_log": -2.016736756919271,
+      "pseudo_harmonic": -2.016736756919271,
+      "coarse_world_no_offtree": -2.016736756919271
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 2.0198197156487256,
+      "nearest": 2.019906883382079,
+      "nearest_log": 2.019906883382079,
+      "pseudo_harmonic": 2.019906883382079,
+      "coarse_world_no_offtree": 2.019906883382079
+     }
+    },
+    "2.0": {
+     "us=0": {
+      "restricted_menu_equilibrium": -2.016736756919271,
+      "nearest": -2.016736756919271,
+      "nearest_log": -2.016736756919271,
+      "pseudo_harmonic": -2.016736756919271,
+      "coarse_world_no_offtree": -2.016736756919271
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 2.019906883382079,
+      "nearest": 2.019906883382079,
+      "nearest_log": 2.019906883382079,
+      "pseudo_harmonic": 2.019906883382079,
+      "coarse_world_no_offtree": 2.019906883382079
+     }
+    }
+   }
+  },
+  {
+   "name": "dry_high polarized vs bluff-catcher",
+   "seed": 4244,
+   "coarse": "B_50_100",
+   "full_fine": {
+    "us=0": {
+     "restricted_menu_equilibrium": -4.999235645368742,
+     "nearest": -4.999374316594453,
+     "nearest_log": -4.999374316594453,
+     "pseudo_harmonic": -4.999374316594453,
+     "coarse_world_no_offtree": -4.999374316594453
+    },
+    "us=1": {
+     "restricted_menu_equilibrium": 5.001564945513614,
+     "nearest": 5.21615053982322,
+     "nearest_log": 5.249796749358494,
+     "pseudo_harmonic": 5.2097534950243745,
+     "coarse_world_no_offtree": 5.000394954445445
+    }
+   },
+   "single": {
+    "0.25": {
+     "us=0": {
+      "restricted_menu_equilibrium": -4.999250720365438,
+      "nearest": -4.999374316594453,
+      "nearest_log": -4.999374316594453,
+      "pseudo_harmonic": -4.999374316594453,
+      "coarse_world_no_offtree": -4.999374316594453
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 5.000541912715166,
+      "nearest": 5.035399974141233,
+      "nearest_log": 5.035399974141233,
+      "pseudo_harmonic": 5.035399974141233,
+      "coarse_world_no_offtree": 5.000394954445445
+     }
+    },
+    "0.75": {
+     "us=0": {
+      "restricted_menu_equilibrium": -4.999495633554902,
+      "nearest": -4.999374316594453,
+      "nearest_log": -4.999374316594453,
+      "pseudo_harmonic": -4.999374316594453,
+      "coarse_world_no_offtree": -4.999374316594453
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 5.000497885069636,
+      "nearest": 5.055497356814271,
+      "nearest_log": 5.075209016502544,
+      "pseudo_harmonic": 5.000394954445445,
+      "coarse_world_no_offtree": 5.000394954445445
+     }
+    },
+    "1.5": {
+     "us=0": {
+      "restricted_menu_equilibrium": -4.999372364458443,
+      "nearest": -4.999374316594453,
+      "nearest_log": -4.999374316594453,
+      "pseudo_harmonic": -4.999374316594453,
+      "coarse_world_no_offtree": -4.999374316594453
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 5.0007880110045235,
+      "nearest": 5.174748475328587,
+      "nearest_log": 5.174748475328587,
+      "pseudo_harmonic": 5.174748475328587,
+      "coarse_world_no_offtree": 5.000394954445445
+     }
+    },
+    "2.0": {
+     "us=0": {
+      "restricted_menu_equilibrium": -4.999374316594453,
+      "nearest": -4.999374316594453,
+      "nearest_log": -4.999374316594453,
+      "pseudo_harmonic": -4.999374316594453,
+      "coarse_world_no_offtree": -4.999374316594453
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 5.000394954445445,
+      "nearest": 5.000394954445445,
+      "nearest_log": 5.000394954445445,
+      "pseudo_harmonic": 5.000394954445445,
+      "coarse_world_no_offtree": 5.000394954445445
+     }
+    }
+   }
+  },
+  {
+   "name": "dry_high polarized vs bluff-catcher",
+   "seed": 4244,
+   "coarse": "C_33_75_150",
+   "full_fine": {
+    "us=0": {
+     "restricted_menu_equilibrium": -4.998101873841049,
+     "nearest": -4.998142989399354,
+     "nearest_log": -4.998142989399354,
+     "pseudo_harmonic": -4.998142989399354,
+     "coarse_world_no_offtree": -4.998142989399354
+    },
+    "us=1": {
+     "restricted_menu_equilibrium": 5.0014044661464405,
+     "nearest": 5.071654529112065,
+     "nearest_log": 5.1967255571073885,
+     "pseudo_harmonic": 5.0223769003802,
+     "coarse_world_no_offtree": 5.000682559012939
+    }
+   },
+   "single": {
+    "0.25": {
+     "us=0": {
+      "restricted_menu_equilibrium": -4.996035484116524,
+      "nearest": -4.998142989399354,
+      "nearest_log": -4.998142989399354,
+      "pseudo_harmonic": -4.998142989399354,
+      "coarse_world_no_offtree": -4.998142989399354
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 5.001164934932597,
+      "nearest": 5.021721356356014,
+      "nearest_log": 5.021721356356014,
+      "pseudo_harmonic": 5.021721356356014,
+      "coarse_world_no_offtree": 5.000682559012939
+     }
+    },
+    "2.0": {
+     "us=0": {
+      "restricted_menu_equilibrium": -4.998142989399354,
+      "nearest": -4.998142989399354,
+      "nearest_log": -4.998142989399354,
+      "pseudo_harmonic": -4.998142989399354,
+      "coarse_world_no_offtree": -4.998142989399354
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 5.000682559012939,
+      "nearest": 5.000682559012939,
+      "nearest_log": 5.000682559012939,
+      "pseudo_harmonic": 5.000682559012939,
+      "coarse_world_no_offtree": 5.000682559012939
+     }
+    }
+   }
+  },
+  {
+   "name": "paired uncapped vs capped",
+   "seed": 4242,
+   "coarse": "B_50_100",
+   "full_fine": {
+    "us=0": {
+     "restricted_menu_equilibrium": 0.7874702249202011,
+     "nearest": 1.277888775541624,
+     "nearest_log": 1.276927235946407,
+     "pseudo_harmonic": 1.276927235946407,
+     "coarse_world_no_offtree": 0.7842672860983472
+    },
+    "us=1": {
+     "restricted_menu_equilibrium": -0.7832067373643439,
+     "nearest": 0.009115768590873152,
+     "nearest_log": -0.032302818838734204,
+     "pseudo_harmonic": -0.03631244143944934,
+     "coarse_world_no_offtree": -0.7832333036298833
+    }
+   },
+   "single": {
+    "0.25": {
+     "us=0": {
+      "restricted_menu_equilibrium": 0.7844685524377032,
+      "nearest": 0.9974450823336309,
+      "nearest_log": 0.9974450823336309,
+      "pseudo_harmonic": 0.9974450823336309,
+      "coarse_world_no_offtree": 0.7842672860983472
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -0.7828302409776854,
+      "nearest": -0.14615456656500636,
+      "nearest_log": -0.14615456656500636,
+      "pseudo_harmonic": -0.14615456656500636,
+      "coarse_world_no_offtree": -0.7832333036298833
+     }
+    },
+    "0.75": {
+     "us=0": {
+      "restricted_menu_equilibrium": 0.7875012980357705,
+      "nearest": 0.988659752855813,
+      "nearest_log": 0.9302882743788277,
+      "pseudo_harmonic": 0.7935156055848437,
+      "coarse_world_no_offtree": 0.7842672860983472
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -0.7830795621812796,
+      "nearest": -0.4804554137602335,
+      "nearest_log": -0.4731124709395982,
+      "pseudo_harmonic": -0.7832333036298833,
+      "coarse_world_no_offtree": -0.7832333036298833
+     }
+    },
+    "1.5": {
+     "us=0": {
+      "restricted_menu_equilibrium": 0.7843726242923471,
+      "nearest": 1.0637494397111236,
+      "nearest_log": 1.0637494397111236,
+      "pseudo_harmonic": 1.0637494397111236,
+      "coarse_world_no_offtree": 0.7842672860983472
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -0.7834032995920235,
+      "nearest": -0.5258836237905562,
+      "nearest_log": -0.5258836237905562,
+      "pseudo_harmonic": -0.5258836237905562,
+      "coarse_world_no_offtree": -0.7832333036298833
+     }
+    },
+    "2.0": {
+     "us=0": {
+      "restricted_menu_equilibrium": 0.7842672860983472,
+      "nearest": 0.7842672860983472,
+      "nearest_log": 0.7842672860983472,
+      "pseudo_harmonic": 0.7842672860983472,
+      "coarse_world_no_offtree": 0.7842672860983472
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -0.7832333036298833,
+      "nearest": -0.7832333036298833,
+      "nearest_log": -0.7832333036298833,
+      "pseudo_harmonic": -0.7832333036298833,
+      "coarse_world_no_offtree": -0.7832333036298833
+     }
+    }
+   }
+  },
+  {
+   "name": "paired uncapped vs capped",
+   "seed": 4242,
+   "coarse": "C_33_75_150",
+   "full_fine": {
+    "us=0": {
+     "restricted_menu_equilibrium": 0.7878040464042373,
+     "nearest": 1.0138483625427996,
+     "nearest_log": 1.1283941362444352,
+     "pseudo_harmonic": 0.8412251095114073,
+     "coarse_world_no_offtree": 0.7776046182764793
+    },
+    "us=1": {
+     "restricted_menu_equilibrium": -0.7755631864062942,
+     "nearest": -0.4216223868775404,
+     "nearest_log": -0.1956427004687482,
+     "pseudo_harmonic": -0.6811147900877214,
+     "coarse_world_no_offtree": -0.7757943661541465
+    }
+   },
+   "single": {
+    "0.25": {
+     "us=0": {
+      "restricted_menu_equilibrium": 0.7780281290017124,
+      "nearest": 0.8226186910536859,
+      "nearest_log": 0.8226186910536859,
+      "pseudo_harmonic": 0.8226186910536859,
+      "coarse_world_no_offtree": 0.7776046182764793
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -0.7757191386541029,
+      "nearest": -0.6812779696152312,
+      "nearest_log": -0.6812779696152312,
+      "pseudo_harmonic": -0.6812779696152312,
+      "coarse_world_no_offtree": -0.7757943661541465
+     }
+    },
+    "2.0": {
+     "us=0": {
+      "restricted_menu_equilibrium": 0.7776046182764793,
+      "nearest": 0.7776046182764793,
+      "nearest_log": 0.7776046182764793,
+      "pseudo_harmonic": 0.7776046182764793,
+      "coarse_world_no_offtree": 0.7776046182764793
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -0.7757943661541465,
+      "nearest": -0.7757943661541465,
+      "nearest_log": -0.7757943661541465,
+      "pseudo_harmonic": -0.7757943661541465,
+      "coarse_world_no_offtree": -0.7757943661541465
+     }
+    }
+   }
+  },
+  {
+   "name": "paired uncapped vs capped",
+   "seed": 4243,
+   "coarse": "B_50_100",
+   "full_fine": {
+    "us=0": {
+     "restricted_menu_equilibrium": 1.9774427844253584,
+     "nearest": 2.7452566944455983,
+     "nearest_log": 2.7452566944455983,
+     "pseudo_harmonic": 2.7452566944455983,
+     "coarse_world_no_offtree": 1.974791221204073
+    },
+    "us=1": {
+     "restricted_menu_equilibrium": -1.9733310832091606,
+     "nearest": -0.854170208934774,
+     "nearest_log": -0.9494514543099142,
+     "pseudo_harmonic": -0.9494514543099142,
+     "coarse_world_no_offtree": -1.9732195354022501
+    }
+   },
+   "single": {
+    "0.25": {
+     "us=0": {
+      "restricted_menu_equilibrium": 1.9748093830977655,
+      "nearest": 2.2475300983114805,
+      "nearest_log": 2.2475300983114805,
+      "pseudo_harmonic": 2.2475300983114805,
+      "coarse_world_no_offtree": 1.974791221204073
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -1.9730489118273702,
+      "nearest": -0.9528099483793648,
+      "nearest_log": -0.9528099483793648,
+      "pseudo_harmonic": -0.9528099483793648,
+      "coarse_world_no_offtree": -1.9732195354022501
+     }
+    },
+    "0.75": {
+     "us=0": {
+      "restricted_menu_equilibrium": 1.9774593650800707,
+      "nearest": 2.3191724206999877,
+      "nearest_log": 2.164719336891663,
+      "pseudo_harmonic": 1.997448298809221,
+      "coarse_world_no_offtree": 1.974791221204073
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -1.9732916016205724,
+      "nearest": -1.7219641462814896,
+      "nearest_log": -1.449044586379689,
+      "pseudo_harmonic": -1.9416007181979926,
+      "coarse_world_no_offtree": -1.9732195354022501
+     }
+    },
+    "1.5": {
+     "us=0": {
+      "restricted_menu_equilibrium": 1.9747800170053829,
+      "nearest": 2.4725178173381903,
+      "nearest_log": 2.4725178173381903,
+      "pseudo_harmonic": 2.4725178173381903,
+      "coarse_world_no_offtree": 1.974791221204073
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -1.973399878124888,
+      "nearest": -1.8215326855307536,
+      "nearest_log": -1.8215326855307536,
+      "pseudo_harmonic": -1.8215326855307536,
+      "coarse_world_no_offtree": -1.9732195354022501
+     }
+    },
+    "2.0": {
+     "us=0": {
+      "restricted_menu_equilibrium": 1.974791221204073,
+      "nearest": 1.974791221204073,
+      "nearest_log": 1.974791221204073,
+      "pseudo_harmonic": 1.974791221204073,
+      "coarse_world_no_offtree": 1.974791221204073
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -1.9732195354022501,
+      "nearest": -1.9732195354022501,
+      "nearest_log": -1.9732195354022501,
+      "pseudo_harmonic": -1.9732195354022501,
+      "coarse_world_no_offtree": -1.9732195354022501
+     }
+    }
+   }
+  },
+  {
+   "name": "paired uncapped vs capped",
+   "seed": 4243,
+   "coarse": "C_33_75_150",
+   "full_fine": {
+    "us=0": {
+     "restricted_menu_equilibrium": 1.97743451020425,
+     "nearest": 2.3562069203012372,
+     "nearest_log": 2.5316244427952244,
+     "pseudo_harmonic": 2.0480814152968065,
+     "coarse_world_no_offtree": 1.9725944558882413
+    },
+    "us=1": {
+     "restricted_menu_equilibrium": -1.9702121829817436,
+     "nearest": -1.5153833294060375,
+     "nearest_log": -1.050942753096822,
+     "pseudo_harmonic": -1.7155396866022035,
+     "coarse_world_no_offtree": -1.969973790209588
+    }
+   },
+   "single": {
+    "0.25": {
+     "us=0": {
+      "restricted_menu_equilibrium": 1.9730318876814592,
+      "nearest": 2.017165822310801,
+      "nearest_log": 2.017165822310801,
+      "pseudo_harmonic": 2.017165822310801,
+      "coarse_world_no_offtree": 1.9725944558882413
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -1.9702730126691477,
+      "nearest": -1.740685907368666,
+      "nearest_log": -1.740685907368666,
+      "pseudo_harmonic": -1.740685907368666,
+      "coarse_world_no_offtree": -1.969973790209588
+     }
+    },
+    "2.0": {
+     "us=0": {
+      "restricted_menu_equilibrium": 1.9725944558882413,
+      "nearest": 1.9725944558882413,
+      "nearest_log": 1.9725944558882413,
+      "pseudo_harmonic": 1.9725944558882413,
+      "coarse_world_no_offtree": 1.9725944558882413
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -1.969973790209588,
+      "nearest": -1.969973790209588,
+      "nearest_log": -1.969973790209588,
+      "pseudo_harmonic": -1.969973790209588,
+      "coarse_world_no_offtree": -1.969973790209588
+     }
+    }
+   }
+  },
+  {
+   "name": "paired uncapped vs capped",
+   "seed": 4244,
+   "coarse": "B_50_100",
+   "full_fine": {
+    "us=0": {
+     "restricted_menu_equilibrium": 0.15007338518099422,
+     "nearest": 0.9720235464192388,
+     "nearest_log": 0.9720235464192388,
+     "pseudo_harmonic": 0.9720235464192388,
+     "coarse_world_no_offtree": 0.14391728501916506
+    },
+    "us=1": {
+     "restricted_menu_equilibrium": -0.14074385915861642,
+     "nearest": 0.5638058391544853,
+     "nearest_log": 0.6641167701044552,
+     "pseudo_harmonic": 0.5638058391544853,
+     "coarse_world_no_offtree": -0.14095615936022154
+    }
+   },
+   "single": {
+    "0.25": {
+     "us=0": {
+      "restricted_menu_equilibrium": 0.14423096235691418,
+      "nearest": 0.42122483754784645,
+      "nearest_log": 0.42122483754784645,
+      "pseudo_harmonic": 0.42122483754784645,
+      "coarse_world_no_offtree": 0.14391728501916506
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -0.14077124361025906,
+      "nearest": 0.2525416146257211,
+      "nearest_log": 0.2525416146257211,
+      "pseudo_harmonic": 0.2525416146257211,
+      "coarse_world_no_offtree": -0.14095615936022154
+     }
+    },
+    "0.75": {
+     "us=0": {
+      "restricted_menu_equilibrium": 0.14998753700163686,
+      "nearest": 0.5291754040800422,
+      "nearest_log": 0.34083876090184395,
+      "pseudo_harmonic": 0.17398266594553274,
+      "coarse_world_no_offtree": 0.14391728501916506
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -0.14089988570572798,
+      "nearest": 0.024702120835709884,
+      "nearest_log": 0.22449080899996193,
+      "pseudo_harmonic": -0.14095615936022154,
+      "coarse_world_no_offtree": -0.14095615936022154
+     }
+    },
+    "1.5": {
+     "us=0": {
+      "restricted_menu_equilibrium": 0.1440477230621257,
+      "nearest": 0.6948160328463773,
+      "nearest_log": 0.6948160328463773,
+      "pseudo_harmonic": 0.6948160328463773,
+      "coarse_world_no_offtree": 0.14391728501916506
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -0.14082249518112855,
+      "nearest": 0.2921444748804657,
+      "nearest_log": 0.2921444748804657,
+      "pseudo_harmonic": 0.2921444748804657,
+      "coarse_world_no_offtree": -0.14095615936022154
+     }
+    },
+    "2.0": {
+     "us=0": {
+      "restricted_menu_equilibrium": 0.14391728501916506,
+      "nearest": 0.14391728501916506,
+      "nearest_log": 0.14391728501916506,
+      "pseudo_harmonic": 0.14391728501916506,
+      "coarse_world_no_offtree": 0.14391728501916506
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -0.14095615936022154,
+      "nearest": -0.14095615936022154,
+      "nearest_log": -0.14095615936022154,
+      "pseudo_harmonic": -0.14095615936022154,
+      "coarse_world_no_offtree": -0.14095615936022154
+     }
+    }
+   }
+  },
+  {
+   "name": "paired uncapped vs capped",
+   "seed": 4244,
+   "coarse": "C_33_75_150",
+   "full_fine": {
+    "us=0": {
+     "restricted_menu_equilibrium": 0.15021165386707688,
+     "nearest": 0.5444496309880992,
+     "nearest_log": 0.7068047923245794,
+     "pseudo_harmonic": 0.22971124692236755,
+     "coarse_world_no_offtree": 0.1477928016795187
+    },
+    "us=1": {
+     "restricted_menu_equilibrium": -0.14452797396702888,
+     "nearest": 0.1539930182084116,
+     "nearest_log": 0.36426924974874164,
+     "pseudo_harmonic": -0.08579218098637942,
+     "coarse_world_no_offtree": -0.14479543431721775
+    }
+   },
+   "single": {
+    "0.25": {
+     "us=0": {
+      "restricted_menu_equilibrium": 0.14940912263593525,
+      "nearest": 0.21473199783776067,
+      "nearest_log": 0.21473199783776067,
+      "pseudo_harmonic": 0.21473199783776067,
+      "coarse_world_no_offtree": 0.1477928016795187
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -0.14458480359403914,
+      "nearest": -0.09595853011956068,
+      "nearest_log": -0.09595853011956068,
+      "pseudo_harmonic": -0.09595853011956068,
+      "coarse_world_no_offtree": -0.14479543431721775
+     }
+    },
+    "2.0": {
+     "us=0": {
+      "restricted_menu_equilibrium": 0.1477928016795187,
+      "nearest": 0.1477928016795187,
+      "nearest_log": 0.1477928016795187,
+      "pseudo_harmonic": 0.1477928016795187,
+      "coarse_world_no_offtree": 0.1477928016795187
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -0.14479543431721775,
+      "nearest": -0.14479543431721775,
+      "nearest_log": -0.14479543431721775,
+      "pseudo_harmonic": -0.14479543431721775,
+      "coarse_world_no_offtree": -0.14479543431721775
+     }
+    }
+   }
+  },
+  {
+   "name": "four-straight strong vs strong",
+   "seed": 4242,
+   "coarse": "B_50_100",
+   "full_fine": {
+    "us=0": {
+     "restricted_menu_equilibrium": -0.4413251424856578,
+     "nearest": -0.2424763530002776,
+     "nearest_log": -0.24248167126651454,
+     "pseudo_harmonic": -0.24248167126651454,
+     "coarse_world_no_offtree": -0.5143791955671285
+    },
+    "us=1": {
+     "restricted_menu_equilibrium": 0.6443524275774004,
+     "nearest": 0.8935261136022115,
+     "nearest_log": 0.8996415632351398,
+     "pseudo_harmonic": 0.8935261136022115,
+     "coarse_world_no_offtree": 0.5158309800010324
+    }
+   },
+   "single": {
+    "0.25": {
+     "us=0": {
+      "restricted_menu_equilibrium": -0.4411421846991764,
+      "nearest": -0.24248167126651454,
+      "nearest_log": -0.24248167126651454,
+      "pseudo_harmonic": -0.24248167126651454,
+      "coarse_world_no_offtree": -0.5143791955671285
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 0.6441038068692309,
+      "nearest": 0.8935261136022115,
+      "nearest_log": 0.8935261136022115,
+      "pseudo_harmonic": 0.8935261136022115,
+      "coarse_world_no_offtree": 0.5158309800010324
+     }
+    },
+    "0.75": {
+     "us=0": {
+      "restricted_menu_equilibrium": -0.5143551678424475,
+      "nearest": -0.5143738773008916,
+      "nearest_log": -0.5143791955671285,
+      "pseudo_harmonic": -0.5143791955671285,
+      "coarse_world_no_offtree": -0.5143791955671285
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 0.5159488303384114,
+      "nearest": 0.5158309800010324,
+      "nearest_log": 0.5219464296339609,
+      "pseudo_harmonic": 0.5158309800010324,
+      "coarse_world_no_offtree": 0.5158309800010324
+     }
+    },
+    "1.5": {
+     "us=0": {
+      "restricted_menu_equilibrium": -0.5145235628767546,
+      "nearest": -0.5143791955671285,
+      "nearest_log": -0.5143791955671285,
+      "pseudo_harmonic": -0.5143791955671285,
+      "coarse_world_no_offtree": -0.5143791955671285
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 0.515826073583697,
+      "nearest": 0.5158309800010324,
+      "nearest_log": 0.5158309800010324,
+      "pseudo_harmonic": 0.5158309800010324,
+      "coarse_world_no_offtree": 0.5158309800010324
+     }
+    },
+    "2.0": {
+     "us=0": {
+      "restricted_menu_equilibrium": -0.5143791955671285,
+      "nearest": -0.5143791955671285,
+      "nearest_log": -0.5143791955671285,
+      "pseudo_harmonic": -0.5143791955671285,
+      "coarse_world_no_offtree": -0.5143791955671285
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 0.5158309800010324,
+      "nearest": 0.5158309800010324,
+      "nearest_log": 0.5158309800010324,
+      "pseudo_harmonic": 0.5158309800010324,
+      "coarse_world_no_offtree": 0.5158309800010324
+     }
+    }
+   }
+  },
+  {
+   "name": "four-straight strong vs strong",
+   "seed": 4242,
+   "coarse": "C_33_75_150",
+   "full_fine": {
+    "us=0": {
+     "restricted_menu_equilibrium": -0.5401802515511207,
+     "nearest": -0.33872749366526633,
+     "nearest_log": -0.33084786240099595,
+     "pseudo_harmonic": -0.3812145248899146,
+     "coarse_world_no_offtree": -0.5802710851577619
+    },
+    "us=1": {
+     "restricted_menu_equilibrium": 0.643484405622095,
+     "nearest": 0.8925270077079109,
+     "nearest_log": 0.9527591078930384,
+     "pseudo_harmonic": 0.7745380942005587,
+     "coarse_world_no_offtree": 0.5817308421514793
+    }
+   },
+   "single": {
+    "0.25": {
+     "us=0": {
+      "restricted_menu_equilibrium": -0.5396693977466284,
+      "nearest": -0.38623454748786534,
+      "nearest_log": -0.38623454748786534,
+      "pseudo_harmonic": -0.38623454748786534,
+      "coarse_world_no_offtree": -0.5802710851577619
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 0.6451099667217246,
+      "nearest": 0.7572852289797523,
+      "nearest_log": 0.7572852289797523,
+      "pseudo_harmonic": 0.7572852289797523,
+      "coarse_world_no_offtree": 0.5817308421514793
+     }
+    },
+    "2.0": {
+     "us=0": {
+      "restricted_menu_equilibrium": -0.5802710851577619,
+      "nearest": -0.5802710851577619,
+      "nearest_log": -0.5802710851577619,
+      "pseudo_harmonic": -0.5802710851577619,
+      "coarse_world_no_offtree": -0.5802710851577619
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 0.5817308421514793,
+      "nearest": 0.5817308421514793,
+      "nearest_log": 0.5817308421514793,
+      "pseudo_harmonic": 0.5817308421514793,
+      "coarse_world_no_offtree": 0.5817308421514793
+     }
+    }
+   }
+  },
+  {
+   "name": "four-straight strong vs strong",
+   "seed": 4243,
+   "coarse": "B_50_100",
+   "full_fine": {
+    "us=0": {
+     "restricted_menu_equilibrium": -0.9651439814983012,
+     "nearest": -0.9071285378299558,
+     "nearest_log": -0.907136328011007,
+     "pseudo_harmonic": -0.907136328011007,
+     "coarse_world_no_offtree": -1.0083377356231706
+    },
+    "us=1": {
+     "restricted_menu_equilibrium": 1.009529606741755,
+     "nearest": 1.0088494900234743,
+     "nearest_log": 1.0088494900234743,
+     "pseudo_harmonic": 1.0088494900234743,
+     "coarse_world_no_offtree": 1.0087743317524702
+    }
+   },
+   "single": {
+    "0.25": {
+     "us=0": {
+      "restricted_menu_equilibrium": -0.9651507956461066,
+      "nearest": -0.907136328011007,
+      "nearest_log": -0.907136328011007,
+      "pseudo_harmonic": -0.907136328011007,
+      "coarse_world_no_offtree": -1.0083377356231706
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 1.0089352290725517,
+      "nearest": 1.0088494900234743,
+      "nearest_log": 1.0088494900234743,
+      "pseudo_harmonic": 1.0088494900234743,
+      "coarse_world_no_offtree": 1.0087743317524702
+     }
+    },
+    "0.75": {
+     "us=0": {
+      "restricted_menu_equilibrium": -1.008347707472318,
+      "nearest": -1.0083299454421195,
+      "nearest_log": -1.0083377356231706,
+      "pseudo_harmonic": -1.0083377356231706,
+      "coarse_world_no_offtree": -1.0083377356231706
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 1.0089547275812374,
+      "nearest": 1.0087743317524702,
+      "nearest_log": 1.0087743317524702,
+      "pseudo_harmonic": 1.0087743317524702,
+      "coarse_world_no_offtree": 1.0087743317524702
+     }
+    },
+    "1.5": {
+     "us=0": {
+      "restricted_menu_equilibrium": -1.0083927893746754,
+      "nearest": -1.0083377356231706,
+      "nearest_log": -1.0083377356231706,
+      "pseudo_harmonic": -1.0083377356231706,
+      "coarse_world_no_offtree": -1.0083377356231706
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 1.0089824905343139,
+      "nearest": 1.0087743317524702,
+      "nearest_log": 1.0087743317524702,
+      "pseudo_harmonic": 1.0087743317524702,
+      "coarse_world_no_offtree": 1.0087743317524702
+     }
+    },
+    "2.0": {
+     "us=0": {
+      "restricted_menu_equilibrium": -1.0083377356231706,
+      "nearest": -1.0083377356231706,
+      "nearest_log": -1.0083377356231706,
+      "pseudo_harmonic": -1.0083377356231706,
+      "coarse_world_no_offtree": -1.0083377356231706
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 1.0087743317524702,
+      "nearest": 1.0087743317524702,
+      "nearest_log": 1.0087743317524702,
+      "pseudo_harmonic": 1.0087743317524702,
+      "coarse_world_no_offtree": 1.0087743317524702
+     }
+    }
+   }
+  },
+  {
+   "name": "four-straight strong vs strong",
+   "seed": 4243,
+   "coarse": "C_33_75_150",
+   "full_fine": {
+    "us=0": {
+     "restricted_menu_equilibrium": -0.9648083492289093,
+     "nearest": -0.9544820124996862,
+     "nearest_log": -0.9545106083045585,
+     "pseudo_harmonic": -0.954509106208574,
+     "coarse_world_no_offtree": -1.0036558213116362
+    },
+    "us=1": {
+     "restricted_menu_equilibrium": 1.0051826170609401,
+     "nearest": 1.0315902492488878,
+     "nearest_log": 1.0315771988903257,
+     "pseudo_harmonic": 1.03158101845336,
+     "coarse_world_no_offtree": 1.0046836784319604
+    }
+   },
+   "single": {
+    "0.25": {
+     "us=0": {
+      "restricted_menu_equilibrium": -0.9646654725313302,
+      "nearest": -0.9545014576469995,
+      "nearest_log": -0.9545014576469995,
+      "pseudo_harmonic": -0.9545014576469995,
+      "coarse_world_no_offtree": -1.0036558213116362
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 1.0050500275377288,
+      "nearest": 1.031579114983799,
+      "nearest_log": 1.031579114983799,
+      "pseudo_harmonic": 1.031579114983799,
+      "coarse_world_no_offtree": 1.0046836784319604
+     }
+    },
+    "2.0": {
+     "us=0": {
+      "restricted_menu_equilibrium": -1.0036558213116362,
+      "nearest": -1.0036558213116362,
+      "nearest_log": -1.0036558213116362,
+      "pseudo_harmonic": -1.0036558213116362,
+      "coarse_world_no_offtree": -1.0036558213116362
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 1.0046836784319604,
+      "nearest": 1.0046836784319604,
+      "nearest_log": 1.0046836784319604,
+      "pseudo_harmonic": 1.0046836784319604,
+      "coarse_world_no_offtree": 1.0046836784319604
+     }
+    }
+   }
+  },
+  {
+   "name": "four-straight strong vs strong",
+   "seed": 4244,
+   "coarse": "B_50_100",
+   "full_fine": {
+    "us=0": {
+     "restricted_menu_equilibrium": -1.345463435470205,
+     "nearest": -1.280807772991452,
+     "nearest_log": -1.2808142509354008,
+     "pseudo_harmonic": -1.2808140114199464,
+     "coarse_world_no_offtree": -1.3455953096104287
+    },
+    "us=1": {
+     "restricted_menu_equilibrium": 1.346158745774104,
+     "nearest": 1.3458622803381064,
+     "nearest_log": 1.3484314935295634,
+     "pseudo_harmonic": 1.3458622803381064,
+     "coarse_world_no_offtree": 1.3458622803381064
+    }
+   },
+   "single": {
+    "0.25": {
+     "us=0": {
+      "restricted_menu_equilibrium": -1.3455391454165606,
+      "nearest": -1.2808142509354008,
+      "nearest_log": -1.2808142509354008,
+      "pseudo_harmonic": -1.2808142509354008,
+      "coarse_world_no_offtree": -1.3455953096104287
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 1.3460475064848159,
+      "nearest": 1.3458622803381064,
+      "nearest_log": 1.3458622803381064,
+      "pseudo_harmonic": 1.3458622803381064,
+      "coarse_world_no_offtree": 1.3458622803381064
+     }
+    },
+    "0.75": {
+     "us=0": {
+      "restricted_menu_equilibrium": -1.3455945076328795,
+      "nearest": -1.3455888316664797,
+      "nearest_log": -1.3455953096104287,
+      "pseudo_harmonic": -1.3455950700949741,
+      "coarse_world_no_offtree": -1.3455953096104287
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 1.34595612224219,
+      "nearest": 1.3458622803381064,
+      "nearest_log": 1.3484314935295634,
+      "pseudo_harmonic": 1.3458622803381064,
+      "coarse_world_no_offtree": 1.3458622803381064
+     }
+    },
+    "1.5": {
+     "us=0": {
+      "restricted_menu_equilibrium": -1.345618045485389,
+      "nearest": -1.3455953096104287,
+      "nearest_log": -1.3455953096104287,
+      "pseudo_harmonic": -1.3455953096104287,
+      "coarse_world_no_offtree": -1.3455953096104287
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 1.3459690472683115,
+      "nearest": 1.3458622803381064,
+      "nearest_log": 1.3458622803381064,
+      "pseudo_harmonic": 1.3458622803381064,
+      "coarse_world_no_offtree": 1.3458622803381064
+     }
+    },
+    "2.0": {
+     "us=0": {
+      "restricted_menu_equilibrium": -1.3455953096104287,
+      "nearest": -1.3455953096104287,
+      "nearest_log": -1.3455953096104287,
+      "pseudo_harmonic": -1.3455953096104287,
+      "coarse_world_no_offtree": -1.3455953096104287
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 1.3458622803381064,
+      "nearest": 1.3458622803381064,
+      "nearest_log": 1.3458622803381064,
+      "pseudo_harmonic": 1.3458622803381064,
+      "coarse_world_no_offtree": 1.3458622803381064
+     }
+    }
+   }
+  },
+  {
+   "name": "four-straight strong vs strong",
+   "seed": 4244,
+   "coarse": "C_33_75_150",
+   "full_fine": {
+    "us=0": {
+     "restricted_menu_equilibrium": -1.3452818871782044,
+     "nearest": -1.3444742408056678,
+     "nearest_log": -1.3444742408056678,
+     "pseudo_harmonic": -1.3444742408056678,
+     "coarse_world_no_offtree": -1.345403001852177
+    },
+    "us=1": {
+     "restricted_menu_equilibrium": 1.3461334823139055,
+     "nearest": 1.3460700479118834,
+     "nearest_log": 1.3556999742632607,
+     "pseudo_harmonic": 1.346064884818119,
+     "coarse_world_no_offtree": 1.3460631272574122
+    }
+   },
+   "single": {
+    "0.25": {
+     "us=0": {
+      "restricted_menu_equilibrium": -1.3454707139812019,
+      "nearest": -1.3444742408056678,
+      "nearest_log": -1.3444742408056678,
+      "pseudo_harmonic": -1.3444742408056678,
+      "coarse_world_no_offtree": -1.345403001852177
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 1.346079260470784,
+      "nearest": 1.3460631272574122,
+      "nearest_log": 1.3460631272574122,
+      "pseudo_harmonic": 1.3460631272574122,
+      "coarse_world_no_offtree": 1.3460631272574122
+     }
+    },
+    "2.0": {
+     "us=0": {
+      "restricted_menu_equilibrium": -1.345403001852177,
+      "nearest": -1.345403001852177,
+      "nearest_log": -1.345403001852177,
+      "pseudo_harmonic": -1.345403001852177,
+      "coarse_world_no_offtree": -1.345403001852177
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 1.3460631272574122,
+      "nearest": 1.3460631272574122,
+      "nearest_log": 1.3460631272574122,
+      "pseudo_harmonic": 1.3460631272574122,
+      "coarse_world_no_offtree": 1.3460631272574122
+     }
+    }
+   }
+  },
+  {
+   "name": "four-flush thin value",
+   "seed": 4242,
+   "coarse": "B_50_100",
+   "full_fine": {
+    "us=0": {
+     "restricted_menu_equilibrium": -4.62424407169806,
+     "nearest": -4.183231040213901,
+     "nearest_log": -4.183231040213901,
+     "pseudo_harmonic": -4.183231040213901,
+     "coarse_world_no_offtree": -4.624620261951028
+    },
+    "us=1": {
+     "restricted_menu_equilibrium": 4.626456521930455,
+     "nearest": 4.915995065152626,
+     "nearest_log": 4.915995065152626,
+     "pseudo_harmonic": 4.915995065152626,
+     "coarse_world_no_offtree": 4.625796648528256
+    }
+   },
+   "single": {
+    "0.25": {
+     "us=0": {
+      "restricted_menu_equilibrium": -4.624106361165701,
+      "nearest": -4.216801661224052,
+      "nearest_log": -4.216801661224052,
+      "pseudo_harmonic": -4.216801661224052,
+      "coarse_world_no_offtree": -4.624620261951028
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 4.626591402850935,
+      "nearest": 4.779912855684892,
+      "nearest_log": 4.779912855684892,
+      "pseudo_harmonic": 4.779912855684892,
+      "coarse_world_no_offtree": 4.625796648528256
+     }
+    },
+    "0.75": {
+     "us=0": {
+      "restricted_menu_equilibrium": -4.624645163760011,
+      "nearest": -4.594153196389577,
+      "nearest_log": -4.601331630645168,
+      "pseudo_harmonic": -4.6219470226936075,
+      "coarse_world_no_offtree": -4.624620261951028
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 4.625801008372384,
+      "nearest": 4.668953706228043,
+      "nearest_log": 4.7264262879159675,
+      "pseudo_harmonic": 4.625796648528256,
+      "coarse_world_no_offtree": 4.625796648528256
+     }
+    },
+    "1.5": {
+     "us=0": {
+      "restricted_menu_equilibrium": -4.624661056787678,
+      "nearest": -4.591049640940877,
+      "nearest_log": -4.591049640940877,
+      "pseudo_harmonic": -4.591049640940877,
+      "coarse_world_no_offtree": -4.624620261951028
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 4.625928572483065,
+      "nearest": 4.761927298290111,
+      "nearest_log": 4.761927298290111,
+      "pseudo_harmonic": 4.761927298290111,
+      "coarse_world_no_offtree": 4.625796648528256
+     }
+    },
+    "2.0": {
+     "us=0": {
+      "restricted_menu_equilibrium": -4.624620261951028,
+      "nearest": -4.624620261951028,
+      "nearest_log": -4.624620261951028,
+      "pseudo_harmonic": -4.624620261951028,
+      "coarse_world_no_offtree": -4.624620261951028
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 4.625796648528256,
+      "nearest": 4.625796648528256,
+      "nearest_log": 4.625796648528256,
+      "pseudo_harmonic": 4.625796648528256,
+      "coarse_world_no_offtree": 4.625796648528256
+     }
+    }
+   }
+  },
+  {
+   "name": "four-flush thin value",
+   "seed": 4242,
+   "coarse": "C_33_75_150",
+   "full_fine": {
+    "us=0": {
+     "restricted_menu_equilibrium": -4.623155241414289,
+     "nearest": -4.48718053693154,
+     "nearest_log": -4.327832236177663,
+     "pseudo_harmonic": -4.508174262250993,
+     "coarse_world_no_offtree": -4.625216021038901
+    },
+    "us=1": {
+     "restricted_menu_equilibrium": 4.629141988549403,
+     "nearest": 4.7503841751980715,
+     "nearest_log": 4.8263323474202835,
+     "pseudo_harmonic": 4.721456883745473,
+     "coarse_world_no_offtree": 4.6279374305726515
+    }
+   },
+   "single": {
+    "0.25": {
+     "us=0": {
+      "restricted_menu_equilibrium": -4.625493207395129,
+      "nearest": -4.511585880328978,
+      "nearest_log": -4.511585880328978,
+      "pseudo_harmonic": -4.511585880328978,
+      "coarse_world_no_offtree": -4.625216021038901
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 4.6283550878840405,
+      "nearest": 4.6818034747320185,
+      "nearest_log": 4.6818034747320185,
+      "pseudo_harmonic": 4.6818034747320185,
+      "coarse_world_no_offtree": 4.6279374305726515
+     }
+    },
+    "2.0": {
+     "us=0": {
+      "restricted_menu_equilibrium": -4.625216021038901,
+      "nearest": -4.625216021038901,
+      "nearest_log": -4.625216021038901,
+      "pseudo_harmonic": -4.625216021038901,
+      "coarse_world_no_offtree": -4.625216021038901
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 4.6279374305726515,
+      "nearest": 4.6279374305726515,
+      "nearest_log": 4.6279374305726515,
+      "pseudo_harmonic": 4.6279374305726515,
+      "coarse_world_no_offtree": 4.6279374305726515
+     }
+    }
+   }
+  },
+  {
+   "name": "four-flush thin value",
+   "seed": 4243,
+   "coarse": "B_50_100",
+   "full_fine": {
+    "us=0": {
+     "restricted_menu_equilibrium": -4.753613287108282,
+     "nearest": -4.484841734156511,
+     "nearest_log": -4.484841734156511,
+     "pseudo_harmonic": -4.484841734156511,
+     "coarse_world_no_offtree": -4.753226559106446
+    },
+    "us=1": {
+     "restricted_menu_equilibrium": 4.756723887370105,
+     "nearest": 5.026171647228664,
+     "nearest_log": 5.020830153519546,
+     "pseudo_harmonic": 5.020830153519546,
+     "coarse_world_no_offtree": 4.755927228278468
+    }
+   },
+   "single": {
+    "0.25": {
+     "us=0": {
+      "restricted_menu_equilibrium": -4.753561490462648,
+      "nearest": -4.500054739762226,
+      "nearest_log": -4.500054739762226,
+      "pseudo_harmonic": -4.500054739762226,
+      "coarse_world_no_offtree": -4.753226559106446
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 4.756136685908252,
+      "nearest": 4.870831756436141,
+      "nearest_log": 4.870831756436141,
+      "pseudo_harmonic": 4.870831756436141,
+      "coarse_world_no_offtree": 4.755927228278468
+     }
+    },
+    "0.75": {
+     "us=0": {
+      "restricted_menu_equilibrium": -4.753235814098288,
+      "nearest": -4.745623568294081,
+      "nearest_log": -4.729396007834002,
+      "pseudo_harmonic": -4.753226559106446,
+      "coarse_world_no_offtree": -4.753226559106446
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 4.75639391417976,
+      "nearest": 4.842826032603761,
+      "nearest_log": 4.835543858254622,
+      "pseudo_harmonic": 4.758014063234631,
+      "coarse_world_no_offtree": 4.755927228278468
+     }
+    },
+    "1.5": {
+     "us=0": {
+      "restricted_menu_equilibrium": -4.753325403889784,
+      "nearest": -4.738013553500731,
+      "nearest_log": -4.738013553500731,
+      "pseudo_harmonic": -4.738013553500731,
+      "coarse_world_no_offtree": -4.753226559106446
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 4.755775760246905,
+      "nearest": 4.90602884964394,
+      "nearest_log": 4.90602884964394,
+      "pseudo_harmonic": 4.90602884964394,
+      "coarse_world_no_offtree": 4.755927228278468
+     }
+    },
+    "2.0": {
+     "us=0": {
+      "restricted_menu_equilibrium": -4.753226559106446,
+      "nearest": -4.753226559106446,
+      "nearest_log": -4.753226559106446,
+      "pseudo_harmonic": -4.753226559106446,
+      "coarse_world_no_offtree": -4.753226559106446
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 4.755927228278468,
+      "nearest": 4.755927228278468,
+      "nearest_log": 4.755927228278468,
+      "pseudo_harmonic": 4.755927228278468,
+      "coarse_world_no_offtree": 4.755927228278468
+     }
+    }
+   }
+  },
+  {
+   "name": "four-flush thin value",
+   "seed": 4243,
+   "coarse": "C_33_75_150",
+   "full_fine": {
+    "us=0": {
+     "restricted_menu_equilibrium": -4.745326803708124,
+     "nearest": -4.73268003510003,
+     "nearest_log": -4.648773241421322,
+     "pseudo_harmonic": -4.740082793283488,
+     "coarse_world_no_offtree": -4.745483544493279
+    },
+    "us=1": {
+     "restricted_menu_equilibrium": 4.756609571287721,
+     "nearest": 4.860998276986978,
+     "nearest_log": 4.900848101399513,
+     "pseudo_harmonic": 4.787246601597836,
+     "coarse_world_no_offtree": 4.750360542663685
+    }
+   },
+   "single": {
+    "0.25": {
+     "us=0": {
+      "restricted_menu_equilibrium": -4.745057781049617,
+      "nearest": -4.741014130301195,
+      "nearest_log": -4.741014130301195,
+      "pseudo_harmonic": -4.741014130301195,
+      "coarse_world_no_offtree": -4.745483544493279
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 4.751061628239242,
+      "nearest": 4.781249754232607,
+      "nearest_log": 4.781249754232607,
+      "pseudo_harmonic": 4.781249754232607,
+      "coarse_world_no_offtree": 4.750360542663685
+     }
+    },
+    "2.0": {
+     "us=0": {
+      "restricted_menu_equilibrium": -4.745483544493279,
+      "nearest": -4.745483544493279,
+      "nearest_log": -4.745483544493279,
+      "pseudo_harmonic": -4.745483544493279,
+      "coarse_world_no_offtree": -4.745483544493279
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 4.750360542663685,
+      "nearest": 4.750360542663685,
+      "nearest_log": 4.750360542663685,
+      "pseudo_harmonic": 4.750360542663685,
+      "coarse_world_no_offtree": 4.750360542663685
+     }
+    }
+   }
+  },
+  {
+   "name": "four-flush thin value",
+   "seed": 4244,
+   "coarse": "B_50_100",
+   "full_fine": {
+    "us=0": {
+     "restricted_menu_equilibrium": -4.932870003140102,
+     "nearest": -4.774673240465375,
+     "nearest_log": -4.77617388858224,
+     "pseudo_harmonic": -4.77617388858224,
+     "coarse_world_no_offtree": -4.935860943857028
+    },
+    "us=1": {
+     "restricted_menu_equilibrium": 4.93929432992897,
+     "nearest": 5.080300577551205,
+     "nearest_log": 5.080767234559565,
+     "pseudo_harmonic": 5.080300577551205,
+     "coarse_world_no_offtree": 4.938285088780437
+    }
+   },
+   "single": {
+    "0.25": {
+     "us=0": {
+      "restricted_menu_equilibrium": -4.932833097759936,
+      "nearest": -4.777112387024428,
+      "nearest_log": -4.777112387024428,
+      "pseudo_harmonic": -4.777112387024428,
+      "coarse_world_no_offtree": -4.935860943857028
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 4.938247015430416,
+      "nearest": 4.98106261122639,
+      "nearest_log": 4.98106261122639,
+      "pseudo_harmonic": 4.98106261122639,
+      "coarse_world_no_offtree": 4.938285088780437
+     }
+    },
+    "0.75": {
+     "us=0": {
+      "restricted_menu_equilibrium": -4.9358494663357195,
+      "nearest": -4.933421797297974,
+      "nearest_log": -4.935860943857028,
+      "pseudo_harmonic": -4.935860943857028,
+      "coarse_world_no_offtree": -4.935860943857028
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 4.938524919118558,
+      "nearest": 4.958444072595311,
+      "nearest_log": 4.945453582559019,
+      "pseudo_harmonic": 4.938285088780437,
+      "coarse_world_no_offtree": 4.938285088780437
+     }
+    },
+    "1.5": {
+     "us=0": {
+      "restricted_menu_equilibrium": -4.935883937503588,
+      "nearest": -4.934922445414839,
+      "nearest_log": -4.934922445414839,
+      "pseudo_harmonic": -4.934922445414839,
+      "coarse_world_no_offtree": -4.935860943857028
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 4.939122724210671,
+      "nearest": 5.037523055105253,
+      "nearest_log": 5.037523055105253,
+      "pseudo_harmonic": 5.037523055105253,
+      "coarse_world_no_offtree": 4.938285088780437
+     }
+    },
+    "2.0": {
+     "us=0": {
+      "restricted_menu_equilibrium": -4.935860943857028,
+      "nearest": -4.935860943857028,
+      "nearest_log": -4.935860943857028,
+      "pseudo_harmonic": -4.935860943857028,
+      "coarse_world_no_offtree": -4.935860943857028
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 4.938285088780437,
+      "nearest": 4.938285088780437,
+      "nearest_log": 4.938285088780437,
+      "pseudo_harmonic": 4.938285088780437,
+      "coarse_world_no_offtree": 4.938285088780437
+     }
+    }
+   }
+  },
+  {
+   "name": "four-flush thin value",
+   "seed": 4244,
+   "coarse": "C_33_75_150",
+   "full_fine": {
+    "us=0": {
+     "restricted_menu_equilibrium": -4.930668794679495,
+     "nearest": -4.88862126248113,
+     "nearest_log": -4.890859225419532,
+     "pseudo_harmonic": -4.8924427412821645,
+     "coarse_world_no_offtree": -4.931073858620758
+    },
+    "us=1": {
+     "restricted_menu_equilibrium": 4.937628740599749,
+     "nearest": 4.970836384336835,
+     "nearest_log": 4.986244517084835,
+     "pseudo_harmonic": 4.968683973179335,
+     "coarse_world_no_offtree": 4.937232490117086
+    }
+   },
+   "single": {
+    "0.25": {
+     "us=0": {
+      "restricted_menu_equilibrium": -4.932525330338508,
+      "nearest": -4.893018885228987,
+      "nearest_log": -4.893018885228987,
+      "pseudo_harmonic": -4.893018885228987,
+      "coarse_world_no_offtree": -4.931073858620758
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 4.936685678804366,
+      "nearest": 4.937232490117086,
+      "nearest_log": 4.937232490117086,
+      "pseudo_harmonic": 4.937232490117086,
+      "coarse_world_no_offtree": 4.937232490117086
+     }
+    },
+    "2.0": {
+     "us=0": {
+      "restricted_menu_equilibrium": -4.931073858620758,
+      "nearest": -4.931073858620758,
+      "nearest_log": -4.931073858620758,
+      "pseudo_harmonic": -4.931073858620758,
+      "coarse_world_no_offtree": -4.931073858620758
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 4.937232490117086,
+      "nearest": 4.937232490117086,
+      "nearest_log": 4.937232490117086,
+      "pseudo_harmonic": 4.937232490117086,
+      "coarse_world_no_offtree": 4.937232490117086
+     }
+    }
+   }
+  },
+  {
+   "name": "monotone bluff-heavy",
+   "seed": 4242,
+   "coarse": "B_50_100",
+   "full_fine": {
+    "us=0": {
+     "restricted_menu_equilibrium": 0.6991046494288415,
+     "nearest": 0.6984281252358119,
+     "nearest_log": 0.6984281057583444,
+     "pseudo_harmonic": 0.6984281057583444,
+     "coarse_world_no_offtree": 0.697991349289215
+    },
+    "us=1": {
+     "restricted_menu_equilibrium": -0.6949463666160642,
+     "nearest": 0.5477094864888967,
+     "nearest_log": 0.5655492611021417,
+     "pseudo_harmonic": 0.5477094864888967,
+     "coarse_world_no_offtree": -0.695615231569551
+    }
+   },
+   "single": {
+    "0.25": {
+     "us=0": {
+      "restricted_menu_equilibrium": 0.6990118573623175,
+      "nearest": 0.6984281057583444,
+      "nearest_log": 0.6984281057583444,
+      "pseudo_harmonic": 0.6984281057583444,
+      "coarse_world_no_offtree": 0.697991349289215
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -0.6953298671713737,
+      "nearest": 0.10276709598393086,
+      "nearest_log": 0.10276709598393086,
+      "pseudo_harmonic": 0.10276709598393086,
+      "coarse_world_no_offtree": -0.695615231569551
+     }
+    },
+    "0.75": {
+     "us=0": {
+      "restricted_menu_equilibrium": 0.697869380669524,
+      "nearest": 0.6979913687666824,
+      "nearest_log": 0.697991349289215,
+      "pseudo_harmonic": 0.697991349289215,
+      "coarse_world_no_offtree": 0.697991349289215
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -0.6956072873233237,
+      "nearest": -0.622317230691109,
+      "nearest_log": -0.04088052875796738,
+      "pseudo_harmonic": -0.695615231569551,
+      "coarse_world_no_offtree": -0.695615231569551
+     }
+    },
+    "1.5": {
+     "us=0": {
+      "restricted_menu_equilibrium": 0.6976500991233827,
+      "nearest": 0.697991349289215,
+      "nearest_log": 0.697991349289215,
+      "pseudo_harmonic": 0.697991349289215,
+      "coarse_world_no_offtree": 0.697991349289215
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -0.6946958506216034,
+      "nearest": -0.2506728410645852,
+      "nearest_log": -0.2506728410645852,
+      "pseudo_harmonic": -0.2506728410645852,
+      "coarse_world_no_offtree": -0.695615231569551
+     }
+    },
+    "2.0": {
+     "us=0": {
+      "restricted_menu_equilibrium": 0.697991349289215,
+      "nearest": 0.697991349289215,
+      "nearest_log": 0.697991349289215,
+      "pseudo_harmonic": 0.697991349289215,
+      "coarse_world_no_offtree": 0.697991349289215
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -0.695615231569551,
+      "nearest": -0.695615231569551,
+      "nearest_log": -0.695615231569551,
+      "pseudo_harmonic": -0.695615231569551,
+      "coarse_world_no_offtree": -0.695615231569551
+     }
+    }
+   }
+  },
+  {
+   "name": "monotone bluff-heavy",
+   "seed": 4242,
+   "coarse": "C_33_75_150",
+   "full_fine": {
+    "us=0": {
+     "restricted_menu_equilibrium": 0.7009968869265547,
+     "nearest": 0.7012396972376738,
+     "nearest_log": 0.7012347127864689,
+     "pseudo_harmonic": 0.7012347127864689,
+     "coarse_world_no_offtree": 0.7012361511050071
+    },
+    "us=1": {
+     "restricted_menu_equilibrium": -0.6949556519454603,
+     "nearest": -0.5212982177307857,
+     "nearest_log": 0.16856160805872294,
+     "pseudo_harmonic": -0.6930316744725344,
+     "coarse_world_no_offtree": -0.6942730497849161
+    }
+   },
+   "single": {
+    "0.25": {
+     "us=0": {
+      "restricted_menu_equilibrium": 0.7017593728973066,
+      "nearest": 0.7012361511050071,
+      "nearest_log": 0.7012361511050071,
+      "pseudo_harmonic": 0.7012361511050071,
+      "coarse_world_no_offtree": 0.7012361511050071
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -0.6955041477057848,
+      "nearest": -0.6942730497849161,
+      "nearest_log": -0.6942730497849161,
+      "pseudo_harmonic": -0.6942730497849161,
+      "coarse_world_no_offtree": -0.6942730497849161
+     }
+    },
+    "2.0": {
+     "us=0": {
+      "restricted_menu_equilibrium": 0.7012361511050071,
+      "nearest": 0.7012361511050071,
+      "nearest_log": 0.7012361511050071,
+      "pseudo_harmonic": 0.7012361511050071,
+      "coarse_world_no_offtree": 0.7012361511050071
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -0.6942730497849161,
+      "nearest": -0.6942730497849161,
+      "nearest_log": -0.6942730497849161,
+      "pseudo_harmonic": -0.6942730497849161,
+      "coarse_world_no_offtree": -0.6942730497849161
+     }
+    }
+   }
+  },
+  {
+   "name": "monotone bluff-heavy",
+   "seed": 4243,
+   "coarse": "B_50_100",
+   "full_fine": {
+    "us=0": {
+     "restricted_menu_equilibrium": 2.5273694318530784,
+     "nearest": 2.527617854552037,
+     "nearest_log": 2.527608371868121,
+     "pseudo_harmonic": 2.527608427985829,
+     "coarse_world_no_offtree": 2.5275550119341057
+    },
+    "us=1": {
+     "restricted_menu_equilibrium": -2.5242857119631097,
+     "nearest": -1.5041779795345804,
+     "nearest_log": -1.4600593586879103,
+     "pseudo_harmonic": -1.5041779795345804,
+     "coarse_world_no_offtree": -2.524766617330031
+    }
+   },
+   "single": {
+    "0.25": {
+     "us=0": {
+      "restricted_menu_equilibrium": 2.5275392906398375,
+      "nearest": 2.527608371868121,
+      "nearest_log": 2.527608371868121,
+      "pseudo_harmonic": 2.527608371868121,
+      "coarse_world_no_offtree": 2.5275550119341057
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -2.5235271247904367,
+      "nearest": -1.7593309716831285,
+      "nearest_log": -1.7593309716831285,
+      "pseudo_harmonic": -1.7593309716831285,
+      "coarse_world_no_offtree": -2.524766617330031
+     }
+    },
+    "0.75": {
+     "us=0": {
+      "restricted_menu_equilibrium": 2.526904320838534,
+      "nearest": 2.5275644946180225,
+      "nearest_log": 2.5275550119341057,
+      "pseudo_harmonic": 2.5275550680518135,
+      "coarse_world_no_offtree": 2.5275550119341057
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -2.5240682665476393,
+      "nearest": -2.4769790257613624,
+      "nearest_log": -1.8319160596287203,
+      "pseudo_harmonic": -2.524766617330031,
+      "coarse_world_no_offtree": -2.524766617330031
+     }
+    },
+    "1.5": {
+     "us=0": {
+      "restricted_menu_equilibrium": 2.527541872621639,
+      "nearest": 2.5275550119341057,
+      "nearest_log": 2.5275550119341057,
+      "pseudo_harmonic": 2.5275550119341057,
+      "coarse_world_no_offtree": 2.5275550119341057
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -2.523982763299979,
+      "nearest": -2.269613625181483,
+      "nearest_log": -2.269613625181483,
+      "pseudo_harmonic": -2.269613625181483,
+      "coarse_world_no_offtree": -2.524766617330031
+     }
+    },
+    "2.0": {
+     "us=0": {
+      "restricted_menu_equilibrium": 2.5275550119341057,
+      "nearest": 2.5275550119341057,
+      "nearest_log": 2.5275550119341057,
+      "pseudo_harmonic": 2.5275550119341057,
+      "coarse_world_no_offtree": 2.5275550119341057
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -2.524766617330031,
+      "nearest": -2.524766617330031,
+      "nearest_log": -2.524766617330031,
+      "pseudo_harmonic": -2.524766617330031,
+      "coarse_world_no_offtree": -2.524766617330031
+     }
+    }
+   }
+  },
+  {
+   "name": "monotone bluff-heavy",
+   "seed": 4243,
+   "coarse": "C_33_75_150",
+   "full_fine": {
+    "us=0": {
+     "restricted_menu_equilibrium": 2.5279840509672473,
+     "nearest": 2.5286826766482733,
+     "nearest_log": 2.528680554996953,
+     "pseudo_harmonic": 2.528680554996953,
+     "coarse_world_no_offtree": 2.5286810916631395
+    },
+    "us=1": {
+     "restricted_menu_equilibrium": -2.5240346186091185,
+     "nearest": -2.4340843769313034,
+     "nearest_log": -1.5848805701917987,
+     "pseudo_harmonic": -2.5238019829000207,
+     "coarse_world_no_offtree": -2.5238019829000207
+    }
+   },
+   "single": {
+    "0.25": {
+     "us=0": {
+      "restricted_menu_equilibrium": 2.5293608054675905,
+      "nearest": 2.5286810916631395,
+      "nearest_log": 2.5286810916631395,
+      "pseudo_harmonic": 2.5286810916631395,
+      "coarse_world_no_offtree": 2.5286810916631395
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -2.5244040440455273,
+      "nearest": -2.5238019829000207,
+      "nearest_log": -2.5238019829000207,
+      "pseudo_harmonic": -2.5238019829000207,
+      "coarse_world_no_offtree": -2.5238019829000207
+     }
+    },
+    "2.0": {
+     "us=0": {
+      "restricted_menu_equilibrium": 2.5286810916631395,
+      "nearest": 2.5286810916631395,
+      "nearest_log": 2.5286810916631395,
+      "pseudo_harmonic": 2.5286810916631395,
+      "coarse_world_no_offtree": 2.5286810916631395
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -2.5238019829000207,
+      "nearest": -2.5238019829000207,
+      "nearest_log": -2.5238019829000207,
+      "pseudo_harmonic": -2.5238019829000207,
+      "coarse_world_no_offtree": -2.5238019829000207
+     }
+    }
+   }
+  },
+  {
+   "name": "monotone bluff-heavy",
+   "seed": 4244,
+   "coarse": "B_50_100",
+   "full_fine": {
+    "us=0": {
+     "restricted_menu_equilibrium": -0.11692874542313002,
+     "nearest": -0.11853521175685872,
+     "nearest_log": -0.11853521175685872,
+     "pseudo_harmonic": -0.11853521175685872,
+     "coarse_world_no_offtree": -0.11853521175685872
+    },
+    "us=1": {
+     "restricted_menu_equilibrium": 0.12186664932639507,
+     "nearest": 0.6354366312570483,
+     "nearest_log": 1.0928195160811143,
+     "pseudo_harmonic": 0.6354366312570483,
+     "coarse_world_no_offtree": 0.12272202033952878
+    }
+   },
+   "single": {
+    "0.25": {
+     "us=0": {
+      "restricted_menu_equilibrium": -0.11652343042257823,
+      "nearest": -0.11853521175685872,
+      "nearest_log": -0.11853521175685872,
+      "pseudo_harmonic": -0.11853521175685872,
+      "coarse_world_no_offtree": -0.11853521175685872
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 0.1224327248688421,
+      "nearest": 0.12272202033952878,
+      "nearest_log": 0.12272202033952878,
+      "pseudo_harmonic": 0.12272202033952878,
+      "coarse_world_no_offtree": 0.12272202033952878
+     }
+    },
+    "0.75": {
+     "us=0": {
+      "restricted_menu_equilibrium": -0.118477239033984,
+      "nearest": -0.11853521175685872,
+      "nearest_log": -0.11853521175685872,
+      "pseudo_harmonic": -0.11853521175685872,
+      "coarse_world_no_offtree": -0.11853521175685872
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 0.12143940645472623,
+      "nearest": 0.2686166023293619,
+      "nearest_log": 0.5801049051635949,
+      "pseudo_harmonic": 0.12272202033952878,
+      "coarse_world_no_offtree": 0.12272202033952878
+     }
+    },
+    "1.5": {
+     "us=0": {
+      "restricted_menu_equilibrium": -0.11751514887951779,
+      "nearest": -0.11853521175685872,
+      "nearest_log": -0.11853521175685872,
+      "pseudo_harmonic": -0.11853521175685872,
+      "coarse_world_no_offtree": -0.11853521175685872
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 0.12212145293174992,
+      "nearest": 0.6354366312570483,
+      "nearest_log": 0.6354366312570483,
+      "pseudo_harmonic": 0.6354366312570483,
+      "coarse_world_no_offtree": 0.12272202033952878
+     }
+    },
+    "2.0": {
+     "us=0": {
+      "restricted_menu_equilibrium": -0.11853521175685872,
+      "nearest": -0.11853521175685872,
+      "nearest_log": -0.11853521175685872,
+      "pseudo_harmonic": -0.11853521175685872,
+      "coarse_world_no_offtree": -0.11853521175685872
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 0.12272202033952878,
+      "nearest": 0.12272202033952878,
+      "nearest_log": 0.12272202033952878,
+      "pseudo_harmonic": 0.12272202033952878,
+      "coarse_world_no_offtree": 0.12272202033952878
+     }
+    }
+   }
+  },
+  {
+   "name": "monotone bluff-heavy",
+   "seed": 4244,
+   "coarse": "C_33_75_150",
+   "full_fine": {
+    "us=0": {
+     "restricted_menu_equilibrium": -0.11617085486800913,
+     "nearest": -0.116223397694622,
+     "nearest_log": -0.11622888998686245,
+     "pseudo_harmonic": -0.11622888998686245,
+     "coarse_world_no_offtree": -0.11622806623695073
+    },
+    "us=1": {
+     "restricted_menu_equilibrium": 0.12148179273537568,
+     "nearest": 0.24117745966907772,
+     "nearest_log": 0.9138605757487357,
+     "pseudo_harmonic": 0.12174289179150738,
+     "coarse_world_no_offtree": 0.12174289179150738
+    }
+   },
+   "single": {
+    "0.25": {
+     "us=0": {
+      "restricted_menu_equilibrium": -0.11607466564699527,
+      "nearest": -0.11622806623695073,
+      "nearest_log": -0.11622806623695073,
+      "pseudo_harmonic": -0.11622806623695073,
+      "coarse_world_no_offtree": -0.11622806623695073
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 0.12092126504836354,
+      "nearest": 0.12174289179150738,
+      "nearest_log": 0.12174289179150738,
+      "pseudo_harmonic": 0.12174289179150738,
+      "coarse_world_no_offtree": 0.12174289179150738
+     }
+    },
+    "2.0": {
+     "us=0": {
+      "restricted_menu_equilibrium": -0.11622806623695073,
+      "nearest": -0.11622806623695073,
+      "nearest_log": -0.11622806623695073,
+      "pseudo_harmonic": -0.11622806623695073,
+      "coarse_world_no_offtree": -0.11622806623695073
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 0.12174289179150738,
+      "nearest": 0.12174289179150738,
+      "nearest_log": 0.12174289179150738,
+      "pseudo_harmonic": 0.12174289179150738,
+      "coarse_world_no_offtree": 0.12174289179150738
+     }
+    }
+   }
+  },
+  {
+   "name": "low connected mixed",
+   "seed": 4242,
+   "coarse": "B_50_100",
+   "full_fine": {
+    "us=0": {
+     "restricted_menu_equilibrium": -2.5075314470022265,
+     "nearest": -2.4536089247928428,
+     "nearest_log": -2.454214254753405,
+     "pseudo_harmonic": -2.454214254753405,
+     "coarse_world_no_offtree": -2.5098529102821807
+    },
+    "us=1": {
+     "restricted_menu_equilibrium": 2.5144190330340908,
+     "nearest": 3.843442410031839,
+     "nearest_log": 3.843442410031839,
+     "pseudo_harmonic": 3.843442410031839,
+     "coarse_world_no_offtree": 2.5131277618474153
+    }
+   },
+   "single": {
+    "0.25": {
+     "us=0": {
+      "restricted_menu_equilibrium": -2.5073595802166424,
+      "nearest": -2.4560455361183537,
+      "nearest_log": -2.4560455361183537,
+      "pseudo_harmonic": -2.4560455361183537,
+      "coarse_world_no_offtree": -2.5098529102821807
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 2.513349648491549,
+      "nearest": 3.3262576360416403,
+      "nearest_log": 3.3262576360416403,
+      "pseudo_harmonic": 3.3262576360416403,
+      "coarse_world_no_offtree": 2.5131277618474153
+     }
+    },
+    "0.75": {
+     "us=0": {
+      "restricted_menu_equilibrium": -2.50999455646086,
+      "nearest": -2.5078667177766505,
+      "nearest_log": -2.508839986264861,
+      "pseudo_harmonic": -2.509763445760085,
+      "coarse_world_no_offtree": -2.5098529102821807
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 2.513569648484731,
+      "nearest": 2.782994682977061,
+      "nearest_log": 3.034636639510459,
+      "pseudo_harmonic": 2.5166558226134503,
+      "coarse_world_no_offtree": 2.5131277618474153
+     }
+    },
+    "1.5": {
+     "us=0": {
+      "restricted_menu_equilibrium": -2.5098958865627257,
+      "nearest": -2.5080216289172323,
+      "nearest_log": -2.5080216289172323,
+      "pseudo_harmonic": -2.5080216289172323,
+      "coarse_world_no_offtree": -2.5098529102821807
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 2.5139687934614416,
+      "nearest": 3.182490190141304,
+      "nearest_log": 3.182490190141304,
+      "pseudo_harmonic": 3.182490190141304,
+      "coarse_world_no_offtree": 2.5131277618474153
+     }
+    },
+    "2.0": {
+     "us=0": {
+      "restricted_menu_equilibrium": -2.5098529102821807,
+      "nearest": -2.5098529102821807,
+      "nearest_log": -2.5098529102821807,
+      "pseudo_harmonic": -2.5098529102821807,
+      "coarse_world_no_offtree": -2.5098529102821807
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 2.5131277618474153,
+      "nearest": 2.5131277618474153,
+      "nearest_log": 2.5131277618474153,
+      "pseudo_harmonic": 2.5131277618474153,
+      "coarse_world_no_offtree": 2.5131277618474153
+     }
+    }
+   }
+  },
+  {
+   "name": "low connected mixed",
+   "seed": 4242,
+   "coarse": "C_33_75_150",
+   "full_fine": {
+    "us=0": {
+     "restricted_menu_equilibrium": -2.506919164043075,
+     "nearest": -2.505534205630734,
+     "nearest_log": -2.5054219238086843,
+     "pseudo_harmonic": -2.506624918717619,
+     "coarse_world_no_offtree": -2.5070951983454925
+    },
+    "us=1": {
+     "restricted_menu_equilibrium": 2.5141874065573804,
+     "nearest": 2.832463990107879,
+     "nearest_log": 3.3752327520711987,
+     "pseudo_harmonic": 2.5697976808596157,
+     "coarse_world_no_offtree": 2.5129059986400146
+    }
+   },
+   "single": {
+    "0.25": {
+     "us=0": {
+      "restricted_menu_equilibrium": -2.507034298319376,
+      "nearest": -2.5066852958902244,
+      "nearest_log": -2.5066852958902244,
+      "pseudo_harmonic": -2.5066852958902244,
+      "coarse_world_no_offtree": -2.5070951983454925
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 2.5127785455748763,
+      "nearest": 2.5538860129661884,
+      "nearest_log": 2.5538860129661884,
+      "pseudo_harmonic": 2.5538860129661884,
+      "coarse_world_no_offtree": 2.5129059986400146
+     }
+    },
+    "2.0": {
+     "us=0": {
+      "restricted_menu_equilibrium": -2.5070951983454925,
+      "nearest": -2.5070951983454925,
+      "nearest_log": -2.5070951983454925,
+      "pseudo_harmonic": -2.5070951983454925,
+      "coarse_world_no_offtree": -2.5070951983454925
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 2.5129059986400146,
+      "nearest": 2.5129059986400146,
+      "nearest_log": 2.5129059986400146,
+      "pseudo_harmonic": 2.5129059986400146,
+      "coarse_world_no_offtree": 2.5129059986400146
+     }
+    }
+   }
+  },
+  {
+   "name": "low connected mixed",
+   "seed": 4243,
+   "coarse": "B_50_100",
+   "full_fine": {
+    "us=0": {
+     "restricted_menu_equilibrium": 1.115049702132909,
+     "nearest": 1.1996715008628231,
+     "nearest_log": 1.1915776061784116,
+     "pseudo_harmonic": 1.1915776061784116,
+     "coarse_world_no_offtree": 1.111816965785411
+    },
+    "us=1": {
+     "restricted_menu_equilibrium": -1.1053982504195876,
+     "nearest": 0.3715193392484582,
+     "nearest_log": 0.3715193392484582,
+     "pseudo_harmonic": 0.3715193392484582,
+     "coarse_world_no_offtree": -1.108576806927377
+    }
+   },
+   "single": {
+    "0.25": {
+     "us=0": {
+      "restricted_menu_equilibrium": 1.1148362654309165,
+      "nearest": 1.1670017571007218,
+      "nearest_log": 1.1670017571007218,
+      "pseudo_harmonic": 1.1670017571007218,
+      "coarse_world_no_offtree": 1.111816965785411
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -1.1081612455715992,
+      "nearest": 0.011166650867126704,
+      "nearest_log": 0.011166650867126704,
+      "pseudo_harmonic": 0.011166650867126704,
+      "coarse_world_no_offtree": -1.108576806927377
+     }
+    },
+    "0.75": {
+     "us=0": {
+      "restricted_menu_equilibrium": 1.1117261253873394,
+      "nearest": 1.136601447003199,
+      "nearest_log": 1.1254009984269404,
+      "pseudo_harmonic": 1.11185451952014,
+      "coarse_world_no_offtree": 1.111816965785411
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -1.1069910668137903,
+      "nearest": -0.743177886286616,
+      "nearest_log": -0.36412433228471963,
+      "pseudo_harmonic": -1.0777892620601992,
+      "coarse_world_no_offtree": -1.108576806927377
+     }
+    },
+    "1.5": {
+     "us=0": {
+      "restricted_menu_equilibrium": 1.1120911524382713,
+      "nearest": 1.1363928148631008,
+      "nearest_log": 1.1363928148631008,
+      "pseudo_harmonic": 1.1363928148631008,
+      "coarse_world_no_offtree": 1.111816965785411
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -1.1078037521063944,
+      "nearest": -0.67696545428206,
+      "nearest_log": -0.67696545428206,
+      "pseudo_harmonic": -0.67696545428206,
+      "coarse_world_no_offtree": -1.108576806927377
+     }
+    },
+    "2.0": {
+     "us=0": {
+      "restricted_menu_equilibrium": 1.111816965785411,
+      "nearest": 1.111816965785411,
+      "nearest_log": 1.111816965785411,
+      "pseudo_harmonic": 1.111816965785411,
+      "coarse_world_no_offtree": 1.111816965785411
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -1.108576806927377,
+      "nearest": -1.108576806927377,
+      "nearest_log": -1.108576806927377,
+      "pseudo_harmonic": -1.108576806927377,
+      "coarse_world_no_offtree": -1.108576806927377
+     }
+    }
+   }
+  },
+  {
+   "name": "low connected mixed",
+   "seed": 4243,
+   "coarse": "C_33_75_150",
+   "full_fine": {
+    "us=0": {
+     "restricted_menu_equilibrium": 1.1143029977713286,
+     "nearest": 1.144570479349369,
+     "nearest_log": 1.1497795692668578,
+     "pseudo_harmonic": 1.1256672377195107,
+     "coarse_world_no_offtree": 1.1136099157598103
+    },
+    "us=1": {
+     "restricted_menu_equilibrium": -1.1059000595396093,
+     "nearest": -0.5422718072721215,
+     "nearest_log": 0.09206266118055978,
+     "pseudo_harmonic": -0.8078890460176384,
+     "coarse_world_no_offtree": -1.1064256420839425
+    }
+   },
+   "single": {
+    "0.25": {
+     "us=0": {
+      "restricted_menu_equilibrium": 1.114846838977825,
+      "nearest": 1.1229058680942803,
+      "nearest_log": 1.1229058680942803,
+      "pseudo_harmonic": 1.1229058680942803,
+      "coarse_world_no_offtree": 1.1136099157598103
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -1.1059495621876472,
+      "nearest": -0.8601752863898608,
+      "nearest_log": -0.8601752863898608,
+      "pseudo_harmonic": -0.8601752863898608,
+      "coarse_world_no_offtree": -1.1064256420839425
+     }
+    },
+    "2.0": {
+     "us=0": {
+      "restricted_menu_equilibrium": 1.1136099157598103,
+      "nearest": 1.1136099157598103,
+      "nearest_log": 1.1136099157598103,
+      "pseudo_harmonic": 1.1136099157598103,
+      "coarse_world_no_offtree": 1.1136099157598103
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -1.1064256420839425,
+      "nearest": -1.1064256420839425,
+      "nearest_log": -1.1064256420839425,
+      "pseudo_harmonic": -1.1064256420839425,
+      "coarse_world_no_offtree": -1.1064256420839425
+     }
+    }
+   }
+  },
+  {
+   "name": "low connected mixed",
+   "seed": 4244,
+   "coarse": "B_50_100",
+   "full_fine": {
+    "us=0": {
+     "restricted_menu_equilibrium": -3.6489652431865642,
+     "nearest": -3.649166232370496,
+     "nearest_log": -3.649199192307073,
+     "pseudo_harmonic": -3.649199192307073,
+     "coarse_world_no_offtree": -3.6493529334445576
+    },
+    "us=1": {
+     "restricted_menu_equilibrium": 3.6515765937757663,
+     "nearest": 4.93471992636465,
+     "nearest_log": 4.944308528016126,
+     "pseudo_harmonic": 4.93471992636465,
+     "coarse_world_no_offtree": 3.6504779428323637
+    }
+   },
+   "single": {
+    "0.25": {
+     "us=0": {
+      "restricted_menu_equilibrium": -3.648948057392346,
+      "nearest": -3.6492331791992463,
+      "nearest_log": -3.6492331791992463,
+      "pseudo_harmonic": -3.6492331791992463,
+      "coarse_world_no_offtree": -3.6493529334445576
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 3.650393687291978,
+      "nearest": 4.194287980312995,
+      "nearest_log": 4.194287980312995,
+      "pseudo_harmonic": 4.194287980312995,
+      "coarse_world_no_offtree": 3.6504779428323637
+     }
+    },
+    "0.75": {
+     "us=0": {
+      "restricted_menu_equilibrium": -3.6494309937002543,
+      "nearest": -3.649297808845038,
+      "nearest_log": -3.6493429358968696,
+      "pseudo_harmonic": -3.6493529334445576,
+      "coarse_world_no_offtree": -3.6493529334445576
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 3.6504545421423398,
+      "nearest": 3.9538879647949163,
+      "nearest_log": 4.11878385594587,
+      "pseudo_harmonic": 3.656129602540327,
+      "coarse_world_no_offtree": 3.6504779428323637
+     }
+    },
+    "1.5": {
+     "us=0": {
+      "restricted_menu_equilibrium": -3.6492465749246827,
+      "nearest": -3.6493189465523836,
+      "nearest_log": -3.6493189465523836,
+      "pseudo_harmonic": -3.6493189465523836,
+      "coarse_world_no_offtree": -3.6493529334445576
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 3.6509484165418162,
+      "nearest": 4.425798287446867,
+      "nearest_log": 4.425798287446867,
+      "pseudo_harmonic": 4.425798287446867,
+      "coarse_world_no_offtree": 3.6504779428323637
+     }
+    },
+    "2.0": {
+     "us=0": {
+      "restricted_menu_equilibrium": -3.6493529334445576,
+      "nearest": -3.6493529334445576,
+      "nearest_log": -3.6493529334445576,
+      "pseudo_harmonic": -3.6493529334445576,
+      "coarse_world_no_offtree": -3.6493529334445576
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 3.6504779428323637,
+      "nearest": 3.6504779428323637,
+      "nearest_log": 3.6504779428323637,
+      "pseudo_harmonic": 3.6504779428323637,
+      "coarse_world_no_offtree": 3.6504779428323637
+     }
+    }
+   }
+  },
+  {
+   "name": "low connected mixed",
+   "seed": 4244,
+   "coarse": "C_33_75_150",
+   "full_fine": {
+    "us=0": {
+     "restricted_menu_equilibrium": -3.648496495517999,
+     "nearest": -3.6484918956864103,
+     "nearest_log": -3.648498172940679,
+     "pseudo_harmonic": -3.6485087044024014,
+     "coarse_world_no_offtree": -3.6485138219370263
+    },
+    "us=1": {
+     "restricted_menu_equilibrium": 3.6513801223193676,
+     "nearest": 3.9611916566554544,
+     "nearest_log": 4.34123977325482,
+     "pseudo_harmonic": 3.6688798557339815,
+     "coarse_world_no_offtree": 3.650562090025844
+    }
+   },
+   "single": {
+    "0.25": {
+     "us=0": {
+      "restricted_menu_equilibrium": -3.6479454931342294,
+      "nearest": -3.6485088147445426,
+      "nearest_log": -3.6485088147445426,
+      "pseudo_harmonic": -3.6485088147445426,
+      "coarse_world_no_offtree": -3.6485138219370263
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 3.6510496576723366,
+      "nearest": 3.650562090025844,
+      "nearest_log": 3.650562090025844,
+      "pseudo_harmonic": 3.650562090025844,
+      "coarse_world_no_offtree": 3.650562090025844
+     }
+    },
+    "2.0": {
+     "us=0": {
+      "restricted_menu_equilibrium": -3.6485138219370263,
+      "nearest": -3.6485138219370263,
+      "nearest_log": -3.6485138219370263,
+      "pseudo_harmonic": -3.6485138219370263,
+      "coarse_world_no_offtree": -3.6485138219370263
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 3.650562090025844,
+      "nearest": 3.650562090025844,
+      "nearest_log": 3.650562090025844,
+      "pseudo_harmonic": 3.650562090025844,
+      "coarse_world_no_offtree": 3.650562090025844
+     }
+    }
+   }
+  },
+  {
+   "name": "paired_low_ace_river",
+   "seed": 4242,
+   "coarse": "B_50_100",
+   "full_fine": {
+    "us=0": {
+     "restricted_menu_equilibrium": -2.630165886464955,
+     "nearest": -2.608221123455868,
+     "nearest_log": -2.6082218604011613,
+     "pseudo_harmonic": -2.6082218604011613,
+     "coarse_world_no_offtree": -2.630562145629645
+    },
+    "us=1": {
+     "restricted_menu_equilibrium": 2.6377673284316225,
+     "nearest": 3.588697207226129,
+     "nearest_log": 3.771778063052659,
+     "pseudo_harmonic": 3.588697207226129,
+     "coarse_world_no_offtree": 2.6315384373048265
+    }
+   },
+   "single": {
+    "0.25": {
+     "us=0": {
+      "restricted_menu_equilibrium": -2.6301587230766605,
+      "nearest": -2.6082218604011613,
+      "nearest_log": -2.6082218604011613,
+      "pseudo_harmonic": -2.6082218604011613,
+      "coarse_world_no_offtree": -2.630562145629645
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 2.6317214705625696,
+      "nearest": 3.0360057513936844,
+      "nearest_log": 3.0360057513936844,
+      "pseudo_harmonic": 3.0360057513936844,
+      "coarse_world_no_offtree": 2.6315384373048265
+     }
+    },
+    "0.75": {
+     "us=0": {
+      "restricted_menu_equilibrium": -2.630338769409609,
+      "nearest": -2.630561408684352,
+      "nearest_log": -2.630562145629645,
+      "pseudo_harmonic": -2.630562145629645,
+      "coarse_world_no_offtree": -2.630562145629645
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 2.6320834560642457,
+      "nearest": 2.7961236804085554,
+      "nearest_log": 3.219086607220215,
+      "pseudo_harmonic": 2.6324170264846156,
+      "coarse_world_no_offtree": 2.6315384373048265
+     }
+    },
+    "1.5": {
+     "us=0": {
+      "restricted_menu_equilibrium": -2.6305139251005167,
+      "nearest": -2.630562145629645,
+      "nearest_log": -2.630562145629645,
+      "pseudo_harmonic": -2.630562145629645,
+      "coarse_world_no_offtree": -2.630562145629645
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 2.6375881339635927,
+      "nearest": 3.1842298931372714,
+      "nearest_log": 3.1842298931372714,
+      "pseudo_harmonic": 3.1842298931372714,
+      "coarse_world_no_offtree": 2.6315384373048265
+     }
+    },
+    "2.0": {
+     "us=0": {
+      "restricted_menu_equilibrium": -2.630562145629645,
+      "nearest": -2.630562145629645,
+      "nearest_log": -2.630562145629645,
+      "pseudo_harmonic": -2.630562145629645,
+      "coarse_world_no_offtree": -2.630562145629645
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 2.6315384373048265,
+      "nearest": 2.6315384373048265,
+      "nearest_log": 2.6315384373048265,
+      "pseudo_harmonic": 2.6315384373048265,
+      "coarse_world_no_offtree": 2.6315384373048265
+     }
+    }
+   }
+  },
+  {
+   "name": "paired_low_ace_river",
+   "seed": 4242,
+   "coarse": "C_33_75_150",
+   "full_fine": {
+    "us=0": {
+     "restricted_menu_equilibrium": -2.6343754225321057,
+     "nearest": -2.6342650146250812,
+     "nearest_log": -2.6342706108412837,
+     "pseudo_harmonic": -2.6342706108412837,
+     "coarse_world_no_offtree": -2.6342688200520987
+    },
+    "us=1": {
+     "restricted_menu_equilibrium": 2.637644452989906,
+     "nearest": 2.7821212229403693,
+     "nearest_log": 3.358932324955993,
+     "pseudo_harmonic": 2.6411946233042385,
+     "coarse_world_no_offtree": 2.6374564260391935
+    }
+   },
+   "single": {
+    "0.25": {
+     "us=0": {
+      "restricted_menu_equilibrium": -2.6343857235122288,
+      "nearest": -2.6342688200520987,
+      "nearest_log": -2.6342688200520987,
+      "pseudo_harmonic": -2.6342688200520987,
+      "coarse_world_no_offtree": -2.6342688200520987
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 2.6373038817620507,
+      "nearest": 2.6374564260391935,
+      "nearest_log": 2.6374564260391935,
+      "pseudo_harmonic": 2.6374564260391935,
+      "coarse_world_no_offtree": 2.6374564260391935
+     }
+    },
+    "2.0": {
+     "us=0": {
+      "restricted_menu_equilibrium": -2.6342688200520987,
+      "nearest": -2.6342688200520987,
+      "nearest_log": -2.6342688200520987,
+      "pseudo_harmonic": -2.6342688200520987,
+      "coarse_world_no_offtree": -2.6342688200520987
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 2.6374564260391935,
+      "nearest": 2.6374564260391935,
+      "nearest_log": 2.6374564260391935,
+      "pseudo_harmonic": 2.6374564260391935,
+      "coarse_world_no_offtree": 2.6374564260391935
+     }
+    }
+   }
+  },
+  {
+   "name": "paired_low_ace_river",
+   "seed": 4243,
+   "coarse": "B_50_100",
+   "full_fine": {
+    "us=0": {
+     "restricted_menu_equilibrium": 1.0120960759047817,
+     "nearest": 1.0111055399981972,
+     "nearest_log": 1.0111055399981972,
+     "pseudo_harmonic": 1.0111055399981972,
+     "coarse_world_no_offtree": 1.011104258508765
+    },
+    "us=1": {
+     "restricted_menu_equilibrium": -1.0077457189201846,
+     "nearest": -0.6089278344668263,
+     "nearest_log": -0.10658147525657713,
+     "pseudo_harmonic": -0.6089278344668263,
+     "coarse_world_no_offtree": -1.007537286696965
+    }
+   },
+   "single": {
+    "0.25": {
+     "us=0": {
+      "restricted_menu_equilibrium": 1.0120009263327332,
+      "nearest": 1.0111055399981972,
+      "nearest_log": 1.0111055399981972,
+      "pseudo_harmonic": 1.0111055399981972,
+      "coarse_world_no_offtree": 1.011104258508765
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -1.0078698565149349,
+      "nearest": -1.007537286696965,
+      "nearest_log": -1.007537286696965,
+      "pseudo_harmonic": -1.007537286696965,
+      "coarse_world_no_offtree": -1.007537286696965
+     }
+    },
+    "0.75": {
+     "us=0": {
+      "restricted_menu_equilibrium": 1.012466386670794,
+      "nearest": 1.011104258508765,
+      "nearest_log": 1.011104258508765,
+      "pseudo_harmonic": 1.011104258508765,
+      "coarse_world_no_offtree": 1.011104258508765
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -1.0078263107313987,
+      "nearest": -0.9038012523729135,
+      "nearest_log": -0.5051909274867158,
+      "pseudo_harmonic": -1.007537286696965,
+      "coarse_world_no_offtree": -1.007537286696965
+     }
+    },
+    "1.5": {
+     "us=0": {
+      "restricted_menu_equilibrium": 1.0123776782020997,
+      "nearest": 1.011104258508765,
+      "nearest_log": 1.011104258508765,
+      "pseudo_harmonic": 1.011104258508765,
+      "coarse_world_no_offtree": 1.011104258508765
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -1.0079243004217344,
+      "nearest": -0.6089278344668263,
+      "nearest_log": -0.6089278344668263,
+      "pseudo_harmonic": -0.6089278344668263,
+      "coarse_world_no_offtree": -1.007537286696965
+     }
+    },
+    "2.0": {
+     "us=0": {
+      "restricted_menu_equilibrium": 1.011104258508765,
+      "nearest": 1.011104258508765,
+      "nearest_log": 1.011104258508765,
+      "pseudo_harmonic": 1.011104258508765,
+      "coarse_world_no_offtree": 1.011104258508765
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -1.007537286696965,
+      "nearest": -1.007537286696965,
+      "nearest_log": -1.007537286696965,
+      "pseudo_harmonic": -1.007537286696965,
+      "coarse_world_no_offtree": -1.007537286696965
+     }
+    }
+   }
+  },
+  {
+   "name": "paired_low_ace_river",
+   "seed": 4243,
+   "coarse": "C_33_75_150",
+   "full_fine": {
+    "us=0": {
+     "restricted_menu_equilibrium": 1.0128377007388827,
+     "nearest": 1.0133653833409153,
+     "nearest_log": 1.0133649306049373,
+     "pseudo_harmonic": 1.0133649306049373,
+     "coarse_world_no_offtree": 1.0133649306049373
+    },
+    "us=1": {
+     "restricted_menu_equilibrium": -1.008370310745131,
+     "nearest": -0.8418880442684628,
+     "nearest_log": -0.5062007207055683,
+     "pseudo_harmonic": -1.0049548594919946,
+     "coarse_world_no_offtree": -1.0084459908971
+    }
+   },
+   "single": {
+    "0.25": {
+     "us=0": {
+      "restricted_menu_equilibrium": 1.0136733048500726,
+      "nearest": 1.0133649306049373,
+      "nearest_log": 1.0133649306049373,
+      "pseudo_harmonic": 1.0133649306049373,
+      "coarse_world_no_offtree": 1.0133649306049373
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -1.0088139134523875,
+      "nearest": -1.0084459908971,
+      "nearest_log": -1.0084459908971,
+      "pseudo_harmonic": -1.0084459908971,
+      "coarse_world_no_offtree": -1.0084459908971
+     }
+    },
+    "2.0": {
+     "us=0": {
+      "restricted_menu_equilibrium": 1.0133649306049373,
+      "nearest": 1.0133649306049373,
+      "nearest_log": 1.0133649306049373,
+      "pseudo_harmonic": 1.0133649306049373,
+      "coarse_world_no_offtree": 1.0133649306049373
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -1.0084459908971,
+      "nearest": -1.0084459908971,
+      "nearest_log": -1.0084459908971,
+      "pseudo_harmonic": -1.0084459908971,
+      "coarse_world_no_offtree": -1.0084459908971
+     }
+    }
+   }
+  },
+  {
+   "name": "paired_low_ace_river",
+   "seed": 4244,
+   "coarse": "B_50_100",
+   "full_fine": {
+    "us=0": {
+     "restricted_menu_equilibrium": -2.803859574671069,
+     "nearest": -2.7815332287157872,
+     "nearest_log": -2.781533469476126,
+     "pseudo_harmonic": -2.781533469476126,
+     "coarse_world_no_offtree": -2.8042914448366147
+    },
+    "us=1": {
+     "restricted_menu_equilibrium": 2.8067246146065195,
+     "nearest": 4.159518954202072,
+     "nearest_log": 4.17090630221082,
+     "pseudo_harmonic": 4.159518954202072,
+     "coarse_world_no_offtree": 2.8060812849111882
+    }
+   },
+   "single": {
+    "0.25": {
+     "us=0": {
+      "restricted_menu_equilibrium": -2.8039127521523044,
+      "nearest": -2.781533469476126,
+      "nearest_log": -2.781533469476126,
+      "pseudo_harmonic": -2.781533469476126,
+      "coarse_world_no_offtree": -2.8042914448366147
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 2.806198036620575,
+      "nearest": 3.494802625586802,
+      "nearest_log": 3.494802625586802,
+      "pseudo_harmonic": 3.494802625586802,
+      "coarse_world_no_offtree": 2.8060812849111882
+     }
+    },
+    "0.75": {
+     "us=0": {
+      "restricted_menu_equilibrium": -2.8039985670620005,
+      "nearest": -2.804291204076276,
+      "nearest_log": -2.8042914448366147,
+      "pseudo_harmonic": -2.8042914448366147,
+      "coarse_world_no_offtree": -2.8042914448366147
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 2.8060167943843335,
+      "nearest": 2.9558195155295808,
+      "nearest_log": 3.389775221644671,
+      "pseudo_harmonic": 2.8060812849111882,
+      "coarse_world_no_offtree": 2.8060812849111882
+     }
+    },
+    "1.5": {
+     "us=0": {
+      "restricted_menu_equilibrium": -2.804312134452213,
+      "nearest": -2.8042914448366147,
+      "nearest_log": -2.8042914448366147,
+      "pseudo_harmonic": -2.8042914448366147,
+      "coarse_world_no_offtree": -2.8042914448366147
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 2.806878919176161,
+      "nearest": 3.470797613526459,
+      "nearest_log": 3.470797613526459,
+      "pseudo_harmonic": 3.470797613526459,
+      "coarse_world_no_offtree": 2.8060812849111882
+     }
+    },
+    "2.0": {
+     "us=0": {
+      "restricted_menu_equilibrium": -2.8042914448366147,
+      "nearest": -2.8042914448366147,
+      "nearest_log": -2.8042914448366147,
+      "pseudo_harmonic": -2.8042914448366147,
+      "coarse_world_no_offtree": -2.8042914448366147
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 2.8060812849111882,
+      "nearest": 2.8060812849111882,
+      "nearest_log": 2.8060812849111882,
+      "pseudo_harmonic": 2.8060812849111882,
+      "coarse_world_no_offtree": 2.8060812849111882
+     }
+    }
+   }
+  },
+  {
+   "name": "paired_low_ace_river",
+   "seed": 4244,
+   "coarse": "C_33_75_150",
+   "full_fine": {
+    "us=0": {
+     "restricted_menu_equilibrium": -2.801702549552499,
+     "nearest": -2.8017150004456717,
+     "nearest_log": -2.801712065621148,
+     "pseudo_harmonic": -2.80172122646117,
+     "coarse_world_no_offtree": -2.8017221607185383
+    },
+    "us=1": {
+     "restricted_menu_equilibrium": 2.806633823093206,
+     "nearest": 3.048156238391585,
+     "nearest_log": 3.6825401791567898,
+     "pseudo_harmonic": 2.825511558308289,
+     "coarse_world_no_offtree": 2.804397988503598
+    }
+   },
+   "single": {
+    "0.25": {
+     "us=0": {
+      "restricted_menu_equilibrium": -2.8018805936171756,
+      "nearest": -2.8017221607185383,
+      "nearest_log": -2.8017221607185383,
+      "pseudo_harmonic": -2.8017221607185383,
+      "coarse_world_no_offtree": -2.8017221607185383
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 2.8044364574872684,
+      "nearest": 2.8161473167757145,
+      "nearest_log": 2.8161473167757145,
+      "pseudo_harmonic": 2.8161473167757145,
+      "coarse_world_no_offtree": 2.804397988503598
+     }
+    },
+    "2.0": {
+     "us=0": {
+      "restricted_menu_equilibrium": -2.8017221607185383,
+      "nearest": -2.8017221607185383,
+      "nearest_log": -2.8017221607185383,
+      "pseudo_harmonic": -2.8017221607185383,
+      "coarse_world_no_offtree": -2.8017221607185383
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 2.804397988503598,
+      "nearest": 2.804397988503598,
+      "nearest_log": 2.804397988503598,
+      "pseudo_harmonic": 2.804397988503598,
+      "coarse_world_no_offtree": 2.804397988503598
+     }
+    }
+   }
+  },
+  {
+   "name": "broadway_dry",
+   "seed": 4242,
+   "coarse": "B_50_100",
+   "full_fine": {
+    "us=0": {
+     "restricted_menu_equilibrium": 1.0291572938877624,
+     "nearest": 1.309245180925074,
+     "nearest_log": 1.309245180925074,
+     "pseudo_harmonic": 1.309245180925074,
+     "coarse_world_no_offtree": 1.0263325469100182
+    },
+    "us=1": {
+     "restricted_menu_equilibrium": -0.9991388733690472,
+     "nearest": 0.3600160618939255,
+     "nearest_log": 0.3598575537439152,
+     "pseudo_harmonic": 0.3598575537439152,
+     "coarse_world_no_offtree": -1.0240135502212357
+    }
+   },
+   "single": {
+    "0.25": {
+     "us=0": {
+      "restricted_menu_equilibrium": 1.026416372735096,
+      "nearest": 1.2266957864489823,
+      "nearest_log": 1.2266957864489823,
+      "pseudo_harmonic": 1.2266957864489823,
+      "coarse_world_no_offtree": 1.0263325469100182
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -1.0221205532939215,
+      "nearest": 0.17743137977175222,
+      "nearest_log": 0.17743137977175222,
+      "pseudo_harmonic": 0.17743137977175222,
+      "coarse_world_no_offtree": -1.0240135502212357
+     }
+    },
+    "0.75": {
+     "us=0": {
+      "restricted_menu_equilibrium": 1.0290589232352605,
+      "nearest": 1.1016591413765344,
+      "nearest_log": 1.0770211554149096,
+      "pseudo_harmonic": 1.0361758020762946,
+      "coarse_world_no_offtree": 1.0263325469100182
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -1.0136081552312666,
+      "nearest": -0.7867990498866703,
+      "nearest_log": -0.32698198611236046,
+      "pseudo_harmonic": -1.010026040900856,
+      "coarse_world_no_offtree": -1.0240135502212357
+     }
+    },
+    "1.5": {
+     "us=0": {
+      "restricted_menu_equilibrium": 1.0264664156656855,
+      "nearest": 1.1088819413861097,
+      "nearest_log": 1.1088819413861097,
+      "pseudo_harmonic": 1.1088819413861097,
+      "coarse_world_no_offtree": 1.0263325469100182
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -1.0063950497434022,
+      "nearest": -0.5816463939284302,
+      "nearest_log": -0.5816463939284302,
+      "pseudo_harmonic": -0.5816463939284302,
+      "coarse_world_no_offtree": -1.0240135502212357
+     }
+    },
+    "2.0": {
+     "us=0": {
+      "restricted_menu_equilibrium": 1.0263325469100182,
+      "nearest": 1.0263325469100182,
+      "nearest_log": 1.0263325469100182,
+      "pseudo_harmonic": 1.0263325469100182,
+      "coarse_world_no_offtree": 1.0263325469100182
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -1.0240135502212357,
+      "nearest": -1.0240135502212357,
+      "nearest_log": -1.0240135502212357,
+      "pseudo_harmonic": -1.0240135502212357,
+      "coarse_world_no_offtree": -1.0240135502212357
+     }
+    }
+   }
+  },
+  {
+   "name": "broadway_dry",
+   "seed": 4242,
+   "coarse": "C_33_75_150",
+   "full_fine": {
+    "us=0": {
+     "restricted_menu_equilibrium": 1.010986321527243,
+     "nearest": 1.0859698394322261,
+     "nearest_log": 1.1252101566018662,
+     "pseudo_harmonic": 1.0359570166496634,
+     "coarse_world_no_offtree": 1.0092267706600946
+    },
+    "us=1": {
+     "restricted_menu_equilibrium": -0.9983250733978095,
+     "nearest": -0.5137913401678271,
+     "nearest_log": 0.013945505887995369,
+     "pseudo_harmonic": -0.7430528301234538,
+     "coarse_world_no_offtree": -1.0027237123954624
+    }
+   },
+   "single": {
+    "0.25": {
+     "us=0": {
+      "restricted_menu_equilibrium": 1.0084538744124099,
+      "nearest": 1.0271528653821154,
+      "nearest_log": 1.0271528653821154,
+      "pseudo_harmonic": 1.0271528653821154,
+      "coarse_world_no_offtree": 1.0092267706600946
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -1.0035574582544138,
+      "nearest": -0.7488605575591444,
+      "nearest_log": -0.7488605575591444,
+      "pseudo_harmonic": -0.7488605575591444,
+      "coarse_world_no_offtree": -1.0027237123954624
+     }
+    },
+    "2.0": {
+     "us=0": {
+      "restricted_menu_equilibrium": 1.0092267706600946,
+      "nearest": 1.0092267706600946,
+      "nearest_log": 1.0092267706600946,
+      "pseudo_harmonic": 1.0092267706600946,
+      "coarse_world_no_offtree": 1.0092267706600946
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -1.0027237123954624,
+      "nearest": -1.0027237123954624,
+      "nearest_log": -1.0027237123954624,
+      "pseudo_harmonic": -1.0027237123954624,
+      "coarse_world_no_offtree": -1.0027237123954624
+     }
+    }
+   }
+  },
+  {
+   "name": "broadway_dry",
+   "seed": 4243,
+   "coarse": "B_50_100",
+   "full_fine": {
+    "us=0": {
+     "restricted_menu_equilibrium": 3.2468382821052746,
+     "nearest": 3.3845761059830877,
+     "nearest_log": 3.3800555657919027,
+     "pseudo_harmonic": 3.381835509971616,
+     "coarse_world_no_offtree": 3.2408815921491376
+    },
+    "us=1": {
+     "restricted_menu_equilibrium": -3.237447492100014,
+     "nearest": -1.8984220130941538,
+     "nearest_log": -1.9095057866849385,
+     "pseudo_harmonic": -1.9095057866849385,
+     "coarse_world_no_offtree": -3.2397356425236037
+    }
+   },
+   "single": {
+    "0.25": {
+     "us=0": {
+      "restricted_menu_equilibrium": 3.2447667566900993,
+      "nearest": 3.3525774104200865,
+      "nearest_log": 3.3525774104200865,
+      "pseudo_harmonic": 3.3525774104200865,
+      "coarse_world_no_offtree": 3.2408815921491376
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -3.2372955885008605,
+      "nearest": -1.9561006736621844,
+      "nearest_log": -1.9561006736621844,
+      "pseudo_harmonic": -1.9561006736621844,
+      "coarse_world_no_offtree": -3.2397356425236037
+     }
+    },
+    "0.75": {
+     "us=0": {
+      "restricted_menu_equilibrium": 3.2416739991727725,
+      "nearest": 3.270591023103788,
+      "nearest_log": 3.2566056038094873,
+      "pseudo_harmonic": 3.2456062938185593,
+      "coarse_world_no_offtree": 3.2408815921491376
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -3.238971188246138,
+      "nearest": -3.099293857478464,
+      "nearest_log": -2.4522346804466335,
+      "pseudo_harmonic": -3.2232325425040496,
+      "coarse_world_no_offtree": -3.2397356425236037
+     }
+    },
+    "1.5": {
+     "us=0": {
+      "restricted_menu_equilibrium": 3.241033242611498,
+      "nearest": 3.268359747520954,
+      "nearest_log": 3.268359747520954,
+      "pseudo_harmonic": 3.268359747520954,
+      "coarse_world_no_offtree": 3.2408815921491376
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -3.239564382122837,
+      "nearest": -3.1090132789056155,
+      "nearest_log": -3.1090132789056155,
+      "pseudo_harmonic": -3.1090132789056155,
+      "coarse_world_no_offtree": -3.2397356425236037
+     }
+    },
+    "2.0": {
+     "us=0": {
+      "restricted_menu_equilibrium": 3.2408815921491376,
+      "nearest": 3.2408815921491376,
+      "nearest_log": 3.2408815921491376,
+      "pseudo_harmonic": 3.2408815921491376,
+      "coarse_world_no_offtree": 3.2408815921491376
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -3.2397356425236037,
+      "nearest": -3.2397356425236037,
+      "nearest_log": -3.2397356425236037,
+      "pseudo_harmonic": -3.2397356425236037,
+      "coarse_world_no_offtree": -3.2397356425236037
+     }
+    }
+   }
+  },
+  {
+   "name": "broadway_dry",
+   "seed": 4243,
+   "coarse": "C_33_75_150",
+   "full_fine": {
+    "us=0": {
+     "restricted_menu_equilibrium": 3.2430483351859403,
+     "nearest": 3.2635081083353903,
+     "nearest_log": 3.2787985836313784,
+     "pseudo_harmonic": 3.248380883915149,
+     "coarse_world_no_offtree": 3.2432578818113553
+    },
+    "us=1": {
+     "restricted_menu_equilibrium": -3.238990965893387,
+     "nearest": -2.8639723228571987,
+     "nearest_log": -2.241089387141072,
+     "pseudo_harmonic": -2.9646745252914717,
+     "coarse_world_no_offtree": -3.238900354936672
+    }
+   },
+   "single": {
+    "0.25": {
+     "us=0": {
+      "restricted_menu_equilibrium": 3.243193107793669,
+      "nearest": 3.2463336990930958,
+      "nearest_log": 3.2463336990930958,
+      "pseudo_harmonic": 3.2463336990930958,
+      "coarse_world_no_offtree": 3.2432578818113553
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -3.238214107587143,
+      "nearest": -2.975469489721818,
+      "nearest_log": -2.975469489721818,
+      "pseudo_harmonic": -2.975469489721818,
+      "coarse_world_no_offtree": -3.238900354936672
+     }
+    },
+    "2.0": {
+     "us=0": {
+      "restricted_menu_equilibrium": 3.2432578818113553,
+      "nearest": 3.2432578818113553,
+      "nearest_log": 3.2432578818113553,
+      "pseudo_harmonic": 3.2432578818113553,
+      "coarse_world_no_offtree": 3.2432578818113553
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -3.238900354936672,
+      "nearest": -3.238900354936672,
+      "nearest_log": -3.238900354936672,
+      "pseudo_harmonic": -3.238900354936672,
+      "coarse_world_no_offtree": -3.238900354936672
+     }
+    }
+   }
+  },
+  {
+   "name": "broadway_dry",
+   "seed": 4244,
+   "coarse": "B_50_100",
+   "full_fine": {
+    "us=0": {
+     "restricted_menu_equilibrium": 1.4090330971848162,
+     "nearest": 1.5201849133492633,
+     "nearest_log": 1.5178496511853599,
+     "pseudo_harmonic": 1.5178496511853599,
+     "coarse_world_no_offtree": 1.405964263553873
+    },
+    "us=1": {
+     "restricted_menu_equilibrium": -1.4044292804707663,
+     "nearest": -0.27282888030308494,
+     "nearest_log": -0.39950512315072356,
+     "pseudo_harmonic": -0.39950512315072356,
+     "coarse_world_no_offtree": -1.4051734348229403
+    }
+   },
+   "single": {
+    "0.25": {
+     "us=0": {
+      "restricted_menu_equilibrium": 1.4059835188988892,
+      "nearest": 1.4589106106394802,
+      "nearest_log": 1.4589106106394802,
+      "pseudo_harmonic": 1.4589106106394802,
+      "coarse_world_no_offtree": 1.405964263553873
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -1.404355846125825,
+      "nearest": -0.45557860168260156,
+      "nearest_log": -0.45557860168260156,
+      "pseudo_harmonic": -0.45557860168260156,
+      "coarse_world_no_offtree": -1.4051734348229403
+     }
+    },
+    "0.75": {
+     "us=0": {
+      "restricted_menu_equilibrium": 1.408789491310552,
+      "nearest": 1.467238566263656,
+      "nearest_log": 1.4415754249307149,
+      "pseudo_harmonic": 1.4143979380063287,
+      "coarse_world_no_offtree": 1.405964263553873
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -1.4048632470066869,
+      "nearest": -1.1672787627130705,
+      "nearest_log": -1.0137702670139666,
+      "pseudo_harmonic": -1.3932658156145254,
+      "coarse_world_no_offtree": -1.4051734348229403
+     }
+    },
+    "1.5": {
+     "us=0": {
+      "restricted_menu_equilibrium": 1.4058714743323744,
+      "nearest": 1.4649033040997528,
+      "nearest_log": 1.4649033040997528,
+      "pseudo_harmonic": 1.4649033040997528,
+      "coarse_world_no_offtree": 1.405964263553873
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -1.404970691849174,
+      "nearest": -1.2958189459223846,
+      "nearest_log": -1.2958189459223846,
+      "pseudo_harmonic": -1.2958189459223846,
+      "coarse_world_no_offtree": -1.4051734348229403
+     }
+    },
+    "2.0": {
+     "us=0": {
+      "restricted_menu_equilibrium": 1.405964263553873,
+      "nearest": 1.405964263553873,
+      "nearest_log": 1.405964263553873,
+      "pseudo_harmonic": 1.405964263553873,
+      "coarse_world_no_offtree": 1.405964263553873
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -1.4051734348229403,
+      "nearest": -1.4051734348229403,
+      "nearest_log": -1.4051734348229403,
+      "pseudo_harmonic": -1.4051734348229403,
+      "coarse_world_no_offtree": -1.4051734348229403
+     }
+    }
+   }
+  },
+  {
+   "name": "broadway_dry",
+   "seed": 4244,
+   "coarse": "C_33_75_150",
+   "full_fine": {
+    "us=0": {
+     "restricted_menu_equilibrium": 1.4236778828404173,
+     "nearest": 1.478000591929613,
+     "nearest_log": 1.4897568916877422,
+     "pseudo_harmonic": 1.445950754727817,
+     "coarse_world_no_offtree": 1.4208142231307983
+    },
+    "us=1": {
+     "restricted_menu_equilibrium": -1.4014766935606238,
+     "nearest": -0.9618271060013077,
+     "nearest_log": -0.5901935488209719,
+     "pseudo_harmonic": -1.1422508484290699,
+     "coarse_world_no_offtree": -1.4181595034423495
+    }
+   },
+   "single": {
+    "0.25": {
+     "us=0": {
+      "restricted_menu_equilibrium": 1.420488129637014,
+      "nearest": 1.4379951622400937,
+      "nearest_log": 1.4379951622400937,
+      "pseudo_harmonic": 1.4379951622400937,
+      "coarse_world_no_offtree": 1.4208142231307983
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -1.4181795673095543,
+      "nearest": -1.1884339614267494,
+      "nearest_log": -1.1884339614267494,
+      "pseudo_harmonic": -1.1884339614267494,
+      "coarse_world_no_offtree": -1.4181595034423495
+     }
+    },
+    "2.0": {
+     "us=0": {
+      "restricted_menu_equilibrium": 1.4208142231307983,
+      "nearest": 1.4208142231307983,
+      "nearest_log": 1.4208142231307983,
+      "pseudo_harmonic": 1.4208142231307983,
+      "coarse_world_no_offtree": 1.4208142231307983
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -1.4181595034423495,
+      "nearest": -1.4181595034423495,
+      "nearest_log": -1.4181595034423495,
+      "pseudo_harmonic": -1.4181595034423495,
+      "coarse_world_no_offtree": -1.4181595034423495
+     }
+    }
+   }
+  },
+  {
+   "name": "two_tone_middling",
+   "seed": 4242,
+   "coarse": "B_50_100",
+   "full_fine": {
+    "us=0": {
+     "restricted_menu_equilibrium": -1.6997057213673974,
+     "nearest": -1.643964252421211,
+     "nearest_log": -1.6453312484022886,
+     "pseudo_harmonic": -1.6453312484022886,
+     "coarse_world_no_offtree": -1.7016936272595724
+    },
+    "us=1": {
+     "restricted_menu_equilibrium": 1.7053807628842952,
+     "nearest": 2.4516197243214912,
+     "nearest_log": 2.71437469243138,
+     "pseudo_harmonic": 2.4516197243214912,
+     "coarse_world_no_offtree": 1.7047683992540659
+    }
+   },
+   "single": {
+    "0.25": {
+     "us=0": {
+      "restricted_menu_equilibrium": -1.7012940170545603,
+      "nearest": -1.6824723054026736,
+      "nearest_log": -1.6824723054026736,
+      "pseudo_harmonic": -1.6824723054026736,
+      "coarse_world_no_offtree": -1.7016936272595724
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 1.70508756603161,
+      "nearest": 2.0192630350723593,
+      "nearest_log": 2.0192630350723593,
+      "pseudo_harmonic": 2.0192630350723593,
+      "coarse_world_no_offtree": 1.7047683992540659
+     }
+    },
+    "0.75": {
+     "us=0": {
+      "restricted_menu_equilibrium": -1.7002288752407262,
+      "nearest": -1.673470709660406,
+      "nearest_log": -1.687292308430461,
+      "pseudo_harmonic": -1.6999536473459051,
+      "coarse_world_no_offtree": -1.7016936272595724
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 1.7046871198566946,
+      "nearest": 1.9057063044323312,
+      "nearest_log": 2.109298589882352,
+      "pseudo_harmonic": 1.7047683992540659,
+      "coarse_world_no_offtree": 1.7047683992540659
+     }
+    },
+    "1.5": {
+     "us=0": {
+      "restricted_menu_equilibrium": -1.7013973001100786,
+      "nearest": -1.664552570259188,
+      "nearest_log": -1.664552570259188,
+      "pseudo_harmonic": -1.664552570259188,
+      "coarse_world_no_offtree": -1.7016936272595724
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 1.7057855685773167,
+      "nearest": 2.298075383054707,
+      "nearest_log": 2.298075383054707,
+      "pseudo_harmonic": 2.298075383054707,
+      "coarse_world_no_offtree": 1.7047683992540659
+     }
+    },
+    "2.0": {
+     "us=0": {
+      "restricted_menu_equilibrium": -1.7016936272595724,
+      "nearest": -1.7016936272595724,
+      "nearest_log": -1.7016936272595724,
+      "pseudo_harmonic": -1.7016936272595724,
+      "coarse_world_no_offtree": -1.7016936272595724
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 1.7047683992540659,
+      "nearest": 1.7047683992540659,
+      "nearest_log": 1.7047683992540659,
+      "pseudo_harmonic": 1.7047683992540659,
+      "coarse_world_no_offtree": 1.7047683992540659
+     }
+    }
+   }
+  },
+  {
+   "name": "two_tone_middling",
+   "seed": 4242,
+   "coarse": "C_33_75_150",
+   "full_fine": {
+    "us=0": {
+     "restricted_menu_equilibrium": -1.698364015137927,
+     "nearest": -1.6679084912598858,
+     "nearest_log": -1.659516473229723,
+     "pseudo_harmonic": -1.6909013161011495,
+     "coarse_world_no_offtree": -1.6987163952814925
+    },
+    "us=1": {
+     "restricted_menu_equilibrium": 1.7041610547103359,
+     "nearest": 1.880130024092539,
+     "nearest_log": 2.2297550788499074,
+     "pseudo_harmonic": 1.721815678554832,
+     "coarse_world_no_offtree": 1.7045876872377332
+    }
+   },
+   "single": {
+    "0.25": {
+     "us=0": {
+      "restricted_menu_equilibrium": -1.6987276812877057,
+      "nearest": -1.691927519702596,
+      "nearest_log": -1.691927519702596,
+      "pseudo_harmonic": -1.691927519702596,
+      "coarse_world_no_offtree": -1.6987163952814925
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 1.703841085569875,
+      "nearest": 1.7124872211559767,
+      "nearest_log": 1.7124872211559767,
+      "pseudo_harmonic": 1.7124872211559767,
+      "coarse_world_no_offtree": 1.7045876872377332
+     }
+    },
+    "2.0": {
+     "us=0": {
+      "restricted_menu_equilibrium": -1.6987163952814925,
+      "nearest": -1.6987163952814925,
+      "nearest_log": -1.6987163952814925,
+      "pseudo_harmonic": -1.6987163952814925,
+      "coarse_world_no_offtree": -1.6987163952814925
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 1.7045876872377332,
+      "nearest": 1.7045876872377332,
+      "nearest_log": 1.7045876872377332,
+      "pseudo_harmonic": 1.7045876872377332,
+      "coarse_world_no_offtree": 1.7045876872377332
+     }
+    }
+   }
+  },
+  {
+   "name": "two_tone_middling",
+   "seed": 4243,
+   "coarse": "B_50_100",
+   "full_fine": {
+    "us=0": {
+     "restricted_menu_equilibrium": 1.0571491233721753,
+     "nearest": 1.1594666982280868,
+     "nearest_log": 1.1566348490204004,
+     "pseudo_harmonic": 1.1566348490204004,
+     "coarse_world_no_offtree": 1.0550634195554291
+    },
+    "us=1": {
+     "restricted_menu_equilibrium": -1.05108503183998,
+     "nearest": -0.13260659220891347,
+     "nearest_log": -0.02405287052701499,
+     "pseudo_harmonic": -0.13260659220891347,
+     "coarse_world_no_offtree": -1.0516514475759264
+    }
+   },
+   "single": {
+    "0.25": {
+     "us=0": {
+      "restricted_menu_equilibrium": 1.0568220111536344,
+      "nearest": 1.095979575628046,
+      "nearest_log": 1.095979575628046,
+      "pseudo_harmonic": 1.095979575628046,
+      "coarse_world_no_offtree": 1.0550634195554291
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -1.0524625705534147,
+      "nearest": -0.560791927429449,
+      "nearest_log": -0.560791927429449,
+      "pseudo_harmonic": -0.560791927429449,
+      "coarse_world_no_offtree": -1.0516514475759264
+     }
+    },
+    "0.75": {
+     "us=0": {
+      "restricted_menu_equilibrium": 1.056042995103939,
+      "nearest": 1.103242518510948,
+      "nearest_log": 1.084643593324132,
+      "pseudo_harmonic": 1.0582389742860143,
+      "coarse_world_no_offtree": 1.0550634195554291
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -1.0517442714455782,
+      "nearest": -0.8415594130107178,
+      "nearest_log": -0.5048906606780433,
+      "pseudo_harmonic": -1.0516514475759264,
+      "coarse_world_no_offtree": -1.0516514475759264
+     }
+    },
+    "1.5": {
+     "us=0": {
+      "restricted_menu_equilibrium": 1.0553230731120962,
+      "nearest": 1.1157186929477834,
+      "nearest_log": 1.1157186929477834,
+      "pseudo_harmonic": 1.1157186929477834,
+      "coarse_world_no_offtree": 1.0550634195554291
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -1.0506418123237362,
+      "nearest": -0.5804806949889261,
+      "nearest_log": -0.5804806949889261,
+      "pseudo_harmonic": -0.5804806949889261,
+      "coarse_world_no_offtree": -1.0516514475759264
+     }
+    },
+    "2.0": {
+     "us=0": {
+      "restricted_menu_equilibrium": 1.0550634195554291,
+      "nearest": 1.0550634195554291,
+      "nearest_log": 1.0550634195554291,
+      "pseudo_harmonic": 1.0550634195554291,
+      "coarse_world_no_offtree": 1.0550634195554291
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -1.0516514475759264,
+      "nearest": -1.0516514475759264,
+      "nearest_log": -1.0516514475759264,
+      "pseudo_harmonic": -1.0516514475759264,
+      "coarse_world_no_offtree": -1.0516514475759264
+     }
+    }
+   }
+  },
+  {
+   "name": "two_tone_middling",
+   "seed": 4243,
+   "coarse": "C_33_75_150",
+   "full_fine": {
+    "us=0": {
+     "restricted_menu_equilibrium": 1.0576708227848213,
+     "nearest": 1.121725909065846,
+     "nearest_log": 1.1237553669651967,
+     "pseudo_harmonic": 1.077561243041288,
+     "coarse_world_no_offtree": 1.0591492649535295
+    },
+    "us=1": {
+     "restricted_menu_equilibrium": -1.053737974311585,
+     "nearest": -0.8998149597414618,
+     "nearest_log": -0.3683164753738214,
+     "pseudo_harmonic": -0.9620108454206651,
+     "coarse_world_no_offtree": -1.053994124525008
+    }
+   },
+   "single": {
+    "0.25": {
+     "us=0": {
+      "restricted_menu_equilibrium": 1.0596986908132506,
+      "nearest": 1.0725099339964157,
+      "nearest_log": 1.0725099339964157,
+      "pseudo_harmonic": 1.0725099339964157,
+      "coarse_world_no_offtree": 1.0591492649535295
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -1.0542073426022889,
+      "nearest": -1.0301327590735303,
+      "nearest_log": -1.0301327590735303,
+      "pseudo_harmonic": -1.0301327590735303,
+      "coarse_world_no_offtree": -1.053994124525008
+     }
+    },
+    "2.0": {
+     "us=0": {
+      "restricted_menu_equilibrium": 1.0591492649535295,
+      "nearest": 1.0591492649535295,
+      "nearest_log": 1.0591492649535295,
+      "pseudo_harmonic": 1.0591492649535295,
+      "coarse_world_no_offtree": 1.0591492649535295
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": -1.053994124525008,
+      "nearest": -1.053994124525008,
+      "nearest_log": -1.053994124525008,
+      "pseudo_harmonic": -1.053994124525008,
+      "coarse_world_no_offtree": -1.053994124525008
+     }
+    }
+   }
+  },
+  {
+   "name": "two_tone_middling",
+   "seed": 4244,
+   "coarse": "B_50_100",
+   "full_fine": {
+    "us=0": {
+     "restricted_menu_equilibrium": -1.676404428974314,
+     "nearest": -1.4757132470954548,
+     "nearest_log": -1.4757132470954548,
+     "pseudo_harmonic": -1.4757132470954548,
+     "coarse_world_no_offtree": -1.6797875048722908
+    },
+    "us=1": {
+     "restricted_menu_equilibrium": 1.6827884636817518,
+     "nearest": 2.6247487953859086,
+     "nearest_log": 2.7883458175709572,
+     "pseudo_harmonic": 2.6247487953859086,
+     "coarse_world_no_offtree": 1.682683655799126
+    }
+   },
+   "single": {
+    "0.25": {
+     "us=0": {
+      "restricted_menu_equilibrium": -1.6792269890198919,
+      "nearest": -1.6054285729924005,
+      "nearest_log": -1.6054285729924005,
+      "pseudo_harmonic": -1.6054285729924005,
+      "coarse_world_no_offtree": -1.6797875048722908
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 1.6825570012809863,
+      "nearest": 2.1099523553033257,
+      "nearest_log": 2.1099523553033257,
+      "pseudo_harmonic": 2.1099523553033257,
+      "coarse_world_no_offtree": 1.682683655799126
+     }
+    },
+    "0.75": {
+     "us=0": {
+      "restricted_menu_equilibrium": -1.6768538323723652,
+      "nearest": -1.5872147929205809,
+      "nearest_log": -1.6258516678168713,
+      "pseudo_harmonic": -1.6719661339818965,
+      "coarse_world_no_offtree": -1.6797875048722908
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 1.6825541298158462,
+      "nearest": 1.7552654286751042,
+      "nearest_log": 2.1551654995448097,
+      "pseudo_harmonic": 1.682683655799126,
+      "coarse_world_no_offtree": 1.682683655799126
+     }
+    },
+    "1.5": {
+     "us=0": {
+      "restricted_menu_equilibrium": -1.6795628297827785,
+      "nearest": -1.5500721789753449,
+      "nearest_log": -1.5500721789753449,
+      "pseudo_harmonic": -1.5500721789753449,
+      "coarse_world_no_offtree": -1.6797875048722908
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 1.683631656378916,
+      "nearest": 2.3038822151951934,
+      "nearest_log": 2.3038822151951934,
+      "pseudo_harmonic": 2.3038822151951934,
+      "coarse_world_no_offtree": 1.682683655799126
+     }
+    },
+    "2.0": {
+     "us=0": {
+      "restricted_menu_equilibrium": -1.6797875048722908,
+      "nearest": -1.6797875048722908,
+      "nearest_log": -1.6797875048722908,
+      "pseudo_harmonic": -1.6797875048722908,
+      "coarse_world_no_offtree": -1.6797875048722908
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 1.682683655799126,
+      "nearest": 1.682683655799126,
+      "nearest_log": 1.682683655799126,
+      "pseudo_harmonic": 1.682683655799126,
+      "coarse_world_no_offtree": 1.682683655799126
+     }
+    }
+   }
+  },
+  {
+   "name": "two_tone_middling",
+   "seed": 4244,
+   "coarse": "C_33_75_150",
+   "full_fine": {
+    "us=0": {
+     "restricted_menu_equilibrium": -1.6754777308459632,
+     "nearest": -1.5929993674444554,
+     "nearest_log": -1.5453294557348118,
+     "pseudo_harmonic": -1.6591158063408553,
+     "coarse_world_no_offtree": -1.6759462286839446
+    },
+    "us=1": {
+     "restricted_menu_equilibrium": 1.6801089950540375,
+     "nearest": 1.831237790103056,
+     "nearest_log": 2.196631099679728,
+     "pseudo_harmonic": 1.6802411085131146,
+     "coarse_world_no_offtree": 1.6800898044798784
+    }
+   },
+   "single": {
+    "0.25": {
+     "us=0": {
+      "restricted_menu_equilibrium": -1.6754754870243205,
+      "nearest": -1.66516454445351,
+      "nearest_log": -1.66516454445351,
+      "pseudo_harmonic": -1.66516454445351,
+      "coarse_world_no_offtree": -1.6759462286839446
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 1.6796669825102535,
+      "nearest": 1.6800898044798784,
+      "nearest_log": 1.6800898044798784,
+      "pseudo_harmonic": 1.6800898044798784,
+      "coarse_world_no_offtree": 1.6800898044798784
+     }
+    },
+    "2.0": {
+     "us=0": {
+      "restricted_menu_equilibrium": -1.6759462286839446,
+      "nearest": -1.6759462286839446,
+      "nearest_log": -1.6759462286839446,
+      "pseudo_harmonic": -1.6759462286839446,
+      "coarse_world_no_offtree": -1.6759462286839446
+     },
+     "us=1": {
+      "restricted_menu_equilibrium": 1.6800898044798784,
+      "nearest": 1.6800898044798784,
+      "nearest_log": 1.6800898044798784,
+      "pseudo_harmonic": 1.6800898044798784,
+      "coarse_world_no_offtree": 1.6800898044798784
+     }
+    }
+   }
+  }
+ ],
+ "seconds": 81.5,
+ "commit": "99db11a5e49f54e91a2bc8ef9e27b68cf35a30e6"
+}

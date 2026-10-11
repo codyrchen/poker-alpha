@@ -13,7 +13,7 @@ export default function BenchmarksPage() {
           <img src="/figures/native_speedup.png" alt="Native C++ backend speedup vs Python reference" />
           <figcaption>
             Native C++17 training backend vs the Python reference:{" "}
-            <b>38.1×</b> end-to-end on the release configuration, with
+            <b>74.2×</b> warm training throughput on the release configuration, with
             bit-exact regret/strategy tapes.
           </figcaption>
         </figure>

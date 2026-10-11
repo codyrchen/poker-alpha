@@ -159,8 +159,29 @@ def create_app() -> FastAPI:
             obs = observe_manual(req.state)
         except (ValueError, KeyError, TypeError) as exc:
             raise HTTPException(422, f"invalid state: {exc}")
-        report = analyze(obs, config=_config(req.settings))
-        return _to_response(report)
+        cfg = _config(req.settings)
+        report = analyze(obs, config=cfg)
+        resp = _to_response(report)
+        if req.include_receipt:
+            from ..analysis.receipt import build_receipt
+
+            resp.receipt = build_receipt(report, req.state, cfg)
+        return resp
+
+    @app.post("/receipt/verify", response_model=S.VerifyReceiptResponse)
+    def receipt_verify(req: S.VerifyReceiptRequest) -> S.VerifyReceiptResponse:
+        from ..analysis.receipt import RECEIPT_FORMAT, verify_receipt
+
+        if req.receipt.get("format") != RECEIPT_FORMAT:
+            raise HTTPException(422, f"unsupported receipt format; expected "
+                                     f"{RECEIPT_FORMAT}")
+        try:
+            out = verify_receipt(req.receipt, solver=_solver()
+                                 if not hasattr(_solver(), "code") else None)
+        except (KeyError, ValueError, TypeError) as exc:
+            raise HTTPException(422, f"malformed receipt: {exc}")
+        return S.VerifyReceiptResponse(reproduced=out["reproduced"],
+                                       mismatches=out["mismatches"])
 
     @app.post("/what-if", response_model=S.WhatIfResponse)
     def what_if(req: S.WhatIfRequest) -> S.WhatIfResponse:

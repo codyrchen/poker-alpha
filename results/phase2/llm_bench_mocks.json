@@ -1,0 +1,312 @@
+{
+ "format": "pokeralpha.phase2.llm_bench_mocks/v1",
+ "dataset": {
+  "format": "pokeralpha.llmbench/v2",
+  "n_items": 120,
+  "games": [
+   "kuhn",
+   "leduc_r1",
+   "auction",
+   "signaling"
+  ],
+  "representations": [
+   "json",
+   "natural",
+   "compact"
+  ]
+ },
+ "note": "mock agents only; no external model was called (credentials not available). Each mock exhibits one failure mode the benchmark must detect.",
+ "mocks": {
+  "mock-perfect": {
+   "auction": {
+    "parse_failure_rate": 0.0,
+    "illegal_action_rate": 0.0,
+    "inconsistent_action_rate": 0.0,
+    "repeat_determinism": 1.0,
+    "failure_counts": {},
+    "exploitability_by_rep": {
+     "json": 3.1886997678938983e-07,
+     "natural": 3.1886997678938983e-07,
+     "compact": 3.1886997678938983e-07
+    },
+    "max_representation_instability": 0.0
+   },
+   "kuhn": {
+    "parse_failure_rate": 0.0,
+    "illegal_action_rate": 0.0,
+    "inconsistent_action_rate": 0.0,
+    "repeat_determinism": 1.0,
+    "failure_counts": {},
+    "exploitability_by_rep": {
+     "json": 4.364861937376785e-05,
+     "natural": 4.364861937376785e-05,
+     "compact": 4.364861937376785e-05
+    },
+    "max_representation_instability": 0.0
+   },
+   "leduc_r1": {
+    "parse_failure_rate": 0.0,
+    "illegal_action_rate": 0.0,
+    "inconsistent_action_rate": 0.0,
+    "repeat_determinism": 1.0,
+    "failure_counts": {},
+    "exploitability_by_rep": {
+     "json": 0.0012617590801699621,
+     "natural": 0.0012617590801699621,
+     "compact": 0.0012617590801699621
+    },
+    "max_representation_instability": 0.0
+   },
+   "signaling": {
+    "parse_failure_rate": 0.0,
+    "illegal_action_rate": 0.0,
+    "inconsistent_action_rate": 0.0,
+    "repeat_determinism": 1.0,
+    "failure_counts": {},
+    "exploitability_by_rep": {
+     "json": 0.00029819198993397134,
+     "natural": 0.00029819198993397134,
+     "compact": 0.00029819198993397134
+    },
+    "max_representation_instability": 0.0
+   }
+  },
+  "mock-always-first": {
+   "auction": {
+    "parse_failure_rate": 0.0,
+    "illegal_action_rate": 0.0,
+    "inconsistent_action_rate": 0.0,
+    "repeat_determinism": 1.0,
+    "failure_counts": {},
+    "exploitability_by_rep": {
+     "json": 0.3333333333333333,
+     "natural": 0.3333333333333333,
+     "compact": 0.3333333333333333
+    },
+    "max_representation_instability": 0.0
+   },
+   "kuhn": {
+    "parse_failure_rate": 0.0,
+    "illegal_action_rate": 0.0,
+    "inconsistent_action_rate": 0.0,
+    "repeat_determinism": 1.0,
+    "failure_counts": {},
+    "exploitability_by_rep": {
+     "json": 1.0,
+     "natural": 1.0,
+     "compact": 1.0
+    },
+    "max_representation_instability": 0.0
+   },
+   "leduc_r1": {
+    "parse_failure_rate": 0.0,
+    "illegal_action_rate": 0.0,
+    "inconsistent_action_rate": 0.0,
+    "repeat_determinism": 1.0,
+    "failure_counts": {},
+    "exploitability_by_rep": {
+     "json": 1.0083929450929334,
+     "natural": 1.0083929450929334,
+     "compact": 1.0083929450929334
+    },
+    "max_representation_instability": 0.0
+   },
+   "signaling": {
+    "parse_failure_rate": 0.0,
+    "illegal_action_rate": 0.0,
+    "inconsistent_action_rate": 0.0,
+    "repeat_determinism": 1.0,
+    "failure_counts": {},
+    "exploitability_by_rep": {
+     "json": 0.6099999999999999,
+     "natural": 0.6099999999999999,
+     "compact": 0.6099999999999999
+    },
+    "max_representation_instability": 0.0
+   }
+  },
+  "mock-random": {
+   "auction": {
+    "parse_failure_rate": 0.0,
+    "illegal_action_rate": 0.0,
+    "inconsistent_action_rate": 0.0,
+    "repeat_determinism": 0.05555555555555555,
+    "failure_counts": {},
+    "exploitability_by_rep": {
+     "json": 0.4444444444444444,
+     "natural": 0.4444444444444444,
+     "compact": 0.4444444444444444
+    },
+    "max_representation_instability": 0.0
+   },
+   "kuhn": {
+    "parse_failure_rate": 0.0,
+    "illegal_action_rate": 0.0,
+    "inconsistent_action_rate": 0.0,
+    "repeat_determinism": 0.3888888888888889,
+    "failure_counts": {},
+    "exploitability_by_rep": {
+     "json": 0.45833333333333326,
+     "natural": 0.45833333333333326,
+     "compact": 0.45833333333333326
+    },
+    "max_representation_instability": 0.0
+   },
+   "leduc_r1": {
+    "parse_failure_rate": 0.0,
+    "illegal_action_rate": 0.0,
+    "inconsistent_action_rate": 0.0,
+    "repeat_determinism": 0.48148148148148145,
+    "failure_counts": {},
+    "exploitability_by_rep": {
+     "json": 1.3991731436718324,
+     "natural": 1.3991731436718324,
+     "compact": 1.3991731436718324
+    },
+    "max_representation_instability": 0.0
+   },
+   "signaling": {
+    "parse_failure_rate": 0.0,
+    "illegal_action_rate": 0.0,
+    "inconsistent_action_rate": 0.0,
+    "repeat_determinism": 0.5,
+    "failure_counts": {},
+    "exploitability_by_rep": {
+     "json": 0.35,
+     "natural": 0.35,
+     "compact": 0.35
+    },
+    "max_representation_instability": 0.0
+   }
+  },
+  "mock-malformed": {
+   "auction": {
+    "parse_failure_rate": 0.8055555555555556,
+    "illegal_action_rate": 0.2222222222222222,
+    "inconsistent_action_rate": 0.19444444444444445,
+    "repeat_determinism": null,
+    "failure_counts": {
+     "illegal_action": 8,
+     "bad_probabilities": 7,
+     "bad_schema": 7,
+     "no_json": 7
+    },
+    "exploitability_by_rep": {
+     "json": 0.3333335484602836,
+     "natural": 0.16666687221064455,
+     "compact": 0.16666692806677663
+    },
+    "max_representation_instability": null
+   },
+   "kuhn": {
+    "parse_failure_rate": 0.8055555555555556,
+    "illegal_action_rate": 0.20833333333333334,
+    "inconsistent_action_rate": 0.19444444444444445,
+    "repeat_determinism": null,
+    "failure_counts": {
+     "illegal_action": 15,
+     "bad_probabilities": 15,
+     "bad_schema": 14,
+     "no_json": 14
+    },
+    "exploitability_by_rep": {
+     "json": 0.1572230118070767,
+     "natural": 0.13891923726965283,
+     "compact": 0.03703533275643091
+    },
+    "max_representation_instability": null
+   },
+   "leduc_r1": {
+    "parse_failure_rate": 0.7962962962962963,
+    "illegal_action_rate": 0.19444444444444445,
+    "inconsistent_action_rate": 0.2037037037037037,
+    "repeat_determinism": null,
+    "failure_counts": {
+     "bad_schema": 22,
+     "no_json": 22,
+     "illegal_action": 21,
+     "bad_probabilities": 21
+    },
+    "exploitability_by_rep": {
+     "json": 0.45921746866085333,
+     "natural": 0.7221629989542391,
+     "compact": 0.7978522703687626
+    },
+    "max_representation_instability": null
+   },
+   "signaling": {
+    "parse_failure_rate": 0.7916666666666666,
+    "illegal_action_rate": 0.16666666666666666,
+    "inconsistent_action_rate": 0.20833333333333334,
+    "repeat_determinism": null,
+    "failure_counts": {
+     "bad_probabilities": 5,
+     "bad_schema": 5,
+     "no_json": 5,
+     "illegal_action": 4
+    },
+    "exploitability_by_rep": {
+     "json": 0.06324337479137893,
+     "natural": 0.0901833337502608,
+     "compact": 0.14698756119812356
+    },
+    "max_representation_instability": null
+   }
+  },
+  "mock-prompt-sensitive": {
+   "auction": {
+    "parse_failure_rate": 0.0,
+    "illegal_action_rate": 0.0,
+    "inconsistent_action_rate": 0.0,
+    "repeat_determinism": 1.0,
+    "failure_counts": {},
+    "exploitability_by_rep": {
+     "json": 3.1886997678938983e-07,
+     "natural": 0.3333333333333333,
+     "compact": 0.3333333333333333
+    },
+    "max_representation_instability": 0.7682923440972435
+   },
+   "kuhn": {
+    "parse_failure_rate": 0.0,
+    "illegal_action_rate": 0.0,
+    "inconsistent_action_rate": 0.0,
+    "repeat_determinism": 1.0,
+    "failure_counts": {},
+    "exploitability_by_rep": {
+     "json": 4.364861937376785e-05,
+     "natural": 1.0,
+     "compact": 1.0
+    },
+    "max_representation_instability": 0.4261682092098252
+   },
+   "leduc_r1": {
+    "parse_failure_rate": 0.0,
+    "illegal_action_rate": 0.0,
+    "inconsistent_action_rate": 0.0,
+    "repeat_determinism": 1.0,
+    "failure_counts": {},
+    "exploitability_by_rep": {
+     "json": 0.0012617590801699621,
+     "natural": 1.0083929450929334,
+     "compact": 1.0083929450929334
+    },
+    "max_representation_instability": 0.7740496867261428
+   },
+   "signaling": {
+    "parse_failure_rate": 0.0,
+    "illegal_action_rate": 0.0,
+    "inconsistent_action_rate": 0.0,
+    "repeat_determinism": 1.0,
+    "failure_counts": {},
+    "exploitability_by_rep": {
+     "json": 0.00029819198993397134,
+     "natural": 0.6099999999999999,
+     "compact": 0.6099999999999999
+    },
+    "max_representation_instability": 0.6750954974300585
+   }
+  }
+ },
+ "commit": "8a315c5fd40916eee94347aa299f51e2130faff0"
+}

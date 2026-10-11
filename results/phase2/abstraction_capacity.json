@@ -1,0 +1,4750 @@
+{
+ "format": "pokeralpha.phase2.abstraction_capacity/v1",
+ "domain": "river subgames (Program 1 family)",
+ "k_grid": [
+  1,
+  2,
+  3,
+  4,
+  6,
+  8,
+  12,
+  16,
+  24,
+  48
+ ],
+ "seeds": [
+  0,
+  1,
+  2
+ ],
+ "boards": [
+  "dry_high polarized vs bluff-catcher",
+  "paired uncapped vs capped",
+  "four-straight strong vs strong",
+  "four-flush thin value",
+  "monotone bluff-heavy",
+  "low connected mixed",
+  "paired_low_ace_river",
+  "broadway_dry",
+  "two_tone_middling"
+ ],
+ "summary_uniform": {
+  "1": {
+   "exploitability_mean": 3.829035735789483,
+   "infosets_mean": 14.0,
+   "table_bytes_mean": 608.0,
+   "iterations_per_second_mean": 2098.6145086971464
+  },
+  "2": {
+   "exploitability_mean": 1.0727608438916152,
+   "infosets_mean": 28.0,
+   "table_bytes_mean": 1216.0,
+   "iterations_per_second_mean": 2137.168104793834
+  },
+  "3": {
+   "exploitability_mean": 0.5947126129777447,
+   "infosets_mean": 42.0,
+   "table_bytes_mean": 1824.0,
+   "iterations_per_second_mean": 2169.9208220334936
+  },
+  "4": {
+   "exploitability_mean": 0.3470552605167457,
+   "infosets_mean": 56.0,
+   "table_bytes_mean": 2432.0,
+   "iterations_per_second_mean": 2086.163343892783
+  },
+  "6": {
+   "exploitability_mean": 0.1977676894341142,
+   "infosets_mean": 84.0,
+   "table_bytes_mean": 3648.0,
+   "iterations_per_second_mean": 2104.4476794670272
+  },
+  "8": {
+   "exploitability_mean": 0.14498248011927442,
+   "infosets_mean": 112.0,
+   "table_bytes_mean": 4864.0,
+   "iterations_per_second_mean": 2174.352151946866
+  },
+  "12": {
+   "exploitability_mean": 0.10797147301306247,
+   "infosets_mean": 168.0,
+   "table_bytes_mean": 7296.0,
+   "iterations_per_second_mean": 2137.8661044505343
+  },
+  "16": {
+   "exploitability_mean": 0.08944151956068301,
+   "infosets_mean": 224.0,
+   "table_bytes_mean": 9728.0,
+   "iterations_per_second_mean": 2131.9017212501517
+  },
+  "24": {
+   "exploitability_mean": 0.061704726909903175,
+   "infosets_mean": 336.0,
+   "table_bytes_mean": 14592.0,
+   "iterations_per_second_mean": 2010.2590248557667
+  },
+  "48": {
+   "exploitability_mean": 0.004334353156397848,
+   "infosets_mean": 672.0,
+   "table_bytes_mean": 29184.0,
+   "iterations_per_second_mean": 1969.9093086036721
+  }
+ },
+ "adaptive_vs_uniform_error_ratio_at_equal_infosets": {
+  "median": 1.3615260268417801,
+  "mean": 1.909117410908481,
+  "share_adaptive_better": 0.8592592592592593,
+  "points": 540,
+  "definition": "uniform error interpolated (log-linear in infosets) / adaptive error; > 1 = adaptive better"
+ },
+ "instances": [
+  {
+   "name": "dry_high polarized vs bluff-catcher",
+   "seed": 300,
+   "n": [
+    48,
+    48
+   ],
+   "uniform": [
+    {
+     "k": 1,
+     "exploitability": 4.413892596763828,
+     "infosets": 14,
+     "table_bytes": 608,
+     "solve_seconds": 0.18176958290860057,
+     "iterations_per_second": 2205.354323228921
+    },
+    {
+     "k": 2,
+     "exploitability": 0.9269638068096928,
+     "infosets": 28,
+     "table_bytes": 1216,
+     "solve_seconds": 0.1903457920998335,
+     "iterations_per_second": 2105.5462102745055
+    },
+    {
+     "k": 3,
+     "exploitability": 0.24793960869185172,
+     "infosets": 42,
+     "table_bytes": 1824,
+     "solve_seconds": 0.19119412498548627,
+     "iterations_per_second": 2100.7470033205814
+    },
+    {
+     "k": 4,
+     "exploitability": 0.23202091910182854,
+     "infosets": 56,
+     "table_bytes": 2432,
+     "solve_seconds": 0.20144916605204344,
+     "iterations_per_second": 1993.812540271142
+    },
+    {
+     "k": 6,
+     "exploitability": 0.1533230604574347,
+     "infosets": 84,
+     "table_bytes": 3648,
+     "solve_seconds": 0.19461770891211927,
+     "iterations_per_second": 2059.729137825119
+    },
+    {
+     "k": 8,
+     "exploitability": 0.16095911699769383,
+     "infosets": 112,
+     "table_bytes": 4864,
+     "solve_seconds": 0.18943491694517434,
+     "iterations_per_second": 2115.6567888973614
+    },
+    {
+     "k": 12,
+     "exploitability": 0.1363444648206542,
+     "infosets": 168,
+     "table_bytes": 7296,
+     "solve_seconds": 0.21173416590318084,
+     "iterations_per_second": 1896.717419347169
+    },
+    {
+     "k": 16,
+     "exploitability": 0.14079168709536494,
+     "infosets": 224,
+     "table_bytes": 9728,
+     "solve_seconds": 0.18856274988502264,
+     "iterations_per_second": 2126.049960366563
+    },
+    {
+     "k": 24,
+     "exploitability": 0.05673840827010279,
+     "infosets": 336,
+     "table_bytes": 14592,
+     "solve_seconds": 0.18834979203529656,
+     "iterations_per_second": 2134.192224291427
+    },
+    {
+     "k": 48,
+     "exploitability": 0.002989042639229389,
+     "infosets": 672,
+     "table_bytes": 29184,
+     "solve_seconds": 0.20775579195469618,
+     "iterations_per_second": 1929.9302639327684
+    }
+   ],
+   "adaptive_path": [
+    {
+     "infosets": 35,
+     "exploitability": 0.24104721241327853
+    },
+    {
+     "infosets": 42,
+     "exploitability": 0.2537471656696195
+    },
+    {
+     "infosets": 49,
+     "exploitability": 0.18681233567918176
+    },
+    {
+     "infosets": 56,
+     "exploitability": 0.204399551188285
+    },
+    {
+     "infosets": 63,
+     "exploitability": 0.17266380045670982
+    },
+    {
+     "infosets": 70,
+     "exploitability": 0.1704424011211425
+    },
+    {
+     "infosets": 77,
+     "exploitability": 0.13528583409941675
+    },
+    {
+     "infosets": 84,
+     "exploitability": 0.14125236270873165
+    },
+    {
+     "infosets": 91,
+     "exploitability": 0.14122613250598048
+    },
+    {
+     "infosets": 98,
+     "exploitability": 0.14152989648704728
+    },
+    {
+     "infosets": 105,
+     "exploitability": 0.12422574920536444
+    },
+    {
+     "infosets": 112,
+     "exploitability": 0.1283139125361079
+    },
+    {
+     "infosets": 119,
+     "exploitability": 0.12832494192360588
+    },
+    {
+     "infosets": 126,
+     "exploitability": 0.12577984289213973
+    },
+    {
+     "infosets": 133,
+     "exploitability": 0.13145347223472026
+    },
+    {
+     "infosets": 140,
+     "exploitability": 0.14011238850936203
+    },
+    {
+     "infosets": 147,
+     "exploitability": 0.10855018812319184
+    },
+    {
+     "infosets": 154,
+     "exploitability": 0.10616526068524612
+    },
+    {
+     "infosets": 161,
+     "exploitability": 0.10594712063875011
+    },
+    {
+     "infosets": 168,
+     "exploitability": 0.08805611603874519
+    }
+   ]
+  },
+  {
+   "name": "dry_high polarized vs bluff-catcher",
+   "seed": 301,
+   "n": [
+    48,
+    48
+   ],
+   "uniform": [
+    {
+     "k": 1,
+     "exploitability": 5.5983915189645845,
+     "infosets": 14,
+     "table_bytes": 608,
+     "solve_seconds": 0.18283000006340444,
+     "iterations_per_second": 2192.3724604248714
+    },
+    {
+     "k": 2,
+     "exploitability": 0.21840297422624333,
+     "infosets": 28,
+     "table_bytes": 1216,
+     "solve_seconds": 0.198381083086133,
+     "iterations_per_second": 2020.0341129450192
+    },
+    {
+     "k": 3,
+     "exploitability": 0.2559253813162321,
+     "infosets": 42,
+     "table_bytes": 1824,
+     "solve_seconds": 0.1857544998638332,
+     "iterations_per_second": 2157.5108820911637
+    },
+    {
+     "k": 4,
+     "exploitability": 0.21160178162211007,
+     "infosets": 56,
+     "table_bytes": 2432,
+     "solve_seconds": 0.19283670792356133,
+     "iterations_per_second": 2078.135731318945
+    },
+    {
+     "k": 6,
+     "exploitability": 0.1966013669226635,
+     "infosets": 84,
+     "table_bytes": 3648,
+     "solve_seconds": 0.194818917196244,
+     "iterations_per_second": 2060.7195326681453
+    },
+    {
+     "k": 8,
+     "exploitability": 0.14415914740202163,
+     "infosets": 112,
+     "table_bytes": 4864,
+     "solve_seconds": 0.18860841589048505,
+     "iterations_per_second": 2130.463368162512
+    },
+    {
+     "k": 12,
+     "exploitability": 0.11645900227458794,
+     "infosets": 168,
+     "table_bytes": 7296,
+     "solve_seconds": 0.19365475000813603,
+     "iterations_per_second": 2074.6426113783837
+    },
+    {
+     "k": 16,
+     "exploitability": 0.09752643132208672,
+     "infosets": 224,
+     "table_bytes": 9728,
+     "solve_seconds": 0.2021254999563098,
+     "iterations_per_second": 1983.0945356512889
+    },
+    {
+     "k": 24,
+     "exploitability": 0.06591922005551942,
+     "infosets": 336,
+     "table_bytes": 14592,
+     "solve_seconds": 0.19517487497068942,
+     "iterations_per_second": 2058.090458081858
+    },
+    {
+     "k": 48,
+     "exploitability": 0.005833148220953266,
+     "infosets": 672,
+     "table_bytes": 29184,
+     "solve_seconds": 0.2005132909398526,
+     "iterations_per_second": 1999.4376584155434
+    }
+   ],
+   "adaptive_path": [
+    {
+     "infosets": 35,
+     "exploitability": 0.2025962360145468
+    },
+    {
+     "infosets": 42,
+     "exploitability": 0.21474416975287292
+    },
+    {
+     "infosets": 49,
+     "exploitability": 0.2384919727485989
+    },
+    {
+     "infosets": 56,
+     "exploitability": 0.23484896738693983
+    },
+    {
+     "infosets": 63,
+     "exploitability": 0.21731563157767797
+    },
+    {
+     "infosets": 70,
+     "exploitability": 0.15994827417790658
+    },
+    {
+     "infosets": 77,
+     "exploitability": 0.1627020418548435
+    },
+    {
+     "infosets": 84,
+     "exploitability": 0.16616392744421615
+    },
+    {
+     "infosets": 91,
+     "exploitability": 0.1334162107744974
+    },
+    {
+     "infosets": 98,
+     "exploitability": 0.12541640290104716
+    },
+    {
+     "infosets": 105,
+     "exploitability": 0.13305727400329603
+    },
+    {
+     "infosets": 112,
+     "exploitability": 0.11320081385561398
+    },
+    {
+     "infosets": 119,
+     "exploitability": 0.11163044835124536
+    },
+    {
+     "infosets": 126,
+     "exploitability": 0.11172721231271376
+    },
+    {
+     "infosets": 133,
+     "exploitability": 0.10281315481167708
+    },
+    {
+     "infosets": 140,
+     "exploitability": 0.10680456750294187
+    },
+    {
+     "infosets": 147,
+     "exploitability": 0.10498478988025273
+    },
+    {
+     "infosets": 154,
+     "exploitability": 0.10263002927524467
+    },
+    {
+     "infosets": 161,
+     "exploitability": 0.08933806942266109
+    },
+    {
+     "infosets": 168,
+     "exploitability": 0.091936250011452
+    }
+   ]
+  },
+  {
+   "name": "dry_high polarized vs bluff-catcher",
+   "seed": 302,
+   "n": [
+    48,
+    48
+   ],
+   "uniform": [
+    {
+     "k": 1,
+     "exploitability": 5.841119475669847,
+     "infosets": 14,
+     "table_bytes": 608,
+     "solve_seconds": 0.20385099994018674,
+     "iterations_per_second": 1965.9235864446343
+    },
+    {
+     "k": 2,
+     "exploitability": 0.23997587392960695,
+     "infosets": 28,
+     "table_bytes": 1216,
+     "solve_seconds": 0.1851955831516534,
+     "iterations_per_second": 2168.9959641608993
+    },
+    {
+     "k": 3,
+     "exploitability": 0.6887033103461697,
+     "infosets": 42,
+     "table_bytes": 1824,
+     "solve_seconds": 0.19120041700080037,
+     "iterations_per_second": 2096.414544214836
+    },
+    {
+     "k": 4,
+     "exploitability": 0.22255043129217777,
+     "infosets": 56,
+     "table_bytes": 2432,
+     "solve_seconds": 0.19718462508171797,
+     "iterations_per_second": 2032.2664675276415
+    },
+    {
+     "k": 6,
+     "exploitability": 0.22639812778502322,
+     "infosets": 84,
+     "table_bytes": 3648,
+     "solve_seconds": 0.19166045798920095,
+     "iterations_per_second": 2091.0313022515334
+    },
+    {
+     "k": 8,
+     "exploitability": 0.18030802829839987,
+     "infosets": 112,
+     "table_bytes": 4864,
+     "solve_seconds": 0.1886926661245525,
+     "iterations_per_second": 2123.947377356574
+    },
+    {
+     "k": 12,
+     "exploitability": 0.09519489631005484,
+     "infosets": 168,
+     "table_bytes": 7296,
+     "solve_seconds": 0.1949330000206828,
+     "iterations_per_second": 2055.844888888067
+    },
+    {
+     "k": 16,
+     "exploitability": 0.10058728578370635,
+     "infosets": 224,
+     "table_bytes": 9728,
+     "solve_seconds": 0.1897607499267906,
+     "iterations_per_second": 2111.9784133018084
+    },
+    {
+     "k": 24,
+     "exploitability": 0.06348958059163856,
+     "infosets": 336,
+     "table_bytes": 14592,
+     "solve_seconds": 0.20215587480925024,
+     "iterations_per_second": 1982.2923503673023
+    },
+    {
+     "k": 48,
+     "exploitability": 0.006772052221263869,
+     "infosets": 672,
+     "table_bytes": 29184,
+     "solve_seconds": 0.202920125098899,
+     "iterations_per_second": 1974.8783132619355
+    }
+   ],
+   "adaptive_path": [
+    {
+     "infosets": 35,
+     "exploitability": 0.2673764210522618
+    },
+    {
+     "infosets": 42,
+     "exploitability": 0.25175491102982606
+    },
+    {
+     "infosets": 49,
+     "exploitability": 0.22598771669343787
+    },
+    {
+     "infosets": 56,
+     "exploitability": 0.18608249113648756
+    },
+    {
+     "infosets": 63,
+     "exploitability": 0.19688922305465795
+    },
+    {
+     "infosets": 70,
+     "exploitability": 0.18772843734311073
+    },
+    {
+     "infosets": 77,
+     "exploitability": 0.19747801240939433
+    },
+    {
+     "infosets": 84,
+     "exploitability": 0.14007854716480117
+    },
+    {
+     "infosets": 91,
+     "exploitability": 0.1429023530475546
+    },
+    {
+     "infosets": 98,
+     "exploitability": 0.140133893745512
+    },
+    {
+     "infosets": 105,
+     "exploitability": 0.13015976987119904
+    },
+    {
+     "infosets": 112,
+     "exploitability": 0.13183209552097674
+    },
+    {
+     "infosets": 119,
+     "exploitability": 0.1220851244751271
+    },
+    {
+     "infosets": 126,
+     "exploitability": 0.10890268917346113
+    },
+    {
+     "infosets": 133,
+     "exploitability": 0.09522067416887381
+    },
+    {
+     "infosets": 140,
+     "exploitability": 0.08257154935302657
+    },
+    {
+     "infosets": 147,
+     "exploitability": 0.0735106950100688
+    },
+    {
+     "infosets": 154,
+     "exploitability": 0.07317522494247142
+    },
+    {
+     "infosets": 161,
+     "exploitability": 0.07296489751986113
+    },
+    {
+     "infosets": 168,
+     "exploitability": 0.05766589802510558
+    }
+   ]
+  },
+  {
+   "name": "paired uncapped vs capped",
+   "seed": 300,
+   "n": [
+    48,
+    48
+   ],
+   "uniform": [
+    {
+     "k": 1,
+     "exploitability": 4.834035193612331,
+     "infosets": 14,
+     "table_bytes": 608,
+     "solve_seconds": 0.18683687504380941,
+     "iterations_per_second": 2150.6219484548374
+    },
+    {
+     "k": 2,
+     "exploitability": 1.638175144108616,
+     "infosets": 28,
+     "table_bytes": 1216,
+     "solve_seconds": 0.1848608748987317,
+     "iterations_per_second": 2173.5128912404393
+    },
+    {
+     "k": 3,
+     "exploitability": 0.5572673335909729,
+     "infosets": 42,
+     "table_bytes": 1824,
+     "solve_seconds": 0.20457254094071686,
+     "iterations_per_second": 1959.1332931755846
+    },
+    {
+     "k": 4,
+     "exploitability": 0.25944356997628654,
+     "infosets": 56,
+     "table_bytes": 2432,
+     "solve_seconds": 0.18933616601862013,
+     "iterations_per_second": 2121.0182268249646
+    },
+    {
+     "k": 6,
+     "exploitability": 0.1440997312923046,
+     "infosets": 84,
+     "table_bytes": 3648,
+     "solve_seconds": 0.19417058303952217,
+     "iterations_per_second": 2064.616030506595
+    },
+    {
+     "k": 8,
+     "exploitability": 0.1838580944135866,
+     "infosets": 112,
+     "table_bytes": 4864,
+     "solve_seconds": 0.1962450419086963,
+     "iterations_per_second": 2042.0148835991126
+    },
+    {
+     "k": 12,
+     "exploitability": 0.14509379771060155,
+     "infosets": 168,
+     "table_bytes": 7296,
+     "solve_seconds": 0.19082024996168911,
+     "iterations_per_second": 2100.183578591147
+    },
+    {
+     "k": 16,
+     "exploitability": 0.09001016955791843,
+     "infosets": 224,
+     "table_bytes": 9728,
+     "solve_seconds": 0.18973279185593128,
+     "iterations_per_second": 2112.2846579168418
+    },
+    {
+     "k": 24,
+     "exploitability": 0.10156640583615774,
+     "infosets": 336,
+     "table_bytes": 14592,
+     "solve_seconds": 0.18935233284719288,
+     "iterations_per_second": 2121.4053787398248
+    },
+    {
+     "k": 48,
+     "exploitability": 0.0027934339066587044,
+     "infosets": 672,
+     "table_bytes": 29184,
+     "solve_seconds": 0.1984884161502123,
+     "iterations_per_second": 2024.0328592526103
+    }
+   ],
+   "adaptive_path": [
+    {
+     "infosets": 35,
+     "exploitability": 0.6035980727065245
+    },
+    {
+     "infosets": 42,
+     "exploitability": 0.47852324803357776
+    },
+    {
+     "infosets": 49,
+     "exploitability": 0.40410809155488914
+    },
+    {
+     "infosets": 56,
+     "exploitability": 0.25944356997628654
+    },
+    {
+     "infosets": 63,
+     "exploitability": 0.25816129089659695
+    },
+    {
+     "infosets": 70,
+     "exploitability": 0.15302080964847686
+    },
+    {
+     "infosets": 77,
+     "exploitability": 0.14997654664120655
+    },
+    {
+     "infosets": 84,
+     "exploitability": 0.1421274835870662
+    },
+    {
+     "infosets": 91,
+     "exploitability": 0.13947824403905396
+    },
+    {
+     "infosets": 98,
+     "exploitability": 0.13834018484366373
+    },
+    {
+     "infosets": 105,
+     "exploitability": 0.11714095881060099
+    },
+    {
+     "infosets": 112,
+     "exploitability": 0.12128011586611999
+    },
+    {
+     "infosets": 119,
+     "exploitability": 0.11377276248779707
+    },
+    {
+     "infosets": 126,
+     "exploitability": 0.09837142199630546
+    },
+    {
+     "infosets": 133,
+     "exploitability": 0.10906200678472867
+    },
+    {
+     "infosets": 140,
+     "exploitability": 0.10245334125458187
+    },
+    {
+     "infosets": 147,
+     "exploitability": 0.10897114694335157
+    },
+    {
+     "infosets": 154,
+     "exploitability": 0.10271002853913694
+    },
+    {
+     "infosets": 161,
+     "exploitability": 0.09921471802558807
+    },
+    {
+     "infosets": 168,
+     "exploitability": 0.09829334164605588
+    }
+   ]
+  },
+  {
+   "name": "paired uncapped vs capped",
+   "seed": 301,
+   "n": [
+    48,
+    48
+   ],
+   "uniform": [
+    {
+     "k": 1,
+     "exploitability": 3.1225343096497262,
+     "infosets": 14,
+     "table_bytes": 608,
+     "solve_seconds": 0.2047876671422273,
+     "iterations_per_second": 1957.341781287826
+    },
+    {
+     "k": 2,
+     "exploitability": 1.5511437159698185,
+     "infosets": 28,
+     "table_bytes": 1216,
+     "solve_seconds": 0.19623187510296702,
+     "iterations_per_second": 2042.2603302712446
+    },
+    {
+     "k": 3,
+     "exploitability": 0.7387372001240559,
+     "infosets": 42,
+     "table_bytes": 1824,
+     "solve_seconds": 0.19154058303683996,
+     "iterations_per_second": 2092.253557331266
+    },
+    {
+     "k": 4,
+     "exploitability": 0.46676108379709247,
+     "infosets": 56,
+     "table_bytes": 2432,
+     "solve_seconds": 0.18708737497217953,
+     "iterations_per_second": 2146.8364653626973
+    },
+    {
+     "k": 6,
+     "exploitability": 0.16818345682170732,
+     "infosets": 84,
+     "table_bytes": 3648,
+     "solve_seconds": 0.2018977920524776,
+     "iterations_per_second": 1989.865773196078
+    },
+    {
+     "k": 8,
+     "exploitability": 0.16707631276657686,
+     "infosets": 112,
+     "table_bytes": 4864,
+     "solve_seconds": 0.20164708397351205,
+     "iterations_per_second": 1987.6224904247003
+    },
+    {
+     "k": 12,
+     "exploitability": 0.13621904959893283,
+     "infosets": 168,
+     "table_bytes": 7296,
+     "solve_seconds": 0.19130575004965067,
+     "iterations_per_second": 2094.8824638709466
+    },
+    {
+     "k": 16,
+     "exploitability": 0.11850666222981532,
+     "infosets": 224,
+     "table_bytes": 9728,
+     "solve_seconds": 0.19766487507149577,
+     "iterations_per_second": 2027.3926103523304
+    },
+    {
+     "k": 24,
+     "exploitability": 0.08748378477108765,
+     "infosets": 336,
+     "table_bytes": 14592,
+     "solve_seconds": 0.19850524980574846,
+     "iterations_per_second": 2018.8764937036763
+    },
+    {
+     "k": 48,
+     "exploitability": 0.0037309660644399,
+     "infosets": 672,
+     "table_bytes": 29184,
+     "solve_seconds": 0.19856874994002283,
+     "iterations_per_second": 2018.2754855245648
+    }
+   ],
+   "adaptive_path": [
+    {
+     "infosets": 35,
+     "exploitability": 0.6034712556521553
+    },
+    {
+     "infosets": 42,
+     "exploitability": 0.36227548405909815
+    },
+    {
+     "infosets": 49,
+     "exploitability": 0.24633034334565473
+    },
+    {
+     "infosets": 56,
+     "exploitability": 0.19948687607281446
+    },
+    {
+     "infosets": 63,
+     "exploitability": 0.1893403942315508
+    },
+    {
+     "infosets": 70,
+     "exploitability": 0.2146437750550345
+    },
+    {
+     "infosets": 77,
+     "exploitability": 0.21141674636214924
+    },
+    {
+     "infosets": 84,
+     "exploitability": 0.1747741818376256
+    },
+    {
+     "infosets": 91,
+     "exploitability": 0.21058737778241343
+    },
+    {
+     "infosets": 98,
+     "exploitability": 0.1862566100549925
+    },
+    {
+     "infosets": 105,
+     "exploitability": 0.15997133671767017
+    },
+    {
+     "infosets": 112,
+     "exploitability": 0.1604170707636784
+    },
+    {
+     "infosets": 119,
+     "exploitability": 0.13425845297989802
+    },
+    {
+     "infosets": 126,
+     "exploitability": 0.11939668132889447
+    },
+    {
+     "infosets": 133,
+     "exploitability": 0.11724251779370842
+    },
+    {
+     "infosets": 140,
+     "exploitability": 0.1109692333375012
+    },
+    {
+     "infosets": 147,
+     "exploitability": 0.105862930448826
+    },
+    {
+     "infosets": 154,
+     "exploitability": 0.11027544791372224
+    },
+    {
+     "infosets": 161,
+     "exploitability": 0.11443476462312718
+    },
+    {
+     "infosets": 168,
+     "exploitability": 0.11418906518442684
+    }
+   ]
+  },
+  {
+   "name": "paired uncapped vs capped",
+   "seed": 302,
+   "n": [
+    48,
+    48
+   ],
+   "uniform": [
+    {
+     "k": 1,
+     "exploitability": 4.522953024604559,
+     "infosets": 14,
+     "table_bytes": 608,
+     "solve_seconds": 0.21614062506705523,
+     "iterations_per_second": 1853.9203459475375
+    },
+    {
+     "k": 2,
+     "exploitability": 1.8096864432408495,
+     "infosets": 28,
+     "table_bytes": 1216,
+     "solve_seconds": 0.19370195805095136,
+     "iterations_per_second": 2068.8576118294122
+    },
+    {
+     "k": 3,
+     "exploitability": 0.5395194679140314,
+     "infosets": 42,
+     "table_bytes": 1824,
+     "solve_seconds": 0.19335650000721216,
+     "iterations_per_second": 2077.6504505628527
+    },
+    {
+     "k": 4,
+     "exploitability": 0.2723191434568714,
+     "infosets": 56,
+     "table_bytes": 2432,
+     "solve_seconds": 0.1897967499680817,
+     "iterations_per_second": 2112.0467196356444
+    },
+    {
+     "k": 6,
+     "exploitability": 0.17175639211548793,
+     "infosets": 84,
+     "table_bytes": 3648,
+     "solve_seconds": 0.19042058405466378,
+     "iterations_per_second": 2104.6751345489365
+    },
+    {
+     "k": 8,
+     "exploitability": 0.219685162646715,
+     "infosets": 112,
+     "table_bytes": 4864,
+     "solve_seconds": 0.18615154107101262,
+     "iterations_per_second": 2158.500971526321
+    },
+    {
+     "k": 12,
+     "exploitability": 0.13557326564928018,
+     "infosets": 168,
+     "table_bytes": 7296,
+     "solve_seconds": 0.19981804210692644,
+     "iterations_per_second": 2009.9197882637504
+    },
+    {
+     "k": 16,
+     "exploitability": 0.10085172679885168,
+     "infosets": 224,
+     "table_bytes": 9728,
+     "solve_seconds": 0.20060495799407363,
+     "iterations_per_second": 1998.168338411036
+    },
+    {
+     "k": 24,
+     "exploitability": 0.10133967313558151,
+     "infosets": 336,
+     "table_bytes": 14592,
+     "solve_seconds": 0.21183837484568357,
+     "iterations_per_second": 1891.5749258687463
+    },
+    {
+     "k": 48,
+     "exploitability": 0.0032085450743233324,
+     "infosets": 672,
+     "table_bytes": 29184,
+     "solve_seconds": 0.20405075000599027,
+     "iterations_per_second": 1964.0075189456604
+    }
+   ],
+   "adaptive_path": [
+    {
+     "infosets": 35,
+     "exploitability": 0.3880911505430938
+    },
+    {
+     "infosets": 42,
+     "exploitability": 0.38086601645948304
+    },
+    {
+     "infosets": 49,
+     "exploitability": 0.29232131628748836
+    },
+    {
+     "infosets": 56,
+     "exploitability": 0.2982837290228124
+    },
+    {
+     "infosets": 63,
+     "exploitability": 0.2859052745874535
+    },
+    {
+     "infosets": 70,
+     "exploitability": 0.1893263121292844
+    },
+    {
+     "infosets": 77,
+     "exploitability": 0.14867570283319126
+    },
+    {
+     "infosets": 84,
+     "exploitability": 0.1361582868204153
+    },
+    {
+     "infosets": 91,
+     "exploitability": 0.13922014971212698
+    },
+    {
+     "infosets": 98,
+     "exploitability": 0.1322878397986652
+    },
+    {
+     "infosets": 105,
+     "exploitability": 0.13013791265025437
+    },
+    {
+     "infosets": 112,
+     "exploitability": 0.13228101760419547
+    },
+    {
+     "infosets": 119,
+     "exploitability": 0.13210274712234416
+    },
+    {
+     "infosets": 126,
+     "exploitability": 0.1338970526708983
+    },
+    {
+     "infosets": 133,
+     "exploitability": 0.11405640848051984
+    },
+    {
+     "infosets": 140,
+     "exploitability": 0.11246096680988499
+    },
+    {
+     "infosets": 147,
+     "exploitability": 0.11387221808848547
+    },
+    {
+     "infosets": 154,
+     "exploitability": 0.11802097195116146
+    },
+    {
+     "infosets": 161,
+     "exploitability": 0.10935980121874445
+    },
+    {
+     "infosets": 168,
+     "exploitability": 0.1220403150622053
+    }
+   ]
+  },
+  {
+   "name": "four-straight strong vs strong",
+   "seed": 300,
+   "n": [
+    48,
+    48
+   ],
+   "uniform": [
+    {
+     "k": 1,
+     "exploitability": 4.311940061786549,
+     "infosets": 14,
+     "table_bytes": 608,
+     "solve_seconds": 0.21179208299145103,
+     "iterations_per_second": 1892.0752420881074
+    },
+    {
+     "k": 2,
+     "exploitability": 0.6078968869085778,
+     "infosets": 28,
+     "table_bytes": 1216,
+     "solve_seconds": 0.18855662504211068,
+     "iterations_per_second": 2130.0497393710557
+    },
+    {
+     "k": 3,
+     "exploitability": 0.6261571838277371,
+     "infosets": 42,
+     "table_bytes": 1824,
+     "solve_seconds": 0.19402575003914535,
+     "iterations_per_second": 2070.1268403002914
+    },
+    {
+     "k": 4,
+     "exploitability": 0.07262905636991945,
+     "infosets": 56,
+     "table_bytes": 2432,
+     "solve_seconds": 0.19067016593180597,
+     "iterations_per_second": 2102.284000647939
+    },
+    {
+     "k": 6,
+     "exploitability": 0.14892913458721435,
+     "infosets": 84,
+     "table_bytes": 3648,
+     "solve_seconds": 0.1986212912015617,
+     "iterations_per_second": 2021.4756529988813
+    },
+    {
+     "k": 8,
+     "exploitability": 0.06927688651222497,
+     "infosets": 112,
+     "table_bytes": 4864,
+     "solve_seconds": 0.1915934169664979,
+     "iterations_per_second": 2096.470396322735
+    },
+    {
+     "k": 12,
+     "exploitability": 0.03882576086786327,
+     "infosets": 168,
+     "table_bytes": 7296,
+     "solve_seconds": 0.19840616709552705,
+     "iterations_per_second": 2020.2351805431254
+    },
+    {
+     "k": 16,
+     "exploitability": 0.02912673870588134,
+     "infosets": 224,
+     "table_bytes": 9728,
+     "solve_seconds": 0.19823391712270677,
+     "iterations_per_second": 2025.5172937914228
+    },
+    {
+     "k": 24,
+     "exploitability": 0.010984086676435578,
+     "infosets": 336,
+     "table_bytes": 14592,
+     "solve_seconds": 0.2060551659669727,
+     "iterations_per_second": 1945.4018875395348
+    },
+    {
+     "k": 48,
+     "exploitability": 0.0022395500748320085,
+     "infosets": 672,
+     "table_bytes": 29184,
+     "solve_seconds": 0.20108816702850163,
+     "iterations_per_second": 1997.3805171188708
+    }
+   ],
+   "adaptive_path": [
+    {
+     "infosets": 35,
+     "exploitability": 0.20516936948479125
+    },
+    {
+     "infosets": 42,
+     "exploitability": 0.11700574139097442
+    },
+    {
+     "infosets": 49,
+     "exploitability": 0.09197601976912584
+    },
+    {
+     "infosets": 56,
+     "exploitability": 0.09145041152162958
+    },
+    {
+     "infosets": 63,
+     "exploitability": 0.07514750580347151
+    },
+    {
+     "infosets": 70,
+     "exploitability": 0.0739372009149959
+    },
+    {
+     "infosets": 77,
+     "exploitability": 0.06459071606763322
+    },
+    {
+     "infosets": 84,
+     "exploitability": 0.06827500453532187
+    },
+    {
+     "infosets": 91,
+     "exploitability": 0.06503817222872099
+    },
+    {
+     "infosets": 98,
+     "exploitability": 0.05867969049825117
+    },
+    {
+     "infosets": 105,
+     "exploitability": 0.04795275152172418
+    },
+    {
+     "infosets": 112,
+     "exploitability": 0.04971655862648339
+    },
+    {
+     "infosets": 119,
+     "exploitability": 0.043216218578470356
+    },
+    {
+     "infosets": 126,
+     "exploitability": 0.031912178356247045
+    },
+    {
+     "infosets": 133,
+     "exploitability": 0.026992321407293574
+    },
+    {
+     "infosets": 140,
+     "exploitability": 0.027064397929075557
+    },
+    {
+     "infosets": 147,
+     "exploitability": 0.017299444544876974
+    },
+    {
+     "infosets": 154,
+     "exploitability": 0.016033609026078977
+    },
+    {
+     "infosets": 161,
+     "exploitability": 0.018331751082985126
+    },
+    {
+     "infosets": 168,
+     "exploitability": 0.014962231752178146
+    }
+   ]
+  },
+  {
+   "name": "four-straight strong vs strong",
+   "seed": 301,
+   "n": [
+    48,
+    48
+   ],
+   "uniform": [
+    {
+     "k": 1,
+     "exploitability": 5.266542157768834,
+     "infosets": 14,
+     "table_bytes": 608,
+     "solve_seconds": 0.1834352498408407,
+     "iterations_per_second": 2191.789337954732
+    },
+    {
+     "k": 2,
+     "exploitability": 0.5937428619967167,
+     "infosets": 28,
+     "table_bytes": 1216,
+     "solve_seconds": 0.2018595829140395,
+     "iterations_per_second": 1990.5321233761179
+    },
+    {
+     "k": 3,
+     "exploitability": 0.45493209301259135,
+     "infosets": 42,
+     "table_bytes": 1824,
+     "solve_seconds": 0.19713104097172618,
+     "iterations_per_second": 2033.3098556847342
+    },
+    {
+     "k": 4,
+     "exploitability": 0.353989430193521,
+     "infosets": 56,
+     "table_bytes": 2432,
+     "solve_seconds": 0.2007323750294745,
+     "iterations_per_second": 1996.303095536236
+    },
+    {
+     "k": 6,
+     "exploitability": 0.21074841569707004,
+     "infosets": 84,
+     "table_bytes": 3648,
+     "solve_seconds": 0.1900289999321103,
+     "iterations_per_second": 2108.8926730093117
+    },
+    {
+     "k": 8,
+     "exploitability": 0.13243351252235092,
+     "infosets": 112,
+     "table_bytes": 4864,
+     "solve_seconds": 0.1883410830050707,
+     "iterations_per_second": 2132.41639359096
+    },
+    {
+     "k": 12,
+     "exploitability": 0.08258214429130789,
+     "infosets": 168,
+     "table_bytes": 7296,
+     "solve_seconds": 0.20972825004719198,
+     "iterations_per_second": 1910.9136000887738
+    },
+    {
+     "k": 16,
+     "exploitability": 0.06474399596009334,
+     "infosets": 224,
+     "table_bytes": 9728,
+     "solve_seconds": 0.191404249984771,
+     "iterations_per_second": 2098.0767801000843
+    },
+    {
+     "k": 24,
+     "exploitability": 0.03824355496825538,
+     "infosets": 336,
+     "table_bytes": 14592,
+     "solve_seconds": 0.19909195904619992,
+     "iterations_per_second": 2013.653830745905
+    },
+    {
+     "k": 48,
+     "exploitability": 0.0015060124811372422,
+     "infosets": 672,
+     "table_bytes": 29184,
+     "solve_seconds": 0.2029469171538949,
+     "iterations_per_second": 1974.7641637181707
+    }
+   ],
+   "adaptive_path": [
+    {
+     "infosets": 35,
+     "exploitability": 0.4213658266651134
+    },
+    {
+     "infosets": 42,
+     "exploitability": 0.278655416009063
+    },
+    {
+     "infosets": 49,
+     "exploitability": 0.27993252326861806
+    },
+    {
+     "infosets": 56,
+     "exploitability": 0.23555466563985428
+    },
+    {
+     "infosets": 63,
+     "exploitability": 0.19070315279943245
+    },
+    {
+     "infosets": 70,
+     "exploitability": 0.13245022452400307
+    },
+    {
+     "infosets": 77,
+     "exploitability": 0.16289683406224942
+    },
+    {
+     "infosets": 84,
+     "exploitability": 0.14787984763035067
+    },
+    {
+     "infosets": 91,
+     "exploitability": 0.12645615351638057
+    },
+    {
+     "infosets": 98,
+     "exploitability": 0.08642339752524175
+    },
+    {
+     "infosets": 105,
+     "exploitability": 0.05258499649194831
+    },
+    {
+     "infosets": 112,
+     "exploitability": 0.04929295883945706
+    },
+    {
+     "infosets": 119,
+     "exploitability": 0.05375468144075202
+    },
+    {
+     "infosets": 126,
+     "exploitability": 0.043318329705609004
+    },
+    {
+     "infosets": 133,
+     "exploitability": 0.036084169365162566
+    },
+    {
+     "infosets": 140,
+     "exploitability": 0.03578970619221178
+    },
+    {
+     "infosets": 147,
+     "exploitability": 0.029670167661937752
+    },
+    {
+     "infosets": 154,
+     "exploitability": 0.028856231861453474
+    },
+    {
+     "infosets": 161,
+     "exploitability": 0.02207951464806096
+    },
+    {
+     "infosets": 168,
+     "exploitability": 0.021609157884059316
+    }
+   ]
+  },
+  {
+   "name": "four-straight strong vs strong",
+   "seed": 302,
+   "n": [
+    48,
+    48
+   ],
+   "uniform": [
+    {
+     "k": 1,
+     "exploitability": 5.278125697859883,
+     "infosets": 14,
+     "table_bytes": 608,
+     "solve_seconds": 0.1896072078961879,
+     "iterations_per_second": 2113.997304426188
+    },
+    {
+     "k": 2,
+     "exploitability": 0.6471190794010431,
+     "infosets": 28,
+     "table_bytes": 1216,
+     "solve_seconds": 0.2058640420436859,
+     "iterations_per_second": 1946.5537184056445
+    },
+    {
+     "k": 3,
+     "exploitability": 0.4422026401221486,
+     "infosets": 42,
+     "table_bytes": 1824,
+     "solve_seconds": 0.19048775010742247,
+     "iterations_per_second": 2103.8476775741938
+    },
+    {
+     "k": 4,
+     "exploitability": 0.3638790748864989,
+     "infosets": 56,
+     "table_bytes": 2432,
+     "solve_seconds": 0.19719237508252263,
+     "iterations_per_second": 2032.1722552156482
+    },
+    {
+     "k": 6,
+     "exploitability": 0.2708022653039204,
+     "infosets": 84,
+     "table_bytes": 3648,
+     "solve_seconds": 0.197940916987136,
+     "iterations_per_second": 2024.4404715905177
+    },
+    {
+     "k": 8,
+     "exploitability": 0.1391883126536521,
+     "infosets": 112,
+     "table_bytes": 4864,
+     "solve_seconds": 0.19868483301252127,
+     "iterations_per_second": 2016.7685940627537
+    },
+    {
+     "k": 12,
+     "exploitability": 0.07795706901779259,
+     "infosets": 168,
+     "table_bytes": 7296,
+     "solve_seconds": 0.20321091683581471,
+     "iterations_per_second": 1971.870043174653
+    },
+    {
+     "k": 16,
+     "exploitability": 0.11494781393731451,
+     "infosets": 224,
+     "table_bytes": 9728,
+     "solve_seconds": 0.1898853329475969,
+     "iterations_per_second": 2110.6169918175733
+    },
+    {
+     "k": 24,
+     "exploitability": 0.05292006513815645,
+     "infosets": 336,
+     "table_bytes": 14592,
+     "solve_seconds": 0.21393770794384181,
+     "iterations_per_second": 1876.7884448729508
+    },
+    {
+     "k": 48,
+     "exploitability": 0.0015694518091626253,
+     "infosets": 672,
+     "table_bytes": 29184,
+     "solve_seconds": 0.21226812503300607,
+     "iterations_per_second": 1893.9479939131356
+    }
+   ],
+   "adaptive_path": [
+    {
+     "infosets": 35,
+     "exploitability": 0.48886455170499654
+    },
+    {
+     "infosets": 42,
+     "exploitability": 0.4262593774902732
+    },
+    {
+     "infosets": 49,
+     "exploitability": 0.3454808795949893
+    },
+    {
+     "infosets": 56,
+     "exploitability": 0.23759342657977534
+    },
+    {
+     "infosets": 63,
+     "exploitability": 0.18914073676915766
+    },
+    {
+     "infosets": 70,
+     "exploitability": 0.20831023310244712
+    },
+    {
+     "infosets": 77,
+     "exploitability": 0.1804365226359419
+    },
+    {
+     "infosets": 84,
+     "exploitability": 0.15757555030649362
+    },
+    {
+     "infosets": 91,
+     "exploitability": 0.14648068016601934
+    },
+    {
+     "infosets": 98,
+     "exploitability": 0.13714979537062788
+    },
+    {
+     "infosets": 105,
+     "exploitability": 0.14516415245264297
+    },
+    {
+     "infosets": 112,
+     "exploitability": 0.13735656818788172
+    },
+    {
+     "infosets": 119,
+     "exploitability": 0.13109314037700048
+    },
+    {
+     "infosets": 126,
+     "exploitability": 0.1254687265718486
+    },
+    {
+     "infosets": 133,
+     "exploitability": 0.12515377750493967
+    },
+    {
+     "infosets": 140,
+     "exploitability": 0.1306105230912475
+    },
+    {
+     "infosets": 147,
+     "exploitability": 0.12505746374536764
+    },
+    {
+     "infosets": 154,
+     "exploitability": 0.12661259210182463
+    },
+    {
+     "infosets": 161,
+     "exploitability": 0.11980487058510353
+    },
+    {
+     "infosets": 168,
+     "exploitability": 0.11526937666831177
+    }
+   ]
+  },
+  {
+   "name": "four-flush thin value",
+   "seed": 300,
+   "n": [
+    48,
+    48
+   ],
+   "uniform": [
+    {
+     "k": 1,
+     "exploitability": 0.25871739964688256,
+     "infosets": 14,
+     "table_bytes": 608,
+     "solve_seconds": 0.19407920795492828,
+     "iterations_per_second": 2069.6475188395348
+    },
+    {
+     "k": 2,
+     "exploitability": 0.40021148001181484,
+     "infosets": 28,
+     "table_bytes": 1216,
+     "solve_seconds": 0.20193291688337922,
+     "iterations_per_second": 1992.5834347836267
+    },
+    {
+     "k": 3,
+     "exploitability": 0.40338896742655184,
+     "infosets": 42,
+     "table_bytes": 1824,
+     "solve_seconds": 0.18786066607572138,
+     "iterations_per_second": 2133.8075181589056
+    },
+    {
+     "k": 4,
+     "exploitability": 0.2884256086725734,
+     "infosets": 56,
+     "table_bytes": 2432,
+     "solve_seconds": 0.18774049985222518,
+     "iterations_per_second": 2134.5889510222873
+    },
+    {
+     "k": 6,
+     "exploitability": 0.22429224451932628,
+     "infosets": 84,
+     "table_bytes": 3648,
+     "solve_seconds": 0.18815575004555285,
+     "iterations_per_second": 2134.4337441009466
+    },
+    {
+     "k": 8,
+     "exploitability": 0.056423838763263845,
+     "infosets": 112,
+     "table_bytes": 4864,
+     "solve_seconds": 0.18018187512643635,
+     "iterations_per_second": 2225.3366674398067
+    },
+    {
+     "k": 12,
+     "exploitability": 0.025712228187677155,
+     "infosets": 168,
+     "table_bytes": 7296,
+     "solve_seconds": 0.19433895801194012,
+     "iterations_per_second": 2062.1439993060003
+    },
+    {
+     "k": 16,
+     "exploitability": 0.023436848638070273,
+     "infosets": 224,
+     "table_bytes": 9728,
+     "solve_seconds": 0.20492166699841619,
+     "iterations_per_second": 1955.4097378894423
+    },
+    {
+     "k": 24,
+     "exploitability": 0.019784497377888233,
+     "infosets": 336,
+     "table_bytes": 14592,
+     "solve_seconds": 0.19175887503661215,
+     "iterations_per_second": 2089.950147107699
+    },
+    {
+     "k": 48,
+     "exploitability": 0.003856708482932625,
+     "infosets": 672,
+     "table_bytes": 29184,
+     "solve_seconds": 0.2030224169138819,
+     "iterations_per_second": 1974.0705835437755
+    }
+   ],
+   "adaptive_path": [
+    {
+     "infosets": 35,
+     "exploitability": 0.3004202745347371
+    },
+    {
+     "infosets": 42,
+     "exploitability": 0.15631381435321456
+    },
+    {
+     "infosets": 49,
+     "exploitability": 0.07337729970323581
+    },
+    {
+     "infosets": 56,
+     "exploitability": 0.06479771094402587
+    },
+    {
+     "infosets": 63,
+     "exploitability": 0.06851437489385548
+    },
+    {
+     "infosets": 70,
+     "exploitability": 0.049791559731126256
+    },
+    {
+     "infosets": 77,
+     "exploitability": 0.04709967155536576
+    },
+    {
+     "infosets": 84,
+     "exploitability": 0.04199329888979131
+    },
+    {
+     "infosets": 91,
+     "exploitability": 0.03189692638189712
+    },
+    {
+     "infosets": 98,
+     "exploitability": 0.026906367453324087
+    },
+    {
+     "infosets": 105,
+     "exploitability": 0.023481806684928497
+    },
+    {
+     "infosets": 112,
+     "exploitability": 0.02025262854952059
+    },
+    {
+     "infosets": 119,
+     "exploitability": 0.017592433735206026
+    },
+    {
+     "infosets": 126,
+     "exploitability": 0.015618892793899164
+    },
+    {
+     "infosets": 133,
+     "exploitability": 0.013059898589607766
+    },
+    {
+     "infosets": 140,
+     "exploitability": 0.010805402848704126
+    },
+    {
+     "infosets": 147,
+     "exploitability": 0.010138678407257018
+    },
+    {
+     "infosets": 154,
+     "exploitability": 0.009033235729807298
+    },
+    {
+     "infosets": 161,
+     "exploitability": 0.011226672626762912
+    },
+    {
+     "infosets": 168,
+     "exploitability": 0.011069399092519916
+    }
+   ]
+  },
+  {
+   "name": "four-flush thin value",
+   "seed": 301,
+   "n": [
+    48,
+    48
+   ],
+   "uniform": [
+    {
+     "k": 1,
+     "exploitability": 0.41030731623860106,
+     "infosets": 14,
+     "table_bytes": 608,
+     "solve_seconds": 0.18180045811459422,
+     "iterations_per_second": 2204.509090005723
+    },
+    {
+     "k": 2,
+     "exploitability": 0.533151560841848,
+     "infosets": 28,
+     "table_bytes": 1216,
+     "solve_seconds": 0.23514249990694225,
+     "iterations_per_second": 1707.3262283077172
+    },
+    {
+     "k": 3,
+     "exploitability": 0.4055804434220174,
+     "infosets": 42,
+     "table_bytes": 1824,
+     "solve_seconds": 0.18646166613325477,
+     "iterations_per_second": 2149.720889401111
+    },
+    {
+     "k": 4,
+     "exploitability": 0.3785654321136769,
+     "infosets": 56,
+     "table_bytes": 2432,
+     "solve_seconds": 0.20139837521128356,
+     "iterations_per_second": 1989.5375196923878
+    },
+    {
+     "k": 6,
+     "exploitability": 0.119534653786884,
+     "infosets": 84,
+     "table_bytes": 3648,
+     "solve_seconds": 0.20124041591770947,
+     "iterations_per_second": 1991.1266242870952
+    },
+    {
+     "k": 8,
+     "exploitability": 0.0804376574119221,
+     "infosets": 112,
+     "table_bytes": 4864,
+     "solve_seconds": 0.1962661670986563,
+     "iterations_per_second": 2041.7204341931968
+    },
+    {
+     "k": 12,
+     "exploitability": 0.06261053032370034,
+     "infosets": 168,
+     "table_bytes": 7296,
+     "solve_seconds": 0.1890808749012649,
+     "iterations_per_second": 2124.2458088196686
+    },
+    {
+     "k": 16,
+     "exploitability": 0.03699180272052738,
+     "infosets": 224,
+     "table_bytes": 9728,
+     "solve_seconds": 0.19598779105581343,
+     "iterations_per_second": 2045.3087024478743
+    },
+    {
+     "k": 24,
+     "exploitability": 0.03130490384782325,
+     "infosets": 336,
+     "table_bytes": 14592,
+     "solve_seconds": 0.1941906251013279,
+     "iterations_per_second": 2063.8122071702373
+    },
+    {
+     "k": 48,
+     "exploitability": 0.002261305658512569,
+     "infosets": 672,
+     "table_bytes": 29184,
+     "solve_seconds": 0.2644617911428213,
+     "iterations_per_second": 1514.733385470536
+    }
+   ],
+   "adaptive_path": [
+    {
+     "infosets": 35,
+     "exploitability": 0.4601375562245904
+    },
+    {
+     "infosets": 42,
+     "exploitability": 0.29624551465218163
+    },
+    {
+     "infosets": 49,
+     "exploitability": 0.1613685682790118
+    },
+    {
+     "infosets": 56,
+     "exploitability": 0.06561475311750886
+    },
+    {
+     "infosets": 63,
+     "exploitability": 0.06650188343339547
+    },
+    {
+     "infosets": 70,
+     "exploitability": 0.04287583447758436
+    },
+    {
+     "infosets": 77,
+     "exploitability": 0.04935626243278435
+    },
+    {
+     "infosets": 84,
+     "exploitability": 0.04868025514900465
+    },
+    {
+     "infosets": 91,
+     "exploitability": 0.04852020703551707
+    },
+    {
+     "infosets": 98,
+     "exploitability": 0.04197992857265476
+    },
+    {
+     "infosets": 105,
+     "exploitability": 0.04353683368817585
+    },
+    {
+     "infosets": 112,
+     "exploitability": 0.044514561394020546
+    },
+    {
+     "infosets": 119,
+     "exploitability": 0.04338119652343364
+    },
+    {
+     "infosets": 126,
+     "exploitability": 0.03975088803862681
+    },
+    {
+     "infosets": 133,
+     "exploitability": 0.03541222567260238
+    },
+    {
+     "infosets": 140,
+     "exploitability": 0.036191923029718076
+    },
+    {
+     "infosets": 147,
+     "exploitability": 0.03499171120632871
+    },
+    {
+     "infosets": 154,
+     "exploitability": 0.03444582120252715
+    },
+    {
+     "infosets": 161,
+     "exploitability": 0.04006601604784432
+    },
+    {
+     "infosets": 168,
+     "exploitability": 0.019436724577442277
+    }
+   ]
+  },
+  {
+   "name": "four-flush thin value",
+   "seed": 302,
+   "n": [
+    48,
+    48
+   ],
+   "uniform": [
+    {
+     "k": 1,
+     "exploitability": 0.982535509853157,
+     "infosets": 14,
+     "table_bytes": 608,
+     "solve_seconds": 0.2016777500975877,
+     "iterations_per_second": 1987.1773299566437
+    },
+    {
+     "k": 2,
+     "exploitability": 1.1138896240532303,
+     "infosets": 28,
+     "table_bytes": 1216,
+     "solve_seconds": 0.21401104191318154,
+     "iterations_per_second": 1872.1457028298855
+    },
+    {
+     "k": 3,
+     "exploitability": 0.6476447037734043,
+     "infosets": 42,
+     "table_bytes": 1824,
+     "solve_seconds": 0.19363029208034277,
+     "iterations_per_second": 2069.5315100316725
+    },
+    {
+     "k": 4,
+     "exploitability": 0.26732304434842713,
+     "infosets": 56,
+     "table_bytes": 2432,
+     "solve_seconds": 0.18453745800070465,
+     "iterations_per_second": 2171.685777550115
+    },
+    {
+     "k": 6,
+     "exploitability": 0.08619063520625803,
+     "infosets": 84,
+     "table_bytes": 3648,
+     "solve_seconds": 0.1968923748936504,
+     "iterations_per_second": 2039.418567310724
+    },
+    {
+     "k": 8,
+     "exploitability": 0.10814612059968765,
+     "infosets": 112,
+     "table_bytes": 4864,
+     "solve_seconds": 0.1942188749089837,
+     "iterations_per_second": 2063.8255282719706
+    },
+    {
+     "k": 12,
+     "exploitability": 0.06234188748799463,
+     "infosets": 168,
+     "table_bytes": 7296,
+     "solve_seconds": 0.19348091701976955,
+     "iterations_per_second": 2075.0004557366174
+    },
+    {
+     "k": 16,
+     "exploitability": 0.033242488383783186,
+     "infosets": 224,
+     "table_bytes": 9728,
+     "solve_seconds": 0.19616829184815288,
+     "iterations_per_second": 2043.480576349173
+    },
+    {
+     "k": 24,
+     "exploitability": 0.031805892192388274,
+     "infosets": 336,
+     "table_bytes": 14592,
+     "solve_seconds": 0.23751041712239385,
+     "iterations_per_second": 1690.8561890399567
+    },
+    {
+     "k": 48,
+     "exploitability": 0.001451965932003585,
+     "infosets": 672,
+     "table_bytes": 29184,
+     "solve_seconds": 0.23225133400410414,
+     "iterations_per_second": 1725.8274942241146
+    }
+   ],
+   "adaptive_path": [
+    {
+     "infosets": 35,
+     "exploitability": 0.3797541734284031
+    },
+    {
+     "infosets": 42,
+     "exploitability": 0.24864044213375713
+    },
+    {
+     "infosets": 49,
+     "exploitability": 0.28206834240520307
+    },
+    {
+     "infosets": 56,
+     "exploitability": 0.18959109101029403
+    },
+    {
+     "infosets": 63,
+     "exploitability": 0.17496062213613905
+    },
+    {
+     "infosets": 70,
+     "exploitability": 0.11447979771934591
+    },
+    {
+     "infosets": 77,
+     "exploitability": 0.07836168857643822
+    },
+    {
+     "infosets": 84,
+     "exploitability": 0.07469995937237872
+    },
+    {
+     "infosets": 91,
+     "exploitability": 0.07126473231752861
+    },
+    {
+     "infosets": 98,
+     "exploitability": 0.04527577545569539
+    },
+    {
+     "infosets": 105,
+     "exploitability": 0.038231194770924404
+    },
+    {
+     "infosets": 112,
+     "exploitability": 0.03868343939709584
+    },
+    {
+     "infosets": 119,
+     "exploitability": 0.037405517327878
+    },
+    {
+     "infosets": 126,
+     "exploitability": 0.03282595846970349
+    },
+    {
+     "infosets": 133,
+     "exploitability": 0.025959690550187986
+    },
+    {
+     "infosets": 140,
+     "exploitability": 0.024355892993396466
+    },
+    {
+     "infosets": 147,
+     "exploitability": 0.02416966899920503
+    },
+    {
+     "infosets": 154,
+     "exploitability": 0.02272660707393248
+    },
+    {
+     "infosets": 161,
+     "exploitability": 0.022051040404944544
+    },
+    {
+     "infosets": 168,
+     "exploitability": 0.021859454286135005
+    }
+   ]
+  },
+  {
+   "name": "monotone bluff-heavy",
+   "seed": 300,
+   "n": [
+    48,
+    48
+   ],
+   "uniform": [
+    {
+     "k": 1,
+     "exploitability": 3.4021933581345607,
+     "infosets": 14,
+     "table_bytes": 608,
+     "solve_seconds": 0.17147354199551046,
+     "iterations_per_second": 2337.536917615284
+    },
+    {
+     "k": 2,
+     "exploitability": 2.7366947487686937,
+     "infosets": 28,
+     "table_bytes": 1216,
+     "solve_seconds": 0.20140520809218287,
+     "iterations_per_second": 1989.544120703777
+    },
+    {
+     "k": 3,
+     "exploitability": 0.6437390615407477,
+     "infosets": 42,
+     "table_bytes": 1824,
+     "solve_seconds": 0.17898116610012949,
+     "iterations_per_second": 2239.292160562574
+    },
+    {
+     "k": 4,
+     "exploitability": 0.14887265700494312,
+     "infosets": 56,
+     "table_bytes": 2432,
+     "solve_seconds": 0.1896391250193119,
+     "iterations_per_second": 2113.2034206012627
+    },
+    {
+     "k": 6,
+     "exploitability": 0.12210644059807485,
+     "infosets": 84,
+     "table_bytes": 3648,
+     "solve_seconds": 0.19530941685661674,
+     "iterations_per_second": 2051.7778985536006
+    },
+    {
+     "k": 8,
+     "exploitability": 0.12208161946709639,
+     "infosets": 112,
+     "table_bytes": 4864,
+     "solve_seconds": 0.18930016714148223,
+     "iterations_per_second": 2117.0429207177212
+    },
+    {
+     "k": 12,
+     "exploitability": 0.11053854386746476,
+     "infosets": 168,
+     "table_bytes": 7296,
+     "solve_seconds": 0.19612933415919542,
+     "iterations_per_second": 2047.725666635194
+    },
+    {
+     "k": 16,
+     "exploitability": 0.10789470577817795,
+     "infosets": 224,
+     "table_bytes": 9728,
+     "solve_seconds": 0.19605462509207428,
+     "iterations_per_second": 2049.195191723679
+    },
+    {
+     "k": 24,
+     "exploitability": 0.0963803313272874,
+     "infosets": 336,
+     "table_bytes": 14592,
+     "solve_seconds": 0.21194912516511977,
+     "iterations_per_second": 1900.3165211430323
+    },
+    {
+     "k": 48,
+     "exploitability": 0.006277032103651048,
+     "infosets": 672,
+     "table_bytes": 29184,
+     "solve_seconds": 0.25359708280302584,
+     "iterations_per_second": 1579.7855879547137
+    }
+   ],
+   "adaptive_path": [
+    {
+     "infosets": 35,
+     "exploitability": 0.1336199595833112
+    },
+    {
+     "infosets": 42,
+     "exploitability": 0.15233198338417653
+    },
+    {
+     "infosets": 49,
+     "exploitability": 0.15329160506900186
+    },
+    {
+     "infosets": 56,
+     "exploitability": 0.14887265700494312
+    },
+    {
+     "infosets": 63,
+     "exploitability": 0.1476767770267472
+    },
+    {
+     "infosets": 70,
+     "exploitability": 0.13161545907167782
+    },
+    {
+     "infosets": 77,
+     "exploitability": 0.12946417842904
+    },
+    {
+     "infosets": 84,
+     "exploitability": 0.12746974356763852
+    },
+    {
+     "infosets": 91,
+     "exploitability": 0.11734257500055789
+    },
+    {
+     "infosets": 98,
+     "exploitability": 0.1120370154167899
+    },
+    {
+     "infosets": 105,
+     "exploitability": 0.12183111683799763
+    },
+    {
+     "infosets": 112,
+     "exploitability": 0.11714146774434653
+    },
+    {
+     "infosets": 119,
+     "exploitability": 0.12296816075572303
+    },
+    {
+     "infosets": 126,
+     "exploitability": 0.11738586446733512
+    },
+    {
+     "infosets": 133,
+     "exploitability": 0.12452865035161098
+    },
+    {
+     "infosets": 140,
+     "exploitability": 0.1270418325525653
+    },
+    {
+     "infosets": 147,
+     "exploitability": 0.1251199402741232
+    },
+    {
+     "infosets": 154,
+     "exploitability": 0.11744670413651792
+    },
+    {
+     "infosets": 161,
+     "exploitability": 0.11581407676118882
+    },
+    {
+     "infosets": 168,
+     "exploitability": 0.11030128538016482
+    }
+   ]
+  },
+  {
+   "name": "monotone bluff-heavy",
+   "seed": 301,
+   "n": [
+    48,
+    48
+   ],
+   "uniform": [
+    {
+     "k": 1,
+     "exploitability": 2.77382949272297,
+     "infosets": 14,
+     "table_bytes": 608,
+     "solve_seconds": 0.1814630830194801,
+     "iterations_per_second": 2208.5847269862975
+    },
+    {
+     "k": 2,
+     "exploitability": 2.7919881644092333,
+     "infosets": 28,
+     "table_bytes": 1216,
+     "solve_seconds": 0.19941445789299905,
+     "iterations_per_second": 2009.433457081574
+    },
+    {
+     "k": 3,
+     "exploitability": 1.498872920667346,
+     "infosets": 42,
+     "table_bytes": 1824,
+     "solve_seconds": 0.18829158297739923,
+     "iterations_per_second": 2128.3407236707912
+    },
+    {
+     "k": 4,
+     "exploitability": 0.27470064514554526,
+     "infosets": 56,
+     "table_bytes": 2432,
+     "solve_seconds": 0.19307250017300248,
+     "iterations_per_second": 2075.4190036499504
+    },
+    {
+     "k": 6,
+     "exploitability": 0.24605100047167705,
+     "infosets": 84,
+     "table_bytes": 3648,
+     "solve_seconds": 0.18860833393409848,
+     "iterations_per_second": 2124.728656634815
+    },
+    {
+     "k": 8,
+     "exploitability": 0.10900971799680093,
+     "infosets": 112,
+     "table_bytes": 4864,
+     "solve_seconds": 0.1860127078834921,
+     "iterations_per_second": 2154.447401007796
+    },
+    {
+     "k": 12,
+     "exploitability": 0.10444219531284038,
+     "infosets": 168,
+     "table_bytes": 7296,
+     "solve_seconds": 0.20194854098372161,
+     "iterations_per_second": 1985.7813991637472
+    },
+    {
+     "k": 16,
+     "exploitability": 0.09804818046305486,
+     "infosets": 224,
+     "table_bytes": 9728,
+     "solve_seconds": 0.19483058294281363,
+     "iterations_per_second": 2062.423539341782
+    },
+    {
+     "k": 24,
+     "exploitability": 0.05695490065070263,
+     "infosets": 336,
+     "table_bytes": 14592,
+     "solve_seconds": 0.22921737493015826,
+     "iterations_per_second": 1748.3819760750687
+    },
+    {
+     "k": 48,
+     "exploitability": 0.006583640754436848,
+     "infosets": 672,
+     "table_bytes": 29184,
+     "solve_seconds": 0.22454349999316037,
+     "iterations_per_second": 1787.735129152682
+    }
+   ],
+   "adaptive_path": [
+    {
+     "infosets": 35,
+     "exploitability": 0.2674251726046588
+    },
+    {
+     "infosets": 42,
+     "exploitability": 0.130907510770924
+    },
+    {
+     "infosets": 49,
+     "exploitability": 0.1408689617978658
+    },
+    {
+     "infosets": 56,
+     "exploitability": 0.1343500230433794
+    },
+    {
+     "infosets": 63,
+     "exploitability": 0.1312174544610557
+    },
+    {
+     "infosets": 70,
+     "exploitability": 0.12004868894134102
+    },
+    {
+     "infosets": 77,
+     "exploitability": 0.14105221465123818
+    },
+    {
+     "infosets": 84,
+     "exploitability": 0.13705991184430966
+    },
+    {
+     "infosets": 91,
+     "exploitability": 0.12958032621217264
+    },
+    {
+     "infosets": 98,
+     "exploitability": 0.12486850813123362
+    },
+    {
+     "infosets": 105,
+     "exploitability": 0.12256061762314485
+    },
+    {
+     "infosets": 112,
+     "exploitability": 0.13097282481571004
+    },
+    {
+     "infosets": 119,
+     "exploitability": 0.10779159671322902
+    },
+    {
+     "infosets": 126,
+     "exploitability": 0.105745607880529
+    },
+    {
+     "infosets": 133,
+     "exploitability": 0.10894917267242143
+    },
+    {
+     "infosets": 140,
+     "exploitability": 0.09742120467445736
+    },
+    {
+     "infosets": 147,
+     "exploitability": 0.09898963653507542
+    },
+    {
+     "infosets": 154,
+     "exploitability": 0.1019870134330505
+    },
+    {
+     "infosets": 161,
+     "exploitability": 0.10469093752446734
+    },
+    {
+     "infosets": 168,
+     "exploitability": 0.08321968006383096
+    }
+   ]
+  },
+  {
+   "name": "monotone bluff-heavy",
+   "seed": 302,
+   "n": [
+    48,
+    48
+   ],
+   "uniform": [
+    {
+     "k": 1,
+     "exploitability": 1.5741317303393128,
+     "infosets": 14,
+     "table_bytes": 608,
+     "solve_seconds": 0.18406762508675456,
+     "iterations_per_second": 2177.699365524994
+    },
+    {
+     "k": 2,
+     "exploitability": 1.5740459335355568,
+     "infosets": 28,
+     "table_bytes": 1216,
+     "solve_seconds": 0.2067706671077758,
+     "iterations_per_second": 1941.6242521194645
+    },
+    {
+     "k": 3,
+     "exploitability": 1.5751123186766995,
+     "infosets": 42,
+     "table_bytes": 1824,
+     "solve_seconds": 0.18513679201714694,
+     "iterations_per_second": 2165.1460706502626
+    },
+    {
+     "k": 4,
+     "exploitability": 1.454725426948853,
+     "infosets": 56,
+     "table_bytes": 2432,
+     "solve_seconds": 0.1881644579116255,
+     "iterations_per_second": 2134.366365906729
+    },
+    {
+     "k": 6,
+     "exploitability": 0.5295836417846278,
+     "infosets": 84,
+     "table_bytes": 3648,
+     "solve_seconds": 0.19277666602283716,
+     "iterations_per_second": 2083.614134292219
+    },
+    {
+     "k": 8,
+     "exploitability": 0.1365700347415313,
+     "infosets": 112,
+     "table_bytes": 4864,
+     "solve_seconds": 0.1976934161502868,
+     "iterations_per_second": 2031.7344224074113
+    },
+    {
+     "k": 12,
+     "exploitability": 0.09356107502813371,
+     "infosets": 168,
+     "table_bytes": 7296,
+     "solve_seconds": 0.20245170779526234,
+     "iterations_per_second": 1979.7929184681177
+    },
+    {
+     "k": 16,
+     "exploitability": 0.05965586367320985,
+     "infosets": 224,
+     "table_bytes": 9728,
+     "solve_seconds": 0.1992628329899162,
+     "iterations_per_second": 2011.1514119032513
+    },
+    {
+     "k": 24,
+     "exploitability": 0.050390522638678936,
+     "infosets": 336,
+     "table_bytes": 14592,
+     "solve_seconds": 0.25156887504272163,
+     "iterations_per_second": 1595.7552898171987
+    },
+    {
+     "k": 48,
+     "exploitability": 0.0038567635167132686,
+     "infosets": 672,
+     "table_bytes": 29184,
+     "solve_seconds": 0.2217398751527071,
+     "iterations_per_second": 1807.7543616117875
+    }
+   ],
+   "adaptive_path": [
+    {
+     "infosets": 35,
+     "exploitability": 1.454885587678408
+    },
+    {
+     "infosets": 42,
+     "exploitability": 0.08053005850222883
+    },
+    {
+     "infosets": 49,
+     "exploitability": 0.08690961561219157
+    },
+    {
+     "infosets": 56,
+     "exploitability": 0.058674864957534156
+    },
+    {
+     "infosets": 63,
+     "exploitability": 0.06709320826021625
+    },
+    {
+     "infosets": 70,
+     "exploitability": 0.0736658817446838
+    },
+    {
+     "infosets": 77,
+     "exploitability": 0.07799408847828171
+    },
+    {
+     "infosets": 84,
+     "exploitability": 0.0786572705121582
+    },
+    {
+     "infosets": 91,
+     "exploitability": 0.07115384585256734
+    },
+    {
+     "infosets": 98,
+     "exploitability": 0.08664999168240795
+    },
+    {
+     "infosets": 105,
+     "exploitability": 0.08483968613870263
+    },
+    {
+     "infosets": 112,
+     "exploitability": 0.08592966995993345
+    },
+    {
+     "infosets": 119,
+     "exploitability": 0.08613504542978223
+    },
+    {
+     "infosets": 126,
+     "exploitability": 0.08634544790436904
+    },
+    {
+     "infosets": 133,
+     "exploitability": 0.082120199002367
+    },
+    {
+     "infosets": 140,
+     "exploitability": 0.0770626912672363
+    },
+    {
+     "infosets": 147,
+     "exploitability": 0.07765947356183278
+    },
+    {
+     "infosets": 154,
+     "exploitability": 0.06899300052812984
+    },
+    {
+     "infosets": 161,
+     "exploitability": 0.06598384536511759
+    },
+    {
+     "infosets": 168,
+     "exploitability": 0.07225547020893486
+    }
+   ]
+  },
+  {
+   "name": "low connected mixed",
+   "seed": 300,
+   "n": [
+    48,
+    48
+   ],
+   "uniform": [
+    {
+     "k": 1,
+     "exploitability": 4.9463309939504025,
+     "infosets": 14,
+     "table_bytes": 608,
+     "solve_seconds": 0.19815804087556899,
+     "iterations_per_second": 2022.2442634923307
+    },
+    {
+     "k": 2,
+     "exploitability": 0.7737233222872439,
+     "infosets": 28,
+     "table_bytes": 1216,
+     "solve_seconds": 0.1849134168587625,
+     "iterations_per_second": 2171.877403985082
+    },
+    {
+     "k": 3,
+     "exploitability": 0.5203363699799857,
+     "infosets": 42,
+     "table_bytes": 1824,
+     "solve_seconds": 0.19596837484277785,
+     "iterations_per_second": 2045.2799431391654
+    },
+    {
+     "k": 4,
+     "exploitability": 0.2624684835504285,
+     "infosets": 56,
+     "table_bytes": 2432,
+     "solve_seconds": 0.1884000829886645,
+     "iterations_per_second": 2127.0853751873065
+    },
+    {
+     "k": 6,
+     "exploitability": 0.19381860093400627,
+     "infosets": 84,
+     "table_bytes": 3648,
+     "solve_seconds": 0.19295062497258186,
+     "iterations_per_second": 2076.841850642266
+    },
+    {
+     "k": 8,
+     "exploitability": 0.13836271230495267,
+     "infosets": 112,
+     "table_bytes": 4864,
+     "solve_seconds": 0.1888295840471983,
+     "iterations_per_second": 2122.225131402992
+    },
+    {
+     "k": 12,
+     "exploitability": 0.1110661213308265,
+     "infosets": 168,
+     "table_bytes": 7296,
+     "solve_seconds": 0.2109710001386702,
+     "iterations_per_second": 1899.1094222154027
+    },
+    {
+     "k": 16,
+     "exploitability": 0.0945639206277833,
+     "infosets": 224,
+     "table_bytes": 9728,
+     "solve_seconds": 0.2007105420343578,
+     "iterations_per_second": 2000.420089554529
+    },
+    {
+     "k": 24,
+     "exploitability": 0.07626569462997435,
+     "infosets": 336,
+     "table_bytes": 14592,
+     "solve_seconds": 0.25157658313401043,
+     "iterations_per_second": 1592.8586858000801
+    },
+    {
+     "k": 48,
+     "exploitability": 0.005617776429449384,
+     "infosets": 672,
+     "table_bytes": 29184,
+     "solve_seconds": 0.22784316702745855,
+     "iterations_per_second": 1758.6176387046035
+    }
+   ],
+   "adaptive_path": [
+    {
+     "infosets": 35,
+     "exploitability": 0.5628184525352807
+    },
+    {
+     "infosets": 42,
+     "exploitability": 0.42396560665389094
+    },
+    {
+     "infosets": 49,
+     "exploitability": 0.37576201763398953
+    },
+    {
+     "infosets": 56,
+     "exploitability": 0.3180184606365076
+    },
+    {
+     "infosets": 63,
+     "exploitability": 0.15208710124639147
+    },
+    {
+     "infosets": 70,
+     "exploitability": 0.15547237912430023
+    },
+    {
+     "infosets": 77,
+     "exploitability": 0.14590745015980322
+    },
+    {
+     "infosets": 84,
+     "exploitability": 0.14856731969280457
+    },
+    {
+     "infosets": 91,
+     "exploitability": 0.1499361659160896
+    },
+    {
+     "infosets": 98,
+     "exploitability": 0.15246086063848874
+    },
+    {
+     "infosets": 105,
+     "exploitability": 0.15151126692464478
+    },
+    {
+     "infosets": 112,
+     "exploitability": 0.1429063153695067
+    },
+    {
+     "infosets": 119,
+     "exploitability": 0.14767968652641617
+    },
+    {
+     "infosets": 126,
+     "exploitability": 0.141377680498054
+    },
+    {
+     "infosets": 133,
+     "exploitability": 0.14839040426781647
+    },
+    {
+     "infosets": 140,
+     "exploitability": 0.1283307527340234
+    },
+    {
+     "infosets": 147,
+     "exploitability": 0.12716793096719048
+    },
+    {
+     "infosets": 154,
+     "exploitability": 0.11734596510576112
+    },
+    {
+     "infosets": 161,
+     "exploitability": 0.11222227961808218
+    },
+    {
+     "infosets": 168,
+     "exploitability": 0.10196804552476291
+    }
+   ]
+  },
+  {
+   "name": "low connected mixed",
+   "seed": 301,
+   "n": [
+    48,
+    48
+   ],
+   "uniform": [
+    {
+     "k": 1,
+     "exploitability": 4.967071921013827,
+     "infosets": 14,
+     "table_bytes": 608,
+     "solve_seconds": 0.21305279107764363,
+     "iterations_per_second": 1884.6555458051741
+    },
+    {
+     "k": 2,
+     "exploitability": 0.6813607792262335,
+     "infosets": 28,
+     "table_bytes": 1216,
+     "solve_seconds": 0.19136970792897046,
+     "iterations_per_second": 2098.754257455603
+    },
+    {
+     "k": 3,
+     "exploitability": 0.4673522127754406,
+     "infosets": 42,
+     "table_bytes": 1824,
+     "solve_seconds": 0.20315949991345406,
+     "iterations_per_second": 1976.746052487467
+    },
+    {
+     "k": 4,
+     "exploitability": 0.3611138177899551,
+     "infosets": 56,
+     "table_bytes": 2432,
+     "solve_seconds": 0.19962945813313127,
+     "iterations_per_second": 2007.7641959247878
+    },
+    {
+     "k": 6,
+     "exploitability": 0.2613089361310894,
+     "infosets": 84,
+     "table_bytes": 3648,
+     "solve_seconds": 0.19575429195538163,
+     "iterations_per_second": 2047.1269933913852
+    },
+    {
+     "k": 8,
+     "exploitability": 0.21657484309705213,
+     "infosets": 112,
+     "table_bytes": 4864,
+     "solve_seconds": 0.19376449985429645,
+     "iterations_per_second": 2068.1935114383896
+    },
+    {
+     "k": 12,
+     "exploitability": 0.1694322560092241,
+     "infosets": 168,
+     "table_bytes": 7296,
+     "solve_seconds": 0.1790466250386089,
+     "iterations_per_second": 2238.6216807167393
+    },
+    {
+     "k": 16,
+     "exploitability": 0.18498904614740466,
+     "infosets": 224,
+     "table_bytes": 9728,
+     "solve_seconds": 0.19588225008919835,
+     "iterations_per_second": 2052.525848701409
+    },
+    {
+     "k": 24,
+     "exploitability": 0.104830848204813,
+     "infosets": 336,
+     "table_bytes": 14592,
+     "solve_seconds": 0.2419969579204917,
+     "iterations_per_second": 1655.881017731654
+    },
+    {
+     "k": 48,
+     "exploitability": 0.008551071416239786,
+     "infosets": 672,
+     "table_bytes": 29184,
+     "solve_seconds": 0.2181489581707865,
+     "iterations_per_second": 1836.955638269895
+    }
+   ],
+   "adaptive_path": [
+    {
+     "infosets": 35,
+     "exploitability": 0.40084532338700807
+    },
+    {
+     "infosets": 42,
+     "exploitability": 0.4017113710117721
+    },
+    {
+     "infosets": 49,
+     "exploitability": 0.27262992699247673
+    },
+    {
+     "infosets": 56,
+     "exploitability": 0.2701655879451183
+    },
+    {
+     "infosets": 63,
+     "exploitability": 0.2815171024064459
+    },
+    {
+     "infosets": 70,
+     "exploitability": 0.2411179993143453
+    },
+    {
+     "infosets": 77,
+     "exploitability": 0.23778683492315858
+    },
+    {
+     "infosets": 84,
+     "exploitability": 0.23922078068442473
+    },
+    {
+     "infosets": 91,
+     "exploitability": 0.24053259165680463
+    },
+    {
+     "infosets": 98,
+     "exploitability": 0.24291504135093556
+    },
+    {
+     "infosets": 105,
+     "exploitability": 0.22327299830846314
+    },
+    {
+     "infosets": 112,
+     "exploitability": 0.21363346138726913
+    },
+    {
+     "infosets": 119,
+     "exploitability": 0.2217479139006228
+    },
+    {
+     "infosets": 126,
+     "exploitability": 0.2112206607879294
+    },
+    {
+     "infosets": 133,
+     "exploitability": 0.21648488261286744
+    },
+    {
+     "infosets": 140,
+     "exploitability": 0.21225598172621135
+    },
+    {
+     "infosets": 147,
+     "exploitability": 0.2130202022599338
+    },
+    {
+     "infosets": 154,
+     "exploitability": 0.20977169456582098
+    },
+    {
+     "infosets": 161,
+     "exploitability": 0.1993509274429781
+    },
+    {
+     "infosets": 168,
+     "exploitability": 0.20097040148284467
+    }
+   ]
+  },
+  {
+   "name": "low connected mixed",
+   "seed": 302,
+   "n": [
+    48,
+    48
+   ],
+   "uniform": [
+    {
+     "k": 1,
+     "exploitability": 4.942348561740744,
+     "infosets": 14,
+     "table_bytes": 608,
+     "solve_seconds": 0.20214704098179936,
+     "iterations_per_second": 1989.0350267926274
+    },
+    {
+     "k": 2,
+     "exploitability": 0.7200438937038192,
+     "infosets": 28,
+     "table_bytes": 1216,
+     "solve_seconds": 0.1919016670435667,
+     "iterations_per_second": 2088.8128329350448
+    },
+    {
+     "k": 3,
+     "exploitability": 0.4226505550779894,
+     "infosets": 42,
+     "table_bytes": 1824,
+     "solve_seconds": 0.18204245902597904,
+     "iterations_per_second": 2201.604609833261
+    },
+    {
+     "k": 4,
+     "exploitability": 0.360726564348939,
+     "infosets": 56,
+     "table_bytes": 2432,
+     "solve_seconds": 0.21268616686575115,
+     "iterations_per_second": 1887.307680001734
+    },
+    {
+     "k": 6,
+     "exploitability": 0.22759235745050005,
+     "infosets": 84,
+     "table_bytes": 3648,
+     "solve_seconds": 0.20311020803637803,
+     "iterations_per_second": 1973.257836786554
+    },
+    {
+     "k": 8,
+     "exploitability": 0.22727207446114805,
+     "infosets": 112,
+     "table_bytes": 4864,
+     "solve_seconds": 0.1924863748718053,
+     "iterations_per_second": 2081.9038232993385
+    },
+    {
+     "k": 12,
+     "exploitability": 0.18689168168569165,
+     "infosets": 168,
+     "table_bytes": 7296,
+     "solve_seconds": 0.19932233286090195,
+     "iterations_per_second": 2010.383205606385
+    },
+    {
+     "k": 16,
+     "exploitability": 0.15912312433193687,
+     "infosets": 224,
+     "table_bytes": 9728,
+     "solve_seconds": 0.1969194170087576,
+     "iterations_per_second": 2039.4896161403085
+    },
+    {
+     "k": 24,
+     "exploitability": 0.09145837018665742,
+     "infosets": 336,
+     "table_bytes": 14592,
+     "solve_seconds": 0.2260663751512766,
+     "iterations_per_second": 1772.9805500498971
+    },
+    {
+     "k": 48,
+     "exploitability": 0.005826027429141206,
+     "infosets": 672,
+     "table_bytes": 29184,
+     "solve_seconds": 0.23997858283109963,
+     "iterations_per_second": 1669.5379245438776
+    }
+   ],
+   "adaptive_path": [
+    {
+     "infosets": 35,
+     "exploitability": 0.42719781259530887
+    },
+    {
+     "infosets": 42,
+     "exploitability": 0.4311929886393538
+    },
+    {
+     "infosets": 49,
+     "exploitability": 0.3736344729399676
+    },
+    {
+     "infosets": 56,
+     "exploitability": 0.25830576882863293
+    },
+    {
+     "infosets": 63,
+     "exploitability": 0.22666375512960263
+    },
+    {
+     "infosets": 70,
+     "exploitability": 0.22615377938303022
+    },
+    {
+     "infosets": 77,
+     "exploitability": 0.2236842730878038
+    },
+    {
+     "infosets": 84,
+     "exploitability": 0.22644476870592456
+    },
+    {
+     "infosets": 91,
+     "exploitability": 0.22184670573841173
+    },
+    {
+     "infosets": 98,
+     "exploitability": 0.2171815224104139
+    },
+    {
+     "infosets": 105,
+     "exploitability": 0.2210813259026186
+    },
+    {
+     "infosets": 112,
+     "exploitability": 0.2068153662577884
+    },
+    {
+     "infosets": 119,
+     "exploitability": 0.20256898954955443
+    },
+    {
+     "infosets": 126,
+     "exploitability": 0.2011468557465634
+    },
+    {
+     "infosets": 133,
+     "exploitability": 0.1943786247453438
+    },
+    {
+     "infosets": 140,
+     "exploitability": 0.18575654581625062
+    },
+    {
+     "infosets": 147,
+     "exploitability": 0.18955030045729046
+    },
+    {
+     "infosets": 154,
+     "exploitability": 0.17913299213394107
+    },
+    {
+     "infosets": 161,
+     "exploitability": 0.1713933326166341
+    },
+    {
+     "infosets": 168,
+     "exploitability": 0.1667027747791441
+    }
+   ]
+  },
+  {
+   "name": "paired_low_ace_river",
+   "seed": 300,
+   "n": [
+    48,
+    48
+   ],
+   "uniform": [
+    {
+     "k": 1,
+     "exploitability": 5.084729038963319,
+     "infosets": 14,
+     "table_bytes": 608,
+     "solve_seconds": 0.17717445781454444,
+     "iterations_per_second": 2262.616733622391
+    },
+    {
+     "k": 2,
+     "exploitability": 0.24925910287971553,
+     "infosets": 28,
+     "table_bytes": 1216,
+     "solve_seconds": 0.18860570807009935,
+     "iterations_per_second": 2129.2149570532956
+    },
+    {
+     "k": 3,
+     "exploitability": 0.30986258636333863,
+     "infosets": 42,
+     "table_bytes": 1824,
+     "solve_seconds": 0.1982718340586871,
+     "iterations_per_second": 2025.479693893879
+    },
+    {
+     "k": 4,
+     "exploitability": 0.13593355203018387,
+     "infosets": 56,
+     "table_bytes": 2432,
+     "solve_seconds": 0.18007987504824996,
+     "iterations_per_second": 2226.1984579915525
+    },
+    {
+     "k": 6,
+     "exploitability": 0.12676297037002793,
+     "infosets": 84,
+     "table_bytes": 3648,
+     "solve_seconds": 0.1923324589151889,
+     "iterations_per_second": 2083.60509000074
+    },
+    {
+     "k": 8,
+     "exploitability": 0.13249851132814605,
+     "infosets": 112,
+     "table_bytes": 4864,
+     "solve_seconds": 0.19263662514276803,
+     "iterations_per_second": 2084.9137648950473
+    },
+    {
+     "k": 12,
+     "exploitability": 0.1062557203391492,
+     "infosets": 168,
+     "table_bytes": 7296,
+     "solve_seconds": 0.19102737493813038,
+     "iterations_per_second": 2103.2387915482377
+    },
+    {
+     "k": 16,
+     "exploitability": 0.09954061347865562,
+     "infosets": 224,
+     "table_bytes": 9728,
+     "solve_seconds": 0.199702792102471,
+     "iterations_per_second": 2007.1118711702607
+    },
+    {
+     "k": 24,
+     "exploitability": 0.03515355079014637,
+     "infosets": 336,
+     "table_bytes": 14592,
+     "solve_seconds": 0.23028404195792973,
+     "iterations_per_second": 1742.5242509874647
+    },
+    {
+     "k": 48,
+     "exploitability": 0.0043814805766349,
+     "infosets": 672,
+     "table_bytes": 29184,
+     "solve_seconds": 0.19691216689534485,
+     "iterations_per_second": 2035.4822739707208
+    }
+   ],
+   "adaptive_path": [
+    {
+     "infosets": 35,
+     "exploitability": 0.17142203031777403
+    },
+    {
+     "infosets": 42,
+     "exploitability": 0.16512535365013337
+    },
+    {
+     "infosets": 49,
+     "exploitability": 0.14812053134143066
+    },
+    {
+     "infosets": 56,
+     "exploitability": 0.17712189588686478
+    },
+    {
+     "infosets": 63,
+     "exploitability": 0.14440832077747023
+    },
+    {
+     "infosets": 70,
+     "exploitability": 0.13707960766651506
+    },
+    {
+     "infosets": 77,
+     "exploitability": 0.13645483537120673
+    },
+    {
+     "infosets": 84,
+     "exploitability": 0.1288777574433173
+    },
+    {
+     "infosets": 91,
+     "exploitability": 0.12551894945288522
+    },
+    {
+     "infosets": 98,
+     "exploitability": 0.15201531771690346
+    },
+    {
+     "infosets": 105,
+     "exploitability": 0.16216109524268574
+    },
+    {
+     "infosets": 112,
+     "exploitability": 0.14575887177342195
+    },
+    {
+     "infosets": 119,
+     "exploitability": 0.10749054180954953
+    },
+    {
+     "infosets": 126,
+     "exploitability": 0.10778947957065066
+    },
+    {
+     "infosets": 133,
+     "exploitability": 0.10524625204842253
+    },
+    {
+     "infosets": 140,
+     "exploitability": 0.08838420992866913
+    },
+    {
+     "infosets": 147,
+     "exploitability": 0.08362481636012098
+    },
+    {
+     "infosets": 154,
+     "exploitability": 0.08121437942189225
+    },
+    {
+     "infosets": 161,
+     "exploitability": 0.0812143794218918
+    },
+    {
+     "infosets": 168,
+     "exploitability": 0.08161283280282294
+    }
+   ]
+  },
+  {
+   "name": "paired_low_ace_river",
+   "seed": 301,
+   "n": [
+    48,
+    48
+   ],
+   "uniform": [
+    {
+     "k": 1,
+     "exploitability": 4.552773284184189,
+     "infosets": 14,
+     "table_bytes": 608,
+     "solve_seconds": 0.17529437504708767,
+     "iterations_per_second": 2286.566298214935
+    },
+    {
+     "k": 2,
+     "exploitability": 1.6129881634497616,
+     "infosets": 28,
+     "table_bytes": 1216,
+     "solve_seconds": 0.18728891597129405,
+     "iterations_per_second": 2139.8289049280543
+    },
+    {
+     "k": 3,
+     "exploitability": 0.1790120011420324,
+     "infosets": 42,
+     "table_bytes": 1824,
+     "solve_seconds": 0.1994449170306325,
+     "iterations_per_second": 2009.9404131312353
+    },
+    {
+     "k": 4,
+     "exploitability": 0.17459876759605292,
+     "infosets": 56,
+     "table_bytes": 2432,
+     "solve_seconds": 0.184421458048746,
+     "iterations_per_second": 2173.076480382437
+    },
+    {
+     "k": 6,
+     "exploitability": 0.16496568535930903,
+     "infosets": 84,
+     "table_bytes": 3648,
+     "solve_seconds": 0.19182087504304945,
+     "iterations_per_second": 2089.126939676867
+    },
+    {
+     "k": 8,
+     "exploitability": 0.12849920473032073,
+     "infosets": 112,
+     "table_bytes": 4864,
+     "solve_seconds": 0.2007061659824103,
+     "iterations_per_second": 1996.489083761859
+    },
+    {
+     "k": 12,
+     "exploitability": 0.09578435324511152,
+     "infosets": 168,
+     "table_bytes": 7296,
+     "solve_seconds": 0.19575299997814,
+     "iterations_per_second": 2047.0990513016593
+    },
+    {
+     "k": 16,
+     "exploitability": 0.059843402516668254,
+     "infosets": 224,
+     "table_bytes": 9728,
+     "solve_seconds": 0.21564258309081197,
+     "iterations_per_second": 1861.5264814983002
+    },
+    {
+     "k": 24,
+     "exploitability": 0.04509731682810858,
+     "infosets": 336,
+     "table_bytes": 14592,
+     "solve_seconds": 0.24971583299338818,
+     "iterations_per_second": 1607.1356813797481
+    },
+    {
+     "k": 48,
+     "exploitability": 0.005425673802791908,
+     "infosets": 672,
+     "table_bytes": 29184,
+     "solve_seconds": 0.24998766696080565,
+     "iterations_per_second": 1603.0685421472258
+    }
+   ],
+   "adaptive_path": [
+    {
+     "infosets": 35,
+     "exploitability": 0.22651073691830734
+    },
+    {
+     "infosets": 42,
+     "exploitability": 0.19050073094006714
+    },
+    {
+     "infosets": 49,
+     "exploitability": 0.1645063773253796
+    },
+    {
+     "infosets": 56,
+     "exploitability": 0.17169322679589322
+    },
+    {
+     "infosets": 63,
+     "exploitability": 0.11413764562413982
+    },
+    {
+     "infosets": 70,
+     "exploitability": 0.08928958427775575
+    },
+    {
+     "infosets": 77,
+     "exploitability": 0.08915240384092278
+    },
+    {
+     "infosets": 84,
+     "exploitability": 0.10307899314399335
+    },
+    {
+     "infosets": 91,
+     "exploitability": 0.09926395588054451
+    },
+    {
+     "infosets": 98,
+     "exploitability": 0.07808629141766016
+    },
+    {
+     "infosets": 105,
+     "exploitability": 0.07686797971069163
+    },
+    {
+     "infosets": 112,
+     "exploitability": 0.07098857378616696
+    },
+    {
+     "infosets": 119,
+     "exploitability": 0.0724301384673662
+    },
+    {
+     "infosets": 126,
+     "exploitability": 0.06220017408002143
+    },
+    {
+     "infosets": 133,
+     "exploitability": 0.05347583921685979
+    },
+    {
+     "infosets": 140,
+     "exploitability": 0.05366679638209128
+    },
+    {
+     "infosets": 147,
+     "exploitability": 0.048102405631101616
+    },
+    {
+     "infosets": 154,
+     "exploitability": 0.040043156767528065
+    },
+    {
+     "infosets": 161,
+     "exploitability": 0.03744192205864173
+    },
+    {
+     "infosets": 168,
+     "exploitability": 0.034590005999384055
+    }
+   ]
+  },
+  {
+   "name": "paired_low_ace_river",
+   "seed": 302,
+   "n": [
+    48,
+    48
+   ],
+   "uniform": [
+    {
+     "k": 1,
+     "exploitability": 5.767439346706766,
+     "infosets": 14,
+     "table_bytes": 608,
+     "solve_seconds": 0.1808048749808222,
+     "iterations_per_second": 2216.6748966617456
+    },
+    {
+     "k": 2,
+     "exploitability": 0.29741450385855495,
+     "infosets": 28,
+     "table_bytes": 1216,
+     "solve_seconds": 0.1702665421180427,
+     "iterations_per_second": 2359.3832233045314
+    },
+    {
+     "k": 3,
+     "exploitability": 0.5347438437150377,
+     "infosets": 42,
+     "table_bytes": 1824,
+     "solve_seconds": 0.15963329188525677,
+     "iterations_per_second": 2511.969142911547
+    },
+    {
+     "k": 4,
+     "exploitability": 0.1854309889057505,
+     "infosets": 56,
+     "table_bytes": 2432,
+     "solve_seconds": 0.17874133284203708,
+     "iterations_per_second": 2247.271497178911
+    },
+    {
+     "k": 6,
+     "exploitability": 0.1519475862518031,
+     "infosets": 84,
+     "table_bytes": 3648,
+     "solve_seconds": 0.194645666051656,
+     "iterations_per_second": 2062.4328537788692
+    },
+    {
+     "k": 8,
+     "exploitability": 0.13235687376611094,
+     "infosets": 112,
+     "table_bytes": 4864,
+     "solve_seconds": 0.17796429083682597,
+     "iterations_per_second": 2252.202048524456
+    },
+    {
+     "k": 12,
+     "exploitability": 0.1010306591886212,
+     "infosets": 168,
+     "table_bytes": 7296,
+     "solve_seconds": 0.16796287498436868,
+     "iterations_per_second": 2391.7889777068435
+    },
+    {
+     "k": 16,
+     "exploitability": 0.08371245257195237,
+     "infosets": 224,
+     "table_bytes": 9728,
+     "solve_seconds": 0.1631753749679774,
+     "iterations_per_second": 2463.0977913427478
+    },
+    {
+     "k": 24,
+     "exploitability": 0.06685969328080887,
+     "infosets": 336,
+     "table_bytes": 14592,
+     "solve_seconds": 0.16211620904505253,
+     "iterations_per_second": 2473.7365094065403
+    },
+    {
+     "k": 48,
+     "exploitability": 0.0069251452083486376,
+     "infosets": 672,
+     "table_bytes": 29184,
+     "solve_seconds": 0.17351575009524822,
+     "iterations_per_second": 2310.3058395265725
+    }
+   ],
+   "adaptive_path": [
+    {
+     "infosets": 35,
+     "exploitability": 0.20481030856855909
+    },
+    {
+     "infosets": 42,
+     "exploitability": 0.18119006701503954
+    },
+    {
+     "infosets": 49,
+     "exploitability": 0.13683814679868866
+    },
+    {
+     "infosets": 56,
+     "exploitability": 0.12802594946406604
+    },
+    {
+     "infosets": 63,
+     "exploitability": 0.1333308747681865
+    },
+    {
+     "infosets": 70,
+     "exploitability": 0.13579294788326246
+    },
+    {
+     "infosets": 77,
+     "exploitability": 0.13116122003273972
+    },
+    {
+     "infosets": 84,
+     "exploitability": 0.13245192410085083
+    },
+    {
+     "infosets": 91,
+     "exploitability": 0.13080374498009406
+    },
+    {
+     "infosets": 98,
+     "exploitability": 0.1212101239939728
+    },
+    {
+     "infosets": 105,
+     "exploitability": 0.11410711688649577
+    },
+    {
+     "infosets": 112,
+     "exploitability": 0.11350470554990638
+    },
+    {
+     "infosets": 119,
+     "exploitability": 0.11112596607649095
+    },
+    {
+     "infosets": 126,
+     "exploitability": 0.10993876131247776
+    },
+    {
+     "infosets": 133,
+     "exploitability": 0.11433866977309737
+    },
+    {
+     "infosets": 140,
+     "exploitability": 0.11155122810201501
+    },
+    {
+     "infosets": 147,
+     "exploitability": 0.11078115547508072
+    },
+    {
+     "infosets": 154,
+     "exploitability": 0.11246134339788505
+    },
+    {
+     "infosets": 161,
+     "exploitability": 0.09426043317319727
+    },
+    {
+     "infosets": 168,
+     "exploitability": 0.08679963646947436
+    }
+   ]
+  },
+  {
+   "name": "broadway_dry",
+   "seed": 300,
+   "n": [
+    48,
+    48
+   ],
+   "uniform": [
+    {
+     "k": 1,
+     "exploitability": 3.0647713526492355,
+     "infosets": 14,
+     "table_bytes": 608,
+     "solve_seconds": 0.2084770838264376,
+     "iterations_per_second": 1922.2832878412614
+    },
+    {
+     "k": 2,
+     "exploitability": 1.6777001142956207,
+     "infosets": 28,
+     "table_bytes": 1216,
+     "solve_seconds": 0.17612537508830428,
+     "iterations_per_second": 2275.7681013274096
+    },
+    {
+     "k": 3,
+     "exploitability": 0.817683520956524,
+     "infosets": 42,
+     "table_bytes": 1824,
+     "solve_seconds": 0.1628067079000175,
+     "iterations_per_second": 2462.13190568265
+    },
+    {
+     "k": 4,
+     "exploitability": 0.2421229283093036,
+     "infosets": 56,
+     "table_bytes": 2432,
+     "solve_seconds": 0.17915441701188684,
+     "iterations_per_second": 2237.08329120106
+    },
+    {
+     "k": 6,
+     "exploitability": 0.14583012569938125,
+     "infosets": 84,
+     "table_bytes": 3648,
+     "solve_seconds": 0.17808166681788862,
+     "iterations_per_second": 2250.628594872717
+    },
+    {
+     "k": 8,
+     "exploitability": 0.14428827548774203,
+     "infosets": 112,
+     "table_bytes": 4864,
+     "solve_seconds": 0.16589670884422958,
+     "iterations_per_second": 2416.3155628637232
+    },
+    {
+     "k": 12,
+     "exploitability": 0.11584662574501814,
+     "infosets": 168,
+     "table_bytes": 7296,
+     "solve_seconds": 0.1653160830028355,
+     "iterations_per_second": 2424.916625283272
+    },
+    {
+     "k": 16,
+     "exploitability": 0.08842584139311116,
+     "infosets": 224,
+     "table_bytes": 9728,
+     "solve_seconds": 0.16528708301484585,
+     "iterations_per_second": 2425.3932531929677
+    },
+    {
+     "k": 24,
+     "exploitability": 0.06006785188610175,
+     "infosets": 336,
+     "table_bytes": 14592,
+     "solve_seconds": 0.1723334591370076,
+     "iterations_per_second": 2325.9138401276527
+    },
+    {
+     "k": 48,
+     "exploitability": 0.0035995998706337407,
+     "infosets": 672,
+     "table_bytes": 29184,
+     "solve_seconds": 0.17142174998298287,
+     "iterations_per_second": 2338.4491041082133
+    }
+   ],
+   "adaptive_path": [
+    {
+     "infosets": 35,
+     "exploitability": 0.5493175199253185
+    },
+    {
+     "infosets": 42,
+     "exploitability": 0.422894561602849
+    },
+    {
+     "infosets": 49,
+     "exploitability": 0.24908279403780487
+    },
+    {
+     "infosets": 56,
+     "exploitability": 0.19438641783374777
+    },
+    {
+     "infosets": 63,
+     "exploitability": 0.1578663309052699
+    },
+    {
+     "infosets": 70,
+     "exploitability": 0.1338617839654621
+    },
+    {
+     "infosets": 77,
+     "exploitability": 0.13863981867795538
+    },
+    {
+     "infosets": 84,
+     "exploitability": 0.13071934416538378
+    },
+    {
+     "infosets": 91,
+     "exploitability": 0.13129102590066022
+    },
+    {
+     "infosets": 98,
+     "exploitability": 0.131230550616243
+    },
+    {
+     "infosets": 105,
+     "exploitability": 0.12144861207325852
+    },
+    {
+     "infosets": 112,
+     "exploitability": 0.12078237238422851
+    },
+    {
+     "infosets": 119,
+     "exploitability": 0.11674964565287826
+    },
+    {
+     "infosets": 126,
+     "exploitability": 0.1189271665327194
+    },
+    {
+     "infosets": 133,
+     "exploitability": 0.10313000543969819
+    },
+    {
+     "infosets": 140,
+     "exploitability": 0.09449997431323931
+    },
+    {
+     "infosets": 147,
+     "exploitability": 0.09442503058395735
+    },
+    {
+     "infosets": 154,
+     "exploitability": 0.08509132238820327
+    },
+    {
+     "infosets": 161,
+     "exploitability": 0.08571545633885291
+    },
+    {
+     "infosets": 168,
+     "exploitability": 0.08320894327053918
+    }
+   ]
+  },
+  {
+   "name": "broadway_dry",
+   "seed": 301,
+   "n": [
+    48,
+    48
+   ],
+   "uniform": [
+    {
+     "k": 1,
+     "exploitability": 2.242915761447618,
+     "infosets": 14,
+     "table_bytes": 608,
+     "solve_seconds": 0.20230279094539583,
+     "iterations_per_second": 1981.0741339360593
+    },
+    {
+     "k": 2,
+     "exploitability": 2.5727789216242543,
+     "infosets": 28,
+     "table_bytes": 1216,
+     "solve_seconds": 0.16094670887105167,
+     "iterations_per_second": 2490.8364443689707
+    },
+    {
+     "k": 3,
+     "exploitability": 0.9292731331956946,
+     "infosets": 42,
+     "table_bytes": 1824,
+     "solve_seconds": 0.17381804203614593,
+     "iterations_per_second": 2305.877538021254
+    },
+    {
+     "k": 4,
+     "exploitability": 0.33057565082918305,
+     "infosets": 56,
+     "table_bytes": 2432,
+     "solve_seconds": 0.1999974159989506,
+     "iterations_per_second": 2007.386760931587
+    },
+    {
+     "k": 6,
+     "exploitability": 0.13545692264960962,
+     "infosets": 84,
+     "table_bytes": 3648,
+     "solve_seconds": 0.18007654207758605,
+     "iterations_per_second": 2226.270731933116
+    },
+    {
+     "k": 8,
+     "exploitability": 0.1512553833694934,
+     "infosets": 112,
+     "table_bytes": 4864,
+     "solve_seconds": 0.16178279207088053,
+     "iterations_per_second": 2477.8867954345683
+    },
+    {
+     "k": 12,
+     "exploitability": 0.10305959162760914,
+     "infosets": 168,
+     "table_bytes": 7296,
+     "solve_seconds": 0.1636221669614315,
+     "iterations_per_second": 2450.037100233116
+    },
+    {
+     "k": 16,
+     "exploitability": 0.05191884027575622,
+     "infosets": 224,
+     "table_bytes": 9728,
+     "solve_seconds": 0.17048345785588026,
+     "iterations_per_second": 2351.17031721164
+    },
+    {
+     "k": 24,
+     "exploitability": 0.04475001781742538,
+     "infosets": 336,
+     "table_bytes": 14592,
+     "solve_seconds": 0.1660849170293659,
+     "iterations_per_second": 2413.6455543533957
+    },
+    {
+     "k": 48,
+     "exploitability": 0.003372803689010828,
+     "infosets": 672,
+     "table_bytes": 29184,
+     "solve_seconds": 0.17138112499378622,
+     "iterations_per_second": 2339.1915474055904
+    }
+   ],
+   "adaptive_path": [
+    {
+     "infosets": 35,
+     "exploitability": 0.5534661769516822
+    },
+    {
+     "infosets": 42,
+     "exploitability": 0.29671215286018593
+    },
+    {
+     "infosets": 49,
+     "exploitability": 0.2574179057094703
+    },
+    {
+     "infosets": 56,
+     "exploitability": 0.24830891054007576
+    },
+    {
+     "infosets": 63,
+     "exploitability": 0.12266539934242227
+    },
+    {
+     "infosets": 70,
+     "exploitability": 0.12313717687838488
+    },
+    {
+     "infosets": 77,
+     "exploitability": 0.12290093674255398
+    },
+    {
+     "infosets": 84,
+     "exploitability": 0.12718751359476932
+    },
+    {
+     "infosets": 91,
+     "exploitability": 0.09752411147051787
+    },
+    {
+     "infosets": 98,
+     "exploitability": 0.08151949040382522
+    },
+    {
+     "infosets": 105,
+     "exploitability": 0.06202254300426713
+    },
+    {
+     "infosets": 112,
+     "exploitability": 0.06434323566444133
+    },
+    {
+     "infosets": 119,
+     "exploitability": 0.06894043864275634
+    },
+    {
+     "infosets": 126,
+     "exploitability": 0.06884606513485236
+    },
+    {
+     "infosets": 133,
+     "exploitability": 0.06254637338028934
+    },
+    {
+     "infosets": 140,
+     "exploitability": 0.061882835937716596
+    },
+    {
+     "infosets": 147,
+     "exploitability": 0.05760300792782802
+    },
+    {
+     "infosets": 154,
+     "exploitability": 0.05753948276997356
+    },
+    {
+     "infosets": 161,
+     "exploitability": 0.046395237969660164
+    },
+    {
+     "infosets": 168,
+     "exploitability": 0.04690693782804267
+    }
+   ]
+  },
+  {
+   "name": "broadway_dry",
+   "seed": 302,
+   "n": [
+    48,
+    48
+   ],
+   "uniform": [
+    {
+     "k": 1,
+     "exploitability": 1.0064244204544668,
+     "infosets": 14,
+     "table_bytes": 608,
+     "solve_seconds": 0.20383337489329278,
+     "iterations_per_second": 1966.1446228740126
+    },
+    {
+     "k": 2,
+     "exploitability": 1.0186306529335676,
+     "infosets": 28,
+     "table_bytes": 1216,
+     "solve_seconds": 0.17106012487784028,
+     "iterations_per_second": 2343.256293749605
+    },
+    {
+     "k": 3,
+     "exploitability": 0.9993913345667897,
+     "infosets": 42,
+     "table_bytes": 1824,
+     "solve_seconds": 0.15747870900668204,
+     "iterations_per_second": 2545.7323643747754
+    },
+    {
+     "k": 4,
+     "exploitability": 0.8738826472222523,
+     "infosets": 56,
+     "table_bytes": 2432,
+     "solve_seconds": 0.19935624999925494,
+     "iterations_per_second": 2010.0384640519737
+    },
+    {
+     "k": 6,
+     "exploitability": 0.3180664017897956,
+     "infosets": 84,
+     "table_bytes": 3648,
+     "solve_seconds": 0.1769260000437498,
+     "iterations_per_second": 2265.384081528297
+    },
+    {
+     "k": 8,
+     "exploitability": 0.08719527791426862,
+     "infosets": 112,
+     "table_bytes": 4864,
+     "solve_seconds": 0.15247604181058705,
+     "iterations_per_second": 2629.516716111217
+    },
+    {
+     "k": 12,
+     "exploitability": 0.061570479079103624,
+     "infosets": 168,
+     "table_bytes": 7296,
+     "solve_seconds": 0.16874641715548933,
+     "iterations_per_second": 2375.4867534901887
+    },
+    {
+     "k": 16,
+     "exploitability": 0.03209253062889239,
+     "infosets": 224,
+     "table_bytes": 9728,
+     "solve_seconds": 0.16585908411070704,
+     "iterations_per_second": 2416.9141668222655
+    },
+    {
+     "k": 24,
+     "exploitability": 0.02042176357589809,
+     "infosets": 336,
+     "table_bytes": 14592,
+     "solve_seconds": 0.16749045788310468,
+     "iterations_per_second": 2393.2975789969605
+    },
+    {
+     "k": 48,
+     "exploitability": 0.0023186618938033643,
+     "infosets": 672,
+     "table_bytes": 29184,
+     "solve_seconds": 0.17866541701368988,
+     "iterations_per_second": 2243.5059289124274
+    }
+   ],
+   "adaptive_path": [
+    {
+     "infosets": 35,
+     "exploitability": 0.844982455280048
+    },
+    {
+     "infosets": 42,
+     "exploitability": 0.2515930961791988
+    },
+    {
+     "infosets": 49,
+     "exploitability": 0.16887493266228848
+    },
+    {
+     "infosets": 56,
+     "exploitability": 0.13210324917647487
+    },
+    {
+     "infosets": 63,
+     "exploitability": 0.11409950365440968
+    },
+    {
+     "infosets": 70,
+     "exploitability": 0.07832213281278899
+    },
+    {
+     "infosets": 77,
+     "exploitability": 0.07323638446045155
+    },
+    {
+     "infosets": 84,
+     "exploitability": 0.06247531049774957
+    },
+    {
+     "infosets": 91,
+     "exploitability": 0.045350081194575065
+    },
+    {
+     "infosets": 98,
+     "exploitability": 0.04927251801058086
+    },
+    {
+     "infosets": 105,
+     "exploitability": 0.033971240354050636
+    },
+    {
+     "infosets": 112,
+     "exploitability": 0.04200443375953644
+    },
+    {
+     "infosets": 119,
+     "exploitability": 0.032826715162352915
+    },
+    {
+     "infosets": 126,
+     "exploitability": 0.03615512046043734
+    },
+    {
+     "infosets": 133,
+     "exploitability": 0.023759089998266925
+    },
+    {
+     "infosets": 140,
+     "exploitability": 0.02255517684863939
+    },
+    {
+     "infosets": 147,
+     "exploitability": 0.017340834356939894
+    },
+    {
+     "infosets": 154,
+     "exploitability": 0.016725943746400906
+    },
+    {
+     "infosets": 161,
+     "exploitability": 0.015265131909226293
+    },
+    {
+     "infosets": 168,
+     "exploitability": 0.016115493676414516
+    }
+   ]
+  },
+  {
+   "name": "two_tone_middling",
+   "seed": 300,
+   "n": [
+    48,
+    48
+   ],
+   "uniform": [
+    {
+     "k": 1,
+     "exploitability": 4.956722541251951,
+     "infosets": 14,
+     "table_bytes": 608,
+     "solve_seconds": 0.1867311669047922,
+     "iterations_per_second": 2161.700117460733
+    },
+    {
+     "k": 2,
+     "exploitability": 0.5330699867935771,
+     "infosets": 28,
+     "table_bytes": 1216,
+     "solve_seconds": 0.1528922920115292,
+     "iterations_per_second": 2622.9758993551295
+    },
+    {
+     "k": 3,
+     "exploitability": 0.3449274522006762,
+     "infosets": 42,
+     "table_bytes": 1824,
+     "solve_seconds": 0.16286212508566678,
+     "iterations_per_second": 2461.3869925323343
+    },
+    {
+     "k": 4,
+     "exploitability": 0.4637117188045392,
+     "infosets": 56,
+     "table_bytes": 2432,
+     "solve_seconds": 0.19887987500987947,
+     "iterations_per_second": 2014.8760822481165
+    },
+    {
+     "k": 6,
+     "exploitability": 0.2295805772248879,
+     "infosets": 84,
+     "table_bytes": 3648,
+     "solve_seconds": 0.1747645828872919,
+     "iterations_per_second": 2299.2717788135847
+    },
+    {
+     "k": 8,
+     "exploitability": 0.1627495191104692,
+     "infosets": 112,
+     "table_bytes": 4864,
+     "solve_seconds": 0.16350391600281,
+     "iterations_per_second": 2452.451185882165
+    },
+    {
+     "k": 12,
+     "exploitability": 0.12887428089612285,
+     "infosets": 168,
+     "table_bytes": 7296,
+     "solve_seconds": 0.16104562510736287,
+     "iterations_per_second": 2495.191546856426
+    },
+    {
+     "k": 16,
+     "exploitability": 0.10772189342936023,
+     "infosets": 224,
+     "table_bytes": 9728,
+     "solve_seconds": 0.16936379205435514,
+     "iterations_per_second": 2367.503061567889
+    },
+    {
+     "k": 24,
+     "exploitability": 0.0818060302414631,
+     "infosets": 336,
+     "table_bytes": 14592,
+     "solve_seconds": 0.16429558396339417,
+     "iterations_per_second": 2445.388244273582
+    },
+    {
+     "k": 48,
+     "exploitability": 0.004491289719275593,
+     "infosets": 672,
+     "table_bytes": 29184,
+     "solve_seconds": 0.173216792056337,
+     "iterations_per_second": 2315.258077947754
+    }
+   ],
+   "adaptive_path": [
+    {
+     "infosets": 35,
+     "exploitability": 0.5094435268928309
+    },
+    {
+     "infosets": 42,
+     "exploitability": 0.34252099973740646
+    },
+    {
+     "infosets": 49,
+     "exploitability": 0.33292134207946295
+    },
+    {
+     "infosets": 56,
+     "exploitability": 0.3230676306268869
+    },
+    {
+     "infosets": 63,
+     "exploitability": 0.32881096360241757
+    },
+    {
+     "infosets": 70,
+     "exploitability": 0.27672620454106256
+    },
+    {
+     "infosets": 77,
+     "exploitability": 0.2067503702846329
+    },
+    {
+     "infosets": 84,
+     "exploitability": 0.17400681255255224
+    },
+    {
+     "infosets": 91,
+     "exploitability": 0.17233009998644716
+    },
+    {
+     "infosets": 98,
+     "exploitability": 0.16296091483750186
+    },
+    {
+     "infosets": 105,
+     "exploitability": 0.16621705622554234
+    },
+    {
+     "infosets": 112,
+     "exploitability": 0.16689271349261453
+    },
+    {
+     "infosets": 119,
+     "exploitability": 0.15544966926771614
+    },
+    {
+     "infosets": 126,
+     "exploitability": 0.1546522429979219
+    },
+    {
+     "infosets": 133,
+     "exploitability": 0.14596205693849185
+    },
+    {
+     "infosets": 140,
+     "exploitability": 0.14444680884418187
+    },
+    {
+     "infosets": 147,
+     "exploitability": 0.13051938961694742
+    },
+    {
+     "infosets": 154,
+     "exploitability": 0.12683293434262521
+    },
+    {
+     "infosets": 161,
+     "exploitability": 0.12000461135936408
+    },
+    {
+     "infosets": 168,
+     "exploitability": 0.11983046375765238
+    }
+   ]
+  },
+  {
+   "name": "two_tone_middling",
+   "seed": 301,
+   "n": [
+    48,
+    48
+   ],
+   "uniform": [
+    {
+     "k": 1,
+     "exploitability": 4.164777206497671,
+     "infosets": 14,
+     "table_bytes": 608,
+     "solve_seconds": 0.1790449160616845,
+     "iterations_per_second": 2243.1850997433908
+    },
+    {
+     "k": 2,
+     "exploitability": 0.8939647601291559,
+     "infosets": 28,
+     "table_bytes": 1216,
+     "solve_seconds": 0.1653556670062244,
+     "iterations_per_second": 2424.8651723413
+    },
+    {
+     "k": 3,
+     "exploitability": 0.39169561096966116,
+     "infosets": 42,
+     "table_bytes": 1824,
+     "solve_seconds": 0.1696495411451906,
+     "iterations_per_second": 2362.742499560885
+    },
+    {
+     "k": 4,
+     "exploitability": 0.30593105603290466,
+     "infosets": 56,
+     "table_bytes": 2432,
+     "solve_seconds": 0.20026112510822713,
+     "iterations_per_second": 2005.6165681356442
+    },
+    {
+     "k": 6,
+     "exploitability": 0.20973240964780365,
+     "infosets": 84,
+     "table_bytes": 3648,
+     "solve_seconds": 0.17514075012877584,
+     "iterations_per_second": 2289.163831906086
+    },
+    {
+     "k": 8,
+     "exploitability": 0.19316082604427717,
+     "infosets": 112,
+     "table_bytes": 4864,
+     "solve_seconds": 0.17721958295442164,
+     "iterations_per_second": 2261.6876150077896
+    },
+    {
+     "k": 12,
+     "exploitability": 0.18419079062014987,
+     "infosets": 168,
+     "table_bytes": 7296,
+     "solve_seconds": 0.1595265418291092,
+     "iterations_per_second": 2512.884420636278
+    },
+    {
+     "k": 16,
+     "exploitability": 0.10552577197116814,
+     "infosets": 224,
+     "table_bytes": 9728,
+     "solve_seconds": 0.1670290830079466,
+     "iterations_per_second": 2399.8008144569717
+    },
+    {
+     "k": 24,
+     "exploitability": 0.07111294543063984,
+     "infosets": 336,
+     "table_bytes": 14592,
+     "solve_seconds": 0.1665535420179367,
+     "iterations_per_second": 2411.1182668943047
+    },
+    {
+     "k": 48,
+     "exploitability": 0.005269965105506702,
+     "infosets": 672,
+     "table_bytes": 29184,
+     "solve_seconds": 0.17825937503948808,
+     "iterations_per_second": 2249.6465515808304
+    }
+   ],
+   "adaptive_path": [
+    {
+     "infosets": 35,
+     "exploitability": 0.39431674408331585
+    },
+    {
+     "infosets": 42,
+     "exploitability": 0.282625364526066
+    },
+    {
+     "infosets": 49,
+     "exploitability": 0.2789089387731223
+    },
+    {
+     "infosets": 56,
+     "exploitability": 0.26733010474740204
+    },
+    {
+     "infosets": 63,
+     "exploitability": 0.19088059138229682
+    },
+    {
+     "infosets": 70,
+     "exploitability": 0.1925833165924168
+    },
+    {
+     "infosets": 77,
+     "exploitability": 0.16633935076266898
+    },
+    {
+     "infosets": 84,
+     "exploitability": 0.16336150080370188
+    },
+    {
+     "infosets": 91,
+     "exploitability": 0.14151814278285169
+    },
+    {
+     "infosets": 98,
+     "exploitability": 0.12529610249772058
+    },
+    {
+     "infosets": 105,
+     "exploitability": 0.11906712401660405
+    },
+    {
+     "infosets": 112,
+     "exploitability": 0.1210597678902755
+    },
+    {
+     "infosets": 119,
+     "exploitability": 0.1191477035951258
+    },
+    {
+     "infosets": 126,
+     "exploitability": 0.1184514459841256
+    },
+    {
+     "infosets": 133,
+     "exploitability": 0.11021436798479439
+    },
+    {
+     "infosets": 140,
+     "exploitability": 0.10970244985095454
+    },
+    {
+     "infosets": 147,
+     "exploitability": 0.1088372482501958
+    },
+    {
+     "infosets": 154,
+     "exploitability": 0.10602904737581426
+    },
+    {
+     "infosets": 161,
+     "exploitability": 0.1083856505718244
+    },
+    {
+     "infosets": 168,
+     "exploitability": 0.10723531225764293
+    }
+   ]
+  },
+  {
+   "name": "two_tone_middling",
+   "seed": 302,
+   "n": [
+    48,
+    48
+   ],
+   "uniform": [
+    {
+     "k": 1,
+     "exploitability": 5.096411593840215,
+     "infosets": 14,
+     "table_bytes": 608,
+     "solve_seconds": 0.18070887494832277,
+     "iterations_per_second": 2217.8604291921547
+    },
+    {
+     "k": 2,
+     "exploitability": 0.5505202856805672,
+     "infosets": 28,
+     "table_bytes": 1216,
+     "solve_seconds": 0.16709504183381796,
+     "iterations_per_second": 2398.965440929121
+    },
+    {
+     "k": 3,
+     "exploitability": 0.41458929500338443,
+     "infosets": 42,
+     "table_bytes": 1824,
+     "solve_seconds": 0.1906378751154989,
+     "iterations_per_second": 2102.1380626050577
+    },
+    {
+     "k": 4,
+     "exploitability": 0.40618855360231804,
+     "infosets": 56,
+     "table_bytes": 2432,
+     "solve_seconds": 0.18649216601625085,
+     "iterations_per_second": 2149.0288911064335
+    },
+    {
+     "k": 6,
+     "exploitability": 0.15606447386319586,
+     "infosets": 84,
+     "table_bytes": 3648,
+     "solve_seconds": 0.1816420410759747,
+     "iterations_per_second": 2206.4314285047362
+    },
+    {
+     "k": 8,
+     "exploitability": 0.1906998984129051,
+     "infosets": 112,
+     "table_bytes": 4864,
+     "solve_seconds": 0.1652515830937773,
+     "iterations_per_second": 2425.7542259629013
+    },
+    {
+     "k": 12,
+     "exploitability": 0.12777130083717247,
+     "infosets": 168,
+     "table_bytes": 7296,
+     "solve_seconds": 0.16957812500186265,
+     "iterations_per_second": 2363.727422294521
+    },
+    {
+     "k": 16,
+     "exploitability": 0.13110118971789597,
+     "infosets": 224,
+     "table_bytes": 9728,
+     "solve_seconds": 0.16588879213668406,
+     "iterations_per_second": 2416.244420730658
+    },
+    {
+     "k": 24,
+     "exploitability": 0.1028977162176451,
+     "infosets": 336,
+     "table_bytes": 14592,
+     "solve_seconds": 0.1734291249886155,
+     "iterations_per_second": 2311.165166539996
+    },
+    {
+     "k": 48,
+     "exploitability": 0.006318421141655567,
+     "infosets": 672,
+     "table_bytes": 29184,
+     "solve_seconds": 0.1727276248857379,
+     "iterations_per_second": 2320.9709491405615
+    }
+   ],
+   "adaptive_path": [
+    {
+     "infosets": 35,
+     "exploitability": 0.378058464397283
+    },
+    {
+     "infosets": 42,
+     "exploitability": 0.3262947496382231
+    },
+    {
+     "infosets": 49,
+     "exploitability": 0.32200575626158034
+    },
+    {
+     "infosets": 56,
+     "exploitability": 0.24367430644400528
+    },
+    {
+     "infosets": 63,
+     "exploitability": 0.24030275470540105
+    },
+    {
+     "infosets": 70,
+     "exploitability": 0.19858273227765283
+    },
+    {
+     "infosets": 77,
+     "exploitability": 0.19601336326425506
+    },
+    {
+     "infosets": 84,
+     "exploitability": 0.18405539243999944
+    },
+    {
+     "infosets": 91,
+     "exploitability": 0.18595609017648274
+    },
+    {
+     "infosets": 98,
+     "exploitability": 0.18626599684882636
+    },
+    {
+     "infosets": 105,
+     "exploitability": 0.18327853833102165
+    },
+    {
+     "infosets": 112,
+     "exploitability": 0.18104064209371395
+    },
+    {
+     "infosets": 119,
+     "exploitability": 0.17914784227796995
+    },
+    {
+     "infosets": 126,
+     "exploitability": 0.18289792380458514
+    },
+    {
+     "infosets": 133,
+     "exploitability": 0.1666383536915101
+    },
+    {
+     "infosets": 140,
+     "exploitability": 0.15139224223246162
+    },
+    {
+     "infosets": 147,
+     "exploitability": 0.15318396831422884
+    },
+    {
+     "infosets": 154,
+     "exploitability": 0.15014446280394142
+    },
+    {
+     "infosets": 161,
+     "exploitability": 0.1539052395312573
+    },
+    {
+     "infosets": 168,
+     "exploitability": 0.154393495399187
+    }
+   ]
+  }
+ ],
+ "seconds": 18.5,
+ "commit": "d5f727a05d5c40b52032e0e24bfeefb31b53d9e2",
+ "timing_note": "10 instances ran concurrently"
+}

@@ -1,0 +1,1945 @@
+{
+ "format": "pokeralpha.phase2.collision_dispersion/v1",
+ "question": "does within-cell heterogeneity of the RAW equilibrium predict the cell's measured error?",
+ "definitions": {
+  "policy_dispersion": "reach-weighted mean TV of member hands' raw-equilibrium policies to their weighted mean, over the player's nodes",
+  "br_gain": "cell's exact best-response gain in the abstract solution (error decomposition)"
+ },
+ "cells": 216,
+ "k": 4,
+ "signals": {
+  "policy_dispersion": {
+   "spearman_vs_br_gain": 0.4959930458805177,
+   "top_cell_agreement": 0.25925925925925924
+  },
+  "equity_spread": {
+   "spearman_vs_br_gain": 0.44805035615702,
+   "top_cell_agreement": 0.5555555555555556
+  },
+  "shared_action_regret": {
+   "spearman_vs_br_gain": 0.932207480355252,
+   "top_cell_agreement": 0.7777777777777778
+  }
+ },
+ "instances": [
+  {
+   "name": "dry_high polarized vs bluff-catcher",
+   "seed": 500,
+   "k": 4,
+   "cells": [
+    {
+     "player": 0,
+     "cell": 0,
+     "policy_dispersion": 0.39727375334090503,
+     "equity_spread": 0.0,
+     "br_gain": 0.021083081592718614,
+     "shared_action_regret": 0.020174432965131633
+    },
+    {
+     "player": 0,
+     "cell": 1,
+     "policy_dispersion": 0.2744258741003999,
+     "equity_spread": 0.0,
+     "br_gain": 0.03154292858336799,
+     "shared_action_regret": 0.025281138906937645
+    },
+    {
+     "player": 0,
+     "cell": 2,
+     "policy_dispersion": 0.30284341739827486,
+     "equity_spread": 1.0,
+     "br_gain": 0.020338260308792697,
+     "shared_action_regret": 0.06674229952127379
+    },
+    {
+     "player": 0,
+     "cell": 3,
+     "policy_dispersion": 9.192701168559564e-05,
+     "equity_spread": 0.0,
+     "br_gain": 0.02048734804522584,
+     "shared_action_regret": 0.020145097014936886
+    },
+    {
+     "player": 1,
+     "cell": 0,
+     "policy_dispersion": 0.1696184822163597,
+     "equity_spread": 0.10676532769556035,
+     "br_gain": 0.04214642840210194,
+     "shared_action_regret": 0.04174767455684233
+    },
+    {
+     "player": 1,
+     "cell": 1,
+     "policy_dispersion": 0.15302035872029815,
+     "equity_spread": 0.10256410256410253,
+     "br_gain": 0.02115333086419747,
+     "shared_action_regret": 0.02101016948749979
+    },
+    {
+     "player": 1,
+     "cell": 2,
+     "policy_dispersion": 0.05892569318887365,
+     "equity_spread": 0.05693581780538304,
+     "br_gain": 0.008154485117524667,
+     "shared_action_regret": 0.007953325065625384
+    },
+    {
+     "player": 1,
+     "cell": 3,
+     "policy_dispersion": 0.20278449229203876,
+     "equity_spread": 0.05959595959595965,
+     "br_gain": 0.06512504311005363,
+     "shared_action_regret": 0.06484697099430725
+    }
+   ]
+  },
+  {
+   "name": "dry_high polarized vs bluff-catcher",
+   "seed": 501,
+   "k": 4,
+   "cells": [
+    {
+     "player": 0,
+     "cell": 0,
+     "policy_dispersion": 0.32145511486086353,
+     "equity_spread": 0.0,
+     "br_gain": 0.04360855705976617,
+     "shared_action_regret": 0.042195534090270034
+    },
+    {
+     "player": 0,
+     "cell": 1,
+     "policy_dispersion": 0.31290500467188503,
+     "equity_spread": 1.0,
+     "br_gain": 0.0015871347837280725,
+     "shared_action_regret": 0.2072440812298025
+    },
+    {
+     "player": 0,
+     "cell": 2,
+     "policy_dispersion": 6.81561468478667e-05,
+     "equity_spread": 0.0,
+     "br_gain": 0.001118416060461258,
+     "shared_action_regret": 0.0006564324015375655
+    },
+    {
+     "player": 0,
+     "cell": 3,
+     "policy_dispersion": 4.373296590023328e-05,
+     "equity_spread": 0.0,
+     "br_gain": 0.019413857363304754,
+     "shared_action_regret": 0.019047979415334593
+    },
+    {
+     "player": 1,
+     "cell": 0,
+     "policy_dispersion": 0.16712052651168882,
+     "equity_spread": 0.14285714285714296,
+     "br_gain": 0.07577889397119644,
+     "shared_action_regret": 0.07539325274528257
+    },
+    {
+     "player": 1,
+     "cell": 1,
+     "policy_dispersion": 0.3578001762891362,
+     "equity_spread": 0.09043927648578809,
+     "br_gain": 0.13542624292391053,
+     "shared_action_regret": 0.13377632217332486
+    },
+    {
+     "player": 1,
+     "cell": 2,
+     "policy_dispersion": 0.1926877101838677,
+     "equity_spread": 0.09898628503279666,
+     "br_gain": 0.11275864699638133,
+     "shared_action_regret": 0.11224353583043035
+    },
+    {
+     "player": 1,
+     "cell": 3,
+     "policy_dispersion": 0.3303951037000783,
+     "equity_spread": 0.14285714285714296,
+     "br_gain": 0.16219954544792217,
+     "shared_action_regret": 0.1596303153413901
+    }
+   ]
+  },
+  {
+   "name": "dry_high polarized vs bluff-catcher",
+   "seed": 502,
+   "k": 4,
+   "cells": [
+    {
+     "player": 0,
+     "cell": 0,
+     "policy_dispersion": 0.36612266052552467,
+     "equity_spread": 0.0,
+     "br_gain": 0.037122253075232814,
+     "shared_action_regret": 0.029690645905447913
+    },
+    {
+     "player": 0,
+     "cell": 1,
+     "policy_dispersion": 0.39092219956197083,
+     "equity_spread": 0.0,
+     "br_gain": 0.04131260661491262,
+     "shared_action_regret": 0.03627004676816438
+    },
+    {
+     "player": 0,
+     "cell": 2,
+     "policy_dispersion": 0.015352662159210669,
+     "equity_spread": 1.0,
+     "br_gain": 0.0478351582461905,
+     "shared_action_regret": 0.056142493352608305
+    },
+    {
+     "player": 0,
+     "cell": 3,
+     "policy_dispersion": 1.3928257383641538e-05,
+     "equity_spread": 0.0,
+     "br_gain": 0.04439263996118012,
+     "shared_action_regret": 0.043896734502746754
+    },
+    {
+     "player": 1,
+     "cell": 0,
+     "policy_dispersion": 0.327973592670477,
+     "equity_spread": 0.08192389006342493,
+     "br_gain": 0.09559469215190405,
+     "shared_action_regret": 0.0952947320147156
+    },
+    {
+     "player": 1,
+     "cell": 1,
+     "policy_dispersion": 0.20615584787523566,
+     "equity_spread": 0.12846068660022147,
+     "br_gain": 0.0638263012087667,
+     "shared_action_regret": 0.0635254521538514
+    },
+    {
+     "player": 1,
+     "cell": 2,
+     "policy_dispersion": 0.12929897787009262,
+     "equity_spread": 0.12749445676274945,
+     "br_gain": 0.02990078648076125,
+     "shared_action_regret": 0.029603091690050036
+    },
+    {
+     "player": 1,
+     "cell": 3,
+     "policy_dispersion": 0.2724552169043781,
+     "equity_spread": 0.06459330143540676,
+     "br_gain": 0.050982712467891586,
+     "shared_action_regret": 0.0502547594915827
+    }
+   ]
+  },
+  {
+   "name": "paired uncapped vs capped",
+   "seed": 500,
+   "k": 4,
+   "cells": [
+    {
+     "player": 0,
+     "cell": 0,
+     "policy_dispersion": 0.11263503970502943,
+     "equity_spread": 0.2981601731601731,
+     "br_gain": 0.049337318581268344,
+     "shared_action_regret": 0.04901117839154312
+    },
+    {
+     "player": 0,
+     "cell": 1,
+     "policy_dispersion": 0.08084856591174912,
+     "equity_spread": 0.1267676767676768,
+     "br_gain": 0.012076052197887086,
+     "shared_action_regret": 0.010586517694489143
+    },
+    {
+     "player": 0,
+     "cell": 2,
+     "policy_dispersion": 0.07538376729343481,
+     "equity_spread": 0.25175438596491223,
+     "br_gain": 0.02084275831772897,
+     "shared_action_regret": 0.00514178715411228
+    },
+    {
+     "player": 0,
+     "cell": 3,
+     "policy_dispersion": 0.2484143539216066,
+     "equity_spread": 0.44047619047619047,
+     "br_gain": 0.2741605620961737,
+     "shared_action_regret": 0.6030194391516996
+    },
+    {
+     "player": 1,
+     "cell": 0,
+     "policy_dispersion": 0.3473513047600421,
+     "equity_spread": 0.14772727272727273,
+     "br_gain": 0.043435670638506105,
+     "shared_action_regret": 0.0430302841405069
+    },
+    {
+     "player": 1,
+     "cell": 1,
+     "policy_dispersion": 0.0041489194191430545,
+     "equity_spread": 0.626899696048632,
+     "br_gain": 0.041555980042837656,
+     "shared_action_regret": 0.0001111908378558291
+    },
+    {
+     "player": 1,
+     "cell": 2,
+     "policy_dispersion": 0.27677259666362264,
+     "equity_spread": 0.10106382978723405,
+     "br_gain": 0.0326994394921728,
+     "shared_action_regret": 0.10009450050205719
+    },
+    {
+     "player": 1,
+     "cell": 3,
+     "policy_dispersion": 0.18194016548778424,
+     "equity_spread": 0.05138339920948631,
+     "br_gain": 0.02162447995968763,
+     "shared_action_regret": 0.03874880759971013
+    }
+   ]
+  },
+  {
+   "name": "paired uncapped vs capped",
+   "seed": 501,
+   "k": 4,
+   "cells": [
+    {
+     "player": 0,
+     "cell": 0,
+     "policy_dispersion": 0.11551276213842948,
+     "equity_spread": 0.2209302325581395,
+     "br_gain": 0.03944970999207398,
+     "shared_action_regret": 0.03850377742864708
+    },
+    {
+     "player": 0,
+     "cell": 1,
+     "policy_dispersion": 0.08216191768850219,
+     "equity_spread": 0.09523809523809518,
+     "br_gain": 0.02432285843127842,
+     "shared_action_regret": 0.023747090681476662
+    },
+    {
+     "player": 0,
+     "cell": 2,
+     "policy_dispersion": 0.11009850332067843,
+     "equity_spread": 0.22564935064935077,
+     "br_gain": 0.02449732931379878,
+     "shared_action_regret": 0.02347217189916582
+    },
+    {
+     "player": 0,
+     "cell": 3,
+     "policy_dispersion": 0.30819400246626555,
+     "equity_spread": 0.55,
+     "br_gain": 0.35697852949838493,
+     "shared_action_regret": 0.7156169110377175
+    },
+    {
+     "player": 1,
+     "cell": 0,
+     "policy_dispersion": 0.4092646046057646,
+     "equity_spread": 0.25348837209302333,
+     "br_gain": 0.08251184567726313,
+     "shared_action_regret": 0.08201356217370695
+    },
+    {
+     "player": 1,
+     "cell": 1,
+     "policy_dispersion": 0.14861859248870704,
+     "equity_spread": 0.4651162790697675,
+     "br_gain": 0.0004964764882302801,
+     "shared_action_regret": 0.024026488219774492
+    },
+    {
+     "player": 1,
+     "cell": 2,
+     "policy_dispersion": 0.37824847799993094,
+     "equity_spread": 0.0397050482132727,
+     "br_gain": 0.008169717587781573,
+     "shared_action_regret": 0.03918666597566999
+    },
+    {
+     "player": 1,
+     "cell": 3,
+     "policy_dispersion": 0.40700043177695633,
+     "equity_spread": 0.029644268774703497,
+     "br_gain": 0.022039580755551534,
+     "shared_action_regret": 0.028237392523875048
+    }
+   ]
+  },
+  {
+   "name": "paired uncapped vs capped",
+   "seed": 502,
+   "k": 4,
+   "cells": [
+    {
+     "player": 0,
+     "cell": 0,
+     "policy_dispersion": 0.1001367959277153,
+     "equity_spread": 0.09302325581395347,
+     "br_gain": 0.052258671452752564,
+     "shared_action_regret": 0.05176162022865893
+    },
+    {
+     "player": 0,
+     "cell": 1,
+     "policy_dispersion": 0.12985454558210832,
+     "equity_spread": 0.12456445993031355,
+     "br_gain": 0.0002794713515640451,
+     "shared_action_regret": 0.0
+    },
+    {
+     "player": 0,
+     "cell": 2,
+     "policy_dispersion": 0.09385134478480843,
+     "equity_spread": 0.3398373983739838,
+     "br_gain": 0.019942943751378905,
+     "shared_action_regret": 0.018787951816679856
+    },
+    {
+     "player": 0,
+     "cell": 3,
+     "policy_dispersion": 0.3293913642013053,
+     "equity_spread": 0.41463414634146334,
+     "br_gain": 0.3804069424316021,
+     "shared_action_regret": 0.8274343126859133
+    },
+    {
+     "player": 1,
+     "cell": 0,
+     "policy_dispersion": 0.4162078318870428,
+     "equity_spread": 0.4651162790697673,
+     "br_gain": 0.13689754522566872,
+     "shared_action_regret": 0.13643918931227428
+    },
+    {
+     "player": 1,
+     "cell": 1,
+     "policy_dispersion": 0.010705812531445574,
+     "equity_spread": 0.17441860465116277,
+     "br_gain": 0.00019686469022584842,
+     "shared_action_regret": 1.1665401740329118e-05
+    },
+    {
+     "player": 1,
+     "cell": 2,
+     "policy_dispersion": 0.36870943689872565,
+     "equity_spread": 0.17908902691511386,
+     "br_gain": 0.05189502793228833,
+     "shared_action_regret": 0.36323001682021105
+    },
+    {
+     "player": 1,
+     "cell": 3,
+     "policy_dispersion": 0.26757443360421196,
+     "equity_spread": 0.05039525691699609,
+     "br_gain": 0.022771744549779406,
+     "shared_action_regret": 0.037840851306498925
+    }
+   ]
+  },
+  {
+   "name": "four-straight strong vs strong",
+   "seed": 500,
+   "k": 4,
+   "cells": [
+    {
+     "player": 0,
+     "cell": 0,
+     "policy_dispersion": 6.849129370225065e-05,
+     "equity_spread": 0.036264441591784324,
+     "br_gain": 0.0028764908087110866,
+     "shared_action_regret": 0.0019468070067050177
+    },
+    {
+     "player": 0,
+     "cell": 1,
+     "policy_dispersion": 0.20204324085982575,
+     "equity_spread": 0.5518648018648018,
+     "br_gain": 0.19822197484887122,
+     "shared_action_regret": 0.6917172749097866
+    },
+    {
+     "player": 0,
+     "cell": 2,
+     "policy_dispersion": 0.23125547155177567,
+     "equity_spread": 0.04428904428904423,
+     "br_gain": 0.014875213594577285,
+     "shared_action_regret": 0.012637467897167336
+    },
+    {
+     "player": 0,
+     "cell": 3,
+     "policy_dispersion": 0.23968166391085602,
+     "equity_spread": 0.2838235294117648,
+     "br_gain": 0.01217596036168515,
+     "shared_action_regret": 0.011996385172412208
+    },
+    {
+     "player": 1,
+     "cell": 0,
+     "policy_dispersion": 0.0013286204466512288,
+     "equity_spread": 0.05694444444444448,
+     "br_gain": 0.034972066951758404,
+     "shared_action_regret": 0.03483888074008525
+    },
+    {
+     "player": 1,
+     "cell": 1,
+     "policy_dispersion": 0.2548383357339797,
+     "equity_spread": 0.5788461538461538,
+     "br_gain": 0.14072084650377883,
+     "shared_action_regret": 0.2255809519302847
+    },
+    {
+     "player": 1,
+     "cell": 2,
+     "policy_dispersion": 0.1663527559191997,
+     "equity_spread": 0.08182533438237594,
+     "br_gain": 0.04592278843374901,
+     "shared_action_regret": 0.045471413194363666
+    },
+    {
+     "player": 1,
+     "cell": 3,
+     "policy_dispersion": 0.1686771743247985,
+     "equity_spread": 0.375,
+     "br_gain": 0.051257905816791655,
+     "shared_action_regret": 0.049993749618442516
+    }
+   ]
+  },
+  {
+   "name": "four-straight strong vs strong",
+   "seed": 501,
+   "k": 4,
+   "cells": [
+    {
+     "player": 0,
+     "cell": 0,
+     "policy_dispersion": 0.09820174726928393,
+     "equity_spread": 0.5404761904761906,
+     "br_gain": 0.06118783367870116,
+     "shared_action_regret": 0.16847769250324574
+    },
+    {
+     "player": 0,
+     "cell": 1,
+     "policy_dispersion": 0.28085117091058664,
+     "equity_spread": 0.09722222222222221,
+     "br_gain": 0.027493516672477104,
+     "shared_action_regret": 0.03795671807625883
+    },
+    {
+     "player": 0,
+     "cell": 2,
+     "policy_dispersion": 0.3074412937704784,
+     "equity_spread": 0.06501547987616108,
+     "br_gain": 0.006144947480653603,
+     "shared_action_regret": 0.011575984260084026
+    },
+    {
+     "player": 0,
+     "cell": 3,
+     "policy_dispersion": 0.19228571001079373,
+     "equity_spread": 0.2961225766103813,
+     "br_gain": 0.01910815989992603,
+     "shared_action_regret": 0.01900059083208964
+    },
+    {
+     "player": 1,
+     "cell": 0,
+     "policy_dispersion": 0.005892032307427053,
+     "equity_spread": 0.040019762845849724,
+     "br_gain": 0.0215512916047694,
+     "shared_action_regret": 0.02147127956072866
+    },
+    {
+     "player": 1,
+     "cell": 1,
+     "policy_dispersion": 0.4459652747344172,
+     "equity_spread": 0.5736111111111111,
+     "br_gain": 0.1572041598833035,
+     "shared_action_regret": 0.18588419162804357
+    },
+    {
+     "player": 1,
+     "cell": 2,
+     "policy_dispersion": 0.01377272325723507,
+     "equity_spread": 0.0857279693486589,
+     "br_gain": 0.0429625904016639,
+     "shared_action_regret": 0.04720679242498629
+    },
+    {
+     "player": 1,
+     "cell": 3,
+     "policy_dispersion": 0.07047838799252135,
+     "equity_spread": 0.4297385620915033,
+     "br_gain": 0.0735661456037159,
+     "shared_action_regret": 0.07998836160931992
+    }
+   ]
+  },
+  {
+   "name": "four-straight strong vs strong",
+   "seed": 502,
+   "k": 4,
+   "cells": [
+    {
+     "player": 0,
+     "cell": 0,
+     "policy_dispersion": 7.057204132890867e-05,
+     "equity_spread": 0.05032467532467533,
+     "br_gain": 0.0002866286937967394,
+     "shared_action_regret": 0.0
+    },
+    {
+     "player": 0,
+     "cell": 1,
+     "policy_dispersion": 0.2858051558605146,
+     "equity_spread": 0.6230650154798762,
+     "br_gain": 0.37886495230998635,
+     "shared_action_regret": 1.3704977174884878
+    },
+    {
+     "player": 0,
+     "cell": 2,
+     "policy_dispersion": 0.11624643836335738,
+     "equity_spread": 0.07899090157154665,
+     "br_gain": 0.0001698807712743819,
+     "shared_action_regret": 1.8477338338926587e-06
+    },
+    {
+     "player": 0,
+     "cell": 3,
+     "policy_dispersion": 0.2093581804655388,
+     "equity_spread": 0.296875,
+     "br_gain": 0.01074097495966388,
+     "shared_action_regret": 0.009989677818245413
+    },
+    {
+     "player": 1,
+     "cell": 0,
+     "policy_dispersion": 0.0007902444794502025,
+     "equity_spread": 0.07207446808510634,
+     "br_gain": 0.04887275393738721,
+     "shared_action_regret": 0.04877622730026268
+    },
+    {
+     "player": 1,
+     "cell": 1,
+     "policy_dispersion": 0.29855766004620693,
+     "equity_spread": 0.6247401247401247,
+     "br_gain": 0.1325844811437137,
+     "shared_action_regret": 0.2640447667422524
+    },
+    {
+     "player": 1,
+     "cell": 2,
+     "policy_dispersion": 0.055782835578030356,
+     "equity_spread": 0.04117647058823526,
+     "br_gain": 0.02302757640211669,
+     "shared_action_regret": 0.03788857244741268
+    },
+    {
+     "player": 1,
+     "cell": 3,
+     "policy_dispersion": 0.22266700964216155,
+     "equity_spread": 0.40909090909090906,
+     "br_gain": 0.05657691307319203,
+     "shared_action_regret": 0.09383066308618708
+    }
+   ]
+  },
+  {
+   "name": "four-flush thin value",
+   "seed": 500,
+   "k": 4,
+   "cells": [
+    {
+     "player": 0,
+     "cell": 0,
+     "policy_dispersion": 0.2257271056089623,
+     "equity_spread": 0.1944444444444443,
+     "br_gain": 0.0003607060893944941,
+     "shared_action_regret": 0.0
+    },
+    {
+     "player": 0,
+     "cell": 1,
+     "policy_dispersion": 0.14013957255656773,
+     "equity_spread": 0.11904761904761896,
+     "br_gain": 0.00028664880400941506,
+     "shared_action_regret": 7.278956644173835e-05
+    },
+    {
+     "player": 0,
+     "cell": 2,
+     "policy_dispersion": 0.40074393096769356,
+     "equity_spread": 0.0,
+     "br_gain": 0.0003126644474043816,
+     "shared_action_regret": 0.0
+    },
+    {
+     "player": 0,
+     "cell": 3,
+     "policy_dispersion": 0.19184348815533286,
+     "equity_spread": 0.0,
+     "br_gain": 0.0003014827796262026,
+     "shared_action_regret": 0.0
+    },
+    {
+     "player": 1,
+     "cell": 0,
+     "policy_dispersion": 0.045706761601445614,
+     "equity_spread": 0.0,
+     "br_gain": 6.113765528303894e-05,
+     "shared_action_regret": 0.0
+    },
+    {
+     "player": 1,
+     "cell": 1,
+     "policy_dispersion": 0.004799343298692938,
+     "equity_spread": 0.0,
+     "br_gain": 5.998154639084985e-05,
+     "shared_action_regret": 0.0
+    },
+    {
+     "player": 1,
+     "cell": 2,
+     "policy_dispersion": 0.010393651550636058,
+     "equity_spread": 0.13953488372093023,
+     "br_gain": 5.8113693817959944e-05,
+     "shared_action_regret": 0.0
+    },
+    {
+     "player": 1,
+     "cell": 3,
+     "policy_dispersion": 0.3402661577593078,
+     "equity_spread": 0.44642857142857145,
+     "br_gain": 0.7298725171859674,
+     "shared_action_regret": 0.729493127148049
+    }
+   ]
+  },
+  {
+   "name": "four-flush thin value",
+   "seed": 501,
+   "k": 4,
+   "cells": [
+    {
+     "player": 0,
+     "cell": 0,
+     "policy_dispersion": 0.1683854459582869,
+     "equity_spread": 0.41595253790375747,
+     "br_gain": 4.134044661081859e-05,
+     "shared_action_regret": 1.108537333763747e-08
+    },
+    {
+     "player": 0,
+     "cell": 1,
+     "policy_dispersion": 0.231584749993394,
+     "equity_spread": 0.10256410256410253,
+     "br_gain": 6.163635571843074e-05,
+     "shared_action_regret": 2.8641811711249687e-07
+    },
+    {
+     "player": 0,
+     "cell": 2,
+     "policy_dispersion": 0.2652282374051602,
+     "equity_spread": 0.0,
+     "br_gain": 5.4670040385770835e-05,
+     "shared_action_regret": 1.2426729430609074e-06
+    },
+    {
+     "player": 0,
+     "cell": 3,
+     "policy_dispersion": 0.15971408439356025,
+     "equity_spread": 0.0,
+     "br_gain": 5.40541608031464e-05,
+     "shared_action_regret": 7.447795569437421e-07
+    },
+    {
+     "player": 1,
+     "cell": 0,
+     "policy_dispersion": 1.2615653420334157e-05,
+     "equity_spread": 0.0,
+     "br_gain": 8.186669190590745e-05,
+     "shared_action_regret": 0.0
+    },
+    {
+     "player": 1,
+     "cell": 1,
+     "policy_dispersion": 0.012852029127283907,
+     "equity_spread": 0.0,
+     "br_gain": 8.207035526346107e-05,
+     "shared_action_regret": 0.0
+    },
+    {
+     "player": 1,
+     "cell": 2,
+     "policy_dispersion": 0.0067042910228363685,
+     "equity_spread": 0.06818181818181814,
+     "br_gain": 7.623537007561687e-05,
+     "shared_action_regret": 0.0
+    },
+    {
+     "player": 1,
+     "cell": 3,
+     "policy_dispersion": 0.21624466155645014,
+     "equity_spread": 0.37416851441241683,
+     "br_gain": 0.4021081669399514,
+     "shared_action_regret": 0.4019956931638978
+    }
+   ]
+  },
+  {
+   "name": "four-flush thin value",
+   "seed": 502,
+   "k": 4,
+   "cells": [
+    {
+     "player": 0,
+     "cell": 0,
+     "policy_dispersion": 0.1645989506243476,
+     "equity_spread": 0.2804878048780488,
+     "br_gain": 0.06012534886023402,
+     "shared_action_regret": 0.06198390608317256
+    },
+    {
+     "player": 0,
+     "cell": 1,
+     "policy_dispersion": 0.2154629780939716,
+     "equity_spread": 0.11904761904761896,
+     "br_gain": 0.04699903804242113,
+     "shared_action_regret": 0.0695893324951611
+    },
+    {
+     "player": 0,
+     "cell": 2,
+     "policy_dispersion": 0.2770200358734155,
+     "equity_spread": 0.0,
+     "br_gain": 0.006961308016954687,
+     "shared_action_regret": 0.006307091444143459
+    },
+    {
+     "player": 0,
+     "cell": 3,
+     "policy_dispersion": 0.27367086583888667,
+     "equity_spread": 0.0,
+     "br_gain": 0.00877996758876562,
+     "shared_action_regret": 0.00822760834891767
+    },
+    {
+     "player": 1,
+     "cell": 0,
+     "policy_dispersion": 0.03071669071207333,
+     "equity_spread": 0.0,
+     "br_gain": 0.0025213319790541727,
+     "shared_action_regret": 0.0023977196745143866
+    },
+    {
+     "player": 1,
+     "cell": 1,
+     "policy_dispersion": 0.03143934542052683,
+     "equity_spread": 0.0,
+     "br_gain": 0.005454289206616392,
+     "shared_action_regret": 0.005187600809912153
+    },
+    {
+     "player": 1,
+     "cell": 2,
+     "policy_dispersion": 3.128771748091828e-05,
+     "equity_spread": 0.225,
+     "br_gain": 9.789952333862095e-05,
+     "shared_action_regret": 7.032548912637193e-06
+    },
+    {
+     "player": 1,
+     "cell": 3,
+     "policy_dispersion": 0.4168858854130986,
+     "equity_spread": 0.32045454545454555,
+     "br_gain": 0.5640268522732371,
+     "shared_action_regret": 0.5816710947829762
+    }
+   ]
+  },
+  {
+   "name": "monotone bluff-heavy",
+   "seed": 500,
+   "k": 4,
+   "cells": [
+    {
+     "player": 0,
+     "cell": 0,
+     "policy_dispersion": 0.20663743245409663,
+     "equity_spread": 0.0,
+     "br_gain": 0.04811690809883447,
+     "shared_action_regret": 0.04236913895943084
+    },
+    {
+     "player": 0,
+     "cell": 1,
+     "policy_dispersion": 0.07127372722544581,
+     "equity_spread": 0.0,
+     "br_gain": 0.014389119586259255,
+     "shared_action_regret": 0.013688142719594815
+    },
+    {
+     "player": 0,
+     "cell": 2,
+     "policy_dispersion": 0.2042573565188123,
+     "equity_spread": 0.0,
+     "br_gain": 0.03001801458388717,
+     "shared_action_regret": 0.029036938393870435
+    },
+    {
+     "player": 0,
+     "cell": 3,
+     "policy_dispersion": 0.19841951349403425,
+     "equity_spread": 1.0,
+     "br_gain": 0.006111719404331556,
+     "shared_action_regret": 0.1258631796430727
+    },
+    {
+     "player": 1,
+     "cell": 0,
+     "policy_dispersion": 0.1116043667204758,
+     "equity_spread": 0.06418219461697705,
+     "br_gain": 0.021773465380549653,
+     "shared_action_regret": 0.021046542815566706
+    },
+    {
+     "player": 1,
+     "cell": 1,
+     "policy_dispersion": 0.14980791544096805,
+     "equity_spread": 0.06448202959830873,
+     "br_gain": 0.04698705843973652,
+     "shared_action_regret": 0.04532528694804574
+    },
+    {
+     "player": 1,
+     "cell": 2,
+     "policy_dispersion": 0.1800599641633876,
+     "equity_spread": 0.07608695652173902,
+     "br_gain": 0.039594900936359985,
+     "shared_action_regret": 0.03913864294932135
+    },
+    {
+     "player": 1,
+     "cell": 3,
+     "policy_dispersion": 0.1678001664748354,
+     "equity_spread": 0.06395663956639552,
+     "br_gain": 0.04492761732595247,
+     "shared_action_regret": 0.04358098794216201
+    }
+   ]
+  },
+  {
+   "name": "monotone bluff-heavy",
+   "seed": 501,
+   "k": 4,
+   "cells": [
+    {
+     "player": 0,
+     "cell": 0,
+     "policy_dispersion": 0.11816312544218152,
+     "equity_spread": 0.0,
+     "br_gain": 0.041145225982461106,
+     "shared_action_regret": 0.040141180188524375
+    },
+    {
+     "player": 0,
+     "cell": 1,
+     "policy_dispersion": 0.11906858913994872,
+     "equity_spread": 0.0,
+     "br_gain": 0.03215024616522452,
+     "shared_action_regret": 0.03179649965738421
+    },
+    {
+     "player": 0,
+     "cell": 2,
+     "policy_dispersion": 0.2683969455188706,
+     "equity_spread": 0.0,
+     "br_gain": 0.04772947155785477,
+     "shared_action_regret": 0.047357648248431944
+    },
+    {
+     "player": 0,
+     "cell": 3,
+     "policy_dispersion": 0.3267623239229779,
+     "equity_spread": 1.0,
+     "br_gain": 0.37272732032325695,
+     "shared_action_regret": 0.7700881835668365
+    },
+    {
+     "player": 1,
+     "cell": 0,
+     "policy_dispersion": 0.308127170244644,
+     "equity_spread": 0.0843023255813955,
+     "br_gain": 0.0584937768746554,
+     "shared_action_regret": 0.056225756847486666
+    },
+    {
+     "player": 1,
+     "cell": 1,
+     "policy_dispersion": 0.1551269265456826,
+     "equity_spread": 0.07792207792207795,
+     "br_gain": 0.022339556594340358,
+     "shared_action_regret": 0.02170402539933859
+    },
+    {
+     "player": 1,
+     "cell": 2,
+     "policy_dispersion": 0.22365382886912064,
+     "equity_spread": 0.06976744186046535,
+     "br_gain": 0.022277871157545676,
+     "shared_action_regret": 0.021703866927539825
+    },
+    {
+     "player": 1,
+     "cell": 3,
+     "policy_dispersion": 0.3264883456649669,
+     "equity_spread": 0.0636363636363636,
+     "br_gain": 0.0644571760576872,
+     "shared_action_regret": 0.06367017666538205
+    }
+   ]
+  },
+  {
+   "name": "monotone bluff-heavy",
+   "seed": 502,
+   "k": 4,
+   "cells": [
+    {
+     "player": 0,
+     "cell": 0,
+     "policy_dispersion": 0.20260558076763518,
+     "equity_spread": 0.0,
+     "br_gain": 0.034807154915702104,
+     "shared_action_regret": 0.03138485895741357
+    },
+    {
+     "player": 0,
+     "cell": 1,
+     "policy_dispersion": 0.14970764266415432,
+     "equity_spread": 0.0,
+     "br_gain": 0.03438062747046952,
+     "shared_action_regret": 0.03388971815246755
+    },
+    {
+     "player": 0,
+     "cell": 2,
+     "policy_dispersion": 0.28098317618529534,
+     "equity_spread": 0.0,
+     "br_gain": 0.025879715403808068,
+     "shared_action_regret": 0.025153297097762664
+    },
+    {
+     "player": 0,
+     "cell": 3,
+     "policy_dispersion": 0.2769395247437897,
+     "equity_spread": 1.0,
+     "br_gain": 0.031045990078857805,
+     "shared_action_regret": 0.1580001123148745
+    },
+    {
+     "player": 1,
+     "cell": 0,
+     "policy_dispersion": 0.19550221246434377,
+     "equity_spread": 0.05073995771670181,
+     "br_gain": 0.06318638379760683,
+     "shared_action_regret": 0.0621412999657142
+    },
+    {
+     "player": 1,
+     "cell": 1,
+     "policy_dispersion": 0.2524262595114152,
+     "equity_spread": 0.10085470085470094,
+     "br_gain": 0.0655781432096757,
+     "shared_action_regret": 0.06425384595734027
+    },
+    {
+     "player": 1,
+     "cell": 2,
+     "policy_dispersion": 0.17338743429544165,
+     "equity_spread": 0.08481152993348107,
+     "br_gain": 0.037775592473587465,
+     "shared_action_regret": 0.03742262611265861
+    },
+    {
+     "player": 1,
+     "cell": 3,
+     "policy_dispersion": 0.09285605386222298,
+     "equity_spread": 0.036175710594315125,
+     "br_gain": 0.03244245056086256,
+     "shared_action_regret": 0.030886194029109172
+    }
+   ]
+  },
+  {
+   "name": "low connected mixed",
+   "seed": 500,
+   "k": 4,
+   "cells": [
+    {
+     "player": 0,
+     "cell": 0,
+     "policy_dispersion": 0.2038302726739243,
+     "equity_spread": 0.0,
+     "br_gain": 0.0447027148985024,
+     "shared_action_regret": 0.06124784978850255
+    },
+    {
+     "player": 0,
+     "cell": 1,
+     "policy_dispersion": 0.19313390303264324,
+     "equity_spread": 0.17857142857142863,
+     "br_gain": 0.10925444522612147,
+     "shared_action_regret": 0.1127071646883418
+    },
+    {
+     "player": 0,
+     "cell": 2,
+     "policy_dispersion": 0.46823741851504846,
+     "equity_spread": 0.7867965367965369,
+     "br_gain": 0.5047319775836415,
+     "shared_action_regret": 0.8657989836489555
+    },
+    {
+     "player": 0,
+     "cell": 3,
+     "policy_dispersion": 0.12396717998452124,
+     "equity_spread": 0.024390243902438935,
+     "br_gain": 0.02899103659556515,
+     "shared_action_regret": 0.028589630920384218
+    },
+    {
+     "player": 1,
+     "cell": 0,
+     "policy_dispersion": 0.21710551831800115,
+     "equity_spread": 0.24307095343680707,
+     "br_gain": 0.0846302775914178,
+     "shared_action_regret": 0.09492820284775641
+    },
+    {
+     "player": 1,
+     "cell": 1,
+     "policy_dispersion": 0.3079880297468865,
+     "equity_spread": 0.12015503875968991,
+     "br_gain": 0.014795998252345545,
+     "shared_action_regret": 0.01590851666263634
+    },
+    {
+     "player": 1,
+     "cell": 2,
+     "policy_dispersion": 0.3024175306976218,
+     "equity_spread": 0.05391120507399583,
+     "br_gain": 0.03478590494863589,
+     "shared_action_regret": 0.034497909799475326
+    },
+    {
+     "player": 1,
+     "cell": 3,
+     "policy_dispersion": 0.3975897237690363,
+     "equity_spread": 0.22934782608695647,
+     "br_gain": 0.12155030745261686,
+     "shared_action_regret": 0.12995620669991398
+    }
+   ]
+  },
+  {
+   "name": "low connected mixed",
+   "seed": 501,
+   "k": 4,
+   "cells": [
+    {
+     "player": 0,
+     "cell": 0,
+     "policy_dispersion": 0.31165163027543136,
+     "equity_spread": 0.0,
+     "br_gain": 0.08290392851669906,
+     "shared_action_regret": 0.08624082187179977
+    },
+    {
+     "player": 0,
+     "cell": 1,
+     "policy_dispersion": 0.26230910231670573,
+     "equity_spread": 0.12045454545454538,
+     "br_gain": 0.08915632985094063,
+     "shared_action_regret": 0.11407541225292317
+    },
+    {
+     "player": 0,
+     "cell": 2,
+     "policy_dispersion": 0.46169574404932257,
+     "equity_spread": 0.7966058763931105,
+     "br_gain": 0.20307949058070002,
+     "shared_action_regret": 0.44558299228941833
+    },
+    {
+     "player": 0,
+     "cell": 3,
+     "policy_dispersion": 0.08983608896051043,
+     "equity_spread": 0.0,
+     "br_gain": 0.02752365816383956,
+     "shared_action_regret": 0.02272271388956884
+    },
+    {
+     "player": 1,
+     "cell": 0,
+     "policy_dispersion": 0.1911379498028743,
+     "equity_spread": 0.39772727272727276,
+     "br_gain": 0.027088815210595845,
+     "shared_action_regret": 0.026485059971902945
+    },
+    {
+     "player": 1,
+     "cell": 1,
+     "policy_dispersion": 0.2605159345825758,
+     "equity_spread": 0.08304297328687571,
+     "br_gain": 0.07790350828578935,
+     "shared_action_regret": 0.07774767683664752
+    },
+    {
+     "player": 1,
+     "cell": 2,
+     "policy_dispersion": 0.35098269661825704,
+     "equity_spread": 0.1031042128603104,
+     "br_gain": 0.08454444639697374,
+     "shared_action_regret": 0.08446939799395237
+    },
+    {
+     "player": 1,
+     "cell": 3,
+     "policy_dispersion": 0.4150673850776426,
+     "equity_spread": 0.22222222222222232,
+     "br_gain": 0.18784377032548943,
+     "shared_action_regret": 0.1876742643122378
+    }
+   ]
+  },
+  {
+   "name": "low connected mixed",
+   "seed": 502,
+   "k": 4,
+   "cells": [
+    {
+     "player": 0,
+     "cell": 0,
+     "policy_dispersion": 0.379484660303657,
+     "equity_spread": 0.0,
+     "br_gain": 0.03992593869385293,
+     "shared_action_regret": 0.035109479743643354
+    },
+    {
+     "player": 0,
+     "cell": 1,
+     "policy_dispersion": 0.33388400586018874,
+     "equity_spread": 0.07608695652173915,
+     "br_gain": 0.09364285286967321,
+     "shared_action_regret": 0.10606026817306605
+    },
+    {
+     "player": 0,
+     "cell": 2,
+     "policy_dispersion": 0.29065863303532646,
+     "equity_spread": 0.9767441860465116,
+     "br_gain": 0.15672931415089128,
+     "shared_action_regret": 0.17731163673132336
+    },
+    {
+     "player": 0,
+     "cell": 3,
+     "policy_dispersion": 0.03691356235527982,
+     "equity_spread": 0.0,
+     "br_gain": 0.00026824007423881246,
+     "shared_action_regret": 0.0011183206479889601
+    },
+    {
+     "player": 1,
+     "cell": 0,
+     "policy_dispersion": 0.23876717656114574,
+     "equity_spread": 0.25317124735729385,
+     "br_gain": 0.023070072794252258,
+     "shared_action_regret": 0.022525816506039166
+    },
+    {
+     "player": 1,
+     "cell": 1,
+     "policy_dispersion": 0.22869114238807303,
+     "equity_spread": 0.08246225319396039,
+     "br_gain": 0.057176936590032916,
+     "shared_action_regret": 0.057078465115908285
+    },
+    {
+     "player": 1,
+     "cell": 2,
+     "policy_dispersion": 0.3412442222289596,
+     "equity_spread": 0.10741971207087486,
+     "br_gain": 0.07837746198245893,
+     "shared_action_regret": 0.07826075324510819
+    },
+    {
+     "player": 1,
+     "cell": 3,
+     "policy_dispersion": 0.44089739197948474,
+     "equity_spread": 0.29325014180374354,
+     "br_gain": 0.09401044216853262,
+     "shared_action_regret": 0.09372336866785268
+    }
+   ]
+  },
+  {
+   "name": "paired_low_ace_river",
+   "seed": 500,
+   "k": 4,
+   "cells": [
+    {
+     "player": 0,
+     "cell": 0,
+     "policy_dispersion": 0.4342746740518296,
+     "equity_spread": 0.0,
+     "br_gain": 0.02533769179999655,
+     "shared_action_regret": 0.024838064902272375
+    },
+    {
+     "player": 0,
+     "cell": 1,
+     "policy_dispersion": 0.3215582826189516,
+     "equity_spread": 0.0,
+     "br_gain": 0.04702811645555949,
+     "shared_action_regret": 0.044077107678532984
+    },
+    {
+     "player": 0,
+     "cell": 2,
+     "policy_dispersion": 0.39367318084995157,
+     "equity_spread": 1.0,
+     "br_gain": 0.06131738021863961,
+     "shared_action_regret": 0.20664687451284966
+    },
+    {
+     "player": 0,
+     "cell": 3,
+     "policy_dispersion": 1.568393945809766e-05,
+     "equity_spread": 0.0,
+     "br_gain": 0.0009586971502416608,
+     "shared_action_regret": 0.0
+    },
+    {
+     "player": 1,
+     "cell": 0,
+     "policy_dispersion": 0.19050780600868492,
+     "equity_spread": 0.059595959595959536,
+     "br_gain": 0.041939472179087646,
+     "shared_action_regret": 0.04150715542422809
+    },
+    {
+     "player": 1,
+     "cell": 1,
+     "policy_dispersion": 0.29855412571609613,
+     "equity_spread": 0.06666666666666665,
+     "br_gain": 0.06040495924964162,
+     "shared_action_regret": 0.059933996795412364
+    },
+    {
+     "player": 1,
+     "cell": 2,
+     "policy_dispersion": 0.13939199289268933,
+     "equity_spread": 0.0643363728470111,
+     "br_gain": 0.004220165349701134,
+     "shared_action_regret": 0.00387591511102013
+    },
+    {
+     "player": 1,
+     "cell": 3,
+     "policy_dispersion": 0.3357523133727926,
+     "equity_spread": 0.10300985988583289,
+     "br_gain": 0.07779942240311412,
+     "shared_action_regret": 0.07683721943299329
+    }
+   ]
+  },
+  {
+   "name": "paired_low_ace_river",
+   "seed": 501,
+   "k": 4,
+   "cells": [
+    {
+     "player": 0,
+     "cell": 0,
+     "policy_dispersion": 0.36718151268245913,
+     "equity_spread": 0.0,
+     "br_gain": 0.042139765191352,
+     "shared_action_regret": 0.038819414777092234
+    },
+    {
+     "player": 0,
+     "cell": 1,
+     "policy_dispersion": 0.37221529293259326,
+     "equity_spread": 0.0,
+     "br_gain": 0.030446940847648457,
+     "shared_action_regret": 0.023171493863380327
+    },
+    {
+     "player": 0,
+     "cell": 2,
+     "policy_dispersion": 0.22203370131693764,
+     "equity_spread": 1.0,
+     "br_gain": 0.15644808855863634,
+     "shared_action_regret": 0.1687769867975015
+    },
+    {
+     "player": 0,
+     "cell": 3,
+     "policy_dispersion": 0.007783989289670213,
+     "equity_spread": 0.0,
+     "br_gain": 0.0005106651384060301,
+     "shared_action_regret": 0.0
+    },
+    {
+     "player": 1,
+     "cell": 0,
+     "policy_dispersion": 0.11013198947153383,
+     "equity_spread": 0.06314699792960665,
+     "br_gain": 0.02977919870731978,
+     "shared_action_regret": 0.029677682246120923
+    },
+    {
+     "player": 1,
+     "cell": 1,
+     "policy_dispersion": 0.13897880366157667,
+     "equity_spread": 0.05602536997885821,
+     "br_gain": 0.041666453420640286,
+     "shared_action_regret": 0.04152990623378284
+    },
+    {
+     "player": 1,
+     "cell": 2,
+     "policy_dispersion": 0.23689366984819848,
+     "equity_spread": 0.07619047619047614,
+     "br_gain": 0.07140354885062057,
+     "shared_action_regret": 0.07129372586299722
+    },
+    {
+     "player": 1,
+     "cell": 3,
+     "policy_dispersion": 0.2533627938265227,
+     "equity_spread": 0.13007736943907156,
+     "br_gain": 0.000526581889899732,
+     "shared_action_regret": 0.00025030541052988844
+    }
+   ]
+  },
+  {
+   "name": "paired_low_ace_river",
+   "seed": 502,
+   "k": 4,
+   "cells": [
+    {
+     "player": 0,
+     "cell": 0,
+     "policy_dispersion": 0.40020822331059047,
+     "equity_spread": 0.0,
+     "br_gain": 0.033014035427759464,
+     "shared_action_regret": 0.0323530451524314
+    },
+    {
+     "player": 0,
+     "cell": 1,
+     "policy_dispersion": 0.38777341688651457,
+     "equity_spread": 0.0,
+     "br_gain": 0.033311122210224045,
+     "shared_action_regret": 0.02990875863049698
+    },
+    {
+     "player": 0,
+     "cell": 2,
+     "policy_dispersion": 0.19490448426744184,
+     "equity_spread": 1.0,
+     "br_gain": 0.10994714433901419,
+     "shared_action_regret": 0.11596898745873079
+    },
+    {
+     "player": 0,
+     "cell": 3,
+     "policy_dispersion": 5.397869481908519e-05,
+     "equity_spread": 0.0,
+     "br_gain": 0.0004878991163955737,
+     "shared_action_regret": 0.0
+    },
+    {
+     "player": 1,
+     "cell": 0,
+     "policy_dispersion": 0.18715664789321768,
+     "equity_spread": 0.08940568475452204,
+     "br_gain": 0.03605087001485183,
+     "shared_action_regret": 0.03586348043036753
+    },
+    {
+     "player": 1,
+     "cell": 1,
+     "policy_dispersion": 0.1939507955770229,
+     "equity_spread": 0.04347826086956519,
+     "br_gain": 0.037738242884725486,
+     "shared_action_regret": 0.03746566611603405
+    },
+    {
+     "player": 1,
+     "cell": 2,
+     "policy_dispersion": 0.15446549882316654,
+     "equity_spread": 0.07936507936507936,
+     "br_gain": 0.01628013864054518,
+     "shared_action_regret": 0.016098686578549223
+    },
+    {
+     "player": 1,
+     "cell": 3,
+     "policy_dispersion": 0.32892751844177,
+     "equity_spread": 0.1962059620596205,
+     "br_gain": 0.11024684479948352,
+     "shared_action_regret": 0.10995319678490728
+    }
+   ]
+  },
+  {
+   "name": "broadway_dry",
+   "seed": 500,
+   "k": 4,
+   "cells": [
+    {
+     "player": 0,
+     "cell": 0,
+     "policy_dispersion": 0.0215192270393916,
+     "equity_spread": 0.0,
+     "br_gain": 0.04581366721752653,
+     "shared_action_regret": 0.04197792443958312
+    },
+    {
+     "player": 0,
+     "cell": 1,
+     "policy_dispersion": 0.2447656752645173,
+     "equity_spread": 0.14772727272727276,
+     "br_gain": 0.06241563579935305,
+     "shared_action_regret": 0.057565188644192675
+    },
+    {
+     "player": 0,
+     "cell": 2,
+     "policy_dispersion": 0.14019006454865202,
+     "equity_spread": 0.22547380156075808,
+     "br_gain": 0.09586896626385713,
+     "shared_action_regret": 0.10415682971342301
+    },
+    {
+     "player": 0,
+     "cell": 3,
+     "policy_dispersion": 0.47335589698007474,
+     "equity_spread": 0.6317829457364341,
+     "br_gain": 0.450318842239652,
+     "shared_action_regret": 1.329429102419476
+    },
+    {
+     "player": 1,
+     "cell": 0,
+     "policy_dispersion": 0.4850963332450445,
+     "equity_spread": 0.17840909090909096,
+     "br_gain": 0.040786511354555154,
+     "shared_action_regret": 0.03595197535056224
+    },
+    {
+     "player": 1,
+     "cell": 1,
+     "policy_dispersion": 0.08035655809169537,
+     "equity_spread": 0.26356589147286813,
+     "br_gain": 0.0004705363202654935,
+     "shared_action_regret": 0.021998233691470335
+    },
+    {
+     "player": 1,
+     "cell": 2,
+     "policy_dispersion": 0.2666847446369172,
+     "equity_spread": 0.05411255411255422,
+     "br_gain": 0.01557586541757465,
+     "shared_action_regret": 0.015637695045275117
+    },
+    {
+     "player": 1,
+     "cell": 3,
+     "policy_dispersion": 0.4509730231906874,
+     "equity_spread": 0.1428940568475453,
+     "br_gain": 0.11678810940623861,
+     "shared_action_regret": 0.1165524459928074
+    }
+   ]
+  },
+  {
+   "name": "broadway_dry",
+   "seed": 501,
+   "k": 4,
+   "cells": [
+    {
+     "player": 0,
+     "cell": 0,
+     "policy_dispersion": 0.10772610173320478,
+     "equity_spread": 0.0,
+     "br_gain": 0.05025747818494314,
+     "shared_action_regret": 0.06456142033935396
+    },
+    {
+     "player": 0,
+     "cell": 1,
+     "policy_dispersion": 0.16887431348598925,
+     "equity_spread": 0.127906976744186,
+     "br_gain": 0.047973592162173104,
+     "shared_action_regret": 0.06809416676457153
+    },
+    {
+     "player": 0,
+     "cell": 2,
+     "policy_dispersion": 0.1306215186107309,
+     "equity_spread": 0.23230535894843274,
+     "br_gain": 0.09699983826870257,
+     "shared_action_regret": 0.10017946157433023
+    },
+    {
+     "player": 0,
+     "cell": 3,
+     "policy_dispersion": 0.2887229632793078,
+     "equity_spread": 0.5655133295519001,
+     "br_gain": 0.11323451495184968,
+     "shared_action_regret": 0.257653761820467
+    },
+    {
+     "player": 1,
+     "cell": 0,
+     "policy_dispersion": 0.37073550851789355,
+     "equity_spread": 0.2781385281385282,
+     "br_gain": 0.06845396004574053,
+     "shared_action_regret": 0.06777370859079582
+    },
+    {
+     "player": 1,
+     "cell": 1,
+     "policy_dispersion": 0.2382065740167711,
+     "equity_spread": 0.1636363636363637,
+     "br_gain": 0.017385456286028843,
+     "shared_action_regret": 0.0184100002024337
+    },
+    {
+     "player": 1,
+     "cell": 2,
+     "policy_dispersion": 0.3759591092270357,
+     "equity_spread": 0.1512714063310847,
+     "br_gain": 0.08220789272383248,
+     "shared_action_regret": 0.09974257155815251
+    },
+    {
+     "player": 1,
+     "cell": 3,
+     "policy_dispersion": 0.19641848812572774,
+     "equity_spread": 0.05245478036175688,
+     "br_gain": 0.0012269215745268208,
+     "shared_action_regret": 0.0008190176647164538
+    }
+   ]
+  },
+  {
+   "name": "broadway_dry",
+   "seed": 502,
+   "k": 4,
+   "cells": [
+    {
+     "player": 0,
+     "cell": 0,
+     "policy_dispersion": 0.06860390221367355,
+     "equity_spread": 0.0,
+     "br_gain": 0.04706115282479102,
+     "shared_action_regret": 0.0499089274102012
+    },
+    {
+     "player": 0,
+     "cell": 1,
+     "policy_dispersion": 0.21190984553054037,
+     "equity_spread": 0.03488372093023256,
+     "br_gain": 0.046317067828273537,
+     "shared_action_regret": 0.07134265903611112
+    },
+    {
+     "player": 0,
+     "cell": 2,
+     "policy_dispersion": 0.1316672587184282,
+     "equity_spread": 0.27246300211416485,
+     "br_gain": 0.07310661862651671,
+     "shared_action_regret": 0.07449975140800434
+    },
+    {
+     "player": 0,
+     "cell": 3,
+     "policy_dispersion": 0.33108095071778404,
+     "equity_spread": 0.5930232558139537,
+     "br_gain": 0.12936179879778925,
+     "shared_action_regret": 0.2735770606496469
+    },
+    {
+     "player": 1,
+     "cell": 0,
+     "policy_dispersion": 0.2744245330827475,
+     "equity_spread": 0.27380952380952367,
+     "br_gain": 0.003290841887921288,
+     "shared_action_regret": 0.0027261527981101985
+    },
+    {
+     "player": 1,
+     "cell": 1,
+     "policy_dispersion": 0.3247285096714079,
+     "equity_spread": 0.07272727272727286,
+     "br_gain": 0.023384483030446452,
+     "shared_action_regret": 0.02380701606191263
+    },
+    {
+     "player": 1,
+     "cell": 2,
+     "policy_dispersion": 0.37620672730199267,
+     "equity_spread": 0.13624873609706767,
+     "br_gain": 0.0331532214786356,
+     "shared_action_regret": 0.033397273981032635
+    },
+    {
+     "player": 1,
+     "cell": 3,
+     "policy_dispersion": 0.10754305671091942,
+     "equity_spread": 0.055462653288740116,
+     "br_gain": 0.00022967009607068045,
+     "shared_action_regret": 0.0
+    }
+   ]
+  },
+  {
+   "name": "two_tone_middling",
+   "seed": 500,
+   "k": 4,
+   "cells": [
+    {
+     "player": 0,
+     "cell": 0,
+     "policy_dispersion": 0.2692490468176314,
+     "equity_spread": 0.0,
+     "br_gain": 0.03884823837740077,
+     "shared_action_regret": 0.03880379808917031
+    },
+    {
+     "player": 0,
+     "cell": 1,
+     "policy_dispersion": 0.21356071577389593,
+     "equity_spread": 0.23809523809523808,
+     "br_gain": 0.009665280609885293,
+     "shared_action_regret": 0.010977579164809306
+    },
+    {
+     "player": 0,
+     "cell": 2,
+     "policy_dispersion": 0.16274891517384857,
+     "equity_spread": 0.7621816168327797,
+     "br_gain": 0.19662504542254267,
+     "shared_action_regret": 0.3632044022183677
+    },
+    {
+     "player": 0,
+     "cell": 3,
+     "policy_dispersion": 0.1409849857791623,
+     "equity_spread": 0.0,
+     "br_gain": 0.015541214907439371,
+     "shared_action_regret": 0.015247940128504084
+    },
+    {
+     "player": 1,
+     "cell": 0,
+     "policy_dispersion": 0.2972532164415788,
+     "equity_spread": 0.29539295392953924,
+     "br_gain": 0.06349388735255737,
+     "shared_action_regret": 0.0627671253930738
+    },
+    {
+     "player": 1,
+     "cell": 1,
+     "policy_dispersion": 0.37712137950933855,
+     "equity_spread": 0.21458773784355178,
+     "br_gain": 0.061055690337063456,
+     "shared_action_regret": 0.061898771823253755
+    },
+    {
+     "player": 1,
+     "cell": 2,
+     "policy_dispersion": 0.4154449657643003,
+     "equity_spread": 0.01740812379110246,
+     "br_gain": 0.043228277605914425,
+     "shared_action_regret": 0.04303451528472761
+    },
+    {
+     "player": 1,
+     "cell": 3,
+     "policy_dispersion": 0.45891009530974375,
+     "equity_spread": 0.11184939091915835,
+     "br_gain": 0.08378787724588717,
+     "shared_action_regret": 0.10239466255271103
+    }
+   ]
+  },
+  {
+   "name": "two_tone_middling",
+   "seed": 501,
+   "k": 4,
+   "cells": [
+    {
+     "player": 0,
+     "cell": 0,
+     "policy_dispersion": 0.36480162129271376,
+     "equity_spread": 0.0543478260869565,
+     "br_gain": 0.016510156650232102,
+     "shared_action_regret": 0.012352511599654961
+    },
+    {
+     "player": 0,
+     "cell": 1,
+     "policy_dispersion": 0.4209452980721949,
+     "equity_spread": 0.13932806324110675,
+     "br_gain": 0.13546519466381648,
+     "shared_action_regret": 0.1457788872948415
+    },
+    {
+     "player": 0,
+     "cell": 2,
+     "policy_dispersion": 0.45902314658937454,
+     "equity_spread": 0.813953488372093,
+     "br_gain": 0.27910510573030034,
+     "shared_action_regret": 0.3385342569583244
+    },
+    {
+     "player": 0,
+     "cell": 3,
+     "policy_dispersion": 0.06713916341343623,
+     "equity_spread": 0.0,
+     "br_gain": 0.004945721017655891,
+     "shared_action_regret": 0.004666200806493576
+    },
+    {
+     "player": 1,
+     "cell": 0,
+     "policy_dispersion": 0.21685119363687666,
+     "equity_spread": 0.275,
+     "br_gain": 0.000637759810229184,
+     "shared_action_regret": 0.00020949714530540018
+    },
+    {
+     "player": 1,
+     "cell": 1,
+     "policy_dispersion": 0.2705460935344239,
+     "equity_spread": 0.08304297328687571,
+     "br_gain": 0.05249682000938486,
+     "shared_action_regret": 0.05229797592932348
+    },
+    {
+     "player": 1,
+     "cell": 2,
+     "policy_dispersion": 0.3031220130097223,
+     "equity_spread": 0.04743083003952575,
+     "br_gain": 0.055368417547629674,
+     "shared_action_regret": 0.05406886849097135
+    },
+    {
+     "player": 1,
+     "cell": 3,
+     "policy_dispersion": 0.36695879056142444,
+     "equity_spread": 0.15792682926829282,
+     "br_gain": 0.05155859245134837,
+     "shared_action_regret": 0.05120019562674689
+    }
+   ]
+  },
+  {
+   "name": "two_tone_middling",
+   "seed": 502,
+   "k": 4,
+   "cells": [
+    {
+     "player": 0,
+     "cell": 0,
+     "policy_dispersion": 0.2947982411202309,
+     "equity_spread": 0.0,
+     "br_gain": 0.03336396789556924,
+     "shared_action_regret": 0.027728280649337092
+    },
+    {
+     "player": 0,
+     "cell": 1,
+     "policy_dispersion": 0.33994448636576063,
+     "equity_spread": 0.1276595744680851,
+     "br_gain": 0.09982704188348149,
+     "shared_action_regret": 0.11866256390954211
+    },
+    {
+     "player": 0,
+     "cell": 2,
+     "policy_dispersion": 0.34389741540140134,
+     "equity_spread": 0.8888888888888888,
+     "br_gain": 0.30087791408157033,
+     "shared_action_regret": 0.3026380727824055
+    },
+    {
+     "player": 0,
+     "cell": 3,
+     "policy_dispersion": 0.02988297086548075,
+     "equity_spread": 0.0,
+     "br_gain": 0.004698595270276523,
+     "shared_action_regret": 0.00465583167584635
+    },
+    {
+     "player": 1,
+     "cell": 0,
+     "policy_dispersion": 0.19501025763475194,
+     "equity_spread": 0.263477801268499,
+     "br_gain": 0.0010362369729190052,
+     "shared_action_regret": 0.0004909095245919473
+    },
+    {
+     "player": 1,
+     "cell": 1,
+     "policy_dispersion": 0.42939920908840495,
+     "equity_spread": 0.0918604651162791,
+     "br_gain": 0.1027248775055283,
+     "shared_action_regret": 0.1025415464276664
+    },
+    {
+     "player": 1,
+     "cell": 2,
+     "policy_dispersion": 0.17210559143328447,
+     "equity_spread": 0.07676767676767682,
+     "br_gain": 0.020759199073071305,
+     "shared_action_regret": 0.02042136819684648
+    },
+    {
+     "player": 1,
+     "cell": 3,
+     "policy_dispersion": 0.426411269193687,
+     "equity_spread": 0.08075880758807585,
+     "br_gain": 0.04214415299566809,
+     "shared_action_regret": 0.04162184730078888
+    }
+   ]
+  }
+ ],
+ "seconds": 1.9,
+ "commit": "d5f727a05d5c40b52032e0e24bfeefb31b53d9e2"
+}

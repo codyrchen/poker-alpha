@@ -1,0 +1,584 @@
+{
+ "format": "pokeralpha.experiments.index/v1",
+ "runs": {
+  "h13_nested_resolving": {
+   "classification": "POSITIVE",
+   "command": "python experiments/phase2_nested_resolving.py",
+   "commit": "8ef1c149938bb4c5000f5caa2706dc43dff7b76a",
+   "headline": "safe nested resolving -8-22% translation cost vs pseudo-harmonic; unsafe 15-30x worse",
+   "inputs": {},
+   "mode": "confirmation",
+   "name": "h13_nested_resolving",
+   "notes": "",
+   "outputs": {
+    "results/phase2/nested_resolving.json": "997193c325b19ce8d3b8fc93304fc26b821c1d5d84e776d2544aa819343c79e2",
+    "results/phase2/nested_resolving_confirm.json": "ae8152006d04eb36835ecd3b977619d92163e92b5810d7ddff32c0d7c509325a"
+   },
+   "peak_rss_mb": null,
+   "recorded_utc": "2026-10-11T21:39:36Z",
+   "seeds": "6100-6102 / 8800-8802",
+   "status": "done",
+   "wall_seconds": null
+  },
+  "h1_h3_hypotheses": {
+   "classification": "DESCRIPTIVE",
+   "command": "python experiments/phase2_hypotheses.py",
+   "commit": "576bf7f05661523a6d666f3177e47c9a5646b048",
+   "headline": "ensembling -20-26% vs single, worse than 3x compute",
+   "inputs": {},
+   "mode": "confirmation",
+   "name": "h1_h3_hypotheses",
+   "notes": "",
+   "outputs": {
+    "results/phase2/hypotheses.json": "39157223876da8a2313cfb6625ed3d34b95fb6657839b258a75dc3cd4519bff2"
+   },
+   "peak_rss_mb": null,
+   "recorded_utc": "2026-10-11T20:39:02Z",
+   "seeds": "8 reps",
+   "status": "done",
+   "wall_seconds": null
+  },
+  "h4_translation": {
+   "classification": "POSITIVE",
+   "command": "python experiments/phase2_translation.py",
+   "commit": "576bf7f05661523a6d666f3177e47c9a5646b048",
+   "headline": "pseudo-harmonic ~8x cheaper than nearest-log (IP, release-like menu)",
+   "inputs": {},
+   "mode": "confirmation",
+   "name": "h4_translation",
+   "notes": "",
+   "outputs": {
+    "results/phase2/translation.json": "6442566ab7c24f1682765c1c1d2094b9bb7f0172202b2af053b13992a436b94c",
+    "results/phase2/translation_confirm.json": "da719b99a62dc949ac5caddc79739cf16b535ac576b049ced53d65c1142388d9"
+   },
+   "peak_rss_mb": null,
+   "recorded_utc": "2026-10-11T20:39:02Z",
+   "seeds": "seeds 900-902 / 4242-4244",
+   "status": "done",
+   "wall_seconds": null
+  },
+  "loop_W1_local_sensitivity_training": {
+   "classification": "NULL",
+   "command": "python experiments/phase2_research_loop.py run",
+   "commit": "0703fb8685c6f4685ecef8ec3d103c8725ab754d",
+   "headline": {
+    "seed0": {
+     "control_change": -0.007583770527539776,
+     "failing_change": -0.013313516093174826
+    },
+    "seed1": {
+     "control_change": -0.006066942634007665,
+     "failing_change": -0.05577428744093632
+    },
+    "seed2": {
+     "control_change": -0.003348049558390763,
+     "failing_change": -0.008674763657743001
+    }
+   },
+   "inputs": {},
+   "mode": "confirmation",
+   "name": "loop_W1_local_sensitivity_training",
+   "notes": "",
+   "outputs": {
+    "results/phase2/loop/results.json": "6626a81e1a9fd4738b1a0872401e227f7a0968c90f2324ae78665579e4626b5b"
+   },
+   "peak_rss_mb": null,
+   "recorded_utc": "2026-10-11T21:11:54Z",
+   "seeds": [
+    0,
+    1,
+    2
+   ],
+   "status": "done",
+   "wall_seconds": null
+  },
+  "loop_W2_seed_disagreement_4m": {
+   "classification": "DESCRIPTIVE",
+   "command": "python experiments/phase2_research_loop.py run",
+   "commit": "0703fb8685c6f4685ecef8ec3d103c8725ab754d",
+   "headline": {
+    "0-100": {
+     "keys": 25400,
+     "ratio": 1.0034118585661091,
+     "seed_tv_2m": 0.3386318671265812,
+     "seed_tv_4m": 0.3397872311631946
+    },
+    "100-1000": {
+     "keys": 35675,
+     "ratio": 0.9367482148334385,
+     "seed_tv_2m": 0.30777814429199146,
+     "seed_tv_4m": 0.28831062723027145
+    },
+    "1000-10000": {
+     "keys": 46299,
+     "ratio": 0.900858505471901,
+     "seed_tv_2m": 0.24145247512148302,
+     "seed_tv_4m": 0.21751451588043055
+    },
+    "10000-inf": {
+     "keys": 30444,
+     "ratio": 0.8801026260241126,
+     "seed_tv_2m": 0.16477154848703934,
+     "seed_tv_4m": 0.14501587251750273
+    }
+   },
+   "inputs": {},
+   "mode": "confirmation",
+   "name": "loop_W2_seed_disagreement_4m",
+   "notes": "STRUCTURAL (training does not resolve it); researcher-directed follow-up of Program 18 (the loop rule table did not fire for W2)",
+   "outputs": {
+    "results/phase2/loop/results.json": "6626a81e1a9fd4738b1a0872401e227f7a0968c90f2324ae78665579e4626b5b"
+   },
+   "peak_rss_mb": null,
+   "recorded_utc": "2026-10-11T21:11:54Z",
+   "seeds": [
+    0,
+    1,
+    2
+   ],
+   "status": "done",
+   "wall_seconds": null
+  },
+  "native_benchmark_v2": {
+   "classification": "POSITIVE",
+   "command": "python experiments/benchmark_native_solver.py --out results/benchmarks/native_mccfr_v2.json",
+   "commit": "8ef1c149938bb4c5000f5caa2706dc43dff7b76a",
+   "headline": "1,625 vs 21.9 it/s, 74.2x (Phase I 38.1x)",
+   "inputs": {},
+   "mode": "confirmation",
+   "name": "native_benchmark_v2",
+   "notes": "",
+   "outputs": {
+    "results/benchmarks/native_mccfr_v2.json": "4994e0b840cc95c7994e68e1f9e2a042eec715de1d28bf30584bee442251ef3e"
+   },
+   "peak_rss_mb": null,
+   "recorded_utc": "2026-10-11T21:39:36Z",
+   "seeds": [
+    0,
+    1,
+    2
+   ],
+   "status": "done",
+   "wall_seconds": null
+  },
+  "p10_redteam_confirmation": {
+   "classification": "VALIDATION",
+   "command": "python experiments/phase2_redteam.py && python experiments/phase2_redteam_overlap.py",
+   "commit": "576bf7f05661523a6d666f3177e47c9a5646b048",
+   "headline": "17/18 clusters confirmed",
+   "inputs": {},
+   "mode": "confirmation",
+   "name": "p10_redteam_confirmation",
+   "notes": "",
+   "outputs": {
+    "results/phase2/redteam_abstraction_overlap.json": "96b9bd6a9a790cd7a05f110a5d49ffa62fb07dd6db3e3a43de12963bda9bf11c",
+    "results/phase2/redteam_confirmation.json": "3183e76295ad758479c3f951eb4954a137d067b072786abf94de6721bf5c46b8"
+   },
+   "peak_rss_mb": null,
+   "recorded_utc": "2026-10-11T20:39:02Z",
+   "seeds": "state seed 202",
+   "status": "done",
+   "wall_seconds": null
+  },
+  "p10_redteam_discovery": {
+   "classification": "DESCRIPTIVE",
+   "command": "python experiments/phase2_redteam.py",
+   "commit": "576bf7f05661523a6d666f3177e47c9a5646b048",
+   "headline": "20,000 states",
+   "inputs": {},
+   "mode": "discovery",
+   "name": "p10_redteam_discovery",
+   "notes": "",
+   "outputs": {
+    "results/phase2/redteam_discovery.json": "6bee39ec20d882ce6ac0f4fa7457c2314afdcd2712b3b7be7a0d99e19930e3d5"
+   },
+   "peak_rss_mb": null,
+   "recorded_utc": "2026-10-11T20:39:02Z",
+   "seeds": "state seed 101",
+   "status": "done",
+   "wall_seconds": null
+  },
+  "p14_general_games": {
+   "classification": "VALIDATION",
+   "command": "python experiments/phase2_general_games.py",
+   "commit": "576bf7f05661523a6d666f3177e47c9a5646b048",
+   "headline": "cheap-talk oracle holds",
+   "inputs": {},
+   "mode": "validation",
+   "name": "p14_general_games",
+   "notes": "",
+   "outputs": {
+    "results/phase2/general_games.json": "7573c4372ba1a62c4ffc8c04d001f925ef8314e96afd9971b55d476bd4c07e1a"
+   },
+   "peak_rss_mb": null,
+   "recorded_utc": "2026-10-11T20:39:02Z",
+   "seeds": null,
+   "status": "done",
+   "wall_seconds": null
+  },
+  "p15_agents": {
+   "classification": "DESCRIPTIVE",
+   "command": "python experiments/phase2_agents.py",
+   "commit": "576bf7f05661523a6d666f3177e47c9a5646b048",
+   "headline": "3 cycles survive Bonferroni",
+   "inputs": {},
+   "mode": "descriptive",
+   "name": "p15_agents",
+   "notes": "",
+   "outputs": {
+    "results/phase2/agents.json": "04219b2a758d435a104e0d96d1feedc04caf91e7889e710f9e604687c125e92c"
+   },
+   "peak_rss_mb": null,
+   "recorded_utc": "2026-10-11T20:39:02Z",
+   "seeds": "5 match seeds",
+   "status": "done",
+   "wall_seconds": null
+  },
+  "p16_llm_bench_mocks": {
+   "classification": "VALIDATION",
+   "command": "pytest tests/test_llm_bench_v2.py",
+   "commit": "576bf7f05661523a6d666f3177e47c9a5646b048",
+   "headline": "all mock failure modes detected",
+   "inputs": {},
+   "mode": "validation",
+   "name": "p16_llm_bench_mocks",
+   "notes": "",
+   "outputs": {
+    "results/phase2/llm_bench_mocks.json": "f31784d99582c1064282f4293c89fa4703c4556e068544505ce07034619c74f7"
+   },
+   "peak_rss_mb": null,
+   "recorded_utc": "2026-10-11T20:39:02Z",
+   "seeds": null,
+   "status": "done",
+   "wall_seconds": null
+  },
+  "p17_strategy_compiler": {
+   "classification": "DESCRIPTIVE",
+   "command": "python experiments/phase2_strategy_compiler.py",
+   "commit": "576bf7f05661523a6d666f3177e47c9a5646b048",
+   "headline": "0.064 TV distilled Leduc strategy is 3,600x more exploitable",
+   "inputs": {},
+   "mode": "descriptive",
+   "name": "p17_strategy_compiler",
+   "notes": "",
+   "outputs": {
+    "results/phase2/strategy_compiler.json": "aa7b9b3cca5f63a8f4fe370a7f84d16f8fe97b876d5e8ab14a669f8683db44bf"
+   },
+   "peak_rss_mb": null,
+   "recorded_utc": "2026-10-11T20:39:02Z",
+   "seeds": null,
+   "status": "done",
+   "wall_seconds": null
+  },
+  "p18_policy_geometry": {
+   "classification": "DESCRIPTIVE",
+   "command": "python experiments/phase2_policy_geometry.py",
+   "commit": "576bf7f05661523a6d666f3177e47c9a5646b048",
+   "headline": "seed disagreement shrinks 4-12% per doubling",
+   "inputs": {},
+   "mode": "descriptive",
+   "name": "p18_policy_geometry",
+   "notes": "",
+   "outputs": {
+    "results/phase2/policy_geometry.json": "8e962bff09f1d0879aa9ce4e61305fd5a089b3f7dfc211b7206026664dd348ad"
+   },
+   "peak_rss_mb": null,
+   "recorded_utc": "2026-10-11T20:39:02Z",
+   "seeds": "3 seeds x {1M,2M}",
+   "status": "done",
+   "wall_seconds": null
+  },
+  "p1_adaptive_abstraction_confirmation": {
+   "classification": "POSITIVE",
+   "command": "python experiments/phase2_adaptive_abstraction.py --confirm",
+   "commit": "576bf7f05661523a6d666f3177e47c9a5646b048",
+   "headline": "-24% vs uniform_matched (39/45 wins), -56% vs random (45/45)",
+   "inputs": {},
+   "mode": "confirmation",
+   "name": "p1_adaptive_abstraction_confirmation",
+   "notes": "",
+   "outputs": {
+    "results/phase2/adaptive_abstraction_confirm.json": "eb555607ca9742d66c480ed5a581ab709c2fa229d0d8b1d0afa9290cee914f4e"
+   },
+   "peak_rss_mb": null,
+   "recorded_utc": "2026-10-11T20:39:02Z",
+   "seeds": "seeds 5000-5004 x 9 boards",
+   "status": "done",
+   "wall_seconds": null
+  },
+  "p1_adaptive_abstraction_discovery": {
+   "classification": "POSITIVE",
+   "command": "python experiments/phase2_adaptive_abstraction.py",
+   "commit": "576bf7f05661523a6d666f3177e47c9a5646b048",
+   "headline": "br_gain refinement -31% vs uniform_matched, -57% vs random",
+   "inputs": {},
+   "mode": "discovery",
+   "name": "p1_adaptive_abstraction_discovery",
+   "notes": "",
+   "outputs": {
+    "results/phase2/adaptive_abstraction.json": "151b936ff6b914a5e9b1f3fd2a3a77bc0b2c9071db02ee521064a89419f32d29"
+   },
+   "peak_rss_mb": null,
+   "recorded_utc": "2026-10-11T20:39:02Z",
+   "seeds": "seeds 0-4 x 6 boards",
+   "status": "done",
+   "wall_seconds": null
+  },
+  "p1_adaptive_abstraction_highcap": {
+   "classification": "POSITIVE",
+   "command": "python experiments/phase2_adaptive_abstraction.py --k0 8 --splits 16 --hands 64 --seeds 3",
+   "commit": "576bf7f05661523a6d666f3177e47c9a5646b048",
+   "headline": "-31% vs uniform_matched at K=8, 16 splits",
+   "inputs": {},
+   "mode": "confirmation",
+   "name": "p1_adaptive_abstraction_highcap",
+   "notes": "",
+   "outputs": {
+    "results/phase2/adaptive_abstraction_highcap.json": "02afe36e264eb9760d00c97023e8408bdfe5dd505a2f12483397dd952e6ff074"
+   },
+   "peak_rss_mb": null,
+   "recorded_utc": "2026-10-11T20:39:02Z",
+   "seeds": "seeds 0-2 x 6 boards",
+   "status": "done",
+   "wall_seconds": null
+  },
+  "p21_native_stress": {
+   "classification": "VALIDATION",
+   "command": "python experiments/phase2_native_stress.py --parts checkpoint,parity",
+   "commit": "576bf7f05661523a6d666f3177e47c9a5646b048",
+   "headline": "10k parity bit-identical",
+   "inputs": {},
+   "mode": "validation",
+   "name": "p21_native_stress",
+   "notes": "",
+   "outputs": {
+    "results/phase2/native_correctness_stress.json": "6a2dd40711a2308525e14a3338a12c59e0f053328993d76f7f277793e9409181"
+   },
+   "peak_rss_mb": null,
+   "recorded_utc": "2026-10-11T20:39:02Z",
+   "seeds": null,
+   "status": "done",
+   "wall_seconds": null
+  },
+  "p22_evaluator_stress": {
+   "classification": "VALIDATION",
+   "command": "python experiments/phase2_evaluator_stress.py",
+   "commit": "576bf7f05661523a6d666f3177e47c9a5646b048",
+   "headline": "all 6- and 7-card hands match",
+   "inputs": {},
+   "mode": "validation",
+   "name": "p22_evaluator_stress",
+   "notes": "",
+   "outputs": {
+    "results/phase2/evaluator_stress.json": "55f82d6594482d9d7b40813904ab56f7542031cd820ae06148f705075dd76060"
+   },
+   "peak_rss_mb": null,
+   "recorded_utc": "2026-10-11T20:39:02Z",
+   "seeds": null,
+   "status": "done",
+   "wall_seconds": null
+  },
+  "p23_native_memory": {
+   "classification": "DESCRIPTIVE",
+   "command": "python experiments/phase2_native_stress.py --parts scale",
+   "commit": "576bf7f05661523a6d666f3177e47c9a5646b048",
+   "headline": "table saturates ~146k infosets, 131.5 MB",
+   "inputs": {},
+   "mode": "descriptive",
+   "name": "p23_native_memory",
+   "notes": "",
+   "outputs": {
+    "results/phase2/native_memory.json": "ebfb63bd5c9dc30be0b1a1733368d738f572cce321587ac158b55de544dffe78"
+   },
+   "peak_rss_mb": null,
+   "recorded_utc": "2026-10-11T20:39:02Z",
+   "seeds": "seed 11",
+   "status": "done",
+   "wall_seconds": null
+  },
+  "p2_active_compute_confirmation": {
+   "classification": "NULL",
+   "command": "python experiments/phase2_active_compute.py --seed-base 100 --seeds 20",
+   "commit": "576bf7f05661523a6d666f3177e47c9a5646b048",
+   "headline": "discovery positives did not replicate",
+   "inputs": {},
+   "mode": "confirmation",
+   "name": "p2_active_compute_confirmation",
+   "notes": "",
+   "outputs": {
+    "results/phase2/active_compute_confirm.json": "792b3ddde5c6d9d15aa7c3dcbd956770cdb5fe747dd047303abd9272183f8a8c"
+   },
+   "peak_rss_mb": null,
+   "recorded_utc": "2026-10-11T20:39:02Z",
+   "seeds": "seeds 100-119",
+   "status": "done",
+   "wall_seconds": null
+  },
+  "p2_active_compute_discovery": {
+   "classification": "NULL",
+   "command": "python experiments/phase2_active_compute.py",
+   "commit": "576bf7f05661523a6d666f3177e47c9a5646b048",
+   "headline": "no replicated gain",
+   "inputs": {},
+   "mode": "discovery",
+   "name": "p2_active_compute_discovery",
+   "notes": "",
+   "outputs": {
+    "results/phase2/active_compute.json": "c0f0ed442d5fb0636fdb16d69598caff16ae1c86516a0c22ac8496f8caf7f04e"
+   },
+   "peak_rss_mb": null,
+   "recorded_utc": "2026-10-11T20:39:02Z",
+   "seeds": "seeds 0-9",
+   "status": "done",
+   "wall_seconds": null
+  },
+  "p3_cfr_family_benchmark": {
+   "classification": "DESCRIPTIVE",
+   "command": "python experiments/phase2_cfr_family_benchmark.py",
+   "commit": "576bf7f05661523a6d666f3177e47c9a5646b048",
+   "headline": "DCFR best at large budgets on 4/5 games; crossover between 1 and 2 s",
+   "inputs": {},
+   "mode": "descriptive",
+   "name": "p3_cfr_family_benchmark",
+   "notes": "",
+   "outputs": {
+    "results/phase2/cfr_family_benchmark.json": "e106925edcf07fa977a8eb2c557a5cb3742f0a9ddf70f6cebac0de3ee34a3e77"
+   },
+   "peak_rss_mb": null,
+   "recorded_utc": "2026-10-11T20:39:02Z",
+   "seeds": "10 seeds (sampling methods)",
+   "status": "done",
+   "wall_seconds": null
+  },
+  "p4_confidence_ablation": {
+   "classification": "DESCRIPTIVE",
+   "command": "python experiments/phase2_confidence_ablation.py",
+   "commit": "576bf7f05661523a6d666f3177e47c9a5646b048",
+   "headline": "seed disagreement controls false confidence; visits control tail",
+   "inputs": {},
+   "mode": "validation",
+   "name": "p4_confidence_ablation",
+   "notes": "",
+   "outputs": {
+    "results/phase2/confidence_ablation.json": "5b2e9ff2e1c3ef8d04e99acdb917a356e25c4f6c7299e96c47bb4a60e7207c87"
+   },
+   "peak_rss_mb": null,
+   "recorded_utc": "2026-10-11T20:39:02Z",
+   "seeds": "LOGO over 9 games",
+   "status": "done",
+   "wall_seconds": null
+  },
+  "p4_confidence_v3_candidate": {
+   "classification": "NEGATIVE",
+   "command": "python experiments/phase2_confidence_v3_candidate.py",
+   "commit": "576bf7f05661523a6d666f3177e47c9a5646b048",
+   "headline": "logistic score: higher false confidence on 8/9 games; keep v2",
+   "inputs": {},
+   "mode": "validation",
+   "name": "p4_confidence_v3_candidate",
+   "notes": "",
+   "outputs": {
+    "results/phase2/confidence_v3_candidate.json": "5f8556730997bb5674b4b5d94dcb6e7157e85884d2d7c68103f3900bdc1ecab7"
+   },
+   "peak_rss_mb": null,
+   "recorded_utc": "2026-10-11T20:39:02Z",
+   "seeds": "LOGO + family shift",
+   "status": "done",
+   "wall_seconds": null
+  },
+  "p5_abstraction_science": {
+   "classification": "DESCRIPTIVE",
+   "command": "python experiments/phase2_abstraction_science.py",
+   "commit": "576bf7f05661523a6d666f3177e47c9a5646b048",
+   "headline": "IR Leduc degrades with training; value-based collision predicts error",
+   "inputs": {},
+   "mode": "descriptive",
+   "name": "p5_abstraction_science",
+   "notes": "",
+   "outputs": {
+    "results/phase2/abstraction_capacity.json": "a53d49d0cfe3c99b581452660f324a3e78ddb4891959a9682af7d1e2571f1b0e",
+    "results/phase2/action_abstraction.json": "cf4ece3c71b04df8cfccd77f47e3d1c9f1148f48bbec2d17825ac23257f215eb",
+    "results/phase2/collision_dispersion.json": "a013b631d1c0918a1afe1b64218abe6a2416b0d20b9b8196fdb86f2f639b65ae",
+    "results/phase2/recall_ablation.json": "ee955c487ff61f28c808956adaae714554514cc9c11e6c775850b68d9b553c24"
+   },
+   "peak_rss_mb": null,
+   "recorded_utc": "2026-10-11T20:39:02Z",
+   "seeds": "3 seeds x 9 boards",
+   "status": "done",
+   "wall_seconds": null
+  },
+  "p6_local_resolving": {
+   "classification": "POSITIVE",
+   "command": "python experiments/phase2_local_resolving.py",
+   "commit": "576bf7f05661523a6d666f3177e47c9a5646b048",
+   "headline": "safe gadget never worse (>1e-4) at >=1s; closes 9-31% of gap; unsafe 2-3x worse",
+   "inputs": {},
+   "mode": "validation",
+   "name": "p6_local_resolving",
+   "notes": "",
+   "outputs": {
+    "results/phase2/local_resolving.json": "9919a86ee522d46c66718ee369dc0186bde6692c9aca644adcf445ac8cb87bc0"
+   },
+   "peak_rss_mb": null,
+   "recorded_utc": "2026-10-11T20:39:02Z",
+   "seeds": "seeds 7000-7002 x 9 boards",
+   "status": "done",
+   "wall_seconds": null
+  },
+  "p7_native_optimization": {
+   "classification": "POSITIVE",
+   "command": "see docs/phase2/native_systems.md",
+   "commit": "576bf7f05661523a6d666f3177e47c9a5646b048",
+   "headline": "1.96x training throughput, identical digest",
+   "inputs": {},
+   "mode": "validation",
+   "name": "p7_native_optimization",
+   "notes": "",
+   "outputs": {
+    "results/phase2/native_optimization_trials.json": "5174fc36006495767f4fe8f81900ee082f927fce2156d8f046794ecf7e47934a",
+    "results/phase2/native_profile.json": "dc01d431742afc50775a6d7286a778b701358fbbc5ce62148ddc496b0c018a8f"
+   },
+   "peak_rss_mb": null,
+   "recorded_utc": "2026-10-11T20:39:02Z",
+   "seeds": "A/B, 3-5 reps",
+   "status": "done",
+   "wall_seconds": null
+  },
+  "p8_artifact_compression": {
+   "classification": "DESCRIPTIVE",
+   "command": "python experiments/phase2_artifact_compression.py",
+   "commit": "576bf7f05661523a6d666f3177e47c9a5646b048",
+   "headline": "uint16: -27% size, max TV 3.7e-5",
+   "inputs": {},
+   "mode": "descriptive",
+   "name": "p8_artifact_compression",
+   "notes": "",
+   "outputs": {
+    "results/phase2/artifact_compression.json": "6e554b01ac79f593b7b05e2a9398101cef64a303003eaf8fafe06059a3d14ee6"
+   },
+   "peak_rss_mb": null,
+   "recorded_utc": "2026-10-11T20:39:02Z",
+   "seeds": null,
+   "status": "done",
+   "wall_seconds": null
+  },
+  "p9_exhaustive_correctness": {
+   "classification": "VALIDATION",
+   "command": "python experiments/phase2_exhaustive_correctness.py",
+   "commit": "576bf7f05661523a6d666f3177e47c9a5646b048",
+   "headline": "14.75M states, 0 violations",
+   "inputs": {},
+   "mode": "validation",
+   "name": "p9_exhaustive_correctness",
+   "notes": "",
+   "outputs": {
+    "results/phase2/exhaustive_correctness.json": "72be0817c8882ccae95754835c0ca07cc313a5baa1e5ac15421e1c866fc37352"
+   },
+   "peak_rss_mb": null,
+   "recorded_utc": "2026-10-11T20:39:02Z",
+   "seeds": null,
+   "status": "done",
+   "wall_seconds": null
+  }
+ }
+}

@@ -1,0 +1,370 @@
+{
+ "format": "pokeralpha.phase2.redteam_abstraction_overlap/v1",
+ "states": 20000,
+ "states_with_key": 19768,
+ "states_with_confidence_stats": 19737,
+ "collision_signal_coverage": {
+  "release_keys_with_collision": 2057,
+  "release_keys": 144025,
+  "states_with_collision": 7527
+ },
+ "objectives": {
+  "gate_rejected": {
+   "k_visits": {
+    "n": 19737,
+    "failing": 10031,
+    "auc": 0.72239539808625,
+    "auc_ci95": [
+     0.7163231960437689,
+     0.7288647600567744
+    ],
+    "direction": "low visits = suspicious"
+   },
+   "k_seed": {
+    "n": 19736,
+    "failing": 10031,
+    "auc": 0.998698573320183,
+    "auc_ci95": [
+     0.9980992612495893,
+     0.9992276566199216
+    ],
+    "direction": "high value = suspicious"
+   },
+   "k_movement": {
+    "n": 19727,
+    "failing": 10023,
+    "auc": 0.6719167411244328,
+    "auc_ci95": [
+     0.6644333620627544,
+     0.6795576148716165
+    ],
+    "direction": "high value = suspicious"
+   },
+   "k_collision": {
+    "n": 7527,
+    "failing": 2215,
+    "auc": 0.4986465330849357,
+    "auc_ci95": [
+     0.4923362578188376,
+     0.5043692750253189
+    ],
+    "direction": "high value = suspicious"
+   },
+   "rate_by_street": {
+    "Preflop": {
+     "rate": 0.7605825507009664,
+     "n": 7347
+    },
+    "Flop": {
+     "rate": 0.37595010719158056,
+     "n": 5131
+    },
+    "Turn": {
+     "rate": 0.3458011583011583,
+     "n": 4144
+    },
+    "River": {
+     "rate": 0.3978685612788632,
+     "n": 3378
+    }
+   }
+  },
+  "seed_disagreement": {
+   "k_visits": {
+    "n": 19737,
+    "failing": 9982,
+    "auc": 0.7187620084167904,
+    "auc_ci95": [
+     0.7121175359544283,
+     0.727084360024739
+    ],
+    "direction": "low visits = suspicious"
+   },
+   "k_seed": {
+    "n": 19736,
+    "failing": 9982,
+    "auc": 1.0,
+    "auc_ci95": [
+     1.0,
+     1.0
+    ],
+    "direction": "high value = suspicious"
+   },
+   "k_movement": {
+    "n": 19727,
+    "failing": 9974,
+    "auc": 0.6685444803880636,
+    "auc_ci95": [
+     0.6616892955991222,
+     0.6763242785871578
+    ],
+    "direction": "high value = suspicious"
+   },
+   "k_collision": {
+    "n": 7527,
+    "failing": 2206,
+    "auc": 0.4988211917302643,
+    "auc_ci95": [
+     0.49283210609412503,
+     0.504695339384074
+    ],
+    "direction": "high value = suspicious"
+   },
+   "rate_by_street": {
+    "Preflop": {
+     "rate": 0.7521437321355655,
+     "n": 7347
+    },
+    "Flop": {
+     "rate": 0.3630871175209511,
+     "n": 5131
+    },
+    "Turn": {
+     "rate": 0.3248069498069498,
+     "n": 4144
+    },
+    "River": {
+     "rate": 0.3691533451746596,
+     "n": 3378
+    }
+   }
+  },
+  "low_visits": {
+   "k_visits": {
+    "n": 19737,
+    "failing": 95,
+    "auc": 1.0,
+    "auc_ci95": [
+     1.0,
+     1.0
+    ],
+    "direction": "low visits = suspicious"
+   },
+   "k_seed": {
+    "n": 19736,
+    "failing": 95,
+    "auc": 0.8226014861500781,
+    "auc_ci95": [
+     0.7744900482466418,
+     0.864803120393012
+    ],
+    "direction": "high value = suspicious"
+   },
+   "k_movement": {
+    "n": 19727,
+    "failing": 95,
+    "auc": 0.09022648307811093,
+    "auc_ci95": [
+     0.04628128041150336,
+     0.14191856471828435
+    ],
+    "direction": "high value = suspicious"
+   },
+   "k_collision": {
+    "n": 7527,
+    "failing": 0,
+    "auc": null,
+    "auc_ci95": null,
+    "direction": "high value = suspicious"
+   },
+   "rate_by_street": {
+    "Preflop": {
+     "rate": 0.008030488634816932,
+     "n": 7347
+    },
+    "Flop": {
+     "rate": 0.0009744689144416293,
+     "n": 5131
+    },
+    "Turn": {
+     "rate": 0.0016891891891891893,
+     "n": 4144
+    },
+    "River": {
+     "rate": 0.007104795737122558,
+     "n": 3378
+    }
+   }
+  },
+  "translation_distance": {
+   "k_visits": {
+    "n": 19737,
+    "failing": 2535,
+    "auc": 0.5668921576248989,
+    "auc_ci95": [
+     0.5557327078408947,
+     0.5785439509137087
+    ],
+    "direction": "low visits = suspicious"
+   },
+   "k_seed": {
+    "n": 19736,
+    "failing": 2534,
+    "auc": 0.42572429905041237,
+    "auc_ci95": [
+     0.4132430980813693,
+     0.4389915175124729
+    ],
+    "direction": "high value = suspicious"
+   },
+   "k_movement": {
+    "n": 19727,
+    "failing": 2534,
+    "auc": 0.42229105327322736,
+    "auc_ci95": [
+     0.4067119319521702,
+     0.4351442008022311
+    ],
+    "direction": "high value = suspicious"
+   },
+   "k_collision": {
+    "n": 7527,
+    "failing": 668,
+    "auc": 0.46617582738008456,
+    "auc_ci95": [
+     0.46392927886771623,
+     0.4692232138542706
+    ],
+    "direction": "high value = suspicious"
+   },
+   "rate_by_street": {
+    "Preflop": {
+     "rate": 0.03879134340547162,
+     "n": 7347
+    },
+    "Flop": {
+     "rate": 0.18339504969791465,
+     "n": 5131
+    },
+    "Turn": {
+     "rate": 0.18243243243243243,
+     "n": 4144
+    },
+    "River": {
+     "rate": 0.19686204854943753,
+     "n": 3378
+    }
+   }
+  },
+  "local_sensitivity": {
+   "k_visits": {
+    "n": 19737,
+    "failing": 81,
+    "auc": 0.7455701020515836,
+    "auc_ci95": [
+     0.6975589410587363,
+     0.7895767008374744
+    ],
+    "direction": "low visits = suspicious"
+   },
+   "k_seed": {
+    "n": 19736,
+    "failing": 81,
+    "auc": 0.6049483215089931,
+    "auc_ci95": [
+     0.552563813912557,
+     0.6450255718026796
+    ],
+    "direction": "high value = suspicious"
+   },
+   "k_movement": {
+    "n": 19727,
+    "failing": 81,
+    "auc": 0.5732926502803323,
+    "auc_ci95": [
+     0.5019862520129655,
+     0.6452446988506387
+    ],
+    "direction": "high value = suspicious"
+   },
+   "k_collision": {
+    "n": 7527,
+    "failing": 26,
+    "auc": 0.4690707905612585,
+    "auc_ci95": [
+     0.4665728883868143,
+     0.4717904766601226
+    ],
+    "direction": "high value = suspicious"
+   },
+   "rate_by_street": {
+    "Preflop": {
+     "rate": 0.0005444399074452157,
+     "n": 7347
+    },
+    "Flop": {
+     "rate": 0.007795751315533035,
+     "n": 5131
+    },
+    "Turn": {
+     "rate": 0.005791505791505791,
+     "n": 4144
+    },
+    "River": {
+     "rate": 0.0041444641799881585,
+     "n": 3378
+    }
+   }
+  },
+  "model_sensitivity": {
+   "k_visits": {
+    "n": 19737,
+    "failing": 8166,
+    "auc": 0.6674671320255929,
+    "auc_ci95": [
+     0.659536102472257,
+     0.6747151492707034
+    ],
+    "direction": "low visits = suspicious"
+   },
+   "k_seed": {
+    "n": 19736,
+    "failing": 8166,
+    "auc": 0.9129659923908204,
+    "auc_ci95": [
+     0.9082611012608652,
+     0.916896720541669
+    ],
+    "direction": "high value = suspicious"
+   },
+   "k_movement": {
+    "n": 19727,
+    "failing": 8161,
+    "auc": 0.6531761701430507,
+    "auc_ci95": [
+     0.6458997063331651,
+     0.6614128379945892
+    ],
+    "direction": "high value = suspicious"
+   },
+   "k_collision": {
+    "n": 7527,
+    "failing": 1837,
+    "auc": 0.501198465825977,
+    "auc_ci95": [
+     0.49489609803684514,
+     0.5071754260285167
+    ],
+    "direction": "high value = suspicious"
+   },
+   "rate_by_street": {
+    "Preflop": {
+     "rate": 0.6186198448346264,
+     "n": 7347
+    },
+    "Flop": {
+     "rate": 0.2744104463067628,
+     "n": 5131
+    },
+    "Turn": {
+     "rate": 0.28016409266409265,
+     "n": 4144
+    },
+    "River": {
+     "rate": 0.3392539964476021,
+     "n": 3378
+    }
+   }
+  }
+ }
+}

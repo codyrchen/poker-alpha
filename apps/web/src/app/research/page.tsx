@@ -26,7 +26,9 @@ export default function ResearchPage() {
         The training loop is reimplemented in C++17 with bit-exact parity
         against the Python reference — the regret and strategy tapes match to
         the last bit across seeds (FMA contraction disabled to keep IEEE
-        semantics). The measured end-to-end speedup is <b>38.1×</b>, which is
+        semantics). The measured end-to-end MCCFR training throughput on the release
+        configuration is <b>74.2×</b> the Python reference (38.1× from the port,
+        1.96× more from Phase II profiling), which is
         what made the 2M-iteration release strategy and three-seed stability
         analysis practical.
       </p>

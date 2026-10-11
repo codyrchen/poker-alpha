@@ -1,0 +1,118 @@
+{
+ "format": "pokeralpha.phase2.native_optimization_trials/v1",
+ "machine": "Apple M3 Pro, 12 cores, macOS; clang (AppleClang) Release -O3 -ffp-contract=off (no fast-math)",
+ "method": "A/B builds of identical CMake Release flags in separate directories; parity suite (shared-tape bit parity, checkpoint, features incl. new 255-bucket flush-board test, exhaustive 5-card evaluator) and the ASan+UBSan native selftest pass on the final build",
+ "trials": [
+  {
+   "id": "T1_river_table_dedup",
+   "change": "river percentile table: evaluate each distinct canonical holding once (flush-suit cards by exact card, others by rank), compact (value, cumulative count) table instead of sorting 1,081 values",
+   "reps": 5,
+   "workload": "release config (v2), seed 0, 30,000 iterations from a fresh table, one process per rep, old/new alternated",
+   "baseline_it_per_s": [
+    839.8273713844608,
+    853.8842953910432,
+    857.5971253350168,
+    856.0515310557225,
+    823.2424146494227
+   ],
+   "new_it_per_s": [
+    1287.6288610717984,
+    1383.139008724772,
+    1370.3815111832146,
+    1362.046239158446,
+    1306.4437523870076
+   ],
+   "baseline_median": 853.8842953910432,
+   "new_median": 1362.046239158446,
+   "speedup_median": 1.5951180347387535,
+   "baseline_stdev": 13.066178346041097,
+   "new_stdev": 37.73651123919259,
+   "peak_rss_mb_baseline_median": 261.15625,
+   "peak_rss_mb_new_median": 218.671875,
+   "strategy_digest_identical": true,
+   "digest": "4ab9ef3c23ad6a76",
+   "decision": "GO"
+  },
+  {
+   "id": "T2_eval_board_counts",
+   "change": "T1 + evaluator split into count accumulation + finish; board histogram computed once per table",
+   "reps": 4,
+   "workload": "release config (v2), seed 0, 30,000 iterations from a fresh table, one process per rep, old/new alternated",
+   "baseline_it_per_s": [
+    860.4238551093786,
+    859.0512651032493,
+    857.8685710637341,
+    858.2357263273332
+   ],
+   "new_it_per_s": [
+    1455.8203061240724,
+    1459.7630340015382,
+    1458.8626978748464,
+    1461.129982227063
+   ],
+   "baseline_median": 858.6434957152912,
+   "new_median": 1459.3128659381923,
+   "speedup_median": 1.6995561874285376,
+   "baseline_stdev": 0.9810727266423377,
+   "new_stdev": 1.9495775492028213,
+   "peak_rss_mb_baseline_median": 268.0078125,
+   "peak_rss_mb_new_median": 223.2109375,
+   "strategy_digest_identical": true,
+   "digest": "4ab9ef3c23ad6a76",
+   "decision": "GO"
+  },
+  {
+   "id": "T3_flat_index",
+   "change": "T2 + flat open-addressing infoset index (splitmix64, linear probing, load <= 1/2) replacing std::unordered_map",
+   "reps": 3,
+   "workload": "release config (v2), seed 0, 30,000 iterations from a fresh table, one process per rep, old/new alternated",
+   "baseline_it_per_s": [
+    858.1528601540933,
+    857.4365904212372,
+    858.4136015503884
+   ],
+   "new_it_per_s": [
+    1678.2711150000353,
+    1680.077923682382,
+    1674.9420123793077
+   ],
+   "baseline_median": 858.1528601540933,
+   "new_median": 1678.2711150000353,
+   "speedup_median": 1.9556785194407884,
+   "baseline_stdev": 0.4130616247316024,
+   "new_stdev": 2.1272064828728494,
+   "peak_rss_mb_baseline_median": 273.3125,
+   "peak_rss_mb_new_median": 232.640625,
+   "strategy_digest_identical": true,
+   "digest": "4ab9ef3c23ad6a76",
+   "decision": "GO"
+  }
+ ],
+ "no_go": [
+  {
+   "id": "SIMD_evaluator",
+   "decision": "NO-GO (not attempted)",
+   "reason": "after T1-T3 the evaluator's work is ~100-300 scalar evaluations per new river board with data-dependent branching on rank multiplicities; hand-written NEON would need a different (table-driven) evaluator and a new exhaustive parity proof; expected payoff bounded by evaluate's ~45% share"
+  },
+  {
+   "id": "ffast_math",
+   "decision": "NO-GO by rule",
+   "reason": "breaks bit parity with the Python reference (fsum, FMA contraction already disabled)"
+  },
+  {
+   "id": "bigger_river_board_cache",
+   "decision": "NO-GO (measured reasoning)",
+   "reason": "external sampling draws fresh river boards on almost every chance branch: 2.6M possible boards vs ~2,000 cached after 30k iterations; cache size does not change the hit rate materially (river_board_cache_entries stays ~2k of a 4,096 limit)"
+  },
+  {
+   "id": "float32_training",
+   "decision": "NO-GO for release",
+   "reason": "changes numerics (bit parity with Python is a project invariant); table memory is ~20 MB, not a bottleneck"
+  }
+ ],
+ "headline": {
+  "baseline_it_per_s": 858.1528601540933,
+  "final_it_per_s": 1678.2711150000353,
+  "speedup": 1.9556785194407884
+ }
+}

@@ -22,3 +22,5 @@ cmake-build*/
 # Native training outputs: logs are committed, checkpoints are not
 results/native_training/**/*.npz
 results/native_training/**/seed*/
+results/phase2/_*.log
+results/phase2/*_quick.json

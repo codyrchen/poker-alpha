@@ -127,3 +127,20 @@ def test_no_silent_fallback_to_a_mismatched_strategy(v2_artifact, tmp_path):
     (tmp_path / "junk.npz").write_bytes(b"not an artifact")
     miss = SolverStrategyProvider.from_artifact(tmp_path / "junk.npz")
     assert getattr(miss, "code", None) == "INCOMPATIBLE_CHECKPOINT"
+
+
+def test_lazy_artifact_view_matches_eager_exactly():
+    """Phase II H23: the array-backed lazy view returns identical lookups."""
+    from poker_alpha.solver_config import RELEASE_STRATEGY
+    path = Path(__file__).parents[1] / RELEASE_STRATEGY
+    eager = load_artifact(path)
+    lazy = load_artifact(path, lazy=True)
+    assert len(lazy) == len(eager) and len(lazy.visits) == len(eager.visits)
+    assert list(lazy.strategy) == list(eager.strategy)
+    for k in list(eager.strategy)[::97]:
+        assert lazy.strategy[k] == pytest.approx(eager.strategy[k], abs=0)
+        assert lazy.strategy.get(k) == eager.strategy.get(k)
+        assert lazy.visits[k] == eager.visits[k]
+        assert lazy.lookup(k) == eager.lookup(k)
+    assert lazy.strategy.get("no-such-key") is None and "no-such-key" not in lazy.strategy
+    assert lazy.lookup("x" * 500) is None
