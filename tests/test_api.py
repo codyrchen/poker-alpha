@@ -136,6 +136,7 @@ def test_no_dangerous_endpoints(client):
     paths = {r.path for r in app.routes}
     for banned in ("train", "file", "shell", "exec", "upload"):
         assert not any(banned in p for p in paths), paths
-    # CORS restricted to explicit local origins
-    assert all(o.startswith("http://localhost") or
+    # CORS restricted to explicit local origins; "null" is the file://
+    # Electron renderer (documented: the loopback bind is the boundary)
+    assert all(o == "null" or o.startswith("http://localhost") or
                o.startswith("http://127.0.0.1") for o in LOCAL_ORIGINS)
