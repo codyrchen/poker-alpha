@@ -45,7 +45,7 @@
    "qualifier": "promoted v2 rule (sd<0.2, recent mv<0.1, visits>=20) coverage vs the v1 ACCEPT share, held-out games; accepted wrong-rate 3.0% vs 3.3%"
   },
   "test_count": {
-   "value": 944,
+   "value": 1008,
    "units": "tests",
    "source": "pytest --collect-only -q (this commit)"
   },
