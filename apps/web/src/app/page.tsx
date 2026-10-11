@@ -108,7 +108,7 @@ export default function Home() {
             <td>
               <Link href="/download">Desktop overlay</Link>
             </td>
-            <td>Compact always-on-top summary (local development preview)</td>
+            <td>Compact always-on-top summary; engine bundled (standalone, unsigned)</td>
           </tr>
         </tbody>
       </table>

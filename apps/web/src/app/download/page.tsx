@@ -8,18 +8,23 @@ export default function DownloadPage() {
         nothing to sign up for.
       </p>
 
-      <h2>Desktop overlay — development preview</h2>
+      <h2>Desktop overlay — standalone local build (unsigned)</h2>
       <p>
-        An Electron shell with a compact, always-on-top strategy overlay. It
-        is currently a <b>local development preview</b>: unsigned, built from
-        source. There is no notarized installer yet (that requires Apple
-        signing credentials).
+        An Electron shell with a compact, always-on-top strategy overlay and
+        the <b>engine bundled inside the app</b> — no Python, no environment
+        variables. Built from source it is fully standalone (~485 MB), but
+        <b> unsigned</b>: macOS Gatekeeper will warn on first launch, and
+        there is no notarized installer yet (that requires Apple signing
+        credentials).
       </p>
       <pre className="mono panel" style={{ whiteSpace: "pre-wrap" }}>
         {`git clone https://github.com/codyrchen/poker-alpha
 cd poker-alpha
-python -m venv .venv && .venv/bin/pip install -e ".[ui,vision,api]"
-cd apps/desktop && npm install && npm start`}
+python -m venv .venv && .venv/bin/pip install -e ".[ui,vision,api]" pyinstaller
+# freeze the engine, then build the standalone app
+(cd packaging && ../.venv/bin/pyinstaller --noconfirm pokeralpha_engine.spec)
+cd apps/desktop && npm install && npm run pack   # release/mac-arm64/PokerAlpha.app
+npm start                                        # or run from source`}
       </pre>
 
       <h2>Local engine + web app</h2>
@@ -33,6 +38,22 @@ cd apps/desktop && npm install && npm start`}
 # this website, locally
 cd apps/web && npm install && npm run dev`}
       </pre>
+
+      <h2>Three deployment shapes</h2>
+      <ul style={{ marginLeft: "1.2rem" }}>
+        <li>
+          <b>Public static site</b> (if this page is hosted): research,
+          benchmarks and pre-computed demo outputs only — it cannot reach a
+          local engine from a public origin.
+        </li>
+        <li>
+          <b>Local web app + local engine</b>: the full analyzer, strategy
+          explorer and study upload against 127.0.0.1.
+        </li>
+        <li>
+          <b>Desktop app</b>: the engine bundled inside, no setup.
+        </li>
+      </ul>
 
       <h2>Boundaries</h2>
       <ul style={{ marginLeft: "1.2rem" }}>

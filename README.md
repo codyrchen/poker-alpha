@@ -262,7 +262,7 @@ a `DecisionReport` with EV ± SE, provenance and warnings.
 | **Study** | session review with strict regret semantics, 169-hand strategy explorer, what-if, trainer | [study_mode](docs/study_mode.md) |
 | **Local API** | `python -m poker_alpha.api` — 127.0.0.1-only `pokeralpha.api/v1` engine for frontends | [local_api](docs/local_api.md) |
 | **Web** | Next.js app (analyzer, strategy, study, trainer, research) against the local engine; bundled real-engine outputs when offline, labeled as such | [web_app](docs/web_app.md) |
-| **Desktop** | Electron always-on-top overlay — local development preview, unsigned | [desktop_app](docs/desktop_app.md) |
+| **Desktop** | Electron always-on-top overlay with the engine bundled inside — standalone local build, unsigned | [desktop_app](docs/desktop_app.md) |
 
 What the platform does **not** claim: a solved game, GTO play, a profitable
 bot, Nash guarantees for 3+ players, ground-truth opponent ranges, or

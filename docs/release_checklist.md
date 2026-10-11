@@ -28,8 +28,8 @@
       independent sessions are evaluated; no accuracy numbers without
       `poker_alpha.observer.dataset baseline` output to cite
 - [ ] regret language: "ESTIMATED DECISION REGRET", never "money lost"
-- [ ] packaging: "unsigned local development preview" until
-      signing/notarization exists
+- [ ] packaging: "standalone local build, unsigned" — signing/
+      notarization remains the public-distribution blocker only
 
 ## External blockers (not release blockers for the local product)
 

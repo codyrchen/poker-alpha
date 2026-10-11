@@ -1,4 +1,4 @@
-# Desktop overlay (`apps/desktop`) — local development preview
+# Desktop overlay (`apps/desktop`) — standalone local build (unsigned)
 
 Electron + TypeScript. A transparent, frameless, draggable,
 always-on-top window rendering the engine's compact summary: top action

@@ -33,7 +33,7 @@ Setup once: `.venv/bin/python -m poker_alpha.api` in one terminal,
    states are review-only.
 6. **Desktop overlay** (30 s) — `cd apps/desktop && npm start`: the
    always-on-top compact summary, expanded state, click-through toggle,
-   and the engine sidecar in the logs. Unsigned local preview.
+   and the engine sidecar in the logs. The packaged app bundles the engine (standalone, unsigned).
 7. **The engineering story** (30 s) — /benchmarks: 38.1× native backend
    with bit-exact parity; API answers a full analysis in ~0.1 s warm.
 8. **Close on abstention** (20 s) — "Every surface obeys the same rule:

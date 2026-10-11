@@ -40,7 +40,10 @@ export function OfflineNote({ state }: { state: ConnState }) {
       outputs of the real engine</b> bundled with this page — not live
       computation. Start the engine with{" "}
       <code className="mono">python -m poker_alpha.api</code> to analyze your
-      own states.
+      own states. Live analysis only works when this site itself runs
+      locally (or via the desktop app): the engine deliberately accepts
+      requests from localhost page origins only, so a publicly hosted copy
+      of this site cannot reach it.
     </p>
   );
 }

@@ -35,3 +35,25 @@ hitting `/demo-spots`, `/analyze`, `/strategy/preflop`, `/release/info`).
 Session uploads on `/study` go to the local API and nowhere else.
 
 Screenshots (headless Chrome, real pages): `docs/assets/web_*.png`.
+
+## Deployment shapes (claim boundary)
+
+| shape | works | why |
+|---|---|---|
+| **Public static site** | research, benchmarks, pre-computed demo outputs (labeled) | a hosted origin is not in the engine's CORS allowlist, and must not be — the engine is a local service |
+| **Local web app + local engine** | full analyzer / study / strategy / trainer | localhost page origins are explicitly allowed |
+| **Desktop app** | everything, zero setup | the engine ships inside the bundle |
+
+The hosted shape never silently degrades: pages show an explicit
+"ENGINE OFFLINE — SHOWING PRE-COMPUTED OUTPUT" badge and say why live
+analysis needs a local deployment.
+
+### Future local-companion pairing (design note only — NOT implemented)
+
+If a hosted site should ever talk to a local engine, the sound shape is
+an explicit pairing step, not wildcard CORS: the engine would mint a
+one-time pairing code shown in its terminal; the site exchanges it for a
+bearer token over `http://127.0.0.1:<port>` with the specific hosted
+origin added to CORS **only after** the user confirms the code; tokens
+expire and are revocable from the engine. Until someone needs that, the
+boundary stays as above — no permissive localhost CORS wildcards.
