@@ -32,6 +32,11 @@ ROOT = Path(__file__).resolve().parents[2]
 LOCAL_ORIGINS = [
     "http://localhost:3000", "http://127.0.0.1:3000",   # Next.js dev
     "http://localhost:8501", "http://127.0.0.1:8501",   # Streamlit
+    # The Electron overlay loads its renderer from file://, whose Origin is
+    # the literal string "null". The real security boundary is the loopback
+    # bind (the server is unreachable off-machine); CORS here is
+    # defense-in-depth for browser tabs, not the perimeter.
+    "null",
 ]
 
 
