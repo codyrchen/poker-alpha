@@ -50,6 +50,11 @@ cleanup() {
   for pid in ${PIDS[@]+"${PIDS[@]}"}; do
     kill "$pid" 2>/dev/null || true
   done
+  # final sweep for the exact services this script starts (spawn chains
+  # like npm->next-server can escape the parent/child kills above)
+  pkill -f "streamlit run poker_alpha/ui/app.py" 2>/dev/null || true
+  pkill -f "poker_alpha.api" 2>/dev/null || true
+  pkill -f "next-server (v" 2>/dev/null || true
   wait 2>/dev/null || true
 }
 trap cleanup EXIT INT TERM

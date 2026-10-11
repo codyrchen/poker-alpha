@@ -264,3 +264,16 @@ input:focus-visible, textarea:focus-visible, [tabindex]:focus-visible {
   body { background: #fff; color: #111; }
   .metric, .lab-card { background: #fff; }
 }
+
+/* mobile hardening */
+.mono, .pipe-step p, .hero .sub, .kv dd { overflow-wrap: anywhere; }
+@media (max-width: 480px) {
+  .hero h1 { font-size: 1.55rem; }
+  .hero .sub { font-size: 0.98rem; }
+  .metric .n { font-size: 1.2rem; }
+  .arena-actions button { padding: 0.6rem 1.1rem; }
+}
+@media (max-width: 640px) {
+  table.data, .heatmap { display: block; overflow-x: auto;
+                         -webkit-overflow-scrolling: touch; }
+}
