@@ -146,8 +146,8 @@ export default function LearnPage() {
                 <td>
                   <MixBar mix={{ p: s.p, b: s.b }} />
                 </td>
-                <td className="mono">{(s.b * 100).toFixed(1)}%</td>
-                <td className="mono muted">{(r.b * 100).toFixed(1)}%</td>
+                <td className="mono" style={{ whiteSpace: "nowrap" }}>{(s.b * 100).toFixed(1)}%</td>
+                <td className="mono muted" style={{ whiteSpace: "nowrap" }}>{(r.b * 100).toFixed(1)}%</td>
               </tr>
             );
           })}
@@ -165,13 +165,14 @@ export default function LearnPage() {
       <p>
         PokerAlpha&rsquo;s Hold&rsquo;em strategy was trained by the sampling
         variant of this algorithm (external-sampling MCCFR) over an
-        abstraction with 144,025 information sets, accelerated 74.2× by a
-        bit-exact C++17 backend, across three independent seeds — and then
-        gated by a calibrated confidence layer because, unlike here,
-        Hold&rsquo;em&rsquo;s exploitability cannot be computed exactly.
+        abstraction with 144,025 information sets on a bit-exact C++17
+        training backend (74.2× the Python reference&rsquo;s training
+        throughput), across three independent seeds. It is then gated by a
+        calibrated confidence layer because, unlike here, Hold&rsquo;em&rsquo;s
+        exploitability cannot be computed exactly.
       </p>
-      <p>
-        <Link className="btn" href="/engineering">The 74× engineering story</Link>{" "}
+      <p style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap", marginTop: "0.8rem" }}>
+        <Link className="btn" href="/engineering">How the backend was built</Link>{" "}
         <Link className="btn" href="/arena">Play against the trained Kuhn policy</Link>{" "}
         <Link className="btn" href="/lab">Research Lab</Link>
       </p>
