@@ -1,7 +1,13 @@
+import type { Metadata } from "next";
 // One-page recruiter overview. Print-friendly.
 
 import Link from "next/link";
 import claims from "@/data/lab/claims.json";
+
+export const metadata: Metadata = {
+  title: "One-page overview",
+  description: "PokerAlpha on one page: what was built, the hardest problems and the headline numbers.",
+};
 
 const C = (claims as any).payload.claims;
 

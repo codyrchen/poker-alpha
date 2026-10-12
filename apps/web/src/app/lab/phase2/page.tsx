@@ -93,6 +93,9 @@ function Native() {
     <section>
       <h2>2. Profile-driven native training speedup</h2>
       <Question>Where does training time actually go, and can it be removed without changing a single bit of output?</Question>
+      <p className="small muted" style={{ marginTop: "0.6rem" }}>
+        Inclusive share of training CPU before optimization (functions call each other, so the shares overlap).
+      </p>
       <Bars
         rows={prof.map(([k, v]) => ({ name: k, value: v }))}
         fmt={(v) => `${v.toFixed(1)}%`}
@@ -275,7 +278,7 @@ export default function Phase2Page() {
       <Question>
         New evidence from controlled experiments on exact reduced games (single-street river subgames, Leduc):
         abstraction refinement, decision-time resolving, action translation; plus native training performance on the
-        release configuration — and the ideas that failed. Every comparison has a capacity- or compute-matched control and
+        release configuration, and the ideas that failed. Every comparison has a capacity- or compute-matched control and
         an independent confirmation run.
       </Question>
       <Refinement />

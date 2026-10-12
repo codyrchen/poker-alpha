@@ -131,6 +131,11 @@ export default function ArenaPage() {
           poker against PokerAlpha&rsquo;s CFR policy — then see exactly what
           it observed about you.
         </Question>
+        <p className="scope-note">
+          A controlled small-game sandbox. The opponent is a CFR policy for Kuhn poker (three cards,
+          one betting round), not the Hold&rsquo;em release strategy, and everything runs in your
+          browser.
+        </p>
         <h2>Kuhn poker in 15 seconds</h2>
         <p style={{ maxWidth: "44rem" }}>
           Three cards: <b>J &lt; Q &lt; K</b>. You each ante 1 chip and get

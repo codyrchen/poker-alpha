@@ -68,14 +68,18 @@ export default function LearnPage() {
       <Question>
         Can you watch game-theoretic strategy learning actually happen?
         Below, counterfactual regret minimization plays Kuhn poker against
-        itself in your browser and converges toward an equilibrium — live,
-        not an animation.
+        itself in your browser and converges toward an equilibrium.
       </Question>
+      <p className="scope-note">
+        <b>This is real computation, not an animation.</b> Every point on the curve is the exact
+        exploitability of the current average strategy, computed in your browser by a best response
+        over the full Kuhn game tree.
+      </p>
       <p className="muted small">
         This is the SAME vanilla-CFR algorithm as PokerAlpha&rsquo;s Python
         reference, ported to TypeScript and test-validated against a committed
         Python-generated trace at 13 checkpoints (strategies agree to 4+
-        decimals). Hold&rsquo;em adds abstraction, a 74× C++ backend,
+        decimals). Hold&rsquo;em adds abstraction, a C++ training backend,
         independent seeds and confidence gating on top of this exact idea.
       </p>
 

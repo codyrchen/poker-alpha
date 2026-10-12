@@ -1,7 +1,13 @@
+import type { Metadata } from "next";
 // Evidence: every headline number, its meaning, method and source.
 
 import claims from "@/data/lab/claims.json";
 import { ProvenanceFooter, Question } from "@/components/Lab";
+
+export const metadata: Metadata = {
+  title: "Evidence",
+  description: "Every headline number with its meaning, method and source artifact.",
+};
 
 const env = claims as any;
 const C = env.payload.claims;
@@ -20,9 +26,22 @@ const MEANING: Record<string, [string, string]> = {
     "training uncertainty is measured across seeds instead of assumed away",
   ],
   evaluator_hands: [
-    "Exhaustive hand-evaluator parity",
-    "every possible 5-, 6- and 7-card hand compared between Python and C++ (133,784,560 seven-card hands)",
+    "Exhaustive five-card evaluator parity",
+    "every possible 5-card hand compared between Python and C++ (CI-tested)",
   ],
+  evaluator_hands_7card: [
+    "Exhaustive seven-card evaluator parity",
+    "every possible 7-card hand compared between the C++ and Python evaluators, zero mismatches",
+  ],
+  parity_iterations: [
+    "Python ↔ C++ training parity",
+    "both backends consume one shared random tape; iterate values and average strategies are bit-identical",
+  ],
+  native_speedup_phase1: [
+    "Historical: first native port",
+    "the original C++ port before Phase II profiling; kept for the build story",
+  ],
+  native_it_per_s_phase1: ["Historical: first native port throughput", "warm median"],
   calibration_rows: [
     "Confidence calibration states",
     "infosets from nine exactly solved reduced games with TRUE EV-regret targets, leave-one-game-out",
@@ -57,6 +76,7 @@ export default function EvidencePage() {
         measured, and where the artifact lives. The site reads these from a
         machine-checked claims registry — numbers cannot silently go stale.
       </Question>
+      <div style={{ overflowX: "auto" }}>
       <table className="data">
         <thead>
           <tr>
@@ -68,7 +88,7 @@ export default function EvidencePage() {
         </thead>
         <tbody>
           {Object.entries(C).map(([key, c]: [string, any]) => (
-            <tr key={key}>
+            <tr key={key} id={key} style={{ scrollMarginTop: "1rem" }}>
               <td className="mono small">{key}</td>
               <td className="mono" style={{ whiteSpace: "nowrap" }}>
                 {fmt(c.value)}
@@ -87,6 +107,7 @@ export default function EvidencePage() {
           ))}
         </tbody>
       </table>
+      </div>
 
       <h2>The validation ladder</h2>
       <p className="muted small" style={{ maxWidth: "44rem" }}>
@@ -103,7 +124,7 @@ export default function EvidencePage() {
           ["Checkpoint identity", "train(a)+save+load+train(b) bit-identical to train(a+b)"],
           ["Three independent seeds", "cross-run disagreement measured, feeding the gate"],
           ["Confidence calibration", "8,880 exact EV-regret targets; leave-one-game-out"],
-          ["Restricted LBR", "an honest lower bound: ≥ ~100 bb/100 exploitability remains in the full game"],
+          ["Restricted LBR", "an honest lower bound: at least ~100 bb/100 exploitability remains in the full game"],
         ].map(([name, what], i) => (
           <li key={i} style={{ marginBottom: "0.4rem" }}>
             <b>{name}</b>
