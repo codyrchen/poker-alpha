@@ -1,8 +1,15 @@
+import type { Metadata } from "next";
 // Hidden-Information Game Lab: the solver stack beyond poker.
 
 import Link from "next/link";
 import data from "@/data/lab/games.json";
 import { MixBar, ProvenanceFooter, Question } from "@/components/Lab";
+
+export const metadata: Metadata = {
+  title: "Game lab",
+  description: "Kuhn, Leduc and an auction duel on one solver stack, with exact exploitability.",
+};
+
 
 const env = data as any;
 const G = env.payload;

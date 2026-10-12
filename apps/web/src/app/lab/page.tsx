@@ -1,7 +1,13 @@
+import type { Metadata } from "next";
 // Research Lab hub: every interactive research surface, question first.
 
 import Link from "next/link";
 import { Question } from "@/components/Lab";
+
+export const metadata: Metadata = {
+  title: "Research lab",
+  description: "Interactive research surfaces built on precomputed PokerAlpha engine output.",
+};
 
 const CARDS: {
   href: string;

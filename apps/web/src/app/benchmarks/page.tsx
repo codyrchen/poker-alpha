@@ -1,4 +1,11 @@
+import type { Metadata } from "next";
 /* eslint-disable @next/next/no-img-element */
+
+export const metadata: Metadata = {
+  title: "Benchmarks",
+  description: "Native training throughput and confidence-gate calibration figures.",
+};
+
 export default function BenchmarksPage() {
   return (
     <main>

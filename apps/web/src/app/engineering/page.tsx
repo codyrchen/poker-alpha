@@ -1,9 +1,15 @@
+import type { Metadata } from "next";
 /* eslint-disable @next/next/no-img-element */
-// Engineering: the 74× story, the bit-exact story, the test matrix, and
+// Engineering: the native speedup story, the bit-exact story, the test matrix, and
 // where each piece lives in the source tree.
 
 import Link from "next/link";
 import claims from "@/data/lab/claims.json";
+
+export const metadata: Metadata = {
+  title: "Engineering",
+  description: "How the C++ training backend was built, profiled and kept bit-identical to the Python reference.",
+};
 
 const C = (claims as any).payload.claims;
 
@@ -12,9 +18,9 @@ export default function EngineeringPage() {
     <main>
       <h1>Engineering</h1>
       <p className="lead" style={{ maxWidth: "46rem" }}>
-        The interesting part wasn&rsquo;t just the solver — it was keeping a
-        {` ${C.native_speedup.value}×`} rewrite provably identical, and
-        learning which trust signals were real.
+        The interesting part was not just the solver. It was keeping a C++ training backend
+        provably identical to the Python reference while making it {C.native_speedup.value}× faster,
+        and learning which trust signals were real.
       </p>
 
       <h2>Problem → decision → result: the {C.native_speedup.value}× backend</h2>
@@ -22,9 +28,9 @@ export default function EngineeringPage() {
         <div className="pipe-step">
           <b>PROBLEM</b>
           <p>
-            Python trained at ~{C.python_it_per_s.value} it/s; a 2M-iteration
-            experiment took a day. Profiling put ~60% of the time in hand
-            evaluation and river percentile tables.
+            Python trained at ~{C.python_it_per_s.value} it/s, so one 2M-iteration run took more
+            than a day. Profiling put ~60% of the time in hand evaluation and river percentile
+            tables.
           </p>
         </div>
         <div className="pipe-step">
@@ -46,12 +52,29 @@ export default function EngineeringPage() {
           </p>
         </div>
         <div className="pipe-step">
-          <b>RESULT</b>
+          <b>PORT RESULT</b>
           <p>
-            {C.python_it_per_s.value} → {C.native_it_per_s.value} it/s warm
-            ({C.native_speedup.value}×, median of 3 trials). 2M-iteration ×
-            3-seed training became a ~50-minute laptop job — which is what
-            made the multi-seed uncertainty analysis affordable at all.
+            ~{Math.round(C.python_it_per_s.value)} → {Math.round(C.native_it_per_s_phase1.value)} it/s warm
+            ({C.native_speedup_phase1.value}×, median of 3 trials; historical benchmark). Multi-seed,
+            2M-iteration training became practical on a laptop, which is what made the uncertainty
+            analysis affordable at all.
+          </p>
+        </div>
+        <div className="pipe-step">
+          <b>PROFILE AGAIN</b>
+          <p>
+            A sampling profile of the native trainer found 69.5% of CPU rebuilding river percentile
+            tables. Deduplicating that work, reusing evaluator board counts and a flat
+            open-addressing infoset index gave a further 1.96× in an A/B test between native
+            builds, with an identical strategy digest.
+          </p>
+        </div>
+        <div className="pipe-step">
+          <b>CURRENT</b>
+          <p>
+            {C.python_it_per_s.value} → {Math.round(C.native_it_per_s.value).toLocaleString("en-US")} it/s
+            warm ({C.native_speedup.value}×, fresh benchmark, median of 3 trials). This is MCCFR
+            training throughput on the release configuration, not end-user analysis latency.
           </p>
         </div>
       </div>
@@ -67,10 +90,10 @@ export default function EngineeringPage() {
         Faster isn&rsquo;t useful if it silently becomes a different
         algorithm. Both backends consume a <b>shared random tape</b>; the
         parity suite requires identical trajectories, regret sums and
-        average strategies — bitwise — across 1,000 training iterations,
-        plus exact evaluator parity on all{" "}
-        {C.evaluator_hands.value.toLocaleString()} five-card hands and 1M
-        random 7-card hands, and bit-identical checkpoint resume.
+        average strategies, bitwise. CI runs 1,000 iterations; a stress run held for{" "}
+        {C.parity_iterations.value.toLocaleString("en-US")}. The evaluator matches on every five-,
+        six- and seven-card hand ({C.evaluator_hands_7card.value.toLocaleString("en-US")} seven-card
+        hands), and checkpoint resume is bit-identical (100k continuous equals 10 × 10k).
       </p>
       <p style={{ maxWidth: "46rem" }}>
         It caught real bugs: clang&rsquo;s <b>FMA contraction</b> fused a

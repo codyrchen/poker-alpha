@@ -1,8 +1,15 @@
+import type { Metadata } from "next";
 // Agent Arena: reproducible tournaments between algorithmic agents.
 
 import Link from "next/link";
 import data from "@/data/lab/tournament.json";
 import { ProvenanceFooter, Question } from "@/components/Lab";
+
+export const metadata: Metadata = {
+  title: "Agent arena",
+  description: "Seat-swapped agent tournaments with confidence intervals.",
+};
+
 
 const env = data as any;
 const P = env.payload;

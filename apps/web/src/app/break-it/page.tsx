@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 // Try to break PokerAlpha: real stress scenarios + the automated red
 // team's discoveries. Finding weaknesses is the point.
 
@@ -5,6 +6,12 @@ import Link from "next/link";
 import breakit from "@/data/lab/break_it.json";
 import redteam from "@/data/lab/redteam.json";
 import { ProvenanceFooter, Question } from "@/components/Lab";
+
+export const metadata: Metadata = {
+  title: "Red team",
+  description: "Automated search for fragile states, with confirmation.",
+};
+
 
 const B = (breakit as any).payload;
 const R = (redteam as any).payload;

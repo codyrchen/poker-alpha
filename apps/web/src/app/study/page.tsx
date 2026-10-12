@@ -36,6 +36,13 @@ export default function StudyPage() {
       <p>
         <ConnectionBadge state={conn} />
       </p>
+      {conn === "offline" && (
+        <p className="scope-note">
+          Session review needs the local engine; there is no bundled output for uploads. Run{" "}
+          <span className="mono">python -m poker_alpha.api</span> and open a locally served copy of this
+          site (see <a href="/download">Run locally</a>).
+        </p>
+      )}
       <p className="muted small">
         The file goes to your local engine on 127.0.0.1 and nowhere else. For
         the full experience (drill-down, patterns, trainer integration) use

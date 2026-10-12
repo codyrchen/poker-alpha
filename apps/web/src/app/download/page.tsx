@@ -1,3 +1,10 @@
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Run locally",
+  description: "Run the PokerAlpha engine and app on your own machine.",
+};
+
 export default function DownloadPage() {
   return (
     <main>
