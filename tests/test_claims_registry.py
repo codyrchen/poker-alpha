@@ -28,6 +28,14 @@ def test_claims_match_authoritative_sources():
     assert c["coverage_gain"]["value"] == round(v2["coverage"] / v1["share"], 2)
     import numpy as np
 
+    v1 = json.loads((ROOT / "results/benchmarks/native_mccfr_v1.json").read_text())
+    assert c["native_speedup_phase1"]["value"] == v1["speedup_warm"]
+    assert c["native_it_per_s_phase1"]["value"] == v1["native_warm_it_per_s_median"]
+    ev = json.loads((ROOT / "results/phase2/evaluator_stress.json").read_text())["exhaustive"]["7_card"]
+    assert c["evaluator_hands_7card"]["value"] == ev["hands"] and ev["mismatches"] == 0
+    tape = json.loads((ROOT / "results/phase2/native_correctness_stress.json").read_text())["shared_tape_parity"]
+    assert c["parity_iterations"]["value"] == tape["iterations"]
+    assert tape["iterate_value_mismatches"] == 0 and tape["average_strategy_bit_identical"]
     with np.load(ROOT / c["stored_infosets"]["source"], allow_pickle=False) as z:
         assert c["stored_infosets"]["value"] == len(z["keys"])
 

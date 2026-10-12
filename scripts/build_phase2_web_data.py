@@ -34,7 +34,11 @@ def main():
                   "paired_vs_uniform": conf["paired"]["adaptive:br_gain"]["vs_uniform_matched"],
                   "paired_vs_random": conf["paired"]["adaptive:br_gain"]["vs_random_mean"],
                   "instances": conf["instances"],
-                  "negative_signal": conf["arms"]["adaptive:positive_regret"]["exploitability_mean"]}
+                  "negative_signal": conf["arms"]["adaptive:positive_regret"]["exploitability_mean"],
+                  "relative_vs_uniform": {
+                      "confirmation": conf["paired"]["adaptive:br_gain"]["vs_uniform_matched"]["relative_mean"],
+                      "discovery": disc["paired"]["adaptive:br_gain"]["vs_uniform_matched"]["relative_mean"],
+                      "double_capacity": j("adaptive_abstraction_highcap.json")["summary"]["paired"]["adaptive:br_gain"]["vs_uniform_matched"]["relative_mean"]}}
     nat = j("native_optimization_trials.json")
     prof = j("native_profile.json")
     plain = ["deduplicated river percentile table (no 1,081-value sort)",
@@ -57,6 +61,7 @@ def main():
             "unsafe_worse_count": [s[f"unsafe@{b}"]["worse_than_blueprint_count"] for b in budgets],
             "n": s["blueprint"]["n"]}
     tr, trc = j("translation.json")["summary"], j("translation_confirm.json")["summary"]
+    ns = j("nested_resolving_confirm.json")["summary"]
     translation = {m: {seat: {"discovery": tr[m][seat]["translation_cost_vs_restricted_equilibrium"],
                               "confirmation": trc[m][seat]["translation_cost_vs_restricted_equilibrium"]}
                        for seat in ("us=0", "us=1")} for m in tr}
@@ -76,7 +81,9 @@ def main():
         {"title": "Positive regret as a refinement signal", "result": "NEGATIVE",
          "detail": "No better than random splitting; error-guided refinement needs within-cell heterogeneity, not solver regret."},
     ]
+    nested = {m: {k: v["cost_mean"] for k, v in ns[m].items() if isinstance(v, dict)} for m in ns}
     payload = {"refinement": refinement, "native": native, "resolving": resolving, "translation": translation,
+               "nested_resolving_confirmation": nested,
                "negatives": negatives, "active_compute_note": {"games": list(ac)}}
     OUT.write_text(json.dumps(envelope("phase2_research", payload, {}), separators=(",", ":"), allow_nan=False))
     print("wrote", OUT, OUT.stat().st_size // 1024, "KB")

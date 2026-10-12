@@ -53,6 +53,30 @@
    "value": 144025,
    "units": "infosets",
    "source": "results/strategy/holdem_v2_native_seed0_2m.npz"
+  },
+  "evaluator_hands_7card": {
+   "value": 133784560,
+   "units": "7-card hands",
+   "source": "results/phase2/evaluator_stress.json",
+   "qualifier": "exhaustive native vs Python parity, 0 mismatches"
+  },
+  "parity_iterations": {
+   "value": 10000,
+   "units": "training iterations",
+   "source": "results/phase2/native_correctness_stress.json",
+   "qualifier": "Python vs native on one shared random tape, bit-identical (CI runs 1,000)"
+  },
+  "native_speedup_phase1": {
+   "value": 38.11,
+   "units": "x",
+   "source": "results/benchmarks/native_mccfr_v1.json",
+   "qualifier": "HISTORICAL: first native port before Phase II profiling, warm median of 3 trials"
+  },
+  "native_it_per_s_phase1": {
+   "value": 836.99,
+   "units": "it/s",
+   "source": "results/benchmarks/native_mccfr_v1.json",
+   "qualifier": "HISTORICAL: first native port"
   }
  }
 }
