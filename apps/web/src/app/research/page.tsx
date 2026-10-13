@@ -132,6 +132,7 @@ export default function ResearchPage() {
 
       <h2>Deep dives</h2>
       <ul style={{ marginLeft: "1.2rem" }}>
+        <li><Link href="/evidence">Evidence</Link>: every headline number with its method and source file</li>
         <li><Link href="/lab">Research lab</Link>: interactive surfaces built on precomputed engine output</li>
         <li><a href={doc("docs/solver_validation.md")}>Validation ladder</a> (exact CFR → exact subgames → LBR)</li>
         <li><a href={doc("docs/solver_confidence_v2.md")}>Confidence system v2</a></li>

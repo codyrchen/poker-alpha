@@ -3,6 +3,7 @@ import claims from "@/data/lab/claims.json";
 import oneHand from "@/data/lab/one_hand.json";
 import phase2 from "@/data/lab/phase2.json";
 import { MixBar } from "@/components/Lab";
+import { FEATURED } from "@/lib/demos";
 import { AUTHOR, REPO_URL } from "@/lib/site";
 
 const C = (claims as any).payload.claims;
@@ -41,7 +42,7 @@ const HEADLINE = [
   {
     id: "release_iterations",
     n: `${C.training_seeds.value} × ${(C.release_iterations.value / 1e6).toFixed(0)}M`,
-    what: "independent seeds × MCCFR iterations behind the release strategy",
+    what: "independent MCCFR training runs × iterations; one is released, all three measure disagreement",
     src: "solver_config.py",
   },
   {
@@ -167,7 +168,7 @@ const FAILS = [
   ["The abstraction forgets.", "The encoder is imperfect-recall, which voids CFR's convergence guarantee. In exact Leduc tests, one forgetful abstraction got worse with more training."],
   ["Flop and turn are lossy.", "Exact flop and turn subgames show the encoder merging strategically different hands, so those streets are permanently capped at low confidence."],
   ["Some decisions stay uncertain.", "Seeds disagree on many preflop spots and on jam / 3-bet defense. Doubling training twice removed only about a tenth of the disagreement each time, so the gate rejects there."],
-  ["Screen recognition is unvalidated.", "The observer is tested on synthetic frames only. Real-data validation is blocked, so it is excluded from the product."],
+  ["Screen recognition is experimental.", "The screen observer has limited real PokerNow tuning but has not yet been independently validated on a held-out real-world dataset. It is excluded from the product."],
   ["No profitability claim.", "Nothing here is evidence of real-money win rate. The project never automates actions on a poker client."],
 ];
 
@@ -175,20 +176,24 @@ export default function Home() {
   return (
     <main>
       <section className="home-hero">
-        <div className="eyebrow">Independent research project</div>
+        <div className="eyebrow">Heads-up no-limit Hold&rsquo;em · open research</div>
         <h1>PokerAlpha</h1>
-        <p className="tagline">A research system for decision-making under hidden information.</p>
+        <p className="tagline">
+          An open research and engineering project for game-theoretic decision-making under hidden
+          information.
+        </p>
         <p className="detail">
-          Custom Hold&rsquo;em engine, CFR/MCCFR solvers, a bit-exact C++ training backend, exact
-          reduced-game validation, and a calibrated abstention layer. I built it to study how
+          A custom Hold&rsquo;em engine, CFR/MCCFR solvers, a bit-exact C++ training backend, exact
+          reduced-game validation and a calibrated abstention layer. The question behind it: how do
           imperfect-information systems behave when their abstractions are wrong, their policies
-          disagree, and compute is limited.
+          disagree, and compute is limited?
         </p>
         <div className="cta-row">
-          <Link className="btn solid" href="/learn">Explore the system</Link>
-          <a className="textlink" href={REPO_URL}>GitHub</a>
+          <Link className="btn solid" href="/interactive">Try the demos</Link>
           <Link className="textlink" href="/research">Research</Link>
           <Link className="textlink" href="/engineering">Engineering</Link>
+          <Link className="textlink" href="/download">Download</Link>
+          <a className="textlink" href={REPO_URL}>GitHub</a>
         </div>
         <div className="headline-metrics">
           {HEADLINE.map((m) => (
@@ -201,20 +206,101 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="block">
-        <div className="eyebrow">Why it is hard</div>
+      <section className="block" id="how">
+        <div className="eyebrow">How it works</div>
         <h2>The answer is a distribution, and nobody tells you whether it is right</h2>
         <p className="intro">
-          Heads-up no-limit Hold&rsquo;em has around 10<sup>160</sup> states, so any strategy is
-          trained on a lossy abstraction whose error has to be measured separately. Correct play is
-          randomized, independent training runs disagree with each other, and none of this is
-          testable without a fast training loop. A confident-looking policy table says nothing about
-          where it can be trusted.
+          In poker you never see the other player&rsquo;s cards, so good play is randomized and has to
+          be learned rather than looked up. Heads-up no-limit Hold&rsquo;em has around 10<sup>160</sup>{" "}
+          states, so any strategy is trained on a simplified abstraction of the game, and that
+          simplification has an error of its own. PokerAlpha handles this in three steps.
+        </p>
+        <div className="steps">
+          <div>
+            <div className="n">01</div>
+            <b>Learn by self-play</b>
+            <p>
+              Counterfactual regret minimization plays the game against itself and shifts weight
+              toward actions it regrets not taking. {C.training_seeds.value} independent runs of{" "}
+              {fmtInt(C.release_iterations.value)} iterations each: one is the release strategy, and
+              the disagreement between them is measured.
+            </p>
+          </div>
+          <div>
+            <div className="n">02</div>
+            <b>Check against exact answers</b>
+            <p>
+              Small games (Kuhn, Leduc, single-street river subgames) can be solved exactly, so the
+              solver and the abstraction are measured there instead of being assumed correct.
+            </p>
+          </div>
+          <div>
+            <div className="n">03</div>
+            <b>Refuse when unsure</b>
+            <p>
+              A calibrated confidence gate looks at training visits and disagreement between runs,
+              and shows no numbers at all for states it cannot trust.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="block" id="try">
+        <div className="eyebrow">Try it yourself</div>
+        <h2>Three demos that run in your browser</h2>
+        <p className="intro">Nothing to install. The first two compute live on your machine.</p>
+        <div className="feature-demos">
+          {FEATURED.map((d) => (
+            <Link key={d.href} className="feature" href={d.href}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={d.img} alt={d.alt} loading="lazy" width={1000} height={625} />
+              <div className="body">
+                <div className="tag">{d.tag}</div>
+                <h3>{d.title}</h3>
+                <p>{d.text}</p>
+                <p className="scope">{d.scope}</p>
+                <span className="go">{d.cta} →</span>
+              </div>
+            </Link>
+          ))}
+        </div>
+        <p className="small" style={{ marginTop: "1rem" }}>
+          <Link href="/interactive">All demos and research explorers →</Link>
+        </p>
+      </section>
+
+      <section className="block" id="research">
+        <div className="eyebrow">What the research found</div>
+        <h2>Five results, with their limits</h2>
+        <p className="intro">
+          Each comes with a matched control and a confirmation run. Most are exact measurements in
+          small or single-street games, which is where exact answers exist; none is a full-Hold&rsquo;em
+          theorem.
+        </p>
+        <div className="results">
+          {RESULTS.map((r, i) => (
+            <div className="result" key={r.title}>
+              <div className="idx">{String(i + 1).padStart(2, "0")}</div>
+              <div>
+                <h3>{r.title}</h3>
+                <p className="finding">{r.finding}</p>
+              </div>
+              <div>
+                <p className="fact"><b>Method</b>{r.method}</p>
+                <p className="fact"><b>Limit</b>{r.limit}</p>
+                <p className="fact"><a href={r.href}>Write-up and data →</a></p>
+              </div>
+            </div>
+          ))}
+        </div>
+        <p className="small" style={{ marginTop: "1rem" }}>
+          <Link href="/lab/phase2">Charts and controls for these results →</Link>{" "}
+          <span className="muted">· the null and negative results are on the same page.</span>
         </p>
       </section>
 
       <section className="block" id="build">
-        <div className="eyebrow">Build story</div>
+        <div className="eyebrow">How it was engineered</div>
         <h2>From {C.python_it_per_s.value} to {fmtInt(Math.round(C.native_it_per_s.value))} iterations per second</h2>
         <p className="intro">
           Warm MCCFR training throughput on the release configuration. The two benchmark endpoints
@@ -270,7 +356,7 @@ export default function Home() {
       </section>
 
       <section className="block">
-        <div className="eyebrow">What I built</div>
+        <div className="eyebrow">What is in the repository</div>
         <h2>Scope</h2>
         <p className="intro">
           Everything below is implemented in this repository. Off-the-shelf pieces are the
@@ -335,37 +421,7 @@ export default function Home() {
         </p>
       </section>
 
-      <section className="block">
-        <div className="eyebrow">Research</div>
-        <h2>Five results, with their limits</h2>
-        <p className="intro">
-          Each comes with a matched control and a confirmation run. Most are exact measurements in
-          small or single-street games, which is where exact answers exist; none is a full-Hold&rsquo;em
-          theorem.
-        </p>
-        <div className="results">
-          {RESULTS.map((r, i) => (
-            <div className="result" key={r.title}>
-              <div className="idx">{String(i + 1).padStart(2, "0")}</div>
-              <div>
-                <h3>{r.title}</h3>
-                <p className="finding">{r.finding}</p>
-              </div>
-              <div>
-                <p className="fact"><b>Method</b>{r.method}</p>
-                <p className="fact"><b>Limit</b>{r.limit}</p>
-                <p className="fact"><a href={r.href}>Write-up and data →</a></p>
-              </div>
-            </div>
-          ))}
-        </div>
-        <p className="small" style={{ marginTop: "1rem" }}>
-          <Link href="/lab/phase2">Charts and controls for these results →</Link>{" "}
-          <span className="muted">· the null and negative results are on the same page.</span>
-        </p>
-      </section>
-
-      <section className="block">
+      <section className="block" id="limits">
         <div className="eyebrow">Where it fails</div>
         <h2>What the system does not know</h2>
         <p className="pullquote">
@@ -386,32 +442,17 @@ export default function Home() {
         </p>
       </section>
 
-      <section className="block">
-        <div className="eyebrow">Try it</div>
-        <h2>Three things to open</h2>
-        <div className="demos">
-          <Link className="demo" href="/learn">
-            <div className="order">01</div>
-            <h3>Watch a solver learn</h3>
-            <p>Vanilla CFR on Kuhn poker, running in your browser. The exploitability curve is computed live from the current strategy.</p>
-            <p className="scope">Real computation, not an animation. Checked against the Python reference.</p>
-          </Link>
-          <Link className="demo" href="/arena">
-            <div className="order">02</div>
-            <h3>Play against it</h3>
-            <p>Heads-up Kuhn against the CFR policy, then see the exact exploitability of the strategy you played.</p>
-            <p className="scope">A small-game sandbox, not the Hold&rsquo;em release strategy.</p>
-          </Link>
-          <Link className="demo" href="/lab/phase2">
-            <div className="order">03</div>
-            <h3>Phase II results</h3>
-            <p>Refinement, native speedup, resolving with a budget slider, translation costs, and five ideas that failed.</p>
-            <p className="scope">Exact reduced-game results, with their controls.</p>
-          </Link>
-        </div>
-        <p className="small" style={{ marginTop: "0.9rem" }}>
-          <Link href="/interactive">All interactive pages →</Link>
+      <section className="block" id="get">
+        <div className="eyebrow">Get PokerAlpha</div>
+        <h2>Source now, desktop builds later</h2>
+        <p className="intro">
+          The full source, experiments and result files are on GitHub. Desktop builds for macOS,
+          Windows and Linux are planned; until signed releases exist, the app runs from source.
         </p>
+        <div className="cta-row" style={{ marginTop: "1rem" }}>
+          <Link className="btn solid" href="/download">Download page</Link>
+          <a className="textlink" href={REPO_URL}>View on GitHub</a>
+        </div>
       </section>
 
       <section className="block" aria-labelledby="about">
@@ -423,13 +464,9 @@ export default function Home() {
             <p className="small" style={{ marginTop: "0.5rem" }}>{AUTHOR.interests}</p>
           </div>
           <div className="links">
-            {AUTHOR.links.map((l) =>
-              l.href ? (
-                <a key={l.label} href={l.href}>{l.label}</a>
-              ) : (
-                <span key={l.label} className="todo" title="Not added yet">{l.label} (soon)</span>
-              ),
-            )}
+            {AUTHOR.links.map((l) => (
+              <a key={l.label} href={l.href}>{l.label}</a>
+            ))}
           </div>
         </div>
       </section>

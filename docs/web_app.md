@@ -61,7 +61,7 @@ boundary stays as above — no permissive localhost CORS wildcards.
 ## Public deployment (static)
 
 `apps/web` is a static export (`output: 'export'` in `next.config.mjs`).
-It builds without the Python engine: every recruiter-facing page reads
+It builds without the Python engine: every public page reads
 bundled research data from `src/data/`. Pages that can talk to a local
 engine (`/analyze`, `/strategy`, `/study`, `/trainer`) show bundled output
 or an explicit "requires the local engine" note on a public deployment.

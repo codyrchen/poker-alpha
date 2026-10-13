@@ -5,9 +5,9 @@ import { TopNav } from "@/components/Nav";
 import { SECONDARY_NAV, SITE_URL } from "@/lib/site";
 
 const DESCRIPTION =
-  "A research system for decision-making under hidden information: a custom Hold'em engine, " +
-  "CFR/MCCFR solvers, a bit-exact C++17 training backend, exact reduced-game validation and a " +
-  "calibrated abstention layer.";
+  "An open research and engineering project for game-theoretic decision-making under hidden " +
+  "information: a custom Hold'em engine, CFR/MCCFR solvers, a bit-exact C++17 training backend, " +
+  "exact reduced-game validation, a calibrated abstention layer and live browser demos.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
