@@ -303,7 +303,7 @@ input:focus-visible, textarea:focus-visible, [tabindex]:focus-visible {
 }
 
 
-/* ---- recruiter site (editorial layout) ----------------------------------- */
+/* ---- editorial layout ---------------------------------------------------- */
 
 .eyebrow { font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.08em;
            text-transform: uppercase; color: var(--muted); margin-bottom: 0.5rem; }
@@ -427,7 +427,7 @@ section.block > .intro { color: var(--muted); max-width: 44rem; margin-bottom: 1
          border-top: 1px solid var(--hairline); padding-top: 1.2rem; }
 .about .name { font-weight: 650; font-size: 1.05rem; }
 .about .links { display: flex; gap: 1.1rem; flex-wrap: wrap; font-size: 0.9rem; }
-.about .links .todo { color: var(--muted); }
+
 @media (max-width: 640px) { .about { grid-template-columns: 1fr; } }
 
 /* site footer links */
@@ -455,3 +455,52 @@ section.block > .intro { color: var(--muted); max-width: 44rem; margin-bottom: 1
 
 /* evidence deep links */
 table.data tr:target td { background: rgba(42, 120, 214, 0.12); }
+
+/* featured demos: real screenshots, whole card clickable */
+.feature-demos { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.1rem; margin-top: 1.3rem; }
+.feature { display: flex; flex-direction: column; color: var(--ink); background: var(--bg);
+           border: 1px solid var(--hairline); border-radius: var(--radius); overflow: hidden;
+           transition: border-color 0.15s ease; }
+.feature:hover { text-decoration: none; border-color: var(--ink); }
+.feature img { display: block; width: 100%; height: auto; aspect-ratio: 16 / 10; object-fit: cover; object-position: top;
+               border-bottom: 1px solid var(--hairline); background: var(--panel); }
+.feature .body { display: flex; flex-direction: column; gap: 0.35rem; padding: 0.9rem 1rem 1rem; flex: 1; }
+.feature .tag { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.feature h3 { margin: 0; font-size: 1.08rem; }
+.feature p { color: var(--muted); font-size: 0.88rem; }
+.feature .scope { color: var(--ink); font-size: 0.8rem; }
+.feature .go { margin-top: auto; padding-top: 0.5rem; font-size: 0.88rem; font-weight: 600; color: var(--accent); }
+@media (max-width: 860px) { .feature-demos { grid-template-columns: 1fr; } }
+
+/* three-step explainer */
+.steps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; margin-top: 1.3rem;
+         border-top: 1px solid var(--hairline); }
+.steps > div { padding: 1rem 1.2rem 0 0; }
+.steps > div + div { padding-left: 1.2rem; border-left: 1px solid var(--hair-soft); }
+.steps .n { font-family: var(--mono); font-size: 0.72rem; color: var(--muted); }
+.steps b { display: block; margin: 0.2rem 0 0.3rem; }
+.steps p { color: var(--muted); font-size: 0.9rem; }
+@media (max-width: 760px) {
+  .steps { grid-template-columns: 1fr; }
+  .steps > div, .steps > div + div { padding: 0.9rem 0; border-left: 0; border-bottom: 1px solid var(--hair-soft); }
+}
+
+/* screenshot gallery */
+.shots { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.6rem 1.4rem; margin-top: 1.2rem; }
+.shots figure { margin: 0; }
+.shots img { display: block; width: 100%; height: auto; border: 1px solid var(--hairline); border-radius: var(--radius); background: var(--panel); }
+.shots figcaption { font-size: 0.84rem; color: var(--muted); margin-top: 0.45rem; }
+.shots figcaption b { color: var(--ink); font-weight: 600; }
+.shots figure.small img { width: auto; max-width: 100%; }
+@media (max-width: 760px) { .shots { grid-template-columns: 1fr; } }
+
+/* download platforms */
+.platforms { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--hairline); margin-top: 1rem; }
+.platforms > div { padding: 1rem 1.2rem 1rem 0; }
+.platforms > div + div { padding-left: 1.2rem; border-left: 1px solid var(--hair-soft); }
+.platforms b { display: block; font-size: 1.05rem; }
+.platforms .state { font-family: var(--mono); font-size: 0.78rem; color: var(--muted); margin-top: 0.3rem; }
+@media (max-width: 640px) {
+  .platforms { grid-template-columns: 1fr; }
+  .platforms > div, .platforms > div + div { padding: 0.8rem 0; border-left: 0; border-bottom: 1px solid var(--hair-soft); }
+}

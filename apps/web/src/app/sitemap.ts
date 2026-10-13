@@ -3,12 +3,12 @@ import { SITE_URL } from "@/lib/site";
 
 export const dynamic = "force-static";
 
-// Public, recruiter-facing routes first; deep-dive pages after.
+// Main public routes first; deep-dive pages after.
 const ROUTES = [
-  "/", "/research", "/engineering", "/interactive", "/evidence",
+  "/", "/interactive", "/research", "/engineering", "/download", "/evidence",
   "/learn", "/arena", "/lab", "/lab/phase2", "/overview", "/tour", "/benchmarks",
   "/trust", "/surface", "/microscope", "/atlas", "/break-it", "/replay", "/agents",
-  "/games", "/analyze", "/download",
+  "/games", "/analyze",
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {

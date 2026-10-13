@@ -118,7 +118,7 @@ export default function EngineeringPage() {
             ["API", "contract tests + fuzzed direct-vs-JSON parity"],
             ["Web", `vitest incl. browser-CFR-vs-Python fixture; strict tsc; static build`],
             ["Desktop", "sidecar smoke + packaged standalone smoke outside the repo"],
-            ["Observer", "REAL held-out validation still BLOCKED on independent data — stated, not hidden"],
+            ["Observer", "experimental: limited real PokerNow tuning, no independent held-out validation yet"],
           ].map(([what, how]) => (
             <tr key={what as string}>
               <td style={{ whiteSpace: "nowrap" }}>{what}</td>

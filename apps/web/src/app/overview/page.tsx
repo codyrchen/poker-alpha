@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-// One-page recruiter overview. Print-friendly.
+// One-page project overview. Print-friendly.
 
 import Link from "next/link";
 import claims from "@/data/lab/claims.json";

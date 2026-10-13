@@ -1,76 +1,109 @@
 import type { Metadata } from "next";
+import Link from "next/link";
+import { REPO_URL, RELEASES_URL } from "@/lib/site";
+import { latestRelease, pickAssets, type Platform } from "@/lib/releases";
 
 export const metadata: Metadata = {
-  title: "Run locally",
-  description: "Run the PokerAlpha engine and app on your own machine.",
+  title: "Download",
+  description: "Download PokerAlpha: desktop builds (planned), source code and local setup.",
 };
 
-export default function DownloadPage() {
+const NAMES: Record<Platform, string> = { macos: "macOS", windows: "Windows", linux: "Linux" };
+const doc = (p: string) => `${REPO_URL}/blob/main/${p}`;
+const mb = (bytes?: number) => (bytes ? ` · ${Math.round(bytes / 1e6)} MB` : "");
+
+export default async function DownloadPage() {
+  const release = await latestRelease("codyrchen/poker-alpha");
+  const downloads = pickAssets(release);
+  const anyBuild = downloads.some((d) => d.asset);
+
   return (
     <main>
-      <h1>Download</h1>
-      <p className="lead">
-        PokerAlpha is local-first: the engine, the web app and the desktop
-        overlay all run on your machine. There is no hosted service and
-        nothing to sign up for.
+      <div className="eyebrow">Download</div>
+      <h1>Download PokerAlpha</h1>
+      <p className="lead" style={{ marginTop: "0.6rem" }}>
+        PokerAlpha runs on your own machine. There is no hosted service and no account, and hands
+        and screenshots stay local.
       </p>
 
-      <h2>Desktop overlay — standalone local build (unsigned)</h2>
-      <p>
-        An Electron shell with a compact, always-on-top strategy overlay and
-        the <b>engine bundled inside the app</b> — no Python, no environment
-        variables. Built from source it is fully standalone (~540 MB), but
-        <b> unsigned</b>: macOS Gatekeeper will warn on first launch, and
-        there is no notarized installer yet (that requires Apple signing
-        credentials).
-      </p>
-      <pre className="mono panel" style={{ whiteSpace: "pre-wrap" }}>
-        {`git clone https://github.com/codyrchen/poker-alpha
+      <section className="block" style={{ marginTop: "2.4rem" }}>
+        <h2>Desktop app</h2>
+        <p className="intro">
+          {anyBuild
+            ? `Builds from the ${release!.tag_name} release on GitHub.`
+            : "Desktop builds are planned. When signed releases are published on GitHub, this page will link them here. Until then the app runs from source."}
+        </p>
+        <div className="platforms">
+          {downloads.map(({ platform, asset }) => (
+            <div key={platform}>
+              <b>{NAMES[platform]}</b>
+              {asset ? (
+                <div className="state">
+                  <a href={asset.browser_download_url}>{asset.name}</a>
+                  {mb(asset.size)}
+                </div>
+              ) : (
+                <div className="state">Coming soon</div>
+              )}
+            </div>
+          ))}
+        </div>
+        {anyBuild && (
+          <p className="small" style={{ marginTop: "0.8rem" }}>
+            <a href={release!.html_url}>Release notes and checksums</a>
+          </p>
+        )}
+      </section>
+
+      <section className="block" style={{ marginTop: "3rem" }}>
+        <h2>Source code</h2>
+        <p className="intro">
+          The engine, solvers, C++ backend, experiments, result files and this site are in one
+          repository.
+        </p>
+        <div className="cta-row" style={{ marginTop: "0.9rem" }}>
+          <a className="btn solid" href={REPO_URL}>View on GitHub</a>
+          <a className="textlink" href={RELEASES_URL}>Releases</a>
+        </div>
+      </section>
+
+      <section className="block" style={{ marginTop: "3rem" }}>
+        <h2>Local development</h2>
+        <p className="intro">Python 3.11+ and Node 20.9+. The C++ backend is optional and builds with pip.</p>
+        <pre className="mono panel" style={{ whiteSpace: "pre-wrap", marginTop: "0.8rem" }}>
+          {`git clone ${REPO_URL}
 cd poker-alpha
-python -m venv .venv && .venv/bin/pip install -e ".[ui,vision,api]" pyinstaller
-# freeze the engine, then build the standalone app
-(cd packaging && ../.venv/bin/pyinstaller --noconfirm pokeralpha_engine.spec)
-cd apps/desktop && npm install && npm run pack   # release/mac-arm64/PokerAlpha.app
-npm start                                        # or run from source`}
-      </pre>
+python3 -m venv .venv && source .venv/bin/activate
+pip install -e ".[dev,ui,api]"
+pip install ./cpp                  # optional: native C++ training backend
 
-      <h2>Local engine + web app</h2>
-      <pre className="mono panel" style={{ whiteSpace: "pre-wrap" }}>
-        {`# engine (binds 127.0.0.1 only)
-.venv/bin/python -m poker_alpha.api
+python -m poker_alpha.api          # local engine on 127.0.0.1
+cd apps/web && npm install && npm run dev   # this site, talking to the local engine`}
+        </pre>
+        <ul style={{ marginLeft: "1.2rem", marginTop: "0.8rem" }}>
+          <li><a href={doc("README.md#quick-start")}>Quick start</a> and the full test suite</li>
+          <li><a href={doc("docs/web_app.md")}>Web app and local engine</a></li>
+          <li><a href={doc("docs/desktop_app.md")}>Desktop app</a>: build the Electron overlay with the engine bundled inside (unsigned)</li>
+        </ul>
+        <p className="small muted" style={{ marginTop: "0.8rem" }}>
+          The live demos on <Link href="/interactive">the Demo page</Link> need none of this.
+        </p>
+      </section>
 
-# full Streamlit app: Play / Study / Developer
-.venv/bin/streamlit run poker_alpha/ui/app.py
-
-# this website, locally
-cd apps/web && npm install && npm run dev`}
-      </pre>
-
-      <h2>Three deployment shapes</h2>
-      <ul style={{ marginLeft: "1.2rem" }}>
-        <li>
-          <b>Public static site</b> (if this page is hosted): research,
-          benchmarks and pre-computed demo outputs only — it cannot reach a
-          local engine from a public origin.
-        </li>
-        <li>
-          <b>Local web app + local engine</b>: the full analyzer, strategy
-          explorer and study upload against 127.0.0.1.
-        </li>
-        <li>
-          <b>Desktop app</b>: the engine bundled inside, no setup.
-        </li>
-      </ul>
-
-      <h2>Boundaries</h2>
-      <ul style={{ marginLeft: "1.2rem" }}>
-        <li>Analysis only: no automated clicking, betting or client control.</li>
-        <li>
-          Real-time use only in private / play-money / test environments where
-          assistance is permitted; otherwise use post-session review.
-        </li>
-        <li>Hands, screenshots and sessions stay on your machine by default.</li>
-      </ul>
+      <section className="block" style={{ marginTop: "3rem" }}>
+        <h2>Intended use</h2>
+        <ul style={{ marginLeft: "1.2rem" }}>
+          <li>Analysis only. PokerAlpha never clicks, bets or controls a poker client.</li>
+          <li>
+            Real-time use only in private, play-money or test environments where assistance is
+            permitted; everywhere else, use post-session review.
+          </li>
+          <li>
+            The screen observer is experimental and excluded from the product. See the{" "}
+            <a href={doc("docs/system_card.md")}>system card</a>.
+          </li>
+        </ul>
+      </section>
     </main>
   );
 }
