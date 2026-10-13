@@ -191,7 +191,7 @@ authoritative status: [solver status](docs/solver_status_final.md).
 | Full-game exploitability | LOWER BOUND ONLY — restricted LBR (validated on exact games, Spearman 0.986); exact value infeasible |
 | Rollout fallback | MEASURED WITH CAVEATS — 20/36 exact-river agreement, over-bet bias documented |
 | Trained strategy | EXPERIMENTAL — see release section |
-| Real PokerNow screen recognition | **BLOCKED ON INDEPENDENT REAL DATA** — synthetic validation only; 1 tuning frame, 0 held-out frames |
+| Real PokerNow screen recognition | **EXPERIMENTAL** — limited real PokerNow tuning (1 real frame); not yet independently validated on a held-out real-world dataset (0 held-out frames) |
 
 One authoritative summary supersedes older phase reports:
 [docs/solver_status_final.md](docs/solver_status_final.md).

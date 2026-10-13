@@ -5,7 +5,7 @@ allowed. PokerAlpha only reads the screen; it never clicks or acts.
 
 ## Before the test (10 minutes)
 
-1. `git fetch && git checkout claude/live-observer && git pull`
+1. `git fetch && git checkout main && git pull`
 2. `python -m pip install -e ".[vision,ui]"` (once per environment)
 3. `python -m poker_alpha.doctor` — every line OK (a WARN on screen capture
    on macOS = grant Screen Recording to your terminal app, then restart it)
@@ -53,7 +53,7 @@ allowed. PokerAlpha only reads the screen; it never clicks or acts.
 6. Debug report of one bad frame: Live screen -> Region debugger -> **Export
    current debug report** (optional).
 
-## What to send Claude
+## What to collect for analysis
 
 * `~/pokeralpha_sessions/<id>/manifest.json` and `session.json`
 * the anonymized export folder (`raw/`, `annotations/`, `manifest.json`,

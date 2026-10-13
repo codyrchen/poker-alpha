@@ -1,4 +1,4 @@
-# PokerAlpha — technical overview (pre-interview briefing)
+# PokerAlpha — technical overview
 
 A 2-page orientation for a technical reviewer. Everything here is backed by
 a committed result file; the authoritative status document is
@@ -108,26 +108,7 @@ annotated frames. The observer is read-only by design.
 
 ---
 
-## Interview artifacts (moonshot sprint additions)
-
-### 30-second pitch (nontechnical)
-"I built a poker AI from scratch — not a wrapper around anything. That
-means the game engine itself, the learning algorithm that trains by
-self-play, a C++ backend, then profiled and optimized, that made training 74× faster while provably
-staying the same algorithm, and a trust system that makes it refuse to
-answer when its own evidence is weak. Then I turned it into a product:
-you can watch it learn in the browser, play against it, and see exactly
-where it fails."
-
-### 2-minute pitch (technical) — added beats
-CFR family implemented from the ground up; external-sampling MCCFR at
-Hold'em scale on an imperfect-recall abstraction whose error is measured
-by exactly solving subgames; full hot path in C++17 with shared-random-
-tape bitwise parity (FMA contraction caught and disabled); confidence
-gate calibrated on 8,880 exact EV-regret targets with the negative
-result that policy movement predicts nothing; automated red team that
-searches legal states for fragility; the whole thing generalized to a
-Game interface running Kuhn, Leduc and a non-poker auction.
+## Engineering notes
 
 ### Hardest bugs (all real)
 1. **FMA contraction broke cross-language bit parity** — one fused
@@ -155,22 +136,7 @@ floor) · coverage vs confidence (v2 rule: 1.68× coverage at equal
 accepted risk, movement kept only as a cheap conjunction) · product
 polish vs scientific honesty (REJECTED cells show no numbers, ever).
 
-### Resume bullets (factual)
-- SWE: "Built a C++17/pybind11 training backend for a Monte-Carlo
-  counterfactual-regret poker solver; 74.2× measured speedup with
-  bitwise cross-language parity enforced in CI."
-- Quant: "Calibrated a per-state abstention rule for solver output
-  against exact EV-regret targets from 8,880 solved-game states;
-  shipped the negative result that policy movement is not a trust
-  signal."
-- Research eng: "Built an automated red team that generates legal poker
-  states and clusters measured solver fragility; discovery/confirmation
-  split enforced."
-- ML systems: "Designed reproducibility receipts (content-addressed
-  analysis records with seeds and artifact SHAs) with a verifier that
-  re-runs and compares."
-
-### "What would you change?"
+### Next steps
 Collect the independent labeled PokerNow sessions the observer
 validation is blocked on; spend the next large compute budget on
 abstraction refinement where the red team's clusters point (preflop
